@@ -1,15 +1,15 @@
-package projects
+package project
 
 import (
 	"fmt"
 	"os"
 
 	"github.com/arduino/arduino-check/configuration"
-	"github.com/arduino/arduino-check/projects/library"
-	"github.com/arduino/arduino-check/projects/packageindex"
-	"github.com/arduino/arduino-check/projects/platform"
-	"github.com/arduino/arduino-check/projects/projecttype"
-	"github.com/arduino/arduino-check/projects/sketch"
+	"github.com/arduino/arduino-check/project/library"
+	"github.com/arduino/arduino-check/project/packageindex"
+	"github.com/arduino/arduino-check/project/platform"
+	"github.com/arduino/arduino-check/project/projecttype"
+	"github.com/arduino/arduino-check/project/sketch"
 	"github.com/arduino/arduino-cli/cli/errorcodes"
 	"github.com/arduino/go-paths-helper"
 )

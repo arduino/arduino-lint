@@ -2,7 +2,7 @@ package configuration
 
 import (
 	"github.com/arduino/arduino-check/configuration/checkmode"
-	"github.com/arduino/arduino-check/projects/projecttype"
+	"github.com/arduino/arduino-check/project/projecttype"
 )
 
 func setDefaults() {

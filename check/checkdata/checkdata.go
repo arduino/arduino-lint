@@ -1,9 +1,9 @@
 package checkdata
 
 import (
-	"github.com/arduino/arduino-check/projects"
-	"github.com/arduino/arduino-check/projects/library"
-	"github.com/arduino/arduino-check/projects/projecttype"
+	"github.com/arduino/arduino-check/project"
+	"github.com/arduino/arduino-check/project/library"
+	"github.com/arduino/arduino-check/project/projecttype"
 	"github.com/arduino/go-paths-helper"
 	"github.com/arduino/go-properties-orderedmap"
 	"github.com/xeipuuv/gojsonschema"
@@ -39,7 +39,7 @@ func LibraryPropertiesSchemaValidationResult() *gojsonschema.Result {
 	return libraryPropertiesSchemaValidationResult
 }
 
-func Initialize(project projects.Type) {
+func Initialize(project project.Type) {
 	projectType = project.ProjectType
 	projectPath = project.Path
 	switch project.ProjectType {

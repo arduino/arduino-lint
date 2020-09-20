@@ -1,6 +1,6 @@
 package checkmode
 
-import "github.com/arduino/arduino-check/projects/projecttype"
+import "github.com/arduino/arduino-check/project/projecttype"
 
 type Type int
 

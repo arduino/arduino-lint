@@ -3,7 +3,7 @@ package checkconfigurations
 import (
 	"github.com/arduino/arduino-check/check/checkfunctions"
 	"github.com/arduino/arduino-check/configuration/checkmode"
-	"github.com/arduino/arduino-check/projects/projecttype"
+	"github.com/arduino/arduino-check/project/projecttype"
 )
 
 type Type struct {

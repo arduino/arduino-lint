@@ -3,12 +3,12 @@ package main
 import (
 	"github.com/arduino/arduino-check/check"
 	"github.com/arduino/arduino-check/configuration"
-	"github.com/arduino/arduino-check/projects"
+	"github.com/arduino/arduino-check/project"
 )
 
 func main() {
 	configuration.Initialize()
-	projects := projects.FindProjects()
+	projects := project.FindProjects()
 	for _, project := range projects {
 		check.RunChecks(project)
 	}
