@@ -1,18 +1,9 @@
 package configuration
 
 import (
+	"github.com/arduino/arduino-check/configuration/checkmode"
 	"github.com/arduino/arduino-check/projects/projecttype"
 	"github.com/arduino/go-paths-helper"
-)
-
-type CheckMode int
-
-const (
-	Permissive CheckMode = iota
-	LibraryManagerSubmission
-	LibraryManagerIndexed
-	Official
-	Default
 )
 
 func Initialize() {
@@ -23,25 +14,10 @@ func Initialize() {
 	superprojectType = projecttype.Library
 }
 
-var customCheckModes map[CheckMode]bool
+var customCheckModes map[checkmode.Type]bool
 
-func CheckModes(superprojectType projecttype.Type) map[CheckMode]bool {
-	checkModes := make(map[CheckMode]bool)
-
-	// Merge the default settings with any custom settings specified by the user
-	for key, defaultValue := range defaultCheckModes[superprojectType] {
-		customCheckModeValue, customCheckModeIsConfigured := customCheckModes[key]
-		if customCheckModeIsConfigured {
-			checkModes[key] = customCheckModeValue
-		} else {
-			checkModes[key] = defaultValue
-		}
-	}
-
-	// This mode is always enabled
-	checkModes[Default] = true
-
-	return checkModes
+func CheckModes(superprojectType projecttype.Type) map[checkmode.Type]bool {
+	return checkmode.Modes(defaultCheckModes, customCheckModes, superprojectType)
 }
 
 var superprojectType projecttype.Type

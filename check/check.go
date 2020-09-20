@@ -13,10 +13,10 @@ import (
 	"github.com/arduino/arduino-check/projects"
 )
 
-func shouldRun(checkConfiguration checkconfigurations.Configuration, currentProject projects.Project) bool {
-	checkModes := configuration.CheckModes(projects.SuperprojectType(currentProject))
+func shouldRun(checkConfiguration checkconfigurations.Type, currentProject projects.Type) bool {
+	checkModes := configuration.CheckModes(currentProject.SuperprojectType)
 
-	if checkConfiguration.ProjectType != currentProject.Type {
+	if checkConfiguration.ProjectType != currentProject.ProjectType {
 		return false
 	}
 
@@ -44,8 +44,8 @@ func message(templateText string, checkOutput string) string {
 	return messageBuffer.String()
 }
 
-func RunChecks(project projects.Project) {
-	fmt.Printf("Checking %s in %s\n", project.Type.String(), project.Path.String())
+func RunChecks(project projects.Type) {
+	fmt.Printf("Checking %s in %s\n", project.ProjectType.String(), project.Path.String())
 
 	checkdata.Initialize(project)
 

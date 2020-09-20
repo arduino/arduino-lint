@@ -39,14 +39,19 @@ func LibraryPropertiesSchemaValidationResult() *gojsonschema.Result {
 	return libraryPropertiesSchemaValidationResult
 }
 
-func Initialize(project projects.Project) {
-	projectType = project.Type
+func Initialize(project projects.Type) {
+	projectType = project.ProjectType
 	projectPath = project.Path
-	switch project.Type {
+	switch project.ProjectType {
 	case projecttype.Sketch:
 	case projecttype.Library:
 		libraryProperties, libraryPropertiesLoadError = library.Properties(project.Path)
-		libraryPropertiesSchemaValidationResult = library.ValidateProperties(libraryProperties)
+		if libraryPropertiesLoadError != nil {
+			libraryPropertiesSchemaValidationResult = library.ValidateProperties(libraryProperties)
+		} else {
+			// TODO: can I even do this?
+			libraryPropertiesSchemaValidationResult = nil
+		}
 	case projecttype.Platform:
 	case projecttype.PackageIndex:
 	}

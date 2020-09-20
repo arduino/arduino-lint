@@ -5,7 +5,18 @@ import (
 	"github.com/arduino/arduino-check/configuration"
 )
 
-func CheckLevel(checkConfiguration checkconfigurations.Configuration) Level {
+//go:generate stringer -type=Type -linecomment
+type Type int
+
+// Line comments set the string for each level
+const (
+	Info    Type = iota // info
+	Warning             // warning
+	Error               // error
+	Pass                // pass
+)
+
+func CheckLevel(checkConfiguration checkconfigurations.Type) Type {
 	configurationCheckModes := configuration.CheckModes(checkConfiguration.ProjectType)
 	for _, promoteMode := range checkConfiguration.PromoteModes {
 		if configurationCheckModes[promoteMode] == true {

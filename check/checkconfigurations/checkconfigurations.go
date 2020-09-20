@@ -2,11 +2,11 @@ package checkconfigurations
 
 import (
 	"github.com/arduino/arduino-check/check/checkfunctions"
-	"github.com/arduino/arduino-check/configuration"
+	"github.com/arduino/arduino-check/configuration/checkmode"
 	"github.com/arduino/arduino-check/projects/projecttype"
 )
 
-type Configuration struct {
+type Type struct {
 	ProjectType projecttype.Type
 	// Arbitrary text for the log
 	Category    string
@@ -19,19 +19,19 @@ type Configuration struct {
 	// The check function output will be filled into the template
 	MessageTemplate string
 	// Check is disabled when tool is in any of these modes
-	DisableModes []configuration.CheckMode
+	DisableModes []checkmode.Type
 	// Check is only enabled when tool is in one of these modes
-	EnableModes []configuration.CheckMode
+	EnableModes []checkmode.Type
 	// In these modes, failed check is treated as an error, otherwise it's handled as normal.
-	PromoteModes  []configuration.CheckMode
-	InfoModes     []configuration.CheckMode
-	WarningModes  []configuration.CheckMode
-	ErrorModes    []configuration.CheckMode
-	CheckFunction checkfunctions.CheckFunction
+	PromoteModes  []checkmode.Type
+	InfoModes     []checkmode.Type
+	WarningModes  []checkmode.Type
+	ErrorModes    []checkmode.Type
+	CheckFunction checkfunctions.Type
 }
 
 // Checks is an array of structs that define the configuration of each check.
-var Configurations = []Configuration{
+var Configurations = []Type{
 	{
 		ProjectType:     projecttype.Library,
 		Category:        "library.properties",
@@ -41,11 +41,11 @@ var Configurations = []Configuration{
 		Description:     "",
 		MessageTemplate: "library.properties has an invalid format: {{.}}",
 		DisableModes:    nil,
-		EnableModes:     []configuration.CheckMode{configuration.Default},
+		EnableModes:     []checkmode.Type{checkmode.Default},
 		PromoteModes:    nil,
 		InfoModes:       nil,
 		WarningModes:    nil,
-		ErrorModes:      []configuration.CheckMode{configuration.Default},
+		ErrorModes:      []checkmode.Type{checkmode.Default},
 		CheckFunction:   checkfunctions.CheckLibraryPropertiesFormat,
 	},
 }

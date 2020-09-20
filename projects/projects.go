@@ -14,73 +14,67 @@ import (
 	"github.com/arduino/go-paths-helper"
 )
 
-type Project struct {
+type Type struct {
 	Path             *paths.Path
-	Type             projecttype.Type
+	ProjectType      projecttype.Type
 	SuperprojectType projecttype.Type
 }
 
-func SuperprojectType(project Project) projecttype.Type {
-	if project.SuperprojectType == 0 {
-		// SuperprojectType field not set, meaning this is the superproject. Use Type field.
-		return project.Type
-	}
-	return project.SuperprojectType
-}
-
-func FindProjects() []Project {
+func FindProjects() []Type {
 	targetPath := configuration.TargetPath()
-	projectType := configuration.SuperprojectType()
-	fmt.Printf("finding projects of type %s", projectType.String())
+	superprojectTypeConfiguration := configuration.SuperprojectType()
 	recursive := configuration.Recursive()
 
-	var projects []Project
+	var foundProjects []Type
 
 	// If targetPath is a file, targetPath itself is the project, so it's only necessary to determine/verify the type
 	if targetPath.IsNotDir() {
-		// The filename provides additional information about the project type. So rather than using isProject(), which doesn't use that information, use a function that does.
-		isProject, projectType := isProjectIndicatorFile(targetPath, projectType)
+		// The filename provides additional information about the project type. So rather than using isProject(), which doesn't make use this information, use a specialized function that does.
+		isProject, projectType := isProjectIndicatorFile(targetPath, superprojectTypeConfiguration)
 		if isProject {
-			project := Project{
-				Path: targetPath.Parent(),
-				Type: projectType,
+			foundProject := Type{
+				Path:             targetPath.Parent(),
+				ProjectType:      projectType,
+				SuperprojectType: projectType,
 			}
-			projects = append(projects, project)
+			foundProjects = append(foundProjects, foundProject)
 
-			projects = append(projects, findSubprojects(project, projectType)...)
+			foundProjects = append(foundProjects, findSubprojects(foundProject, projectType)...)
 
-			return projects
+			return foundProjects
 		}
 
 		fmt.Errorf("error: specified path %s is not an Arduino project", targetPath.String())
 		os.Exit(errorcodes.ErrGeneric)
 	}
 
-	projects = append(projects, findProjects(targetPath, projectType, recursive)...)
+	foundProjects = append(foundProjects, findProjects(targetPath, superprojectTypeConfiguration, recursive)...)
 
-	if projects == nil {
+	if foundProjects == nil {
 		fmt.Errorf("error: no projects found under %s", targetPath.String())
 		os.Exit(errorcodes.ErrGeneric)
 	}
 
-	return projects
+	return foundProjects
 }
 
-func findProjects(targetPath *paths.Path, projectType projecttype.Type, recursive bool) []Project {
-	var projects []Project
+func findProjects(targetPath *paths.Path, projectType projecttype.Type, recursive bool) []Type {
+	var foundProjects []Type
 
 	isProject, projectType := isProject(targetPath, projectType)
 	if isProject {
-		project := Project{
-			Path: targetPath,
-			Type: projectType,
+		foundProject := Type{
+			Path:        targetPath,
+			ProjectType: projectType,
+			// findSubprojects() will overwrite this with the correct value when the project is a subproject
+			SuperprojectType: projectType,
 		}
-		projects = append(projects, project)
+		foundProjects = append(foundProjects, foundProject)
 
-		projects = append(projects, findSubprojects(project, project.Type)...)
+		foundProjects = append(foundProjects, findSubprojects(foundProject, foundProject.ProjectType)...)
 
 		// Don't search recursively past a project
-		return projects
+		return foundProjects
 	}
 
 	if recursive {
@@ -88,17 +82,17 @@ func findProjects(targetPath *paths.Path, projectType projecttype.Type, recursiv
 		directoryListing, _ := targetPath.ReadDir()
 		directoryListing.FilterDirs()
 		for _, potentialProjectDirectory := range directoryListing {
-			projects = append(projects, findProjects(potentialProjectDirectory, projectType, recursive)...)
+			foundProjects = append(foundProjects, findProjects(potentialProjectDirectory, projectType, recursive)...)
 		}
 	}
 
-	return projects
+	return foundProjects
 }
 
-func findSubprojects(superproject Project, apexSuperprojectType projecttype.Type) []Project {
-	var immediateSubprojects []Project
+func findSubprojects(superproject Type, apexSuperprojectType projecttype.Type) []Type {
+	var immediateSubprojects []Type
 
-	switch superproject.Type {
+	switch superproject.ProjectType {
 	case projecttype.Sketch:
 		// Sketches don't have subprojects
 		return nil
@@ -117,10 +111,10 @@ func findSubprojects(superproject Project, apexSuperprojectType projecttype.Type
 		return nil
 	}
 
-	var allSubprojects []Project
+	var allSubprojects []Type
 	// Subprojects may have their own subprojects
 	for _, immediateSubproject := range immediateSubprojects {
-		// Subprojects at all levels should have SuperprojectType set to the top level superproject's type, not the immediate parent
+		// Subprojects at all levels should have SuperprojectType set to the top level superproject's type, not the immediate parent's type
 		immediateSubproject.SuperprojectType = apexSuperprojectType
 		// Each parent project should be followed in the list by its subprojects
 		allSubprojects = append(allSubprojects, immediateSubproject)
