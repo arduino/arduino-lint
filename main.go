@@ -12,4 +12,5 @@ func main() {
 	for _, project := range projects {
 		check.RunChecks(project)
 	}
+	// TODO: set exit status according to check results
 }
