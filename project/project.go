@@ -59,14 +59,14 @@ func FindProjects() ([]Type, error) {
 func findProjects(targetPath *paths.Path, projectType projecttype.Type, recursive bool) []Type {
 	var foundProjects []Type
 
-	isProject, projectType := isProject(targetPath, projectType)
+	isProject, foundProjectType := isProject(targetPath, projectType)
 	if isProject {
 		logrus.Tracef("%s is %s", targetPath.String(), projectType.String())
 		foundProject := Type{
 			Path:        targetPath,
-			ProjectType: projectType,
+			ProjectType: foundProjectType,
 			// findSubprojects() will overwrite this with the correct value when the project is a subproject
-			SuperprojectType: projectType,
+			SuperprojectType: foundProjectType,
 		}
 		foundProjects = append(foundProjects, foundProject)
 
