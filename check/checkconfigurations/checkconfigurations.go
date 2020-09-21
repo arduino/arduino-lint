@@ -21,7 +21,7 @@ type Type struct {
 	Category        string
 	Subcategory     string
 	ID              string // Unique check identifier: <project type identifier (L|S|P|I)><category identifier><number>
-	Name            string // Short description of the check.
+	Brief           string // Short description of the check.
 	Description     string // Supplemental information about the check.
 	MessageTemplate string // The warning/error message template displayed when the check fails. Will be filled by check function output.
 	// The following fields define under which tool configuration modes the check will run:
@@ -41,7 +41,7 @@ var Configurations = []Type{
 		Category:        "library.properties",
 		Subcategory:     "general",
 		ID:              "LP001",
-		Name:            "invalid format",
+		Brief:           "invalid format",
 		Description:     "",
 		MessageTemplate: "library.properties has an invalid format: {{.}}",
 		DisableModes:    nil,
@@ -56,7 +56,7 @@ var Configurations = []Type{
 		Category:        "library.properties",
 		Subcategory:     "name field",
 		ID:              "LP002",
-		Name:            "missing name field",
+		Brief:           "missing name field",
 		Description:     "",
 		MessageTemplate: "missing name field in library.properties",
 		DisableModes:    nil,
@@ -71,7 +71,7 @@ var Configurations = []Type{
 		Category:        "library.properties",
 		Subcategory:     "name field",
 		ID:              "LP003",
-		Name:            "disallowed characters",
+		Brief:           "disallowed characters",
 		Description:     "",
 		MessageTemplate: "disallowed characters in library.properties name field. See: https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format",
 		DisableModes:    nil,
@@ -86,7 +86,7 @@ var Configurations = []Type{
 		Category:        "library.properties",
 		Subcategory:     "version field",
 		ID:              "LP004",
-		Name:            "missing version field",
+		Brief:           "missing version field",
 		Description:     "",
 		MessageTemplate: "missing version field in library.properties",
 		DisableModes:    nil,
@@ -101,7 +101,7 @@ var Configurations = []Type{
 		Category:        "structure",
 		Subcategory:     "",
 		ID:              "SS001",
-		Name:            ".pde extension",
+		Brief:           ".pde extension",
 		Description:     "The .pde extension is used by both Processing sketches and Arduino sketches. Processing sketches should either be in the \"data\" subfolder of the sketch or in the \"extras\" folder of the library. Arduino sketches should use the modern .ino extension",
 		MessageTemplate: "{{.}} uses deprecated .pde file extension. Use .ino for Arduino sketches",
 		DisableModes:    nil,
