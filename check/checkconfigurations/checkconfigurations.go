@@ -34,6 +34,11 @@ type Type struct {
 	CheckFunction checkfunctions.Type // The function that implements the check.
 }
 
+// Configurations returns the slice of check configurations.
+func Configurations() []Type {
+	return configurations
+}
+
 // configurations is an array of structs that define the configuration of each check.
 var configurations = []Type{
 	{
@@ -111,9 +116,4 @@ var configurations = []Type{
 		ErrorModes:      []checkmode.Type{checkmode.Default},
 		CheckFunction:   checkfunctions.PdeSketchExtension,
 	},
-}
-
-// Configurations returns the slice of check configurations.
-func Configurations() []Type {
-	return configurations
 }

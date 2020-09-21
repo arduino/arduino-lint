@@ -17,6 +17,36 @@ import (
 	"github.com/arduino/arduino-check/result/feedback"
 )
 
+// RunChecks runs all checks for the given project and outputs the results.
+func RunChecks(project project.Type) {
+	fmt.Printf("Checking %s in %s\n", project.ProjectType.String(), project.Path.String())
+
+	checkdata.Initialize(project)
+
+	for _, checkConfiguration := range checkconfigurations.Configurations() {
+		if !shouldRun(checkConfiguration, project) {
+			// TODO: this should only be printed to log and in verbose mode
+			fmt.Printf("Skipping check: %s\n", checkConfiguration.ID)
+			continue
+		}
+
+		fmt.Printf("Running check %s: ", checkConfiguration.ID)
+		result, output := checkConfiguration.CheckFunction()
+		fmt.Printf("%s\n", result.String())
+		if result == checkresult.NotRun {
+			// TODO: make the check functions output an explanation for why they didn't run
+			fmt.Printf("%s: %s\n", checklevel.Notice, output)
+		} else if result != checkresult.Pass {
+			checkLevel, err := checklevel.CheckLevel(checkConfiguration)
+			if err != nil {
+				feedback.Errorf("Error while determining check level: %v", err)
+				os.Exit(1)
+			}
+			fmt.Printf("%s: %s\n", checkLevel.String(), message(checkConfiguration.MessageTemplate, output))
+		}
+	}
+}
+
 // shouldRun returns whether a given check should be run for the given project under the current tool configuration.
 func shouldRun(checkConfiguration checkconfigurations.Type, currentProject project.Type) bool {
 	configurationCheckModes := configuration.CheckModes(currentProject.SuperprojectType)
@@ -63,34 +93,4 @@ func message(templateText string, checkOutput string) string {
 	messageTemplate.Execute(messageBuffer, checkOutput)
 
 	return messageBuffer.String()
-}
-
-// RunChecks runs all checks for the given project and outputs the results.
-func RunChecks(project project.Type) {
-	fmt.Printf("Checking %s in %s\n", project.ProjectType.String(), project.Path.String())
-
-	checkdata.Initialize(project)
-
-	for _, checkConfiguration := range checkconfigurations.Configurations() {
-		if !shouldRun(checkConfiguration, project) {
-			// TODO: this should only be printed to log and in verbose mode
-			fmt.Printf("Skipping check: %s\n", checkConfiguration.ID)
-			continue
-		}
-
-		fmt.Printf("Running check %s: ", checkConfiguration.ID)
-		result, output := checkConfiguration.CheckFunction()
-		fmt.Printf("%s\n", result.String())
-		if result == checkresult.NotRun {
-			// TODO: make the check functions output an explanation for why they didn't run
-			fmt.Printf("%s: %s\n", checklevel.Notice, output)
-		} else if result != checkresult.Pass {
-			checkLevel, err := checklevel.CheckLevel(checkConfiguration)
-			if err != nil {
-				feedback.Errorf("Error while determining check level: %v", err)
-				os.Exit(1)
-			}
-			fmt.Printf("%s: %s\n", checkLevel.String(), message(checkConfiguration.MessageTemplate, output))
-		}
-	}
 }
