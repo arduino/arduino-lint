@@ -77,7 +77,7 @@
   "propertyNames": {
     "not": {
       "$comment": "Misspelled optional property names",
-      "pattern": "^(depend)|(D((epends?)|(EPENDS?)))|(dot_a_linkages)|(dot-?a-?linkages?)|(D(((ot)|(OT))[_-]?((a)|(A))[_-]?((linkages?)|(LINKAGES?))))|(include)|(I((ncludes?)|(NCLUDES?)))|(precompile)|(pre[-_]compiled?)|(P((re[-_]?compiled?)|(RE[-_]?COMPILED?)))|(ldflag)|(ld[-_]flags?)|(L((d[-_]?flags?)|(D[-_]?FLAGS?)))$"
+      "pattern": "^((depend)|(D((epends?)|(EPENDS?)))|(dot_a_linkages)|(dot-?a-?linkages?)|(D(((ot)|(OT))[_-]?((a)|(A))[_-]?((linkages?)|(LINKAGES?))))|(include)|(I((ncludes?)|(NCLUDES?)))|(precompile)|(pre[-_]compiled?)|(P((re[-_]?compiled?)|(RE[-_]?COMPILED?)))|(ldflag)|(ld[-_]flags?)|(L((d[-_]?flags?)|(D[-_]?FLAGS?))))$"
     }
   },
   "required": ["name", "version", "author", "maintainer", "sentence", "paragraph", "category", "url", "architectures"]
