@@ -24,7 +24,13 @@ func RunChecks(project project.Type) {
 	checkdata.Initialize(project)
 
 	for _, checkConfiguration := range checkconfigurations.Configurations() {
-		if !shouldRun(checkConfiguration, project) {
+		runCheck, err := shouldRun(checkConfiguration, project)
+		if err != nil {
+			feedback.Errorf("Error while determining whether to run check: %v", err)
+			os.Exit(1)
+		}
+
+		if !runCheck {
 			// TODO: this should only be printed to log and in verbose mode
 			fmt.Printf("Skipping check: %s\n", checkConfiguration.ID)
 			continue
@@ -48,40 +54,39 @@ func RunChecks(project project.Type) {
 }
 
 // shouldRun returns whether a given check should be run for the given project under the current tool configuration.
-func shouldRun(checkConfiguration checkconfigurations.Type, currentProject project.Type) bool {
+func shouldRun(checkConfiguration checkconfigurations.Type, currentProject project.Type) (bool, error) {
 	configurationCheckModes := configuration.CheckModes(currentProject.SuperprojectType)
 
 	if checkConfiguration.ProjectType != currentProject.ProjectType {
-		return false
+		return false, nil
 	}
 
 	for _, disableMode := range checkConfiguration.DisableModes {
 		if configurationCheckModes[disableMode] == true {
-			return false
+			return false, nil
 		}
 	}
 
 	for _, enableMode := range checkConfiguration.EnableModes {
 		if configurationCheckModes[enableMode] == true {
-			return true
+			return true, nil
 		}
 	}
 
 	// Use default
 	for _, disableMode := range checkConfiguration.DisableModes {
 		if disableMode == checkmode.Default {
-			return false
+			return false, nil
 		}
 	}
 
 	for _, enableMode := range checkConfiguration.EnableModes {
 		if enableMode == checkmode.Default {
-			return true
+			return true, nil
 		}
 	}
 
-	// TODO: this should return an error
-	return false
+	return false, fmt.Errorf("Check %s is incorrectly configured", checkConfiguration.ID)
 }
 
 // message fills the message template provided by the check configuration with the check output.
