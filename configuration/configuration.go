@@ -13,8 +13,12 @@ func Initialize() {
 	// TODO validate target path value, exit if not found
 	// TODO support multiple paths
 	targetPath = paths.New("e:/electronics/arduino/libraries/arduino-check-test-library")
-	superprojectType = projecttype.Library
-	customCheckModes[checkmode.Permissive] = false
+
+	// customCheckModes[checkmode.Permissive] = false
+	// customCheckModes[checkmode.LibraryManagerSubmission] = false
+	// customCheckModes[checkmode.LibraryManagerIndexed] = false
+	// customCheckModes[checkmode.Official] = false
+	// superprojectType = projecttype.All
 	logrus.SetLevel(logrus.PanicLevel)
 
 	logrus.WithFields(logrus.Fields{
