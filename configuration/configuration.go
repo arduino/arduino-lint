@@ -4,6 +4,7 @@ import (
 	"github.com/arduino/arduino-check/configuration/checkmode"
 	"github.com/arduino/arduino-check/project/projecttype"
 	"github.com/arduino/go-paths-helper"
+	"github.com/sirupsen/logrus"
 )
 
 func Initialize() {
@@ -13,6 +14,13 @@ func Initialize() {
 	targetPath = paths.New("e:/electronics/arduino/libraries/arduino-check-test-library")
 	superprojectType = projecttype.Library
 	customCheckModes[checkmode.Permissive] = false
+	logrus.SetLevel(logrus.PanicLevel)
+
+	logrus.WithFields(logrus.Fields{
+		"superproject type": SuperprojectType().String(),
+		"recursive":         Recursive(),
+		"projects path":     TargetPath().String(),
+	}).Debug("Configuration initialized")
 }
 
 var customCheckModes = make(map[checkmode.Type]bool)
