@@ -8,6 +8,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// TODO: will it be possible to use init() instead?
 // Initialize sets up the tool configuration according to defaults and user-specified options.
 func Initialize() {
 	setDefaults()
