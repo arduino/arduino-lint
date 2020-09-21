@@ -1,5 +1,7 @@
 package configuration
 
+// The default configuration settings.
+
 import (
 	"github.com/arduino/arduino-check/configuration/checkmode"
 	"github.com/arduino/arduino-check/project/projecttype"

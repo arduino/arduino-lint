@@ -1,5 +1,7 @@
+// Package projecttype defines the Arduino project types.
 package projecttype
 
+// Type is the type for Arduino project types.
 //go:generate stringer -type=Type -linecomment
 type Type int
 

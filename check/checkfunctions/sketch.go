@@ -1,5 +1,7 @@
 package checkfunctions
 
+// The check functions for sketches.
+
 import (
 	"github.com/arduino/arduino-check/check/checkdata"
 	"github.com/arduino/arduino-check/check/checkresult"

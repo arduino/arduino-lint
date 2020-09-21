@@ -1,5 +1,7 @@
 package checkfunctions
 
+// The check functions for libraries.
+
 import (
 	"github.com/arduino/arduino-check/check/checkdata"
 	"github.com/arduino/arduino-check/check/checkresult"

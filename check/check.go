@@ -1,3 +1,4 @@
+// Package check runs checks on a project.
 package check
 
 import (
@@ -16,6 +17,7 @@ import (
 	"github.com/arduino/arduino-check/result/feedback"
 )
 
+// shouldRun returns whether a given check should be run for the given project under the current tool configuration.
 func shouldRun(checkConfiguration checkconfigurations.Type, currentProject project.Type) bool {
 	configurationCheckModes := configuration.CheckModes(currentProject.SuperprojectType)
 
@@ -52,6 +54,7 @@ func shouldRun(checkConfiguration checkconfigurations.Type, currentProject proje
 	return false
 }
 
+// message fills the message template provided by the check configuration with the check output.
 // TODO: make checkOutput a struct to allow for more advanced message templating
 func message(templateText string, checkOutput string) string {
 	messageTemplate := template.Must(template.New("messageTemplate").Parse(templateText))
@@ -62,6 +65,7 @@ func message(templateText string, checkOutput string) string {
 	return messageBuffer.String()
 }
 
+// RunChecks runs all checks for the given project and outputs the results.
 func RunChecks(project project.Type) {
 	fmt.Printf("Checking %s in %s\n", project.ProjectType.String(), project.Path.String())
 

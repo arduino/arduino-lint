@@ -1,3 +1,11 @@
+/*
+Package checkconfigurations defines the configuration of each check:
+- metadata
+- output template
+- under which conditions it's enabled
+- the level of a failure
+- which function implements it
+*/
 package checkconfigurations
 
 import (
@@ -6,29 +14,24 @@ import (
 	"github.com/arduino/arduino-check/project/projecttype"
 )
 
+// Type is the type for check configurations.
 type Type struct {
-	ProjectType projecttype.Type
-	// Arbitrary text for the log
-	Category    string
-	Subcategory string
-	// Unique check identifier
-	ID          string
-	Name        string
-	Description string
-	// The warning/error message template displayed when the check fails
-	// The check function output will be filled into the template
-	MessageTemplate string
-	// The following fields define under which tool configuration modes the check will run
-	// Check is disabled when tool is in any of these modes
-	DisableModes []checkmode.Type
-	// Check is only enabled when tool is in one of these modes
-	EnableModes []checkmode.Type
-	// The following fields define the check level in each configuration mode
-	InfoModes    []checkmode.Type
-	WarningModes []checkmode.Type
-	ErrorModes   []checkmode.Type
-	// The function that implements the check
-	CheckFunction checkfunctions.Type
+	ProjectType projecttype.Type // The project type the check applies to.
+	// The following fields provide arbitrary text for the tool output associated with each check:
+	Category        string
+	Subcategory     string
+	ID              string // Unique check identifier: <project type identifier (L|S|P|I)><category identifier><number>
+	Name            string // Short description of the check.
+	Description     string // Supplemental information about the check.
+	MessageTemplate string // The warning/error message template displayed when the check fails. Will be filled by check function output.
+	// The following fields define under which tool configuration modes the check will run:
+	DisableModes []checkmode.Type // Check is disabled when tool is in any of these modes.
+	EnableModes  []checkmode.Type // Check is only enabled when tool is in one of these modes.
+	// The following fields define the check level in each configuration mode:
+	InfoModes     []checkmode.Type    // Failure of the check only results in an informational message.
+	WarningModes  []checkmode.Type    // Failure of the check is considered a warning.
+	ErrorModes    []checkmode.Type    // Failure of the check is considered an error.
+	CheckFunction checkfunctions.Type // The function that implements the check.
 }
 
 // Checks is an array of structs that define the configuration of each check.

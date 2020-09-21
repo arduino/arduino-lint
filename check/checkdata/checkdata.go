@@ -1,3 +1,7 @@
+/*
+Package checkdata handles the collection of data specific to a project before running the checks on it.
+This is for data required by multiple checks.
+*/
 package checkdata
 
 import (
@@ -11,34 +15,41 @@ import (
 
 var projectType projecttype.Type
 
+// ProjectType returns the type of the project being checked.
 func ProjectType() projecttype.Type {
 	return projectType
 }
 
 var projectPath *paths.Path
 
+// ProjectPath returns the path to the project being checked.
 func ProjectPath() *paths.Path {
 	return projectPath
 }
 
 var libraryPropertiesLoadError error
 
+// LibraryPropertiesLoadError returns the error output from loading the library.properties metadata file.
 func LibraryPropertiesLoadError() error {
 	return libraryPropertiesLoadError
 }
 
 var libraryProperties *properties.Map
 
+// LibraryProperties returns the data from the library.properties metadata file.
 func LibraryProperties() *properties.Map {
 	return libraryProperties
 }
 
 var libraryPropertiesSchemaValidationResult *gojsonschema.Result
 
+// LibraryPropertiesSchemaValidationResult returns the result of validating library.properties against the JSON schema.
+// See: https://github.com/xeipuuv/gojsonschema
 func LibraryPropertiesSchemaValidationResult() *gojsonschema.Result {
 	return libraryPropertiesSchemaValidationResult
 }
 
+// Initialize gathers the check data for the specified project.
 func Initialize(project project.Type) {
 	projectType = project.ProjectType
 	projectPath = project.Path

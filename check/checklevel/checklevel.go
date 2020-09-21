@@ -1,3 +1,4 @@
+// Package checklevel defines the level assigned to a check failure.
 package checklevel
 
 import (
@@ -8,10 +9,11 @@ import (
 	"github.com/arduino/arduino-check/configuration/checkmode"
 )
 
+// Type is the type for the check levels.
 //go:generate stringer -type=Type -linecomment
 type Type int
 
-// Line comments set the string for each level
+// The line comments set the string for each level.
 const (
 	Info    Type = iota // info
 	Warning             // warning
@@ -19,6 +21,7 @@ const (
 	Notice              // notice
 )
 
+// CheckLevel determines the check level assigned to failure of the given check under the current tool configuration.
 func CheckLevel(checkConfiguration checkconfigurations.Type) (Type, error) {
 	configurationCheckModes := configuration.CheckModes(checkConfiguration.ProjectType)
 	for _, errorMode := range checkConfiguration.ErrorModes {

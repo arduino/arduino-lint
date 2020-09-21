@@ -1,3 +1,4 @@
+// Package checkresult defines the possible result values returned by a check.
 package checkresult
 
 //go:generate stringer -type=Type -linecomment

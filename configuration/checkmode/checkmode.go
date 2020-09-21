@@ -1,3 +1,4 @@
+// Package checkmode defines the tool configuration options that affect checks.
 package checkmode
 
 import (
@@ -5,6 +6,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// Type is the type for check modes.
 type Type int
 
 //go:generate stringer -type=Type -linecomment
@@ -17,10 +19,10 @@ const (
 	Default                              // default
 )
 
+// Modes merges the default check mode values for the given superproject type with any user-specified check mode settings.
 func Modes(defaultCheckModes map[projecttype.Type]map[Type]bool, customCheckModes map[Type]bool, superprojectType projecttype.Type) map[Type]bool {
 	checkModes := make(map[Type]bool)
 
-	// Merge the default settings with any custom settings specified by the user
 	for key, defaultValue := range defaultCheckModes[superprojectType] {
 		customCheckModeValue, customCheckModeIsConfigured := customCheckModes[key]
 		if customCheckModeIsConfigured {
