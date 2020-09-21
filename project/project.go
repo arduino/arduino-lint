@@ -51,7 +51,7 @@ func FindProjects() ([]Type, error) {
 		return nil, fmt.Errorf("specified path %s is not an Arduino project", targetPath.String())
 	}
 
-	foundProjects = append(foundProjects, findProjects(targetPath, superprojectTypeFilter, recursive)...)
+	foundProjects = append(foundProjects, findProjectsUnderPath(targetPath, superprojectTypeFilter, recursive)...)
 
 	if foundProjects == nil {
 		return nil, fmt.Errorf("no projects found under %s", targetPath.String())
@@ -60,8 +60,8 @@ func FindProjects() ([]Type, error) {
 	return foundProjects, nil
 }
 
-// findProjects finds projects of the given type and subprojects of those projects. It returns a slice containing the definitions of all found projects.
-func findProjects(targetPath *paths.Path, projectType projecttype.Type, recursive bool) []Type {
+// findProjectsUnderPath finds projects of the given type and subprojects of those projects. It returns a slice containing the definitions of all found projects.
+func findProjectsUnderPath(targetPath *paths.Path, projectType projecttype.Type, recursive bool) []Type {
 	var foundProjects []Type
 
 	isProject, foundProjectType := isProject(targetPath, projectType)
@@ -86,7 +86,7 @@ func findProjects(targetPath *paths.Path, projectType projecttype.Type, recursiv
 		directoryListing, _ := targetPath.ReadDir()
 		directoryListing.FilterDirs()
 		for _, potentialProjectDirectory := range directoryListing {
-			foundProjects = append(foundProjects, findProjects(potentialProjectDirectory, projectType, recursive)...)
+			foundProjects = append(foundProjects, findProjectsUnderPath(potentialProjectDirectory, projectType, recursive)...)
 		}
 	}
 
@@ -104,14 +104,14 @@ func findSubprojects(superproject Type, apexSuperprojectType projecttype.Type) [
 		return nil
 	case projecttype.Library:
 		subprojectPath := superproject.Path.Join("examples")
-		immediateSubprojects = append(immediateSubprojects, findProjects(subprojectPath, projecttype.Sketch, true)...)
+		immediateSubprojects = append(immediateSubprojects, findProjectsUnderPath(subprojectPath, projecttype.Sketch, true)...)
 		// Apparently there is some level of official support for "example" in addition to the specification-compliant "examples".
 		// see: https://github.com/arduino/arduino-cli/blob/0.13.0/arduino/libraries/loader.go#L153
 		subprojectPath = superproject.Path.Join("example")
-		immediateSubprojects = append(immediateSubprojects, findProjects(subprojectPath, projecttype.Sketch, true)...)
+		immediateSubprojects = append(immediateSubprojects, findProjectsUnderPath(subprojectPath, projecttype.Sketch, true)...)
 	case projecttype.Platform:
 		subprojectPath := superproject.Path.Join("libraries")
-		immediateSubprojects = append(immediateSubprojects, findProjects(subprojectPath, projecttype.Library, false)...)
+		immediateSubprojects = append(immediateSubprojects, findProjectsUnderPath(subprojectPath, projecttype.Library, false)...)
 	case projecttype.PackageIndex:
 		// Platform indexes don't have subprojects
 		return nil
