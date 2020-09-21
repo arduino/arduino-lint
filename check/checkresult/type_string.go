@@ -10,13 +10,13 @@ func _() {
 	var x [1]struct{}
 	_ = x[Pass-0]
 	_ = x[Fail-1]
-	_ = x[Skipped-2]
+	_ = x[Skip-2]
 	_ = x[NotRun-3]
 }
 
-const _Type_name = "passfailskippednot run"
+const _Type_name = "passfailskippedunable to run"
 
-var _Type_index = [...]uint8{0, 4, 8, 15, 22}
+var _Type_index = [...]uint8{0, 4, 8, 15, 28}
 
 func (i Type) String() string {
 	if i < 0 || i >= Type(len(_Type_index)-1) {

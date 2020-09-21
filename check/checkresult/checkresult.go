@@ -7,7 +7,7 @@ const (
 	Pass Type = iota // pass
 	Fail             // fail
 	// The check is configured to be skipped in the current tool configuration mode
-	Skipped // skipped
-	// An error prevented the check from running
-	NotRun // not run
+	Skip // skipped
+	// An unrelated error prevented the check from running
+	NotRun // unable to run
 )
