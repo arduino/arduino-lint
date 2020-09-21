@@ -75,7 +75,10 @@ func RunChecks(project project.Type) {
 		fmt.Printf("Running check %s: ", checkConfiguration.ID)
 		result, output := checkConfiguration.CheckFunction()
 		fmt.Printf("%s\n", result.String())
-		if (result != checkresult.Pass) && (result != checkresult.NotRun) {
+		if result == checkresult.NotRun {
+			// TODO: make the check functions output an explanation for why they didn't run
+			fmt.Printf("%s: %s\n", checklevel.Notice, output)
+		} else if result != checkresult.Pass {
 			fmt.Printf("%s: %s\n", checklevel.CheckLevel(checkConfiguration).String(), message(checkConfiguration.MessageTemplate, output))
 		}
 	}
