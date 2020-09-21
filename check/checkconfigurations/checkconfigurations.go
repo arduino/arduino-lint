@@ -34,8 +34,8 @@ type Type struct {
 	CheckFunction checkfunctions.Type // The function that implements the check.
 }
 
-// Checks is an array of structs that define the configuration of each check.
-var Configurations = []Type{
+// configurations is an array of structs that define the configuration of each check.
+var configurations = []Type{
 	{
 		ProjectType:     projecttype.Library,
 		Category:        "library.properties",
@@ -111,4 +111,9 @@ var Configurations = []Type{
 		ErrorModes:      []checkmode.Type{checkmode.Default},
 		CheckFunction:   checkfunctions.PdeSketchExtension,
 	},
+}
+
+// Configurations returns the slice of check configurations.
+func Configurations() []Type {
+	return configurations
 }

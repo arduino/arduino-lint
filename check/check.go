@@ -71,7 +71,7 @@ func RunChecks(project project.Type) {
 
 	checkdata.Initialize(project)
 
-	for _, checkConfiguration := range checkconfigurations.Configurations {
+	for _, checkConfiguration := range checkconfigurations.Configurations() {
 		if !shouldRun(checkConfiguration, project) {
 			// TODO: this should only be printed to log and in verbose mode
 			fmt.Printf("Skipping check: %s\n", checkConfiguration.ID)
