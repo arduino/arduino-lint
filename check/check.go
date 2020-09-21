@@ -3,6 +3,7 @@ package check
 import (
 	"bytes"
 	"fmt"
+	"os"
 	"text/template"
 
 	"github.com/arduino/arduino-check/check/checkconfigurations"
@@ -12,6 +13,7 @@ import (
 	"github.com/arduino/arduino-check/configuration"
 	"github.com/arduino/arduino-check/configuration/checkmode"
 	"github.com/arduino/arduino-check/project"
+	"github.com/arduino/arduino-check/result/feedback"
 )
 
 func shouldRun(checkConfiguration checkconfigurations.Type, currentProject project.Type) bool {
@@ -79,7 +81,12 @@ func RunChecks(project project.Type) {
 			// TODO: make the check functions output an explanation for why they didn't run
 			fmt.Printf("%s: %s\n", checklevel.Notice, output)
 		} else if result != checkresult.Pass {
-			fmt.Printf("%s: %s\n", checklevel.CheckLevel(checkConfiguration).String(), message(checkConfiguration.MessageTemplate, output))
+			checkLevel, err := checklevel.CheckLevel(checkConfiguration)
+			if err != nil {
+				feedback.Errorf("Error while determining check level: %v", err)
+				os.Exit(1)
+			}
+			fmt.Printf("%s: %s\n", checkLevel.String(), message(checkConfiguration.MessageTemplate, output))
 		}
 	}
 }

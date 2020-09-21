@@ -24,7 +24,6 @@ type Type struct {
 	// Check is only enabled when tool is in one of these modes
 	EnableModes []checkmode.Type
 	// The following fields define the check level in each configuration mode
-	PassModes    []checkmode.Type
 	InfoModes    []checkmode.Type
 	WarningModes []checkmode.Type
 	ErrorModes   []checkmode.Type
@@ -44,7 +43,6 @@ var Configurations = []Type{
 		MessageTemplate: "library.properties has an invalid format: {{.}}",
 		DisableModes:    nil,
 		EnableModes:     []checkmode.Type{checkmode.All},
-		PassModes:       nil,
 		InfoModes:       nil,
 		WarningModes:    nil,
 		ErrorModes:      []checkmode.Type{checkmode.All},
@@ -60,7 +58,6 @@ var Configurations = []Type{
 		MessageTemplate: "missing name field in library.properties",
 		DisableModes:    nil,
 		EnableModes:     []checkmode.Type{checkmode.All},
-		PassModes:       nil,
 		InfoModes:       nil,
 		WarningModes:    nil,
 		ErrorModes:      []checkmode.Type{checkmode.All},
@@ -76,7 +73,6 @@ var Configurations = []Type{
 		MessageTemplate: "disallowed characters in library.properties name field. See: https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format",
 		DisableModes:    nil,
 		EnableModes:     []checkmode.Type{checkmode.All},
-		PassModes:       nil,
 		InfoModes:       nil,
 		WarningModes:    nil,
 		ErrorModes:      []checkmode.Type{checkmode.All},
@@ -92,7 +88,6 @@ var Configurations = []Type{
 		MessageTemplate: "missing version field in library.properties",
 		DisableModes:    nil,
 		EnableModes:     []checkmode.Type{checkmode.All},
-		PassModes:       nil,
 		InfoModes:       nil,
 		WarningModes:    nil,
 		ErrorModes:      []checkmode.Type{checkmode.All},
@@ -108,7 +103,6 @@ var Configurations = []Type{
 		MessageTemplate: "{{.}} uses deprecated .pde file extension. Use .ino for Arduino sketches",
 		DisableModes:    nil,
 		EnableModes:     []checkmode.Type{checkmode.All},
-		PassModes:       nil,
 		InfoModes:       nil,
 		WarningModes:    []checkmode.Type{checkmode.Permissive},
 		ErrorModes:      []checkmode.Type{checkmode.Default},
