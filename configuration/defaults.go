@@ -8,7 +8,7 @@ import (
 )
 
 func setDefaults() {
-	superprojectType = projecttype.All
+	superprojectTypeFilter = projecttype.All
 	recursive = true
 	// TODO: targetPath defaults to current path
 }

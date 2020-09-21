@@ -25,9 +25,9 @@ func Initialize() {
 	logrus.SetLevel(logrus.PanicLevel)
 
 	logrus.WithFields(logrus.Fields{
-		"superproject type": SuperprojectType().String(),
-		"recursive":         Recursive(),
-		"projects path":     TargetPath().String(),
+		"superproject type filter": SuperprojectTypeFilter().String(),
+		"recursive":                Recursive(),
+		"projects path":            TargetPath().String(),
 	}).Debug("Configuration initialized")
 }
 
@@ -38,11 +38,11 @@ func CheckModes(superprojectType projecttype.Type) map[checkmode.Type]bool {
 	return checkmode.Modes(defaultCheckModes, customCheckModes, superprojectType)
 }
 
-var superprojectType projecttype.Type
+var superprojectTypeFilter projecttype.Type
 
 // SuperprojectType returns the superproject type filter configuration.
-func SuperprojectType() projecttype.Type {
-	return superprojectType
+func SuperprojectTypeFilter() projecttype.Type {
+	return superprojectTypeFilter
 }
 
 var recursive bool
