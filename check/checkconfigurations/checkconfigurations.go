@@ -18,15 +18,17 @@ type Type struct {
 	// The warning/error message template displayed when the check fails
 	// The check function output will be filled into the template
 	MessageTemplate string
+	// The following fields define under which tool configuration modes the check will run
 	// Check is disabled when tool is in any of these modes
 	DisableModes []checkmode.Type
 	// Check is only enabled when tool is in one of these modes
 	EnableModes []checkmode.Type
-	// In these modes, failed check is treated as an error, otherwise it's handled as normal.
-	PromoteModes  []checkmode.Type
-	InfoModes     []checkmode.Type
-	WarningModes  []checkmode.Type
-	ErrorModes    []checkmode.Type
+	// The following fields define the check level in each configuration mode
+	PassModes    []checkmode.Type
+	InfoModes    []checkmode.Type
+	WarningModes []checkmode.Type
+	ErrorModes   []checkmode.Type
+	// The function that implements the check
 	CheckFunction checkfunctions.Type
 }
 
@@ -41,11 +43,11 @@ var Configurations = []Type{
 		Description:     "",
 		MessageTemplate: "library.properties has an invalid format: {{.}}",
 		DisableModes:    nil,
-		EnableModes:     []checkmode.Type{checkmode.Default},
-		PromoteModes:    nil,
+		EnableModes:     []checkmode.Type{checkmode.All},
+		PassModes:       nil,
 		InfoModes:       nil,
 		WarningModes:    nil,
-		ErrorModes:      []checkmode.Type{checkmode.Default},
+		ErrorModes:      []checkmode.Type{checkmode.All},
 		CheckFunction:   checkfunctions.LibraryPropertiesFormat,
 	},
 	{
@@ -57,11 +59,11 @@ var Configurations = []Type{
 		Description:     "",
 		MessageTemplate: "missing name field in library.properties",
 		DisableModes:    nil,
-		EnableModes:     []checkmode.Type{checkmode.Default},
-		PromoteModes:    nil,
+		EnableModes:     []checkmode.Type{checkmode.All},
+		PassModes:       nil,
 		InfoModes:       nil,
 		WarningModes:    nil,
-		ErrorModes:      []checkmode.Type{checkmode.Default},
+		ErrorModes:      []checkmode.Type{checkmode.All},
 		CheckFunction:   checkfunctions.LibraryPropertiesNameFieldMissing,
 	},
 	{
@@ -73,11 +75,11 @@ var Configurations = []Type{
 		Description:     "",
 		MessageTemplate: "disallowed characters in library.properties name field. See: https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format",
 		DisableModes:    nil,
-		EnableModes:     []checkmode.Type{checkmode.Default},
-		PromoteModes:    nil,
+		EnableModes:     []checkmode.Type{checkmode.All},
+		PassModes:       nil,
 		InfoModes:       nil,
 		WarningModes:    nil,
-		ErrorModes:      []checkmode.Type{checkmode.Default},
+		ErrorModes:      []checkmode.Type{checkmode.All},
 		CheckFunction:   checkfunctions.LibraryPropertiesNameFieldDisallowedCharacters,
 	},
 	{
@@ -89,11 +91,11 @@ var Configurations = []Type{
 		Description:     "",
 		MessageTemplate: "missing version field in library.properties",
 		DisableModes:    nil,
-		EnableModes:     []checkmode.Type{checkmode.Default},
-		PromoteModes:    nil,
+		EnableModes:     []checkmode.Type{checkmode.All},
+		PassModes:       nil,
 		InfoModes:       nil,
 		WarningModes:    nil,
-		ErrorModes:      []checkmode.Type{checkmode.Default},
+		ErrorModes:      []checkmode.Type{checkmode.All},
 		CheckFunction:   checkfunctions.LibraryPropertiesVersionFieldMissing,
 	},
 	{
@@ -105,8 +107,8 @@ var Configurations = []Type{
 		Description:     "The .pde extension is used by both Processing sketches and Arduino sketches. Processing sketches should either be in the \"data\" subfolder of the sketch or in the \"extras\" folder of the library. Arduino sketches should use the modern .ino extension",
 		MessageTemplate: "{{.}} uses deprecated .pde file extension. Use .ino for Arduino sketches",
 		DisableModes:    nil,
-		EnableModes:     []checkmode.Type{checkmode.Default},
-		PromoteModes:    nil,
+		EnableModes:     []checkmode.Type{checkmode.All},
+		PassModes:       nil,
 		InfoModes:       nil,
 		WarningModes:    []checkmode.Type{checkmode.Permissive},
 		ErrorModes:      []checkmode.Type{checkmode.Default},

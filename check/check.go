@@ -10,27 +10,43 @@ import (
 	"github.com/arduino/arduino-check/check/checklevel"
 	"github.com/arduino/arduino-check/check/checkresult"
 	"github.com/arduino/arduino-check/configuration"
+	"github.com/arduino/arduino-check/configuration/checkmode"
 	"github.com/arduino/arduino-check/project"
 )
 
 func shouldRun(checkConfiguration checkconfigurations.Type, currentProject project.Type) bool {
-	checkModes := configuration.CheckModes(currentProject.SuperprojectType)
+	configurationCheckModes := configuration.CheckModes(currentProject.SuperprojectType)
 
 	if checkConfiguration.ProjectType != currentProject.ProjectType {
 		return false
 	}
 
 	for _, disableMode := range checkConfiguration.DisableModes {
-		if checkModes[disableMode] == true {
+		if configurationCheckModes[disableMode] == true {
 			return false
 		}
 	}
 
 	for _, enableMode := range checkConfiguration.EnableModes {
-		if checkModes[enableMode] == true {
+		if configurationCheckModes[enableMode] == true {
 			return true
 		}
 	}
+
+	// Use default
+	for _, disableMode := range checkConfiguration.DisableModes {
+		if disableMode == checkmode.Default {
+			return false
+		}
+	}
+
+	for _, enableMode := range checkConfiguration.EnableModes {
+		if enableMode == checkmode.Default {
+			return true
+		}
+	}
+
+	// TODO: this should return an error
 	return false
 }
 

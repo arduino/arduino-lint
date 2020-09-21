@@ -1,15 +1,20 @@
 package checkmode
 
-import "github.com/arduino/arduino-check/project/projecttype"
+import (
+	"github.com/arduino/arduino-check/project/projecttype"
+	"github.com/sirupsen/logrus"
+)
 
 type Type int
 
+//go:generate stringer -type=Type -linecomment
 const (
-	Permissive Type = iota
-	LibraryManagerSubmission
-	LibraryManagerIndexed
-	Official
-	Default
+	Permissive               Type = iota // --permissive
+	LibraryManagerSubmission             // --library-manager=submit
+	LibraryManagerIndexed                // --library-manager=update
+	Official                             // ARDUINO_CHECK_OFFICIAL
+	All                                  // always
+	Default                              // default
 )
 
 func Modes(defaultCheckModes map[projecttype.Type]map[Type]bool, customCheckModes map[Type]bool, superprojectType projecttype.Type) map[Type]bool {
@@ -23,10 +28,11 @@ func Modes(defaultCheckModes map[projecttype.Type]map[Type]bool, customCheckMode
 		} else {
 			checkModes[key] = defaultValue
 		}
+		logrus.Tracef("Check mode option %s set to %t\n", key.String(), checkModes[key])
 	}
 
 	// This mode is always enabled
-	checkModes[Default] = true
+	checkModes[All] = true
 
 	return checkModes
 }

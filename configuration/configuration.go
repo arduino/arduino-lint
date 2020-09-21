@@ -12,9 +12,10 @@ func Initialize() {
 	// TODO validate target path value, exit if not found
 	targetPath = paths.New("e:/electronics/arduino/libraries/arduino-check-test-library")
 	superprojectType = projecttype.Library
+	customCheckModes[checkmode.Permissive] = false
 }
 
-var customCheckModes map[checkmode.Type]bool
+var customCheckModes = make(map[checkmode.Type]bool)
 
 func CheckModes(superprojectType projecttype.Type) map[checkmode.Type]bool {
 	return checkmode.Modes(defaultCheckModes, customCheckModes, superprojectType)
