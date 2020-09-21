@@ -59,7 +59,7 @@ func RunChecks(project project.Type) {
 		fmt.Printf("Running check %s: ", checkConfiguration.ID)
 		result, output := checkConfiguration.CheckFunction()
 		fmt.Printf("%s\n", result.String())
-		if result != checkresult.Pass {
+		if (result != checkresult.Pass) && (result != checkresult.NotRun) {
 			fmt.Printf("%s: %s\n", checklevel.CheckLevel(checkConfiguration).String(), message(checkConfiguration.MessageTemplate, output))
 		}
 	}
