@@ -2,7 +2,6 @@ package project
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/arduino/arduino-check/configuration"
 	"github.com/arduino/arduino-check/project/library"
@@ -10,7 +9,6 @@ import (
 	"github.com/arduino/arduino-check/project/platform"
 	"github.com/arduino/arduino-check/project/projecttype"
 	"github.com/arduino/arduino-check/project/sketch"
-	"github.com/arduino/arduino-cli/cli/errorcodes"
 	"github.com/arduino/go-paths-helper"
 )
 
@@ -20,7 +18,7 @@ type Type struct {
 	SuperprojectType projecttype.Type
 }
 
-func FindProjects() []Type {
+func FindProjects() ([]Type, error) {
 	targetPath := configuration.TargetPath()
 	superprojectTypeConfiguration := configuration.SuperprojectType()
 	recursive := configuration.Recursive()
@@ -41,21 +39,19 @@ func FindProjects() []Type {
 
 			foundProjects = append(foundProjects, findSubprojects(foundProject, projectType)...)
 
-			return foundProjects
+			return foundProjects, nil
 		}
 
-		fmt.Errorf("error: specified path %s is not an Arduino project", targetPath.String())
-		os.Exit(errorcodes.ErrGeneric)
+		return nil, fmt.Errorf("specified path %s is not an Arduino project", targetPath.String())
 	}
 
 	foundProjects = append(foundProjects, findProjects(targetPath, superprojectTypeConfiguration, recursive)...)
 
 	if foundProjects == nil {
-		fmt.Errorf("error: no projects found under %s", targetPath.String())
-		os.Exit(errorcodes.ErrGeneric)
+		return nil, fmt.Errorf("no projects found under %s", targetPath.String())
 	}
 
-	return foundProjects
+	return foundProjects, nil
 }
 
 func findProjects(targetPath *paths.Path, projectType projecttype.Type, recursive bool) []Type {
