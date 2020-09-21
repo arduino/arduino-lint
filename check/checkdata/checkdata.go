@@ -2,7 +2,7 @@ package checkdata
 
 import (
 	"github.com/arduino/arduino-check/project"
-	"github.com/arduino/arduino-check/project/library"
+	"github.com/arduino/arduino-check/project/library/libraryproperties"
 	"github.com/arduino/arduino-check/project/projecttype"
 	"github.com/arduino/go-paths-helper"
 	"github.com/arduino/go-properties-orderedmap"
@@ -45,12 +45,12 @@ func Initialize(project project.Type) {
 	switch project.ProjectType {
 	case projecttype.Sketch:
 	case projecttype.Library:
-		libraryProperties, libraryPropertiesLoadError = library.Properties(project.Path)
+		libraryProperties, libraryPropertiesLoadError = libraryproperties.Properties(project.Path)
 		if libraryPropertiesLoadError != nil {
-			libraryPropertiesSchemaValidationResult = library.ValidateProperties(libraryProperties)
-		} else {
 			// TODO: can I even do this?
 			libraryPropertiesSchemaValidationResult = nil
+		} else {
+			libraryPropertiesSchemaValidationResult = libraryproperties.Validate(libraryProperties)
 		}
 	case projecttype.Platform:
 	case projecttype.PackageIndex:
