@@ -14,6 +14,7 @@ const (
 	Warning             // warning
 	Error               // error
 	Pass                // pass
+	Notice              // notice
 )
 
 func CheckLevel(checkConfiguration checkconfigurations.Type) Type {

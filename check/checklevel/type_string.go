@@ -12,11 +12,12 @@ func _() {
 	_ = x[Warning-1]
 	_ = x[Error-2]
 	_ = x[Pass-3]
+	_ = x[Notice-4]
 }
 
-const _Type_name = "infowarningerrorpass"
+const _Type_name = "infowarningerrorpassnotice"
 
-var _Type_index = [...]uint8{0, 4, 11, 16, 20}
+var _Type_index = [...]uint8{0, 4, 11, 16, 20, 26}
 
 func (i Type) String() string {
 	if i < 0 || i >= Type(len(_Type_index)-1) {
