@@ -15,6 +15,8 @@ func Initialize() {
 	// TODO configuration according to command line input
 	// TODO validate target path value, exit if not found
 	// TODO support multiple paths
+	// TODO validate output format input
+
 	targetPath = paths.New("e:/electronics/arduino/libraries/arduino-check-test-library")
 
 	// customCheckModes[checkmode.Permissive] = false
@@ -22,6 +24,9 @@ func Initialize() {
 	// customCheckModes[checkmode.LibraryManagerIndexed] = false
 	// customCheckModes[checkmode.Official] = false
 	// superprojectType = projecttype.All
+
+	outputFormat = "json"
+
 	logrus.SetLevel(logrus.PanicLevel)
 
 	logrus.WithFields(logrus.Fields{
@@ -50,6 +55,13 @@ var recursive bool
 // Recursive returns the recursive project search configuration value.
 func Recursive() bool {
 	return recursive
+}
+
+var outputFormat string
+
+// OutputFormat returns the tool output format configuration value.
+func OutputFormat() string {
+	return outputFormat
 }
 
 var targetPath *paths.Path

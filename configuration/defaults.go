@@ -10,6 +10,7 @@ import (
 func setDefaults() {
 	superprojectTypeFilter = projecttype.All
 	recursive = true
+	outputFormat = "text"
 	// TODO: targetPath defaults to current path
 }
 

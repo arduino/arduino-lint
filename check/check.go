@@ -2,18 +2,15 @@
 package check
 
 import (
-	"bytes"
 	"fmt"
 	"os"
-	"text/template"
 
 	"github.com/arduino/arduino-check/check/checkconfigurations"
 	"github.com/arduino/arduino-check/check/checkdata"
-	"github.com/arduino/arduino-check/check/checklevel"
-	"github.com/arduino/arduino-check/check/checkresult"
 	"github.com/arduino/arduino-check/configuration"
 	"github.com/arduino/arduino-check/configuration/checkmode"
 	"github.com/arduino/arduino-check/project"
+	"github.com/arduino/arduino-check/result"
 	"github.com/arduino/arduino-check/result/feedback"
 	"github.com/sirupsen/logrus"
 )
@@ -36,20 +33,23 @@ func RunChecks(project project.Type) {
 			continue
 		}
 
-		fmt.Printf("Running check %s: ", checkConfiguration.ID)
-		result, output := checkConfiguration.CheckFunction()
-		fmt.Printf("%s\n", result.String())
-		if result == checkresult.NotRun {
-			// TODO: make the check functions output an explanation for why they didn't run
-			fmt.Printf("%s: %s\n", checklevel.Notice, output)
-		} else if result != checkresult.Pass {
-			checkLevel, err := checklevel.CheckLevel(checkConfiguration)
-			if err != nil {
-				feedback.Errorf("Error while determining check level: %v", err)
-				os.Exit(1)
-			}
-			fmt.Printf("%s: %s\n", checkLevel.String(), message(checkConfiguration.MessageTemplate, output))
+		// Output will be printed after all checks are finished when configured for "json" output format
+		if configuration.OutputFormat() == "text" {
+			fmt.Printf("Running check %s: ", checkConfiguration.ID)
 		}
+		checkResult, checkOutput := checkConfiguration.CheckFunction()
+		reportText := result.Record(project, checkConfiguration, checkResult, checkOutput)
+		if configuration.OutputFormat() == "text" {
+			fmt.Print(reportText)
+		}
+	}
+
+	// Checks are finished for this project, so summarize its check results in the report.
+	result.AddProjectSummaryReport(project)
+
+	if configuration.OutputFormat() == "text" {
+		// Print the project check results summary.
+		fmt.Print(result.ProjectSummaryText(project))
 	}
 }
 
@@ -87,15 +87,4 @@ func shouldRun(checkConfiguration checkconfigurations.Type, currentProject proje
 	}
 
 	return false, fmt.Errorf("Check %s is incorrectly configured", checkConfiguration.ID)
-}
-
-// message fills the message template provided by the check configuration with the check output.
-// TODO: make checkOutput a struct to allow for more advanced message templating
-func message(templateText string, checkOutput string) string {
-	messageTemplate := template.Must(template.New("messageTemplate").Parse(templateText))
-
-	messageBuffer := new(bytes.Buffer)
-	messageTemplate.Execute(messageBuffer, checkOutput)
-
-	return messageBuffer.String()
 }
