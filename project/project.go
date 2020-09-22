@@ -103,12 +103,10 @@ func findSubprojects(superproject Type, apexSuperprojectType projecttype.Type) [
 		// Sketches don't have subprojects
 		return nil
 	case projecttype.Library:
-		subprojectPath := superproject.Path.Join("examples")
-		immediateSubprojects = append(immediateSubprojects, findProjectsUnderPath(subprojectPath, projecttype.Sketch, true)...)
-		// Apparently there is some level of official support for "example" in addition to the specification-compliant "examples".
-		// see: https://github.com/arduino/arduino-cli/blob/0.13.0/arduino/libraries/loader.go#L153
-		subprojectPath = superproject.Path.Join("example")
-		immediateSubprojects = append(immediateSubprojects, findProjectsUnderPath(subprojectPath, projecttype.Sketch, true)...)
+		for _, subprojectFolderName := range library.ExamplesFolderSupportedNames() {
+			subprojectPath := superproject.Path.Join(subprojectFolderName)
+			immediateSubprojects = append(immediateSubprojects, findProjectsUnderPath(subprojectPath, projecttype.Sketch, true)...)
+		}
 	case projecttype.Platform:
 		subprojectPath := superproject.Path.Join("libraries")
 		immediateSubprojects = append(immediateSubprojects, findProjectsUnderPath(subprojectPath, projecttype.Library, false)...)

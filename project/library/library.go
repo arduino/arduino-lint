@@ -36,3 +36,25 @@ func IsMetadataFile(filePath *paths.Path) bool {
 	}
 	return false
 }
+
+// See: https://arduino.github.io/arduino-cli/latest/library-specification/#library-examples
+var examplesFolderValidNames = map[string]struct{}{
+	"examples": empty,
+}
+
+// Only "examples" is specification-compliant, but apparently "example" is also supported
+// See: https://github.com/arduino/arduino-cli/blob/0.13.0/arduino/libraries/loader.go#L153
+var examplesFolderSupportedNames = map[string]struct{}{
+	"examples": empty,
+	"example":  empty,
+}
+
+// ExamplesFolderNames returns a slice of supported examples folder names
+func ExamplesFolderSupportedNames() []string {
+	folderNames := make([]string, 0, len(examplesFolderSupportedNames))
+	for folderName := range examplesFolderSupportedNames {
+		folderNames = append(folderNames, folderName)
+	}
+
+	return folderNames
+}
