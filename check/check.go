@@ -15,6 +15,7 @@ import (
 	"github.com/arduino/arduino-check/configuration/checkmode"
 	"github.com/arduino/arduino-check/project"
 	"github.com/arduino/arduino-check/result/feedback"
+	"github.com/sirupsen/logrus"
 )
 
 // RunChecks runs all checks for the given project and outputs the results.
@@ -31,8 +32,7 @@ func RunChecks(project project.Type) {
 		}
 
 		if !runCheck {
-			// TODO: this should only be printed to log and in verbose mode
-			fmt.Printf("Skipping check: %s\n", checkConfiguration.ID)
+			logrus.Infof("Skipping check: %s\n", checkConfiguration.ID)
 			continue
 		}
 
