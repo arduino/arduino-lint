@@ -108,8 +108,10 @@ func findSubprojects(superproject Type, apexSuperprojectType projecttype.Type) [
 			immediateSubprojects = append(immediateSubprojects, findProjectsUnderPath(subprojectPath, projecttype.Sketch, true)...)
 		}
 	case projecttype.Platform:
-		subprojectPath := superproject.Path.Join("libraries")
-		immediateSubprojects = append(immediateSubprojects, findProjectsUnderPath(subprojectPath, projecttype.Library, false)...)
+		for _, subprojectFolderName := range platform.BundledLibrariesFolderNames() {
+			subprojectPath := superproject.Path.Join(subprojectFolderName)
+			immediateSubprojects = append(immediateSubprojects, findProjectsUnderPath(subprojectPath, projecttype.Library, false)...)
+		}
 	case projecttype.PackageIndex:
 		// Platform indexes don't have subprojects
 		return nil

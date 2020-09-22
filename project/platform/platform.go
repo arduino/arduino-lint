@@ -40,3 +40,17 @@ func IsRequiredConfigurationFile(filePath *paths.Path) bool {
 	}
 	return false
 }
+
+// See: https://arduino.github.io/arduino-cli/latest/platform-specification/#platform-bundled-libraries
+var bundledLibrariesFolderNames = map[string]struct{}{
+	"libraries": empty,
+}
+
+func BundledLibrariesFolderNames() []string {
+	folderNames := make([]string, 0, len(bundledLibrariesFolderNames))
+	for folderName := range bundledLibrariesFolderNames {
+		folderNames = append(folderNames, folderName)
+	}
+
+	return folderNames
+}
