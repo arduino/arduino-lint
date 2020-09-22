@@ -206,6 +206,11 @@ func jsonReportRaw() []byte {
 	return reportJSON
 }
 
+// Passed returns whether the checks passed cumulatively.
+func Passed() bool {
+	return report.Summary.Pass
+}
+
 func getProjectReportIndex(projectPath *paths.Path) (bool, int) {
 	var index int
 	var projectReport projectReportType

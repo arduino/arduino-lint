@@ -39,5 +39,7 @@ func main() {
 		fmt.Println(result.JSONReport())
 	}
 
-	// TODO: set exit status according to check results
+	if !result.Passed() {
+		os.Exit(1)
+	}
 }
