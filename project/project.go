@@ -266,7 +266,7 @@ func isPackageIndex(potentialProjectPath *paths.Path) bool {
 }
 
 func isPackageIndexIndicatorFile(filePath *paths.Path) bool {
-	if filePath.Ext() == ".json" {
+	if packageindex.HasValidExtension(filePath) {
 		return true
 	}
 
