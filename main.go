@@ -39,6 +39,11 @@ func main() {
 		fmt.Println(result.JSONReport())
 	}
 
+	if configuration.ReportFilePath() != nil {
+		// Write report file.
+		result.WriteReport()
+	}
+
 	if !result.Passed() {
 		os.Exit(1)
 	}

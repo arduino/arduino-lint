@@ -206,6 +206,16 @@ func jsonReportRaw() []byte {
 	return reportJSON
 }
 
+// WriteReport writes a report for all projects to the specified file.
+func WriteReport() {
+	// Write report file
+	err := configuration.ReportFilePath().WriteFile(jsonReportRaw())
+	if err != nil {
+		feedback.Errorf("Error while writing report: %v", err)
+		os.Exit(1)
+	}
+}
+
 // Passed returns whether the checks passed cumulatively.
 func Passed() bool {
 	return report.Summary.Pass

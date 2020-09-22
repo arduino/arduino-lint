@@ -26,6 +26,7 @@ func Initialize() {
 	// superprojectType = projecttype.All
 
 	outputFormat = "json"
+	//reportFilePath = paths.New("report.json")
 
 	logrus.SetLevel(logrus.PanicLevel)
 
@@ -62,6 +63,13 @@ var outputFormat string
 // OutputFormat returns the tool output format configuration value.
 func OutputFormat() string {
 	return outputFormat
+}
+
+var reportFilePath *paths.Path
+
+// ReportFilePath returns the path to save the report file at.
+func ReportFilePath() *paths.Path {
+	return reportFilePath
 }
 
 var targetPath *paths.Path
