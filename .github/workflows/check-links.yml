@@ -1,0 +1,32 @@
+name: Check documentation links
+
+on:
+  push:
+    paths:
+      - ".github/workflows/check-links.yml"
+      - "Taskfile.yml"
+      - "**.md"
+  pull_request:
+    paths:
+      - ".github/workflows/check-links.yml"
+      - "Taskfile.yml"
+      - "**.md"
+  schedule:
+    # Run every Tuesday at 03:00 UTC to catch broken links caused by external changes
+    - cron: "0 3 * * 2"
+
+jobs:
+  check-links:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout local repository
+        uses: actions/checkout@v2
+
+      - name: Install Taskfile
+        uses: arduino/actions/setup-taskfile@master
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
+
+      - name: Check links
+        run: task --silent docs:check-links
