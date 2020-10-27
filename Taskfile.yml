@@ -1,0 +1,193 @@
+version: "3"
+
+tasks:
+  build:
+    desc: Build the project
+    cmds:
+      - go build -v
+
+  test:
+    desc: Run tests
+    cmds:
+      - task: go:test-unit
+      - task: schema:compile
+
+  go:test-unit:
+    desc: Run unit tests
+    cmds:
+      - go test -short -run '{{ default ".*" .TEST_REGEX }}' {{ default "-v" .GOFLAGS }} -coverprofile=coverage_unit.txt {{ default .DEFAULT_PACKAGES .PACKAGES }}
+
+  schema:compile:
+    desc: Compile JSON schema
+    cmds:
+      - npx ajv-cli compile -s "./etc/schema/*.json"
+
+  check:
+    desc: Lint and check formatting of all files
+    cmds:
+      - task: go:check
+      - task: docs:check
+      - task: config:check
+      - task: check-spelling
+
+  lint:
+    desc: Lint all files
+    cmds:
+      - task: go:lint
+      - task: docs:lint
+      - task: config:lint
+
+  check-formatting:
+    desc: Check formatting of all files
+    cmds:
+      - task: go:check-formatting
+      - task: docs:check-formatting
+      - task: config:check-formatting
+
+  format:
+    desc: Format all files
+    cmds:
+      - task: go:format
+      - task: docs:format
+      - task: config:format
+
+  go:check:
+    desc: Lint and check formatting of Go code
+    cmds:
+      - task: go:lint
+      - task: go:check-formatting
+
+  go:lint:
+    desc: Lint Go code
+    cmds:
+      - go vet {{ default .DEFAULT_PACKAGES .PACKAGES }}
+      - "'{{.GOLINTBIN}}' {{.GOLINTFLAGS}} {{ default .DEFAULT_TARGETS .TARGETS }}"
+
+  go:check-formatting:
+    desc: Check Go code formatting
+    cmds:
+      - |
+        RESULTS="$(gofmt -l {{ default .DEFAULT_PATHS .PATHS }})"
+        echo "$RESULTS"
+        test -z "$RESULTS"
+
+  go:format:
+    desc: Format Go code
+    cmds:
+      - go fmt {{ default .DEFAULT_PACKAGES .PACKAGES }}
+
+  docs:check:
+    desc: Lint and check formatting of documentation files
+    cmds:
+      - task: docs:check-formatting
+      - task: docs:check-links
+
+  docs:lint:
+    desc: Lint documentation files
+    cmds:
+      - task: docs:check-license
+
+  docs:check-license:
+    desc: Check if the license file is correctly formatted
+    cmds:
+      - |
+        EXPECTED_LICENSE_FILE="\"LICENSE.txt\""
+        EXPECTED_LICENSE_TYPE="\"GPL-3.0\"" # https://spdx.org/licenses/
+
+        # See: https://github.com/licensee/licensee
+        LICENSEE_OUTPUT="$(licensee detect --json --confidence=100)"
+
+        DETECTED_LICENSE_FILE="$(echo "$LICENSEE_OUTPUT" | jq .matched_files[0].filename | tr --delete '\r')"
+        echo "Detected license file: $DETECTED_LICENSE_FILE"
+        if [ "$DETECTED_LICENSE_FILE" != "$EXPECTED_LICENSE_FILE" ]; then
+          echo "ERROR: detected license file doesn't match expected: $EXPECTED_LICENSE_FILE"
+          exit 1
+        fi
+
+        DETECTED_LICENSE_TYPE="$(echo "$LICENSEE_OUTPUT" | jq .matched_files[0].matched_license | tr --delete '\r')"
+        echo "Detected license type: $DETECTED_LICENSE_TYPE"
+        if [ "$DETECTED_LICENSE_TYPE" != "$EXPECTED_LICENSE_TYPE" ]; then
+          echo "ERROR: detected license type doesn't match expected $EXPECTED_LICENSE_TYPE"
+          exit 1
+        fi
+
+  docs:check-links:
+    desc: Check for dead links in documentation
+    cmds:
+      - |
+        npx --package markdown-link-check --call '
+        STATUS=0
+        for file in $(find -name "*.md"); do
+          markdown-link-check --quiet "$file"
+          STATUS=$(( $STATUS + $? ))
+        done
+        exit $STATUS'
+
+  docs:check-formatting:
+    desc: Check formatting of documentation files
+    cmds:
+      - npx {{ .PRETTIER }} --check "**/*.md"
+
+  docs:format:
+    desc: Format documentation files
+    cmds:
+      - npx {{ .PRETTIER }} --write "**/*.md"
+
+  config:check:
+    desc: Lint and check formatting of configuration files
+    cmds:
+      - task: config:check-formatting
+      - task: config:lint
+
+  config:lint:
+    desc: Lint configuration files
+    cmds:
+      - task: workflow:validate
+
+  workflow:validate:
+    desc: Validate GitHub Actions workflows against JSON schema
+    cmds:
+      - wget --output-document={{ .WORKFLOW_SCHEMA_PATH }} https://json.schemastore.org/github-workflow
+      - npx ajv-cli validate -s {{ .WORKFLOW_SCHEMA_PATH }} -d "./.github/workflows/*.{yml,yaml}"
+
+  config:check-formatting:
+    desc: Check formatting of configuration files
+    cmds:
+      - npx {{ .PRETTIER }} --check "**/*.{yml,yaml}"
+      - npx {{ .PRETTIER }} --check "**/*.json"
+
+  config:format:
+    desc: Format configuration files
+    cmds:
+      - npx {{ .PRETTIER }} --write "**/*.{yml,yaml}"
+      - npx {{ .PRETTIER }} --write "**/*.json"
+
+  check-spelling:
+    desc: Check for commonly misspelled words
+    cmds:
+      - poetry install --no-root
+      - poetry run codespell {{ .CODESPELL_SKIP_OPTION }} {{ .CODESPELL_IGNORE_WORDS_OPTION }}
+
+  correct-spelling:
+    desc: Correct commonly misspelled words where possible
+    cmds:
+      - poetry install --no-root
+      - poetry run codespell --write-changes {{ .CODESPELL_SKIP_OPTION }} {{ .CODESPELL_IGNORE_WORDS_OPTION }}
+
+vars:
+  DEFAULT_PACKAGES:
+    sh: echo `go list ./... | tr '\n' ' '`
+  DEFAULT_PATHS:
+    sh: echo '`go list -f '{{"{{"}}.Dir{{"}}"}}' ./...`'
+  GOFLAGS: "-timeout 10m -v -coverpkg=./... -covermode=atomic"
+
+  GOLINTBIN:
+    sh: go list -f {{"{{"}}".Target{{"}}"}}" golang.org/x/lint/golint
+  GOLINTFLAGS: "-min_confidence 0.8 -set_exit_status"
+
+  PRETTIER: prettier@2.1.2
+
+  WORKFLOW_SCHEMA_PATH: "$(mktemp -t gha-workflow-schema-XXXXXXXXXX.json)"
+
+  CODESPELL_SKIP_OPTION: '--skip "./.git,./go.mod,./go.sum,./arduino-check,./arduino-check.exe"'
+  CODESPELL_IGNORE_WORDS_OPTION: "--ignore-words ./etc/codespell-ignore-words-list.txt"

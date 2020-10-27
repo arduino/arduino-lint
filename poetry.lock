@@ -1,0 +1,18 @@
+[[package]]
+category = "dev"
+description = "Codespell"
+name = "codespell"
+optional = false
+python-versions = "*"
+version = "1.17.1"
+
+[metadata]
+content-hash = "0de193fa2f0268b58dac39b8ef306448c38f414041d05c8b81f3bb7d6fcf7738"
+lock-version = "1.0"
+python-versions = "^3.8"
+
+[metadata.files]
+codespell = [
+    {file = "codespell-1.17.1-py3-none-any.whl", hash = "sha256:0ba864d8b25c4dc1b2a3fb067377ec11edb84c1a967a33d9e9cac73f386f3a0a"},
+    {file = "codespell-1.17.1.tar.gz", hash = "sha256:25a2ecd86b9cdc111dc40a30d0ed28c578e13a0ce158d1c383f9d47811bfcd23"},
+]
