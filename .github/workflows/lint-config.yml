@@ -1,0 +1,32 @@
+name: Lint configuration files
+
+on:
+  push:
+    paths:
+      - ".github/workflows/lint-config.yml"
+      - "Taskfile.yml"
+      - ".github/workflows/*.yml"
+  pull_request:
+    paths:
+      - ".github/workflows/lint-config.yml"
+      - "Taskfile.yml"
+      - ".github/workflows/*.yml"
+  schedule:
+    # Run every Tuesday at 03:00 UTC to catch breakage caused by changes to the GitHub Actions workflow schema
+    - cron: "0 3 * * 2"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout local repository
+        uses: actions/checkout@v2
+
+      - name: Install Taskfile
+        uses: arduino/actions/setup-taskfile@master
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
+
+      - name: Lint configuration files
+        run: task config:lint
