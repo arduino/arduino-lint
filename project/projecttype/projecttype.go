@@ -13,3 +13,13 @@ const (
 	All                      // any project type
 	Not                      // N/A
 )
+
+// Matches returns whether the receiver project type matches the argument project type
+func (projectTypeA Type) Matches(projectTypeB Type) bool {
+	if projectTypeA == Not && projectTypeB == Not {
+		return true
+	} else if projectTypeA == Not || projectTypeB == Not {
+		return false
+	}
+	return (projectTypeA == All || projectTypeB == All || projectTypeA == projectTypeB)
+}
