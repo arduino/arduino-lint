@@ -5,12 +5,13 @@ package configuration
 import (
 	"github.com/arduino/arduino-check/configuration/checkmode"
 	"github.com/arduino/arduino-check/project/projecttype"
+	"github.com/arduino/arduino-check/result/outputformat"
 )
 
 func setDefaults() {
 	superprojectTypeFilter = projecttype.All
 	recursive = true
-	outputFormat = "text"
+	outputFormat = outputformat.Text
 	// TODO: targetPath defaults to current path
 }
 

@@ -4,6 +4,7 @@ package configuration
 import (
 	"github.com/arduino/arduino-check/configuration/checkmode"
 	"github.com/arduino/arduino-check/project/projecttype"
+	"github.com/arduino/arduino-check/result/outputformat"
 	"github.com/arduino/go-paths-helper"
 	"github.com/sirupsen/logrus"
 )
@@ -25,7 +26,7 @@ func Initialize() {
 	// customCheckModes[checkmode.Official] = false
 	// superprojectType = projecttype.All
 
-	outputFormat = "json"
+	outputFormat = outputformat.JSON
 	//reportFilePath = paths.New("report.json")
 
 	logrus.SetLevel(logrus.PanicLevel)
@@ -58,10 +59,10 @@ func Recursive() bool {
 	return recursive
 }
 
-var outputFormat string
+var outputFormat outputformat.Type
 
 // OutputFormat returns the tool output format configuration value.
-func OutputFormat() string {
+func OutputFormat() outputformat.Type {
 	return outputFormat
 }
 

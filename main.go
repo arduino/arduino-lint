@@ -9,6 +9,7 @@ import (
 	"github.com/arduino/arduino-check/project"
 	"github.com/arduino/arduino-check/result"
 	"github.com/arduino/arduino-check/result/feedback"
+	"github.com/arduino/arduino-check/result/outputformat"
 )
 
 func main() {
@@ -29,7 +30,7 @@ func main() {
 	// All projects have been checked, so summarize their check results in the report.
 	result.Results.AddSummary()
 
-	if configuration.OutputFormat() == "text" {
+	if configuration.OutputFormat() == outputformat.Text {
 		if len(projects) > 1 {
 			// There are multiple projects, print the summary of check results for all projects.
 			fmt.Print(result.Results.SummaryText())

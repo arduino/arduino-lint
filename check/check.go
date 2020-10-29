@@ -12,6 +12,7 @@ import (
 	"github.com/arduino/arduino-check/project"
 	"github.com/arduino/arduino-check/result"
 	"github.com/arduino/arduino-check/result/feedback"
+	"github.com/arduino/arduino-check/result/outputformat"
 	"github.com/sirupsen/logrus"
 )
 
@@ -34,12 +35,12 @@ func RunChecks(project project.Type) {
 		}
 
 		// Output will be printed after all checks are finished when configured for "json" output format
-		if configuration.OutputFormat() == "text" {
+		if configuration.OutputFormat() == outputformat.Text {
 			fmt.Printf("Running check %s: ", checkConfiguration.ID)
 		}
 		checkResult, checkOutput := checkConfiguration.CheckFunction()
 		reportText := result.Results.Record(project, checkConfiguration, checkResult, checkOutput)
-		if configuration.OutputFormat() == "text" {
+		if configuration.OutputFormat() == outputformat.Text {
 			fmt.Print(reportText)
 		}
 	}
@@ -47,7 +48,7 @@ func RunChecks(project project.Type) {
 	// Checks are finished for this project, so summarize its check results in the report.
 	result.Results.AddProjectSummary(project)
 
-	if configuration.OutputFormat() == "text" {
+	if configuration.OutputFormat() == outputformat.Text {
 		// Print the project check results summary.
 		fmt.Print(result.Results.ProjectSummaryText(project))
 	}
