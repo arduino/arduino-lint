@@ -38,18 +38,18 @@ func RunChecks(project project.Type) {
 			fmt.Printf("Running check %s: ", checkConfiguration.ID)
 		}
 		checkResult, checkOutput := checkConfiguration.CheckFunction()
-		reportText := result.Record(project, checkConfiguration, checkResult, checkOutput)
+		reportText := result.Report.Record(project, checkConfiguration, checkResult, checkOutput)
 		if configuration.OutputFormat() == "text" {
 			fmt.Print(reportText)
 		}
 	}
 
 	// Checks are finished for this project, so summarize its check results in the report.
-	result.AddProjectSummaryReport(project)
+	result.Report.AddProjectSummaryReport(project)
 
 	if configuration.OutputFormat() == "text" {
 		// Print the project check results summary.
-		fmt.Print(result.ProjectSummaryText(project))
+		fmt.Print(result.Report.ProjectSummaryText(project))
 	}
 }
 
