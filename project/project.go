@@ -66,7 +66,7 @@ func findProjectsUnderPath(targetPath *paths.Path, projectType projecttype.Type,
 
 	isProject, foundProjectType := isProject(targetPath, projectType)
 	if isProject {
-		logrus.Tracef("%s is %s", targetPath, projectType)
+		logrus.Tracef("%s is %s", targetPath, foundProjectType)
 		foundProject := Type{
 			Path:        targetPath,
 			ProjectType: foundProjectType,
