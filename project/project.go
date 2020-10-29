@@ -116,6 +116,8 @@ func findSubprojects(superproject Type, apexSuperprojectType projecttype.Type) [
 	case projecttype.PackageIndex:
 		// Platform indexes don't have subprojects
 		return nil
+	default:
+		panic(fmt.Sprintf("Subproject discovery not configured for project type: %s", superproject.ProjectType))
 	}
 
 	// Search the subproject paths for projects
