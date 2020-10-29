@@ -9,6 +9,7 @@ import (
 	"github.com/arduino/arduino-check/check/checkresult"
 )
 
+// PdeSketchExtension checks for use of deprecated .pde sketch file extensions.
 func PdeSketchExtension() (result checkresult.Type, output string) {
 	directoryListing, _ := checkdata.ProjectPath().ReadDir()
 	directoryListing.FilterOutDirs()
