@@ -62,13 +62,13 @@ func shouldRun(checkConfiguration checkconfigurations.Type, currentProject proje
 	}
 
 	for _, disableMode := range checkConfiguration.DisableModes {
-		if configurationCheckModes[disableMode] == true {
+		if configurationCheckModes[disableMode] {
 			return false, nil
 		}
 	}
 
 	for _, enableMode := range checkConfiguration.EnableModes {
-		if configurationCheckModes[enableMode] == true {
+		if configurationCheckModes[enableMode] {
 			return true, nil
 		}
 	}

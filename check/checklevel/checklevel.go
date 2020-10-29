@@ -25,19 +25,19 @@ const (
 func CheckLevel(checkConfiguration checkconfigurations.Type) (Type, error) {
 	configurationCheckModes := configuration.CheckModes(checkConfiguration.ProjectType)
 	for _, errorMode := range checkConfiguration.ErrorModes {
-		if configurationCheckModes[errorMode] == true {
+		if configurationCheckModes[errorMode] {
 			return Error, nil
 		}
 	}
 
 	for _, warningMode := range checkConfiguration.WarningModes {
-		if configurationCheckModes[warningMode] == true {
+		if configurationCheckModes[warningMode] {
 			return Warning, nil
 		}
 	}
 
 	for _, infoMode := range checkConfiguration.InfoModes {
-		if configurationCheckModes[infoMode] == true {
+		if configurationCheckModes[infoMode] {
 			return Info, nil
 		}
 	}
