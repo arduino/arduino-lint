@@ -17,7 +17,7 @@ import (
 
 // RunChecks runs all checks for the given project and outputs the results.
 func RunChecks(project project.Type) {
-	fmt.Printf("Checking %s in %s\n", project.ProjectType.String(), project.Path.String())
+	fmt.Printf("Checking %s in %s\n", project.ProjectType, project.Path)
 
 	checkdata.Initialize(project)
 

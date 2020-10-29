@@ -83,13 +83,13 @@ func Record(checkedProject project.Type, checkConfiguration checkconfigurations.
 		os.Exit(1)
 	}
 
-	summaryText := fmt.Sprintf("%v\n", checkResult.String())
+	summaryText := fmt.Sprintf("%s\n", checkResult)
 
 	if checkResult == checkresult.NotRun {
 		// TODO: make the check functions output an explanation for why they didn't run
-		summaryText += fmt.Sprintf("%s: %s\n", checklevel.Notice.String(), checkOutput)
+		summaryText += fmt.Sprintf("%s: %s\n", checklevel.Notice, checkOutput)
 	} else if checkResult != checkresult.Pass {
-		summaryText += fmt.Sprintf("%s: %s\n", checkLevel.String(), checkMessage)
+		summaryText += fmt.Sprintf("%s: %s\n", checkLevel, checkMessage)
 	}
 
 	checkReport := checkReportType{

@@ -31,9 +31,9 @@ func Initialize() {
 	logrus.SetLevel(logrus.PanicLevel)
 
 	logrus.WithFields(logrus.Fields{
-		"superproject type filter": SuperprojectTypeFilter().String(),
+		"superproject type filter": SuperprojectTypeFilter(),
 		"recursive":                Recursive(),
-		"projects path":            TargetPath().String(),
+		"projects path":            TargetPath(),
 	}).Debug("Configuration initialized")
 }
 

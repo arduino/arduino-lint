@@ -30,7 +30,7 @@ func Modes(defaultCheckModes map[projecttype.Type]map[Type]bool, customCheckMode
 		} else {
 			checkModes[key] = defaultValue
 		}
-		logrus.Tracef("Check mode option %s set to %t\n", key.String(), checkModes[key])
+		logrus.Tracef("Check mode option %s set to %t\n", key, checkModes[key])
 	}
 
 	// This mode is always enabled

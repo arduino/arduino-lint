@@ -48,13 +48,13 @@ func FindProjects() ([]Type, error) {
 			return foundProjects, nil
 		}
 
-		return nil, fmt.Errorf("specified path %s is not an Arduino project", targetPath.String())
+		return nil, fmt.Errorf("specified path %s is not an Arduino project", targetPath)
 	}
 
 	foundProjects = append(foundProjects, findProjectsUnderPath(targetPath, superprojectTypeFilter, recursive)...)
 
 	if foundProjects == nil {
-		return nil, fmt.Errorf("no projects found under %s", targetPath.String())
+		return nil, fmt.Errorf("no projects found under %s", targetPath)
 	}
 
 	return foundProjects, nil
@@ -66,7 +66,7 @@ func findProjectsUnderPath(targetPath *paths.Path, projectType projecttype.Type,
 
 	isProject, foundProjectType := isProject(targetPath, projectType)
 	if isProject {
-		logrus.Tracef("%s is %s", targetPath.String(), projectType.String())
+		logrus.Tracef("%s is %s", targetPath, projectType)
 		foundProject := Type{
 			Path:        targetPath,
 			ProjectType: foundProjectType,
@@ -132,18 +132,18 @@ func findSubprojects(superproject Type, apexSuperprojectType projecttype.Type) [
 
 // isProject determines if a path contains an Arduino project, and if so which type.
 func isProject(potentialProjectPath *paths.Path, projectType projecttype.Type) (bool, projecttype.Type) {
-	logrus.Tracef("Checking if %s is %s", potentialProjectPath.String(), projectType.String())
+	logrus.Tracef("Checking if %s is %s", potentialProjectPath, projectType)
 	if (projectType == projecttype.All || projectType == projecttype.Sketch) && isSketch(potentialProjectPath) {
-		logrus.Tracef("%s is %s", potentialProjectPath.String(), projecttype.Sketch.String())
+		logrus.Tracef("%s is %s", potentialProjectPath, projecttype.Sketch)
 		return true, projecttype.Sketch
 	} else if (projectType == projecttype.All || projectType == projecttype.Library) && isLibrary(potentialProjectPath) {
-		logrus.Tracef("%s is %s", potentialProjectPath.String(), projecttype.Library.String())
+		logrus.Tracef("%s is %s", potentialProjectPath, projecttype.Library)
 		return true, projecttype.Library
 	} else if (projectType == projecttype.All || projectType == projecttype.Platform) && isPlatform(potentialProjectPath) {
-		logrus.Tracef("%s is %s", potentialProjectPath.String(), projecttype.Platform.String())
+		logrus.Tracef("%s is %s", potentialProjectPath, projecttype.Platform)
 		return true, projecttype.Platform
 	} else if (projectType == projecttype.All || projectType == projecttype.PackageIndex) && isPackageIndex(potentialProjectPath) {
-		logrus.Tracef("%s is %s", potentialProjectPath.String(), projecttype.PackageIndex.String())
+		logrus.Tracef("%s is %s", potentialProjectPath, projecttype.PackageIndex)
 		return true, projecttype.PackageIndex
 	}
 	return false, projecttype.Not
@@ -151,21 +151,21 @@ func isProject(potentialProjectPath *paths.Path, projectType projecttype.Type) (
 
 // isProject determines if a file is the indicator file for an Arduino project, and if so which type.
 func isProjectIndicatorFile(potentialProjectFilePath *paths.Path, projectType projecttype.Type) (bool, projecttype.Type) {
-	logrus.Tracef("Checking if %s is %s indicator file", potentialProjectFilePath.String(), projectType.String())
+	logrus.Tracef("Checking if %s is %s indicator file", potentialProjectFilePath, projectType)
 	if (projectType == projecttype.All || projectType == projecttype.Sketch) && isSketchIndicatorFile(potentialProjectFilePath) {
-		logrus.Tracef("%s is %s indicator file", potentialProjectFilePath.String(), projecttype.Sketch.String())
+		logrus.Tracef("%s is %s indicator file", potentialProjectFilePath, projecttype.Sketch)
 		return true, projecttype.Sketch
 	} else if (projectType == projecttype.All || projectType == projecttype.Library) && isLibraryIndicatorFile(potentialProjectFilePath) {
-		logrus.Tracef("%s is %s indicator file", potentialProjectFilePath.String(), projecttype.Library.String())
+		logrus.Tracef("%s is %s indicator file", potentialProjectFilePath, projecttype.Library)
 		return true, projecttype.Library
 	} else if (projectType == projecttype.All || projectType == projecttype.Platform) && isPlatformIndicatorFile(potentialProjectFilePath) {
-		logrus.Tracef("%s is %s indicator file", potentialProjectFilePath.String(), projecttype.Platform.String())
+		logrus.Tracef("%s is %s indicator file", potentialProjectFilePath, projecttype.Platform)
 		return true, projecttype.Platform
 	} else if (projectType == projecttype.All || projectType == projecttype.PackageIndex) && isPackageIndexIndicatorFile(potentialProjectFilePath) {
-		logrus.Tracef("%s is %s indicator file", potentialProjectFilePath.String(), projecttype.PackageIndex.String())
+		logrus.Tracef("%s is %s indicator file", potentialProjectFilePath, projecttype.PackageIndex)
 		return true, projecttype.PackageIndex
 	}
-	logrus.Tracef("%s is not indicator file", potentialProjectFilePath.String())
+	logrus.Tracef("%s is not indicator file", potentialProjectFilePath)
 	return false, projecttype.Not
 }
 
