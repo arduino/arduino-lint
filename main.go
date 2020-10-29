@@ -14,7 +14,7 @@ import (
 func main() {
 	configuration.Initialize()
 	// Must be called after configuration.Initialize()
-	result.Report.Initialize()
+	result.Results.Initialize()
 
 	projects, err := project.FindProjects()
 	if err != nil {
@@ -27,24 +27,24 @@ func main() {
 	}
 
 	// All projects have been checked, so summarize their check results in the report.
-	result.Report.AddSummaryReport()
+	result.Results.AddSummary()
 
 	if configuration.OutputFormat() == "text" {
 		if len(projects) > 1 {
 			// There are multiple projects, print the summary of check results for all projects.
-			fmt.Print(result.Report.SummaryText())
+			fmt.Print(result.Results.SummaryText())
 		}
 	} else {
 		// Print the complete JSON formatted report.
-		fmt.Println(result.Report.JSONReport())
+		fmt.Println(result.Results.JSONReport())
 	}
 
 	if configuration.ReportFilePath() != nil {
 		// Write report file.
-		result.Report.WriteReport()
+		result.Results.WriteReport()
 	}
 
-	if !result.Report.Passed() {
+	if !result.Results.Passed() {
 		os.Exit(1)
 	}
 }

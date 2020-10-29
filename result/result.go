@@ -18,11 +18,11 @@ import (
 	"github.com/arduino/go-paths-helper"
 )
 
-// Report is the global instance of the check results ReportType struct
-var Report ReportType
+// Results is the global instance of the check results result.Type struct
+var Results Type
 
-// ReportType is the type for the check results report
-type ReportType struct {
+// Type is the type for the check results data
+type Type struct {
 	Configuration toolConfigurationReportType `json:"configuration"`
 	Projects      []projectReportType         `json:"projects"`
 	Summary       summaryReportType           `json:"summary"`
@@ -66,9 +66,9 @@ type summaryReportType struct {
 	ErrorCount   int  `json:"errorCount"`
 }
 
-// Initialize adds the tool configuration data to the report.
-func (report *ReportType) Initialize() {
-	report.Configuration = toolConfigurationReportType{
+// Initialize adds the tool configuration data to the results data.
+func (results *Type) Initialize() {
+	results.Configuration = toolConfigurationReportType{
 		Paths:       []*paths.Path{configuration.TargetPath()},
 		ProjectType: configuration.SuperprojectTypeFilter().String(),
 		Recursive:   configuration.Recursive(),
@@ -76,7 +76,7 @@ func (report *ReportType) Initialize() {
 }
 
 // Record records the result of a check and returns a text summary for it.
-func (report *ReportType) Record(checkedProject project.Type, checkConfiguration checkconfigurations.Type, checkResult checkresult.Type, checkOutput string) string {
+func (results *Type) Record(checkedProject project.Type, checkConfiguration checkconfigurations.Type, checkResult checkresult.Type, checkOutput string) string {
 	checkMessage := message(checkConfiguration.MessageTemplate, checkOutput)
 
 	checkLevel, err := checklevel.CheckLevel(checkConfiguration)
@@ -105,11 +105,11 @@ func (report *ReportType) Record(checkedProject project.Type, checkConfiguration
 		Message:     checkMessage,
 	}
 
-	reportExists, projectReportIndex := report.getProjectReportIndex(checkedProject.Path)
+	reportExists, projectReportIndex := results.getProjectReportIndex(checkedProject.Path)
 	if !reportExists {
 		// There is no existing report for this project.
-		report.Projects = append(
-			report.Projects,
+		results.Projects = append(
+			results.Projects,
 			projectReportType{
 				Path:        checkedProject.Path,
 				ProjectType: checkedProject.ProjectType.String(),
@@ -124,15 +124,15 @@ func (report *ReportType) Record(checkedProject project.Type, checkConfiguration
 		)
 	} else {
 		// There's already a report for this project, just add the checks report to it
-		report.Projects[projectReportIndex].Checks = append(report.Projects[projectReportIndex].Checks, checkReport)
+		results.Projects[projectReportIndex].Checks = append(results.Projects[projectReportIndex].Checks, checkReport)
 	}
 
 	return summaryText
 }
 
-// AddProjectSummaryReport summarizes the results of all checks on the given project and adds it to the report.
-func (report *ReportType) AddProjectSummaryReport(checkedProject project.Type) {
-	reportExists, projectReportIndex := report.getProjectReportIndex(checkedProject.Path)
+// AddProjectSummary summarizes the results of all checks on the given project and adds it to the report.
+func (results *Type) AddProjectSummary(checkedProject project.Type) {
+	reportExists, projectReportIndex := results.getProjectReportIndex(checkedProject.Path)
 	if !reportExists {
 		panic(fmt.Sprintf("Unable to find report for %v when generating report summary", checkedProject.Path))
 	}
@@ -140,7 +140,7 @@ func (report *ReportType) AddProjectSummaryReport(checkedProject project.Type) {
 	pass := true
 	warningCount := 0
 	errorCount := 0
-	for _, checkReport := range report.Projects[projectReportIndex].Checks {
+	for _, checkReport := range results.Projects[projectReportIndex].Checks {
 		if checkReport.Result == checkresult.Fail.String() {
 			if checkReport.Level == checklevel.Warning.String() {
 				warningCount += 1
@@ -151,7 +151,7 @@ func (report *ReportType) AddProjectSummaryReport(checkedProject project.Type) {
 		}
 	}
 
-	report.Projects[projectReportIndex].Summary = summaryReportType{
+	results.Projects[projectReportIndex].Summary = summaryReportType{
 		Pass:         pass,
 		WarningCount: warningCount,
 		ErrorCount:   errorCount,
@@ -159,22 +159,22 @@ func (report *ReportType) AddProjectSummaryReport(checkedProject project.Type) {
 }
 
 // ProjectSummaryText returns a text summary of the check results for the given project.
-func (report ReportType) ProjectSummaryText(checkedProject project.Type) string {
-	reportExists, projectReportIndex := report.getProjectReportIndex(checkedProject.Path)
+func (results Type) ProjectSummaryText(checkedProject project.Type) string {
+	reportExists, projectReportIndex := results.getProjectReportIndex(checkedProject.Path)
 	if !reportExists {
 		panic(fmt.Sprintf("Unable to find report for %v when generating report summary text", checkedProject.Path))
 	}
 
-	projectSummaryReport := report.Projects[projectReportIndex].Summary
+	projectSummaryReport := results.Projects[projectReportIndex].Summary
 	return fmt.Sprintf("\nFinished checking project. Results:\nWarning count: %v\nError count: %v\nChecks passed: %v\n\n", projectSummaryReport.WarningCount, projectSummaryReport.ErrorCount, projectSummaryReport.Pass)
 }
 
-// AddSummaryReport summarizes the check results for all projects and adds it to the report.
-func (report *ReportType) AddSummaryReport() {
+// AddSummary summarizes the check results for all projects and adds it to the report.
+func (results *Type) AddSummary() {
 	pass := true
 	warningCount := 0
 	errorCount := 0
-	for _, projectReport := range report.Projects {
+	for _, projectReport := range results.Projects {
 		if !projectReport.Summary.Pass {
 			pass = false
 		}
@@ -182,7 +182,7 @@ func (report *ReportType) AddSummaryReport() {
 		errorCount += projectReport.Summary.ErrorCount
 	}
 
-	report.Summary = summaryReportType{
+	results.Summary = summaryReportType{
 		Pass:         pass,
 		WarningCount: warningCount,
 		ErrorCount:   errorCount,
@@ -190,17 +190,17 @@ func (report *ReportType) AddSummaryReport() {
 }
 
 // SummaryText returns a text summary of the cumulative check results.
-func (report ReportType) SummaryText() string {
-	return fmt.Sprintf("Finished checking projects. Results:\nWarning count: %v\nError count: %v\nChecks passed: %v\n", report.Summary.WarningCount, report.Summary.ErrorCount, report.Summary.Pass)
+func (results Type) SummaryText() string {
+	return fmt.Sprintf("Finished checking projects. Results:\nWarning count: %v\nError count: %v\nChecks passed: %v\n", results.Summary.WarningCount, results.Summary.ErrorCount, results.Summary.Pass)
 }
 
-// Report returns a JSON formatted report of checks on all projects.
-func (report ReportType) JSONReport() string {
-	return string(report.jsonReportRaw())
+// JSONReport returns a JSON formatted report of checks on all projects.
+func (results Type) JSONReport() string {
+	return string(results.jsonReportRaw())
 }
 
-func (report ReportType) jsonReportRaw() []byte {
-	reportJSON, err := json.MarshalIndent(report, "", "  ")
+func (results Type) jsonReportRaw() []byte {
+	reportJSON, err := json.MarshalIndent(results, "", "  ")
 	if err != nil {
 		panic(fmt.Sprintf("Error while formatting checks report: %v", err))
 	}
@@ -209,9 +209,9 @@ func (report ReportType) jsonReportRaw() []byte {
 }
 
 // WriteReport writes a report for all projects to the specified file.
-func (report ReportType) WriteReport() {
+func (results Type) WriteReport() {
 	// Write report file
-	err := configuration.ReportFilePath().WriteFile(report.jsonReportRaw())
+	err := configuration.ReportFilePath().WriteFile(results.jsonReportRaw())
 	if err != nil {
 		feedback.Errorf("Error while writing report: %v", err)
 		os.Exit(1)
@@ -219,14 +219,14 @@ func (report ReportType) WriteReport() {
 }
 
 // Passed returns whether the checks passed cumulatively.
-func (report ReportType) Passed() bool {
-	return report.Summary.Pass
+func (results Type) Passed() bool {
+	return results.Summary.Pass
 }
 
-func (report ReportType) getProjectReportIndex(projectPath *paths.Path) (bool, int) {
+func (results Type) getProjectReportIndex(projectPath *paths.Path) (bool, int) {
 	var index int
 	var projectReport projectReportType
-	for index, projectReport = range report.Projects {
+	for index, projectReport = range results.Projects {
 		if projectReport.Path == projectPath {
 			return true, index
 		}
