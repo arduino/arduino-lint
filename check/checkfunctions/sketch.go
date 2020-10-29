@@ -3,6 +3,8 @@ package checkfunctions
 // The check functions for sketches.
 
 import (
+	"strings"
+
 	"github.com/arduino/arduino-check/check/checkdata"
 	"github.com/arduino/arduino-check/check/checkresult"
 )
@@ -10,19 +12,15 @@ import (
 func PdeSketchExtension() (result checkresult.Type, output string) {
 	directoryListing, _ := checkdata.ProjectPath().ReadDir()
 	directoryListing.FilterOutDirs()
-	pdeSketches := ""
+	pdeSketches := []string{}
 	for _, filePath := range directoryListing {
 		if filePath.Ext() == ".pde" {
-			if pdeSketches == "" {
-				pdeSketches = filePath.Base()
-			} else {
-				pdeSketches += ", " + filePath.Base()
-			}
+			pdeSketches = append(pdeSketches, filePath.Base())
 		}
 	}
 
-	if pdeSketches != "" {
-		return checkresult.Fail, pdeSketches
+	if len(pdeSketches) > 0 {
+		return checkresult.Fail, strings.Join(pdeSketches, ", ")
 	}
 
 	return checkresult.Pass, ""
