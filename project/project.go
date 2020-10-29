@@ -96,25 +96,33 @@ func findProjectsUnderPath(targetPath *paths.Path, projectType projecttype.Type,
 // findSubprojects finds subprojects of the given project.
 // For example, the subprojects of a library are its example sketches.
 func findSubprojects(superproject Type, apexSuperprojectType projecttype.Type) []Type {
-	var immediateSubprojects []Type
+	subprojectFolderNames := []string{}
+	var subProjectType projecttype.Type
+	var searchPathsRecursively bool
 
+	// Determine possible subproject paths
 	switch superproject.ProjectType {
 	case projecttype.Sketch:
 		// Sketches don't have subprojects
 		return nil
 	case projecttype.Library:
-		for _, subprojectFolderName := range library.ExamplesFolderSupportedNames() {
-			subprojectPath := superproject.Path.Join(subprojectFolderName)
-			immediateSubprojects = append(immediateSubprojects, findProjectsUnderPath(subprojectPath, projecttype.Sketch, true)...)
-		}
+		subprojectFolderNames = append(subprojectFolderNames, library.ExamplesFolderSupportedNames()...)
+		subProjectType = projecttype.Sketch
+		searchPathsRecursively = true // Examples sketches can be under nested subfolders
 	case projecttype.Platform:
-		for _, subprojectFolderName := range platform.BundledLibrariesFolderNames() {
-			subprojectPath := superproject.Path.Join(subprojectFolderName)
-			immediateSubprojects = append(immediateSubprojects, findProjectsUnderPath(subprojectPath, projecttype.Library, false)...)
-		}
+		subprojectFolderNames = append(subprojectFolderNames, platform.BundledLibrariesFolderNames()...)
+		subProjectType = projecttype.Library
+		searchPathsRecursively = false // Bundled libraries must be in the root of the libraries folder
 	case projecttype.PackageIndex:
 		// Platform indexes don't have subprojects
 		return nil
+	}
+
+	// Search the subproject paths for projects
+	var immediateSubprojects []Type
+	for _, subprojectFolderName := range subprojectFolderNames {
+		subprojectPath := superproject.Path.Join(subprojectFolderName)
+		immediateSubprojects = append(immediateSubprojects, findProjectsUnderPath(subprojectPath, subProjectType, searchPathsRecursively)...)
 	}
 
 	var allSubprojects []Type
