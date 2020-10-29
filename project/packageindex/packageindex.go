@@ -20,10 +20,7 @@ var validExtensions = map[string]struct{}{
 // HasValidExtension returns whether the file at the given path has a valid package index extension.
 func HasValidExtension(filePath *paths.Path) bool {
 	_, hasValidExtension := validExtensions[filePath.Ext()]
-	if hasValidExtension {
-		return true
-	}
-	return false
+	return hasValidExtension
 }
 
 // Regular expressions for official and non-official package index filenames

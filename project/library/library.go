@@ -17,10 +17,7 @@ var headerFileValidExtensions = map[string]struct{}{
 // HasHeaderFileValidExtension returns whether the file at the given path has a valid library header file extension.
 func HasHeaderFileValidExtension(filePath *paths.Path) bool {
 	_, hasHeaderFileValidExtension := headerFileValidExtensions[filePath.Ext()]
-	if hasHeaderFileValidExtension {
-		return true
-	}
-	return false
+	return hasHeaderFileValidExtension
 }
 
 // See: https://arduino.github.io/arduino-cli/latest/library-specification/#library-metadata

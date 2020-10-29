@@ -21,10 +21,7 @@ var configurationFilenames = map[string]struct{}{
 // IsConfigurationFile returns whether the file at the given path has a boards platform configuration file filename.
 func IsConfigurationFile(filePath *paths.Path) bool {
 	_, isConfigurationFile := configurationFilenames[filePath.Base()]
-	if isConfigurationFile {
-		return true
-	}
-	return false
+	return isConfigurationFile
 }
 
 var requiredConfigurationFilenames = map[string]struct{}{
@@ -35,10 +32,7 @@ var requiredConfigurationFilenames = map[string]struct{}{
 // IsRequiredConfigurationFile returns whether the file at the given path has the filename of a required boards platform configuration file.
 func IsRequiredConfigurationFile(filePath *paths.Path) bool {
 	_, isRequiredConfigurationFile := requiredConfigurationFilenames[filePath.Base()]
-	if isRequiredConfigurationFile {
-		return true
-	}
-	return false
+	return isRequiredConfigurationFile
 }
 
 // See: https://arduino.github.io/arduino-cli/latest/platform-specification/#platform-bundled-libraries

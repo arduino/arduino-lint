@@ -185,10 +185,7 @@ func isSketch(potentialProjectPath *paths.Path) bool {
 }
 
 func isSketchIndicatorFile(filePath *paths.Path) bool {
-	if sketch.HasMainFileValidExtension(filePath) {
-		return true
-	}
-	return false
+	return sketch.HasMainFileValidExtension(filePath)
 }
 
 // isLibrary determines if a path is an Arduino library.
@@ -236,19 +233,11 @@ func isPlatform(potentialProjectPath *paths.Path) bool {
 }
 
 func isPlatformIndicatorFile(filePath *paths.Path) bool {
-	if platform.IsConfigurationFile(filePath) {
-		return true
-	}
-
-	return false
+	return platform.IsConfigurationFile(filePath)
 }
 
 func isStrictPlatformIndicatorFile(filePath *paths.Path) bool {
-	if platform.IsRequiredConfigurationFile(filePath) {
-		return true
-	}
-
-	return false
+	return platform.IsRequiredConfigurationFile(filePath)
 }
 
 // isPackageIndex determines if a path contains an Arduino package index.
@@ -266,17 +255,9 @@ func isPackageIndex(potentialProjectPath *paths.Path) bool {
 }
 
 func isPackageIndexIndicatorFile(filePath *paths.Path) bool {
-	if packageindex.HasValidExtension(filePath) {
-		return true
-	}
-
-	return false
+	return packageindex.HasValidExtension(filePath)
 }
 
 func isStrictPackageIndexIndicatorFile(filePath *paths.Path) bool {
-	if packageindex.HasValidFilename(filePath, true) {
-		return true
-	}
-
-	return false
+	return packageindex.HasValidFilename(filePath, true)
 }

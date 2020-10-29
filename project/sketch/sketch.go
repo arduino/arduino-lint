@@ -13,8 +13,5 @@ import (
 // Sketches may contain source files with other extensions (e.g., .h, .cpp), but they are required to have at least one file with a main extension.
 func HasMainFileValidExtension(filePath *paths.Path) bool {
 	_, hasMainFileValidExtension := globals.MainFileValidExtensions[filePath.Ext()]
-	if hasMainFileValidExtension {
-		return true
-	}
-	return false
+	return hasMainFileValidExtension
 }
