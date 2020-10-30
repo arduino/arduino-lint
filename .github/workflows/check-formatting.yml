@@ -1,0 +1,46 @@
+name: Check formatting
+
+on:
+  push:
+    paths:
+      - ".github/workflows/check-formatting.yml"
+      - "Taskfile.yml"
+      - ".prettierrc"
+      - "**.go"
+      - "**.json"
+      - "**.md"
+      - "**.yaml"
+      - "**.yml"
+  pull_request:
+    paths:
+      - ".github/workflows/check-formatting.yml"
+      - "Taskfile.yml"
+      - ".prettierrc"
+      - "**.go"
+      - "**.json"
+      - "**.md"
+      - "**.yaml"
+      - "**.yml"
+
+jobs:
+  check-formatting:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout local repository
+        uses: actions/checkout@v2
+
+      - name: Install Taskfile
+        uses: arduino/actions/setup-taskfile@master
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
+
+      - name: Check Go code formatting
+        run: task go:check-formatting
+
+      - name: Check documentation formatting
+        run: task docs:check-formatting
+
+      - name: Check configuration file formatting
+        run: task config:check-formatting
