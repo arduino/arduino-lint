@@ -1,0 +1,51 @@
+name: Run tests
+
+on:
+  push:
+    paths:
+      - ".github/workflows/test.yml"
+      - "Taskfile.yml"
+      - "go.mod"
+      - "go.sum"
+      - "**/*.go"
+      - "**/testdata/**"
+  pull_request:
+    paths:
+      - ".github/workflows/test.yml"
+      - "Taskfile.yml"
+      - "go.mod"
+      - "go.sum"
+      - "**/*.go"
+      - "**/testdata/**"
+
+jobs:
+  test-go:
+    strategy:
+      matrix:
+        operating-system:
+          - ubuntu-latest
+          - windows-latest
+          - macOS-latest
+
+    runs-on: ${{ matrix.operating-system }}
+
+    steps:
+      - name: Checkout local repository
+        uses: actions/checkout@v2
+
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: "1.14"
+
+      - name: Install Taskfile
+        uses: arduino/actions/setup-taskfile@master
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
+
+      - name: Build
+        run: task build
+
+      - name: Run unit tests
+        run: task go:test-unit
