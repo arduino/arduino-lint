@@ -18,6 +18,7 @@ package libraryproperties
 
 import (
 	"github.com/arduino/arduino-check/check/checkdata/schema"
+	"github.com/arduino/arduino-check/check/checkdata/schema/compliancelevel"
 	"github.com/arduino/go-paths-helper"
 	"github.com/arduino/go-properties-orderedmap"
 	"github.com/ory/jsonschema/v3"
@@ -32,10 +33,23 @@ func Properties(libraryPath *paths.Path) (*properties.Map, error) {
 	return libraryProperties, nil
 }
 
-// Validate validates library.properties data against the JSON schema.
-func Validate(libraryProperties *properties.Map, schemasPath *paths.Path) *jsonschema.ValidationError {
-	referencedSchemaFilenames := []string{}
-	schemaObject := schema.Compile("arduino-library-properties-schema.json", referencedSchemaFilenames, schemasPath)
+// Validate validates library.properties data against the JSON schema and returns a map of the result for each compliance level.
+func Validate(libraryProperties *properties.Map, schemasPath *paths.Path) map[compliancelevel.Type]*jsonschema.ValidationError {
+	referencedSchemaFilenames := []string{
+		"general-definitions-schema.json",
+		"arduino-library-properties-definitions-schema.json",
+	}
 
-	return schema.Validate(libraryProperties, schemaObject, schemasPath)
+	var validationResults = make(map[compliancelevel.Type]*jsonschema.ValidationError)
+
+	schemaObject := schema.Compile("arduino-library-properties-permissive-schema.json", referencedSchemaFilenames, schemasPath)
+	validationResults[compliancelevel.Permissive] = schema.Validate(libraryProperties, schemaObject, schemasPath)
+
+	schemaObject = schema.Compile("arduino-library-properties-schema.json", referencedSchemaFilenames, schemasPath)
+	validationResults[compliancelevel.Specification] = schema.Validate(libraryProperties, schemaObject, schemasPath)
+
+	schemaObject = schema.Compile("arduino-library-properties-strict-schema.json", referencedSchemaFilenames, schemasPath)
+	validationResults[compliancelevel.Strict] = schema.Validate(libraryProperties, schemaObject, schemasPath)
+
+	return validationResults
 }
