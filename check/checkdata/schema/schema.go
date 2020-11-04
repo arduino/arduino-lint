@@ -10,11 +10,20 @@ import (
 	"github.com/xeipuuv/gojsonschema"
 )
 
-// Compile compiles the schema files specified by the filename arguments and returns the compiled schema.
-func Compile(schemaFilename string, referencedSchemaFilenames []string) *gojsonschema.Schema {
-	workingPath, _ := os.Getwd()
-	schemasPath := paths.New(workingPath)
+var schemasPath *paths.Path
 
+func init() {
+	workingPath, _ := os.Getwd()
+	schemasPath = paths.New(workingPath)
+}
+
+// SchemasPath returns the path to the folder containing the JSON schemas.
+func SchemasPath() *paths.Path {
+	return schemasPath
+}
+
+// Compile compiles the schema files specified by the filename arguments and returns the compiled schema.
+func Compile(schemaFilename string, referencedSchemaFilenames []string, schemasPath *paths.Path) *gojsonschema.Schema {
 	schemaLoader := gojsonschema.NewSchemaLoader()
 
 	// Load the referenced schemas.

@@ -20,7 +20,7 @@ func Properties(libraryPath *paths.Path) (*properties.Map, error) {
 // Validate validates library.properties data against the JSON schema.
 func Validate(libraryProperties *properties.Map) *gojsonschema.Result {
 	referencedSchemaFilenames := []string{}
-	schemaObject := schema.Compile("arduino-library-properties-schema.json", referencedSchemaFilenames)
+	schemaObject := schema.Compile("arduino-library-properties-schema.json", referencedSchemaFilenames, schema.SchemasPath())
 
 	return schema.Validate(libraryProperties, schemaObject)
 }
