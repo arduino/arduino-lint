@@ -19,7 +19,7 @@ import (
 	"github.com/arduino/arduino-check/project"
 	"github.com/arduino/arduino-check/project/library/libraryproperties"
 	"github.com/arduino/go-properties-orderedmap"
-	"github.com/xeipuuv/gojsonschema"
+	"github.com/ory/jsonschema/v3"
 )
 
 // Initialize gathers the library check data for the specified project.
@@ -47,10 +47,9 @@ func LibraryProperties() *properties.Map {
 	return libraryProperties
 }
 
-var libraryPropertiesSchemaValidationResult *gojsonschema.Result
+var libraryPropertiesSchemaValidationResult *jsonschema.ValidationError
 
 // LibraryPropertiesSchemaValidationResult returns the result of validating library.properties against the JSON schema.
-// See: https://github.com/xeipuuv/gojsonschema
-func LibraryPropertiesSchemaValidationResult() *gojsonschema.Result {
+func LibraryPropertiesSchemaValidationResult() *jsonschema.ValidationError {
 	return libraryPropertiesSchemaValidationResult
 }
