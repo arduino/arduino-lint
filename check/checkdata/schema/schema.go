@@ -10,16 +10,10 @@ import (
 	"github.com/xeipuuv/gojsonschema"
 )
 
-var schemasPath *paths.Path
-
-func init() {
-	workingPath, _ := os.Getwd()
-	schemasPath = paths.New(workingPath)
-}
-
 // SchemasPath returns the path to the folder containing the JSON schemas.
 func SchemasPath() *paths.Path {
-	return schemasPath
+	workingPath, _ := os.Getwd()
+	return paths.New(workingPath)
 }
 
 // Compile compiles the schema files specified by the filename arguments and returns the compiled schema.
