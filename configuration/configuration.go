@@ -2,6 +2,8 @@
 package configuration
 
 import (
+	"os"
+
 	"github.com/arduino/arduino-check/configuration/checkmode"
 	"github.com/arduino/arduino-check/project/projecttype"
 	"github.com/arduino/arduino-check/result/outputformat"
@@ -78,4 +80,10 @@ var targetPath *paths.Path
 // TargetPath returns the projects search path.
 func TargetPath() *paths.Path {
 	return targetPath
+}
+
+// SchemasPath returns the path to the folder containing the JSON schemas.
+func SchemasPath() *paths.Path {
+	workingPath, _ := os.Getwd()
+	return paths.New(workingPath)
 }
