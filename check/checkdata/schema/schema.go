@@ -3,19 +3,12 @@ package schema
 
 import (
 	"net/url"
-	"os"
 	"path/filepath"
 	"regexp"
 
 	"github.com/arduino/go-paths-helper"
 	"github.com/xeipuuv/gojsonschema"
 )
-
-// SchemasPath returns the path to the folder containing the JSON schemas.
-func SchemasPath() *paths.Path {
-	workingPath, _ := os.Getwd()
-	return paths.New(workingPath)
-}
 
 // Compile compiles the schema files specified by the filename arguments and returns the compiled schema.
 func Compile(schemaFilename string, referencedSchemaFilenames []string, schemasPath *paths.Path) *gojsonschema.Schema {
