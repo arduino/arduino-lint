@@ -2,10 +2,11 @@
 package schema
 
 import (
+	"net/url"
 	"os"
+	"path/filepath"
 	"regexp"
 
-	"github.com/arduino/arduino-check/util"
 	"github.com/arduino/go-paths-helper"
 	"github.com/xeipuuv/gojsonschema"
 )
@@ -23,7 +24,7 @@ func Compile(schemaFilename string, referencedSchemaFilenames []string, schemasP
 	// Load the referenced schemas.
 	for _, referencedSchemaFilename := range referencedSchemaFilenames {
 		referencedSchemaPath := schemasPath.Join(referencedSchemaFilename)
-		referencedSchemaURI := util.PathURI(referencedSchemaPath)
+		referencedSchemaURI := pathURI(referencedSchemaPath)
 		err := schemaLoader.AddSchemas(gojsonschema.NewReferenceLoader(referencedSchemaURI))
 		if err != nil {
 			panic(err.Error())
@@ -32,7 +33,7 @@ func Compile(schemaFilename string, referencedSchemaFilenames []string, schemasP
 
 	// Compile the schema.
 	schemaPath := schemasPath.Join(schemaFilename)
-	schemaURI := util.PathURI(schemaPath)
+	schemaURI := pathURI(schemaPath)
 	compiledSchema, err := schemaLoader.Compile(gojsonschema.NewReferenceLoader(schemaURI))
 	if err != nil {
 		panic(err.Error())
@@ -77,4 +78,15 @@ func ValidationErrorMatch(typeQuery string, fieldQuery string, descriptionQueryR
 	}
 
 	return false
+}
+
+// pathURI returns the URI representation of the path argument.
+func pathURI(path *paths.Path) string {
+	uriFriendlyPath := filepath.ToSlash(path.String())
+	pathURI := url.URL{
+		Scheme: "file",
+		Path:   uriFriendlyPath,
+	}
+
+	return pathURI.String()
 }
