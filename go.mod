@@ -7,5 +7,6 @@ require (
 	github.com/arduino/go-paths-helper v1.3.2
 	github.com/arduino/go-properties-orderedmap v1.4.0
 	github.com/sirupsen/logrus v1.6.0
+	github.com/stretchr/testify v1.6.1
 	github.com/xeipuuv/gojsonschema v1.2.0
 )
