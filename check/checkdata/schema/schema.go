@@ -20,7 +20,7 @@ func Compile(schemaFilename string, referencedSchemaFilenames []string, schemasP
 		referencedSchemaURI := pathURI(referencedSchemaPath)
 		err := schemaLoader.AddSchemas(gojsonschema.NewReferenceLoader(referencedSchemaURI))
 		if err != nil {
-			panic(err.Error())
+			panic(err)
 		}
 	}
 
@@ -29,7 +29,7 @@ func Compile(schemaFilename string, referencedSchemaFilenames []string, schemasP
 	schemaURI := pathURI(schemaPath)
 	compiledSchema, err := schemaLoader.Compile(gojsonschema.NewReferenceLoader(schemaURI))
 	if err != nil {
-		panic(err.Error())
+		panic(err)
 	}
 	return compiledSchema
 }
@@ -38,7 +38,7 @@ func Compile(schemaFilename string, referencedSchemaFilenames []string, schemasP
 func Validate(instanceObject interface{}, schemaObject *gojsonschema.Schema) *gojsonschema.Result {
 	result, err := schemaObject.Validate(gojsonschema.NewGoLoader(instanceObject))
 	if err != nil {
-		panic(err.Error())
+		panic(err)
 	}
 
 	return result
