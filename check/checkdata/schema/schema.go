@@ -75,7 +75,15 @@ func ValidationErrorMatch(typeQuery string, fieldQuery string, descriptionQueryR
 
 // pathURI returns the URI representation of the path argument.
 func pathURI(path *paths.Path) string {
-	uriFriendlyPath := filepath.ToSlash(path.String())
+	absolutePath, err := path.Abs()
+	if err != nil {
+		panic(err.Error())
+	}
+	uriFriendlyPath := filepath.ToSlash(absolutePath.String())
+	// In order to be valid, the path in the URI must start with `/`, but Windows paths do not.
+	if uriFriendlyPath[0] != '/' {
+		uriFriendlyPath = "/" + uriFriendlyPath
+	}
 	pathURI := url.URL{
 		Scheme: "file",
 		Path:   uriFriendlyPath,
