@@ -3,3 +3,6 @@
 .vscode/
 .vs/
 .ionide/
+
+# Test files
+/check/checkdata/schema/testdata/invalid-schema.json
