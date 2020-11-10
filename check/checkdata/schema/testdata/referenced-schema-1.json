@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-check/main/check/checkdata/schema/testdata/referenced-schema-1.json",
+  "title": "Schema for use in unit tests",
+  "definitions": {
+    "patternObject": {
+      "pattern": "^[a-z]+$"
+    },
+    "requiredObject": {
+      "required": ["property1"]
+    }
+  }
+}

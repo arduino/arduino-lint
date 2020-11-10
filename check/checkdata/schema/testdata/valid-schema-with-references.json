@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-check/main/check/checkdata/schema/testdata/schema-with-references.json",
+  "title": "Schema for use in unit tests",
+  "type": "object",
+  "properties": {
+    "property1": {
+      "allOf": [
+        {
+          "$ref": "referenced-schema-2.json#/definitions/minLengthObject"
+        }
+      ]
+    },
+    "property2": {
+      "allOf": [
+        {
+          "$ref": "referenced-schema-1.json#/definitions/patternObject"
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "referenced-schema-1.json#/definitions/requiredObject"
+    }
+  ]
+}

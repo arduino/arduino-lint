@@ -21,6 +21,7 @@ import (
 	"github.com/arduino/arduino-check/check/checkdata"
 	"github.com/arduino/arduino-check/check/checkdata/schema"
 	"github.com/arduino/arduino-check/check/checkresult"
+	"github.com/arduino/arduino-check/configuration"
 )
 
 // LibraryPropertiesFormat checks for invalid library.properties format.
@@ -37,7 +38,7 @@ func LibraryPropertiesNameFieldMissing() (result checkresult.Type, output string
 		return checkresult.NotRun, ""
 	}
 
-	if schema.RequiredPropertyMissing("name", checkdata.LibraryPropertiesSchemaValidationResult()) {
+	if schema.RequiredPropertyMissing("name", checkdata.LibraryPropertiesSchemaValidationResult(), configuration.SchemasPath()) {
 		return checkresult.Fail, ""
 	}
 	return checkresult.Pass, ""
@@ -49,7 +50,7 @@ func LibraryPropertiesNameFieldDisallowedCharacters() (result checkresult.Type, 
 		return checkresult.NotRun, ""
 	}
 
-	if schema.PropertyPatternMismatch("name", checkdata.LibraryPropertiesSchemaValidationResult()) {
+	if schema.PropertyPatternMismatch("name", checkdata.LibraryPropertiesSchemaValidationResult(), configuration.SchemasPath()) {
 		return checkresult.Fail, ""
 	}
 
@@ -62,7 +63,7 @@ func LibraryPropertiesVersionFieldMissing() (result checkresult.Type, output str
 		return checkresult.NotRun, ""
 	}
 
-	if schema.RequiredPropertyMissing("version", checkdata.LibraryPropertiesSchemaValidationResult()) {
+	if schema.RequiredPropertyMissing("version", checkdata.LibraryPropertiesSchemaValidationResult(), configuration.SchemasPath()) {
 		return checkresult.Fail, ""
 	}
 	return checkresult.Pass, ""

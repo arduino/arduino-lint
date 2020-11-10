@@ -17,24 +17,27 @@
 package schema
 
 import (
+	"encoding/json"
+	"fmt"
 	"net/url"
+	"path"
 	"path/filepath"
 	"regexp"
 
 	"github.com/arduino/go-paths-helper"
-	"github.com/xeipuuv/gojsonschema"
+	"github.com/arduino/go-properties-orderedmap"
+	"github.com/ory/jsonschema/v3"
+	"github.com/sirupsen/logrus"
+	"github.com/xeipuuv/gojsonreference"
 )
 
 // Compile compiles the schema files specified by the filename arguments and returns the compiled schema.
-func Compile(schemaFilename string, referencedSchemaFilenames []string, schemasPath *paths.Path) *gojsonschema.Schema {
-	schemaLoader := gojsonschema.NewSchemaLoader()
+func Compile(schemaFilename string, referencedSchemaFilenames []string, schemasPath *paths.Path) *jsonschema.Schema {
+	compiler := jsonschema.NewCompiler()
 
 	// Load the referenced schemas.
 	for _, referencedSchemaFilename := range referencedSchemaFilenames {
-		referencedSchemaPath := schemasPath.Join(referencedSchemaFilename)
-		referencedSchemaURI := pathURI(referencedSchemaPath)
-		err := schemaLoader.AddSchemas(gojsonschema.NewReferenceLoader(referencedSchemaURI))
-		if err != nil {
+		if err := loadReferencedSchema(compiler, referencedSchemaFilename, schemasPath); err != nil {
 			panic(err)
 		}
 	}
@@ -42,57 +45,136 @@ func Compile(schemaFilename string, referencedSchemaFilenames []string, schemasP
 	// Compile the schema.
 	schemaPath := schemasPath.Join(schemaFilename)
 	schemaURI := pathURI(schemaPath)
-	compiledSchema, err := schemaLoader.Compile(gojsonschema.NewReferenceLoader(schemaURI))
+	compiledSchema, err := compiler.Compile(schemaURI)
 	if err != nil {
 		panic(err)
 	}
+
 	return compiledSchema
 }
 
-// Validate validates an instance against a JSON schema and returns the gojsonschema.Result object.
-func Validate(instanceObject interface{}, schemaObject *gojsonschema.Schema) *gojsonschema.Result {
-	result, err := schemaObject.Validate(gojsonschema.NewGoLoader(instanceObject))
-	if err != nil {
-		panic(err)
+// Validate validates an instance against a JSON schema and returns nil if it was success, or the
+// jsonschema.ValidationError object otherwise.
+func Validate(instanceObject *properties.Map, schemaObject *jsonschema.Schema, schemasPath *paths.Path) *jsonschema.ValidationError {
+	// Convert the instance data from the native properties.Map type to the interface type required by the schema
+	// validation package.
+	instanceObjectMap := instanceObject.AsMap()
+	instanceInterface := make(map[string]interface{}, len(instanceObjectMap))
+	for k, v := range instanceObjectMap {
+		instanceInterface[k] = v
 	}
 
+	validationError := schemaObject.ValidateInterface(instanceInterface)
+	result, _ := validationError.(*jsonschema.ValidationError)
+	if result == nil {
+		logrus.Debug("Schema validation of instance document passed")
+
+	} else {
+		logrus.Debug("Schema validation of instance document failed:")
+		logValidationError(result, schemasPath)
+		logrus.Trace("-----------------------------------------------")
+	}
 	return result
 }
 
 // RequiredPropertyMissing returns whether the given required property is missing from the document.
-func RequiredPropertyMissing(propertyName string, validationResult *gojsonschema.Result) bool {
-	return ValidationErrorMatch("required", "(root)", propertyName+" is required", validationResult)
+func RequiredPropertyMissing(propertyName string, validationResult *jsonschema.ValidationError, schemasPath *paths.Path) bool {
+	return ValidationErrorMatch("#", "/required$", "", "^#/"+propertyName+"$", validationResult, schemasPath)
 }
 
 // PropertyPatternMismatch returns whether the given property did not match the regular expression defined in the JSON schema.
-func PropertyPatternMismatch(propertyName string, validationResult *gojsonschema.Result) bool {
-	return ValidationErrorMatch("pattern", propertyName, "", validationResult)
+func PropertyPatternMismatch(propertyName string, validationResult *jsonschema.ValidationError, schemasPath *paths.Path) bool {
+	return ValidationErrorMatch("#/"+propertyName, "/pattern$", "", "", validationResult, schemasPath)
 }
 
 // ValidationErrorMatch returns whether the given query matches against the JSON schema validation error.
-// See: https://github.com/xeipuuv/gojsonschema#working-with-errors
-func ValidationErrorMatch(typeQuery string, fieldQuery string, descriptionQueryRegexp string, validationResult *gojsonschema.Result) bool {
-	if validationResult.Valid() {
+// See: https://godoc.org/github.com/ory/jsonschema#ValidationError
+func ValidationErrorMatch(
+	instancePointerQuery,
+	schemaPointerQuery,
+	schemaPointerValueQuery,
+	failureContextQuery string,
+	validationResult *jsonschema.ValidationError,
+	schemasPath *paths.Path,
+) bool {
+	if validationResult == nil {
 		// No error, so nothing to match
+		logrus.Trace("Schema validation passed. No match is possible.")
 		return false
 	}
-	for _, validationError := range validationResult.Errors() {
-		if typeQuery == "" || typeQuery == validationError.Type() {
-			if fieldQuery == "" || fieldQuery == validationError.Field() {
-				descriptionQuery := regexp.MustCompile(descriptionQueryRegexp)
-				return descriptionQuery.MatchString(validationError.Description())
-			}
-		}
+
+	instancePointerRegexp := regexp.MustCompile(instancePointerQuery)
+	schemaPointerRegexp := regexp.MustCompile(schemaPointerQuery)
+	schemaPointerValueRegexp := regexp.MustCompile(schemaPointerValueQuery)
+	failureContextRegexp := regexp.MustCompile(failureContextQuery)
+
+	return validationErrorMatch(
+		instancePointerRegexp,
+		schemaPointerRegexp,
+		schemaPointerValueRegexp,
+		failureContextRegexp,
+		validationResult,
+		schemasPath)
+}
+
+// loadReferencedSchema adds a schema that is referenced by the parent schema to the compiler object.
+func loadReferencedSchema(compiler *jsonschema.Compiler, schemaFilename string, schemasPath *paths.Path) error {
+	schemaPath := schemasPath.Join(schemaFilename)
+	schemaFile, err := schemaPath.Open()
+	if err != nil {
+		return err
+	}
+	defer schemaFile.Close()
+
+	// Get the $id value from the schema to use as the `url` argument for the `compiler.AddResource()` call.
+	id, err := schemaID(schemaFilename, schemasPath)
+	if err != nil {
+		return err
 	}
 
-	return false
+	return compiler.AddResource(id, schemaFile)
+}
+
+// schemaID returns the value of the schema's $id key.
+func schemaID(schemaFilename string, schemasPath *paths.Path) (string, error) {
+	schemaPath := schemasPath.Join(schemaFilename)
+	schemaInterface := unmarshalJSONFile(schemaPath)
+
+	id, ok := schemaInterface.(map[string]interface{})["$id"].(string)
+	if !ok {
+		return "", fmt.Errorf("Schema %s is missing an $id keyword", schemaPath)
+	}
+
+	return id, nil
+}
+
+// unmarshalJSONFile returns the data from a JSON file.
+func unmarshalJSONFile(filePath *paths.Path) interface{} {
+	fileBuffer, err := filePath.ReadFile()
+	if err != nil {
+		panic(err)
+	}
+
+	var dataInterface interface{}
+	if err := json.Unmarshal(fileBuffer, &dataInterface); err != nil {
+		panic(err)
+	}
+
+	return dataInterface
+}
+
+// compile compiles the parent schema and returns the resulting jsonschema.Schema object.
+func compile(compiler *jsonschema.Compiler, schemaFilename string, schemasPath *paths.Path) (*jsonschema.Schema, error) {
+	schemaPath := schemasPath.Join(schemaFilename)
+	schemaURI := pathURI(schemaPath)
+	return compiler.Compile(schemaURI)
 }
 
 // pathURI returns the URI representation of the path argument.
 func pathURI(path *paths.Path) string {
 	absolutePath, err := path.Abs()
 	if err != nil {
-		panic(err.Error())
+		panic(err)
 	}
 	uriFriendlyPath := filepath.ToSlash(absolutePath.String())
 	// In order to be valid, the path in the URI must start with `/`, but Windows paths do not.
@@ -105,4 +187,130 @@ func pathURI(path *paths.Path) string {
 	}
 
 	return pathURI.String()
+}
+
+// logValidationError logs the schema validation error data
+func logValidationError(validationError *jsonschema.ValidationError, schemasPath *paths.Path) {
+	logrus.Trace("--------Schema validation failure cause--------")
+	logrus.Tracef("Error message: %s", validationError.Error())
+	logrus.Tracef("Instance pointer: %v", validationError.InstancePtr)
+	logrus.Tracef("Schema URL: %s", validationError.SchemaURL)
+	logrus.Tracef("Schema pointer: %s", validationError.SchemaPtr)
+	logrus.Tracef("Schema pointer value: %v", schemaPointerValue(validationError, schemasPath))
+	logrus.Tracef("Failure context: %v", validationError.Context)
+	logrus.Tracef("Failure context type: %T", validationError.Context)
+
+	// Recursively log all causes.
+	for _, validationErrorCause := range validationError.Causes {
+		logValidationError(validationErrorCause, schemasPath)
+	}
+}
+
+// schemaPointerValue returns the object identified by the given JSON pointer from the schema file.
+func schemaPointerValue(validationError *jsonschema.ValidationError, schemasPath *paths.Path) interface{} {
+	schemaPath := schemasPath.Join(path.Base(validationError.SchemaURL))
+	return jsonPointerValue(validationError.SchemaPtr, schemaPath)
+}
+
+// jsonPointerValue returns the object identified by the given JSON pointer from the JSON file.
+func jsonPointerValue(jsonPointer string, filePath *paths.Path) interface{} {
+	jsonReference, err := gojsonreference.NewJsonReference(jsonPointer)
+	if err != nil {
+		panic(err)
+	}
+	jsonInterface := unmarshalJSONFile(filePath)
+	jsonPointerValue, _, err := jsonReference.GetPointer().Get(jsonInterface)
+	if err != nil {
+		panic(err)
+	}
+	return jsonPointerValue
+}
+
+func validationErrorMatch(
+	instancePointerRegexp,
+	schemaPointerRegexp,
+	schemaPointerValueRegexp,
+	failureContextRegexp *regexp.Regexp,
+	validationError *jsonschema.ValidationError,
+	schemasPath *paths.Path,
+) bool {
+	logrus.Trace("--------Checking schema validation failure match--------")
+	logrus.Tracef("Checking instance pointer: %s match with regexp: %s", validationError.InstancePtr, instancePointerRegexp)
+	if instancePointerRegexp.MatchString(validationError.InstancePtr) {
+		logrus.Tracef("Matched!")
+		logrus.Tracef("Checking schema pointer: %s match with regexp: %s", validationError.SchemaPtr, schemaPointerRegexp)
+		if schemaPointerRegexp.MatchString(validationError.SchemaPtr) {
+			logrus.Tracef("Matched!")
+			if validationErrorSchemaPointerValueMatch(schemaPointerValueRegexp, validationError, schemasPath) {
+				logrus.Tracef("Matched!")
+				logrus.Tracef("Checking failure context: %v match with regexp: %s", validationError.Context, failureContextRegexp)
+				if validationErrorContextMatch(failureContextRegexp, validationError) {
+					logrus.Tracef("Matched!")
+					return true
+				}
+			}
+		}
+	}
+
+	// Recursively check all causes for a match.
+	for _, validationErrorCause := range validationError.Causes {
+		if validationErrorMatch(
+			instancePointerRegexp,
+			schemaPointerRegexp,
+			schemaPointerValueRegexp,
+			failureContextRegexp,
+			validationErrorCause,
+			schemasPath,
+		) {
+			return true
+		}
+	}
+
+	return false
+}
+
+// validationErrorSchemaPointerValueMatch marshalls the data in the schema at the given JSON pointer and returns whether
+// it matches against the given regular expression.
+func validationErrorSchemaPointerValueMatch(
+	schemaPointerValueRegexp *regexp.Regexp,
+	validationError *jsonschema.ValidationError,
+	schemasPath *paths.Path,
+) bool {
+	marshalledSchemaPointerValue, err := json.Marshal(schemaPointerValue(validationError, schemasPath))
+	logrus.Tracef("Checking schema pointer value: %s match with regexp: %s", marshalledSchemaPointerValue, schemaPointerValueRegexp)
+	if err != nil {
+		panic(err)
+	}
+	return schemaPointerValueRegexp.Match(marshalledSchemaPointerValue)
+}
+
+// validationErrorContextMatch parses the validation error context data and returns whether it matches against the given
+// regular expression.
+func validationErrorContextMatch(failureContextRegexp *regexp.Regexp, validationError *jsonschema.ValidationError) bool {
+	// This was added in the github.com/ory/jsonschema fork of github.com/santhosh-tekuri/jsonschema
+	// It currently only provides context about the `required` keyword.
+	switch contextObject := validationError.Context.(type) {
+	case nil:
+		return failureContextRegexp.MatchString("")
+	case *jsonschema.ValidationErrorContextRequired:
+		return validationErrorContextRequiredMatch(failureContextRegexp, contextObject)
+	default:
+		logrus.Errorf("Unhandled validation error context type: %T", validationError.Context)
+		return failureContextRegexp.MatchString("")
+	}
+}
+
+// validationErrorContextRequiredMatch returns whether any of the JSON pointers of missing required properties match
+// against the given regular expression.
+func validationErrorContextRequiredMatch(
+	failureContextRegexp *regexp.Regexp,
+	contextObject *jsonschema.ValidationErrorContextRequired,
+) bool {
+	// See: https://godoc.org/github.com/ory/jsonschema#ValidationErrorContextRequired
+	for _, requiredPropertyPointer := range contextObject.Missing {
+		if failureContextRegexp.MatchString(requiredPropertyPointer) {
+			return true
+		}
+	}
+	return false
 }
