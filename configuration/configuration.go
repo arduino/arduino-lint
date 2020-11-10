@@ -99,6 +99,9 @@ func TargetPath() *paths.Path {
 
 // SchemasPath returns the path to the folder containing the JSON schemas.
 func SchemasPath() *paths.Path {
-	workingPath, _ := os.Getwd()
-	return paths.New(workingPath)
+	executablePath, err := os.Executable()
+	if err != nil {
+		panic(err)
+	}
+	return paths.New(executablePath).Parent()
 }
