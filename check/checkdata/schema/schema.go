@@ -155,7 +155,7 @@ func logValidationError(validationError *jsonschema.ValidationError, schemasPath
 	logrus.Tracef("Instance pointer: %v", validationError.InstancePtr)
 	logrus.Tracef("Schema URL: %s", validationError.SchemaURL)
 	logrus.Tracef("Schema pointer: %s", validationError.SchemaPtr)
-	logrus.Tracef("Schema pointer value: %v", schemaPointerValue(validationError, schemasPath))
+	logrus.Tracef("Schema pointer value: %v", validationErrorSchemaPointerValue(validationError, schemasPath))
 	logrus.Tracef("Failure context: %v", validationError.Context)
 	logrus.Tracef("Failure context type: %T", validationError.Context)
 
@@ -165,10 +165,15 @@ func logValidationError(validationError *jsonschema.ValidationError, schemasPath
 	}
 }
 
+// validationErrorSchemaPointerValue returns the object identified by the validation error's schema JSON pointer.
+func validationErrorSchemaPointerValue(validationError *jsonschema.ValidationError, schemasPath *paths.Path) interface{} {
+	return schemaPointerValue(validationError.SchemaURL, validationError.SchemaPtr, schemasPath)
+}
+
 // schemaPointerValue returns the object identified by the given JSON pointer from the schema file.
-func schemaPointerValue(validationError *jsonschema.ValidationError, schemasPath *paths.Path) interface{} {
-	schemaPath := schemasPath.Join(path.Base(validationError.SchemaURL))
-	return jsonPointerValue(validationError.SchemaPtr, schemaPath)
+func schemaPointerValue(schemaURL, schemaPointer string, schemasPath *paths.Path) interface{} {
+	schemaPath := schemasPath.Join(path.Base(schemaURL))
+	return jsonPointerValue(schemaPointer, schemaPath)
 }
 
 // jsonPointerValue returns the object identified by the given JSON pointer from the JSON file.

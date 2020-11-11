@@ -1,7 +1,6 @@
 package schema
 
 import (
-	"fmt"
 	"os"
 	"regexp"
 	"runtime"
@@ -155,14 +154,13 @@ func Test_pathURI(t *testing.T) {
 	}
 }
 
-func Test_schemaPointerValue(t *testing.T) {
+func Test_validationErrorSchemaPointerValue(t *testing.T) {
 	validationError := jsonschema.ValidationError{
 		SchemaURL: "https://raw.githubusercontent.com/arduino/arduino-check/main/check/checkdata/schema/testdata/referenced-schema-1.json",
 		SchemaPtr: "#/definitions/patternObject/pattern",
 	}
 
-	schemaPointerValueInterface := schemaPointerValue(&validationError, schemasPath)
-	fmt.Printf("%T", schemaPointerValueInterface)
+	schemaPointerValueInterface := validationErrorSchemaPointerValue(&validationError, schemasPath)
 	schemaPointerValue, ok := schemaPointerValueInterface.(string)
 	require.True(t, ok)
 	require.Equal(t, "^[a-z]+$", schemaPointerValue)
