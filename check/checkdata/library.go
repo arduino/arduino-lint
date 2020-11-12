@@ -16,6 +16,7 @@
 package checkdata
 
 import (
+	"github.com/arduino/arduino-check/configuration"
 	"github.com/arduino/arduino-check/project"
 	"github.com/arduino/arduino-check/project/library/libraryproperties"
 	"github.com/arduino/go-properties-orderedmap"
@@ -29,7 +30,7 @@ func InitializeForLibrary(project project.Type) {
 		// TODO: can I even do this?
 		libraryPropertiesSchemaValidationResult = nil
 	} else {
-		libraryPropertiesSchemaValidationResult = libraryproperties.Validate(libraryProperties)
+		libraryPropertiesSchemaValidationResult = libraryproperties.Validate(libraryProperties, configuration.SchemasPath())
 	}
 }
 
