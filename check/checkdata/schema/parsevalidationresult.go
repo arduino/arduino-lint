@@ -17,6 +17,7 @@ package schema
 
 import (
 	"encoding/json"
+	"fmt"
 	"regexp"
 
 	"github.com/arduino/go-paths-helper"
@@ -76,10 +77,10 @@ func validationErrorMatch(
 	logrus.Tracef("Checking instance pointer: %s match with regexp: %s", validationError.InstancePtr, instancePointerRegexp)
 	if instancePointerRegexp.MatchString(validationError.InstancePtr) {
 		logrus.Tracef("Matched!")
-		logrus.Tracef("Checking schema pointer: %s match with regexp: %s", validationError.SchemaPtr, schemaPointerRegexp)
-		if schemaPointerRegexp.MatchString(validationError.SchemaPtr) {
+		matchedSchemaPointer := validationErrorSchemaPointerMatch(schemaPointerRegexp, validationError, schemasPath)
+		if matchedSchemaPointer != "" {
 			logrus.Tracef("Matched!")
-			if validationErrorSchemaPointerValueMatch(schemaPointerValueRegexp, validationError, schemasPath) {
+			if validationErrorSchemaPointerValueMatch(schemaPointerValueRegexp, validationError.SchemaURL, matchedSchemaPointer, schemasPath) {
 				logrus.Tracef("Matched!")
 				logrus.Tracef("Checking failure context: %v match with regexp: %s", validationError.Context, failureContextRegexp)
 				if validationErrorContextMatch(failureContextRegexp, validationError) {
@@ -107,14 +108,67 @@ func validationErrorMatch(
 	return false
 }
 
+// validationErrorSchemaPointerMatch matches the JSON schema pointer related to the validation failure against a regular expression.
+func validationErrorSchemaPointerMatch(
+	schemaPointerRegexp *regexp.Regexp,
+	validationError *jsonschema.ValidationError,
+	schemasPath *paths.Path,
+) string {
+	logrus.Tracef("Checking schema pointer: %s match with regexp: %s", validationError.SchemaPtr, schemaPointerRegexp)
+	if schemaPointerRegexp.MatchString(validationError.SchemaPtr) {
+		return validationError.SchemaPtr
+	}
+
+	// The schema validator does not provide full pointer past logic inversion keywords to the lowest level keywords related to the validation error cause.
+	// Therefore the sub-keywords must be checked for matches in order to be able to interpret the exact cause of the failure.
+	if regexp.MustCompile("(/not)|(/oneOf)$").MatchString(validationError.SchemaPtr) {
+		return validationErrorSchemaSubPointerMatch(schemaPointerRegexp, validationError.SchemaPtr, validationErrorSchemaPointerValue(validationError, schemasPath))
+	}
+
+	return ""
+}
+
+// validationErrorSchemaSubPointerMatch recursively checks JSON pointers of all keywords under the parent pointer for match against a regular expression.
+// The matching JSON pointer is returned.
+func validationErrorSchemaSubPointerMatch(schemaPointerRegexp *regexp.Regexp, parentPointer string, pointerValueObject interface{}) string {
+	// Recurse through iterable objects.
+	switch assertedObject := pointerValueObject.(type) {
+	case []interface{}:
+		for index, element := range assertedObject {
+			// Append index to JSON pointer and check for match.
+			matchingPointer := validationErrorSchemaSubPointerMatch(schemaPointerRegexp, fmt.Sprintf("%s/%d", parentPointer, index), element)
+			if matchingPointer != "" {
+				return matchingPointer
+			}
+		}
+	case map[string]interface{}:
+		for key := range assertedObject {
+			// Append key to JSON pointer and check for match.
+			matchingPointer := validationErrorSchemaSubPointerMatch(schemaPointerRegexp, parentPointer+"/"+key, assertedObject[key])
+			if matchingPointer != "" {
+				return matchingPointer
+			}
+			// TODO: Follow references. For now, the schema code must be written so that the problematic keywords are after the reference.
+		}
+	}
+
+	// pointerValueObject is not further iterable. Check for match against the parent JSON pointer.
+	logrus.Tracef("Checking schema pointer: %s match with regexp: %s", parentPointer, schemaPointerRegexp)
+	if schemaPointerRegexp.MatchString(parentPointer) {
+		return parentPointer
+	}
+	return ""
+}
+
 // validationErrorSchemaPointerValueMatch marshalls the data in the schema at the given JSON pointer and returns whether
 // it matches against the given regular expression.
 func validationErrorSchemaPointerValueMatch(
 	schemaPointerValueRegexp *regexp.Regexp,
-	validationError *jsonschema.ValidationError,
+	schemaURL,
+	schemaPointer string,
 	schemasPath *paths.Path,
 ) bool {
-	marshalledSchemaPointerValue, err := json.Marshal(schemaPointerValue(validationError, schemasPath))
+	marshalledSchemaPointerValue, err := json.Marshal(schemaPointerValue(schemaURL, schemaPointer, schemasPath))
 	logrus.Tracef("Checking schema pointer value: %s match with regexp: %s", marshalledSchemaPointerValue, schemaPointerValueRegexp)
 	if err != nil {
 		panic(err)
