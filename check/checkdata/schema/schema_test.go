@@ -17,6 +17,7 @@ var schemasPath *paths.Path
 var validMap = map[string]string{
 	"property1": "foo",
 	"property2": "bar",
+	"property3": "baz",
 }
 
 var validPropertiesMap = properties.NewFromHashmap(validMap)
@@ -105,6 +106,46 @@ func TestPropertyPatternMismatch(t *testing.T) {
 	require.True(t, PropertyPatternMismatch("property2", validationResult, schemasPath))
 
 	require.False(t, PropertyPatternMismatch("property1", validationResult, schemasPath))
+}
+
+func TestPropertyLessThanMinLength(t *testing.T) {
+	propertiesMap := properties.NewFromHashmap(validMap)
+	validationResult := Validate(propertiesMap, validSchemaWithReferences, schemasPath)
+	require.False(t, PropertyLessThanMinLength("property1", validationResult, schemasPath))
+
+	propertiesMap.Set("property1", "a")
+	validationResult = Validate(propertiesMap, validSchemaWithReferences, schemasPath)
+	require.True(t, PropertyLessThanMinLength("property1", validationResult, schemasPath))
+}
+
+func TestPropertyGreaterThanMaxLength(t *testing.T) {
+	propertiesMap := properties.NewFromHashmap(validMap)
+	validationResult := Validate(propertiesMap, validSchemaWithReferences, schemasPath)
+	require.False(t, PropertyGreaterThanMaxLength("property1", validationResult, schemasPath))
+
+	propertiesMap.Set("property1", "12345")
+	validationResult = Validate(propertiesMap, validSchemaWithReferences, schemasPath)
+	require.True(t, PropertyGreaterThanMaxLength("property1", validationResult, schemasPath))
+}
+
+func TestPropertyEnumMismatch(t *testing.T) {
+	propertiesMap := properties.NewFromHashmap(validMap)
+	validationResult := Validate(propertiesMap, validSchemaWithReferences, schemasPath)
+	require.False(t, PropertyEnumMismatch("property3", validationResult, schemasPath))
+
+	propertiesMap.Set("property3", "invalid")
+	validationResult = Validate(propertiesMap, validSchemaWithReferences, schemasPath)
+	require.True(t, PropertyEnumMismatch("property3", validationResult, schemasPath))
+}
+
+func TestMisspelledOptionalPropertyFound(t *testing.T) {
+	propertiesMap := properties.NewFromHashmap(validMap)
+	validationResult := Validate(propertiesMap, validSchemaWithReferences, schemasPath)
+	require.False(t, MisspelledOptionalPropertyFound(validationResult, schemasPath))
+
+	propertiesMap.Set("porperties", "foo")
+	validationResult = Validate(propertiesMap, validSchemaWithReferences, schemasPath)
+	require.True(t, MisspelledOptionalPropertyFound(validationResult, schemasPath))
 }
 
 func TestValidationErrorMatch(t *testing.T) {

@@ -8,6 +8,9 @@
       "allOf": [
         {
           "$ref": "referenced-schema-2.json#/definitions/minLengthObject"
+        },
+        {
+          "$ref": "referenced-schema-2.json#/definitions/maxLengthObject"
         }
       ]
     },
@@ -17,11 +20,21 @@
           "$ref": "referenced-schema-1.json#/definitions/patternObject"
         }
       ]
+    },
+    "property3": {
+      "allOf": [
+        {
+          "$ref": "referenced-schema-2.json#/definitions/enumObject"
+        }
+      ]
     }
   },
   "allOf": [
     {
       "$ref": "referenced-schema-1.json#/definitions/requiredObject"
+    },
+    {
+      "$ref": "referenced-schema-2.json#/definitions/misspelledOptionalProperties"
     }
   ]
 }
