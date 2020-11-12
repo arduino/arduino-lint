@@ -103,5 +103,5 @@ func SchemasPath() *paths.Path {
 	if err != nil {
 		panic(err)
 	}
-	return paths.New(executablePath).Parent()
+	return paths.New(executablePath).Parent().Join("etc", "schemas")
 }
