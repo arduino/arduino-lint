@@ -18,7 +18,6 @@ package libraryproperties
 
 import (
 	"github.com/arduino/arduino-check/check/checkdata/schema"
-	"github.com/arduino/arduino-check/configuration"
 	"github.com/arduino/go-paths-helper"
 	"github.com/arduino/go-properties-orderedmap"
 	"github.com/ory/jsonschema/v3"
@@ -34,9 +33,9 @@ func Properties(libraryPath *paths.Path) (*properties.Map, error) {
 }
 
 // Validate validates library.properties data against the JSON schema.
-func Validate(libraryProperties *properties.Map) *jsonschema.ValidationError {
+func Validate(libraryProperties *properties.Map, schemasPath *paths.Path) *jsonschema.ValidationError {
 	referencedSchemaFilenames := []string{}
-	schemaObject := schema.Compile("arduino-library-properties-schema.json", referencedSchemaFilenames, configuration.SchemasPath())
+	schemaObject := schema.Compile("arduino-library-properties-schema.json", referencedSchemaFilenames, schemasPath)
 
-	return schema.Validate(libraryProperties, schemaObject, configuration.SchemasPath())
+	return schema.Validate(libraryProperties, schemaObject, schemasPath)
 }
