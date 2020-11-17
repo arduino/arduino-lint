@@ -17,6 +17,9 @@
 package checkmode
 
 import (
+	"fmt"
+	"strings"
+
 	"github.com/arduino/arduino-check/project/projecttype"
 	"github.com/sirupsen/logrus"
 )
@@ -33,6 +36,20 @@ const (
 	All                                  // always
 	Default                              // default
 )
+
+// LibraryManagerModeFromString parses the --library-manager flag value and returns the corresponding check mode settings.
+func LibraryManagerModeFromString(libraryManagerModeString string) (bool, bool, error) {
+	switch strings.ToLower(libraryManagerModeString) {
+	case "submit":
+		return true, false, nil
+	case "update":
+		return false, true, nil
+	case "false":
+		return false, false, nil
+	default:
+		return false, false, fmt.Errorf("No matching Library Manager mode for string %s", libraryManagerModeString)
+	}
+}
 
 // Modes merges the default check mode values for the given superproject type with any user-specified check mode settings.
 func Modes(defaultCheckModes map[projecttype.Type]map[Type]bool, customCheckModes map[Type]bool, superprojectType projecttype.Type) map[Type]bool {
