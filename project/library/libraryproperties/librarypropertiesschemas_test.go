@@ -13,7 +13,8 @@
 // Arduino software without disclosing the source code of your own applications.
 // To purchase a commercial license, send an email to license@arduino.cc.
 
-package schemas
+// This file contains tests for the library.properties JSON schemas.
+package libraryproperties_test
 
 import (
 	"fmt"
@@ -54,7 +55,7 @@ var schemasPath *paths.Path
 
 func init() {
 	workingPath, _ := os.Getwd()
-	schemasPath = paths.New(workingPath).Join("..")
+	schemasPath = paths.New(workingPath).Join("..", "..", "..", "etc", "schemas")
 }
 
 type propertyValueTestTable struct {
