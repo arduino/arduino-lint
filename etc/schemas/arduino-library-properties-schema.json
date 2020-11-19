@@ -7,78 +7,57 @@
   "type": "object",
   "properties": {
     "name": {
-      "type": "string",
-      "minLength": 1,
-      "maxLength": 63,
-      "pattern": "^(([a-zA-Z][a-zA-Z0-9 _\\.\\-]*)|([0-9][a-zA-Z0-9 _\\.\\-]*[a-zA-Z][a-zA-Z0-9 _\\.\\-]*))$"
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/name/specification/object"
     },
     "version": {
-      "type": "string",
-      "$comment": "https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string adjusted to also allow MAJOR.MINOR and with unused non-capturing group syntax removed",
-      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(\\.(0|[1-9]\\d*))?(-((0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(\\.(0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(\\+([0-9a-zA-Z-]+(\\.[0-9a-zA-Z-]+)*))?$"
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/version/specification/object"
     },
     "author": {
-      "type": "string",
-      "minLength": 1
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/author/specification/object"
     },
     "maintainer": {
-      "type": "string",
-      "minLength": 1
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/maintainer/specification/object"
+    },
+    "email": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/email/specification/object"
     },
     "sentence": {
-      "type": "string",
-      "minLength": 1
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/sentence/specification/object"
     },
     "paragraph": {
-      "type": "string"
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/paragraph/specification/object"
     },
     "category": {
-      "type": "string",
-      "enum": [
-        "Display",
-        "Communication",
-        "Signal Input/Output",
-        "Sensors",
-        "Device Control",
-        "Timing",
-        "Data Storage",
-        "Data Processing",
-        "Other"
-      ]
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/category/specification/object"
     },
     "url": {
-      "type": "string",
-      "format": "uri"
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/url/specification/object"
     },
     "architectures": {
-      "type": "string",
-      "minLength": 1
-    },
-    "depends": {
-      "type": "string",
-      "pattern": "^[a-zA-Z][a-zA-Z\\d _\\.\\-,]*$"
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/architectures/specification/object"
     },
     "dot_a_linkage": {
-      "type": "string",
-      "enum": ["true", "false"]
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/dot_a_linkage/specification/object"
+    },
+    "depends": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/depends/specification/object"
     },
     "includes": {
-      "type": "string",
-      "minLength": 1
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/includes/specification/object"
     },
     "precompiled": {
-      "type": "string",
-      "enum": ["true", "full", "false"]
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/precompiled/specification/object"
     },
     "ldflags": {
-      "type": "string"
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/ldflags/specification/object"
     }
   },
-  "propertyNames": {
-    "not": {
-      "$comment": "Misspelled optional property names",
-      "pattern": "^((depend)|(D((epends?)|(EPENDS?)))|(dot_a_linkages)|(dot-?a-?linkages?)|(D(((ot)|(OT))[_-]?((a)|(A))[_-]?((linkages?)|(LINKAGES?))))|(include)|(I((ncludes?)|(NCLUDES?)))|(precompile)|(pre[-_]compiled?)|(P((re[-_]?compiled?)|(RE[-_]?COMPILED?)))|(ldflag)|(ld[-_]flags?)|(L((d[-_]?flags?)|(D[-_]?FLAGS?))))$"
+  "allOf": [
+    {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertyNamesObjects/specification/object"
+    },
+    {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/requiredObjects/specification/object"
     }
-  },
-  "required": ["name", "version", "author", "maintainer", "sentence", "paragraph", "category", "url", "architectures"]
+  ]
 }

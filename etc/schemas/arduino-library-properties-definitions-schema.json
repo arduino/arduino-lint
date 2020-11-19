@@ -1,0 +1,874 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-check/main/etc/schema/arduino-library-properties-definitions-schema.json",
+  "title": "Shared definitions for the Arduino library.properties schemas",
+  "type": "object",
+  "definitions": {
+    "general": {
+      "patternObjects": {
+        "notStartsWithArduino": {
+          "not": {
+            "pattern": "^[aA][rR][dD][uU][iI][nN][oO].*$"
+          }
+        }
+      }
+    },
+    "propertiesObjects": {
+      "name": {
+        "base": {
+          "definitions": {
+            "patternObjects": {
+              "allowedCharacters": {
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/propertiesObjects/depends/base/definitions/patternObject"
+                  },
+                  {
+                    "not": {
+                      "$comment": "The depends property is a comma separated list of names, so a valid name pattern is a valid depends pattern with the comma excluded",
+                      "pattern": "^.*,.*$"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              },
+              {
+                "$ref": "#/definitions/propertiesObjects/name/base/definitions/patternObjects/allowedCharacters"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/name/base/object"
+              },
+              {
+                "maxLength": 63
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/name/base/object"
+              },
+              {
+                "maxLength": 63
+              },
+              {
+                "$comment": "Only official Arduino libraries are allowed to have names starting with \"Arduino\"",
+                "$ref": "#/definitions/general/patternObjects/notStartsWithArduino"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "definitions": {
+            "patternObjects": {
+              "notContainsSpaces": {
+                "not": {
+                  "pattern": "^.* .*$"
+                }
+              },
+              "notContainsArduino": {
+                "not": {
+                  "pattern": "^.+[aA][rR][dD][uU][iI][nN][oO].*$"
+                }
+              },
+              "notContainsSuperfluousTerms": {
+                "not": {
+                  "pattern": "^.*[lL][iI][bB][rR][aA][rR][yY].*$"
+                }
+              }
+            }
+          },
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/name/specification/object"
+              },
+              {
+                "maxLength": 16
+              },
+              {
+                "$ref": "#/definitions/propertiesObjects/name/strict/definitions/patternObjects/notContainsSpaces"
+              },
+              {
+                "$ref": "#/definitions/propertiesObjects/name/strict/definitions/patternObjects/notContainsArduino"
+              },
+              {
+                "$ref": "#/definitions/propertiesObjects/name/strict/definitions/patternObjects/notContainsSuperfluousTerms"
+              }
+            ]
+          }
+        }
+      },
+      "version": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/version/base/object"
+              },
+              {
+                "$ref": "general-definitions-schema.json#/definitions/patternObjects/relaxedSemver"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/version/base/object"
+              },
+              {
+                "$ref": "general-definitions-schema.json#/definitions/patternObjects/semver"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/version/specification/object"
+              }
+            ]
+          }
+        }
+      },
+      "author": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/author/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/author/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/author/specification/object"
+              }
+            ]
+          }
+        }
+      },
+      "maintainer": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/maintainer/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/maintainer/base/object"
+              },
+              {
+                "$comment": "Only official Arduino libraries are allowed to have maintainer field starting with \"Arduino\"",
+                "$ref": "#/definitions/general/patternObjects/notStartsWithArduino"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/maintainer/specification/object"
+              }
+            ]
+          }
+        }
+      },
+      "email": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/email/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/email/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/email/specification/object"
+              }
+            ]
+          }
+        }
+      },
+      "sentence": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/sentence/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/sentence/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/sentence/specification/object"
+              }
+            ]
+          }
+        }
+      },
+      "paragraph": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/paragraph/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/paragraph/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/paragraph/specification/object"
+              }
+            ]
+          }
+        }
+      },
+      "category": {
+        "base": {
+          "definitions": {
+            "enumObject": {
+              "enum": [
+                "Display",
+                "Communication",
+                "Signal Input/Output",
+                "Sensors",
+                "Device Control",
+                "Timing",
+                "Data Storage",
+                "Data Processing",
+                "Other"
+              ]
+            }
+          },
+          "object": {}
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/category/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/category/base/object"
+              },
+              {
+                "$ref": "#/definitions/propertiesObjects/category/base/definitions/enumObject"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/category/specification/object"
+              }
+            ]
+          }
+        }
+      },
+      "url": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/url/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/url/base/object"
+              },
+              {
+                "format": "uri"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/url/specification/object"
+              }
+            ]
+          }
+        }
+      },
+      "architectures": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/architectures/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/architectures/base/object"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/architectures/specification/object"
+              }
+            ]
+          }
+        }
+      },
+      "depends": {
+        "base": {
+          "definitions": {
+            "patternObject": {
+              "pattern": "^(([a-zA-Z][a-zA-Z0-9 _\\.\\-,]*)|([0-9][a-zA-Z0-9 _\\.\\-]*[a-zA-Z][a-zA-Z0-9 _\\.\\-,]*))$"
+            }
+          },
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/definitions/propertiesObjects/depends/base/definitions/patternObject"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/depends/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/depends/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/depends/specification/object"
+              }
+            ]
+          }
+        }
+      },
+      "dot_a_linkage": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "enum": ["true", "false"]
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/dot_a_linkage/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/dot_a_linkage/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/dot_a_linkage/specification/object"
+              }
+            ]
+          }
+        }
+      },
+      "includes": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/sentence/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/sentence/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/sentence/specification/object"
+              }
+            ]
+          }
+        }
+      },
+      "precompiled": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "enum": ["true", "full", "false"]
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/precompiled/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/precompiled/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/precompiled/specification/object"
+              }
+            ]
+          }
+        }
+      },
+      "ldflags": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/ldflags/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/ldflags/base/object"
+              },
+              {
+                "$comment": "Minimum length for a valid -l option",
+                "minLength": 3
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/ldflags/specification/object"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "propertyNamesObjects": {
+      "base": {
+        "object": {}
+      },
+      "permissive": {
+        "object": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/propertyNamesObjects/base/object"
+            }
+          ]
+        }
+      },
+      "specification": {
+        "object": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/propertyNamesObjects/base/object"
+            }
+          ]
+        }
+      },
+      "strict": {
+        "definitions": {
+          "propertyNamesObjects": {
+            "misspelledOptionalProperties": {
+              "propertyNames": {
+                "$comment": "Misspelled optional property names",
+                "allOf": [
+                  {
+                    "not": {
+                      "pattern": "^[dD][eE][pP][eE][nN][dD]$"
+                    }
+                  },
+                  {
+                    "not": {
+                      "pattern": "^D[eE][pP][eE][nN][dD][sS]$"
+                    }
+                  },
+                  {
+                    "not": {
+                      "pattern": "^[dD][oO][tT][_-]?[aA][_-]?[lL][iI][nN][kK][aA][gG][eE][sS]$"
+                    }
+                  },
+                  {
+                    "not": {
+                      "pattern": "^[dD][oO][tT]-?[aA]-?[lL][iI][nN][kK][aA][gG][eE]$"
+                    }
+                  },
+                  {
+                    "not": {
+                      "pattern": "^D[oO][tT]_[aA]_[lL][iI][nN][kK][aA][gG][eE]$"
+                    }
+                  },
+                  {
+                    "not": {
+                      "pattern": "^[iI][nN][cC][lL][uU][dD][eE]$"
+                    }
+                  },
+                  {
+                    "not": {
+                      "pattern": "^I[nN][cC][lL][uU][dD][eE][sS]$"
+                    }
+                  },
+                  {
+                    "not": {
+                      "pattern": "^[pP][rR][eE][-_]?[cC][oO][mM][pP][iI][lL][eE]$"
+                    }
+                  },
+                  {
+                    "not": {
+                      "pattern": "^[pP][rR][eE][-_][cC][oO][mM][pP][iI][lL][eE][dD]$"
+                    }
+                  },
+                  {
+                    "not": {
+                      "pattern": "^P[rR][eE][-_]?[cC][oO][mM][pP][iI][lL][eE][dD]$"
+                    }
+                  },
+                  {
+                    "not": {
+                      "pattern": "^[lL][dD][-_]?[fF][lL][aA][gG]$"
+                    }
+                  },
+                  {
+                    "not": {
+                      "pattern": "^[lL][dD][-_][fF][lL][aA][gG][sS]$"
+                    }
+                  },
+                  {
+                    "not": {
+                      "pattern": "^L[dD][-_]?[fF][lL][aA][gG][sS]$"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "object": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/propertyNamesObjects/strict/definitions/propertyNamesObjects/misspelledOptionalProperties"
+            },
+            {
+              "$ref": "#/definitions/propertyNamesObjects/specification/object"
+            }
+          ]
+        }
+      }
+    },
+    "requiredObjects": {
+      "base": {
+        "object": {
+          "allOf": [
+            {
+              "required": ["name", "version", "author", "sentence", "paragraph", "url"]
+            }
+          ]
+        }
+      },
+      "permissive": {
+        "object": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/requiredObjects/base/object"
+            },
+            {
+              "$comment": "The original draft of the library specification had an \"email\" field. This was later changed to \"maintainer\" and \"email\" is now deprecated",
+              "anyOf": [
+                {
+                  "required": ["maintainer"]
+                },
+                {
+                  "required": ["email"]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "specification": {
+        "object": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/requiredObjects/base/object"
+            },
+            {
+              "required": ["maintainer"]
+            }
+          ]
+        }
+      },
+      "strict": {
+        "object": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/requiredObjects/specification/object"
+            },
+            {
+              "required": ["category", "architectures"]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

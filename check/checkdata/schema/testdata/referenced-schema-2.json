@@ -5,6 +5,19 @@
   "definitions": {
     "minLengthObject": {
       "minLength": 2
+    },
+    "maxLengthObject": {
+      "maxLength": 4
+    },
+    "enumObject": {
+      "enum": ["baz"]
+    },
+    "misspelledOptionalProperties": {
+      "propertyNames": {
+        "not": {
+          "pattern": "porpert([y]|[ies])"
+        }
+      }
     }
   }
 }

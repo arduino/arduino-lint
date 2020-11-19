@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-check/main/etc/schema/arduino-library-properties-permissive-schema.json",
+  "title": "Arduino library.properties JSON permissive schema",
+  "description": "library.properties is the metadata file for Arduino libraries. This schema defines the minimum requirements for this file. See: https://arduino.github.io/arduino-cli/latest/library-specification/#library-metadata",
+  "$comment": "For information on the Arduino library.properties format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
+  "type": "object",
+  "properties": {
+    "name": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/name/permissive/object"
+    },
+    "version": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/version/permissive/object"
+    },
+    "author": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/author/permissive/object"
+    },
+    "maintainer": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/maintainer/permissive/object"
+    },
+    "email": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/email/permissive/object"
+    },
+    "sentence": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/sentence/permissive/object"
+    },
+    "paragraph": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/paragraph/permissive/object"
+    },
+    "category": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/category/permissive/object"
+    },
+    "url": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/url/permissive/object"
+    },
+    "architectures": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/architectures/permissive/object"
+    },
+    "dot_a_linkage": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/dot_a_linkage/permissive/object"
+    },
+    "depends": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/depends/permissive/object"
+    },
+    "includes": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/includes/permissive/object"
+    },
+    "precompiled": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/precompiled/permissive/object"
+    },
+    "ldflags": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/ldflags/permissive/object"
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertyNamesObjects/permissive/object"
+    },
+    {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/requiredObjects/permissive/object"
+    }
+  ]
+}

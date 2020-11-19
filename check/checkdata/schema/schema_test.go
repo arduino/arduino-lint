@@ -1,3 +1,18 @@
+// This file is part of arduino-check.
+//
+// Copyright 2020 ARDUINO SA (http://www.arduino.cc/)
+//
+// This software is released under the GNU General Public License version 3,
+// which covers the main part of arduino-check.
+// The terms of this license can be found at:
+// https://www.gnu.org/licenses/gpl-3.0.en.html
+//
+// You can be released from the requirements of the above licenses by purchasing
+// a commercial license. Buying such a license is mandatory if you want to
+// modify or otherwise use the software for commercial activities involving the
+// Arduino software without disclosing the source code of your own applications.
+// To purchase a commercial license, send an email to license@arduino.cc.
+
 package schema
 
 import (
@@ -17,6 +32,7 @@ var schemasPath *paths.Path
 var validMap = map[string]string{
 	"property1": "foo",
 	"property2": "bar",
+	"property3": "baz",
 }
 
 var validPropertiesMap = properties.NewFromHashmap(validMap)
@@ -105,6 +121,46 @@ func TestPropertyPatternMismatch(t *testing.T) {
 	require.True(t, PropertyPatternMismatch("property2", validationResult, schemasPath))
 
 	require.False(t, PropertyPatternMismatch("property1", validationResult, schemasPath))
+}
+
+func TestPropertyLessThanMinLength(t *testing.T) {
+	propertiesMap := properties.NewFromHashmap(validMap)
+	validationResult := Validate(propertiesMap, validSchemaWithReferences, schemasPath)
+	require.False(t, PropertyLessThanMinLength("property1", validationResult, schemasPath))
+
+	propertiesMap.Set("property1", "a")
+	validationResult = Validate(propertiesMap, validSchemaWithReferences, schemasPath)
+	require.True(t, PropertyLessThanMinLength("property1", validationResult, schemasPath))
+}
+
+func TestPropertyGreaterThanMaxLength(t *testing.T) {
+	propertiesMap := properties.NewFromHashmap(validMap)
+	validationResult := Validate(propertiesMap, validSchemaWithReferences, schemasPath)
+	require.False(t, PropertyGreaterThanMaxLength("property1", validationResult, schemasPath))
+
+	propertiesMap.Set("property1", "12345")
+	validationResult = Validate(propertiesMap, validSchemaWithReferences, schemasPath)
+	require.True(t, PropertyGreaterThanMaxLength("property1", validationResult, schemasPath))
+}
+
+func TestPropertyEnumMismatch(t *testing.T) {
+	propertiesMap := properties.NewFromHashmap(validMap)
+	validationResult := Validate(propertiesMap, validSchemaWithReferences, schemasPath)
+	require.False(t, PropertyEnumMismatch("property3", validationResult, schemasPath))
+
+	propertiesMap.Set("property3", "invalid")
+	validationResult = Validate(propertiesMap, validSchemaWithReferences, schemasPath)
+	require.True(t, PropertyEnumMismatch("property3", validationResult, schemasPath))
+}
+
+func TestMisspelledOptionalPropertyFound(t *testing.T) {
+	propertiesMap := properties.NewFromHashmap(validMap)
+	validationResult := Validate(propertiesMap, validSchemaWithReferences, schemasPath)
+	require.False(t, MisspelledOptionalPropertyFound(validationResult, schemasPath))
+
+	propertiesMap.Set("porperties", "foo")
+	validationResult = Validate(propertiesMap, validSchemaWithReferences, schemasPath)
+	require.True(t, MisspelledOptionalPropertyFound(validationResult, schemasPath))
 }
 
 func TestValidationErrorMatch(t *testing.T) {

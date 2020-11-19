@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-check/main/etc/schema/arduino-library-properties-strict-schema.json",
+  "title": "Arduino library.properties strict JSON schema",
+  "description": "library.properties is the metadata file for Arduino libraries. This schema defines the recommended format. See: https://arduino.github.io/arduino-cli/latest/library-specification/#library-metadata",
+  "$comment": "For information on the Arduino library.properties format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
+  "type": "object",
+  "properties": {
+    "name": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/name/strict/object"
+    },
+    "version": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/version/strict/object"
+    },
+    "author": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/author/strict/object"
+    },
+    "maintainer": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/maintainer/strict/object"
+    },
+    "email": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/email/strict/object"
+    },
+    "sentence": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/sentence/strict/object"
+    },
+    "paragraph": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/paragraph/strict/object"
+    },
+    "category": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/category/strict/object"
+    },
+    "url": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/url/strict/object"
+    },
+    "architectures": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/architectures/strict/object"
+    },
+    "dot_a_linkage": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/dot_a_linkage/strict/object"
+    },
+    "depends": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/depends/strict/object"
+    },
+    "includes": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/includes/strict/object"
+    },
+    "precompiled": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/precompiled/strict/object"
+    },
+    "ldflags": {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertiesObjects/ldflags/strict/object"
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/propertyNamesObjects/strict/object"
+    },
+    {
+      "$ref": "arduino-library-properties-definitions-schema.json#/definitions/requiredObjects/strict/object"
+    }
+  ]
+}

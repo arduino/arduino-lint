@@ -35,6 +35,26 @@ func PropertyPatternMismatch(propertyName string, validationResult *jsonschema.V
 	return ValidationErrorMatch("#/"+propertyName, "/pattern$", "", "", validationResult, schemasPath)
 }
 
+// PropertyLessThanMinLength returns whether the given property is less than the minimum length allowed by the schema.
+func PropertyLessThanMinLength(propertyName string, validationResult *jsonschema.ValidationError, schemasPath *paths.Path) bool {
+	return ValidationErrorMatch("^#/"+propertyName+"$", "/minLength$", "", "", validationResult, schemasPath)
+}
+
+// PropertyGreaterThanMaxLength returns whether the given property is greater than the maximum length allowed by the schema.
+func PropertyGreaterThanMaxLength(propertyName string, validationResult *jsonschema.ValidationError, schemasPath *paths.Path) bool {
+	return ValidationErrorMatch("^#/"+propertyName+"$", "/maxLength$", "", "", validationResult, schemasPath)
+}
+
+// PropertyEnumMismatch returns whether the given property does not match any of the items in the enum array.
+func PropertyEnumMismatch(propertyName string, validationResult *jsonschema.ValidationError, schemasPath *paths.Path) bool {
+	return ValidationErrorMatch("#/"+propertyName, "/enum$", "", "", validationResult, schemasPath)
+}
+
+// MisspelledOptionalPropertyFound returns whether a misspelled optional property was found.
+func MisspelledOptionalPropertyFound(validationResult *jsonschema.ValidationError, schemasPath *paths.Path) bool {
+	return ValidationErrorMatch("#/", "/misspelledOptionalProperties/", "", "", validationResult, schemasPath)
+}
+
 // ValidationErrorMatch returns whether the given query matches against the JSON schema validation error.
 // See: https://godoc.org/github.com/ory/jsonschema#ValidationError
 func ValidationErrorMatch(

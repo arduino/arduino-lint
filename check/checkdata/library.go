@@ -16,6 +16,7 @@
 package checkdata
 
 import (
+	"github.com/arduino/arduino-check/check/checkdata/schema/compliancelevel"
 	"github.com/arduino/arduino-check/configuration"
 	"github.com/arduino/arduino-check/project"
 	"github.com/arduino/arduino-check/project/library/libraryproperties"
@@ -48,9 +49,9 @@ func LibraryProperties() *properties.Map {
 	return libraryProperties
 }
 
-var libraryPropertiesSchemaValidationResult *jsonschema.ValidationError
+var libraryPropertiesSchemaValidationResult map[compliancelevel.Type]*jsonschema.ValidationError
 
 // LibraryPropertiesSchemaValidationResult returns the result of validating library.properties against the JSON schema.
-func LibraryPropertiesSchemaValidationResult() *jsonschema.ValidationError {
+func LibraryPropertiesSchemaValidationResult() map[compliancelevel.Type]*jsonschema.ValidationError {
 	return libraryPropertiesSchemaValidationResult
 }
