@@ -8,6 +8,8 @@ require (
 	github.com/arduino/go-properties-orderedmap v1.4.0
 	github.com/ory/jsonschema/v3 v3.0.1
 	github.com/sirupsen/logrus v1.6.0
+	github.com/spf13/cobra v1.0.1-0.20200710201246-675ae5f5a98c
+	github.com/spf13/pflag v1.0.3
 	github.com/stretchr/testify v1.6.1
 	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415
 )

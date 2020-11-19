@@ -16,6 +16,11 @@
 // Package projecttype defines the Arduino project types.
 package projecttype
 
+import (
+	"fmt"
+	"strings"
+)
+
 // Type is the type for Arduino project types.
 //go:generate stringer -type=Type -linecomment
 type Type int
@@ -28,6 +33,22 @@ const (
 	All                      // any project type
 	Not                      // N/A
 )
+
+// FromString parses the --project-type flag value and returns the corresponding project type.
+func FromString(projectTypeString string) (Type, error) {
+	projectType, found := map[string]Type{
+		"sketch":        Sketch,
+		"library":       Library,
+		"platform":      Platform,
+		"package-index": PackageIndex,
+		"all":           All,
+	}[strings.ToLower(projectTypeString)]
+
+	if found {
+		return projectType, nil
+	}
+	return Not, fmt.Errorf("No matching project type for string %s", projectTypeString)
+}
 
 // Matches returns whether the receiver project type matches the argument project type
 func (projectTypeA Type) Matches(projectTypeB Type) bool {

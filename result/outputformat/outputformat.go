@@ -16,6 +16,11 @@
 // Package projecttype defines the output formats
 package outputformat
 
+import (
+	"fmt"
+	"strings"
+)
+
 // Type is the type for output formats
 //go:generate stringer -type=Type -linecomment
 type Type int
@@ -24,3 +29,16 @@ const (
 	Text Type = iota // text
 	JSON             // JSON
 )
+
+// FromString parses the --format flag value and returns the corresponding output format type.
+func FromString(outputFormatString string) (Type, error) {
+	formatType, found := map[string]Type{
+		"text": Text,
+		"json": JSON,
+	}[strings.ToLower(outputFormatString)]
+
+	if found {
+		return formatType, nil
+	}
+	return Text, fmt.Errorf("No matching output format for string %s", outputFormatString)
+}
