@@ -21,21 +21,13 @@ import (
 	"github.com/arduino/arduino-check/configuration/checkmode"
 	"github.com/arduino/arduino-check/project/projecttype"
 	"github.com/arduino/arduino-check/result/outputformat"
+	"github.com/arduino/arduino-check/util/test"
 	"github.com/arduino/go-paths-helper"
-	"github.com/spf13/pflag"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestInitialize(t *testing.T) {
-	flags := pflag.NewFlagSet("", pflag.ExitOnError)
-	flags.String("format", "text", "")
-	flags.String("library-manager", "", "")
-	flags.String("log-format", "text", "")
-	flags.String("log-level", "panic", "")
-	flags.Bool("permissive", false, "")
-	flags.String("project-type", "all", "")
-	flags.Bool("recursive", true, "")
-	flags.String("report-file", "", "")
+	flags := test.ConfigurationFlags()
 
 	projectPaths := []string{"/foo"}
 
