@@ -18,11 +18,15 @@ package checkfunctions
 // The check functions for libraries.
 
 import (
+	"strings"
+
 	"github.com/arduino/arduino-check/check/checkdata"
 	"github.com/arduino/arduino-check/check/checkdata/schema"
 	"github.com/arduino/arduino-check/check/checkdata/schema/compliancelevel"
 	"github.com/arduino/arduino-check/check/checkresult"
 	"github.com/arduino/arduino-check/configuration"
+	"github.com/arduino/go-properties-orderedmap"
+	"github.com/sirupsen/logrus"
 )
 
 // LibraryPropertiesFormat checks for invalid library.properties format.
@@ -58,6 +62,42 @@ func LibraryPropertiesNameFieldDisallowedCharacters() (result checkresult.Type, 
 	return checkresult.Pass, ""
 }
 
+// LibraryPropertiesNameFieldDuplicate checks whether there is an existing entry in the Library Manager index using the the library.properties `name` value.
+func LibraryPropertiesNameFieldDuplicate() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	name, hasName := checkdata.LibraryProperties().GetOk("name")
+	if !hasName {
+		return checkresult.NotRun, ""
+	}
+
+	if nameInLibraryManagerIndex(name) {
+		return checkresult.Fail, name
+	}
+
+	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesNameFieldNotInIndex checks whether there is no existing entry in the Library Manager index using the the library.properties `name` value.
+func LibraryPropertiesNameFieldNotInIndex() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	name, hasName := checkdata.LibraryProperties().GetOk("name")
+	if !hasName {
+		return checkresult.NotRun, ""
+	}
+
+	if nameInLibraryManagerIndex(name) {
+		return checkresult.Pass, ""
+	}
+
+	return checkresult.Fail, name
+}
+
 // LibraryPropertiesVersionFieldMissing checks for missing library.properties "version" field.
 func LibraryPropertiesVersionFieldMissing() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
@@ -68,4 +108,47 @@ func LibraryPropertiesVersionFieldMissing() (result checkresult.Type, output str
 		return checkresult.Fail, ""
 	}
 	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesDependsFieldNotInIndex checks whether the libraries listed in the library.properties `depends` field are in the Library Manager index.
+func LibraryPropertiesDependsFieldNotInIndex() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	depends, hasDepends := checkdata.LibraryProperties().GetOk("depends")
+	if !hasDepends {
+		return checkresult.NotRun, ""
+	}
+
+	dependencies, err := properties.SplitQuotedString(depends, "", false)
+	if err != nil {
+		panic(err)
+	}
+	dependenciesNotInIndex := []string{}
+	for _, dependency := range dependencies {
+		logrus.Tracef("Checking if dependency %s is in index.", dependency)
+		if !nameInLibraryManagerIndex(dependency) {
+			dependenciesNotInIndex = append(dependenciesNotInIndex, dependency)
+		}
+	}
+
+	if len(dependenciesNotInIndex) > 0 {
+		return checkresult.Fail, strings.Join(dependenciesNotInIndex, ", ")
+	}
+
+	return checkresult.Pass, ""
+}
+
+// nameInLibraryManagerIndex returns whether there is a library in Library Manager index using the given name.
+func nameInLibraryManagerIndex(name string) bool {
+	libraries := checkdata.LibraryManagerIndex()["libraries"].([]interface{})
+	for _, libraryInterface := range libraries {
+		library := libraryInterface.(map[string]interface{})
+		if library["name"].(string) == name {
+			return true
+		}
+	}
+
+	return false
 }

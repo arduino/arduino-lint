@@ -16,22 +16,50 @@
 package checkdata
 
 import (
+	"encoding/json"
+	"io/ioutil"
+	"net/http"
+	"os"
+
 	"github.com/arduino/arduino-check/check/checkdata/schema/compliancelevel"
-	"github.com/arduino/arduino-check/configuration"
 	"github.com/arduino/arduino-check/project"
 	"github.com/arduino/arduino-check/project/library/libraryproperties"
+	"github.com/arduino/arduino-check/result/feedback"
+	"github.com/arduino/go-paths-helper"
 	"github.com/arduino/go-properties-orderedmap"
 	"github.com/ory/jsonschema/v3"
+	"github.com/sirupsen/logrus"
 )
 
 // Initialize gathers the library check data for the specified project.
-func InitializeForLibrary(project project.Type) {
+func InitializeForLibrary(project project.Type, schemasPath *paths.Path) {
 	libraryProperties, libraryPropertiesLoadError = libraryproperties.Properties(project.Path)
 	if libraryPropertiesLoadError != nil {
+		logrus.Errorf("Error loading library.properties from %s: %s", project.Path, libraryPropertiesLoadError)
 		// TODO: can I even do this?
 		libraryPropertiesSchemaValidationResult = nil
 	} else {
-		libraryPropertiesSchemaValidationResult = libraryproperties.Validate(libraryProperties, configuration.SchemasPath())
+		libraryPropertiesSchemaValidationResult = libraryproperties.Validate(libraryProperties, schemasPath)
+	}
+
+	if libraryManagerIndex == nil { // Only download the Library Manager index once
+		url := "http://downloads.arduino.cc/libraries/library_index.json"
+		httpResponse, err := http.Get(url)
+		if err != nil {
+			feedback.Errorf("%s Unable to download Library Manager index from %s", err, url)
+			os.Exit(1)
+		}
+		defer httpResponse.Body.Close()
+
+		bytes, err := ioutil.ReadAll(httpResponse.Body)
+		if err != nil {
+			panic(err)
+		}
+
+		err = json.Unmarshal(bytes, &libraryManagerIndex)
+		if err != nil {
+			panic(err)
+		}
 	}
 }
 
@@ -54,4 +82,11 @@ var libraryPropertiesSchemaValidationResult map[compliancelevel.Type]*jsonschema
 // LibraryPropertiesSchemaValidationResult returns the result of validating library.properties against the JSON schema.
 func LibraryPropertiesSchemaValidationResult() map[compliancelevel.Type]*jsonschema.ValidationError {
 	return libraryPropertiesSchemaValidationResult
+}
+
+var libraryManagerIndex map[string]interface{}
+
+// LibraryManagerIndex returns the Library Manager index data.
+func LibraryManagerIndex() map[string]interface{} {
+	return libraryManagerIndex
 }
