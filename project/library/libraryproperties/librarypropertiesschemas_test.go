@@ -335,6 +335,16 @@ func TestPropertiesMaintainerPattern(t *testing.T) {
 	checkPropertyPatternMismatch("maintainer", testTables, t)
 }
 
+func TestPropertiesEmailPattern(t *testing.T) {
+	testTables := []propertyValueTestTable{
+		{"Starts with arduino", "arduinofoo", compliancelevel.Permissive, assert.False},
+		{"Starts with arduino", "arduinofoo", compliancelevel.Specification, assert.True},
+		{"Starts with arduino", "arduinofoo", compliancelevel.Strict, assert.True},
+	}
+
+	checkPropertyPatternMismatch("email", testTables, t)
+}
+
 func TestPropertiesCategoryEnum(t *testing.T) {
 	testTables := []propertyValueTestTable{
 		{"Invalid category", "foo", compliancelevel.Permissive, assert.False},

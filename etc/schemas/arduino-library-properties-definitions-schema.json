@@ -247,23 +247,11 @@
         }
       },
       "email": {
-        "base": {
-          "object": {
-            "allOf": [
-              {
-                "type": "string"
-              },
-              {
-                "minLength": 1
-              }
-            ]
-          }
-        },
         "permissive": {
           "object": {
             "allOf": [
               {
-                "$ref": "#/definitions/propertiesObjects/email/base/object"
+                "$ref": "#/definitions/propertiesObjects/maintainer/permissive/object"
               }
             ]
           }
@@ -272,7 +260,7 @@
           "object": {
             "allOf": [
               {
-                "$ref": "#/definitions/propertiesObjects/email/base/object"
+                "$ref": "#/definitions/propertiesObjects/maintainer/specification/object"
               }
             ]
           }
@@ -281,7 +269,7 @@
           "object": {
             "allOf": [
               {
-                "$ref": "#/definitions/propertiesObjects/email/specification/object"
+                "$ref": "#/definitions/propertiesObjects/maintainer/strict/object"
               }
             ]
           }
