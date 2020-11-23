@@ -63,7 +63,10 @@ func ArduinoCheck(rootCommand *cobra.Command, cliArguments []string) {
 
 	if configuration.ReportFilePath() != nil {
 		// Write report file.
-		result.Results.WriteReport()
+		if err := result.Results.WriteReport(); err != nil {
+			feedback.Error(err.Error())
+			os.Exit(1)
+		}
 	}
 
 	if !result.Results.Passed() {

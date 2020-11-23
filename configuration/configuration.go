@@ -70,7 +70,6 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 
 	recursive, _ = flags.GetBool("recursive")
 
-	// TODO: validate path
 	reportFilePathString, _ := flags.GetString("report-file")
 	reportFilePath = paths.New(reportFilePathString)
 
