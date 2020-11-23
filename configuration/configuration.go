@@ -73,9 +73,15 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 	reportFilePathString, _ := flags.GetString("report-file")
 	reportFilePath = paths.New(reportFilePathString)
 
-	// TODO validate target path value, exit if not found
 	// TODO support multiple paths
 	targetPath = paths.New(projectPaths[0])
+	targetPathExists, err := targetPath.ExistCheck()
+	if err != nil {
+		return fmt.Errorf("Problem processing PROJECT_PATH argument value %v: %v", projectPaths[0], err)
+	}
+	if !targetPathExists {
+		return fmt.Errorf("PROJECT_PATH argument %v does not exist", projectPaths[0])
+	}
 
 	// TODO: set via environment variable
 	// customCheckModes[checkmode.Official] = false
