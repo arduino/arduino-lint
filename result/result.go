@@ -224,13 +224,13 @@ func (results Type) jsonReportRaw() []byte {
 }
 
 // WriteReport writes a report for all projects to the specified file.
-func (results Type) WriteReport() {
-	// Write report file
+func (results Type) WriteReport() error {
 	err := configuration.ReportFilePath().WriteFile(results.jsonReportRaw())
 	if err != nil {
-		feedback.Errorf("Error while writing report: %v", err)
-		os.Exit(1)
+		return fmt.Errorf("Error while writing report: %v", err)
 	}
+
+	return nil
 }
 
 // Passed returns whether the checks passed cumulatively.
