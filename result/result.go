@@ -225,7 +225,19 @@ func (results Type) jsonReportRaw() []byte {
 
 // WriteReport writes a report for all projects to the specified file.
 func (results Type) WriteReport() error {
-	err := configuration.ReportFilePath().WriteFile(results.jsonReportRaw())
+	reportFilePath := configuration.ReportFilePath()
+	reportFilePathParentExists, err := reportFilePath.Parent().ExistCheck()
+	if err != nil {
+		return fmt.Errorf("Problem processing --report-file flag value %v: %v", reportFilePath, err)
+	}
+	if !reportFilePathParentExists {
+		err = reportFilePath.Parent().MkdirAll()
+		if err != nil {
+			return fmt.Errorf("Error while creating report file path (%v): %v", reportFilePath.Parent(), err)
+		}
+	}
+
+	err = reportFilePath.WriteFile(results.jsonReportRaw())
 	if err != nil {
 		return fmt.Errorf("Error while writing report: %v", err)
 	}

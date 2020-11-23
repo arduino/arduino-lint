@@ -38,9 +38,17 @@ func TestWriteReport(t *testing.T) {
 	reportFolderPath := paths.New(reportFolderPathString)
 
 	reportFilePath := reportFolderPath.Join("report-file.json")
+	_, err = reportFilePath.Create() // Create file using the report folder path.
+	require.Nil(t, err)
+
+	flags.Set("report-file", reportFilePath.Join("report-file.json").String())
+	assert.Nil(t, configuration.Initialize(flags, projectPaths))
+	assert.Error(t, Results.WriteReport(), "Parent folder creation should fail due to a collision with an existing file at that path")
+
+	reportFilePath = reportFolderPath.Join("report-file-subfolder", "report-file-subsubfolder", "report-file.json")
 	flags.Set("report-file", reportFilePath.String())
 	assert.Nil(t, configuration.Initialize(flags, projectPaths))
-	assert.NoError(t, Results.WriteReport())
+	assert.NoError(t, Results.WriteReport(), "Creation of multiple levels of parent folders")
 
 	reportFile, err := reportFilePath.Open()
 	require.Nil(t, err)
