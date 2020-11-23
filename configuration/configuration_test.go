@@ -16,6 +16,7 @@
 package configuration
 
 import (
+	"os"
 	"testing"
 
 	"github.com/arduino/arduino-check/configuration/checkmode"
@@ -24,12 +25,15 @@ import (
 	"github.com/arduino/arduino-check/util/test"
 	"github.com/arduino/go-paths-helper"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestInitialize(t *testing.T) {
 	flags := test.ConfigurationFlags()
 
-	projectPaths := []string{"/foo"}
+	projectPath, err := os.Getwd()
+	require.Nil(t, err)
+	projectPaths := []string{projectPath}
 
 	flags.Set("format", "foo")
 	assert.Error(t, Initialize(flags, projectPaths))
@@ -125,8 +129,8 @@ func TestInitialize(t *testing.T) {
 	assert.Nil(t, Initialize(flags, projectPaths))
 	assert.Equal(t, reportFilePath, ReportFilePath())
 
-	reportFilePath = paths.New("/baz")
-	projectPaths = []string{reportFilePath.String()}
 	assert.Nil(t, Initialize(flags, projectPaths))
-	assert.Equal(t, reportFilePath, TargetPath())
+	assert.Equal(t, paths.New(projectPaths[0]), TargetPath())
+
+	assert.Error(t, Initialize(flags, []string{"/nonexistent"}))
 }
