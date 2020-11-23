@@ -74,14 +74,16 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 	reportFilePathString, _ := flags.GetString("report-file")
 	reportFilePath = paths.New(reportFilePathString)
 
-	// TODO support multiple paths
-	targetPath = paths.New(projectPaths[0])
-	targetPathExists, err := targetPath.ExistCheck()
-	if err != nil {
-		return fmt.Errorf("Problem processing PROJECT_PATH argument value %v: %v", projectPaths[0], err)
-	}
-	if !targetPathExists {
-		return fmt.Errorf("PROJECT_PATH argument %v does not exist", projectPaths[0])
+	for _, projectPath := range projectPaths {
+		targetPath := paths.New(projectPath)
+		targetPathExists, err := targetPath.ExistCheck()
+		if err != nil {
+			return fmt.Errorf("Problem processing PROJECT_PATH argument value %v: %v", targetPath, err)
+		}
+		if !targetPathExists {
+			return fmt.Errorf("PROJECT_PATH argument %v does not exist", targetPath)
+		}
+		targetPaths.AddIfMissing(targetPath)
 	}
 
 	if officialModeString, ok := os.LookupEnv("ARDUINO_CHECK_OFFICIAL"); ok {
@@ -101,7 +103,7 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 		"superproject type filter":        SuperprojectTypeFilter(),
 		"recursive":                       Recursive(),
 		"report file":                     ReportFilePath(),
-		"projects path":                   TargetPath(),
+		"projects path":                   TargetPaths(),
 	}).Debug("Configuration initialized")
 
 	return nil
@@ -154,11 +156,11 @@ func ReportFilePath() *paths.Path {
 	return reportFilePath
 }
 
-var targetPath *paths.Path
+var targetPaths paths.PathList
 
-// TargetPath returns the projects search path.
-func TargetPath() *paths.Path {
-	return targetPath
+// TargetPaths returns the projects search paths.
+func TargetPaths() paths.PathList {
+	return targetPaths
 }
 
 // SchemasPath returns the path to the folder containing the JSON schemas.

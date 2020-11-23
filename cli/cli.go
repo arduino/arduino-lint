@@ -27,7 +27,7 @@ func Root() *cobra.Command {
 		Short:                 "Linter for Arduino projects.",
 		Long:                  "arduino-check checks specification compliance and for other common problems with Arduino projects",
 		DisableFlagsInUseLine: true,
-		Use:                   "arduino-check [FLAG]... PROJECT_PATH\n\nRun checks on PROJECT_PATH.",
+		Use:                   "arduino-check [FLAG]... PROJECT_PATH...\n\nRun checks on PROJECT_PATH.",
 		Run:                   command.ArduinoCheck,
 	}
 

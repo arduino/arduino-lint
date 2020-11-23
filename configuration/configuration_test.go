@@ -130,7 +130,7 @@ func TestInitialize(t *testing.T) {
 	assert.Equal(t, reportFilePath, ReportFilePath())
 
 	assert.Nil(t, Initialize(flags, projectPaths))
-	assert.Equal(t, paths.New(projectPaths[0]), TargetPath())
+	assert.Equal(t, paths.NewPathList(projectPaths[0]), TargetPaths())
 
 	assert.Error(t, Initialize(flags, []string{"/nonexistent"}))
 
