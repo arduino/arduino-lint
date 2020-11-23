@@ -5,3 +5,10 @@
 
 - Sketches
 - Libraries
+
+## Usage
+
+After installing `arduino-check`, run the command `arduino-check --help` for usage documentation.
+
+Set the `ARDUINO_CHECK_OFFICIAL` environment variable to "true" to run the checks that only apply to official Arduino
+projects.

@@ -133,4 +133,15 @@ func TestInitialize(t *testing.T) {
 	assert.Equal(t, paths.New(projectPaths[0]), TargetPath())
 
 	assert.Error(t, Initialize(flags, []string{"/nonexistent"}))
+
+	os.Setenv("ARDUINO_CHECK_OFFICIAL", "true")
+	assert.Nil(t, Initialize(test.ConfigurationFlags(), projectPaths))
+	assert.True(t, customCheckModes[checkmode.Official])
+
+	os.Setenv("ARDUINO_CHECK_OFFICIAL", "false")
+	assert.Nil(t, Initialize(test.ConfigurationFlags(), projectPaths))
+	assert.False(t, customCheckModes[checkmode.Official])
+
+	os.Setenv("ARDUINO_CHECK_OFFICIAL", "invalid value")
+	assert.Error(t, Initialize(test.ConfigurationFlags(), projectPaths))
 }

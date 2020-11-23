@@ -19,6 +19,7 @@ package configuration
 import (
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/arduino/arduino-check/configuration/checkmode"
@@ -83,8 +84,12 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 		return fmt.Errorf("PROJECT_PATH argument %v does not exist", projectPaths[0])
 	}
 
-	// TODO: set via environment variable
-	// customCheckModes[checkmode.Official] = false
+	if officialModeString, ok := os.LookupEnv("ARDUINO_CHECK_OFFICIAL"); ok {
+		customCheckModes[checkmode.Official], err = strconv.ParseBool(officialModeString)
+		if err != nil {
+			return fmt.Errorf("ARDUINO_CHECK_OFFICIAL environment variable value %s not valid", officialModeString)
+		}
+	}
 
 	logrus.WithFields(logrus.Fields{
 		"output format":                   OutputFormat(),
