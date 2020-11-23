@@ -5,3 +5,7 @@
 
 - Sketches
 - Libraries
+
+## Usage
+
+After installing `arduino-check`, run the command `arduino-check --help` for usage documentation.
