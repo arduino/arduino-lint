@@ -30,7 +30,9 @@ import (
 func TestWriteReport(t *testing.T) {
 	flags := test.ConfigurationFlags()
 
-	projectPaths := []string{"/foo"}
+	projectPath, err := os.Getwd() // Path to an arbitrary folder that is guaranteed to exist.
+	require.Nil(t, err)
+	projectPaths := []string{projectPath}
 
 	reportFolderPathString, err := ioutil.TempDir("", "arduino-check-result-TestWriteReport")
 	require.Nil(t, err)
