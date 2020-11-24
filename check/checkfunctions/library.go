@@ -146,6 +146,35 @@ func LibraryPropertiesVersionFieldNonSemver() (result checkresult.Type, output s
 	return checkresult.Pass, ""
 }
 
+// LibraryPropertiesAuthorFieldMissing checks for missing library.properties "author" field.
+func LibraryPropertiesAuthorFieldMissing() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.RequiredPropertyMissing("author", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+		return checkresult.Fail, ""
+	}
+	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesAuthorFieldLTMinLength checks if the library.properties "author" value is less than the minimum length.
+func LibraryPropertiesAuthorFieldLTMinLength() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	if !checkdata.LibraryProperties().ContainsKey("author") {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.PropertyLessThanMinLength("author", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+		return checkresult.Fail, ""
+	}
+
+	return checkresult.Pass, ""
+}
+
 // LibraryPropertiesDependsFieldNotInIndex checks whether the libraries listed in the library.properties `depends` field are in the Library Manager index.
 func LibraryPropertiesDependsFieldNotInIndex() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
