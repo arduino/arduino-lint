@@ -110,6 +110,42 @@ func LibraryPropertiesVersionFieldMissing() (result checkresult.Type, output str
 	return checkresult.Pass, ""
 }
 
+// LibraryPropertiesVersionFieldNonRelaxedSemver checks whether the library.properties "version" value is "relaxed semver" compliant.
+func LibraryPropertiesVersionFieldNonRelaxedSemver() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	version, ok := checkdata.LibraryProperties().GetOk("version")
+	if !ok {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.PropertyPatternMismatch("version", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+		return checkresult.Fail, version
+	}
+
+	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesVersionFieldNonSemver checks whether the library.properties "version" value is semver compliant.
+func LibraryPropertiesVersionFieldNonSemver() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	version, ok := checkdata.LibraryProperties().GetOk("version")
+	if !ok {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.PropertyPatternMismatch("version", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict], configuration.SchemasPath()) {
+		return checkresult.Fail, version
+	}
+
+	return checkresult.Pass, ""
+}
+
 // LibraryPropertiesDependsFieldNotInIndex checks whether the libraries listed in the library.properties `depends` field are in the Library Manager index.
 func LibraryPropertiesDependsFieldNotInIndex() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
