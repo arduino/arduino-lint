@@ -225,3 +225,12 @@ func TestLibraryContainsSymlinks(t *testing.T) {
 
 	checkCheckFunction(LibraryContainsSymlinks, testTables, t)
 }
+
+func TestLibraryHasDotDevelopmentFile(t *testing.T) {
+	testTables := []checkFunctionTestTable{
+		{"Has .development file", "DotDevelopment", checkresult.Fail, ""},
+		{"No .development file", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkCheckFunction(LibraryHasDotDevelopmentFile, testTables, t)
+}
