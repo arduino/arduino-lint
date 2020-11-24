@@ -746,6 +746,47 @@ func LibraryPropertiesIncludesFieldLTMinLength() (result checkresult.Type, outpu
 	return checkresult.Pass, ""
 }
 
+// LibraryPropertiesIncludesFieldItemNotFound checks whether the header files specified in the library.properties `includes` field are in the library.
+func LibraryPropertiesIncludesFieldItemNotFound() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	includes, ok := checkdata.LibraryProperties().GetOk("includes")
+	if !ok {
+		return checkresult.NotRun, ""
+	}
+
+	includesList, err := properties.SplitQuotedString(includes, "", false)
+	if err != nil {
+		panic(err)
+	}
+
+	findInclude := func(include string) bool {
+		for _, header := range checkdata.SourceHeaders() {
+			logrus.Tracef("Comparing include %s with header file %s", include, header)
+			if include == header {
+				logrus.Tracef("match!")
+				return true
+			}
+		}
+		return false
+	}
+
+	includesNotInLibrary := []string{}
+	for _, include := range includesList {
+		if !findInclude(include) {
+			includesNotInLibrary = append(includesNotInLibrary, include)
+		}
+	}
+
+	if len(includesNotInLibrary) > 0 {
+		return checkresult.Fail, strings.Join(includesNotInLibrary, ", ")
+	}
+
+	return checkresult.Pass, ""
+}
+
 // LibraryPropertiesPrecompiledFieldInvalid checks for invalid value in the library.properties "precompiled" field.
 func LibraryPropertiesPrecompiledFieldInvalid() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
