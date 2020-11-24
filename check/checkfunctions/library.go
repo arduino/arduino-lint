@@ -622,6 +622,24 @@ func LibraryPropertiesArchitecturesFieldLTMinLength() (result checkresult.Type, 
 	return checkresult.Pass, ""
 }
 
+// LibraryPropertiesDependsFieldDisallowedCharacters checks for disallowed characters in the library.properties "depends" field.
+func LibraryPropertiesDependsFieldDisallowedCharacters() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	depends, ok := checkdata.LibraryProperties().GetOk("depends")
+	if !ok {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.PropertyPatternMismatch("depends", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+		return checkresult.Fail, depends
+	}
+
+	return checkresult.Pass, ""
+}
+
 // LibraryPropertiesDependsFieldNotInIndex checks whether the libraries listed in the library.properties `depends` field are in the Library Manager index.
 func LibraryPropertiesDependsFieldNotInIndex() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
