@@ -759,6 +759,19 @@ func LibraryPropertiesPrecompiledFieldEnabledWithFlatLayout() (result checkresul
 	return checkresult.Pass, ""
 }
 
+// LibraryPropertiesLdflagsFieldLTMinLength checks if the library.properties "ldflags" value is less than the minimum length.
+func LibraryPropertiesLdflagsFieldLTMinLength() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.PropertyLessThanMinLength("ldflags", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+		return checkresult.Fail, ""
+	}
+
+	return checkresult.Pass, ""
+}
+
 // spellCheckLibraryPropertiesFieldValue returns the value of the provided library.properties field with commonly misspelled words corrected.
 func spellCheckLibraryPropertiesFieldValue(fieldName string) (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
