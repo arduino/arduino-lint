@@ -538,6 +538,36 @@ func LibraryPropertiesCategoryFieldUncategorized() (result checkresult.Type, out
 	return checkresult.Pass, ""
 }
 
+// LibraryPropertiesUrlFieldMissing checks for missing library.properties "url" field.
+func LibraryPropertiesUrlFieldMissing() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.RequiredPropertyMissing("url", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+		return checkresult.Fail, ""
+	}
+	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesUrlFieldInvalid checks whether the library.properties "url" value has a valid URL format.
+func LibraryPropertiesUrlFieldInvalid() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	url, ok := checkdata.LibraryProperties().GetOk("url")
+	if !ok {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.ValidationErrorMatch("^#/url$", "/format$", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+		return checkresult.Fail, url
+	}
+
+	return checkresult.Pass, ""
+}
+
 // LibraryPropertiesDependsFieldNotInIndex checks whether the libraries listed in the library.properties `depends` field are in the Library Manager index.
 func LibraryPropertiesDependsFieldNotInIndex() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
