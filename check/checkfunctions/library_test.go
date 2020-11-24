@@ -62,6 +62,17 @@ func checkCheckFunction(checkFunction Type, testTables []checkFunctionTestTable,
 	}
 }
 
+func TestLibraryPropertiesNameFieldMissingOfficialPrefix(t *testing.T) {
+	testTables := []checkFunctionTestTable{
+		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Not defined", "MissingFields", checkresult.NotRun, ""},
+		{"Correct prefix", "Arduino_Official", checkresult.Pass, ""},
+		{"Incorrect prefix", "Recursive", checkresult.Fail, "^Recursive$"},
+	}
+
+	checkCheckFunction(LibraryPropertiesNameFieldMissingOfficialPrefix, testTables, t)
+}
+
 func TestLibraryPropertiesNameFieldDuplicate(t *testing.T) {
 	testTables := []checkFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},

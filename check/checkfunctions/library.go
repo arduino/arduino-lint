@@ -151,6 +151,23 @@ func LibraryPropertiesNameFieldStartsWithArduino() (result checkresult.Type, out
 	return checkresult.Pass, ""
 }
 
+// LibraryPropertiesNameFieldMissingOfficialPrefix checks whether the library.properties `name` value uses the prefix required of all new official Arduino libraries.
+func LibraryPropertiesNameFieldMissingOfficialPrefix() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	name, ok := checkdata.LibraryProperties().GetOk("name")
+	if !ok {
+		return checkresult.NotRun, ""
+	}
+
+	if strings.HasPrefix(name, "Arduino_") {
+		return checkresult.Pass, ""
+	}
+	return checkresult.Fail, name
+}
+
 // LibraryPropertiesNameFieldContainsArduino checks if the library.properties "name" value contains "Arduino".
 func LibraryPropertiesNameFieldContainsArduino() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
