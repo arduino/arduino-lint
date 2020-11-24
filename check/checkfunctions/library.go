@@ -19,6 +19,7 @@ package checkfunctions
 
 import (
 	"net/http"
+	"path/filepath"
 	"strings"
 
 	"github.com/arduino/arduino-check/check/checkdata"
@@ -27,6 +28,7 @@ import (
 	"github.com/arduino/arduino-check/check/checkresult"
 	"github.com/arduino/arduino-check/configuration"
 	"github.com/arduino/arduino-cli/arduino/libraries"
+	"github.com/arduino/arduino-cli/arduino/utils"
 	"github.com/arduino/go-properties-orderedmap"
 	"github.com/sirupsen/logrus"
 )
@@ -240,6 +242,27 @@ func LibraryPropertiesNameFieldNotInIndex() (result checkresult.Type, output str
 	}
 
 	return checkresult.Fail, name
+}
+
+// LibraryPropertiesNameFieldHeaderMismatch checks whether the filename of one of the library's header files matches the Library Manager installation folder name.
+func LibraryPropertiesNameFieldHeaderMismatch() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	name, ok := checkdata.LibraryProperties().GetOk("name")
+	if !ok {
+		return checkresult.NotRun, ""
+	}
+
+	sanitizedName := utils.SanitizeName(name)
+	for _, header := range checkdata.SourceHeaders() {
+		if strings.TrimSuffix(header, filepath.Ext(header)) == sanitizedName {
+			return checkresult.Pass, ""
+		}
+	}
+
+	return checkresult.Fail, sanitizedName + ".h"
 }
 
 // LibraryPropertiesVersionFieldMissing checks for missing library.properties "version" field.

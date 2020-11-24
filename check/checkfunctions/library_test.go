@@ -93,6 +93,16 @@ func TestLibraryPropertiesNameFieldNotInIndex(t *testing.T) {
 	checkCheckFunction(LibraryPropertiesNameFieldNotInIndex, testTables, t)
 }
 
+func TestLibraryPropertiesNameFieldHeaderMismatch(t *testing.T) {
+	testTables := []checkFunctionTestTable{
+		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Mismatch", "NameHeaderMismatch", checkresult.Fail, "^NameHeaderMismatch.h$"},
+		{"Match", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkCheckFunction(LibraryPropertiesNameFieldHeaderMismatch, testTables, t)
+}
+
 func TestLibraryPropertiesSentenceFieldSpellCheck(t *testing.T) {
 	testTables := []checkFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
