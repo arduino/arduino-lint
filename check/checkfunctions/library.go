@@ -490,6 +490,54 @@ func LibraryPropertiesParagraphFieldRepeatsSentence() (result checkresult.Type, 
 	return checkresult.Pass, ""
 }
 
+// LibraryPropertiesCategoryFieldMissing checks for missing library.properties "category" field.
+func LibraryPropertiesCategoryFieldMissing() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.RequiredPropertyMissing("category", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+		return checkresult.Fail, ""
+	}
+	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesCategoryFieldInvalid checks for invalid category in the library.properties "category" field.
+func LibraryPropertiesCategoryFieldInvalid() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	category, ok := checkdata.LibraryProperties().GetOk("category")
+	if !ok {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.PropertyEnumMismatch("category", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+		return checkresult.Fail, category
+	}
+
+	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesCategoryFieldUncategorized checks whether the library.properties "category" value is "Uncategorized".
+func LibraryPropertiesCategoryFieldUncategorized() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	category, ok := checkdata.LibraryProperties().GetOk("category")
+	if !ok {
+		return checkresult.NotRun, ""
+	}
+
+	if category == "Uncategorized" {
+		return checkresult.Fail, ""
+	}
+
+	return checkresult.Pass, ""
+}
+
 // LibraryPropertiesDependsFieldNotInIndex checks whether the libraries listed in the library.properties `depends` field are in the Library Manager index.
 func LibraryPropertiesDependsFieldNotInIndex() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
