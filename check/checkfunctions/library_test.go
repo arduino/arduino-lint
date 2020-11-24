@@ -234,3 +234,12 @@ func TestLibraryHasDotDevelopmentFile(t *testing.T) {
 
 	checkCheckFunction(LibraryHasDotDevelopmentFile, testTables, t)
 }
+
+func TestLibraryHasExe(t *testing.T) {
+	testTables := []checkFunctionTestTable{
+		{"Has .exe file", "Exe", checkresult.Fail, ""},
+		{"No .exe files", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkCheckFunction(LibraryHasExe, testTables, t)
+}

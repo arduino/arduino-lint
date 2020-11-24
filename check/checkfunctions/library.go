@@ -907,6 +907,28 @@ func LibraryHasDotDevelopmentFile() (result checkresult.Type, output string) {
 	return checkresult.Pass, ""
 }
 
+// LibraryHasExe checks whether the library contains files with .exe extension.
+func LibraryHasExe() (result checkresult.Type, output string) {
+	projectPathListing, err := checkdata.ProjectPath().ReadDirRecursive()
+	if err != nil {
+		panic(err)
+	}
+	projectPathListing.FilterOutDirs()
+
+	exePaths := []string{}
+	for _, projectPathItem := range projectPathListing {
+		if projectPathItem.Ext() == ".exe" {
+			exePaths = append(exePaths, projectPathItem.String())
+		}
+	}
+
+	if len(exePaths) > 0 {
+		return checkresult.Fail, strings.Join(exePaths, ", ")
+	}
+
+	return checkresult.Pass, ""
+}
+
 // spellCheckLibraryPropertiesFieldValue returns the value of the provided library.properties field with commonly misspelled words corrected.
 func spellCheckLibraryPropertiesFieldValue(fieldName string) (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
