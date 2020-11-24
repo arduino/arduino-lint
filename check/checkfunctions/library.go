@@ -471,6 +471,25 @@ func LibraryPropertiesParagraphFieldSpellCheck() (result checkresult.Type, outpu
 	return spellCheckLibraryPropertiesFieldValue("paragraph")
 }
 
+// LibraryPropertiesParagraphFieldRepeatsSentence checks whether the library.properties `paragraph` value repeats the `sentence` value.
+func LibraryPropertiesParagraphFieldRepeatsSentence() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	sentence, hasSentence := checkdata.LibraryProperties().GetOk("sentence")
+	paragraph, hasParagraph := checkdata.LibraryProperties().GetOk("paragraph")
+
+	if !hasSentence || !hasParagraph {
+		return checkresult.NotRun, ""
+	}
+
+	if strings.HasPrefix(paragraph, sentence) {
+		return checkresult.Fail, ""
+	}
+	return checkresult.Pass, ""
+}
+
 // LibraryPropertiesDependsFieldNotInIndex checks whether the libraries listed in the library.properties `depends` field are in the Library Manager index.
 func LibraryPropertiesDependsFieldNotInIndex() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
