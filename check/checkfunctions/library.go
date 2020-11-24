@@ -723,6 +723,24 @@ func LibraryPropertiesIncludesFieldLTMinLength() (result checkresult.Type, outpu
 	return checkresult.Pass, ""
 }
 
+// LibraryPropertiesPrecompiledFieldInvalid checks for invalid value in the library.properties "precompiled" field.
+func LibraryPropertiesPrecompiledFieldInvalid() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	precompiled, ok := checkdata.LibraryProperties().GetOk("precompiled")
+	if !ok {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.PropertyEnumMismatch("precompiled", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+		return checkresult.Fail, precompiled
+	}
+
+	return checkresult.Pass, ""
+}
+
 // LibraryPropertiesPrecompiledFieldEnabledWithFlatLayout checks whether a precompiled library has the required recursive layout type.
 func LibraryPropertiesPrecompiledFieldEnabledWithFlatLayout() (result checkresult.Type, output string) {
 	if checkdata.LoadedLibrary() == nil || checkdata.LibraryPropertiesLoadError() != nil {
