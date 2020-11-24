@@ -189,5 +189,5 @@ vars:
 
   WORKFLOW_SCHEMA_PATH: "$(mktemp -t gha-workflow-schema-XXXXXXXXXX.json)"
 
-  CODESPELL_SKIP_OPTION: '--skip "./.git,./go.mod,./go.sum,./arduino-check,./arduino-check.exe"'
+  CODESPELL_SKIP_OPTION: '--skip "./.git,./go.mod,./go.sum,./arduino-check,./arduino-check.exe,./check/checkfunctions/testdata/libraries/MisspelledSentenceParagraphValue/library.properties"'
   CODESPELL_IGNORE_WORDS_OPTION: "--ignore-words ./etc/codespell-ignore-words-list.txt"

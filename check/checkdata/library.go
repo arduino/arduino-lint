@@ -27,6 +27,7 @@ import (
 	"github.com/arduino/arduino-check/result/feedback"
 	"github.com/arduino/go-paths-helper"
 	"github.com/arduino/go-properties-orderedmap"
+	"github.com/client9/misspell"
 	"github.com/ory/jsonschema/v3"
 	"github.com/sirupsen/logrus"
 )
@@ -61,6 +62,11 @@ func InitializeForLibrary(project project.Type, schemasPath *paths.Path) {
 			panic(err)
 		}
 	}
+
+	if misspelledWordsReplacer == nil { // The replacer only needs to be compiled once per run.
+		misspelledWordsReplacer = misspell.New()
+		misspelledWordsReplacer.Compile()
+	}
 }
 
 var libraryPropertiesLoadError error
@@ -89,4 +95,11 @@ var libraryManagerIndex map[string]interface{}
 // LibraryManagerIndex returns the Library Manager index data.
 func LibraryManagerIndex() map[string]interface{} {
 	return libraryManagerIndex
+}
+
+var misspelledWordsReplacer *misspell.Replacer
+
+// MisspelledWordsReplacer returns the misspelled words replacer used for spell check.
+func MisspelledWordsReplacer() *misspell.Replacer {
+	return misspelledWordsReplacer
 }
