@@ -670,6 +670,24 @@ func LibraryPropertiesDependsFieldNotInIndex() (result checkresult.Type, output 
 	return checkresult.Pass, ""
 }
 
+// LibraryPropertiesDotALinkageFieldInvalid checks for invalid value in the library.properties "dot_a_linkage" field.
+func LibraryPropertiesDotALinkageFieldInvalid() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	dotALinkage, ok := checkdata.LibraryProperties().GetOk("dot_a_linkage")
+	if !ok {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.PropertyEnumMismatch("dot_a_linkage", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+		return checkresult.Fail, dotALinkage
+	}
+
+	return checkresult.Pass, ""
+}
+
 // spellCheckLibraryPropertiesFieldValue returns the value of the provided library.properties field with commonly misspelled words corrected.
 func spellCheckLibraryPropertiesFieldValue(fieldName string) (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
