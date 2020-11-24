@@ -706,6 +706,23 @@ func LibraryPropertiesDotALinkageFieldTrueWithFlatLayout() (result checkresult.T
 	return checkresult.Pass, ""
 }
 
+// LibraryPropertiesNameFieldLTMinLength checks if the library.properties "includes" value is less than the minimum length.
+func LibraryPropertiesIncludesFieldLTMinLength() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	if !checkdata.LibraryProperties().ContainsKey("includes") {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.PropertyLessThanMinLength("includes", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+		return checkresult.Fail, ""
+	}
+
+	return checkresult.Pass, ""
+}
+
 // LibraryPropertiesPrecompiledFieldEnabledWithFlatLayout checks whether a precompiled library has the required recursive layout type.
 func LibraryPropertiesPrecompiledFieldEnabledWithFlatLayout() (result checkresult.Type, output string) {
 	if checkdata.LoadedLibrary() == nil || checkdata.LibraryPropertiesLoadError() != nil {
