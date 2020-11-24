@@ -146,3 +146,27 @@ func TestLibraryPropertiesDependsFieldNotInIndex(t *testing.T) {
 
 	checkCheckFunction(LibraryPropertiesDependsFieldNotInIndex, testTables, t)
 }
+
+func TestLibraryPropertiesDotALinkageFieldTrueWithFlatLayout(t *testing.T) {
+	testTables := []checkFunctionTestTable{
+		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Not defined", "MissingFields", checkresult.NotRun, ""},
+		{"Flat layout", "DotALinkageFlat", checkresult.Fail, ""},
+		{"Recursive layout", "DotALinkage", checkresult.Pass, ""},
+	}
+
+	checkCheckFunction(LibraryPropertiesDotALinkageFieldTrueWithFlatLayout, testTables, t)
+}
+
+func TestLibraryPropertiesPrecompiledFieldEnabledWithFlatLayout(t *testing.T) {
+	testTables := []checkFunctionTestTable{
+		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Not defined", "MissingFields", checkresult.NotRun, ""},
+		{"Flat layout", "PrecompiledFlat", checkresult.Fail, "^true$"},
+		{"Recursive layout", "Precompiled", checkresult.Pass, ""},
+		{"Recursive, not precompiled", "NotPrecompiled", checkresult.NotRun, ""},
+		{"Flat, not precompiled", "NotPrecompiledFlat", checkresult.NotRun, ""},
+	}
+
+	checkCheckFunction(LibraryPropertiesPrecompiledFieldEnabledWithFlatLayout, testTables, t)
+}
