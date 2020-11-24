@@ -317,9 +317,50 @@ func LibraryPropertiesAuthorFieldLTMinLength() (result checkresult.Type, output 
 	return checkresult.Pass, ""
 }
 
+// LibraryPropertiesSentenceFieldMissing checks for missing library.properties "sentence" field.
+func LibraryPropertiesSentenceFieldMissing() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.RequiredPropertyMissing("sentence", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+		return checkresult.Fail, ""
+	}
+	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesSentenceFieldLTMinLength checks if the library.properties "sentence" value is less than the minimum length.
+func LibraryPropertiesSentenceFieldLTMinLength() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	if !checkdata.LibraryProperties().ContainsKey("sentence") {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.PropertyLessThanMinLength("sentence", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+		return checkresult.Fail, ""
+	}
+
+	return checkresult.Pass, ""
+}
+
 // LibraryPropertiesSentenceFieldSpellCheck checks for commonly misspelled words in the library.properties `sentence` field value.
 func LibraryPropertiesSentenceFieldSpellCheck() (result checkresult.Type, output string) {
 	return spellCheckLibraryPropertiesFieldValue("sentence")
+}
+
+// LibraryPropertiesParagraphFieldMissing checks for missing library.properties "paragraph" field.
+func LibraryPropertiesParagraphFieldMissing() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.RequiredPropertyMissing("paragraph", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+		return checkresult.Fail, ""
+	}
+	return checkresult.Pass, ""
 }
 
 // LibraryPropertiesParagraphFieldSpellCheck checks for commonly misspelled words in the library.properties `paragraph` field value.
