@@ -18,6 +18,7 @@ package checkfunctions
 // The check functions for libraries.
 
 import (
+	"net/http"
 	"strings"
 
 	"github.com/arduino/arduino-check/check/checkdata"
@@ -566,6 +567,30 @@ func LibraryPropertiesUrlFieldInvalid() (result checkresult.Type, output string)
 	}
 
 	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesUrlFieldDeadLink checks whether the URL in the library.properties `url` field can be loaded.
+func LibraryPropertiesUrlFieldDeadLink() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	url, ok := checkdata.LibraryProperties().GetOk("url")
+	if !ok {
+		return checkresult.NotRun, ""
+	}
+
+	logrus.Tracef("Checking URL: %s", url)
+	httpResponse, err := http.Get(url)
+	if err != nil {
+		return checkresult.Fail, err.Error()
+	}
+
+	if httpResponse.StatusCode == http.StatusOK {
+		return checkresult.Pass, ""
+	}
+
+	return checkresult.Fail, httpResponse.Status
 }
 
 // LibraryPropertiesDependsFieldNotInIndex checks whether the libraries listed in the library.properties `depends` field are in the Library Manager index.
