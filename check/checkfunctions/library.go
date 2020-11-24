@@ -49,6 +49,59 @@ func LibraryPropertiesNameFieldMissing() (result checkresult.Type, output string
 	return checkresult.Pass, ""
 }
 
+// LibraryPropertiesNameFieldLTMinLength checks if the library.properties "name" value is less than the minimum length.
+func LibraryPropertiesNameFieldLTMinLength() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	if !checkdata.LibraryProperties().ContainsKey("name") {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.PropertyLessThanMinLength("name", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+		return checkresult.Fail, ""
+	}
+
+	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesNameFieldGTMaxLength checks if the library.properties "name" value is greater than the maximum length.
+func LibraryPropertiesNameFieldGTMaxLength() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	name, ok := checkdata.LibraryProperties().GetOk("name")
+	if !ok {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.PropertyGreaterThanMaxLength("name", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+		return checkresult.Fail, name
+	}
+
+	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesNameFieldGTRecommendedLength checks if the library.properties "name" value is greater than the recommended length.
+func LibraryPropertiesNameFieldGTRecommendedLength() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, checkdata.LibraryProperties().Get("name")
+	}
+
+	name, ok := checkdata.LibraryProperties().GetOk("name")
+	if !ok {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.PropertyGreaterThanMaxLength("name", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict], configuration.SchemasPath()) {
+		return checkresult.Fail, name
+	}
+
+	return checkresult.Pass, ""
+}
+
 // LibraryPropertiesNameFieldDisallowedCharacters checks for disallowed characters in the library.properties "name" field.
 func LibraryPropertiesNameFieldDisallowedCharacters() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
@@ -57,6 +110,78 @@ func LibraryPropertiesNameFieldDisallowedCharacters() (result checkresult.Type, 
 
 	if schema.PropertyPatternMismatch("name", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
 		return checkresult.Fail, ""
+	}
+
+	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesNameFieldHasSpaces checks if the library.properties "name" value contains spaces.
+func LibraryPropertiesNameFieldHasSpaces() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	name, ok := checkdata.LibraryProperties().GetOk("name")
+	if !ok {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/notContainsSpaces", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict], configuration.SchemasPath()) {
+		return checkresult.Fail, name
+	}
+
+	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesNameFieldStartsWithArduino checks if the library.properties "name" value starts with "Arduino".
+func LibraryPropertiesNameFieldStartsWithArduino() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	name, ok := checkdata.LibraryProperties().GetOk("name")
+	if !ok {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/notStartsWithArduino", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+		return checkresult.Fail, name
+	}
+
+	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesNameFieldContainsArduino checks if the library.properties "name" value contains "Arduino".
+func LibraryPropertiesNameFieldContainsArduino() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	name, ok := checkdata.LibraryProperties().GetOk("name")
+	if !ok {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/notContainsArduino", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict], configuration.SchemasPath()) {
+		return checkresult.Fail, name
+	}
+
+	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesNameFieldContainsLibrary checks if the library.properties "name" value contains "library".
+func LibraryPropertiesNameFieldContainsLibrary() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	name, ok := checkdata.LibraryProperties().GetOk("name")
+	if !ok {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/notContainsSuperfluousTerms", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict], configuration.SchemasPath()) {
+		return checkresult.Fail, name
 	}
 
 	return checkresult.Pass, ""
