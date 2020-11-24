@@ -772,6 +772,19 @@ func LibraryPropertiesLdflagsFieldLTMinLength() (result checkresult.Type, output
 	return checkresult.Pass, ""
 }
 
+// LibraryPropertiesMisspelledOptionalField checks if library.properties contains common misspellings of optional fields.
+func LibraryPropertiesMisspelledOptionalField() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.MisspelledOptionalPropertyFound(checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+		return checkresult.Fail, ""
+	}
+
+	return checkresult.Pass, ""
+}
+
 // spellCheckLibraryPropertiesFieldValue returns the value of the provided library.properties field with commonly misspelled words corrected.
 func spellCheckLibraryPropertiesFieldValue(fieldName string) (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
