@@ -124,6 +124,17 @@ func TestLibraryPropertiesParagraphFieldRepeatsSentence(t *testing.T) {
 
 	checkCheckFunction(LibraryPropertiesParagraphFieldRepeatsSentence, testTables, t)
 }
+func TestLibraryPropertiesUrlFieldDeadLink(t *testing.T) {
+	testTables := []checkFunctionTestTable{
+		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Not defined", "MissingFields", checkresult.NotRun, ""},
+		{"Bad URL", "BadURL", checkresult.Fail, "^Get \"http://invalid/\": dial tcp: lookup invalid:"},
+		{"HTTP error 404", "URL404", checkresult.Fail, "^404 Not Found$"},
+		{"Good URL", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkCheckFunction(LibraryPropertiesUrlFieldDeadLink, testTables, t)
+}
 
 func TestLibraryPropertiesDependsFieldNotInIndex(t *testing.T) {
 	testTables := []checkFunctionTestTable{
