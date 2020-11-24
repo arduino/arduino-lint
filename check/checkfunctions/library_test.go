@@ -170,3 +170,12 @@ func TestLibraryPropertiesPrecompiledFieldEnabledWithFlatLayout(t *testing.T) {
 
 	checkCheckFunction(LibraryPropertiesPrecompiledFieldEnabledWithFlatLayout, testTables, t)
 }
+
+func TestLibraryHasSubmodule(t *testing.T) {
+	testTables := []checkFunctionTestTable{
+		{"Has submodule", "Submodule", checkresult.Fail, ""},
+		{"No submodule", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkCheckFunction(LibraryHasSubmodule, testTables, t)
+}
