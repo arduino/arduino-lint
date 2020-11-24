@@ -26,6 +26,7 @@ import (
 	"github.com/arduino/arduino-check/check/checkdata/schema/compliancelevel"
 	"github.com/arduino/arduino-check/check/checkresult"
 	"github.com/arduino/arduino-check/configuration"
+	"github.com/arduino/arduino-cli/arduino/libraries"
 	"github.com/arduino/go-properties-orderedmap"
 	"github.com/sirupsen/logrus"
 )
@@ -683,6 +684,41 @@ func LibraryPropertiesDotALinkageFieldInvalid() (result checkresult.Type, output
 
 	if schema.PropertyEnumMismatch("dot_a_linkage", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
 		return checkresult.Fail, dotALinkage
+	}
+
+	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesDotALinkageFieldTrueWithFlatLayout checks whether a library using the "dot_a_linkage" feature has the required recursive layout type.
+func LibraryPropertiesDotALinkageFieldTrueWithFlatLayout() (result checkresult.Type, output string) {
+	if checkdata.LoadedLibrary() == nil {
+		return checkresult.NotRun, ""
+	}
+
+	if !checkdata.LibraryProperties().ContainsKey("dot_a_linkage") {
+		return checkresult.NotRun, ""
+	}
+
+	if checkdata.LoadedLibrary().DotALinkage && checkdata.LoadedLibrary().Layout == libraries.FlatLayout {
+		return checkresult.Fail, ""
+	}
+
+	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesPrecompiledFieldEnabledWithFlatLayout checks whether a precompiled library has the required recursive layout type.
+func LibraryPropertiesPrecompiledFieldEnabledWithFlatLayout() (result checkresult.Type, output string) {
+	if checkdata.LoadedLibrary() == nil || checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	precompiled, ok := checkdata.LibraryProperties().GetOk("precompiled")
+	if !ok {
+		return checkresult.NotRun, ""
+	}
+
+	if checkdata.LoadedLibrary().Precompiled && checkdata.LoadedLibrary().Layout == libraries.FlatLayout {
+		return checkresult.Fail, precompiled
 	}
 
 	return checkresult.Pass, ""
