@@ -317,6 +317,109 @@ func LibraryPropertiesAuthorFieldLTMinLength() (result checkresult.Type, output 
 	return checkresult.Pass, ""
 }
 
+// LibraryPropertiesMaintainerFieldMissing checks for missing library.properties "maintainer" field.
+func LibraryPropertiesMaintainerFieldMissing() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.RequiredPropertyMissing("maintainer", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+		return checkresult.Fail, ""
+	}
+	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesMaintainerFieldLTMinLength checks if the library.properties "maintainer" value is less than the minimum length.
+func LibraryPropertiesMaintainerFieldLTMinLength() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	if !checkdata.LibraryProperties().ContainsKey("maintainer") {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.PropertyLessThanMinLength("maintainer", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+		return checkresult.Fail, ""
+	}
+
+	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesMaintainerFieldStartsWithArduino checks if the library.properties "maintainer" value starts with "Arduino".
+func LibraryPropertiesMaintainerFieldStartsWithArduino() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	maintainer, ok := checkdata.LibraryProperties().GetOk("maintainer")
+	if !ok {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.ValidationErrorMatch("^#/maintainer$", "/patternObjects/notStartsWithArduino", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+		return checkresult.Fail, maintainer
+	}
+
+	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesEmailFieldAsMaintainerAlias checks whether the library.properties "email" field is being used as an alias for the "maintainer" field.
+func LibraryPropertiesEmailFieldAsMaintainerAlias() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	if !checkdata.LibraryProperties().ContainsKey("email") {
+		return checkresult.NotRun, ""
+	}
+
+	if !checkdata.LibraryProperties().ContainsKey("maintainer") {
+		return checkresult.Fail, ""
+	}
+
+	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesNameFieldLTMinLength checks if the library.properties "email" value is less than the minimum length.
+func LibraryPropertiesEmailFieldLTMinLength() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	if checkdata.LibraryProperties().ContainsKey("maintainer") || !checkdata.LibraryProperties().ContainsKey("email") {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.PropertyLessThanMinLength("email", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+		return checkresult.Fail, ""
+	}
+
+	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesMaintainerFieldStartsWithArduino checks if the library.properties "email" value starts with "Arduino".
+func LibraryPropertiesEmailFieldStartsWithArduino() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	if checkdata.LibraryProperties().ContainsKey("maintainer") {
+		return checkresult.NotRun, ""
+	}
+
+	email, ok := checkdata.LibraryProperties().GetOk("email")
+	if !ok {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.ValidationErrorMatch("^#/email$", "/patternObjects/notStartsWithArduino", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+		return checkresult.Fail, email
+	}
+
+	return checkresult.Pass, ""
+}
+
 // LibraryPropertiesSentenceFieldMissing checks for missing library.properties "sentence" field.
 func LibraryPropertiesSentenceFieldMissing() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
