@@ -39,17 +39,26 @@ type Type struct {
 // FindProjects searches the target path configured by the user for projects of the type configured by the user as well as the subprojects of those project.
 // It returns a slice containing the definitions of each found project.
 func FindProjects() ([]Type, error) {
-	targetPath := configuration.TargetPath()
-	superprojectTypeFilter := configuration.SuperprojectTypeFilter()
-	recursive := configuration.Recursive()
+	var foundProjects []Type
 
+	for _, targetPath := range configuration.TargetPaths() {
+		foundProjectsForTargetPath, err := findProjects(targetPath)
+		if err != nil {
+			return nil, err
+		}
+		foundProjects = append(foundProjects, foundProjectsForTargetPath...)
+	}
+	return foundProjects, nil
+}
+
+func findProjects(targetPath *paths.Path) ([]Type, error) {
 	var foundProjects []Type
 
 	// If targetPath is a file, targetPath itself is the project, so it's only necessary to determine/verify the type.
 	if targetPath.IsNotDir() {
 		logrus.Debug("Projects path is file")
 		// The filename provides additional information about the project type. So rather than using isProject(), which doesn't make use this information, use a specialized function that does.
-		isProject, projectType := isProjectIndicatorFile(targetPath, superprojectTypeFilter)
+		isProject, projectType := isProjectIndicatorFile(targetPath, configuration.SuperprojectTypeFilter())
 		if isProject {
 			foundProject := Type{
 				Path:             targetPath.Parent(),
@@ -66,7 +75,7 @@ func FindProjects() ([]Type, error) {
 		return nil, fmt.Errorf("specified path %s is not an Arduino project", targetPath)
 	}
 
-	foundProjects = append(foundProjects, findProjectsUnderPath(targetPath, superprojectTypeFilter, recursive)...)
+	foundProjects = append(foundProjects, findProjectsUnderPath(targetPath, configuration.SuperprojectTypeFilter(), configuration.Recursive())...)
 
 	if foundProjects == nil {
 		return nil, fmt.Errorf("no projects found under %s", targetPath)

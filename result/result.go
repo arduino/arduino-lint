@@ -44,9 +44,9 @@ type Type struct {
 }
 
 type toolConfigurationReportType struct {
-	Paths       []*paths.Path `json:"paths"`
-	ProjectType string        `json:"projectType"`
-	Recursive   bool          `json:"recursive"`
+	Paths       paths.PathList `json:"paths"`
+	ProjectType string         `json:"projectType"`
+	Recursive   bool           `json:"recursive"`
 }
 
 type projectReportType struct {
@@ -84,7 +84,7 @@ type summaryReportType struct {
 // Initialize adds the tool configuration data to the results data.
 func (results *Type) Initialize() {
 	results.Configuration = toolConfigurationReportType{
-		Paths:       []*paths.Path{configuration.TargetPath()},
+		Paths:       configuration.TargetPaths(),
 		ProjectType: configuration.SuperprojectTypeFilter().String(),
 		Recursive:   configuration.Recursive(),
 	}
