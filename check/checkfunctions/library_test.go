@@ -82,6 +82,28 @@ func TestLibraryPropertiesNameFieldNotInIndex(t *testing.T) {
 	checkCheckFunction(LibraryPropertiesNameFieldNotInIndex, testTables, t)
 }
 
+func TestLibraryPropertiesSentenceFieldSpellCheck(t *testing.T) {
+	testTables := []checkFunctionTestTable{
+		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Not defined", "MissingFields", checkresult.NotRun, ""},
+		{"Misspelled word", "MisspelledSentenceParagraphValue", checkresult.Fail, "^grill broccoli now$"},
+		{"Correct spelling", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkCheckFunction(LibraryPropertiesSentenceFieldSpellCheck, testTables, t)
+}
+
+func TestLibraryPropertiesParagraphFieldSpellCheck(t *testing.T) {
+	testTables := []checkFunctionTestTable{
+		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Not defined", "MissingFields", checkresult.NotRun, ""},
+		{"Misspelled word", "MisspelledSentenceParagraphValue", checkresult.Fail, "^There is a zebra$"},
+		{"Correct spelling", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkCheckFunction(LibraryPropertiesParagraphFieldSpellCheck, testTables, t)
+}
+
 func TestLibraryPropertiesDependsFieldNotInIndex(t *testing.T) {
 	testTables := []checkFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},

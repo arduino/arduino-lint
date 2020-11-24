@@ -175,6 +175,16 @@ func LibraryPropertiesAuthorFieldLTMinLength() (result checkresult.Type, output 
 	return checkresult.Pass, ""
 }
 
+// LibraryPropertiesSentenceFieldSpellCheck checks for commonly misspelled words in the library.properties `sentence` field value.
+func LibraryPropertiesSentenceFieldSpellCheck() (result checkresult.Type, output string) {
+	return spellCheckLibraryPropertiesFieldValue("sentence")
+}
+
+// LibraryPropertiesParagraphFieldSpellCheck checks for commonly misspelled words in the library.properties `paragraph` field value.
+func LibraryPropertiesParagraphFieldSpellCheck() (result checkresult.Type, output string) {
+	return spellCheckLibraryPropertiesFieldValue("paragraph")
+}
+
 // LibraryPropertiesDependsFieldNotInIndex checks whether the libraries listed in the library.properties `depends` field are in the Library Manager index.
 func LibraryPropertiesDependsFieldNotInIndex() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
@@ -200,6 +210,25 @@ func LibraryPropertiesDependsFieldNotInIndex() (result checkresult.Type, output 
 
 	if len(dependenciesNotInIndex) > 0 {
 		return checkresult.Fail, strings.Join(dependenciesNotInIndex, ", ")
+	}
+
+	return checkresult.Pass, ""
+}
+
+// spellCheckLibraryPropertiesFieldValue returns the value of the provided library.properties field with commonly misspelled words corrected.
+func spellCheckLibraryPropertiesFieldValue(fieldName string) (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	fieldValue, ok := checkdata.LibraryProperties().GetOk(fieldName)
+	if !ok {
+		return checkresult.NotRun, ""
+	}
+
+	replaced, diff := checkdata.MisspelledWordsReplacer().Replace(fieldValue)
+	if diff != nil {
+		return checkresult.Fail, replaced
 	}
 
 	return checkresult.Pass, ""
