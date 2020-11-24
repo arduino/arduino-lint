@@ -593,6 +593,35 @@ func LibraryPropertiesUrlFieldDeadLink() (result checkresult.Type, output string
 	return checkresult.Fail, httpResponse.Status
 }
 
+// LibraryPropertiesArchitecturesFieldMissing checks for missing library.properties "architectures" field.
+func LibraryPropertiesArchitecturesFieldMissing() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.RequiredPropertyMissing("architectures", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+		return checkresult.Fail, ""
+	}
+	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesNameFieldLTMinLength checks if the library.properties "architectures" value is less than the minimum length.
+func LibraryPropertiesArchitecturesFieldLTMinLength() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, ""
+	}
+
+	if !checkdata.LibraryProperties().ContainsKey("architectures") {
+		return checkresult.NotRun, ""
+	}
+
+	if schema.PropertyLessThanMinLength("architectures", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+		return checkresult.Fail, ""
+	}
+
+	return checkresult.Pass, ""
+}
+
 // LibraryPropertiesDependsFieldNotInIndex checks whether the libraries listed in the library.properties `depends` field are in the Library Manager index.
 func LibraryPropertiesDependsFieldNotInIndex() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
