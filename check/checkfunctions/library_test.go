@@ -115,6 +115,16 @@ func TestLibraryPropertiesParagraphFieldSpellCheck(t *testing.T) {
 	checkCheckFunction(LibraryPropertiesParagraphFieldSpellCheck, testTables, t)
 }
 
+func TestLibraryPropertiesParagraphFieldRepeatsSentence(t *testing.T) {
+	testTables := []checkFunctionTestTable{
+		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Repeat", "ParagraphRepeatsSentence", checkresult.Fail, ""},
+		{"No repeat", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkCheckFunction(LibraryPropertiesParagraphFieldRepeatsSentence, testTables, t)
+}
+
 func TestLibraryPropertiesDependsFieldNotInIndex(t *testing.T) {
 	testTables := []checkFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
