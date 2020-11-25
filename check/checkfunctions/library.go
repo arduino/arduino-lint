@@ -1008,6 +1008,28 @@ func LibraryFolderNameGTMaxLength() (result checkresult.Type, output string) {
 	return checkresult.Pass, ""
 }
 
+// IncorrectLibrarySrcFolderNameCase checks for incorrect case of src subfolder name in recursive format libraries.
+func IncorrectLibrarySrcFolderNameCase() (result checkresult.Type, output string) {
+	if library.ContainsMetadataFile(checkdata.ProjectPath()) && library.ContainsHeaderFile(checkdata.ProjectPath()) {
+		// Flat layout, so no special treatment of src subfolder.
+		return checkresult.NotRun, ""
+	}
+
+	// The library is intended to have the recursive layout.
+	directoryListing, err := checkdata.ProjectPath().ReadDir()
+	if err != nil {
+		panic(err)
+	}
+	directoryListing.FilterDirs()
+
+	path, found := containsIncorrectPathBaseCase(directoryListing, "src")
+	if found {
+		return checkresult.Fail, path.String()
+	}
+
+	return checkresult.Pass, ""
+}
+
 // MisspelledExamplesFolderName checks for incorrectly spelled `examples` folder name.
 func MisspelledExamplesFolderName() (result checkresult.Type, output string) {
 	directoryListing, err := checkdata.ProjectPath().ReadDir()

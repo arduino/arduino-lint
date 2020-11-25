@@ -310,6 +310,16 @@ func TestLibraryFolderNameGTMaxLength(t *testing.T) {
 	checkLibraryCheckFunction(LibraryFolderNameGTMaxLength, testTables, t)
 }
 
+func TestIncorrectLibrarySrcFolderNameCase(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Flat, not precompiled", "Flat", checkresult.NotRun, ""},
+		{"Incorrect case", "IncorrectSrcFolderNameCase", checkresult.Fail, ""},
+		{"Correct case", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(IncorrectLibrarySrcFolderNameCase, testTables, t)
+}
+
 func TestMisspelledExamplesFolderName(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Correctly spelled", "ExamplesFolder", checkresult.Pass, ""},
