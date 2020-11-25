@@ -67,9 +67,9 @@ func Test_shouldRun(t *testing.T) {
 			ProjectType: testTable.projectType,
 		}
 		run, err := shouldRun(checkConfiguration, project)
-		testTable.errorAssertion(t, err)
+		testTable.errorAssertion(t, err, testTable.testName)
 		if err == nil {
-			testTable.shouldRunAssertion(t, run)
+			testTable.shouldRunAssertion(t, run, testTable.testName)
 		}
 	}
 }

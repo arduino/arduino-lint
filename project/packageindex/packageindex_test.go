@@ -1,0 +1,48 @@
+// This file is part of arduino-check.
+//
+// Copyright 2020 ARDUINO SA (http://www.arduino.cc/)
+//
+// This software is released under the GNU General Public License version 3,
+// which covers the main part of arduino-check.
+// The terms of this license can be found at:
+// https://www.gnu.org/licenses/gpl-3.0.en.html
+//
+// You can be released from the requirements of the above licenses by purchasing
+// a commercial license. Buying such a license is mandatory if you want to
+// modify or otherwise use the software for commercial activities involving the
+// Arduino software without disclosing the source code of your own applications.
+// To purchase a commercial license, send an email to license@arduino.cc.
+
+package packageindex
+
+import (
+	"testing"
+
+	"github.com/arduino/go-paths-helper"
+	"github.com/stretchr/testify/assert"
+)
+
+func TestHasValidExtension(t *testing.T) {
+	assert.True(t, HasValidExtension(paths.New("/foo", "bar.json")))
+	assert.False(t, HasValidExtension(paths.New("/foo", "bar.baz")))
+}
+
+func TestHasValidFilename(t *testing.T) {
+	testTables := []struct {
+		testName          string
+		filename          string
+		officialCheckMode bool
+		assertion         assert.BoolAssertionFunc
+	}{
+		{"Official, primary", "package_index.json", true, assert.True},
+		{"Official, secondary", "package_foo_index.json", true, assert.True},
+		{"Official, invalid", "packageindex.json", true, assert.False},
+		{"Unofficial, valid", "package_foo_index.json", false, assert.True},
+		{"Unofficial, official", "package_index.json", false, assert.False},
+		{"Unofficial, invalid", "packageindex.json", false, assert.False},
+	}
+
+	for _, testTable := range testTables {
+		testTable.assertion(t, HasValidFilename(paths.New("/foo", testTable.filename), testTable.officialCheckMode), testTable.testName)
+	}
+}

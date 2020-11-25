@@ -177,6 +177,10 @@ func TestValidationErrorMatch(t *testing.T) {
 	require.True(t, ValidationErrorMatch("^#/property2$", "/pattern$", `^"\^\[a-z\]\+\$"$`, "", validationResult, schemasPath))
 	require.True(t, ValidationErrorMatch("", "", "", "", validationResult, schemasPath))
 
+	propertiesMap.Set("property3", "bAz")
+	validationResult = Validate(propertiesMap, validSchemaWithReferences, schemasPath)
+	require.True(t, ValidationErrorMatch("^#/property3$", "/pattern$", "", "", validationResult, schemasPath), "Match pointer below logic inversion keyword")
+
 	propertiesMap = properties.NewFromHashmap(validMap)
 	propertiesMap.Remove("property1")
 	validationResult = Validate(propertiesMap, validSchemaWithReferences, schemasPath)

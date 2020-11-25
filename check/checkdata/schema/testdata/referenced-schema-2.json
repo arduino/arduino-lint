@@ -12,6 +12,15 @@
     "enumObject": {
       "enum": ["baz"]
     },
+    "notPatternObject": {
+      "not": {
+        "allOf": [
+          {
+            "pattern": "[A-Z]"
+          }
+        ]
+      }
+    },
     "misspelledOptionalProperties": {
       "propertyNames": {
         "not": {
