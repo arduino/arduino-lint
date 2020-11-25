@@ -26,6 +26,7 @@ import (
 	"github.com/arduino/arduino-check/project/projecttype"
 	"github.com/arduino/go-paths-helper"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 var testDataPath *paths.Path
@@ -199,4 +200,28 @@ func TestLibraryHasSubmodule(t *testing.T) {
 	}
 
 	checkCheckFunction(LibraryHasSubmodule, testTables, t)
+}
+
+func TestLibraryContainsSymlinks(t *testing.T) {
+	testLibrary := "Recursive"
+	symlinkPath := testDataPath.Join(testLibrary, "test-symlink")
+	// It's probably most friendly to developers using Windows to create the symlink needed for the test on demand.
+	err := os.Symlink(testDataPath.Join(testLibrary, "library.properties").String(), symlinkPath.String())
+	require.Nil(t, err, "This test must be run as administrator on Windows to have symlink creation privilege.")
+	defer symlinkPath.RemoveAll() // clean up
+
+	testTables := []checkFunctionTestTable{
+		{"Has symlink", testLibrary, checkresult.Fail, ""},
+	}
+
+	checkCheckFunction(LibraryContainsSymlinks, testTables, t)
+
+	err = symlinkPath.RemoveAll()
+	require.Nil(t, err)
+
+	testTables = []checkFunctionTestTable{
+		{"No symlink", testLibrary, checkresult.Pass, ""},
+	}
+
+	checkCheckFunction(LibraryContainsSymlinks, testTables, t)
 }

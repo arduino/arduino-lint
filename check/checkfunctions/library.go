@@ -19,6 +19,7 @@ package checkfunctions
 
 import (
 	"net/http"
+	"os"
 	"path/filepath"
 	"strings"
 
@@ -859,6 +860,33 @@ func LibraryHasSubmodule() (result checkresult.Type, output string) {
 
 	if hasDotGitmodules && dotGitmodulesPath.IsNotDir() {
 		return checkresult.Fail, ""
+	}
+
+	return checkresult.Pass, ""
+}
+
+// LibraryContainsSymlinks checks if the library folder contains symbolic links.
+func LibraryContainsSymlinks() (result checkresult.Type, output string) {
+	projectPathListing, err := checkdata.ProjectPath().ReadDirRecursive()
+	if err != nil {
+		panic(err)
+	}
+	projectPathListing.FilterOutDirs()
+
+	symlinkPaths := []string{}
+	for _, projectPathItem := range projectPathListing {
+		projectPathItemStat, err := os.Lstat(projectPathItem.String())
+		if err != nil {
+			panic(err)
+		}
+
+		if projectPathItemStat.Mode()&os.ModeSymlink != 0 {
+			symlinkPaths = append(symlinkPaths, projectPathItem.String())
+		}
+	}
+
+	if len(symlinkPaths) > 0 {
+		return checkresult.Fail, strings.Join(symlinkPaths, ", ")
 	}
 
 	return checkresult.Pass, ""
