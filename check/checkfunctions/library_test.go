@@ -251,3 +251,12 @@ func TestProhibitedCharactersInLibraryFolderName(t *testing.T) {
 
 	checkLibraryCheckFunction(ProhibitedCharactersInLibraryFolderName, testTables, t)
 }
+
+func TestLibraryFolderNameGTMaxLength(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Has folder name > max length", "FolderNameTooLong12345678901234567890123456789012345678901234567890", checkresult.Fail, "^FolderNameTooLong12345678901234567890123456789012345678901234567890$"},
+		{"Folder name <= max length", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryFolderNameGTMaxLength, testTables, t)
+}
