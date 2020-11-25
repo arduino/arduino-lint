@@ -28,13 +28,18 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestInitialize(t *testing.T) {
-	flags := test.ConfigurationFlags()
+var projectPaths []string
 
+func init() {
 	projectPath, err := os.Getwd()
-	require.Nil(t, err)
-	projectPaths := []string{projectPath}
+	if err != nil {
+		panic(err)
+	}
+	projectPaths = []string{projectPath}
+}
 
+func TestInitializeFormat(t *testing.T) {
+	flags := test.ConfigurationFlags()
 	flags.Set("format", "foo")
 	assert.Error(t, Initialize(flags, projectPaths))
 
@@ -45,7 +50,10 @@ func TestInitialize(t *testing.T) {
 	flags.Set("format", "json")
 	assert.Nil(t, Initialize(flags, projectPaths))
 	assert.Equal(t, outputformat.JSON, OutputFormat())
+}
 
+func TestInitializeLibraryManager(t *testing.T) {
+	flags := test.ConfigurationFlags()
 	flags.Set("library-manager", "foo")
 	assert.Error(t, Initialize(flags, projectPaths))
 
@@ -71,6 +79,10 @@ func TestInitialize(t *testing.T) {
 	assert.Nil(t, Initialize(flags, projectPaths))
 	assert.False(t, customCheckModes[checkmode.LibraryManagerSubmission])
 	assert.False(t, customCheckModes[checkmode.LibraryManagerIndexed])
+}
+
+func TestInitializeLogFormat(t *testing.T) {
+	flags := test.ConfigurationFlags()
 
 	flags.Set("log-format", "foo")
 	assert.Error(t, Initialize(flags, projectPaths))
@@ -80,6 +92,10 @@ func TestInitialize(t *testing.T) {
 
 	flags.Set("log-format", "json")
 	assert.Nil(t, Initialize(flags, projectPaths))
+}
+
+func TestInitializePermissive(t *testing.T) {
+	flags := test.ConfigurationFlags()
 
 	flags.Set("permissive", "true")
 	assert.Nil(t, Initialize(flags, projectPaths))
@@ -88,6 +104,10 @@ func TestInitialize(t *testing.T) {
 	flags.Set("permissive", "false")
 	assert.Nil(t, Initialize(flags, projectPaths))
 	assert.False(t, customCheckModes[checkmode.Permissive])
+}
+
+func TestInitializeProjectType(t *testing.T) {
+	flags := test.ConfigurationFlags()
 
 	flags.Set("project-type", "foo")
 	assert.Error(t, Initialize(flags, projectPaths))
@@ -111,6 +131,10 @@ func TestInitialize(t *testing.T) {
 	flags.Set("project-type", "all")
 	assert.Nil(t, Initialize(flags, projectPaths))
 	assert.Equal(t, projecttype.All, SuperprojectTypeFilter())
+}
+
+func TestInitializeRecursive(t *testing.T) {
+	flags := test.ConfigurationFlags()
 
 	flags.Set("recursive", "true")
 	assert.Nil(t, Initialize(flags, projectPaths))
@@ -119,6 +143,10 @@ func TestInitialize(t *testing.T) {
 	flags.Set("recursive", "false")
 	assert.Nil(t, Initialize(flags, projectPaths))
 	assert.False(t, Recursive())
+}
+
+func TestInitializeReportFile(t *testing.T) {
+	flags := test.ConfigurationFlags()
 
 	flags.Set("report-file", "")
 	assert.Nil(t, Initialize(flags, projectPaths))
@@ -128,11 +156,20 @@ func TestInitialize(t *testing.T) {
 	flags.Set("report-file", reportFilePath.String())
 	assert.Nil(t, Initialize(flags, projectPaths))
 	assert.Equal(t, reportFilePath, ReportFilePath())
+}
 
-	assert.Nil(t, Initialize(flags, projectPaths))
+func TestInitializeProjectPath(t *testing.T) {
+	targetPaths = nil
+	assert.Nil(t, Initialize(test.ConfigurationFlags(), projectPaths))
 	assert.Equal(t, paths.NewPathList(projectPaths[0]), TargetPaths())
 
-	assert.Error(t, Initialize(flags, []string{"/nonexistent"}))
+	targetPaths = nil
+	assert.Error(t, Initialize(test.ConfigurationFlags(), []string{"/nonexistent"}))
+}
+
+func TestInitializeOfficial(t *testing.T) {
+	assert.Nil(t, Initialize(test.ConfigurationFlags(), projectPaths))
+	assert.False(t, customCheckModes[checkmode.Official], "Default official check mode")
 
 	os.Setenv("ARDUINO_CHECK_OFFICIAL", "true")
 	assert.Nil(t, Initialize(test.ConfigurationFlags(), projectPaths))
