@@ -46,6 +46,27 @@ func ProhibitedCharactersInSketchFileName() (result checkresult.Type, output str
 	return checkresult.Pass, ""
 }
 
+// SketchFileNameGTMaxLength checks if the sketch file names exceed the maximum length.
+func SketchFileNameGTMaxLength() (result checkresult.Type, output string) {
+	directoryListing, _ := checkdata.ProjectPath().ReadDir()
+	directoryListing.FilterOutDirs()
+
+	foundTooLongSketchFileNames := []string{}
+	for _, potentialSketchFile := range directoryListing {
+		if sketch.HasSupportedExtension(potentialSketchFile) {
+			if len(potentialSketchFile.Base())-len(potentialSketchFile.Ext()) > 63 {
+				foundTooLongSketchFileNames = append(foundTooLongSketchFileNames, potentialSketchFile.Base())
+			}
+		}
+	}
+
+	if len(foundTooLongSketchFileNames) > 0 {
+		return checkresult.Fail, strings.Join(foundTooLongSketchFileNames, ", ")
+	}
+
+	return checkresult.Pass, ""
+}
+
 // PdeSketchExtension checks for use of deprecated .pde sketch file extensions.
 func PdeSketchExtension() (result checkresult.Type, output string) {
 	directoryListing, _ := checkdata.ProjectPath().ReadDir()
