@@ -13,21 +13,22 @@
 // Arduino software without disclosing the source code of your own applications.
 // To purchase a commercial license, send an email to license@arduino.cc.
 
-// Package checkfunctions contains the functions that implement each check.
-package checkfunctions
+package sketch
 
 import (
-	"regexp"
+	"testing"
 
-	"github.com/arduino/arduino-check/check/checkresult"
+	"github.com/arduino/go-paths-helper"
+	"github.com/stretchr/testify/assert"
 )
 
-// Type is the function signature for the check functions.
-// The `output` result is the contextual information that will be inserted into the check's message template.
-type Type func() (result checkresult.Type, output string)
+func TestHasMainFileValidExtension(t *testing.T) {
+	assert.True(t, HasMainFileValidExtension(paths.New("/foo/bar.ino")))
+	assert.False(t, HasMainFileValidExtension(paths.New("/foo/bar.h")))
+}
 
-// validProjectPathBaseName checks whether the provided library folder or sketch filename contains prohibited characters.
-func validProjectPathBaseName(name string) bool {
-	baseNameRegexp := regexp.MustCompile("^[a-zA-Z0-9][a-zA-Z0-9_.-]*$")
-	return baseNameRegexp.MatchString(name)
+func TestHasSupportedExtension(t *testing.T) {
+	assert.True(t, HasSupportedExtension(paths.New("/foo/bar.ino")))
+	assert.True(t, HasSupportedExtension(paths.New("/foo/bar.h")))
+	assert.False(t, HasSupportedExtension(paths.New("/foo/bar.baz")))
 }

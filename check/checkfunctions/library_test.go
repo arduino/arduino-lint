@@ -38,14 +38,14 @@ func init() {
 	schemasPath = paths.New(workingDirectory, "..", "..", "etc", "schemas")
 }
 
-type checkFunctionTestTable struct {
+type libraryCheckFunctionTestTable struct {
 	testName            string
 	libraryFolderName   string
 	expectedCheckResult checkresult.Type
 	expectedOutputQuery string
 }
 
-func checkCheckFunction(checkFunction Type, testTables []checkFunctionTestTable, t *testing.T) {
+func checkLibraryCheckFunction(checkFunction Type, testTables []libraryCheckFunctionTestTable, t *testing.T) {
 	for _, testTable := range testTables {
 		expectedOutputRegexp := regexp.MustCompile(testTable.expectedOutputQuery)
 
@@ -64,79 +64,79 @@ func checkCheckFunction(checkFunction Type, testTables []checkFunctionTestTable,
 }
 
 func TestLibraryPropertiesNameFieldMissingOfficialPrefix(t *testing.T) {
-	testTables := []checkFunctionTestTable{
+	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
 		{"Not defined", "MissingFields", checkresult.NotRun, ""},
 		{"Correct prefix", "Arduino_Official", checkresult.Pass, ""},
 		{"Incorrect prefix", "Recursive", checkresult.Fail, "^Recursive$"},
 	}
 
-	checkCheckFunction(LibraryPropertiesNameFieldMissingOfficialPrefix, testTables, t)
+	checkLibraryCheckFunction(LibraryPropertiesNameFieldMissingOfficialPrefix, testTables, t)
 }
 
 func TestLibraryPropertiesNameFieldDuplicate(t *testing.T) {
-	testTables := []checkFunctionTestTable{
+	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
 		{"Duplicate", "Indexed", checkresult.Fail, "^Servo$"},
 		{"Not duplicate", "NotIndexed", checkresult.Pass, ""},
 	}
 
-	checkCheckFunction(LibraryPropertiesNameFieldDuplicate, testTables, t)
+	checkLibraryCheckFunction(LibraryPropertiesNameFieldDuplicate, testTables, t)
 }
 
 func TestLibraryPropertiesNameFieldNotInIndex(t *testing.T) {
-	testTables := []checkFunctionTestTable{
+	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
 		{"In index", "Indexed", checkresult.Pass, ""},
 		{"Not in index", "NotIndexed", checkresult.Fail, "^NotIndexed$"},
 	}
 
-	checkCheckFunction(LibraryPropertiesNameFieldNotInIndex, testTables, t)
+	checkLibraryCheckFunction(LibraryPropertiesNameFieldNotInIndex, testTables, t)
 }
 
 func TestLibraryPropertiesNameFieldHeaderMismatch(t *testing.T) {
-	testTables := []checkFunctionTestTable{
+	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
 		{"Mismatch", "NameHeaderMismatch", checkresult.Fail, "^NameHeaderMismatch.h$"},
 		{"Match", "Recursive", checkresult.Pass, ""},
 	}
 
-	checkCheckFunction(LibraryPropertiesNameFieldHeaderMismatch, testTables, t)
+	checkLibraryCheckFunction(LibraryPropertiesNameFieldHeaderMismatch, testTables, t)
 }
 
 func TestLibraryPropertiesSentenceFieldSpellCheck(t *testing.T) {
-	testTables := []checkFunctionTestTable{
+	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
 		{"Not defined", "MissingFields", checkresult.NotRun, ""},
 		{"Misspelled word", "MisspelledSentenceParagraphValue", checkresult.Fail, "^grill broccoli now$"},
 		{"Correct spelling", "Recursive", checkresult.Pass, ""},
 	}
 
-	checkCheckFunction(LibraryPropertiesSentenceFieldSpellCheck, testTables, t)
+	checkLibraryCheckFunction(LibraryPropertiesSentenceFieldSpellCheck, testTables, t)
 }
 
 func TestLibraryPropertiesParagraphFieldSpellCheck(t *testing.T) {
-	testTables := []checkFunctionTestTable{
+	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
 		{"Not defined", "MissingFields", checkresult.NotRun, ""},
 		{"Misspelled word", "MisspelledSentenceParagraphValue", checkresult.Fail, "^There is a zebra$"},
 		{"Correct spelling", "Recursive", checkresult.Pass, ""},
 	}
 
-	checkCheckFunction(LibraryPropertiesParagraphFieldSpellCheck, testTables, t)
+	checkLibraryCheckFunction(LibraryPropertiesParagraphFieldSpellCheck, testTables, t)
 }
 
 func TestLibraryPropertiesParagraphFieldRepeatsSentence(t *testing.T) {
-	testTables := []checkFunctionTestTable{
+	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
 		{"Repeat", "ParagraphRepeatsSentence", checkresult.Fail, ""},
 		{"No repeat", "Recursive", checkresult.Pass, ""},
 	}
 
-	checkCheckFunction(LibraryPropertiesParagraphFieldRepeatsSentence, testTables, t)
+	checkLibraryCheckFunction(LibraryPropertiesParagraphFieldRepeatsSentence, testTables, t)
 }
 func TestLibraryPropertiesUrlFieldDeadLink(t *testing.T) {
-	testTables := []checkFunctionTestTable{
+	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
 		{"Not defined", "MissingFields", checkresult.NotRun, ""},
 		{"Bad URL", "BadURL", checkresult.Fail, "^Get \"http://invalid/\": dial tcp: lookup invalid:"},
@@ -144,44 +144,44 @@ func TestLibraryPropertiesUrlFieldDeadLink(t *testing.T) {
 		{"Good URL", "Recursive", checkresult.Pass, ""},
 	}
 
-	checkCheckFunction(LibraryPropertiesUrlFieldDeadLink, testTables, t)
+	checkLibraryCheckFunction(LibraryPropertiesUrlFieldDeadLink, testTables, t)
 }
 
 func TestLibraryPropertiesDependsFieldNotInIndex(t *testing.T) {
-	testTables := []checkFunctionTestTable{
+	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
 		{"Dependency not in index", "DependsNotIndexed", checkresult.Fail, "^NotIndexed$"},
 		{"Dependency in index", "DependsIndexed", checkresult.Pass, ""},
 		{"No depends", "NoDepends", checkresult.NotRun, ""},
 	}
 
-	checkCheckFunction(LibraryPropertiesDependsFieldNotInIndex, testTables, t)
+	checkLibraryCheckFunction(LibraryPropertiesDependsFieldNotInIndex, testTables, t)
 }
 
 func TestLibraryPropertiesDotALinkageFieldTrueWithFlatLayout(t *testing.T) {
-	testTables := []checkFunctionTestTable{
+	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
 		{"Not defined", "MissingFields", checkresult.NotRun, ""},
 		{"Flat layout", "DotALinkageFlat", checkresult.Fail, ""},
 		{"Recursive layout", "DotALinkage", checkresult.Pass, ""},
 	}
 
-	checkCheckFunction(LibraryPropertiesDotALinkageFieldTrueWithFlatLayout, testTables, t)
+	checkLibraryCheckFunction(LibraryPropertiesDotALinkageFieldTrueWithFlatLayout, testTables, t)
 }
 
 func TestLibraryPropertiesIncludesFieldItemNotFound(t *testing.T) {
-	testTables := []checkFunctionTestTable{
+	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
 		{"Not defined", "MissingFields", checkresult.NotRun, ""},
 		{"Missing includes", "MissingIncludes", checkresult.Fail, "^Nonexistent.h$"},
 		{"Present includes", "Recursive", checkresult.Pass, ""},
 	}
 
-	checkCheckFunction(LibraryPropertiesIncludesFieldItemNotFound, testTables, t)
+	checkLibraryCheckFunction(LibraryPropertiesIncludesFieldItemNotFound, testTables, t)
 }
 
 func TestLibraryPropertiesPrecompiledFieldEnabledWithFlatLayout(t *testing.T) {
-	testTables := []checkFunctionTestTable{
+	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
 		{"Not defined", "MissingFields", checkresult.NotRun, ""},
 		{"Flat layout", "PrecompiledFlat", checkresult.Fail, "^true$"},
@@ -190,16 +190,16 @@ func TestLibraryPropertiesPrecompiledFieldEnabledWithFlatLayout(t *testing.T) {
 		{"Flat, not precompiled", "NotPrecompiledFlat", checkresult.NotRun, ""},
 	}
 
-	checkCheckFunction(LibraryPropertiesPrecompiledFieldEnabledWithFlatLayout, testTables, t)
+	checkLibraryCheckFunction(LibraryPropertiesPrecompiledFieldEnabledWithFlatLayout, testTables, t)
 }
 
 func TestLibraryHasSubmodule(t *testing.T) {
-	testTables := []checkFunctionTestTable{
+	testTables := []libraryCheckFunctionTestTable{
 		{"Has submodule", "Submodule", checkresult.Fail, ""},
 		{"No submodule", "Recursive", checkresult.Pass, ""},
 	}
 
-	checkCheckFunction(LibraryHasSubmodule, testTables, t)
+	checkLibraryCheckFunction(LibraryHasSubmodule, testTables, t)
 }
 
 func TestLibraryContainsSymlinks(t *testing.T) {
@@ -210,36 +210,44 @@ func TestLibraryContainsSymlinks(t *testing.T) {
 	require.Nil(t, err, "This test must be run as administrator on Windows to have symlink creation privilege.")
 	defer symlinkPath.RemoveAll() // clean up
 
-	testTables := []checkFunctionTestTable{
+	testTables := []libraryCheckFunctionTestTable{
 		{"Has symlink", testLibrary, checkresult.Fail, ""},
 	}
 
-	checkCheckFunction(LibraryContainsSymlinks, testTables, t)
+	checkLibraryCheckFunction(LibraryContainsSymlinks, testTables, t)
 
 	err = symlinkPath.RemoveAll()
 	require.Nil(t, err)
 
-	testTables = []checkFunctionTestTable{
+	testTables = []libraryCheckFunctionTestTable{
 		{"No symlink", testLibrary, checkresult.Pass, ""},
 	}
 
-	checkCheckFunction(LibraryContainsSymlinks, testTables, t)
+	checkLibraryCheckFunction(LibraryContainsSymlinks, testTables, t)
 }
 
 func TestLibraryHasDotDevelopmentFile(t *testing.T) {
-	testTables := []checkFunctionTestTable{
+	testTables := []libraryCheckFunctionTestTable{
 		{"Has .development file", "DotDevelopment", checkresult.Fail, ""},
 		{"No .development file", "Recursive", checkresult.Pass, ""},
 	}
 
-	checkCheckFunction(LibraryHasDotDevelopmentFile, testTables, t)
+	checkLibraryCheckFunction(LibraryHasDotDevelopmentFile, testTables, t)
 }
 
 func TestLibraryHasExe(t *testing.T) {
-	testTables := []checkFunctionTestTable{
+	testTables := []libraryCheckFunctionTestTable{
 		{"Has .exe file", "Exe", checkresult.Fail, ""},
 		{"No .exe files", "Recursive", checkresult.Pass, ""},
 	}
 
-	checkCheckFunction(LibraryHasExe, testTables, t)
+	checkLibraryCheckFunction(LibraryHasExe, testTables, t)
+}
+func TestProhibitedCharactersInLibraryFolderName(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Has prohibited characters", "Prohibited CharactersInFolderName", checkresult.Fail, ""},
+		{"No prohibited characters", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(ProhibitedCharactersInLibraryFolderName, testTables, t)
 }
