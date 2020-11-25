@@ -168,6 +168,17 @@ func TestLibraryPropertiesDotALinkageFieldTrueWithFlatLayout(t *testing.T) {
 	checkCheckFunction(LibraryPropertiesDotALinkageFieldTrueWithFlatLayout, testTables, t)
 }
 
+func TestLibraryPropertiesIncludesFieldItemNotFound(t *testing.T) {
+	testTables := []checkFunctionTestTable{
+		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Not defined", "MissingFields", checkresult.NotRun, ""},
+		{"Missing includes", "MissingIncludes", checkresult.Fail, "^Nonexistent.h$"},
+		{"Present includes", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkCheckFunction(LibraryPropertiesIncludesFieldItemNotFound, testTables, t)
+}
+
 func TestLibraryPropertiesPrecompiledFieldEnabledWithFlatLayout(t *testing.T) {
 	testTables := []checkFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
