@@ -892,6 +892,21 @@ func LibraryContainsSymlinks() (result checkresult.Type, output string) {
 	return checkresult.Pass, ""
 }
 
+// LibraryHasDotDevelopmentFile checks whether the library contains a .development flag file.
+func LibraryHasDotDevelopmentFile() (result checkresult.Type, output string) {
+	dotDevelopmentPath := checkdata.ProjectPath().Join(".development")
+	hasDotDevelopment, err := dotDevelopmentPath.ExistCheck()
+	if err != nil {
+		panic(err)
+	}
+
+	if hasDotDevelopment && dotDevelopmentPath.IsNotDir() {
+		return checkresult.Fail, ""
+	}
+
+	return checkresult.Pass, ""
+}
+
 // spellCheckLibraryPropertiesFieldValue returns the value of the provided library.properties field with commonly misspelled words corrected.
 func spellCheckLibraryPropertiesFieldValue(fieldName string) (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
