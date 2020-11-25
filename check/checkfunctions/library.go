@@ -785,6 +785,21 @@ func LibraryPropertiesMisspelledOptionalField() (result checkresult.Type, output
 	return checkresult.Pass, ""
 }
 
+// LibraryHasSubmodule checks whether the library contains a Git submodule.
+func LibraryHasSubmodule() (result checkresult.Type, output string) {
+	dotGitmodulesPath := checkdata.ProjectPath().Join(".gitmodules")
+	hasDotGitmodules, err := dotGitmodulesPath.ExistCheck()
+	if err != nil {
+		panic(err)
+	}
+
+	if hasDotGitmodules && dotGitmodulesPath.IsNotDir() {
+		return checkresult.Fail, ""
+	}
+
+	return checkresult.Pass, ""
+}
+
 // spellCheckLibraryPropertiesFieldValue returns the value of the provided library.properties field with commonly misspelled words corrected.
 func spellCheckLibraryPropertiesFieldValue(fieldName string) (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
