@@ -965,6 +965,22 @@ func LibraryFolderNameGTMaxLength() (result checkresult.Type, output string) {
 	return checkresult.Pass, ""
 }
 
+// MisspelledExtrasFolderName checks for incorrectly spelled `extras` folder name.
+func MisspelledExtrasFolderName() (result checkresult.Type, output string) {
+	directoryListing, err := checkdata.ProjectPath().ReadDir()
+	if err != nil {
+		panic(err)
+	}
+	directoryListing.FilterDirs()
+
+	path, found := containsMisspelledPathBaseName(directoryListing, "extras", "(?i)^extra$")
+	if found {
+		return checkresult.Fail, path.String()
+	}
+
+	return checkresult.Pass, ""
+}
+
 // spellCheckLibraryPropertiesFieldValue returns the value of the provided library.properties field with commonly misspelled words corrected.
 func spellCheckLibraryPropertiesFieldValue(fieldName string) (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {

@@ -272,3 +272,13 @@ func TestLibraryFolderNameGTMaxLength(t *testing.T) {
 
 	checkLibraryCheckFunction(LibraryFolderNameGTMaxLength, testTables, t)
 }
+
+func TestMisspelledExtrasFolderName(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Correctly spelled", "ExtrasFolder", checkresult.Pass, ""},
+		{"Misspelled", "MisspelledExtrasFolder", checkresult.Fail, ""},
+		{"No extras folder", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(MisspelledExtrasFolderName, testTables, t)
+}
