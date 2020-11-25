@@ -74,16 +74,25 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 	reportFilePathString, _ := flags.GetString("report-file")
 	reportFilePath = paths.New(reportFilePathString)
 
-	for _, projectPath := range projectPaths {
-		targetPath := paths.New(projectPath)
-		targetPathExists, err := targetPath.ExistCheck()
+	if len(projectPaths) == 0 {
+		// Default to using current working directory.
+		workingDirectoryPath, err := os.Getwd()
 		if err != nil {
-			return fmt.Errorf("Problem processing PROJECT_PATH argument value %v: %v", targetPath, err)
+			return fmt.Errorf("Error when setting default PROJECT_PATH argument: %s", err)
 		}
-		if !targetPathExists {
-			return fmt.Errorf("PROJECT_PATH argument %v does not exist", targetPath)
+		targetPaths.Add(paths.New(workingDirectoryPath))
+	} else {
+		for _, projectPath := range projectPaths {
+			targetPath := paths.New(projectPath)
+			targetPathExists, err := targetPath.ExistCheck()
+			if err != nil {
+				return fmt.Errorf("Problem processing PROJECT_PATH argument value %v: %v", targetPath, err)
+			}
+			if !targetPathExists {
+				return fmt.Errorf("PROJECT_PATH argument %v does not exist", targetPath)
+			}
+			targetPaths.AddIfMissing(targetPath)
 		}
-		targetPaths.AddIfMissing(targetPath)
 	}
 
 	if officialModeString, ok := os.LookupEnv("ARDUINO_CHECK_OFFICIAL"); ok {
