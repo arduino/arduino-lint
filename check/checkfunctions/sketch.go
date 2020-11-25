@@ -22,7 +22,29 @@ import (
 
 	"github.com/arduino/arduino-check/check/checkdata"
 	"github.com/arduino/arduino-check/check/checkresult"
+	"github.com/arduino/arduino-check/project/sketch"
 )
+
+// ProhibitedCharactersInSketchFileName checks for prohibited characters in the sketch file names.
+func ProhibitedCharactersInSketchFileName() (result checkresult.Type, output string) {
+	directoryListing, _ := checkdata.ProjectPath().ReadDir()
+	directoryListing.FilterOutDirs()
+
+	foundInvalidSketchFileNames := []string{}
+	for _, potentialSketchFile := range directoryListing {
+		if sketch.HasSupportedExtension(potentialSketchFile) {
+			if !validProjectPathBaseName(potentialSketchFile.Base()) {
+				foundInvalidSketchFileNames = append(foundInvalidSketchFileNames, potentialSketchFile.Base())
+			}
+		}
+	}
+
+	if len(foundInvalidSketchFileNames) > 0 {
+		return checkresult.Fail, strings.Join(foundInvalidSketchFileNames, ", ")
+	}
+
+	return checkresult.Pass, ""
+}
 
 // PdeSketchExtension checks for use of deprecated .pde sketch file extensions.
 func PdeSketchExtension() (result checkresult.Type, output string) {

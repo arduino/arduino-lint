@@ -30,3 +30,9 @@ func HasMainFileValidExtension(filePath *paths.Path) bool {
 	_, hasMainFileValidExtension := globals.MainFileValidExtensions[filePath.Ext()]
 	return hasMainFileValidExtension
 }
+
+// HasSupportedExtension returns whether the file at the given path has any of the file extensions supported for source/header files of a sketch.
+func HasSupportedExtension(filePath *paths.Path) bool {
+	_, hasAdditionalFileValidExtensions := globals.AdditionalFileValidExtensions[filePath.Ext()]
+	return hasAdditionalFileValidExtensions || HasMainFileValidExtension(filePath)
+}
