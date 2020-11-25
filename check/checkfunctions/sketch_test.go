@@ -68,3 +68,12 @@ func TestProhibitedCharactersInSketchFileName(t *testing.T) {
 
 	checkSketchCheckFunction(ProhibitedCharactersInSketchFileName, testTables, t)
 }
+
+func TestSketchFileNameGTMaxLength(t *testing.T) {
+	testTables := []sketchCheckFunctionTestTable{
+		{"Has file name > max length", "FileNameTooLong", checkresult.Fail, "^FileNameTooLong12345678901234567890123456789012345678901234567890.h$"},
+		{"File names <= max length", "Valid", checkresult.Pass, ""},
+	}
+
+	checkSketchCheckFunction(SketchFileNameGTMaxLength, testTables, t)
+}

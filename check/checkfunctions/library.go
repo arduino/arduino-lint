@@ -938,6 +938,15 @@ func ProhibitedCharactersInLibraryFolderName() (result checkresult.Type, output 
 	return checkresult.Pass, ""
 }
 
+// LibraryFolderNameGTMaxLength checks if the library folder name exceeds the maximum length.
+func LibraryFolderNameGTMaxLength() (result checkresult.Type, output string) {
+	if len(checkdata.ProjectPath().Base()) > 63 {
+		return checkresult.Fail, checkdata.ProjectPath().Base()
+	}
+
+	return checkresult.Pass, ""
+}
+
 // spellCheckLibraryPropertiesFieldValue returns the value of the provided library.properties field with commonly misspelled words corrected.
 func spellCheckLibraryPropertiesFieldValue(fieldName string) (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
