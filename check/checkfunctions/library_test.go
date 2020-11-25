@@ -95,13 +95,13 @@ func TestLibraryPropertiesNameFieldNotInIndex(t *testing.T) {
 }
 
 func TestLibraryPropertiesNameFieldHeaderMismatch(t *testing.T) {
-	testTables := []checkFunctionTestTable{
+	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
 		{"Mismatch", "NameHeaderMismatch", checkresult.Fail, "^NameHeaderMismatch.h$"},
 		{"Match", "Recursive", checkresult.Pass, ""},
 	}
 
-	checkCheckFunction(LibraryPropertiesNameFieldHeaderMismatch, testTables, t)
+	checkLibraryCheckFunction(LibraryPropertiesNameFieldHeaderMismatch, testTables, t)
 }
 
 func TestLibraryPropertiesSentenceFieldSpellCheck(t *testing.T) {
@@ -170,14 +170,14 @@ func TestLibraryPropertiesDotALinkageFieldTrueWithFlatLayout(t *testing.T) {
 }
 
 func TestLibraryPropertiesIncludesFieldItemNotFound(t *testing.T) {
-	testTables := []checkFunctionTestTable{
+	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
 		{"Not defined", "MissingFields", checkresult.NotRun, ""},
 		{"Missing includes", "MissingIncludes", checkresult.Fail, "^Nonexistent.h$"},
 		{"Present includes", "Recursive", checkresult.Pass, ""},
 	}
 
-	checkCheckFunction(LibraryPropertiesIncludesFieldItemNotFound, testTables, t)
+	checkLibraryCheckFunction(LibraryPropertiesIncludesFieldItemNotFound, testTables, t)
 }
 
 func TestLibraryPropertiesPrecompiledFieldEnabledWithFlatLayout(t *testing.T) {
@@ -194,12 +194,12 @@ func TestLibraryPropertiesPrecompiledFieldEnabledWithFlatLayout(t *testing.T) {
 }
 
 func TestLibraryHasSubmodule(t *testing.T) {
-	testTables := []checkFunctionTestTable{
+	testTables := []libraryCheckFunctionTestTable{
 		{"Has submodule", "Submodule", checkresult.Fail, ""},
 		{"No submodule", "Recursive", checkresult.Pass, ""},
 	}
 
-	checkCheckFunction(LibraryHasSubmodule, testTables, t)
+	checkLibraryCheckFunction(LibraryHasSubmodule, testTables, t)
 }
 
 func TestLibraryContainsSymlinks(t *testing.T) {
@@ -210,36 +210,44 @@ func TestLibraryContainsSymlinks(t *testing.T) {
 	require.Nil(t, err, "This test must be run as administrator on Windows to have symlink creation privilege.")
 	defer symlinkPath.RemoveAll() // clean up
 
-	testTables := []checkFunctionTestTable{
+	testTables := []libraryCheckFunctionTestTable{
 		{"Has symlink", testLibrary, checkresult.Fail, ""},
 	}
 
-	checkCheckFunction(LibraryContainsSymlinks, testTables, t)
+	checkLibraryCheckFunction(LibraryContainsSymlinks, testTables, t)
 
 	err = symlinkPath.RemoveAll()
 	require.Nil(t, err)
 
-	testTables = []checkFunctionTestTable{
+	testTables = []libraryCheckFunctionTestTable{
 		{"No symlink", testLibrary, checkresult.Pass, ""},
 	}
 
-	checkCheckFunction(LibraryContainsSymlinks, testTables, t)
+	checkLibraryCheckFunction(LibraryContainsSymlinks, testTables, t)
 }
 
 func TestLibraryHasDotDevelopmentFile(t *testing.T) {
-	testTables := []checkFunctionTestTable{
+	testTables := []libraryCheckFunctionTestTable{
 		{"Has .development file", "DotDevelopment", checkresult.Fail, ""},
 		{"No .development file", "Recursive", checkresult.Pass, ""},
 	}
 
-	checkCheckFunction(LibraryHasDotDevelopmentFile, testTables, t)
+	checkLibraryCheckFunction(LibraryHasDotDevelopmentFile, testTables, t)
 }
 
 func TestLibraryHasExe(t *testing.T) {
-	testTables := []checkFunctionTestTable{
+	testTables := []libraryCheckFunctionTestTable{
 		{"Has .exe file", "Exe", checkresult.Fail, ""},
 		{"No .exe files", "Recursive", checkresult.Pass, ""},
 	}
 
-	checkCheckFunction(LibraryHasExe, testTables, t)
+	checkLibraryCheckFunction(LibraryHasExe, testTables, t)
+}
+func TestProhibitedCharactersInLibraryFolderName(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Has prohibited characters", "Prohibited CharactersInFolderName", checkresult.Fail, ""},
+		{"No prohibited characters", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(ProhibitedCharactersInLibraryFolderName, testTables, t)
 }

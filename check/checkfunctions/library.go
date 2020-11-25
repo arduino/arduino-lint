@@ -929,6 +929,15 @@ func LibraryHasExe() (result checkresult.Type, output string) {
 	return checkresult.Pass, ""
 }
 
+// ProhibitedCharactersInLibraryFolderName checks for prohibited characters in the library folder name.
+func ProhibitedCharactersInLibraryFolderName() (result checkresult.Type, output string) {
+	if !validProjectPathBaseName(checkdata.ProjectPath().Base()) {
+		return checkresult.Fail, checkdata.ProjectPath().Base()
+	}
+
+	return checkresult.Pass, ""
+}
+
 // spellCheckLibraryPropertiesFieldValue returns the value of the provided library.properties field with commonly misspelled words corrected.
 func spellCheckLibraryPropertiesFieldValue(fieldName string) (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {

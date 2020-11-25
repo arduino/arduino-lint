@@ -17,9 +17,17 @@
 package checkfunctions
 
 import (
+	"regexp"
+
 	"github.com/arduino/arduino-check/check/checkresult"
 )
 
 // Type is the function signature for the check functions.
 // The `output` result is the contextual information that will be inserted into the check's message template.
 type Type func() (result checkresult.Type, output string)
+
+// validProjectPathBaseName checks whether the provided library folder or sketch filename contains prohibited characters.
+func validProjectPathBaseName(name string) bool {
+	baseNameRegexp := regexp.MustCompile("^[a-zA-Z0-9][a-zA-Z0-9_.-]*$")
+	return baseNameRegexp.MatchString(name)
+}
