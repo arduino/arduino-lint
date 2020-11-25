@@ -17,6 +17,8 @@
 package library
 
 import (
+	"fmt"
+
 	"github.com/arduino/go-paths-helper"
 )
 
@@ -35,6 +37,30 @@ func HasHeaderFileValidExtension(filePath *paths.Path) bool {
 	return hasHeaderFileValidExtension
 }
 
+// ContainsHeaderFile checks whether the provided path contains a file with valid header extension.
+func ContainsHeaderFile(searchPath *paths.Path) bool {
+	if searchPath.NotExist() {
+		panic(fmt.Sprintf("Error: provided path %s does not exist.", searchPath))
+	}
+	if searchPath.IsNotDir() {
+		panic(fmt.Sprintf("Error: provided path %s is not a directory.", searchPath))
+	}
+
+	directoryListing, err := searchPath.ReadDir()
+	if err != nil {
+		panic(err)
+	}
+
+	directoryListing.FilterOutDirs()
+	for _, potentialHeaderFile := range directoryListing {
+		if HasHeaderFileValidExtension(potentialHeaderFile) {
+			return true
+		}
+	}
+
+	return false
+}
+
 // See: https://arduino.github.io/arduino-cli/latest/library-specification/#library-metadata
 var metadataFilenames = map[string]struct{}{
 	"library.properties": empty,
@@ -46,6 +72,30 @@ func IsMetadataFile(filePath *paths.Path) bool {
 	if isMetadataFile {
 		return true
 	}
+	return false
+}
+
+// ContainsMetadataFile checks whether the provided path contains an Arduino library metadata file.
+func ContainsMetadataFile(searchPath *paths.Path) bool {
+	if searchPath.NotExist() {
+		panic(fmt.Sprintf("Error: provided path %s does not exist.", searchPath))
+	}
+	if searchPath.IsNotDir() {
+		panic(fmt.Sprintf("Error: provided path %s is not a directory.", searchPath))
+	}
+
+	directoryListing, err := searchPath.ReadDir()
+	if err != nil {
+		panic(err)
+	}
+
+	directoryListing.FilterOutDirs()
+	for _, potentialMetadataFile := range directoryListing {
+		if IsMetadataFile(potentialMetadataFile) {
+			return true
+		}
+	}
+
 	return false
 }
 

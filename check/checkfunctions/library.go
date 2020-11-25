@@ -904,16 +904,8 @@ func LibraryPropertiesMisspelledOptionalField() (result checkresult.Type, output
 
 // LibraryInvalid checks whether the provided path is a valid library.
 func LibraryInvalid() (result checkresult.Type, output string) {
-	directoryListing, err := checkdata.LoadedLibrary().SourceDir.ReadDir()
-	if err != nil {
-		panic(err)
-	}
-
-	directoryListing.FilterOutDirs()
-	for _, potentialHeaderFile := range directoryListing {
-		if library.HasHeaderFileValidExtension(potentialHeaderFile) {
-			return checkresult.Pass, ""
-		}
+	if library.ContainsHeaderFile(checkdata.LoadedLibrary().SourceDir) {
+		return checkresult.Pass, ""
 	}
 
 	return checkresult.Fail, ""
