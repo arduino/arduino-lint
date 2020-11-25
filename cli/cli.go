@@ -25,13 +25,13 @@ import (
 func Root() *cobra.Command {
 	rootCommand := &cobra.Command{
 		Short:                 "Linter for Arduino projects.",
-		Long:                  "arduino-check checks specification compliance and for other common problems with Arduino projects",
+		Long:                  "arduino-check checks for specification compliance and other common problems with Arduino projects",
 		DisableFlagsInUseLine: true,
 		Use:                   "arduino-check [FLAG]... [PROJECT_PATH]...\n\nRun checks on PROJECT_PATH or current path if no PROJECT_PATH argument provided.",
 		Run:                   command.ArduinoCheck,
 	}
 
-	rootCommand.PersistentFlags().String("format", "text", "The output format, can be {text|json}.")
+	rootCommand.PersistentFlags().String("format", "text", "The output format can be {text|json}.")
 	rootCommand.PersistentFlags().String("library-manager", "", "Configure the checks for libraries in the Arduino Library Manager index. Can be {submit|update|false}.\nsubmit: Also run additional checks required to pass before a library is accepted for inclusion in the index.\nupdate: Also run additional checks required to pass before new releases of a library already in the index are accepted.\nfalse: Don't run any Library Manager-specific checks.")
 	rootCommand.PersistentFlags().String("log-format", "text", "The output format for the logs, can be {text|json}.")
 	rootCommand.PersistentFlags().String("log-level", "panic", "Messages with this level and above will be logged. Valid levels are: trace, debug, info, warn, error, fatal, panic")
