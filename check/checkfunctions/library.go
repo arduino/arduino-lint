@@ -68,6 +68,22 @@ func MisspelledLibraryPropertiesFileName() (result checkresult.Type, output stri
 	return checkresult.Pass, ""
 }
 
+// IncorrectLibraryPropertiesFileNameCase checks for incorrect library.properties file name case.
+func IncorrectLibraryPropertiesFileNameCase() (result checkresult.Type, output string) {
+	directoryListing, err := checkdata.ProjectPath().ReadDir()
+	if err != nil {
+		panic(err)
+	}
+	directoryListing.FilterOutDirs()
+
+	path, found := containsIncorrectPathBaseCase(directoryListing, "library.properties")
+	if found {
+		return checkresult.Fail, path.String()
+	}
+
+	return checkresult.Pass, ""
+}
+
 // LibraryPropertiesNameFieldMissing checks for missing library.properties "name" field.
 func LibraryPropertiesNameFieldMissing() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
@@ -1006,6 +1022,22 @@ func MisspelledExamplesFolderName() (result checkresult.Type, output string) {
 	return checkresult.Pass, ""
 }
 
+// IncorrectExamplesFolderNameCase checks for incorrect `examples` folder name case.
+func IncorrectExamplesFolderNameCase() (result checkresult.Type, output string) {
+	directoryListing, err := checkdata.ProjectPath().ReadDir()
+	if err != nil {
+		panic(err)
+	}
+	directoryListing.FilterDirs()
+
+	path, found := containsIncorrectPathBaseCase(directoryListing, "examples")
+	if found {
+		return checkresult.Fail, path.String()
+	}
+
+	return checkresult.Pass, ""
+}
+
 // MisspelledExtrasFolderName checks for incorrectly spelled `extras` folder name.
 func MisspelledExtrasFolderName() (result checkresult.Type, output string) {
 	directoryListing, err := checkdata.ProjectPath().ReadDir()
@@ -1036,6 +1068,22 @@ func spellCheckLibraryPropertiesFieldValue(fieldName string) (result checkresult
 	replaced, diff := checkdata.MisspelledWordsReplacer().Replace(fieldValue)
 	if diff != nil {
 		return checkresult.Fail, replaced
+	}
+
+	return checkresult.Pass, ""
+}
+
+// IncorrectExtrasFolderNameCase checks for incorrect `extras` folder name case.
+func IncorrectExtrasFolderNameCase() (result checkresult.Type, output string) {
+	directoryListing, err := checkdata.ProjectPath().ReadDir()
+	if err != nil {
+		panic(err)
+	}
+	directoryListing.FilterDirs()
+
+	path, found := containsIncorrectPathBaseCase(directoryListing, "extras")
+	if found {
+		return checkresult.Fail, path.String()
 	}
 
 	return checkresult.Pass, ""

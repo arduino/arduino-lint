@@ -73,6 +73,15 @@ func TestMisspelledLibraryPropertiesFileName(t *testing.T) {
 	checkLibraryCheckFunction(MisspelledLibraryPropertiesFileName, testTables, t)
 }
 
+func TestIncorrectLibraryPropertiesFileNameCase(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Incorrect", "IncorrectLibraryPropertiesCase", checkresult.Fail, ""},
+		{"Correct", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(IncorrectLibraryPropertiesFileNameCase, testTables, t)
+}
+
 func TestLibraryPropertiesMissing(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Legacy", "Legacy", checkresult.Fail, ""},
@@ -302,6 +311,16 @@ func TestMisspelledExamplesFolderName(t *testing.T) {
 	checkLibraryCheckFunction(MisspelledExamplesFolderName, testTables, t)
 }
 
+func TestIncorrectExamplesFolderNameCase(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Correct case", "ExamplesFolder", checkresult.Pass, ""},
+		{"Incorrect case", "IncorrectExamplesFolderCase", checkresult.Fail, ""},
+		{"No examples folder", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(IncorrectExamplesFolderNameCase, testTables, t)
+}
+
 func TestMisspelledExtrasFolderName(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Correctly spelled", "ExtrasFolder", checkresult.Pass, ""},
@@ -310,4 +329,14 @@ func TestMisspelledExtrasFolderName(t *testing.T) {
 	}
 
 	checkLibraryCheckFunction(MisspelledExtrasFolderName, testTables, t)
+}
+
+func TestIncorrectExtrasFolderNameCase(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Correct case", "ExtrasFolder", checkresult.Pass, ""},
+		{"Incorrect case", "IncorrectExtrasFolderCase", checkresult.Fail, ""},
+		{"No extras folder", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(IncorrectExtrasFolderNameCase, testTables, t)
 }

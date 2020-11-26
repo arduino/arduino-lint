@@ -18,6 +18,7 @@ package checkfunctions
 
 import (
 	"regexp"
+	"strings"
 
 	"github.com/arduino/arduino-check/check/checkresult"
 	"github.com/arduino/go-paths-helper"
@@ -41,6 +42,22 @@ func containsMisspelledPathBaseName(pathList paths.PathList, correctBaseName str
 		}
 
 		if misspellingRegexp.MatchString(path.Base()) {
+			return path, true
+		}
+	}
+
+	return nil, false
+}
+
+func containsIncorrectPathBaseCase(pathList paths.PathList, correctBaseName string) (*paths.Path, bool) {
+	for _, path := range pathList {
+		if path.Base() == correctBaseName {
+			// There was a case-sensitive match (paths package's Exist() is not always case-sensitive, so can't be used here).
+			return nil, false
+		}
+
+		if strings.EqualFold(path.Base(), correctBaseName) {
+			// There was a case-insensitive match.
 			return path, true
 		}
 	}
