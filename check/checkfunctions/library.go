@@ -43,6 +43,15 @@ func LibraryPropertiesFormat() (result checkresult.Type, output string) {
 	return checkresult.Pass, ""
 }
 
+// LibraryPropertiesMissing checks for presence of library.properties.
+func LibraryPropertiesMissing() (result checkresult.Type, output string) {
+	if checkdata.LoadedLibrary().IsLegacy {
+		return checkresult.Fail, ""
+	}
+
+	return checkresult.Pass, ""
+}
+
 // MisspelledLibraryPropertiesFileName checks for incorrectly spelled library.properties file name.
 func MisspelledLibraryPropertiesFileName() (result checkresult.Type, output string) {
 	directoryListing, err := checkdata.ProjectPath().ReadDir()
