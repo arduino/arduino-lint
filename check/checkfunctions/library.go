@@ -1073,6 +1073,22 @@ func spellCheckLibraryPropertiesFieldValue(fieldName string) (result checkresult
 	return checkresult.Pass, ""
 }
 
+// IncorrectExtrasFolderNameCase checks for incorrect `extras` folder name case.
+func IncorrectExtrasFolderNameCase() (result checkresult.Type, output string) {
+	directoryListing, err := checkdata.ProjectPath().ReadDir()
+	if err != nil {
+		panic(err)
+	}
+	directoryListing.FilterDirs()
+
+	path, found := containsIncorrectPathBaseCase(directoryListing, "extras")
+	if found {
+		return checkresult.Fail, path.String()
+	}
+
+	return checkresult.Pass, ""
+}
+
 // nameInLibraryManagerIndex returns whether there is a library in Library Manager index using the given name.
 func nameInLibraryManagerIndex(name string) bool {
 	libraries := checkdata.LibraryManagerIndex()["libraries"].([]interface{})

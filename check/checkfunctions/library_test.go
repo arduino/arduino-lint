@@ -330,3 +330,13 @@ func TestMisspelledExtrasFolderName(t *testing.T) {
 
 	checkLibraryCheckFunction(MisspelledExtrasFolderName, testTables, t)
 }
+
+func TestIncorrectExtrasFolderNameCase(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Correct case", "ExtrasFolder", checkresult.Pass, ""},
+		{"Incorrect case", "IncorrectExtrasFolderCase", checkresult.Fail, ""},
+		{"No extras folder", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(IncorrectExtrasFolderNameCase, testTables, t)
+}
