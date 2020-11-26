@@ -1022,6 +1022,22 @@ func MisspelledExamplesFolderName() (result checkresult.Type, output string) {
 	return checkresult.Pass, ""
 }
 
+// IncorrectExamplesFolderNameCase checks for incorrect `examples` folder name case.
+func IncorrectExamplesFolderNameCase() (result checkresult.Type, output string) {
+	directoryListing, err := checkdata.ProjectPath().ReadDir()
+	if err != nil {
+		panic(err)
+	}
+	directoryListing.FilterDirs()
+
+	path, found := containsIncorrectPathBaseCase(directoryListing, "examples")
+	if found {
+		return checkresult.Fail, path.String()
+	}
+
+	return checkresult.Pass, ""
+}
+
 // MisspelledExtrasFolderName checks for incorrectly spelled `extras` folder name.
 func MisspelledExtrasFolderName() (result checkresult.Type, output string) {
 	directoryListing, err := checkdata.ProjectPath().ReadDir()
