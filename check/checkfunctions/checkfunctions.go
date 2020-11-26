@@ -20,6 +20,7 @@ import (
 	"regexp"
 
 	"github.com/arduino/arduino-check/check/checkresult"
+	"github.com/arduino/go-paths-helper"
 )
 
 // Type is the function signature for the check functions.
@@ -30,4 +31,19 @@ type Type func() (result checkresult.Type, output string)
 func validProjectPathBaseName(name string) bool {
 	baseNameRegexp := regexp.MustCompile("^[a-zA-Z0-9][a-zA-Z0-9_.-]*$")
 	return baseNameRegexp.MatchString(name)
+}
+
+func containsMisspelledPathBaseName(pathList paths.PathList, correctBaseName string, misspellingQuery string) (*paths.Path, bool) {
+	misspellingRegexp := regexp.MustCompile(misspellingQuery)
+	for _, path := range pathList {
+		if path.Base() == correctBaseName {
+			return nil, false
+		}
+
+		if misspellingRegexp.MatchString(path.Base()) {
+			return path, true
+		}
+	}
+
+	return nil, false
 }

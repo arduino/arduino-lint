@@ -64,6 +64,15 @@ func checkLibraryCheckFunction(checkFunction Type, testTables []libraryCheckFunc
 	}
 }
 
+func TestMisspelledLibraryPropertiesFileName(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Incorrect", "MisspelledLibraryProperties", checkresult.Fail, ""},
+		{"Correct", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(MisspelledLibraryPropertiesFileName, testTables, t)
+}
+
 func TestLibraryPropertiesNameFieldMissingOfficialPrefix(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
@@ -271,4 +280,24 @@ func TestLibraryFolderNameGTMaxLength(t *testing.T) {
 	}
 
 	checkLibraryCheckFunction(LibraryFolderNameGTMaxLength, testTables, t)
+}
+
+func TestMisspelledExamplesFolderName(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Correctly spelled", "ExamplesFolder", checkresult.Pass, ""},
+		{"Misspelled", "MisspelledExamplesFolder", checkresult.Fail, ""},
+		{"No examples folder", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(MisspelledExamplesFolderName, testTables, t)
+}
+
+func TestMisspelledExtrasFolderName(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Correctly spelled", "ExtrasFolder", checkresult.Pass, ""},
+		{"Misspelled", "MisspelledExtrasFolder", checkresult.Fail, ""},
+		{"No extras folder", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(MisspelledExtrasFolderName, testTables, t)
 }
