@@ -81,6 +81,8 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 	reportFilePathString, _ := flags.GetString("report-file")
 	reportFilePath = paths.New(reportFilePathString)
 
+	versionMode, _ = flags.GetBool("version")
+
 	if len(projectPaths) == 0 {
 		// Default to using current working directory.
 		workingDirectoryPath, err := os.Getwd()
@@ -172,6 +174,23 @@ var reportFilePath *paths.Path
 // ReportFilePath returns the path to save the report file at.
 func ReportFilePath() *paths.Path {
 	return reportFilePath
+}
+
+var versionMode bool
+
+func VersionMode() bool {
+	return versionMode
+}
+
+var version string
+var commit string
+
+func Version() string {
+	if version == "" {
+		return "0.0.0+" + commit
+	}
+
+	return version
 }
 
 var targetPaths paths.PathList

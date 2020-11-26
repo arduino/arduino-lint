@@ -17,6 +17,7 @@
 package command
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 
@@ -34,6 +35,24 @@ func ArduinoCheck(rootCommand *cobra.Command, cliArguments []string) {
 	if err := configuration.Initialize(rootCommand.Flags(), cliArguments); err != nil {
 		feedback.Errorf("Configuration error: %v", err)
 		os.Exit(1)
+	}
+
+	if configuration.VersionMode() {
+		if configuration.OutputFormat() == outputformat.Text {
+			fmt.Println(configuration.Version())
+		} else {
+			versionObject := struct {
+				Version string `json:"version"`
+			}{
+				Version: configuration.Version(),
+			}
+			versionJSON, err := json.MarshalIndent(versionObject, "", "  ")
+			if err != nil {
+				panic(err)
+			}
+			fmt.Println(string(versionJSON))
+		}
+		return
 	}
 
 	result.Results.Initialize()

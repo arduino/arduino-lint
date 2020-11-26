@@ -29,6 +29,7 @@ func ConfigurationFlags() *pflag.FlagSet {
 	flags.String("project-type", "all", "")
 	flags.Bool("recursive", true, "")
 	flags.String("report-file", "", "")
+	flags.Bool("version", false, "")
 
 	return flags
 }
