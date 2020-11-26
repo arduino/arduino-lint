@@ -21,11 +21,11 @@ import "github.com/spf13/pflag"
 // ConfigurationFlags returns a set of the flags used for command line configuration of arduino-check.
 func ConfigurationFlags() *pflag.FlagSet {
 	flags := pflag.NewFlagSet("", pflag.ExitOnError)
+	flags.String("compliance", "specification", "")
 	flags.String("format", "text", "")
 	flags.String("library-manager", "", "")
 	flags.String("log-format", "text", "")
 	flags.String("log-level", "panic", "")
-	flags.Bool("permissive", false, "")
 	flags.String("project-type", "all", "")
 	flags.Bool("recursive", true, "")
 	flags.String("report-file", "", "")
