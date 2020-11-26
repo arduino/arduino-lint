@@ -19,8 +19,22 @@ package feedback
 import (
 	"fmt"
 
+	"github.com/arduino/arduino-check/configuration"
+	"github.com/arduino/arduino-check/result/outputformat"
 	"github.com/sirupsen/logrus"
 )
+
+// Printf behaves like fmt.Printf but only prints when output format is set to `text`.
+func Printf(format string, v ...interface{}) {
+	Print(fmt.Sprintf(format, v...))
+}
+
+// Print behaves like fmt.Print but only prints when output format is set to `text`.
+func Print(message string) {
+	if configuration.OutputFormat() == outputformat.Text {
+		fmt.Printf(message)
+	}
+}
 
 // Errorf behaves like fmt.Printf but also logs the error.
 func Errorf(format string, v ...interface{}) {

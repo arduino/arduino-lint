@@ -27,15 +27,12 @@ import (
 	"github.com/arduino/arduino-check/project"
 	"github.com/arduino/arduino-check/result"
 	"github.com/arduino/arduino-check/result/feedback"
-	"github.com/arduino/arduino-check/result/outputformat"
 	"github.com/sirupsen/logrus"
 )
 
 // RunChecks runs all checks for the given project and outputs the results.
 func RunChecks(project project.Type) {
-	if configuration.OutputFormat() == outputformat.Text {
-		fmt.Printf("Checking %s in %s\n", project.ProjectType, project.Path)
-	}
+	feedback.Printf("Checking %s in %s\n", project.ProjectType, project.Path)
 
 	checkdata.Initialize(project, configuration.SchemasPath())
 
@@ -52,23 +49,18 @@ func RunChecks(project project.Type) {
 		}
 
 		// Output will be printed after all checks are finished when configured for "json" output format
-		if configuration.OutputFormat() == outputformat.Text {
-			fmt.Printf("Running check %s: ", checkConfiguration.ID)
-		}
+		feedback.Printf("Running check %s: ", checkConfiguration.ID)
+
 		checkResult, checkOutput := checkConfiguration.CheckFunction()
 		reportText := result.Results.Record(project, checkConfiguration, checkResult, checkOutput)
-		if configuration.OutputFormat() == outputformat.Text {
-			fmt.Print(reportText)
-		}
+		feedback.Print(reportText)
 	}
 
 	// Checks are finished for this project, so summarize its check results in the report.
 	result.Results.AddProjectSummary(project)
 
-	if configuration.OutputFormat() == outputformat.Text {
-		// Print the project check results summary.
-		fmt.Print(result.Results.ProjectSummaryText(project))
-	}
+	// Print the project check results summary.
+	feedback.Print(result.Results.ProjectSummaryText(project))
 }
 
 // shouldRun returns whether a given check should be run for the given project under the current tool configuration.
