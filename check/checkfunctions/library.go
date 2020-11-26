@@ -43,6 +43,22 @@ func LibraryPropertiesFormat() (result checkresult.Type, output string) {
 	return checkresult.Pass, ""
 }
 
+// MisspelledLibraryPropertiesFileName checks for incorrectly spelled library.properties file name.
+func MisspelledLibraryPropertiesFileName() (result checkresult.Type, output string) {
+	directoryListing, err := checkdata.ProjectPath().ReadDir()
+	if err != nil {
+		panic(err)
+	}
+	directoryListing.FilterOutDirs()
+
+	path, found := containsMisspelledPathBaseName(directoryListing, "library.properties", "(?i)^librar(y)|(ie)s?[.-_]?propert(y)|(ie)s?$")
+	if found {
+		return checkresult.Fail, path.String()
+	}
+
+	return checkresult.Pass, ""
+}
+
 // LibraryPropertiesNameFieldMissing checks for missing library.properties "name" field.
 func LibraryPropertiesNameFieldMissing() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {

@@ -64,6 +64,15 @@ func checkLibraryCheckFunction(checkFunction Type, testTables []libraryCheckFunc
 	}
 }
 
+func TestMisspelledLibraryPropertiesFileName(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Incorrect", "MisspelledLibraryProperties", checkresult.Fail, ""},
+		{"Correct", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(MisspelledLibraryPropertiesFileName, testTables, t)
+}
+
 func TestLibraryPropertiesNameFieldMissingOfficialPrefix(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
