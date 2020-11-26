@@ -981,6 +981,22 @@ func LibraryFolderNameGTMaxLength() (result checkresult.Type, output string) {
 	return checkresult.Pass, ""
 }
 
+// MisspelledExamplesFolderName checks for incorrectly spelled `examples` folder name.
+func MisspelledExamplesFolderName() (result checkresult.Type, output string) {
+	directoryListing, err := checkdata.ProjectPath().ReadDir()
+	if err != nil {
+		panic(err)
+	}
+	directoryListing.FilterDirs()
+
+	path, found := containsMisspelledPathBaseName(directoryListing, "examples", "(?i)^e((x)|(xs)|(s))((am)|(ma))p((le)|(el))s?$")
+	if found {
+		return checkresult.Fail, path.String()
+	}
+
+	return checkresult.Pass, ""
+}
+
 // MisspelledExtrasFolderName checks for incorrectly spelled `extras` folder name.
 func MisspelledExtrasFolderName() (result checkresult.Type, output string) {
 	directoryListing, err := checkdata.ProjectPath().ReadDir()
