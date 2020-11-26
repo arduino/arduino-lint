@@ -28,6 +28,7 @@ import (
 	"github.com/arduino/arduino-check/check/checkdata/schema/compliancelevel"
 	"github.com/arduino/arduino-check/check/checkresult"
 	"github.com/arduino/arduino-check/configuration"
+	"github.com/arduino/arduino-check/project/library"
 	"github.com/arduino/arduino-cli/arduino/libraries"
 	"github.com/arduino/arduino-cli/arduino/utils"
 	"github.com/arduino/go-properties-orderedmap"
@@ -848,6 +849,23 @@ func LibraryPropertiesMisspelledOptionalField() (result checkresult.Type, output
 	}
 
 	return checkresult.Pass, ""
+}
+
+// LibraryInvalid checks whether the provided path is a valid library.
+func LibraryInvalid() (result checkresult.Type, output string) {
+	directoryListing, err := checkdata.LoadedLibrary().SourceDir.ReadDir()
+	if err != nil {
+		panic(err)
+	}
+
+	directoryListing.FilterOutDirs()
+	for _, potentialHeaderFile := range directoryListing {
+		if library.HasHeaderFileValidExtension(potentialHeaderFile) {
+			return checkresult.Pass, ""
+		}
+	}
+
+	return checkresult.Fail, ""
 }
 
 // LibraryHasSubmodule checks whether the library contains a Git submodule.

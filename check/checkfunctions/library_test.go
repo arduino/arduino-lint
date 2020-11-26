@@ -25,6 +25,7 @@ import (
 	"github.com/arduino/arduino-check/project"
 	"github.com/arduino/arduino-check/project/projecttype"
 	"github.com/arduino/go-paths-helper"
+	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -191,6 +192,17 @@ func TestLibraryPropertiesPrecompiledFieldEnabledWithFlatLayout(t *testing.T) {
 	}
 
 	checkLibraryCheckFunction(LibraryPropertiesPrecompiledFieldEnabledWithFlatLayout, testTables, t)
+}
+
+func TestLibraryInvalid(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid flat layout", "FlatWithoutHeader", checkresult.Fail, ""},
+		{"Invalid recursive layout", "RecursiveWithoutLibraryProperties", checkresult.Fail, ""},
+		{"Valid library", "Recursive", checkresult.Pass, ""},
+	}
+
+	logrus.SetLevel(logrus.ErrorLevel)
+	checkLibraryCheckFunction(LibraryInvalid, testTables, t)
 }
 
 func TestLibraryHasSubmodule(t *testing.T) {
