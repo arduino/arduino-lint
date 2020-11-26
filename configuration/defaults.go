@@ -22,8 +22,8 @@ import (
 	"github.com/arduino/arduino-check/project/projecttype"
 )
 
-// Default check modes for each superproject type
-// Subprojects use the same check modes as the superproject
+// Default check modes for each superproject type.
+// Subprojects use the same check modes as the superproject.
 var defaultCheckModes = map[projecttype.Type]map[checkmode.Type]bool{
 	projecttype.Sketch: {
 		checkmode.Permissive:               false,

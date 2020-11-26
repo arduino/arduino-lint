@@ -144,7 +144,7 @@ func findSubprojects(superproject Type, apexSuperprojectType projecttype.Type) [
 		panic(fmt.Sprintf("Subproject discovery not configured for project type: %s", superproject.ProjectType))
 	}
 
-	// Search the subproject paths for projects
+	// Search the subproject paths for projects.
 	var immediateSubprojects []Type
 	for _, subprojectFolderName := range subprojectFolderNames {
 		subprojectPath := superproject.Path.Join(subprojectFolderName)
@@ -186,7 +186,7 @@ func isProject(potentialProjectPath *paths.Path, projectTypeFilter projecttype.T
 	return true, projectType
 }
 
-// isProject determines if a file is the indicator file for an Arduino project, and if so which type.
+// isProjectIndicatorFile determines if a file is the indicator file for an Arduino project, and if so which type.
 func isProjectIndicatorFile(potentialProjectFilePath *paths.Path, projectTypeFilter projecttype.Type) (bool, projecttype.Type) {
 	logrus.Tracef("Checking if %s is %s indicator file", potentialProjectFilePath, projectTypeFilter)
 

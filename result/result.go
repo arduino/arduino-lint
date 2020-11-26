@@ -138,7 +138,7 @@ func (results *Type) Record(checkedProject project.Type, checkConfiguration chec
 			},
 		)
 	} else {
-		// There's already a report for this project, just add the checks report to it
+		// There's already a report for this project; just add the checks report to it.
 		results.Projects[projectReportIndex].Checks = append(results.Projects[projectReportIndex].Checks, checkReport)
 	}
 
