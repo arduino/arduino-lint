@@ -33,6 +33,8 @@ func Properties(libraryPath *paths.Path) (*properties.Map, error) {
 	return libraryProperties, nil
 }
 
+var schemaObject = make(map[compliancelevel.Type]*jsonschema.Schema)
+
 // Validate validates library.properties data against the JSON schema and returns a map of the result for each compliance level.
 func Validate(libraryProperties *properties.Map, schemasPath *paths.Path) map[compliancelevel.Type]*jsonschema.ValidationError {
 	referencedSchemaFilenames := []string{
@@ -42,14 +44,15 @@ func Validate(libraryProperties *properties.Map, schemasPath *paths.Path) map[co
 
 	var validationResults = make(map[compliancelevel.Type]*jsonschema.ValidationError)
 
-	schemaObject := schema.Compile("arduino-library-properties-permissive-schema.json", referencedSchemaFilenames, schemasPath)
-	validationResults[compliancelevel.Permissive] = schema.Validate(libraryProperties, schemaObject, schemasPath)
+	if schemaObject[compliancelevel.Permissive] == nil { // Only compile the schemas once.
+		schemaObject[compliancelevel.Permissive] = schema.Compile("arduino-library-properties-permissive-schema.json", referencedSchemaFilenames, schemasPath)
+		schemaObject[compliancelevel.Specification] = schema.Compile("arduino-library-properties-schema.json", referencedSchemaFilenames, schemasPath)
+		schemaObject[compliancelevel.Strict] = schema.Compile("arduino-library-properties-strict-schema.json", referencedSchemaFilenames, schemasPath)
+	}
 
-	schemaObject = schema.Compile("arduino-library-properties-schema.json", referencedSchemaFilenames, schemasPath)
-	validationResults[compliancelevel.Specification] = schema.Validate(libraryProperties, schemaObject, schemasPath)
-
-	schemaObject = schema.Compile("arduino-library-properties-strict-schema.json", referencedSchemaFilenames, schemasPath)
-	validationResults[compliancelevel.Strict] = schema.Validate(libraryProperties, schemaObject, schemasPath)
+	validationResults[compliancelevel.Permissive] = schema.Validate(libraryProperties, schemaObject[compliancelevel.Permissive], schemasPath)
+	validationResults[compliancelevel.Specification] = schema.Validate(libraryProperties, schemaObject[compliancelevel.Specification], schemasPath)
+	validationResults[compliancelevel.Strict] = schema.Validate(libraryProperties, schemaObject[compliancelevel.Strict], schemasPath)
 
 	return validationResults
 }
