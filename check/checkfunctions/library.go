@@ -68,6 +68,22 @@ func MisspelledLibraryPropertiesFileName() (result checkresult.Type, output stri
 	return checkresult.Pass, ""
 }
 
+// IncorrectLibraryPropertiesFileNameCase checks for incorrect library.properties file name case.
+func IncorrectLibraryPropertiesFileNameCase() (result checkresult.Type, output string) {
+	directoryListing, err := checkdata.ProjectPath().ReadDir()
+	if err != nil {
+		panic(err)
+	}
+	directoryListing.FilterOutDirs()
+
+	path, found := containsIncorrectPathBaseCase(directoryListing, "library.properties")
+	if found {
+		return checkresult.Fail, path.String()
+	}
+
+	return checkresult.Pass, ""
+}
+
 // LibraryPropertiesNameFieldMissing checks for missing library.properties "name" field.
 func LibraryPropertiesNameFieldMissing() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
