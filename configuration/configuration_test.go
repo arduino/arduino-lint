@@ -171,6 +171,18 @@ func TestInitializeReportFile(t *testing.T) {
 	assert.Equal(t, reportFilePath, ReportFilePath())
 }
 
+func TestInitializeVersion(t *testing.T) {
+	flags := test.ConfigurationFlags()
+
+	flags.Set("version", "true")
+	assert.Nil(t, Initialize(flags, projectPaths))
+	assert.True(t, VersionMode())
+
+	flags.Set("version", "false")
+	assert.Nil(t, Initialize(flags, projectPaths))
+	assert.False(t, VersionMode())
+}
+
 func TestInitializeProjectPath(t *testing.T) {
 	targetPaths = nil
 	assert.Nil(t, Initialize(test.ConfigurationFlags(), []string{}))
@@ -200,4 +212,11 @@ func TestInitializeOfficial(t *testing.T) {
 
 	os.Setenv("ARDUINO_CHECK_OFFICIAL", "invalid value")
 	assert.Error(t, Initialize(test.ConfigurationFlags(), projectPaths))
+}
+
+func TestVersion(t *testing.T) {
+	commit = "abcd"
+	assert.Equal(t, "0.0.0+"+commit, Version())
+	version = "42.1.2"
+	assert.Equal(t, version, Version())
 }
