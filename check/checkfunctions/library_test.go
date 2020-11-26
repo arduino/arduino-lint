@@ -73,6 +73,16 @@ func TestMisspelledLibraryPropertiesFileName(t *testing.T) {
 	checkLibraryCheckFunction(MisspelledLibraryPropertiesFileName, testTables, t)
 }
 
+func TestLibraryPropertiesMissing(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Legacy", "Legacy", checkresult.Fail, ""},
+		{"Flat non-legacy", "Flat", checkresult.Pass, ""},
+		{"Recursive", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesMissing, testTables, t)
+}
+
 func TestLibraryPropertiesNameFieldMissingOfficialPrefix(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
@@ -197,7 +207,7 @@ func TestLibraryPropertiesPrecompiledFieldEnabledWithFlatLayout(t *testing.T) {
 		{"Flat layout", "PrecompiledFlat", checkresult.Fail, "^true$"},
 		{"Recursive layout", "Precompiled", checkresult.Pass, ""},
 		{"Recursive, not precompiled", "NotPrecompiled", checkresult.NotRun, ""},
-		{"Flat, not precompiled", "NotPrecompiledFlat", checkresult.NotRun, ""},
+		{"Flat, not precompiled", "Flat", checkresult.NotRun, ""},
 	}
 
 	checkLibraryCheckFunction(LibraryPropertiesPrecompiledFieldEnabledWithFlatLayout, testTables, t)
