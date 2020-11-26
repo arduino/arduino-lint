@@ -92,7 +92,7 @@ func LibraryPropertiesNameFieldGTMaxLength() (result checkresult.Type, output st
 // LibraryPropertiesNameFieldGTRecommendedLength checks if the library.properties "name" value is greater than the recommended length.
 func LibraryPropertiesNameFieldGTRecommendedLength() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
-		return checkresult.NotRun, checkdata.LibraryProperties().Get("name")
+		return checkresult.NotRun, ""
 	}
 
 	name, ok := checkdata.LibraryProperties().GetOk("name")
