@@ -84,6 +84,16 @@ func IncorrectLibraryPropertiesFileNameCase() (result checkresult.Type, output s
 	return checkresult.Pass, ""
 }
 
+// RedundantLibraryProperties checks for redundant copies of the library.properties file.
+func RedundantLibraryProperties() (result checkresult.Type, output string) {
+	redundantLibraryPropertiesPath := checkdata.ProjectPath().Join("src", "library.properties")
+	if redundantLibraryPropertiesPath.Exist() {
+		return checkresult.Fail, redundantLibraryPropertiesPath.String()
+	}
+
+	return checkresult.Pass, ""
+}
+
 // LibraryPropertiesNameFieldMissing checks for missing library.properties "name" field.
 func LibraryPropertiesNameFieldMissing() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
