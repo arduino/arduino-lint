@@ -35,7 +35,6 @@ const (
 	LibraryManagerSubmission             // --library-manager=submit
 	LibraryManagerIndexed                // --library-manager=update
 	Official                             // ARDUINO_CHECK_OFFICIAL
-	All                                  // always
 	Default                              // default
 )
 
@@ -80,9 +79,6 @@ func Modes(defaultCheckModes map[projecttype.Type]map[Type]bool, customCheckMode
 		}
 		logrus.Tracef("Check mode option %s set to %t\n", key, checkModes[key])
 	}
-
-	// This mode is always enabled
-	checkModes[All] = true
 
 	return checkModes
 }

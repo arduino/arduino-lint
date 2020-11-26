@@ -29,13 +29,11 @@ func TestMode(t *testing.T) {
 			LibraryManagerSubmission: false,
 			LibraryManagerIndexed:    false,
 			Official:                 false,
-			All:                      true,
 		},
 		projecttype.Library: {
 			LibraryManagerSubmission: true,
 			LibraryManagerIndexed:    false,
 			Official:                 false,
-			All:                      true,
 		},
 	}
 
