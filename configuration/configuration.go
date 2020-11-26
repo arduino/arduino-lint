@@ -33,6 +33,15 @@ import (
 // Initialize sets up the tool configuration according to defaults and user-specified options.
 func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 	var err error
+
+	complianceString, _ := flags.GetString("compliance")
+	if complianceString != "" {
+		customCheckModes[checkmode.Strict], customCheckModes[checkmode.Specification], customCheckModes[checkmode.Permissive], err = checkmode.ComplianceModeFromString(complianceString)
+		if err != nil {
+			return fmt.Errorf("--compliance flag value %s not valid", complianceString)
+		}
+	}
+
 	outputFormatString, _ := flags.GetString("format")
 	outputFormat, err = outputformat.FromString(outputFormatString)
 	if err != nil {
@@ -60,8 +69,6 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 		return fmt.Errorf("--log-level flag value %s not valid", logLevelString)
 	}
 	logrus.SetLevel(logLevel)
-
-	customCheckModes[checkmode.Permissive], _ = flags.GetBool("permissive")
 
 	superprojectTypeFilterString, _ := flags.GetString("project-type")
 	superprojectTypeFilter, err = projecttype.FromString(superprojectTypeFilterString)
@@ -103,12 +110,14 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 	}
 
 	logrus.WithFields(logrus.Fields{
+		"compliance strict mode":          customCheckModes[checkmode.Strict],
+		"compliance specification mode":   customCheckModes[checkmode.Specification],
+		"compliance permissive mode":      customCheckModes[checkmode.Permissive],
 		"output format":                   OutputFormat(),
 		"Library Manager submission mode": customCheckModes[checkmode.LibraryManagerSubmission],
 		"Library Manager update mode":     customCheckModes[checkmode.LibraryManagerIndexed],
 		"log format":                      logFormatString,
 		"log level":                       logrus.GetLevel().String(),
-		"permissive":                      customCheckModes[checkmode.Permissive],
 		"superproject type filter":        SuperprojectTypeFilter(),
 		"recursive":                       Recursive(),
 		"report file":                     ReportFilePath(),

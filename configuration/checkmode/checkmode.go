@@ -29,13 +29,29 @@ type Type int
 
 //go:generate stringer -type=Type -linecomment
 const (
-	Permissive               Type = iota // --permissive
+	Strict                   Type = iota // strict
+	Specification                        // specification
+	Permissive                           // permissive
 	LibraryManagerSubmission             // --library-manager=submit
 	LibraryManagerIndexed                // --library-manager=update
 	Official                             // ARDUINO_CHECK_OFFICIAL
 	All                                  // always
 	Default                              // default
 )
+
+// ComplianceModeFromString parses the --compliance flag value and returns the corresponding check mode settings.
+func ComplianceModeFromString(complianceModeString string) (bool, bool, bool, error) {
+	switch strings.ToLower(complianceModeString) {
+	case "strict":
+		return true, false, false, nil
+	case "specification":
+		return false, true, false, nil
+	case "permissive":
+		return false, false, true, nil
+	default:
+		return false, false, false, fmt.Errorf("No matching compliance mode for string %s", complianceModeString)
+	}
+}
 
 // LibraryManagerModeFromString parses the --library-manager flag value and returns the corresponding check mode settings.
 func LibraryManagerModeFromString(libraryManagerModeString string) (bool, bool, error) {

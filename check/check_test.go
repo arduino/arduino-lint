@@ -35,25 +35,25 @@ func Test_shouldRun(t *testing.T) {
 		disableModes          []checkmode.Type
 		enableModes           []checkmode.Type
 		libraryManagerSetting string
-		permissiveSetting     string
+		complianceSetting     string
 		shouldRunAssertion    assert.BoolAssertionFunc
 		errorAssertion        assert.ErrorAssertionFunc
 	}{
-		{"Project type mismatch", projecttype.Library, projecttype.Sketch, []checkmode.Type{}, []checkmode.Type{}, "false", "false", assert.False, assert.NoError},
-		{"Disable mode match", projecttype.Library, projecttype.Library, []checkmode.Type{checkmode.LibraryManagerSubmission}, []checkmode.Type{}, "submit", "false", assert.False, assert.NoError},
-		{"Enable mode match", projecttype.Library, projecttype.Library, []checkmode.Type{}, []checkmode.Type{checkmode.LibraryManagerSubmission}, "submit", "false", assert.True, assert.NoError},
-		{"Disable mode default", projecttype.Library, projecttype.Library, []checkmode.Type{checkmode.Default}, []checkmode.Type{checkmode.LibraryManagerSubmission}, "update", "false", assert.False, assert.NoError},
-		{"Disable mode default override", projecttype.Library, projecttype.Library, []checkmode.Type{checkmode.Default}, []checkmode.Type{checkmode.LibraryManagerSubmission}, "submit", "false", assert.True, assert.NoError},
-		{"Enable mode default", projecttype.Library, projecttype.Library, []checkmode.Type{checkmode.LibraryManagerSubmission}, []checkmode.Type{checkmode.Default}, "update", "false", assert.True, assert.NoError},
-		{"Disable mode default override", projecttype.Library, projecttype.Library, []checkmode.Type{checkmode.LibraryManagerSubmission}, []checkmode.Type{checkmode.Default}, "submit", "false", assert.False, assert.NoError},
-		{"Unable to resolve", projecttype.Library, projecttype.Library, []checkmode.Type{checkmode.LibraryManagerSubmission}, []checkmode.Type{checkmode.LibraryManagerIndexed}, "false", "false", assert.False, assert.Error},
+		{"Project type mismatch", projecttype.Library, projecttype.Sketch, []checkmode.Type{}, []checkmode.Type{}, "false", "specification", assert.False, assert.NoError},
+		{"Disable mode match", projecttype.Library, projecttype.Library, []checkmode.Type{checkmode.LibraryManagerSubmission}, []checkmode.Type{}, "submit", "specification", assert.False, assert.NoError},
+		{"Enable mode match", projecttype.Library, projecttype.Library, []checkmode.Type{}, []checkmode.Type{checkmode.LibraryManagerSubmission}, "submit", "specification", assert.True, assert.NoError},
+		{"Disable mode default", projecttype.Library, projecttype.Library, []checkmode.Type{checkmode.Default}, []checkmode.Type{checkmode.LibraryManagerSubmission}, "update", "specification", assert.False, assert.NoError},
+		{"Disable mode default override", projecttype.Library, projecttype.Library, []checkmode.Type{checkmode.Default}, []checkmode.Type{checkmode.LibraryManagerSubmission}, "submit", "specification", assert.True, assert.NoError},
+		{"Enable mode default", projecttype.Library, projecttype.Library, []checkmode.Type{checkmode.LibraryManagerSubmission}, []checkmode.Type{checkmode.Default}, "update", "specification", assert.True, assert.NoError},
+		{"Disable mode default override", projecttype.Library, projecttype.Library, []checkmode.Type{checkmode.LibraryManagerSubmission}, []checkmode.Type{checkmode.Default}, "submit", "specification", assert.False, assert.NoError},
+		{"Unable to resolve", projecttype.Library, projecttype.Library, []checkmode.Type{checkmode.LibraryManagerSubmission}, []checkmode.Type{checkmode.LibraryManagerIndexed}, "false", "specification", assert.False, assert.Error},
 	}
 
 	flags := test.ConfigurationFlags()
 
 	for _, testTable := range testTables {
 		flags.Set("library-manager", testTable.libraryManagerSetting)
-		flags.Set("permissive", testTable.permissiveSetting)
+		flags.Set("compliance", testTable.complianceSetting)
 
 		configuration.Initialize(flags, []string{"/foo"})
 

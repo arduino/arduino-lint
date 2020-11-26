@@ -38,6 +38,31 @@ func init() {
 	projectPaths = []string{projectPath}
 }
 
+func TestInitializeCompliance(t *testing.T) {
+	flags := test.ConfigurationFlags()
+
+	flags.Set("compliance", "foo")
+	assert.Error(t, Initialize(flags, projectPaths))
+
+	flags.Set("compliance", "strict")
+	assert.Nil(t, Initialize(flags, projectPaths))
+	assert.True(t, customCheckModes[checkmode.Strict])
+	assert.False(t, customCheckModes[checkmode.Specification])
+	assert.False(t, customCheckModes[checkmode.Permissive])
+
+	flags.Set("compliance", "specification")
+	assert.Nil(t, Initialize(flags, projectPaths))
+	assert.False(t, customCheckModes[checkmode.Strict])
+	assert.True(t, customCheckModes[checkmode.Specification])
+	assert.False(t, customCheckModes[checkmode.Permissive])
+
+	flags.Set("compliance", "permissive")
+	assert.Nil(t, Initialize(flags, projectPaths))
+	assert.False(t, customCheckModes[checkmode.Strict])
+	assert.False(t, customCheckModes[checkmode.Specification])
+	assert.True(t, customCheckModes[checkmode.Permissive])
+}
+
 func TestInitializeFormat(t *testing.T) {
 	flags := test.ConfigurationFlags()
 	flags.Set("format", "foo")
@@ -92,18 +117,6 @@ func TestInitializeLogFormat(t *testing.T) {
 
 	flags.Set("log-format", "json")
 	assert.Nil(t, Initialize(flags, projectPaths))
-}
-
-func TestInitializePermissive(t *testing.T) {
-	flags := test.ConfigurationFlags()
-
-	flags.Set("permissive", "true")
-	assert.Nil(t, Initialize(flags, projectPaths))
-	assert.True(t, customCheckModes[checkmode.Permissive])
-
-	flags.Set("permissive", "false")
-	assert.Nil(t, Initialize(flags, projectPaths))
-	assert.False(t, customCheckModes[checkmode.Permissive])
 }
 
 func TestInitializeProjectType(t *testing.T) {
