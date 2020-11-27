@@ -60,6 +60,15 @@ func checkSketchCheckFunction(checkFunction Type, testTables []sketchCheckFuncti
 	}
 }
 
+func TestIncorrectSketchSrcFolderNameCase(t *testing.T) {
+	testTables := []sketchCheckFunctionTestTable{
+		{"Incorrect case", "IncorrectSrcFolderNameCase", checkresult.Fail, ""},
+		{"Correct case", "Valid", checkresult.Pass, ""},
+	}
+
+	checkSketchCheckFunction(IncorrectSketchSrcFolderNameCase, testTables, t)
+}
+
 func TestProhibitedCharactersInSketchFileName(t *testing.T) {
 	testTables := []sketchCheckFunctionTestTable{
 		{"Has prohibited characters", "ProhibitedCharactersInFileName", checkresult.Fail, "^Prohibited CharactersInFileName.h$"},
