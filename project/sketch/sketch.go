@@ -20,6 +20,8 @@ See: https://arduino.github.io/arduino-cli/latest/sketch-specification/
 package sketch
 
 import (
+	"fmt"
+
 	"github.com/arduino/arduino-cli/arduino/globals"
 	"github.com/arduino/go-paths-helper"
 )
@@ -29,6 +31,30 @@ import (
 func HasMainFileValidExtension(filePath *paths.Path) bool {
 	_, hasMainFileValidExtension := globals.MainFileValidExtensions[filePath.Ext()]
 	return hasMainFileValidExtension
+}
+
+// ContainsMainSketchFile checks whether the provided path contains a file with valid main sketch file extension.
+func ContainsMainSketchFile(searchPath *paths.Path) bool {
+	if searchPath.NotExist() {
+		panic(fmt.Sprintf("Error: provided path %s does not exist.", searchPath))
+	}
+	if searchPath.IsNotDir() {
+		panic(fmt.Sprintf("Error: provided path %s is not a directory.", searchPath))
+	}
+
+	directoryListing, err := searchPath.ReadDir()
+	if err != nil {
+		panic(err)
+	}
+
+	directoryListing.FilterOutDirs()
+	for _, potentialHeaderFile := range directoryListing {
+		if HasMainFileValidExtension(potentialHeaderFile) {
+			return true
+		}
+	}
+
+	return false
 }
 
 // HasSupportedExtension returns whether the file at the given path has any of the file extensions supported for source/header files of a sketch.

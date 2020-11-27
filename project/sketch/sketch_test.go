@@ -16,15 +16,28 @@
 package sketch
 
 import (
+	"os"
 	"testing"
 
 	"github.com/arduino/go-paths-helper"
 	"github.com/stretchr/testify/assert"
 )
 
+var testDataPath *paths.Path
+
+func init() {
+	workingDirectory, _ := os.Getwd()
+	testDataPath = paths.New(workingDirectory, "testdata")
+}
+
 func TestHasMainFileValidExtension(t *testing.T) {
 	assert.True(t, HasMainFileValidExtension(paths.New("/foo/bar.ino")))
 	assert.False(t, HasMainFileValidExtension(paths.New("/foo/bar.h")))
+}
+
+func TestContainsMainSketchFile(t *testing.T) {
+	assert.True(t, ContainsMainSketchFile(testDataPath.Join("Valid")))
+	assert.False(t, ContainsMainSketchFile(testDataPath.Join("ContainsNoMainSketchFile")))
 }
 
 func TestHasSupportedExtension(t *testing.T) {
