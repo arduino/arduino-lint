@@ -20,6 +20,7 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/arduino/arduino-check/check/checkdata"
 	"github.com/arduino/arduino-check/check/checkresult"
 	"github.com/arduino/go-paths-helper"
 )
@@ -63,4 +64,36 @@ func containsIncorrectPathBaseCase(pathList paths.PathList, correctBaseName stri
 	}
 
 	return nil, false
+}
+
+// MissingReadme checks if the project has a readme that will be recognized by GitHub.
+func MissingReadme() (result checkresult.Type, output string) {
+	// https://github.com/github/markup/blob/master/README.md
+	readmeRegexp := regexp.MustCompile(`(?i)^readme\.(markdown)|(mdown)|(mkdn)|(md)|(textile)|(rdoc)|(org)|(creole)|(mediawiki)|(wiki)|(rst)|(asciidoc)|(adoc)|(asc)|(pod)|(txt)`)
+
+	// https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/about-readmes#about-readmes
+	if pathContainsReadme(checkdata.ProjectPath(), readmeRegexp) ||
+		(checkdata.ProjectPath().Join("docs").Exist() && pathContainsReadme(checkdata.ProjectPath().Join("docs"), readmeRegexp)) ||
+		(checkdata.ProjectPath().Join(".github").Exist() && pathContainsReadme(checkdata.ProjectPath().Join(".github"), readmeRegexp)) {
+		return checkresult.Pass, ""
+	}
+
+	return checkresult.Fail, ""
+}
+
+// pathContainsReadme checks if the provided path contains a readme file recognized by GitHub.
+func pathContainsReadme(path *paths.Path, readmeRegexp *regexp.Regexp) bool {
+	listing, err := path.ReadDir()
+	if err != nil {
+		panic(err)
+	}
+	listing.FilterOutDirs()
+
+	for _, file := range listing {
+		if readmeRegexp.MatchString(file.Base()) {
+			return true
+		}
+	}
+
+	return false
 }
