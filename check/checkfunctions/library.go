@@ -1064,6 +1064,19 @@ func MisspelledExtrasFolderName() (result checkresult.Type, output string) {
 	return checkresult.Pass, ""
 }
 
+// RecursiveLibraryWithUtilityFolder checks for presence of a `utility` subfolder in a recursive layout library.
+func RecursiveLibraryWithUtilityFolder() (result checkresult.Type, output string) {
+	if checkdata.LoadedLibrary().Layout == libraries.FlatLayout {
+		return checkresult.NotRun, ""
+	}
+
+	if checkdata.ProjectPath().Join("utility").Exist() {
+		return checkresult.Fail, ""
+	}
+
+	return checkresult.Pass, ""
+}
+
 // spellCheckLibraryPropertiesFieldValue returns the value of the provided library.properties field with commonly misspelled words corrected.
 func spellCheckLibraryPropertiesFieldValue(fieldName string) (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
