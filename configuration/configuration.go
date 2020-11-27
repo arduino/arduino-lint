@@ -193,6 +193,12 @@ func Version() string {
 	return version
 }
 
+var buildTimestamp string
+
+func BuildTimestamp() string {
+	return buildTimestamp
+}
+
 var targetPaths paths.PathList
 
 // TargetPaths returns the projects search paths.

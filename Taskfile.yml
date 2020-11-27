@@ -184,8 +184,10 @@ vars:
   # build vars
   COMMIT:
     sh: echo "$(git log -n 1 --format=%h)"
+  TIMESTAMP:
+    sh: echo "$(date --utc --iso-8601=second)"
   LDFLAGS: >
-    -ldflags '-X github.com/arduino/arduino-check/configuration.commit={{.COMMIT}}'
+    -ldflags '-X github.com/arduino/arduino-check/configuration.commit={{.COMMIT}} -X github.com/arduino/arduino-check/configuration.buildTimestamp={{.TIMESTAMP}}'
   GOFLAGS: "-timeout 10m -v -coverpkg=./... -covermode=atomic"
 
   GOLINTFLAGS: "-min_confidence 0.8 -set_exit_status"
