@@ -26,24 +26,32 @@ import (
 // Subprojects use the same check modes as the superproject.
 var defaultCheckModes = map[projecttype.Type]map[checkmode.Type]bool{
 	projecttype.Sketch: {
+		checkmode.Strict:                   false,
+		checkmode.Specification:            true,
 		checkmode.Permissive:               false,
 		checkmode.LibraryManagerSubmission: false,
 		checkmode.LibraryManagerIndexed:    false,
 		checkmode.Official:                 false,
 	},
 	projecttype.Library: {
+		checkmode.Strict:                   false,
+		checkmode.Specification:            true,
 		checkmode.Permissive:               false,
 		checkmode.LibraryManagerSubmission: true,
 		checkmode.LibraryManagerIndexed:    false,
 		checkmode.Official:                 false,
 	},
 	projecttype.Platform: {
+		checkmode.Strict:                   false,
+		checkmode.Specification:            true,
 		checkmode.Permissive:               false,
 		checkmode.LibraryManagerSubmission: false,
 		checkmode.LibraryManagerIndexed:    false,
 		checkmode.Official:                 false,
 	},
 	projecttype.PackageIndex: {
+		checkmode.Strict:                   false,
+		checkmode.Specification:            true,
 		checkmode.Permissive:               false,
 		checkmode.LibraryManagerSubmission: false,
 		checkmode.LibraryManagerIndexed:    false,
