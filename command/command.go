@@ -39,12 +39,14 @@ func ArduinoCheck(rootCommand *cobra.Command, cliArguments []string) {
 
 	if configuration.VersionMode() {
 		if configuration.OutputFormat() == outputformat.Text {
-			fmt.Println(configuration.Version())
+			fmt.Println(configuration.Version() + " " + configuration.BuildTimestamp())
 		} else {
 			versionObject := struct {
-				Version string `json:"version"`
+				Version        string `json:"version"`
+				BuildTimestamp string `json:"buildTimestamp"`
 			}{
-				Version: configuration.Version(),
+				Version:        configuration.Version(),
+				BuildTimestamp: configuration.BuildTimestamp(),
 			}
 			versionJSON, err := json.MarshalIndent(versionObject, "", "  ")
 			if err != nil {

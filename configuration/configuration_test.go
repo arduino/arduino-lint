@@ -220,3 +220,8 @@ func TestVersion(t *testing.T) {
 	version = "42.1.2"
 	assert.Equal(t, version, Version())
 }
+
+func TestBuildTimestamp(t *testing.T) {
+	buildTimestamp = "2020-11-27T04:05:19+00:00"
+	assert.Equal(t, buildTimestamp, BuildTimestamp())
+}
