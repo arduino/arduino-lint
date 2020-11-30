@@ -83,6 +83,7 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 
 	versionMode, _ = flags.GetBool("version")
 
+	targetPaths = nil
 	if len(projectPaths) == 0 {
 		// Default to using current working directory.
 		workingDirectoryPath, err := os.Getwd()
