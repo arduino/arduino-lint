@@ -60,7 +60,7 @@ func MisspelledLibraryPropertiesFileName() (result checkresult.Type, output stri
 	}
 	directoryListing.FilterOutDirs()
 
-	path, found := containsMisspelledPathBaseName(directoryListing, "library.properties", "(?i)^librar(y)|(ie)s?[.-_]?propert(y)|(ie)s?$")
+	path, found := containsMisspelledPathBaseName(directoryListing, "library.properties", "(?i)^librar((y)|(ie))s?[.-_]?propert((y)|(ie))s?$")
 	if found {
 		return checkresult.Fail, path.String()
 	}
