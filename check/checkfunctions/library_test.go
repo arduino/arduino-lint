@@ -292,6 +292,18 @@ func TestLibraryHasExe(t *testing.T) {
 
 	checkLibraryCheckFunction(LibraryHasExe, testTables, t)
 }
+
+func TestLibraryHasStraySketches(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Sketch in root", "SketchInRoot", checkresult.Fail, ""},
+		{"Sketch in subfolder", "MisspelledExamplesFolder", checkresult.Fail, ""},
+		{"Sketch in legit location", "ExamplesFolder", checkresult.Pass, ""},
+		{"No sketches", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryHasStraySketches, testTables, t)
+}
+
 func TestProhibitedCharactersInLibraryFolderName(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Has prohibited characters", "Prohibited CharactersInFolderName", checkresult.Fail, ""},

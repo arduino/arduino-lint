@@ -29,6 +29,7 @@ import (
 	"github.com/arduino/arduino-check/check/checkresult"
 	"github.com/arduino/arduino-check/configuration"
 	"github.com/arduino/arduino-check/project/library"
+	"github.com/arduino/arduino-check/project/sketch"
 	"github.com/arduino/arduino-cli/arduino/libraries"
 	"github.com/arduino/arduino-cli/arduino/utils"
 	"github.com/arduino/go-properties-orderedmap"
@@ -985,6 +986,45 @@ func LibraryHasExe() (result checkresult.Type, output string) {
 
 	if len(exePaths) > 0 {
 		return checkresult.Fail, strings.Join(exePaths, ", ")
+	}
+
+	return checkresult.Pass, ""
+}
+
+// LibraryHasStraySketches checks for sketches outside the `examples` and `extras` folders.
+func LibraryHasStraySketches() (result checkresult.Type, output string) {
+	straySketchPaths := []string{}
+	if sketch.ContainsMainSketchFile(checkdata.ProjectPath()) { // Check library root.
+		straySketchPaths = append(straySketchPaths, checkdata.ProjectPath().String())
+	}
+
+	// Check subfolders.
+	projectPathListing, err := checkdata.ProjectPath().ReadDir()
+	if err != nil {
+		panic(err)
+	}
+	projectPathListing.FilterDirs()
+
+	for _, topLevelSubfolder := range projectPathListing {
+		if topLevelSubfolder.Base() == "examples" || topLevelSubfolder.Base() == "extras" {
+			continue // Skip valid sketch locations.
+		}
+
+		topLevelSubfolderRecursiveListing, err := topLevelSubfolder.ReadDirRecursive()
+		if err != nil {
+			panic(err)
+		}
+		topLevelSubfolderRecursiveListing.FilterDirs()
+
+		for _, subfolder := range topLevelSubfolderRecursiveListing {
+			if sketch.ContainsMainSketchFile(subfolder) {
+				straySketchPaths = append(straySketchPaths, subfolder.String())
+			}
+		}
+	}
+
+	if len(straySketchPaths) > 0 {
+		return checkresult.Fail, strings.Join(straySketchPaths, ", ")
 	}
 
 	return checkresult.Pass, ""
