@@ -58,7 +58,7 @@ func InitializeForLibrary(project project.Type, schemasPath *paths.Path) {
 		}
 	}
 
-	if libraryManagerIndex == nil { // Only download the Library Manager index once
+	if libraryManagerIndex == nil { // Only download the Library Manager index once.
 		url := "http://downloads.arduino.cc/libraries/library_index.json"
 		httpResponse, err := http.Get(url)
 		if err != nil {

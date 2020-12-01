@@ -30,7 +30,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// arduinoCheck is the root command function.
+// ArduinoCheck is the root command function.
 func ArduinoCheck(rootCommand *cobra.Command, cliArguments []string) {
 	if err := configuration.Initialize(rootCommand.Flags(), cliArguments); err != nil {
 		feedback.Errorf("Configuration error: %v", err)

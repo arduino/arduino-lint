@@ -459,7 +459,7 @@ func LibraryPropertiesEmailFieldAsMaintainerAlias() (result checkresult.Type, ou
 	return checkresult.Pass, ""
 }
 
-// LibraryPropertiesNameFieldLTMinLength checks if the library.properties "email" value is less than the minimum length.
+// LibraryPropertiesEmailFieldLTMinLength checks if the library.properties "email" value is less than the minimum length.
 func LibraryPropertiesEmailFieldLTMinLength() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, ""
@@ -476,7 +476,7 @@ func LibraryPropertiesEmailFieldLTMinLength() (result checkresult.Type, output s
 	return checkresult.Pass, ""
 }
 
-// LibraryPropertiesMaintainerFieldStartsWithArduino checks if the library.properties "email" value starts with "Arduino".
+// LibraryPropertiesEmailFieldStartsWithArduino checks if the library.properties "email" value starts with "Arduino".
 func LibraryPropertiesEmailFieldStartsWithArduino() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, ""
@@ -682,7 +682,7 @@ func LibraryPropertiesArchitecturesFieldMissing() (result checkresult.Type, outp
 	return checkresult.Pass, ""
 }
 
-// LibraryPropertiesNameFieldLTMinLength checks if the library.properties "architectures" value is less than the minimum length.
+// LibraryPropertiesArchitecturesFieldLTMinLength checks if the library.properties "architectures" value is less than the minimum length.
 func LibraryPropertiesArchitecturesFieldLTMinLength() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, ""
@@ -782,7 +782,7 @@ func LibraryPropertiesDotALinkageFieldTrueWithFlatLayout() (result checkresult.T
 	return checkresult.Pass, ""
 }
 
-// LibraryPropertiesNameFieldLTMinLength checks if the library.properties "includes" value is less than the minimum length.
+// LibraryPropertiesIncludesFieldLTMinLength checks if the library.properties "includes" value is less than the minimum length.
 func LibraryPropertiesIncludesFieldLTMinLength() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, ""

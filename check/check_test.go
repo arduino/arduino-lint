@@ -45,7 +45,7 @@ func Test_shouldRun(t *testing.T) {
 		{"Disable mode default", projecttype.Library, projecttype.Library, []checkmode.Type{checkmode.Default}, []checkmode.Type{checkmode.LibraryManagerSubmission}, "update", "specification", assert.False, assert.NoError},
 		{"Disable mode default override", projecttype.Library, projecttype.Library, []checkmode.Type{checkmode.Default}, []checkmode.Type{checkmode.LibraryManagerSubmission}, "submit", "specification", assert.True, assert.NoError},
 		{"Enable mode default", projecttype.Library, projecttype.Library, []checkmode.Type{checkmode.LibraryManagerSubmission}, []checkmode.Type{checkmode.Default}, "update", "specification", assert.True, assert.NoError},
-		{"Disable mode default override", projecttype.Library, projecttype.Library, []checkmode.Type{checkmode.LibraryManagerSubmission}, []checkmode.Type{checkmode.Default}, "submit", "specification", assert.False, assert.NoError},
+		{"Enable mode default override", projecttype.Library, projecttype.Library, []checkmode.Type{checkmode.LibraryManagerSubmission}, []checkmode.Type{checkmode.Default}, "submit", "specification", assert.False, assert.NoError},
 		{"Unable to resolve", projecttype.Library, projecttype.Library, []checkmode.Type{checkmode.LibraryManagerSubmission}, []checkmode.Type{checkmode.LibraryManagerIndexed}, "false", "specification", assert.False, assert.Error},
 	}
 

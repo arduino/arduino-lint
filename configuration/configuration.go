@@ -150,7 +150,7 @@ func CheckModes(superprojectType projecttype.Type) map[checkmode.Type]bool {
 
 var superprojectTypeFilter projecttype.Type
 
-// SuperprojectType returns the superproject type filter configuration.
+// SuperprojectTypeFilter returns the superproject type filter configuration.
 func SuperprojectTypeFilter() projecttype.Type {
 	return superprojectTypeFilter
 }

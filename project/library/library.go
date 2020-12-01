@@ -61,7 +61,7 @@ var examplesFolderSupportedNames = map[string]struct{}{
 	"example":  empty,
 }
 
-// ExamplesFolderNames returns a slice of supported examples folder names
+// ExamplesFolderSupportedNames returns a slice of supported examples folder names
 func ExamplesFolderSupportedNames() []string {
 	folderNames := make([]string, 0, len(examplesFolderSupportedNames))
 	for folderName := range examplesFolderSupportedNames {

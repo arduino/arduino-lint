@@ -148,7 +148,7 @@ func pathURI(path *paths.Path) string {
 	return pathURI.String()
 }
 
-// logValidationError logs the schema validation error data
+// logValidationError logs the schema validation error data.
 func logValidationError(validationError *jsonschema.ValidationError, schemasPath *paths.Path) {
 	logrus.Trace("--------Schema validation failure cause--------")
 	logrus.Tracef("Error message: %s", validationError.Error())

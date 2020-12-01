@@ -48,7 +48,7 @@ func RunChecks(project project.Type) {
 			continue
 		}
 
-		// Output will be printed after all checks are finished when configured for "json" output format
+		// Output will be printed after all checks are finished when configured for "json" output format.
 		feedback.Printf("Running check %s: ", checkConfiguration.ID)
 
 		checkResult, checkOutput := checkConfiguration.CheckFunction()

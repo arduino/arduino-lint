@@ -66,7 +66,7 @@ func ValidationErrorMatch(
 	schemasPath *paths.Path,
 ) bool {
 	if validationResult == nil {
-		// No error, so nothing to match
+		// No error, so nothing to match.
 		logrus.Trace("Schema validation passed. No match is possible.")
 		return false
 	}
@@ -140,7 +140,7 @@ func validationErrorSchemaPointerMatch(
 	}
 
 	// The schema validator does not provide full pointer past logic inversion keywords to the lowest level keywords related to the validation error cause.
-	// Therefore the sub-keywords must be checked for matches in order to be able to interpret the exact cause of the failure.
+	// Therefore, the sub-keywords must be checked for matches in order to be able to interpret the exact cause of the failure.
 	if regexp.MustCompile("(/not)|(/oneOf)$").MatchString(validationError.SchemaPtr) {
 		return validationErrorSchemaSubPointerMatch(schemaPointerRegexp, validationError.SchemaPtr, validationErrorSchemaPointerValue(validationError, schemasPath))
 	}

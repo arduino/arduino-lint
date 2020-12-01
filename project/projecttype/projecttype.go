@@ -50,7 +50,7 @@ func FromString(projectTypeString string) (Type, error) {
 	return Not, fmt.Errorf("No matching project type for string %s", projectTypeString)
 }
 
-// Matches returns whether the receiver project type matches the argument project type
+// Matches returns whether the receiver project type matches the argument project type.
 func (projectTypeA Type) Matches(projectTypeB Type) bool {
 	if projectTypeA == Not && projectTypeB == Not {
 		return true
