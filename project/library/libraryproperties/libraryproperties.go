@@ -26,11 +26,7 @@ import (
 
 // Properties parses the library.properties from the given path and returns the data.
 func Properties(libraryPath *paths.Path) (*properties.Map, error) {
-	libraryProperties, err := properties.LoadFromPath(libraryPath.Join("library.properties"))
-	if err != nil {
-		return nil, err
-	}
-	return libraryProperties, nil
+	return properties.SafeLoadFromPath(libraryPath.Join("library.properties"))
 }
 
 var schemaObject = make(map[compliancelevel.Type]*jsonschema.Schema)
