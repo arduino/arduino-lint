@@ -113,9 +113,7 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 	}
 
 	logrus.WithFields(logrus.Fields{
-		"compliance strict mode":          customCheckModes[checkmode.Strict],
-		"compliance specification mode":   customCheckModes[checkmode.Specification],
-		"compliance permissive mode":      customCheckModes[checkmode.Permissive],
+		"compliance":                      checkmode.Compliance(customCheckModes),
 		"output format":                   OutputFormat(),
 		"Library Manager submission mode": customCheckModes[checkmode.LibraryManagerSubmission],
 		"Library Manager update mode":     customCheckModes[checkmode.LibraryManagerIndexed],

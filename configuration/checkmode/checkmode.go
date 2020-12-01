@@ -86,3 +86,13 @@ func Modes(defaultCheckModes map[projecttype.Type]map[Type]bool, customCheckMode
 
 	return checkModes
 }
+
+func Compliance(checkModes map[Type]bool) string {
+	for key, value := range checkModes {
+		if value && (key == Strict || key == Specification || key == Permissive) {
+			return key.String()
+		}
+	}
+
+	panic(fmt.Errorf("Unrecognized compliance configuration"))
+}
