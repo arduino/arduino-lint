@@ -122,13 +122,6 @@ func unmarshalJSONFile(filePath *paths.Path) interface{} {
 	return dataInterface
 }
 
-// compile compiles the parent schema and returns the resulting jsonschema.Schema object.
-func compile(compiler *jsonschema.Compiler, schemaFilename string, schemasPath *paths.Path) (*jsonschema.Schema, error) {
-	schemaPath := schemasPath.Join(schemaFilename)
-	schemaURI := pathURI(schemaPath)
-	return compiler.Compile(schemaURI)
-}
-
 // pathURI returns the URI representation of the path argument.
 func pathURI(path *paths.Path) string {
 	absolutePath, err := path.Abs()
