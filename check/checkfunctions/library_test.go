@@ -381,3 +381,12 @@ func TestRecursiveLibraryWithUtilityFolder(t *testing.T) {
 
 	checkLibraryCheckFunction(RecursiveLibraryWithUtilityFolder, testTables, t)
 }
+
+func TestMissingReadme(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Readme", "Readme", checkresult.Pass, ""},
+		{"No readme", "NoReadme", checkresult.Fail, ""},
+	}
+
+	checkLibraryCheckFunction(MissingReadme, testTables, t)
+}
