@@ -120,7 +120,7 @@ func findProjectsUnderPath(targetPath *paths.Path, projectTypeFilter projecttype
 // findSubprojects finds subprojects of the given project.
 // For example, the subprojects of a library are its example sketches.
 func findSubprojects(superproject Type, apexSuperprojectType projecttype.Type) []Type {
-	subprojectFolderNames := []string{}
+	subprojectsFolderNames := []string{}
 	var subProjectType projecttype.Type
 	var searchPathsRecursively bool
 
@@ -130,11 +130,11 @@ func findSubprojects(superproject Type, apexSuperprojectType projecttype.Type) [
 		// Sketches don't have subprojects
 		return nil
 	case projecttype.Library:
-		subprojectFolderNames = append(subprojectFolderNames, library.ExamplesFolderSupportedNames()...)
+		subprojectsFolderNames = append(subprojectsFolderNames, library.ExamplesFolderSupportedNames()...)
 		subProjectType = projecttype.Sketch
 		searchPathsRecursively = true // Examples sketches can be under nested subfolders
 	case projecttype.Platform:
-		subprojectFolderNames = append(subprojectFolderNames, platform.BundledLibrariesFolderNames()...)
+		subprojectsFolderNames = append(subprojectsFolderNames, platform.BundledLibrariesFolderNames()...)
 		subProjectType = projecttype.Library
 		searchPathsRecursively = false // Bundled libraries must be in the root of the libraries folder
 	case projecttype.PackageIndex:
@@ -146,9 +146,19 @@ func findSubprojects(superproject Type, apexSuperprojectType projecttype.Type) [
 
 	// Search the subproject paths for projects.
 	var immediateSubprojects []Type
-	for _, subprojectFolderName := range subprojectFolderNames {
-		subprojectPath := superproject.Path.Join(subprojectFolderName)
-		immediateSubprojects = append(immediateSubprojects, findProjectsUnderPath(subprojectPath, subProjectType, searchPathsRecursively)...)
+	for _, subprojectsFolderName := range subprojectsFolderNames {
+		subprojectsPath := superproject.Path.Join(subprojectsFolderName)
+		if subprojectsPath.Exist() {
+			directoryListing, err := subprojectsPath.ReadDir()
+			if err != nil {
+				panic(err)
+			}
+			directoryListing.FilterDirs()
+
+			for _, subprojectPath := range directoryListing {
+				immediateSubprojects = append(immediateSubprojects, findProjectsUnderPath(subprojectPath, subProjectType, searchPathsRecursively)...)
+			}
+		}
 	}
 
 	var allSubprojects []Type
