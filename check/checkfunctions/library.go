@@ -904,16 +904,8 @@ func LibraryPropertiesMisspelledOptionalField() (result checkresult.Type, output
 
 // LibraryInvalid checks whether the provided path is a valid library.
 func LibraryInvalid() (result checkresult.Type, output string) {
-	directoryListing, err := checkdata.LoadedLibrary().SourceDir.ReadDir()
-	if err != nil {
-		panic(err)
-	}
-
-	directoryListing.FilterOutDirs()
-	for _, potentialHeaderFile := range directoryListing {
-		if library.HasHeaderFileValidExtension(potentialHeaderFile) {
-			return checkresult.Pass, ""
-		}
+	if library.ContainsHeaderFile(checkdata.LoadedLibrary().SourceDir) {
+		return checkresult.Pass, ""
 	}
 
 	return checkresult.Fail, ""
@@ -1011,6 +1003,28 @@ func ProhibitedCharactersInLibraryFolderName() (result checkresult.Type, output 
 func LibraryFolderNameGTMaxLength() (result checkresult.Type, output string) {
 	if len(checkdata.ProjectPath().Base()) > 63 {
 		return checkresult.Fail, checkdata.ProjectPath().Base()
+	}
+
+	return checkresult.Pass, ""
+}
+
+// IncorrectLibrarySrcFolderNameCase checks for incorrect case of src subfolder name in recursive format libraries.
+func IncorrectLibrarySrcFolderNameCase() (result checkresult.Type, output string) {
+	if library.ContainsMetadataFile(checkdata.ProjectPath()) && library.ContainsHeaderFile(checkdata.ProjectPath()) {
+		// Flat layout, so no special treatment of src subfolder.
+		return checkresult.NotRun, ""
+	}
+
+	// The library is intended to have the recursive layout.
+	directoryListing, err := checkdata.ProjectPath().ReadDir()
+	if err != nil {
+		panic(err)
+	}
+	directoryListing.FilterDirs()
+
+	path, found := containsIncorrectPathBaseCase(directoryListing, "src")
+	if found {
+		return checkresult.Fail, path.String()
 	}
 
 	return checkresult.Pass, ""

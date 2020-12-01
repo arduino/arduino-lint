@@ -25,6 +25,22 @@ import (
 	"github.com/arduino/arduino-check/project/sketch"
 )
 
+// IncorrectSketchSrcFolderNameCase checks for incorrect case of src subfolder name in recursive format libraries.
+func IncorrectSketchSrcFolderNameCase() (result checkresult.Type, output string) {
+	directoryListing, err := checkdata.ProjectPath().ReadDir()
+	if err != nil {
+		panic(err)
+	}
+	directoryListing.FilterDirs()
+
+	path, found := containsIncorrectPathBaseCase(directoryListing, "src")
+	if found {
+		return checkresult.Fail, path.String()
+	}
+
+	return checkresult.Pass, ""
+}
+
 // ProhibitedCharactersInSketchFileName checks for prohibited characters in the sketch file names.
 func ProhibitedCharactersInSketchFileName() (result checkresult.Type, output string) {
 	directoryListing, _ := checkdata.ProjectPath().ReadDir()
