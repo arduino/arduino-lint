@@ -75,7 +75,11 @@ func findProjects(targetPath *paths.Path) ([]Type, error) {
 		return nil, fmt.Errorf("specified path %s is not an Arduino project", targetPath)
 	}
 
-	foundProjects = append(foundProjects, findProjectsUnderPath(targetPath, configuration.SuperprojectTypeFilter(), configuration.Recursive())...)
+	foundParentProjects := findProjectsUnderPath(targetPath, configuration.SuperprojectTypeFilter(), configuration.Recursive())
+	for _, foundParentProject := range foundParentProjects {
+		foundProjects = append(foundProjects, foundParentProject)
+		foundProjects = append(foundProjects, findSubprojects(foundParentProject, foundParentProject.ProjectType)...)
+	}
 
 	if foundProjects == nil {
 		return nil, fmt.Errorf("no projects found under %s", targetPath)
@@ -84,7 +88,7 @@ func findProjects(targetPath *paths.Path) ([]Type, error) {
 	return foundProjects, nil
 }
 
-// findProjectsUnderPath finds projects of the given type and subprojects of those projects. It returns a slice containing the definitions of all found projects.
+// findProjectsUnderPath finds projects of the given type under the given path. It returns a slice containing the definitions of all found projects.
 func findProjectsUnderPath(targetPath *paths.Path, projectTypeFilter projecttype.Type, recursive bool) []Type {
 	var foundProjects []Type
 
@@ -98,8 +102,6 @@ func findProjectsUnderPath(targetPath *paths.Path, projectTypeFilter projecttype
 			SuperprojectType: foundProjectType,
 		}
 		foundProjects = append(foundProjects, foundProject)
-
-		foundProjects = append(foundProjects, findSubprojects(foundProject, foundProject.ProjectType)...)
 
 		// Don't search recursively past a project.
 		return foundProjects
