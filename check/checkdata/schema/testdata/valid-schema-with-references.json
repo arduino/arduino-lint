@@ -25,6 +25,9 @@
       "allOf": [
         {
           "$ref": "referenced-schema-2.json#/definitions/enumObject"
+        },
+        {
+          "$ref": "referenced-schema-2.json#/definitions/notPatternObject"
         }
       ]
     }

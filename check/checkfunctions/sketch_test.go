@@ -86,3 +86,12 @@ func TestSketchFileNameGTMaxLength(t *testing.T) {
 
 	checkSketchCheckFunction(SketchFileNameGTMaxLength, testTables, t)
 }
+
+func TestPdeSketchExtension(t *testing.T) {
+	testTables := []sketchCheckFunctionTestTable{
+		{"Has .pde", "Pde", checkresult.Fail, ""},
+		{"No .pde", "Valid", checkresult.Pass, ""},
+	}
+
+	checkSketchCheckFunction(PdeSketchExtension, testTables, t)
+}

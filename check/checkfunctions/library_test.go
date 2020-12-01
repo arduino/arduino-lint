@@ -101,6 +101,15 @@ func TestRedundantLibraryProperties(t *testing.T) {
 	checkLibraryCheckFunction(RedundantLibraryProperties, testTables, t)
 }
 
+func TestLibraryPropertiesFormat(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesFormat, testTables, t)
+}
+
 func TestLibraryPropertiesNameFieldMissingOfficialPrefix(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},

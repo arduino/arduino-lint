@@ -26,7 +26,10 @@ import (
 var testDataPath *paths.Path
 
 func init() {
-	workingDirectory, _ := os.Getwd()
+	workingDirectory, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
 	testDataPath = paths.New(workingDirectory, "testdata")
 }
 
@@ -38,4 +41,14 @@ func TestContainsHeaderFile(t *testing.T) {
 func TestContainsMetadataFile(t *testing.T) {
 	assert.True(t, ContainsMetadataFile(testDataPath.Join("ContainsMetadataFile")))
 	assert.False(t, ContainsMetadataFile(testDataPath.Join("ContainsNoMetadataFile")))
+}
+
+func TestHasHeaderFileValidExtension(t *testing.T) {
+	assert.True(t, HasHeaderFileValidExtension(testDataPath.Join("ContainsHeaderFile", "foo.h")))
+	assert.False(t, HasHeaderFileValidExtension(testDataPath.Join("ContainsNoHeaderFile", "foo.bar")))
+}
+
+func TestIsMetadataFile(t *testing.T) {
+	assert.True(t, IsMetadataFile(testDataPath.Join("ContainsMetadataFile", "library.properties")))
+	assert.False(t, IsMetadataFile(testDataPath.Join("ContainsNoMetadataFile", "foo.bar")))
 }
