@@ -349,3 +349,13 @@ func TestIncorrectExtrasFolderNameCase(t *testing.T) {
 
 	checkLibraryCheckFunction(IncorrectExtrasFolderNameCase, testTables, t)
 }
+
+func TestRecursiveLibraryWithUtilityFolder(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Flat", "Flat", checkresult.NotRun, ""},
+		{"Recursive with utility", "RecursiveWithUtilityFolder", checkresult.Fail, ""},
+		{"Recursive without utility", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(RecursiveLibraryWithUtilityFolder, testTables, t)
+}
