@@ -16,11 +16,22 @@
 package packageindex
 
 import (
+	"os"
 	"testing"
 
 	"github.com/arduino/go-paths-helper"
 	"github.com/stretchr/testify/assert"
 )
+
+var testDataPath *paths.Path
+
+func init() {
+	workingDirectory, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+	testDataPath = paths.New(workingDirectory, "testdata")
+}
 
 func TestHasValidExtension(t *testing.T) {
 	assert.True(t, HasValidExtension(paths.New("/foo", "bar.json")))
@@ -44,5 +55,29 @@ func TestHasValidFilename(t *testing.T) {
 
 	for _, testTable := range testTables {
 		testTable.assertion(t, HasValidFilename(paths.New("/foo", testTable.filename), testTable.officialCheckMode), testTable.testName)
+	}
+}
+
+func TestFind(t *testing.T) {
+	testTables := []struct {
+		testName     string
+		path         *paths.Path
+		expectedPath *paths.Path
+		errAssertion assert.ValueAssertionFunc
+	}{
+		{"Nonexistent", testDataPath.Join("nonexistent"), nil, assert.NotNil},
+		{"File", testDataPath.Join("HasPackageIndex", "package_foo_index.json"), testDataPath.Join("HasPackageIndex", "package_foo_index.json"), assert.Nil},
+		{"Single", testDataPath.Join("HasPackageIndex"), testDataPath.Join("HasPackageIndex", "package_foo_index.json"), assert.Nil},
+		{"Multiple", testDataPath.Join("HasMultiple"), testDataPath.Join("HasMultiple", "package_foo_index.json"), assert.Nil},
+		{"Valid extension fallback", testDataPath.Join("HasJSON"), testDataPath.Join("HasJSON", "foo.json"), assert.Nil},
+		{"None", testDataPath.Join("HasNone"), nil, assert.NotNil},
+	}
+
+	for _, testTable := range testTables {
+		path, err := Find(testTable.path)
+		testTable.errAssertion(t, err, testTable.testName)
+		if err == nil {
+			assert.Equal(t, testTable.expectedPath, path, testTable.testName)
+		}
 	}
 }

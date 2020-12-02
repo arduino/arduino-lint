@@ -21,6 +21,7 @@ package checkdata
 
 import (
 	"github.com/arduino/arduino-check/project"
+	"github.com/arduino/arduino-check/project/packageindex"
 	"github.com/arduino/arduino-check/project/projecttype"
 	"github.com/arduino/go-paths-helper"
 )
@@ -35,6 +36,14 @@ func Initialize(project project.Type, schemasPath *paths.Path) {
 		InitializeForLibrary(project, schemasPath)
 	case projecttype.Platform:
 	case projecttype.PackageIndex:
+		var err error
+		// Because a package index project is a file, but project.Path may be a folder, an extra discovery step is needed for this project type.
+		projectPath, err = packageindex.Find(project.Path)
+		if err != nil {
+			panic(err)
+		}
+
+		InitializeForPackageIndex()
 	}
 }
 

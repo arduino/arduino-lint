@@ -44,7 +44,8 @@ func TestFindProjects(t *testing.T) {
 	platformPath := testDataPath.Join("Platform")
 	platformBundledLibraryPath := testDataPath.Join("Platform", "libraries", "Library")
 	platformBundledLibraryExamplePath := testDataPath.Join("Platform", "libraries", "Library", "examples", "Example")
-	packageIndexPath := testDataPath.Join("PackageIndex")
+	packageIndexFolderPath := testDataPath.Join("PackageIndex")
+	packageIndexFilePath := packageIndexFolderPath.Join("package_foo_index.json")
 	projectsPath := testDataPath.Join("Projects")
 	projectsPathSketch := testDataPath.Join("Projects", "Sketch")
 	projectsPathLibrary := testDataPath.Join("Projects", "Library")
@@ -119,11 +120,11 @@ func TestFindProjects(t *testing.T) {
 			"Package index file",
 			"all",
 			"",
-			[]string{packageIndexPath.Join("package_foo_index.json").String()},
+			[]string{packageIndexFilePath.String()},
 			assert.NoError,
 			[]Type{
 				{
-					Path:             packageIndexPath,
+					Path:             packageIndexFilePath,
 					ProjectType:      projecttype.PackageIndex,
 					SuperprojectType: projecttype.PackageIndex,
 				},
@@ -190,11 +191,11 @@ func TestFindProjects(t *testing.T) {
 			"Package index folder",
 			"all",
 			"",
-			[]string{packageIndexPath.String()},
+			[]string{packageIndexFolderPath.String()},
 			assert.NoError,
 			[]Type{
 				{
-					Path:             packageIndexPath,
+					Path:             packageIndexFolderPath,
 					ProjectType:      projecttype.PackageIndex,
 					SuperprojectType: projecttype.PackageIndex,
 				},
