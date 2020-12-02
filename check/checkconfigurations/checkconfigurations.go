@@ -97,8 +97,8 @@ var configurations = []Type{
 		DisableModes:    nil,
 		EnableModes:     []checkmode.Type{checkmode.Default},
 		InfoModes:       nil,
-		WarningModes:    []checkmode.Type{checkmode.Permissive},
-		ErrorModes:      []checkmode.Type{checkmode.Default},
+		WarningModes:    []checkmode.Type{checkmode.Default},
+		ErrorModes:      []checkmode.Type{checkmode.Strict},
 		CheckFunction:   checkfunctions.MisspelledLibraryPropertiesFileName,
 	},
 	{
@@ -232,8 +232,8 @@ var configurations = []Type{
 		DisableModes:    []checkmode.Type{checkmode.Official},
 		EnableModes:     []checkmode.Type{checkmode.Default},
 		InfoModes:       nil,
-		WarningModes:    []checkmode.Type{checkmode.Permissive},
-		ErrorModes:      []checkmode.Type{checkmode.Default},
+		WarningModes:    []checkmode.Type{checkmode.Default},
+		ErrorModes:      []checkmode.Type{checkmode.LibraryManagerSubmission, checkmode.Strict},
 		CheckFunction:   checkfunctions.LibraryPropertiesNameFieldStartsWithArduino,
 	},
 	{
@@ -247,8 +247,8 @@ var configurations = []Type{
 		DisableModes:    []checkmode.Type{checkmode.Default},
 		EnableModes:     []checkmode.Type{checkmode.Official},
 		InfoModes:       nil,
-		WarningModes:    nil,
-		ErrorModes:      []checkmode.Type{checkmode.Official},
+		WarningModes:    []checkmode.Type{checkmode.Default},
+		ErrorModes:      []checkmode.Type{checkmode.Strict},
 		CheckFunction:   checkfunctions.LibraryPropertiesNameFieldMissingOfficialPrefix,
 	},
 	{
@@ -1102,8 +1102,8 @@ var configurations = []Type{
 		DisableModes:    nil,
 		EnableModes:     []checkmode.Type{checkmode.Default},
 		InfoModes:       nil,
-		WarningModes:    []checkmode.Type{checkmode.Default},
-		ErrorModes:      []checkmode.Type{checkmode.Strict},
+		WarningModes:    []checkmode.Type{checkmode.Permissive},
+		ErrorModes:      []checkmode.Type{checkmode.Default},
 		CheckFunction:   checkfunctions.IncorrectSketchSrcFolderNameCase,
 	},
 	{
