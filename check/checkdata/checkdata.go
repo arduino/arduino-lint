@@ -35,6 +35,7 @@ func Initialize(project project.Type, schemasPath *paths.Path) {
 	case projecttype.Library:
 		InitializeForLibrary(project, schemasPath)
 	case projecttype.Platform:
+		InitializeForPlatform(project)
 	case projecttype.PackageIndex:
 		var err error
 		// Because a package index project is a file, but project.Path may be a folder, an extra discovery step is needed for this project type.
