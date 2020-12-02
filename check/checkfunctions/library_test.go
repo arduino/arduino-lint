@@ -84,6 +84,7 @@ func TestIncorrectLibraryPropertiesFileNameCase(t *testing.T) {
 
 func TestLibraryPropertiesMissing(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid non-legacy", "InvalidLibraryProperties", checkresult.NotRun, ""},
 		{"Legacy", "Legacy", checkresult.Fail, ""},
 		{"Flat non-legacy", "Flat", checkresult.Pass, ""},
 		{"Recursive", "Recursive", checkresult.Pass, ""},
@@ -104,6 +105,7 @@ func TestRedundantLibraryProperties(t *testing.T) {
 func TestLibraryPropertiesFormat(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Invalid", "InvalidLibraryProperties", checkresult.Fail, ""},
+		{"Legacy", "Legacy", checkresult.NotRun, ""},
 		{"Valid", "Recursive", checkresult.Pass, ""},
 	}
 
@@ -242,6 +244,7 @@ func TestLibraryPropertiesPrecompiledFieldEnabledWithFlatLayout(t *testing.T) {
 
 func TestLibraryInvalid(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid library.properties", "InvalidLibraryProperties", checkresult.Fail, ""},
 		{"Invalid flat layout", "FlatWithoutHeader", checkresult.Fail, ""},
 		{"Invalid recursive layout", "RecursiveWithoutLibraryProperties", checkresult.Fail, ""},
 		{"Valid library", "Recursive", checkresult.Pass, ""},
@@ -383,6 +386,7 @@ func TestIncorrectExtrasFolderNameCase(t *testing.T) {
 
 func TestRecursiveLibraryWithUtilityFolder(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
+		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
 		{"Flat", "Flat", checkresult.NotRun, ""},
 		{"Recursive with utility", "RecursiveWithUtilityFolder", checkresult.Fail, ""},
 		{"Recursive without utility", "Recursive", checkresult.Pass, ""},

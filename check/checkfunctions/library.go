@@ -38,14 +38,23 @@ import (
 
 // LibraryPropertiesFormat checks for invalid library.properties format.
 func LibraryPropertiesFormat() (result checkresult.Type, output string) {
+	if checkdata.LoadedLibrary() != nil && checkdata.LoadedLibrary().IsLegacy {
+		return checkresult.NotRun, ""
+	}
+
 	if checkdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.Fail, checkdata.LibraryPropertiesLoadError().Error()
 	}
+
 	return checkresult.Pass, ""
 }
 
 // LibraryPropertiesMissing checks for presence of library.properties.
 func LibraryPropertiesMissing() (result checkresult.Type, output string) {
+	if checkdata.LoadedLibrary() == nil {
+		return checkresult.NotRun, ""
+	}
+
 	if checkdata.LoadedLibrary().IsLegacy {
 		return checkresult.Fail, ""
 	}
@@ -768,11 +777,7 @@ func LibraryPropertiesDotALinkageFieldInvalid() (result checkresult.Type, output
 
 // LibraryPropertiesDotALinkageFieldTrueWithFlatLayout checks whether a library using the "dot_a_linkage" feature has the required recursive layout type.
 func LibraryPropertiesDotALinkageFieldTrueWithFlatLayout() (result checkresult.Type, output string) {
-	if checkdata.LoadedLibrary() == nil {
-		return checkresult.NotRun, ""
-	}
-
-	if !checkdata.LibraryProperties().ContainsKey("dot_a_linkage") {
+	if checkdata.LoadedLibrary() == nil || !checkdata.LibraryProperties().ContainsKey("dot_a_linkage") {
 		return checkresult.NotRun, ""
 	}
 
@@ -905,7 +910,7 @@ func LibraryPropertiesMisspelledOptionalField() (result checkresult.Type, output
 
 // LibraryInvalid checks whether the provided path is a valid library.
 func LibraryInvalid() (result checkresult.Type, output string) {
-	if library.ContainsHeaderFile(checkdata.LoadedLibrary().SourceDir) {
+	if checkdata.LoadedLibrary() != nil && library.ContainsHeaderFile(checkdata.LoadedLibrary().SourceDir) {
 		return checkresult.Pass, ""
 	}
 
@@ -1120,7 +1125,7 @@ func MisspelledExtrasFolderName() (result checkresult.Type, output string) {
 
 // RecursiveLibraryWithUtilityFolder checks for presence of a `utility` subfolder in a recursive layout library.
 func RecursiveLibraryWithUtilityFolder() (result checkresult.Type, output string) {
-	if checkdata.LoadedLibrary().Layout == libraries.FlatLayout {
+	if checkdata.LoadedLibrary() == nil || checkdata.LoadedLibrary().Layout == libraries.FlatLayout {
 		return checkresult.NotRun, ""
 	}
 
