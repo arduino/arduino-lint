@@ -60,8 +60,14 @@ func findProjects(targetPath *paths.Path) ([]Type, error) {
 		// The filename provides additional information about the project type. So rather than using isProject(), which doesn't make use this information, use a specialized function that does.
 		isProject, projectType := isProjectIndicatorFile(targetPath, configuration.SuperprojectTypeFilter())
 		if isProject {
+			var projectPath *paths.Path
+			if projectType == projecttype.PackageIndex {
+				projectPath = targetPath // With package indexes the project is the file. When the user has provided the full path to the project, that information should be preserved.
+			} else {
+				projectPath = targetPath.Parent()
+			}
 			foundProject := Type{
-				Path:             targetPath.Parent(),
+				Path:             projectPath,
 				ProjectType:      projectType,
 				SuperprojectType: projectType,
 			}

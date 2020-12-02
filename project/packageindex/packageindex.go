@@ -20,6 +20,7 @@ See: https://arduino.github.io/arduino-cli/latest/package_index_json-specificati
 package packageindex
 
 import (
+	"fmt"
 	"regexp"
 
 	"github.com/arduino/go-paths-helper"
@@ -50,4 +51,34 @@ func HasValidFilename(filePath *paths.Path, officialCheckMode bool) bool {
 	regex := validFilenameRegex[officialCheckMode]
 	filename := filePath.Base()
 	return regex.MatchString(filename)
+}
+
+func Find(folderPath *paths.Path) (*paths.Path, error) {
+	exist, err := folderPath.ExistCheck()
+	if !exist {
+		return nil, fmt.Errorf("Error opening path %s: %s", folderPath, err)
+	}
+
+	if folderPath.IsNotDir() {
+		return folderPath, nil
+	}
+
+	directoryListing, err := folderPath.ReadDir()
+	if err != nil {
+		return nil, err
+	}
+
+	directoryListing.FilterOutDirs()
+	for _, potentialPackageIndexFile := range directoryListing {
+		if HasValidFilename(potentialPackageIndexFile, true) {
+			return potentialPackageIndexFile, nil
+		}
+	}
+	for _, potentialPackageIndexFile := range directoryListing {
+		if HasValidExtension(potentialPackageIndexFile) {
+			return potentialPackageIndexFile, nil
+		}
+	}
+
+	return nil, fmt.Errorf("No package index file found in %s", folderPath)
 }

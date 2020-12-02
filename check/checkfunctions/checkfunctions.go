@@ -17,6 +17,7 @@
 package checkfunctions
 
 import (
+	"encoding/json"
 	"regexp"
 	"strings"
 
@@ -96,4 +97,13 @@ func pathContainsReadme(path *paths.Path, readmeRegexp *regexp.Regexp) bool {
 	}
 
 	return false
+}
+
+// isValidJSON checks whether the specified file is a valid JSON document.
+func isValidJSON(path *paths.Path) bool {
+	data, err := path.ReadFile()
+	if err != nil {
+		panic(err)
+	}
+	return json.Valid(data)
 }
