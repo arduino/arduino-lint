@@ -184,17 +184,14 @@ func TestInitializeVersion(t *testing.T) {
 }
 
 func TestInitializeProjectPath(t *testing.T) {
-	targetPaths = nil
 	assert.Nil(t, Initialize(test.ConfigurationFlags(), []string{}))
 	workingDirectoryPath, err := os.Getwd()
 	require.Nil(t, err)
 	assert.Equal(t, paths.NewPathList(workingDirectoryPath), TargetPaths(), "Default PROJECT_PATH to current working directory")
 
-	targetPaths = nil
 	assert.Nil(t, Initialize(test.ConfigurationFlags(), projectPaths))
 	assert.Equal(t, paths.NewPathList(projectPaths[0]), TargetPaths())
 
-	targetPaths = nil
 	assert.Error(t, Initialize(test.ConfigurationFlags(), []string{"/nonexistent"}))
 }
 

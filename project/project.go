@@ -75,7 +75,11 @@ func findProjects(targetPath *paths.Path) ([]Type, error) {
 		return nil, fmt.Errorf("specified path %s is not an Arduino project", targetPath)
 	}
 
-	foundProjects = append(foundProjects, findProjectsUnderPath(targetPath, configuration.SuperprojectTypeFilter(), configuration.Recursive())...)
+	foundParentProjects := findProjectsUnderPath(targetPath, configuration.SuperprojectTypeFilter(), configuration.Recursive())
+	for _, foundParentProject := range foundParentProjects {
+		foundProjects = append(foundProjects, foundParentProject)
+		foundProjects = append(foundProjects, findSubprojects(foundParentProject, foundParentProject.ProjectType)...)
+	}
 
 	if foundProjects == nil {
 		return nil, fmt.Errorf("no projects found under %s", targetPath)
@@ -84,7 +88,7 @@ func findProjects(targetPath *paths.Path) ([]Type, error) {
 	return foundProjects, nil
 }
 
-// findProjectsUnderPath finds projects of the given type and subprojects of those projects. It returns a slice containing the definitions of all found projects.
+// findProjectsUnderPath finds projects of the given type under the given path. It returns a slice containing the definitions of all found projects.
 func findProjectsUnderPath(targetPath *paths.Path, projectTypeFilter projecttype.Type, recursive bool) []Type {
 	var foundProjects []Type
 
@@ -98,8 +102,6 @@ func findProjectsUnderPath(targetPath *paths.Path, projectTypeFilter projecttype
 			SuperprojectType: foundProjectType,
 		}
 		foundProjects = append(foundProjects, foundProject)
-
-		foundProjects = append(foundProjects, findSubprojects(foundProject, foundProject.ProjectType)...)
 
 		// Don't search recursively past a project.
 		return foundProjects
@@ -120,7 +122,7 @@ func findProjectsUnderPath(targetPath *paths.Path, projectTypeFilter projecttype
 // findSubprojects finds subprojects of the given project.
 // For example, the subprojects of a library are its example sketches.
 func findSubprojects(superproject Type, apexSuperprojectType projecttype.Type) []Type {
-	subprojectFolderNames := []string{}
+	subprojectsFolderNames := []string{}
 	var subProjectType projecttype.Type
 	var searchPathsRecursively bool
 
@@ -130,11 +132,11 @@ func findSubprojects(superproject Type, apexSuperprojectType projecttype.Type) [
 		// Sketches don't have subprojects
 		return nil
 	case projecttype.Library:
-		subprojectFolderNames = append(subprojectFolderNames, library.ExamplesFolderSupportedNames()...)
+		subprojectsFolderNames = append(subprojectsFolderNames, library.ExamplesFolderSupportedNames()...)
 		subProjectType = projecttype.Sketch
 		searchPathsRecursively = true // Examples sketches can be under nested subfolders
 	case projecttype.Platform:
-		subprojectFolderNames = append(subprojectFolderNames, platform.BundledLibrariesFolderNames()...)
+		subprojectsFolderNames = append(subprojectsFolderNames, platform.BundledLibrariesFolderNames()...)
 		subProjectType = projecttype.Library
 		searchPathsRecursively = false // Bundled libraries must be in the root of the libraries folder
 	case projecttype.PackageIndex:
@@ -146,9 +148,19 @@ func findSubprojects(superproject Type, apexSuperprojectType projecttype.Type) [
 
 	// Search the subproject paths for projects.
 	var immediateSubprojects []Type
-	for _, subprojectFolderName := range subprojectFolderNames {
-		subprojectPath := superproject.Path.Join(subprojectFolderName)
-		immediateSubprojects = append(immediateSubprojects, findProjectsUnderPath(subprojectPath, subProjectType, searchPathsRecursively)...)
+	for _, subprojectsFolderName := range subprojectsFolderNames {
+		subprojectsPath := superproject.Path.Join(subprojectsFolderName)
+		if subprojectsPath.Exist() {
+			directoryListing, err := subprojectsPath.ReadDir()
+			if err != nil {
+				panic(err)
+			}
+			directoryListing.FilterDirs()
+
+			for _, subprojectPath := range directoryListing {
+				immediateSubprojects = append(immediateSubprojects, findProjectsUnderPath(subprojectPath, subProjectType, searchPathsRecursively)...)
+			}
+		}
 	}
 
 	var allSubprojects []Type
