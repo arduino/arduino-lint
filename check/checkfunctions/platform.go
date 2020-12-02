@@ -37,3 +37,15 @@ func BoardsTxtMissing() (result checkresult.Type, output string) {
 	return checkresult.Fail, boardsTxtPath.String()
 }
 
+// BoardsTxtFormat checks for invalid boards.txt format.
+func BoardsTxtFormat() (result checkresult.Type, output string) {
+	if !checkdata.ProjectPath().Join("boards.txt").Exist() {
+		return checkresult.NotRun, "boards.txt missing"
+	}
+
+	if checkdata.BoardsTxtLoadError() == nil {
+		return checkresult.Pass, ""
+	}
+
+	return checkresult.Fail, checkdata.BoardsTxtLoadError().Error()
+}

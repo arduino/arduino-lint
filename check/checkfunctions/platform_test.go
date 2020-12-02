@@ -71,3 +71,12 @@ func TestBoardsTxtMissing(t *testing.T) {
 	checkPlatformCheckFunction(BoardsTxtMissing, testTables, t)
 }
 
+func TestBoardsTxtFormat(t *testing.T) {
+	testTables := []platformCheckFunctionTestTable{
+		{"Missing", "missing-boards.txt", checkresult.NotRun, ""},
+		{"Valid", "valid-boards.txt", checkresult.Pass, ""},
+		{"Invalid", "invalid-boards.txt", checkresult.Fail, ""},
+	}
+
+	checkPlatformCheckFunction(BoardsTxtFormat, testTables, t)
+}
