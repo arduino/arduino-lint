@@ -26,7 +26,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestConfigurations(t *testing.T) {
+func TestConfigurationResolution(t *testing.T) {
 	for _, checkConfiguration := range checkconfigurations.Configurations() {
 		for checkMode := range checkmode.Types {
 			enabled, err := check.IsEnabled(checkConfiguration, map[checkmode.Type]bool{checkMode: true})
@@ -37,4 +37,31 @@ func TestConfigurations(t *testing.T) {
 			}
 		}
 	}
+}
+
+func TestConfigurationCheckModeConflict(t *testing.T) {
+	// Having the same check mode in multiple configurations results in the configuration behavior being dependent on which order the fields are processed in, which may change.
+	for _, checkConfiguration := range checkconfigurations.Configurations() {
+		conflict, checkMode := checkModeConflict(checkConfiguration.DisableModes, checkConfiguration.EnableModes)
+		assert.False(t, conflict, fmt.Sprintf("Duplicated check mode %s in enable configuration of check %s", checkMode, checkConfiguration.ID))
+
+		conflict, checkMode = checkModeConflict(checkConfiguration.InfoModes, checkConfiguration.WarningModes, checkConfiguration.ErrorModes)
+		assert.False(t, conflict, fmt.Sprintf("Duplicated check mode %s in level configuration of check %s", checkMode, checkConfiguration.ID))
+	}
+}
+
+// checkModeConflict checks whether the same check mode is present in multiple configuration fields.
+func checkModeConflict(configurations ...[]checkmode.Type) (bool, checkmode.Type) {
+	modeCounter := 0
+	checkModeMap := make(map[checkmode.Type]bool)
+	for _, configuration := range configurations {
+		for _, checkMode := range configuration {
+			modeCounter += 1
+			checkModeMap[checkMode] = true
+			if len(checkModeMap) < modeCounter {
+				return true, checkMode
+			}
+		}
+	}
+	return false, checkmode.Default
 }
