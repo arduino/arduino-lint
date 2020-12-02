@@ -52,3 +52,21 @@ func TestMode(t *testing.T) {
 	mergedCheckModes = Modes(defaultCheckModes, customCheckModes, testProjectType)
 	assert.Equal(t, customCheckModes[testCheckMode], mergedCheckModes[testCheckMode], "Should be set to custom value")
 }
+
+func TestCompliance(t *testing.T) {
+	checkModes := map[Type]bool{
+		Strict:        false,
+		Specification: false,
+		Permissive:    false,
+	}
+
+	assert.Panics(t, func() { Compliance(checkModes) })
+	checkModes[Strict] = true
+	assert.Equal(t, Strict.String(), Compliance(checkModes))
+	checkModes[Strict] = false
+	checkModes[Specification] = true
+	assert.Equal(t, Specification.String(), Compliance(checkModes))
+	checkModes[Specification] = false
+	checkModes[Permissive] = true
+	assert.Equal(t, Permissive.String(), Compliance(checkModes))
+}
