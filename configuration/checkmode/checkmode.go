@@ -38,6 +38,19 @@ const (
 	Default                              // default
 )
 
+var empty struct{}
+
+// Types provides an iterator and validator for Type.
+var Types = map[Type]struct{}{
+	Strict:                   empty,
+	Specification:            empty,
+	Permissive:               empty,
+	LibraryManagerSubmission: empty,
+	LibraryManagerIndexed:    empty,
+	Official:                 empty,
+	Default:                  empty,
+}
+
 // ComplianceModeFromString parses the --compliance flag value and returns the corresponding check mode settings.
 func ComplianceModeFromString(complianceModeString string) (bool, bool, bool, error) {
 	switch strings.ToLower(complianceModeString) {

@@ -39,6 +39,10 @@ const (
 // CheckLevel determines the check level assigned to failure of the given check under the current tool configuration.
 func CheckLevel(checkConfiguration checkconfigurations.Type) (Type, error) {
 	configurationCheckModes := configuration.CheckModes(checkConfiguration.ProjectType)
+	return CheckLevelForCheckModes(checkConfiguration, configurationCheckModes)
+}
+
+func CheckLevelForCheckModes(checkConfiguration checkconfigurations.Type, configurationCheckModes map[checkmode.Type]bool) (Type, error) {
 	for _, errorMode := range checkConfiguration.ErrorModes {
 		if configurationCheckModes[errorMode] {
 			return Error, nil
