@@ -31,3 +31,11 @@ func PackageIndexJSONFormat() (result checkresult.Type, output string) {
 	return checkresult.Fail, ""
 }
 
+// PackageIndexFormat checks for invalid package index data format.
+func PackageIndexFormat() (result checkresult.Type, output string) {
+	if checkdata.PackageIndexLoadError() != nil {
+		return checkresult.Fail, checkdata.PackageIndexLoadError().Error()
+	}
+
+	return checkresult.Pass, ""
+}

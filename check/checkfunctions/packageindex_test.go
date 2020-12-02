@@ -69,3 +69,12 @@ func TestPackageIndexJSONFormat(t *testing.T) {
 	checkPackageIndexCheckFunction(PackageIndexJSONFormat, testTables, t)
 }
 
+func TestPackageIndexFormat(t *testing.T) {
+	testTables := []packageIndexCheckFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", checkresult.Fail, ""},
+		{"Not valid package index", "invalid-package-index", checkresult.Fail, ""},
+		{"Valid package index", "valid-package-index", checkresult.Pass, ""},
+	}
+
+	checkPackageIndexCheckFunction(PackageIndexFormat, testTables, t)
+}
