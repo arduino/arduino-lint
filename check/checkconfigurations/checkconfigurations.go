@@ -922,8 +922,8 @@ var configurations = []Type{
 		DisableModes:    nil,
 		EnableModes:     []checkmode.Type{checkmode.Default},
 		InfoModes:       nil,
-		WarningModes:    []checkmode.Type{checkmode.LibraryManagerSubmission, checkmode.LibraryManagerIndexed, checkmode.Strict},
-		ErrorModes:      nil,
+		WarningModes:    []checkmode.Type{checkmode.Default},
+		ErrorModes:      []checkmode.Type{checkmode.LibraryManagerSubmission, checkmode.LibraryManagerIndexed, checkmode.Strict},
 		CheckFunction:   checkfunctions.LibraryHasExe,
 	},
 	{
