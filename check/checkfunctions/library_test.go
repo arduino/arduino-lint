@@ -25,7 +25,6 @@ import (
 	"github.com/arduino/arduino-check/project"
 	"github.com/arduino/arduino-check/project/projecttype"
 	"github.com/arduino/go-paths-helper"
-	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -250,7 +249,6 @@ func TestLibraryInvalid(t *testing.T) {
 		{"Valid library", "Recursive", checkresult.Pass, ""},
 	}
 
-	logrus.SetLevel(logrus.ErrorLevel)
 	checkLibraryCheckFunction(LibraryInvalid, testTables, t)
 }
 
