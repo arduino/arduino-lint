@@ -19,6 +19,7 @@ import (
 	"testing"
 
 	"github.com/arduino/arduino-check/check/checkconfigurations"
+	"github.com/arduino/arduino-check/check/checkresult"
 	"github.com/arduino/arduino-check/configuration"
 	"github.com/arduino/arduino-check/configuration/checkmode"
 	"github.com/arduino/arduino-check/util/test"
@@ -31,19 +32,21 @@ func TestCheckLevel(t *testing.T) {
 		infoModes             []checkmode.Type
 		warningModes          []checkmode.Type
 		errorModes            []checkmode.Type
+		checkResult           checkresult.Type
 		libraryManagerSetting string
 		permissiveSetting     string
 		expectedLevel         Type
 		errorAssertion        assert.ErrorAssertionFunc
 	}{
-		{"Error", []checkmode.Type{}, []checkmode.Type{}, []checkmode.Type{checkmode.LibraryManagerSubmission}, "submit", "false", Error, assert.NoError},
-		{"Warning", []checkmode.Type{}, []checkmode.Type{checkmode.LibraryManagerSubmission}, []checkmode.Type{}, "submit", "false", Warning, assert.NoError},
-		{"Info", []checkmode.Type{checkmode.LibraryManagerSubmission}, []checkmode.Type{}, []checkmode.Type{}, "submit", "false", Info, assert.NoError},
-		{"Default to Error", []checkmode.Type{}, []checkmode.Type{}, []checkmode.Type{checkmode.Default}, "submit", "false", Error, assert.NoError},
-		{"Default to Warning", []checkmode.Type{}, []checkmode.Type{checkmode.Default}, []checkmode.Type{}, "submit", "false", Warning, assert.NoError},
-		{"Default to Info", []checkmode.Type{checkmode.Default}, []checkmode.Type{}, []checkmode.Type{}, "submit", "false", Info, assert.NoError},
-		{"Default override", []checkmode.Type{checkmode.Default}, []checkmode.Type{}, []checkmode.Type{checkmode.LibraryManagerSubmission}, "submit", "false", Error, assert.NoError},
-		{"Unable to resolve", []checkmode.Type{}, []checkmode.Type{}, []checkmode.Type{}, "submit", "false", Info, assert.Error},
+		{"Non-fail", []checkmode.Type{}, []checkmode.Type{}, []checkmode.Type{checkmode.LibraryManagerSubmission}, checkresult.Skip, "submit", "false", Notice, assert.NoError},
+		{"Error", []checkmode.Type{}, []checkmode.Type{}, []checkmode.Type{checkmode.LibraryManagerSubmission}, checkresult.Fail, "submit", "false", Error, assert.NoError},
+		{"Warning", []checkmode.Type{}, []checkmode.Type{checkmode.LibraryManagerSubmission}, []checkmode.Type{}, checkresult.Fail, "submit", "false", Warning, assert.NoError},
+		{"Info", []checkmode.Type{checkmode.LibraryManagerSubmission}, []checkmode.Type{}, []checkmode.Type{}, checkresult.Fail, "submit", "false", Info, assert.NoError},
+		{"Default to Error", []checkmode.Type{}, []checkmode.Type{}, []checkmode.Type{checkmode.Default}, checkresult.Fail, "submit", "false", Error, assert.NoError},
+		{"Default to Warning", []checkmode.Type{}, []checkmode.Type{checkmode.Default}, []checkmode.Type{}, checkresult.Fail, "submit", "false", Warning, assert.NoError},
+		{"Default to Info", []checkmode.Type{checkmode.Default}, []checkmode.Type{}, []checkmode.Type{}, checkresult.Fail, "submit", "false", Info, assert.NoError},
+		{"Default override", []checkmode.Type{checkmode.Default}, []checkmode.Type{}, []checkmode.Type{checkmode.LibraryManagerSubmission}, checkresult.Fail, "submit", "false", Error, assert.NoError},
+		{"Unable to resolve", []checkmode.Type{}, []checkmode.Type{}, []checkmode.Type{}, checkresult.Fail, "submit", "false", Info, assert.Error},
 	}
 
 	flags := test.ConfigurationFlags()
@@ -60,10 +63,10 @@ func TestCheckLevel(t *testing.T) {
 			ErrorModes:   testTable.errorModes,
 		}
 
-		level, err := CheckLevel(checkConfiguration)
-		testTable.errorAssertion(t, err)
+		level, err := CheckLevel(checkConfiguration, testTable.checkResult)
+		testTable.errorAssertion(t, err, testTable.testName)
 		if err == nil {
-			assert.Equal(t, testTable.expectedLevel, level)
+			assert.Equal(t, testTable.expectedLevel, level, testTable.testName)
 		}
 	}
 }

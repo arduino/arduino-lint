@@ -94,7 +94,7 @@ func (results *Type) Initialize() {
 func (results *Type) Record(checkedProject project.Type, checkConfiguration checkconfigurations.Type, checkResult checkresult.Type, checkOutput string) string {
 	checkMessage := message(checkConfiguration.MessageTemplate, checkOutput)
 
-	checkLevel, err := checklevel.CheckLevel(checkConfiguration)
+	checkLevel, err := checklevel.CheckLevel(checkConfiguration, checkResult)
 	if err != nil {
 		feedback.Errorf("Error while determining check level: %v", err)
 		os.Exit(1)

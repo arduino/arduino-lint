@@ -20,6 +20,7 @@ import (
 	"fmt"
 
 	"github.com/arduino/arduino-check/check/checkconfigurations"
+	"github.com/arduino/arduino-check/check/checkresult"
 	"github.com/arduino/arduino-check/configuration"
 	"github.com/arduino/arduino-check/configuration/checkmode"
 )
@@ -36,13 +37,17 @@ const (
 	Notice              // notice
 )
 
-// CheckLevel determines the check level assigned to failure of the given check under the current tool configuration.
-func CheckLevel(checkConfiguration checkconfigurations.Type) (Type, error) {
+// CheckLevel determines the check level assigned to the given result of the given check under the current tool configuration.
+func CheckLevel(checkConfiguration checkconfigurations.Type, checkResult checkresult.Type) (Type, error) {
+	if checkResult != checkresult.Fail {
+		return Notice, nil // Level provided by FailCheckLevel() is only relevant for failure result.
+	}
 	configurationCheckModes := configuration.CheckModes(checkConfiguration.ProjectType)
-	return CheckLevelForCheckModes(checkConfiguration, configurationCheckModes)
+	return FailCheckLevel(checkConfiguration, configurationCheckModes)
 }
 
-func CheckLevelForCheckModes(checkConfiguration checkconfigurations.Type, configurationCheckModes map[checkmode.Type]bool) (Type, error) {
+// FailCheckLevel determines the level of a failed check for the given check modes.
+func FailCheckLevel(checkConfiguration checkconfigurations.Type, configurationCheckModes map[checkmode.Type]bool) (Type, error) {
 	for _, errorMode := range checkConfiguration.ErrorModes {
 		if configurationCheckModes[errorMode] {
 			return Error, nil

@@ -90,7 +90,7 @@ func TestRecord(t *testing.T) {
 	assert.Equal(t, checkConfiguration.Brief, checkReport.Brief)
 	assert.Equal(t, checkConfiguration.Description, checkReport.Description)
 	assert.Equal(t, checkResult.String(), checkReport.Result)
-	checkLevel, _ := checklevel.CheckLevel(checkConfiguration)
+	checkLevel, _ := checklevel.CheckLevel(checkConfiguration, checkResult)
 	assert.Equal(t, checkLevel.String(), checkReport.Level)
 	assert.Equal(t, message(checkConfiguration.MessageTemplate, checkOutput), checkReport.Message)
 

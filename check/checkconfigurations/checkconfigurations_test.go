@@ -32,7 +32,7 @@ func TestConfigurationResolution(t *testing.T) {
 			enabled, err := check.IsEnabled(checkConfiguration, map[checkmode.Type]bool{checkMode: true})
 			assert.Nil(t, err, fmt.Sprintf("Enable configuration of check %s doesn't resolve for check mode %s", checkConfiguration.ID, checkMode))
 			if err == nil && enabled {
-				_, err := checklevel.CheckLevelForCheckModes(checkConfiguration, map[checkmode.Type]bool{checkMode: true})
+				_, err := checklevel.FailCheckLevel(checkConfiguration, map[checkmode.Type]bool{checkMode: true})
 				assert.Nil(t, err, fmt.Sprintf("Level configuration of check %s doesn't resolve for check mode %s", checkConfiguration.ID, checkMode))
 			}
 		}
