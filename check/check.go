@@ -71,6 +71,10 @@ func shouldRun(checkConfiguration checkconfigurations.Type, currentProject proje
 		return false, nil
 	}
 
+	return IsEnabled(checkConfiguration, configurationCheckModes)
+}
+
+func IsEnabled(checkConfiguration checkconfigurations.Type, configurationCheckModes map[checkmode.Type]bool) (bool, error) {
 	for _, disableMode := range checkConfiguration.DisableModes {
 		if configurationCheckModes[disableMode] {
 			return false, nil

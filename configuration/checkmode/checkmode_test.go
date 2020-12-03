@@ -23,19 +23,29 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestTypes(t *testing.T) {
+	for key := range Types {
+		_, valid := Types[key]
+		assert.True(t, valid)
+	}
+
+	_, valid := Types[Strict]
+	assert.True(t, valid)
+	_, valid = Types[42]
+	assert.False(t, valid)
+}
+
 func TestMode(t *testing.T) {
 	defaultCheckModes := map[projecttype.Type]map[Type]bool{
 		projecttype.Sketch: {
 			LibraryManagerSubmission: false,
 			LibraryManagerIndexed:    false,
 			Official:                 false,
-			All:                      true,
 		},
 		projecttype.Library: {
 			LibraryManagerSubmission: true,
 			LibraryManagerIndexed:    false,
 			Official:                 false,
-			All:                      true,
 		},
 	}
 
