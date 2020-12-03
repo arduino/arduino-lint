@@ -175,8 +175,13 @@ func LibraryPropertiesNameFieldDisallowedCharacters() (result checkresult.Type, 
 		return checkresult.NotRun, ""
 	}
 
+	name, ok := checkdata.LibraryProperties().GetOk("name")
+	if !ok {
+		return checkresult.NotRun, "name not defined"
+	}
+
 	if schema.PropertyPatternMismatch("name", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
-		return checkresult.Fail, ""
+		return checkresult.Fail, name
 	}
 
 	return checkresult.Pass, ""

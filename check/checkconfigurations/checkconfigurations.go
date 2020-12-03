@@ -198,7 +198,7 @@ var configurations = []Type{
 		ID:              "LP003",
 		Brief:           "disallowed characters",
 		Description:     "",
-		MessageTemplate: "disallowed characters in library.properties name field. See: https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format",
+		MessageTemplate: "disallowed characters in library.properties name value: {{.}}. See: https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format",
 		DisableModes:    nil,
 		EnableModes:     []checkmode.Type{checkmode.Default},
 		InfoModes:       nil,
