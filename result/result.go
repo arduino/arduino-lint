@@ -92,8 +92,6 @@ func (results *Type) Initialize() {
 
 // Record records the result of a check and returns a text summary for it.
 func (results *Type) Record(checkedProject project.Type, checkConfiguration checkconfigurations.Type, checkResult checkresult.Type, checkOutput string) string {
-	checkMessage := message(checkConfiguration.MessageTemplate, checkOutput)
-
 	checkLevel, err := checklevel.CheckLevel(checkConfiguration, checkResult)
 	if err != nil {
 		feedback.Errorf("Error while determining check level: %v", err)
@@ -102,11 +100,17 @@ func (results *Type) Record(checkedProject project.Type, checkConfiguration chec
 
 	summaryText := fmt.Sprintf("%s\n", checkResult)
 
-	if checkResult == checkresult.NotRun {
-		if checkOutput != "" {
-			summaryText += fmt.Sprintf("%s: %s\n", checklevel.Notice, checkOutput)
-		}
-	} else if checkResult != checkresult.Pass {
+	checkMessage := ""
+	if checkLevel == checklevel.Error {
+		checkMessage = message(checkConfiguration.MessageTemplate, checkOutput)
+	} else {
+		// Checks may provide an explanation for their non-fail result.
+		// The message template should not be used in this case, since it is written for a failure result.
+		checkMessage = checkOutput
+	}
+
+	// Add explanation of check result if present.
+	if checkMessage != "" {
 		summaryText += fmt.Sprintf("%s: %s\n", checkLevel, checkMessage)
 	}
 
