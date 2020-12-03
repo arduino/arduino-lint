@@ -346,7 +346,7 @@ func TestMisspelledExamplesFolderName(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Correctly spelled", "ExamplesFolder", checkresult.Pass, ""},
 		{"Misspelled", "MisspelledExamplesFolder", checkresult.Fail, ""},
-		{"No examples folder", "Recursive", checkresult.Pass, ""},
+		{"No examples folder", "NoExamples", checkresult.Pass, ""},
 	}
 
 	checkLibraryCheckFunction(MisspelledExamplesFolderName, testTables, t)
@@ -356,7 +356,7 @@ func TestIncorrectExamplesFolderNameCase(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Correct case", "ExamplesFolder", checkresult.Pass, ""},
 		{"Incorrect case", "IncorrectExamplesFolderCase", checkresult.Fail, ""},
-		{"No examples folder", "Recursive", checkresult.Pass, ""},
+		{"No examples folder", "NoExamples", checkresult.Pass, ""},
 	}
 
 	checkLibraryCheckFunction(IncorrectExamplesFolderNameCase, testTables, t)
