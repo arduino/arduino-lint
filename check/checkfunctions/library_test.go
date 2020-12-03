@@ -342,6 +342,16 @@ func TestIncorrectLibrarySrcFolderNameCase(t *testing.T) {
 	checkLibraryCheckFunction(IncorrectLibrarySrcFolderNameCase, testTables, t)
 }
 
+func TestMissingExamples(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Has examples", "ExamplesFolder", checkresult.Pass, ""},
+		{`Has examples (in "example" folder)`, "ExampleFolder", checkresult.Pass, ""},
+		{"No examples", "NoExamples", checkresult.Fail, ""},
+	}
+
+	checkLibraryCheckFunction(MissingExamples, testTables, t)
+}
+
 func TestMisspelledExamplesFolderName(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Correctly spelled", "ExamplesFolder", checkresult.Pass, ""},

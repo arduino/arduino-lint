@@ -1084,6 +1084,28 @@ func IncorrectLibrarySrcFolderNameCase() (result checkresult.Type, output string
 	return checkresult.Pass, ""
 }
 
+// MissingExamples checks whether the library is missing examples.
+func MissingExamples() (result checkresult.Type, output string) {
+	for _, examplesFolderName := range library.ExamplesFolderSupportedNames() {
+		examplesPath := checkdata.ProjectPath().Join(examplesFolderName)
+		exists, err := examplesPath.IsDirCheck()
+		if err != nil {
+			panic(err)
+		}
+		if exists {
+			directoryListing, _ := examplesPath.ReadDirRecursive()
+			directoryListing.FilterDirs()
+			for _, potentialExamplePath := range directoryListing {
+				if sketch.ContainsMainSketchFile(potentialExamplePath) {
+					return checkresult.Pass, ""
+				}
+			}
+		}
+	}
+
+	return checkresult.Fail, ""
+}
+
 // MisspelledExamplesFolderName checks for incorrectly spelled `examples` folder name.
 func MisspelledExamplesFolderName() (result checkresult.Type, output string) {
 	directoryListing, err := checkdata.ProjectPath().ReadDir()
