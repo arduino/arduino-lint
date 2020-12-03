@@ -65,6 +65,8 @@ func TestRecord(t *testing.T) {
 	assert.Equal(t, fmt.Sprintf("%s\n", checkresult.Pass), summaryText)
 	summaryText = results.Record(checkedProject, checkConfiguration, checkresult.NotRun, checkOutput)
 	assert.Equal(t, fmt.Sprintf("%s\n%s: %s\n", checkresult.NotRun, checklevel.Notice, checkOutput), summaryText)
+	summaryText = results.Record(checkedProject, checkConfiguration, checkresult.NotRun, "")
+	assert.Equal(t, "", "", summaryText)
 	summaryText = results.Record(checkedProject, checkConfiguration, checkresult.Fail, checkOutput)
 	assert.Equal(t, fmt.Sprintf("%s\n%s: %s\n", checkresult.Fail, checklevel.Error, message(checkConfiguration.MessageTemplate, checkOutput)), summaryText)
 

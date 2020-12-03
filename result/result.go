@@ -103,8 +103,9 @@ func (results *Type) Record(checkedProject project.Type, checkConfiguration chec
 	summaryText := fmt.Sprintf("%s\n", checkResult)
 
 	if checkResult == checkresult.NotRun {
-		// TODO: make the check functions output an explanation for why they didn't run
-		summaryText += fmt.Sprintf("%s: %s\n", checklevel.Notice, checkOutput)
+		if checkOutput != "" {
+			summaryText += fmt.Sprintf("%s: %s\n", checklevel.Notice, checkOutput)
+		}
 	} else if checkResult != checkresult.Pass {
 		summaryText += fmt.Sprintf("%s: %s\n", checkLevel, checkMessage)
 	}
