@@ -69,6 +69,10 @@ func containsIncorrectPathBaseCase(pathList paths.PathList, correctBaseName stri
 
 // MissingReadme checks if the project has a readme that will be recognized by GitHub.
 func MissingReadme() (result checkresult.Type, output string) {
+	if checkdata.ProjectType() != checkdata.SuperProjectType() {
+		return checkresult.NotRun, "Readme not required for subprojects"
+	}
+
 	// https://github.com/github/markup/blob/master/README.md
 	readmeRegexp := regexp.MustCompile(`(?i)^readme\.(markdown)|(mdown)|(mkdn)|(md)|(textile)|(rdoc)|(org)|(creole)|(mediawiki)|(wiki)|(rst)|(asciidoc)|(adoc)|(asc)|(pod)|(txt)$`)
 

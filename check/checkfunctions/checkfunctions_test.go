@@ -64,6 +64,7 @@ func checkCheckFunction(checkFunction Type, testTables []checkFunctionTestTable,
 
 func TestMissingReadme(t *testing.T) {
 	testTables := []checkFunctionTestTable{
+		{"Subproject", "readme", projecttype.Sketch, projecttype.Library, checkresult.NotRun, ""},
 		{"Readme", "readme", projecttype.Sketch, projecttype.Sketch, checkresult.Pass, ""},
 		{"No readme", "no-readme", projecttype.Sketch, projecttype.Sketch, checkresult.Fail, ""},
 	}
