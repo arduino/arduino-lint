@@ -82,3 +82,13 @@ func TestMissingLicenseFile(t *testing.T) {
 
 	checkCheckFunction(MissingLicenseFile, testTables, t)
 }
+
+func TestIncorrectArduinoDotHFileNameCase(t *testing.T) {
+	testTables := []checkFunctionTestTable{
+		{"Incorrect, angle brackets", "arduino.h-angle", projecttype.Sketch, projecttype.Sketch, checkresult.Fail, ""},
+		{"Incorrect, quotes", "arduino.h-quote", projecttype.Sketch, projecttype.Sketch, checkresult.Fail, ""},
+		{"Correct case", "Arduino.h", projecttype.Sketch, projecttype.Sketch, checkresult.Pass, ""},
+	}
+
+	checkCheckFunction(IncorrectArduinoDotHFileNameCase, testTables, t)
+}

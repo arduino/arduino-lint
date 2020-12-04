@@ -18,11 +18,13 @@ package checkfunctions
 
 import (
 	"encoding/json"
+	"fmt"
 	"regexp"
 	"strings"
 
 	"github.com/arduino/arduino-check/check/checkdata"
 	"github.com/arduino/arduino-check/check/checkresult"
+	"github.com/arduino/arduino-check/project/sketch"
 	"github.com/arduino/go-paths-helper"
 )
 
@@ -104,6 +106,36 @@ func MissingLicenseFile() (result checkresult.Type, output string) {
 	}
 
 	return checkresult.Fail, ""
+}
+
+// IncorrectArduinoDotHFileNameCase checks for incorrect file name case of Arduino.h in #include directives.
+func IncorrectArduinoDotHFileNameCase() (result checkresult.Type, output string) {
+	incorrectCaseRegexp := regexp.MustCompile(`^\s*#\s*include\s*["<](a((?i)rduino)|(ARDUINO))\.[hH][">]`)
+
+	directoryListing, err := checkdata.ProjectPath().ReadDirRecursive()
+	if err != nil {
+		panic(err)
+	}
+	directoryListing.FilterOutDirs()
+
+	for _, file := range directoryListing {
+		if !sketch.HasSupportedExtension(file) { // Won't catch all possible files, but good enough.
+			continue
+		}
+
+		lines, err := file.ReadFileAsLines()
+		if err != nil {
+			panic(err)
+		}
+
+		for lineNumber, line := range lines {
+			if incorrectCaseRegexp.MatchString(line) {
+				return checkresult.Fail, fmt.Sprintf("%s:%v: %s", file, lineNumber+1, line)
+			}
+		}
+	}
+
+	return checkresult.Pass, ""
 }
 
 // pathContainsRegexpMatch checks if the provided path contains a file name matching the given regular expression.
