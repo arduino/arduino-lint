@@ -116,3 +116,12 @@ func TestSketchDotJSONFormat(t *testing.T) {
 
 	checkSketchCheckFunction(SketchDotJSONFormat, testTables, t)
 }
+
+func TestSketchNameMismatch(t *testing.T) {
+	testTables := []sketchCheckFunctionTestTable{
+		{"Valid", "Valid", checkresult.Pass, ""},
+		{"Mismatch", "NameMismatch", checkresult.Fail, ""},
+	}
+
+	checkSketchCheckFunction(SketchNameMismatch, testTables, t)
+}
