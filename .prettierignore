@@ -8,3 +8,4 @@
 /check/checkdata/schema/testdata/invalid-schema.json
 /check/checkdata/testdata/packageindexes/invalid-JSON/package_foo_index.json
 /check/checkfunctions/testdata/packageindexes/invalid-JSON/package_foo_index.json
+/check/checkfunctions/testdata/sketches/InvalidJSONMetadataFile/sketch.json

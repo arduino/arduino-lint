@@ -100,3 +100,17 @@ func PdeSketchExtension() (result checkresult.Type, output string) {
 
 	return checkresult.Pass, ""
 }
+
+// SketchDotJSONJSONFormat checks whether the sketch.json metadata file is a valid JSON document.
+func SketchDotJSONJSONFormat() (result checkresult.Type, output string) {
+	metadataPath := sketch.MetadataPath(checkdata.ProjectPath())
+	if metadataPath == nil {
+		return checkresult.NotRun, "No metadata file"
+	}
+
+	if isValidJSON(metadataPath) {
+		return checkresult.Pass, ""
+	}
+
+	return checkresult.Fail, ""
+}
