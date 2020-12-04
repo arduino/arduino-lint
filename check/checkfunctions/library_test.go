@@ -29,12 +29,12 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-var testDataPath *paths.Path
+var librariesTestDataPath *paths.Path
 var schemasPath *paths.Path
 
 func init() {
 	workingDirectory, _ := os.Getwd()
-	testDataPath = paths.New(workingDirectory, "testdata", "libraries")
+	librariesTestDataPath = paths.New(workingDirectory, "testdata", "libraries")
 	schemasPath = paths.New(workingDirectory, "..", "..", "etc", "schemas")
 }
 
@@ -50,7 +50,7 @@ func checkLibraryCheckFunction(checkFunction Type, testTables []libraryCheckFunc
 		expectedOutputRegexp := regexp.MustCompile(testTable.expectedOutputQuery)
 
 		testProject := project.Type{
-			Path:             testDataPath.Join(testTable.libraryFolderName),
+			Path:             librariesTestDataPath.Join(testTable.libraryFolderName),
 			ProjectType:      projecttype.Library,
 			SuperprojectType: projecttype.Library,
 		}
@@ -263,9 +263,9 @@ func TestLibraryHasSubmodule(t *testing.T) {
 
 func TestLibraryContainsSymlinks(t *testing.T) {
 	testLibrary := "Recursive"
-	symlinkPath := testDataPath.Join(testLibrary, "test-symlink")
+	symlinkPath := librariesTestDataPath.Join(testLibrary, "test-symlink")
 	// It's probably most friendly to developers using Windows to create the symlink needed for the test on demand.
-	err := os.Symlink(testDataPath.Join(testLibrary, "library.properties").String(), symlinkPath.String())
+	err := os.Symlink(librariesTestDataPath.Join(testLibrary, "library.properties").String(), symlinkPath.String())
 	require.Nil(t, err, "This test must be run as administrator on Windows to have symlink creation privilege.")
 	defer symlinkPath.RemoveAll() // clean up
 
@@ -391,13 +391,4 @@ func TestRecursiveLibraryWithUtilityFolder(t *testing.T) {
 	}
 
 	checkLibraryCheckFunction(RecursiveLibraryWithUtilityFolder, testTables, t)
-}
-
-func TestMissingReadme(t *testing.T) {
-	testTables := []libraryCheckFunctionTestTable{
-		{"Readme", "Readme", checkresult.Pass, ""},
-		{"No readme", "NoReadme", checkresult.Fail, ""},
-	}
-
-	checkLibraryCheckFunction(MissingReadme, testTables, t)
 }
