@@ -61,12 +61,12 @@ func TestRecord(t *testing.T) {
 	var results Type
 	checkConfiguration := checkconfigurations.Configurations()[0]
 	checkOutput := "foo"
-	summaryText := results.Record(checkedProject, checkConfiguration, checkresult.Pass, checkOutput)
-	assert.Equal(t, fmt.Sprintf("%s\n", checkresult.Pass), summaryText)
-	summaryText = results.Record(checkedProject, checkConfiguration, checkresult.NotRun, checkOutput)
-	assert.Equal(t, fmt.Sprintf("%s\n%s: %s\n", checkresult.NotRun, checklevel.Notice, checkOutput), summaryText)
-	summaryText = results.Record(checkedProject, checkConfiguration, checkresult.Fail, checkOutput)
+	summaryText := results.Record(checkedProject, checkConfiguration, checkresult.Fail, checkOutput)
 	assert.Equal(t, fmt.Sprintf("%s\n%s: %s\n", checkresult.Fail, checklevel.Error, message(checkConfiguration.MessageTemplate, checkOutput)), summaryText)
+	summaryText = results.Record(checkedProject, checkConfiguration, checkresult.NotRun, checkOutput)
+	assert.Equal(t, fmt.Sprintf("%s\n%s: %s\n", checkresult.NotRun, checklevel.Notice, checkOutput), summaryText, "Non-fail result should not use message")
+	summaryText = results.Record(checkedProject, checkConfiguration, checkresult.Pass, "")
+	assert.Equal(t, "", "", summaryText, "Non-failure result with no check function output should result in an empty summary")
 
 	checkResult := checkresult.Pass
 	results = Type{}
@@ -88,9 +88,9 @@ func TestRecord(t *testing.T) {
 	assert.Equal(t, checkConfiguration.Brief, checkReport.Brief)
 	assert.Equal(t, checkConfiguration.Description, checkReport.Description)
 	assert.Equal(t, checkResult.String(), checkReport.Result)
-	checkLevel, _ := checklevel.CheckLevel(checkConfiguration)
+	checkLevel, _ := checklevel.CheckLevel(checkConfiguration, checkResult)
 	assert.Equal(t, checkLevel.String(), checkReport.Level)
-	assert.Equal(t, message(checkConfiguration.MessageTemplate, checkOutput), checkReport.Message)
+	assert.Equal(t, checkOutput, checkReport.Message)
 
 	assert.Len(t, results.Projects, 1)
 	previousProjectPath := checkedProject.Path
