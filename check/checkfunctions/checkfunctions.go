@@ -77,17 +77,37 @@ func MissingReadme() (result checkresult.Type, output string) {
 	readmeRegexp := regexp.MustCompile(`(?i)^readme\.(markdown)|(mdown)|(mkdn)|(md)|(textile)|(rdoc)|(org)|(creole)|(mediawiki)|(wiki)|(rst)|(asciidoc)|(adoc)|(asc)|(pod)|(txt)$`)
 
 	// https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/about-readmes#about-readmes
-	if pathContainsReadme(checkdata.ProjectPath(), readmeRegexp) ||
-		(checkdata.ProjectPath().Join("docs").Exist() && pathContainsReadme(checkdata.ProjectPath().Join("docs"), readmeRegexp)) ||
-		(checkdata.ProjectPath().Join(".github").Exist() && pathContainsReadme(checkdata.ProjectPath().Join(".github"), readmeRegexp)) {
+	if pathContainsRegexpMatch(checkdata.ProjectPath(), readmeRegexp) ||
+		(checkdata.ProjectPath().Join("docs").Exist() && pathContainsRegexpMatch(checkdata.ProjectPath().Join("docs"), readmeRegexp)) ||
+		(checkdata.ProjectPath().Join(".github").Exist() && pathContainsRegexpMatch(checkdata.ProjectPath().Join(".github"), readmeRegexp)) {
 		return checkresult.Pass, ""
 	}
 
 	return checkresult.Fail, ""
 }
 
-// pathContainsReadme checks if the provided path contains a readme file recognized by GitHub.
-func pathContainsReadme(path *paths.Path, readmeRegexp *regexp.Regexp) bool {
+// MissingLicenseFile checks if the project has a license file that will be recognized by GitHub.
+func MissingLicenseFile() (result checkresult.Type, output string) {
+	if checkdata.ProjectType() != checkdata.SuperProjectType() {
+		return checkresult.NotRun, "License file not required for subprojects"
+	}
+
+	// https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/licensing-a-repository#detecting-a-license
+	// https://github.com/licensee/licensee/blob/master/docs/what-we-look-at.md#detecting-the-license-file
+	// Should be `(?i)^(((un)?licen[sc]e)|(copy(ing|right))|(ofl)|(patents))(\.(?!spdx|header|gemspec).+)?$` but regexp package doesn't support negative lookahead, so only using "preferred extensions".
+	// github.com/dlclark/regexp2 does support negative lookahead, but I'd prefer to stick with the standard package.
+	licenseRegexp := regexp.MustCompile(`(?i)^(((un)?licen[sc]e)|(copy(ing|right))|(ofl)|(patents))(\.((md)|(markdown)|(txt)|(html)))?$`)
+
+	// License file must be in root of repo
+	if pathContainsRegexpMatch(checkdata.ProjectPath(), licenseRegexp) {
+		return checkresult.Pass, ""
+	}
+
+	return checkresult.Fail, ""
+}
+
+// pathContainsRegexpMatch checks if the provided path contains a file name matching the given regular expression.
+func pathContainsRegexpMatch(path *paths.Path, pathRegexp *regexp.Regexp) bool {
 	listing, err := path.ReadDir()
 	if err != nil {
 		panic(err)
@@ -95,7 +115,7 @@ func pathContainsReadme(path *paths.Path, readmeRegexp *regexp.Regexp) bool {
 	listing.FilterOutDirs()
 
 	for _, file := range listing {
-		if readmeRegexp.MatchString(file.Base()) {
+		if pathRegexp.MatchString(file.Base()) {
 			return true
 		}
 	}
