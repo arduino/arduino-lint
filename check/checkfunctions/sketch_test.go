@@ -105,3 +105,14 @@ func TestSketchDotJSONJSONFormat(t *testing.T) {
 
 	checkSketchCheckFunction(SketchDotJSONJSONFormat, testTables, t)
 }
+
+func TestSketchDotJSONFormat(t *testing.T) {
+	testTables := []sketchCheckFunctionTestTable{
+		{"No metadata file", "NoMetadataFile", checkresult.NotRun, ""},
+		{"Valid", "ValidMetadataFile", checkresult.Pass, ""},
+		{"Invalid JSON", "InvalidJSONMetadataFile", checkresult.Fail, ""},
+		{"Invalid data", "InvalidDataMetadataFile", checkresult.Fail, ""},
+	}
+
+	checkSketchCheckFunction(SketchDotJSONFormat, testTables, t)
+}

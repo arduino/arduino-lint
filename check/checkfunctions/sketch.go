@@ -114,3 +114,17 @@ func SketchDotJSONJSONFormat() (result checkresult.Type, output string) {
 
 	return checkresult.Fail, ""
 }
+
+// SketchDotJSONFormat checks whether the sketch.json metadata file has the required data format.
+func SketchDotJSONFormat() (result checkresult.Type, output string) {
+	metadataPath := sketch.MetadataPath(checkdata.ProjectPath())
+	if metadataPath == nil {
+		return checkresult.NotRun, "No metadata file"
+	}
+
+	if checkdata.MetadataLoadError() == nil {
+		return checkresult.Pass, ""
+	}
+
+	return checkresult.Fail, checkdata.MetadataLoadError().Error()
+}
