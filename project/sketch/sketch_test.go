@@ -45,3 +45,8 @@ func TestHasSupportedExtension(t *testing.T) {
 	assert.True(t, HasSupportedExtension(paths.New("/foo/bar.h")))
 	assert.False(t, HasSupportedExtension(paths.New("/foo/bar.baz")))
 }
+
+func TestMetadataPath(t *testing.T) {
+	assert.True(t, MetadataPath(testDataPath.Join("HasMetadataFile")).EquivalentTo(testDataPath.Join("HasMetadataFile", "sketch.json")))
+	assert.Nil(t, MetadataPath(testDataPath.Join("NoMetadataFile")))
+}
