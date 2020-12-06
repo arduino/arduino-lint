@@ -18,6 +18,7 @@ package checkfunctions
 // The check functions for libraries.
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -33,7 +34,11 @@ import (
 	"github.com/arduino/arduino-cli/arduino/libraries"
 	"github.com/arduino/arduino-cli/arduino/utils"
 	"github.com/arduino/go-properties-orderedmap"
+	"github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/plumbing"
+	"github.com/go-git/go-git/v5/plumbing/object"
 	"github.com/sirupsen/logrus"
+	semver "go.bug.st/relaxed-semver"
 )
 
 // LibraryPropertiesFormat checks for invalid library.properties format.
@@ -379,6 +384,99 @@ func LibraryPropertiesVersionFieldNonSemver() (result checkresult.Type, output s
 	}
 
 	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesVersionFieldBehindTag checks whether a release tag was made without first bumping the library.properties version value.
+func LibraryPropertiesVersionFieldBehindTag() (result checkresult.Type, output string) {
+	if checkdata.ProjectType() != checkdata.SuperProjectType() {
+		return checkresult.NotRun, "Not relevant for subprojects"
+	}
+
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, "Couldn't load library.properties"
+	}
+
+	versionString, ok := checkdata.LibraryProperties().GetOk("version")
+	if !ok {
+		return checkresult.NotRun, "Field not present"
+	}
+
+	version, err := semver.Parse(versionString)
+	if err != nil {
+		return checkresult.NotRun, "Can't parse version value"
+	}
+	logrus.Tracef("version value: %s", version)
+
+	repository, err := git.PlainOpen(checkdata.ProjectPath().String())
+	if err != nil {
+		return checkresult.NotRun, "Project path is not a repository"
+	}
+
+	headRef, err := repository.Head()
+	if err != nil {
+		panic(err)
+	}
+
+	headCommit, err := repository.CommitObject(headRef.Hash())
+	if err != nil {
+		panic(err)
+	}
+
+	commits := object.NewCommitIterCTime(headCommit, nil, nil) // Get iterator for the head commit and all its parents in chronological commit time order.
+
+	tagRefs, err := repository.Tags() // Get an iterator of the refs of the repository's tags. These are not in a useful order, so it's necessary to cross-reference them against the commits, which are.
+
+	for { // Iterate over all commits in reverse chronological order.
+		commit, err := commits.Next()
+		if err != nil {
+			// Reached end of commits.
+			break
+		}
+
+		for { // Iterate over all tag refs.
+			tagRef, err := tagRefs.Next()
+			if err != nil {
+				// Reached end of tags
+				break
+			}
+
+			// Annotated tags have their own hash, different from the commit hash, so they must be resolved before comparing with the commit.
+			resolvedTagRef, err := repository.ResolveRevision(plumbing.Revision(tagRef.Hash().String()))
+			if err != nil {
+				panic(err)
+			}
+
+			if commit.Hash == *resolvedTagRef {
+				logrus.Tracef("Found tag: %s", tagRef.Name())
+
+				tagName := strings.TrimPrefix(tagRef.Name().String(), "refs/tags/")
+				tagName = strings.TrimPrefix(tagName, "v") // It's common practice to prefix release tag names with "v".
+				tagVersion, err := semver.Parse(tagName)
+				if err != nil {
+					// The normalized tag name is not a recognizable "relaxed semver" version.
+					logrus.Tracef("Can't parse tag name.")
+					break // Disregard unparsable tags.
+				}
+				logrus.Tracef("Tag version: %s", tagVersion)
+
+				if tagVersion.GreaterThan(version) {
+					logrus.Tracef("Tag is greater.")
+
+					if strings.Contains(tagVersion.String(), "-") {
+						// The lack of version bump may have been intentional.
+						logrus.Tracef("Tag is pre-release.")
+						break
+					}
+
+					return checkresult.Fail, fmt.Sprintf("%s vs %s", tagName, versionString)
+				}
+
+				return checkresult.Pass, "" // Tag is less than or equal to version field value, all is well.
+			}
+		}
+	}
+
+	return checkresult.Pass, "" // No problems were found.
 }
 
 // LibraryPropertiesAuthorFieldMissing checks for missing library.properties "author" field.
