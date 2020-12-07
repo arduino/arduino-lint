@@ -28,6 +28,7 @@ import (
 
 // Initialize gathers the check data for the specified project.
 func Initialize(project project.Type, schemasPath *paths.Path) {
+	superprojectType = project.SuperprojectType
 	projectType = project.ProjectType
 	projectPath = project.Path
 	switch project.ProjectType {
@@ -46,6 +47,13 @@ func Initialize(project project.Type, schemasPath *paths.Path) {
 
 		InitializeForPackageIndex()
 	}
+}
+
+var superprojectType projecttype.Type
+
+// SuperProjectType returns the type of the project being checked.
+func SuperProjectType() projecttype.Type {
+	return superprojectType
 }
 
 var projectType projecttype.Type
