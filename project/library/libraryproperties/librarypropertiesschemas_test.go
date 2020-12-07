@@ -368,8 +368,8 @@ func TestPropertiesUrlFormat(t *testing.T) {
 func TestPropertiesDependsPattern(t *testing.T) {
 	testTables := []propertyValueTestTable{
 		{"Invalid characters", "-foo", compliancelevel.Permissive, assert.True},
-		{"Invalid characters", "-foo", compliancelevel.Permissive, assert.True},
-		{"Invalid characters", "-foo", compliancelevel.Permissive, assert.True},
+		{"Invalid characters", "-foo", compliancelevel.Specification, assert.True},
+		{"Invalid characters", "-foo", compliancelevel.Strict, assert.True},
 	}
 
 	checkPropertyPatternMismatch("depends", testTables, t)
