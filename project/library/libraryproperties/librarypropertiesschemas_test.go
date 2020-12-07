@@ -283,6 +283,11 @@ func TestPropertiesNamePattern(t *testing.T) {
 		{"Disallowed character", "-foo", "/patternObjects/allowedCharacters", compliancelevel.Specification, assert.True},
 		{"Disallowed character", "-foo", "/patternObjects/allowedCharacters", compliancelevel.Strict, assert.True},
 
+		// The "minLength" schema will enforce the minimum length, so this is not the responsibility of the pattern schema.
+		{"Empty", "", "/patternObjects/allowedCharacters", compliancelevel.Permissive, assert.False},
+		{"Empty", "", "/patternObjects/allowedCharacters", compliancelevel.Specification, assert.False},
+		{"Empty", "", "/patternObjects/allowedCharacters", compliancelevel.Strict, assert.False},
+
 		{"Starts with arduino", "arduinofoo", "/patternObjects/notStartsWithArduino", compliancelevel.Permissive, assert.False},
 		{"Starts with arduino", "arduinofoo", "/patternObjects/notStartsWithArduino", compliancelevel.Specification, assert.True},
 		{"Starts with arduino", "arduinofoo", "/patternObjects/notStartsWithArduino", compliancelevel.Strict, assert.True},
@@ -370,6 +375,10 @@ func TestPropertiesDependsPattern(t *testing.T) {
 		{"Invalid characters", "-foo", compliancelevel.Permissive, assert.True},
 		{"Invalid characters", "-foo", compliancelevel.Specification, assert.True},
 		{"Invalid characters", "-foo", compliancelevel.Strict, assert.True},
+
+		{"Empty", "", compliancelevel.Permissive, assert.False},
+		{"Empty", "", compliancelevel.Specification, assert.False},
+		{"Empty", "", compliancelevel.Strict, assert.False},
 	}
 
 	checkPropertyPatternMismatch("depends", testTables, t)
