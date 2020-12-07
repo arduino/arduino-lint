@@ -55,7 +55,6 @@ func TestInitialize(t *testing.T) {
 	require.Nil(t, err)
 	var results Type
 	results.Initialize()
-	fmt.Printf("paths: %s", configuration.TargetPaths())
 	assert.Equal(t, paths.NewPathList(workingDirectoryPath), results.Configuration.Paths)
 	assert.Equal(t, projecttype.Sketch.String(), results.Configuration.ProjectType)
 	assert.False(t, results.Configuration.Recursive)
