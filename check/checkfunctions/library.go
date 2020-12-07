@@ -185,7 +185,7 @@ func LibraryPropertiesNameFieldDisallowedCharacters() (result checkresult.Type, 
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.PropertyPatternMismatch("name", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/allowedCharacters", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
 		return checkresult.Fail, name
 	}
 
