@@ -309,6 +309,7 @@ func TestLibraryPropertiesDependsFieldNotInIndex(t *testing.T) {
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
 		{"Dependency not in index", "DependsNotIndexed", checkresult.Fail, "^NotIndexed$"},
 		{"Dependency in index", "DependsIndexed", checkresult.Pass, ""},
+		{"Depends field empty", "DependsEmpty", checkresult.Pass, ""},
 		{"No depends", "NoDepends", checkresult.NotRun, ""},
 	}
 

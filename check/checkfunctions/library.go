@@ -841,12 +841,14 @@ func LibraryPropertiesDependsFieldNotInIndex() (result checkresult.Type, output 
 		return checkresult.NotRun, "Field not present"
 	}
 
-	dependencies, err := properties.SplitQuotedString(depends, "", false)
-	if err != nil {
-		panic(err)
-	}
+	dependencies := strings.Split(depends, ",")
+
 	dependenciesNotInIndex := []string{}
 	for _, dependency := range dependencies {
+		dependency = strings.TrimSpace(dependency)
+		if dependency == "" {
+			continue
+		}
 		logrus.Tracef("Checking if dependency %s is in index.", dependency)
 		if !nameInLibraryManagerIndex(dependency) {
 			dependenciesNotInIndex = append(dependenciesNotInIndex, dependency)
