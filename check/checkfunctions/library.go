@@ -33,7 +33,6 @@ import (
 	"github.com/arduino/arduino-check/project/sketch"
 	"github.com/arduino/arduino-cli/arduino/libraries"
 	"github.com/arduino/arduino-cli/arduino/utils"
-	"github.com/arduino/go-properties-orderedmap"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/go-git/go-git/v5/plumbing/object"
@@ -925,12 +924,13 @@ func LibraryPropertiesIncludesFieldItemNotFound() (result checkresult.Type, outp
 		return checkresult.NotRun, "Field not present"
 	}
 
-	includesList, err := properties.SplitQuotedString(includes, "", false)
-	if err != nil {
-		panic(err)
-	}
+	includesList := strings.Split(includes, ",")
 
 	findInclude := func(include string) bool {
+		include = strings.TrimSpace(include)
+		if include == "" {
+			return true
+		}
 		for _, header := range checkdata.SourceHeaders() {
 			logrus.Tracef("Comparing include %s with header file %s", include, header)
 			if include == header {
