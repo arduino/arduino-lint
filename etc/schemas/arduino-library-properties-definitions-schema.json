@@ -145,7 +145,7 @@
                 "$ref": "#/definitions/propertiesObjects/version/base/object"
               },
               {
-                "$ref": "general-definitions-schema.json#/definitions/patternObjects/semver"
+                "$ref": "general-definitions-schema.json#/definitions/patternObjects/relaxedSemver"
               }
             ]
           }
@@ -154,7 +154,10 @@
           "object": {
             "allOf": [
               {
-                "$ref": "#/definitions/propertiesObjects/version/specification/object"
+                "$ref": "#/definitions/propertiesObjects/version/base/object"
+              },
+              {
+                "$ref": "general-definitions-schema.json#/definitions/patternObjects/semver"
               }
             ]
           }

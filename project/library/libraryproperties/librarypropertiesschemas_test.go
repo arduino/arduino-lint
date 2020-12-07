@@ -319,11 +319,11 @@ func TestPropertiesVersionPattern(t *testing.T) {
 		{"vX.Y.Z", "v1.0.0", compliancelevel.Strict, assert.True},
 
 		{"X.Y", "1.0", compliancelevel.Permissive, assert.False},
-		{"X.Y", "1.0", compliancelevel.Specification, assert.True},
+		{"X.Y", "1.0", compliancelevel.Specification, assert.False},
 		{"X.Y", "1.0", compliancelevel.Strict, assert.True},
 
 		{"X", "1", compliancelevel.Permissive, assert.False},
-		{"X", "1", compliancelevel.Specification, assert.True},
+		{"X", "1", compliancelevel.Specification, assert.False},
 		{"X", "1", compliancelevel.Strict, assert.True},
 	}
 
