@@ -1281,7 +1281,7 @@ func spellCheckLibraryPropertiesFieldValue(fieldName string) (result checkresult
 	}
 
 	replaced, diff := checkdata.MisspelledWordsReplacer().Replace(fieldValue)
-	if diff != nil {
+	if len(diff) > 0 {
 		return checkresult.Fail, replaced
 	}
 

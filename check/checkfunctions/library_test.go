@@ -264,6 +264,7 @@ func TestLibraryPropertiesSentenceFieldSpellCheck(t *testing.T) {
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
 		{"Not defined", "MissingFields", checkresult.NotRun, ""},
 		{"Misspelled word", "MisspelledSentenceParagraphValue", checkresult.Fail, "^grill broccoli now$"},
+		{"Non-nil diff but no typos", "SpuriousMisspelledSentenceParagraphValue", checkresult.Pass, ""},
 		{"Correct spelling", "Recursive", checkresult.Pass, ""},
 	}
 
@@ -275,6 +276,7 @@ func TestLibraryPropertiesParagraphFieldSpellCheck(t *testing.T) {
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
 		{"Not defined", "MissingFields", checkresult.NotRun, ""},
 		{"Misspelled word", "MisspelledSentenceParagraphValue", checkresult.Fail, "^There is a zebra$"},
+		{"Non-nil diff but no typos", "SpuriousMisspelledSentenceParagraphValue", checkresult.Pass, ""},
 		{"Correct spelling", "Recursive", checkresult.Pass, ""},
 	}
 
