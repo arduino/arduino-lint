@@ -102,7 +102,7 @@ func (results *Type) Record(checkedProject project.Type, checkConfiguration chec
 	summaryText := fmt.Sprintf("Check %s result: %s\n", checkConfiguration.ID, checkResult)
 
 	checkMessage := ""
-	if checkLevel == checklevel.Error {
+	if checkResult == checkresult.Fail {
 		checkMessage = message(checkConfiguration.MessageTemplate, checkOutput)
 	} else {
 		// Checks may provide an explanation for their non-fail result.
