@@ -83,6 +83,7 @@ type summaryReportType struct {
 
 // Initialize adds the tool configuration data to the results data.
 func (results *Type) Initialize() {
+	*results = *new(Type)
 	results.Configuration = toolConfigurationReportType{
 		Paths:       configuration.TargetPaths(),
 		ProjectType: configuration.SuperprojectTypeFilter().String(),

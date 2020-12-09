@@ -69,8 +69,8 @@ func TestRecord(t *testing.T) {
 	assert.Equal(t, "", "", summaryText, "Non-failure result with no check function output should result in an empty summary")
 
 	checkResult := checkresult.Pass
-	results = Type{}
 
+	results.Initialize()
 	results.Record(checkedProject, checkConfiguration, checkResult, checkOutput)
 	projectReport := results.Projects[0]
 	assert.Equal(t, checkedProject.Path, projectReport.Path)
