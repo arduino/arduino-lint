@@ -22,6 +22,7 @@ import (
 
 	"github.com/arduino/arduino-check/check/checkconfigurations"
 	"github.com/arduino/arduino-check/check/checkdata"
+	"github.com/arduino/arduino-check/check/checkresult"
 	"github.com/arduino/arduino-check/configuration"
 	"github.com/arduino/arduino-check/configuration/checkmode"
 	"github.com/arduino/arduino-check/project"
@@ -49,11 +50,13 @@ func RunChecks(project project.Type) {
 		}
 
 		// Output will be printed after all checks are finished when configured for "json" output format.
-		feedback.Printf("Running check %s: ", checkConfiguration.ID)
+		feedback.VerbosePrintf("Running check %s...\n", checkConfiguration.ID)
 
 		checkResult, checkOutput := checkConfiguration.CheckFunction()
 		reportText := result.Results.Record(project, checkConfiguration, checkResult, checkOutput)
-		feedback.Print(reportText)
+		if (checkResult == checkresult.Fail) || configuration.Verbose() {
+			feedback.Print(reportText)
+		}
 	}
 
 	// Checks are finished for this project, so summarize its check results in the report.

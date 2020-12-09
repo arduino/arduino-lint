@@ -85,6 +85,8 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 	reportFilePathString, _ := flags.GetString("report-file")
 	reportFilePath = paths.New(reportFilePathString)
 
+	verbose, _ = flags.GetBool("verbose")
+
 	versionMode, _ = flags.GetBool("version")
 
 	targetPaths = nil
@@ -125,6 +127,7 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 		"superproject type filter":        SuperprojectTypeFilter(),
 		"recursive":                       Recursive(),
 		"report file":                     ReportFilePath(),
+		"verbose":                         Verbose(),
 		"projects path":                   TargetPaths(),
 	}).Debug("Configuration initialized")
 
@@ -176,6 +179,13 @@ var reportFilePath *paths.Path
 // ReportFilePath returns the path to save the report file at.
 func ReportFilePath() *paths.Path {
 	return reportFilePath
+}
+
+var verbose bool
+
+// Verbose returns the verbosity setting.
+func Verbose() bool {
+	return verbose
 }
 
 var versionMode bool

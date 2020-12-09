@@ -194,6 +194,18 @@ func TestInitializeVersion(t *testing.T) {
 	assert.False(t, VersionMode())
 }
 
+func TestInitializeVerbose(t *testing.T) {
+	flags := test.ConfigurationFlags()
+
+	flags.Set("verbose", "true")
+	assert.Nil(t, Initialize(flags, projectPaths))
+	assert.True(t, Verbose())
+
+	flags.Set("verbose", "false")
+	assert.Nil(t, Initialize(flags, projectPaths))
+	assert.False(t, Verbose())
+}
+
 func TestInitializeProjectPath(t *testing.T) {
 	assert.Nil(t, Initialize(test.ConfigurationFlags(), []string{}))
 	workingDirectoryPath, err := os.Getwd()
