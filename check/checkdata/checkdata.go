@@ -33,6 +33,7 @@ func Initialize(project project.Type, schemasPath *paths.Path) {
 	projectPath = project.Path
 	switch project.ProjectType {
 	case projecttype.Sketch:
+		InitializeForSketch(project)
 	case projecttype.Library:
 		InitializeForLibrary(project, schemasPath)
 	case projecttype.Platform:

@@ -95,3 +95,33 @@ func TestPdeSketchExtension(t *testing.T) {
 
 	checkSketchCheckFunction(PdeSketchExtension, testTables, t)
 }
+
+func TestSketchDotJSONJSONFormat(t *testing.T) {
+	testTables := []sketchCheckFunctionTestTable{
+		{"No metadata file", "NoMetadataFile", checkresult.NotRun, ""},
+		{"Valid", "ValidMetadataFile", checkresult.Pass, ""},
+		{"Invalid", "InvalidJSONMetadataFile", checkresult.Fail, ""},
+	}
+
+	checkSketchCheckFunction(SketchDotJSONJSONFormat, testTables, t)
+}
+
+func TestSketchDotJSONFormat(t *testing.T) {
+	testTables := []sketchCheckFunctionTestTable{
+		{"No metadata file", "NoMetadataFile", checkresult.NotRun, ""},
+		{"Valid", "ValidMetadataFile", checkresult.Pass, ""},
+		{"Invalid JSON", "InvalidJSONMetadataFile", checkresult.Fail, ""},
+		{"Invalid data", "InvalidDataMetadataFile", checkresult.Fail, ""},
+	}
+
+	checkSketchCheckFunction(SketchDotJSONFormat, testTables, t)
+}
+
+func TestSketchNameMismatch(t *testing.T) {
+	testTables := []sketchCheckFunctionTestTable{
+		{"Valid", "Valid", checkresult.Pass, ""},
+		{"Mismatch", "NameMismatch", checkresult.Fail, ""},
+	}
+
+	checkSketchCheckFunction(SketchNameMismatch, testTables, t)
+}

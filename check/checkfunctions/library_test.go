@@ -19,12 +19,15 @@ import (
 	"os"
 	"regexp"
 	"testing"
+	"time"
 
 	"github.com/arduino/arduino-check/check/checkdata"
 	"github.com/arduino/arduino-check/check/checkresult"
 	"github.com/arduino/arduino-check/project"
 	"github.com/arduino/arduino-check/project/projecttype"
 	"github.com/arduino/go-paths-helper"
+	"github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/plumbing/object"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -150,6 +153,110 @@ func TestLibraryPropertiesNameFieldHeaderMismatch(t *testing.T) {
 	}
 
 	checkLibraryCheckFunction(LibraryPropertiesNameFieldHeaderMismatch, testTables, t)
+}
+
+func TestLibraryPropertiesVersionFieldBehindTag(t *testing.T) {
+	// Set up the test repository folders.
+	TagPrereleaseGreaterPath := librariesTestDataPath.Join("TagPrereleaseGreater")
+	require.Nil(t, librariesTestDataPath.Join("Recursive").CopyDirTo(TagPrereleaseGreaterPath))
+	defer TagPrereleaseGreaterPath.RemoveAll()
+
+	TagGreaterPath := librariesTestDataPath.Join("TagGreater")
+	require.Nil(t, librariesTestDataPath.Join("Recursive").CopyDirTo(TagGreaterPath))
+	defer TagGreaterPath.RemoveAll()
+
+	LightweightTagGreaterPath := librariesTestDataPath.Join("LightweightTagGreater")
+	require.Nil(t, librariesTestDataPath.Join("Recursive").CopyDirTo(LightweightTagGreaterPath))
+	defer LightweightTagGreaterPath.RemoveAll()
+
+	TagMatchPath := librariesTestDataPath.Join("TagMatch")
+	require.Nil(t, librariesTestDataPath.Join("Recursive").CopyDirTo(TagMatchPath))
+	defer TagMatchPath.RemoveAll()
+
+	LightweightTagMatchPath := librariesTestDataPath.Join("LightweightTagMatch")
+	require.Nil(t, librariesTestDataPath.Join("Recursive").CopyDirTo(LightweightTagMatchPath))
+	defer LightweightTagMatchPath.RemoveAll()
+
+	TagMatchWithPrefixPath := librariesTestDataPath.Join("TagMatchWithPrefix")
+	require.Nil(t, librariesTestDataPath.Join("Recursive").CopyDirTo(TagMatchWithPrefixPath))
+	defer TagMatchWithPrefixPath.RemoveAll()
+
+	TagLessThanPath := librariesTestDataPath.Join("TagLessThan")
+	require.Nil(t, librariesTestDataPath.Join("Recursive").CopyDirTo(TagLessThanPath))
+	defer TagLessThanPath.RemoveAll()
+
+	TagNotVersionPath := librariesTestDataPath.Join("TagNotVersion")
+	require.Nil(t, librariesTestDataPath.Join("Recursive").CopyDirTo(TagNotVersionPath))
+	defer TagNotVersionPath.RemoveAll()
+
+	NoTagsPath := librariesTestDataPath.Join("NoTags")
+	require.Nil(t, librariesTestDataPath.Join("Recursive").CopyDirTo(NoTagsPath))
+	defer NoTagsPath.RemoveAll()
+
+	// Test repositories are generated on the fly.
+	gitInitAndTag := func(t *testing.T, repositoryPath *paths.Path, tagName string, annotated bool) string {
+		repository, err := git.PlainInit(repositoryPath.String(), false)
+		require.Nil(t, err)
+		worktree, err := repository.Worktree()
+		require.Nil(t, err)
+		_, err = worktree.Add(".")
+		require.Nil(t, err)
+
+		signature := &object.Signature{
+			Name:  "Jane Developer",
+			Email: "janedeveloper@example.com",
+			When:  time.Now(),
+		}
+
+		_, err = worktree.Commit(
+			"Test commit message",
+			&git.CommitOptions{
+				Author: signature,
+			},
+		)
+		require.Nil(t, err)
+
+		headRef, err := repository.Head()
+		require.Nil(t, err)
+
+		if tagName != "" {
+			// Annotated and lightweight tags are significantly different, so it's important to ensure the check code works correctly with both.
+			if annotated {
+				_, err = repository.CreateTag(
+					tagName,
+					headRef.Hash(),
+					&git.CreateTagOptions{
+						Tagger:  signature,
+						Message: tagName,
+					},
+				)
+			} else {
+				_, err = repository.CreateTag(tagName, headRef.Hash(), nil)
+			}
+			require.Nil(t, err)
+		}
+
+		return repositoryPath.Base()
+	}
+
+	testTables := []libraryCheckFunctionTestTable{
+		// TODO: Test NotRun if subproject
+		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.NotRun, ""},
+		{"Unparsable version", "VersionFormatInvalid", checkresult.NotRun, ""},
+		{"Not repo", "Recursive", checkresult.NotRun, ""},
+		{"Tag name not a version", gitInitAndTag(t, TagNotVersionPath, "foo", true), checkresult.Pass, ""},
+		{"Match w/ tag prefix", gitInitAndTag(t, TagMatchWithPrefixPath, "1.0.0", true), checkresult.Pass, ""},
+		{"Pre-release tag greater", gitInitAndTag(t, TagPrereleaseGreaterPath, "1.0.1-rc1", true), checkresult.Pass, ""},
+		{"Tag greater", gitInitAndTag(t, TagGreaterPath, "1.0.1", true), checkresult.Fail, ""},
+		{"Lightweight tag greater", gitInitAndTag(t, LightweightTagGreaterPath, "1.0.1", false), checkresult.Fail, ""},
+		{"Tag matches", gitInitAndTag(t, TagMatchPath, "1.0.0", true), checkresult.Pass, ""},
+		{"Lightweight tag matches", gitInitAndTag(t, LightweightTagMatchPath, "1.0.0", false), checkresult.Pass, ""},
+		{"Tag less than version", gitInitAndTag(t, TagLessThanPath, "0.1.0", true), checkresult.Pass, ""},
+		{"No tags", gitInitAndTag(t, NoTagsPath, "", true), checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesVersionFieldBehindTag, testTables, t)
 }
 
 func TestLibraryPropertiesSentenceFieldSpellCheck(t *testing.T) {
@@ -342,11 +449,21 @@ func TestIncorrectLibrarySrcFolderNameCase(t *testing.T) {
 	checkLibraryCheckFunction(IncorrectLibrarySrcFolderNameCase, testTables, t)
 }
 
+func TestMissingExamples(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Has examples", "ExamplesFolder", checkresult.Pass, ""},
+		{`Has examples (in "example" folder)`, "ExampleFolder", checkresult.Pass, ""},
+		{"No examples", "NoExamples", checkresult.Fail, ""},
+	}
+
+	checkLibraryCheckFunction(MissingExamples, testTables, t)
+}
+
 func TestMisspelledExamplesFolderName(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Correctly spelled", "ExamplesFolder", checkresult.Pass, ""},
 		{"Misspelled", "MisspelledExamplesFolder", checkresult.Fail, ""},
-		{"No examples folder", "Recursive", checkresult.Pass, ""},
+		{"No examples folder", "NoExamples", checkresult.Pass, ""},
 	}
 
 	checkLibraryCheckFunction(MisspelledExamplesFolderName, testTables, t)
@@ -356,7 +473,7 @@ func TestIncorrectExamplesFolderNameCase(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Correct case", "ExamplesFolder", checkresult.Pass, ""},
 		{"Incorrect case", "IncorrectExamplesFolderCase", checkresult.Fail, ""},
-		{"No examples folder", "Recursive", checkresult.Pass, ""},
+		{"No examples folder", "NoExamples", checkresult.Pass, ""},
 	}
 
 	checkLibraryCheckFunction(IncorrectExamplesFolderNameCase, testTables, t)

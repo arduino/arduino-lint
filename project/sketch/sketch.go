@@ -62,3 +62,27 @@ func HasSupportedExtension(filePath *paths.Path) bool {
 	_, hasAdditionalFileValidExtensions := globals.AdditionalFileValidExtensions[filePath.Ext()]
 	return hasAdditionalFileValidExtensions || HasMainFileValidExtension(filePath)
 }
+
+var empty struct{}
+
+// See: https://arduino.github.io/arduino-cli/latest/sketch-specification/#metadata
+var metadataFilenames = map[string]struct{}{
+	"sketch.json": empty,
+}
+
+// MetadataPath returns the path of the sketch's metadata file.
+func MetadataPath(sketchPath *paths.Path) *paths.Path {
+	for metadataFileName := range metadataFilenames {
+		metadataPath := sketchPath.Join(metadataFileName)
+		exist, err := metadataPath.ExistCheck()
+		if err != nil {
+			panic(err)
+		}
+
+		if exist {
+			return metadataPath
+		}
+	}
+
+	return nil
+}

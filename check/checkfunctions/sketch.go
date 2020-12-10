@@ -23,6 +23,7 @@ import (
 	"github.com/arduino/arduino-check/check/checkdata"
 	"github.com/arduino/arduino-check/check/checkresult"
 	"github.com/arduino/arduino-check/project/sketch"
+	"github.com/arduino/arduino-cli/arduino/globals"
 )
 
 // IncorrectSketchSrcFolderNameCase checks for incorrect case of src subfolder name in recursive format libraries.
@@ -99,4 +100,49 @@ func PdeSketchExtension() (result checkresult.Type, output string) {
 	}
 
 	return checkresult.Pass, ""
+}
+
+// SketchDotJSONJSONFormat checks whether the sketch.json metadata file is a valid JSON document.
+func SketchDotJSONJSONFormat() (result checkresult.Type, output string) {
+	metadataPath := sketch.MetadataPath(checkdata.ProjectPath())
+	if metadataPath == nil {
+		return checkresult.NotRun, "No metadata file"
+	}
+
+	if isValidJSON(metadataPath) {
+		return checkresult.Pass, ""
+	}
+
+	return checkresult.Fail, ""
+}
+
+// SketchDotJSONFormat checks whether the sketch.json metadata file has the required data format.
+func SketchDotJSONFormat() (result checkresult.Type, output string) {
+	metadataPath := sketch.MetadataPath(checkdata.ProjectPath())
+	if metadataPath == nil {
+		return checkresult.NotRun, "No metadata file"
+	}
+
+	if checkdata.MetadataLoadError() == nil {
+		return checkresult.Pass, ""
+	}
+
+	return checkresult.Fail, checkdata.MetadataLoadError().Error()
+}
+
+// SketchNameMismatch checks for mismatch between sketch folder name and primary file name.
+func SketchNameMismatch() (result checkresult.Type, output string) {
+	for extension := range globals.MainFileValidExtensions {
+		validPrimarySketchFilePath := checkdata.ProjectPath().Join(checkdata.ProjectPath().Base() + extension)
+		exist, err := validPrimarySketchFilePath.ExistCheck()
+		if err != nil {
+			panic(err)
+		}
+
+		if exist {
+			return checkresult.Pass, ""
+		}
+	}
+
+	return checkresult.Fail, checkdata.ProjectPath().Base() + ".ino"
 }
