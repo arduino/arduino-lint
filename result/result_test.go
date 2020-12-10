@@ -34,6 +34,16 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+var projectPaths []string
+
+func init() {
+	projectPath, err := os.Getwd() // Path to an arbitrary folder that is guaranteed to exist.
+	if err != nil {
+		panic(err)
+	}
+	projectPaths = []string{projectPath}
+}
+
 func TestInitialize(t *testing.T) {
 	flags := test.ConfigurationFlags()
 	flags.Set("project-type", "sketch")
@@ -52,6 +62,9 @@ func TestInitialize(t *testing.T) {
 }
 
 func TestRecord(t *testing.T) {
+	flags := test.ConfigurationFlags()
+	require.Nil(t, configuration.Initialize(flags, projectPaths))
+
 	checkedProject := project.Type{
 		Path:             paths.New("/foo/bar"),
 		ProjectType:      projecttype.Sketch,
@@ -59,18 +72,20 @@ func TestRecord(t *testing.T) {
 	}
 
 	var results Type
+	results.Initialize()
 	checkConfiguration := checkconfigurations.Configurations()[0]
 	checkOutput := "foo"
 	summaryText := results.Record(checkedProject, checkConfiguration, checkresult.Fail, checkOutput)
-	assert.Equal(t, fmt.Sprintf("%s\n%s: %s\n", checkresult.Fail, checklevel.Error, message(checkConfiguration.MessageTemplate, checkOutput)), summaryText)
+	assert.Equal(t, fmt.Sprintf("Check %s result: %s\n%s: %s\n", checkConfiguration.ID, checkresult.Fail, checklevel.Error, message(checkConfiguration.MessageTemplate, checkOutput)), summaryText)
 	summaryText = results.Record(checkedProject, checkConfiguration, checkresult.NotRun, checkOutput)
-	assert.Equal(t, fmt.Sprintf("%s\n%s: %s\n", checkresult.NotRun, checklevel.Notice, checkOutput), summaryText, "Non-fail result should not use message")
+	assert.Equal(t, fmt.Sprintf("Check %s result: %s\n%s: %s\n", checkConfiguration.ID, checkresult.NotRun, checklevel.Notice, checkOutput), summaryText, "Non-fail result should not use message")
 	summaryText = results.Record(checkedProject, checkConfiguration, checkresult.Pass, "")
 	assert.Equal(t, "", "", summaryText, "Non-failure result with no check function output should result in an empty summary")
 
+	flags.Set("verbose", "true")
+	require.Nil(t, configuration.Initialize(flags, projectPaths))
 	checkResult := checkresult.Pass
-	results = Type{}
-
+	results.Initialize()
 	results.Record(checkedProject, checkConfiguration, checkResult, checkOutput)
 	projectReport := results.Projects[0]
 	assert.Equal(t, checkedProject.Path, projectReport.Path)
@@ -80,7 +95,7 @@ func TestRecord(t *testing.T) {
 	assert.Equal(t, configuration.CheckModes(checkedProject.ProjectType)[checkmode.LibraryManagerSubmission], projectConfigurationReport.LibraryManagerSubmit)
 	assert.Equal(t, configuration.CheckModes(checkedProject.ProjectType)[checkmode.LibraryManagerIndexed], projectConfigurationReport.LibraryManagerUpdate)
 	assert.Equal(t, configuration.CheckModes(checkedProject.ProjectType)[checkmode.Official], projectConfigurationReport.Official)
-
+	assert.Equal(t, 1, len(results.Projects[0].Checks), "Passing check reports should be written to report in verbose mode")
 	checkReport := projectReport.Checks[0]
 	assert.Equal(t, checkConfiguration.Category, checkReport.Category)
 	assert.Equal(t, checkConfiguration.Subcategory, checkReport.Subcategory)
@@ -92,15 +107,25 @@ func TestRecord(t *testing.T) {
 	assert.Equal(t, checkLevel.String(), checkReport.Level)
 	assert.Equal(t, checkOutput, checkReport.Message)
 
+	flags.Set("verbose", "false")
+	require.Nil(t, configuration.Initialize(flags, projectPaths))
+	results.Initialize()
+	results.Record(checkedProject, checkConfiguration, checkresult.Pass, checkOutput)
+	assert.Equal(t, 0, len(results.Projects[0].Checks), "Passing check reports should not be written to report in non-verbose mode")
+
+	results.Initialize()
+	results.Record(checkedProject, checkConfiguration, checkresult.Fail, checkOutput)
+	require.Equal(t, 1, len(projectReport.Checks), "Failing check reports should be written to report in non-verbose mode")
+
 	assert.Len(t, results.Projects, 1)
 	previousProjectPath := checkedProject.Path
 	checkedProject.Path = paths.New("/foo/baz")
-	results.Record(checkedProject, checkConfiguration, checkResult, checkOutput)
+	results.Record(checkedProject, checkConfiguration, checkresult.Fail, checkOutput)
 	assert.Len(t, results.Projects, 2)
 
 	assert.Len(t, results.Projects[0].Checks, 1)
 	checkedProject.Path = previousProjectPath
-	results.Record(checkedProject, checkconfigurations.Configurations()[1], checkResult, checkOutput)
+	results.Record(checkedProject, checkconfigurations.Configurations()[1], checkresult.Fail, checkOutput)
 	assert.Len(t, results.Projects[0].Checks, 2)
 }
 
@@ -114,6 +139,7 @@ func TestAddProjectSummary(t *testing.T) {
 	testTables := []struct {
 		results              []checkresult.Type
 		levels               []checklevel.Type
+		verbose              string
 		expectedPass         bool
 		expectedWarningCount int
 		expectedErrorCount   int
@@ -121,6 +147,15 @@ func TestAddProjectSummary(t *testing.T) {
 		{
 			[]checkresult.Type{checkresult.Pass, checkresult.Pass},
 			[]checklevel.Type{checklevel.Info, checklevel.Info},
+			"true",
+			true,
+			0,
+			0,
+		},
+		{
+			[]checkresult.Type{checkresult.Pass, checkresult.Pass},
+			[]checklevel.Type{checklevel.Info, checklevel.Info},
+			"false",
 			true,
 			0,
 			0,
@@ -128,6 +163,7 @@ func TestAddProjectSummary(t *testing.T) {
 		{
 			[]checkresult.Type{checkresult.Pass, checkresult.Fail},
 			[]checklevel.Type{checklevel.Info, checklevel.Warning},
+			"false",
 			true,
 			1,
 			0,
@@ -135,6 +171,7 @@ func TestAddProjectSummary(t *testing.T) {
 		{
 			[]checkresult.Type{checkresult.Fail, checkresult.Fail},
 			[]checklevel.Type{checklevel.Error, checklevel.Warning},
+			"false",
 			false,
 			1,
 			1,
@@ -142,12 +179,21 @@ func TestAddProjectSummary(t *testing.T) {
 	}
 
 	for _, testTable := range testTables {
+		flags := test.ConfigurationFlags()
+		flags.Set("verbose", testTable.verbose)
+		require.Nil(t, configuration.Initialize(flags, projectPaths))
+
 		var results Type
-		for _, result := range testTable.results {
+		results.Initialize()
+
+		checkIndex := 0
+		for testDataIndex, result := range testTable.results {
 			results.Record(checkedProject, checkconfigurations.Configurations()[0], result, "")
-		}
-		for checkIndex, level := range testTable.levels {
-			results.Projects[0].Checks[checkIndex].Level = level.String()
+			if (result == checkresult.Fail) || configuration.Verbose() {
+				level := testTable.levels[testDataIndex].String()
+				results.Projects[0].Checks[checkIndex].Level = level
+				checkIndex += 1
+			}
 		}
 		results.AddProjectSummary(checkedProject)
 		assert.Equal(t, testTable.expectedPass, results.Projects[0].Summary.Pass)
@@ -242,10 +288,6 @@ func TestAddSummary(t *testing.T) {
 
 func TestWriteReport(t *testing.T) {
 	flags := test.ConfigurationFlags()
-
-	projectPath, err := os.Getwd() // Path to an arbitrary folder that is guaranteed to exist.
-	require.Nil(t, err)
-	projectPaths := []string{projectPath}
 
 	reportFolderPathString, err := ioutil.TempDir("", "arduino-check-result-TestWriteReport")
 	require.Nil(t, err)

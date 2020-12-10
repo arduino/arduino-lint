@@ -83,6 +83,7 @@ type summaryReportType struct {
 
 // Initialize adds the tool configuration data to the results data.
 func (results *Type) Initialize() {
+	*results = *new(Type)
 	results.Configuration = toolConfigurationReportType{
 		Paths:       configuration.TargetPaths(),
 		ProjectType: configuration.SuperprojectTypeFilter().String(),
@@ -98,7 +99,7 @@ func (results *Type) Record(checkedProject project.Type, checkConfiguration chec
 		os.Exit(1)
 	}
 
-	summaryText := fmt.Sprintf("%s\n", checkResult)
+	summaryText := fmt.Sprintf("Check %s result: %s\n", checkConfiguration.ID, checkResult)
 
 	checkMessage := ""
 	if checkLevel == checklevel.Error {
@@ -112,17 +113,6 @@ func (results *Type) Record(checkedProject project.Type, checkConfiguration chec
 	// Add explanation of check result if present.
 	if checkMessage != "" {
 		summaryText += fmt.Sprintf("%s: %s\n", checkLevel, checkMessage)
-	}
-
-	checkReport := checkReportType{
-		Category:    checkConfiguration.Category,
-		Subcategory: checkConfiguration.Subcategory,
-		ID:          checkConfiguration.ID,
-		Brief:       checkConfiguration.Brief,
-		Description: checkConfiguration.Description,
-		Result:      checkResult.String(),
-		Level:       checkLevel.String(),
-		Message:     checkMessage,
 	}
 
 	reportExists, projectReportIndex := results.getProjectReportIndex(checkedProject.Path)
@@ -139,11 +129,22 @@ func (results *Type) Record(checkedProject project.Type, checkConfiguration chec
 					LibraryManagerUpdate: configuration.CheckModes(checkedProject.ProjectType)[checkmode.LibraryManagerIndexed],
 					Official:             configuration.CheckModes(checkedProject.ProjectType)[checkmode.Official],
 				},
-				Checks: []checkReportType{checkReport},
+				Checks: []checkReportType{},
 			},
 		)
-	} else {
-		// There's already a report for this project; just add the checks report to it.
+	}
+
+	if (checkResult == checkresult.Fail) || configuration.Verbose() {
+		checkReport := checkReportType{
+			Category:    checkConfiguration.Category,
+			Subcategory: checkConfiguration.Subcategory,
+			ID:          checkConfiguration.ID,
+			Brief:       checkConfiguration.Brief,
+			Description: checkConfiguration.Description,
+			Result:      checkResult.String(),
+			Level:       checkLevel.String(),
+			Message:     checkMessage,
+		}
 		results.Projects[projectReportIndex].Checks = append(results.Projects[projectReportIndex].Checks, checkReport)
 	}
 
@@ -265,7 +266,7 @@ func (results Type) getProjectReportIndex(projectPath *paths.Path) (bool, int) {
 	}
 
 	// There is no element in the report for this project.
-	return false, index + 1
+	return false, len(results.Projects)
 }
 
 // message fills the message template provided by the check configuration with the check output.
