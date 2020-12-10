@@ -10,6 +10,9 @@ on:
       - "**/*.go"
       - "**/testdata/**"
       - "etc/schemas/**/*.json"
+      - "pyproject.toml"
+      - "test/**"
+      - "Taskfile.yml"
   pull_request:
     paths:
       - ".github/workflows/test.yml"
@@ -19,6 +22,9 @@ on:
       - "**/*.go"
       - "**/testdata/**"
       - "etc/schemas/**/*.json"
+      - "pyproject.toml"
+      - "test/**"
+      - "Taskfile.yml"
 
 jobs:
   test-go:
@@ -57,3 +63,14 @@ jobs:
 
       - name: Run unit tests
         run: task go:test-unit
+
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Run integration tests
+        run: task test-integration

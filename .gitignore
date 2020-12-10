@@ -1,6 +1,7 @@
 # Build artifacts
 arduino-lint
 arduino-lint.exe
+__pycache__/
 
 # Test artifacts
 coverage_unit.txt

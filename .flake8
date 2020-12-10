@@ -1,0 +1,9 @@
+[flake8]
+doctests = True
+ignore =
+    # W503 and W504 are mutually exclusive, so one or the other must be ignored.
+    # PEP 8 recommends line break before, so we keep W504.
+    W503
+max-complexity = 10
+max-line-length = 120
+select = E,W,F,C,N

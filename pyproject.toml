@@ -6,6 +6,17 @@ authors = ["Arduino <info@arduino.cc>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
+invoke = "1.4.1"
+pytest = "6.1.2"
+python-dateutil = "^2.8.1"
+semver = "^2.13.0"
 
 [tool.poetry.dev-dependencies]
+black = { version = "^20.8b1", allow-prereleases = true }
 codespell = ">=1.17.1"
+flake8 = "^3.8.4"
+pep8-naming = "^0.11.1"
+
+[tool.black]
+line-length = 120
+target-version = ["py38"]
