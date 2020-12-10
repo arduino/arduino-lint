@@ -24,6 +24,7 @@ import (
 	"github.com/arduino/arduino-check/result/outputformat"
 	"github.com/arduino/arduino-check/util/test"
 	"github.com/arduino/go-paths-helper"
+	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -107,16 +108,26 @@ func TestInitializeLibraryManager(t *testing.T) {
 }
 
 func TestInitializeLogFormat(t *testing.T) {
-	flags := test.ConfigurationFlags()
+	os.Setenv("ARDUINO_CHECK_LOG_FORMAT", "foo")
+	assert.Error(t, Initialize(test.ConfigurationFlags(), projectPaths), "Invalid format")
 
-	flags.Set("log-format", "foo")
-	assert.Error(t, Initialize(flags, projectPaths))
+	os.Setenv("ARDUINO_CHECK_LOG_FORMAT", "text")
+	assert.Nil(t, Initialize(test.ConfigurationFlags(), projectPaths), "text format")
 
-	flags.Set("log-format", "text")
-	assert.Nil(t, Initialize(flags, projectPaths))
+	os.Setenv("ARDUINO_CHECK_LOG_FORMAT", "json")
+	assert.Nil(t, Initialize(test.ConfigurationFlags(), projectPaths), "json format")
+}
 
-	flags.Set("log-format", "json")
-	assert.Nil(t, Initialize(flags, projectPaths))
+func TestInitializeLogLevel(t *testing.T) {
+	require.Nil(t, Initialize(test.ConfigurationFlags(), projectPaths))
+	assert.Equal(t, defaultLogLevel, logrus.GetLevel(), "Default level")
+
+	os.Setenv("ARDUINO_CHECK_LOG_LEVEL", "foo")
+	assert.Error(t, Initialize(test.ConfigurationFlags(), projectPaths), "Invalid level")
+
+	os.Setenv("ARDUINO_CHECK_LOG_LEVEL", "info")
+	assert.Nil(t, Initialize(test.ConfigurationFlags(), projectPaths), "Valid level")
+	assert.Equal(t, logrus.InfoLevel, logrus.GetLevel())
 }
 
 func TestInitializeProjectType(t *testing.T) {

@@ -56,19 +56,23 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 		}
 	}
 
-	logFormatString, _ := flags.GetString("log-format")
-	logFormat, err := logFormatFromString(logFormatString)
-	if err != nil {
-		return fmt.Errorf("--log-format flag value %s not valid", logFormatString)
+	if logFormatString, ok := os.LookupEnv("ARDUINO_CHECK_LOG_FORMAT"); ok {
+		logFormat, err := logFormatFromString(logFormatString)
+		if err != nil {
+			return fmt.Errorf("--log-format flag value %s not valid", logFormatString)
+		}
+		logrus.SetFormatter(logFormat)
 	}
-	logrus.SetFormatter(logFormat)
 
-	logLevelString, _ := flags.GetString("log-level")
-	logLevel, err := logrus.ParseLevel(logLevelString)
-	if err != nil {
-		return fmt.Errorf("--log-level flag value %s not valid", logLevelString)
+	if logLevelString, ok := os.LookupEnv("ARDUINO_CHECK_LOG_LEVEL"); ok {
+		logLevel, err := logrus.ParseLevel(logLevelString)
+		if err != nil {
+			return fmt.Errorf("--log-level flag value %s not valid", logLevelString)
+		}
+		logrus.SetLevel(logLevel)
+	} else {
+		logrus.SetLevel(defaultLogLevel)
 	}
-	logrus.SetLevel(logLevel)
 
 	superprojectTypeFilterString, _ := flags.GetString("project-type")
 	superprojectTypeFilter, err = projecttype.FromString(superprojectTypeFilterString)
@@ -117,7 +121,6 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 		"output format":                   OutputFormat(),
 		"Library Manager submission mode": customCheckModes[checkmode.LibraryManagerSubmission],
 		"Library Manager update mode":     customCheckModes[checkmode.LibraryManagerIndexed],
-		"log format":                      logFormatString,
 		"log level":                       logrus.GetLevel().String(),
 		"superproject type filter":        SuperprojectTypeFilter(),
 		"recursive":                       Recursive(),

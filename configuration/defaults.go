@@ -20,6 +20,7 @@ package configuration
 import (
 	"github.com/arduino/arduino-check/configuration/checkmode"
 	"github.com/arduino/arduino-check/project/projecttype"
+	"github.com/sirupsen/logrus"
 )
 
 // Default check modes for each superproject type.
@@ -58,3 +59,5 @@ var defaultCheckModes = map[projecttype.Type]map[checkmode.Type]bool{
 		checkmode.Official:                 false,
 	},
 }
+
+var defaultLogLevel = logrus.FatalLevel
