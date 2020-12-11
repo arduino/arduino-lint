@@ -107,7 +107,7 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 			targetPath := paths.New(projectPath)
 			targetPathExists, err := targetPath.ExistCheck()
 			if err != nil {
-				return fmt.Errorf("Problem processing PROJECT_PATH argument value %v: %v", targetPath, err)
+				return fmt.Errorf("Unable to process PROJECT_PATH argument value %v: %v", targetPath, err)
 			}
 			if !targetPathExists {
 				return fmt.Errorf("PROJECT_PATH argument %v does not exist", targetPath)

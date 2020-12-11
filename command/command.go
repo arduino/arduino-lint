@@ -33,7 +33,7 @@ import (
 // ArduinoCheck is the root command function.
 func ArduinoCheck(rootCommand *cobra.Command, cliArguments []string) {
 	if err := configuration.Initialize(rootCommand.Flags(), cliArguments); err != nil {
-		feedback.Errorf("Configuration error: %v", err)
+		feedback.Errorf("Invalid configuration: %v", err)
 		os.Exit(1)
 	}
 

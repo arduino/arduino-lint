@@ -66,8 +66,9 @@ func Errorf(format string, v ...interface{}) {
 	Error(fmt.Sprintf(format, v...))
 }
 
-// Error behaves like fmt.Print but adds a newline and also logs the error.
+// Error behaves like fmt.Print but adds a prefix, newline and also logs the error.
 func Error(v ...interface{}) {
+	fmt.Fprint(os.Stderr, "error: ")
 	fmt.Fprintln(os.Stderr, v...)
 	logrus.Error(fmt.Sprint(v...))
 }

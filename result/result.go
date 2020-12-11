@@ -236,13 +236,13 @@ func (results Type) WriteReport() error {
 	if !reportFilePathParentExists {
 		err = reportFilePath.Parent().MkdirAll()
 		if err != nil {
-			return fmt.Errorf("Error while creating report file path (%v): %v", reportFilePath.Parent(), err)
+			return fmt.Errorf("Unable to create report file path (%v): %v", reportFilePath.Parent(), err)
 		}
 	}
 
 	err = reportFilePath.WriteFile(results.jsonReportRaw())
 	if err != nil {
-		return fmt.Errorf("Error while writing report: %v", err)
+		return fmt.Errorf("While writing report: %v", err)
 	}
 
 	return nil
