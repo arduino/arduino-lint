@@ -18,9 +18,10 @@ package configuration
 // The default configuration settings.
 
 import (
+	"io/ioutil"
+
 	"github.com/arduino/arduino-check/configuration/checkmode"
 	"github.com/arduino/arduino-check/project/projecttype"
-	"github.com/sirupsen/logrus"
 )
 
 // Default check modes for each superproject type.
@@ -60,4 +61,4 @@ var defaultCheckModes = map[projecttype.Type]map[checkmode.Type]bool{
 	},
 }
 
-var defaultLogLevel = logrus.FatalLevel
+var defaultLogOutput = ioutil.Discard // Default to no log output.

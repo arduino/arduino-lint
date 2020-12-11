@@ -56,12 +56,15 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 		}
 	}
 
+	logrus.SetOutput(defaultLogOutput)
+
 	if logFormatString, ok := os.LookupEnv("ARDUINO_CHECK_LOG_FORMAT"); ok {
 		logFormat, err := logFormatFromString(logFormatString)
 		if err != nil {
 			return fmt.Errorf("--log-format flag value %s not valid", logFormatString)
 		}
 		logrus.SetFormatter(logFormat)
+		logrus.SetOutput(os.Stderr) // Enable log output.
 	}
 
 	if logLevelString, ok := os.LookupEnv("ARDUINO_CHECK_LOG_LEVEL"); ok {
@@ -70,8 +73,7 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 			return fmt.Errorf("--log-level flag value %s not valid", logLevelString)
 		}
 		logrus.SetLevel(logLevel)
-	} else {
-		logrus.SetLevel(defaultLogLevel)
+		logrus.SetOutput(os.Stderr) // Enable log output.
 	}
 
 	superprojectTypeFilterString, _ := flags.GetString("project-type")
