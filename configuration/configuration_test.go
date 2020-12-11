@@ -160,6 +160,9 @@ func TestInitializeProjectType(t *testing.T) {
 func TestInitializeRecursive(t *testing.T) {
 	flags := test.ConfigurationFlags()
 
+	flags.Set("recursive", "foo")
+	assert.Error(t, Initialize(flags, projectPaths))
+
 	flags.Set("recursive", "true")
 	assert.Nil(t, Initialize(flags, projectPaths))
 	assert.True(t, Recursive())

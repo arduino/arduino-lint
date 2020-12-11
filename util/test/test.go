@@ -27,7 +27,7 @@ func ConfigurationFlags() *pflag.FlagSet {
 	flags.String("log-format", "text", "")
 	flags.String("log-level", "panic", "")
 	flags.String("project-type", "all", "")
-	flags.Bool("recursive", true, "")
+	flags.String("recursive", "true", "")
 	flags.String("report-file", "", "")
 	flags.Bool("verbose", false, "")
 	flags.Bool("version", false, "")
