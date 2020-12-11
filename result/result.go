@@ -99,7 +99,7 @@ func (results *Type) Record(checkedProject project.Type, checkConfiguration chec
 		os.Exit(1)
 	}
 
-	summaryText := fmt.Sprintf("Check %s result: %s\n", checkConfiguration.ID, checkResult)
+	summaryText := fmt.Sprintf("Check %s result: %s", checkConfiguration.ID, checkResult)
 
 	checkMessage := ""
 	if checkResult == checkresult.Fail {
@@ -112,7 +112,7 @@ func (results *Type) Record(checkedProject project.Type, checkConfiguration chec
 
 	// Add explanation of check result if present.
 	if checkMessage != "" {
-		summaryText += fmt.Sprintf("%s: %s\n", checkLevel, checkMessage)
+		summaryText += fmt.Sprintf("\n%s: %s", checkLevel, checkMessage)
 	}
 
 	reportExists, projectReportIndex := results.getProjectReportIndex(checkedProject.Path)
@@ -187,7 +187,7 @@ func (results Type) ProjectSummaryText(checkedProject project.Type) string {
 	}
 
 	projectSummaryReport := results.Projects[projectReportIndex].Summary
-	return fmt.Sprintf("\nFinished checking project. Results:\nWarning count: %v\nError count: %v\nChecks passed: %v\n\n", projectSummaryReport.WarningCount, projectSummaryReport.ErrorCount, projectSummaryReport.Pass)
+	return fmt.Sprintf("Finished checking project. Results:\nWarning count: %v\nError count: %v\nChecks passed: %v", projectSummaryReport.WarningCount, projectSummaryReport.ErrorCount, projectSummaryReport.Pass)
 }
 
 // AddSummary summarizes the check results for all projects and adds it to the report.
@@ -212,7 +212,7 @@ func (results *Type) AddSummary() {
 
 // SummaryText returns a text summary of the cumulative check results.
 func (results Type) SummaryText() string {
-	return fmt.Sprintf("Finished checking projects. Results:\nWarning count: %v\nError count: %v\nChecks passed: %v\n", results.Summary.WarningCount, results.Summary.ErrorCount, results.Summary.Pass)
+	return fmt.Sprintf("Finished checking projects. Results:\nWarning count: %v\nError count: %v\nChecks passed: %v", results.Summary.WarningCount, results.Summary.ErrorCount, results.Summary.Pass)
 }
 
 // JSONReport returns a JSON formatted report of checks on all projects.

@@ -75,7 +75,7 @@ func ArduinoCheck(rootCommand *cobra.Command, cliArguments []string) {
 	if configuration.OutputFormat() == outputformat.Text {
 		if len(projects) > 1 {
 			// There are multiple projects, print the summary of check results for all projects.
-			fmt.Print(result.Results.SummaryText())
+			fmt.Printf("\n%s\n", result.Results.SummaryText())
 		}
 	} else {
 		// Print the complete JSON formatted report.

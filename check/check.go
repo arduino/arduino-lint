@@ -33,7 +33,7 @@ import (
 
 // RunChecks runs all checks for the given project and outputs the results.
 func RunChecks(project project.Type) {
-	feedback.Printf("Checking %s in %s\n", project.ProjectType, project.Path)
+	feedback.Printf("\nChecking %s in %s\n", project.ProjectType, project.Path)
 
 	checkdata.Initialize(project, configuration.SchemasPath())
 
@@ -55,7 +55,7 @@ func RunChecks(project project.Type) {
 		checkResult, checkOutput := checkConfiguration.CheckFunction()
 		reportText := result.Results.Record(project, checkConfiguration, checkResult, checkOutput)
 		if (checkResult == checkresult.Fail) || configuration.Verbose() {
-			feedback.Print(reportText)
+			feedback.Println(reportText)
 		}
 	}
 
@@ -63,7 +63,7 @@ func RunChecks(project project.Type) {
 	result.Results.AddProjectSummary(project)
 
 	// Print the project check results summary.
-	feedback.Print(result.Results.ProjectSummaryText(project))
+	feedback.Printf("\n%s\n", result.Results.ProjectSummaryText(project))
 }
 
 // shouldRun returns whether a given check should be run for the given project under the current tool configuration.
