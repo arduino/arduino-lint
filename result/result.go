@@ -21,7 +21,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
-	"os"
 
 	"github.com/arduino/arduino-check/check/checkconfigurations"
 	"github.com/arduino/arduino-check/check/checklevel"
@@ -29,7 +28,6 @@ import (
 	"github.com/arduino/arduino-check/configuration"
 	"github.com/arduino/arduino-check/configuration/checkmode"
 	"github.com/arduino/arduino-check/project"
-	"github.com/arduino/arduino-check/result/feedback"
 	"github.com/arduino/go-paths-helper"
 )
 
@@ -95,8 +93,7 @@ func (results *Type) Initialize() {
 func (results *Type) Record(checkedProject project.Type, checkConfiguration checkconfigurations.Type, checkResult checkresult.Type, checkOutput string) string {
 	checkLevel, err := checklevel.CheckLevel(checkConfiguration, checkResult)
 	if err != nil {
-		feedback.Errorf("Error while determining check level: %v", err)
-		os.Exit(1)
+		panic(fmt.Errorf("Error while determining check level: %v", err))
 	}
 
 	summaryText := fmt.Sprintf("Check %s result: %s", checkConfiguration.ID, checkResult)

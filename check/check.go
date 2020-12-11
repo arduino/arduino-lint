@@ -18,7 +18,6 @@ package check
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/arduino/arduino-check/check/checkconfigurations"
 	"github.com/arduino/arduino-check/check/checkdata"
@@ -40,8 +39,7 @@ func RunChecks(project project.Type) {
 	for _, checkConfiguration := range checkconfigurations.Configurations() {
 		runCheck, err := shouldRun(checkConfiguration, project)
 		if err != nil {
-			feedback.Errorf("Error while determining whether to run check: %v", err)
-			os.Exit(1)
+			panic(err)
 		}
 
 		if !runCheck {
