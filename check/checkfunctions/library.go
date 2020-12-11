@@ -33,7 +33,6 @@ import (
 	"github.com/arduino/arduino-check/project/sketch"
 	"github.com/arduino/arduino-cli/arduino/libraries"
 	"github.com/arduino/arduino-cli/arduino/utils"
-	"github.com/arduino/go-properties-orderedmap"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/go-git/go-git/v5/plumbing/object"
@@ -111,8 +110,9 @@ func RedundantLibraryProperties() (result checkresult.Type, output string) {
 
 // LibraryPropertiesNameFieldMissing checks for missing library.properties "name" field.
 func LibraryPropertiesNameFieldMissing() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
-		return checkresult.NotRun, "Couldn't load library.properties"
+	shouldRun, reason := runRequiredLibraryPropertiesFieldCheck()
+	if !shouldRun {
+		return checkresult.NotRun, reason
 	}
 
 	if schema.RequiredPropertyMissing("name", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -185,7 +185,7 @@ func LibraryPropertiesNameFieldDisallowedCharacters() (result checkresult.Type, 
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.PropertyPatternMismatch("name", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/allowedCharacters", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
 		return checkresult.Fail, name
 	}
 
@@ -340,8 +340,9 @@ func LibraryPropertiesNameFieldHeaderMismatch() (result checkresult.Type, output
 
 // LibraryPropertiesVersionFieldMissing checks for missing library.properties "version" field.
 func LibraryPropertiesVersionFieldMissing() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
-		return checkresult.NotRun, "Couldn't load library.properties"
+	shouldRun, reason := runRequiredLibraryPropertiesFieldCheck()
+	if !shouldRun {
+		return checkresult.NotRun, reason
 	}
 
 	if schema.RequiredPropertyMissing("version", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -481,8 +482,9 @@ func LibraryPropertiesVersionFieldBehindTag() (result checkresult.Type, output s
 
 // LibraryPropertiesAuthorFieldMissing checks for missing library.properties "author" field.
 func LibraryPropertiesAuthorFieldMissing() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
-		return checkresult.NotRun, "Couldn't load library.properties"
+	shouldRun, reason := runRequiredLibraryPropertiesFieldCheck()
+	if !shouldRun {
+		return checkresult.NotRun, reason
 	}
 
 	if schema.RequiredPropertyMissing("author", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -510,8 +512,9 @@ func LibraryPropertiesAuthorFieldLTMinLength() (result checkresult.Type, output 
 
 // LibraryPropertiesMaintainerFieldMissing checks for missing library.properties "maintainer" field.
 func LibraryPropertiesMaintainerFieldMissing() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
-		return checkresult.NotRun, "Couldn't load library.properties"
+	shouldRun, reason := runRequiredLibraryPropertiesFieldCheck()
+	if !shouldRun {
+		return checkresult.NotRun, reason
 	}
 
 	if schema.RequiredPropertyMissing("maintainer", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -613,8 +616,9 @@ func LibraryPropertiesEmailFieldStartsWithArduino() (result checkresult.Type, ou
 
 // LibraryPropertiesSentenceFieldMissing checks for missing library.properties "sentence" field.
 func LibraryPropertiesSentenceFieldMissing() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
-		return checkresult.NotRun, "Couldn't load library.properties"
+	shouldRun, reason := runRequiredLibraryPropertiesFieldCheck()
+	if !shouldRun {
+		return checkresult.NotRun, reason
 	}
 
 	if schema.RequiredPropertyMissing("sentence", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -647,8 +651,9 @@ func LibraryPropertiesSentenceFieldSpellCheck() (result checkresult.Type, output
 
 // LibraryPropertiesParagraphFieldMissing checks for missing library.properties "paragraph" field.
 func LibraryPropertiesParagraphFieldMissing() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
-		return checkresult.NotRun, "Couldn't load library.properties"
+	shouldRun, reason := runRequiredLibraryPropertiesFieldCheck()
+	if !shouldRun {
+		return checkresult.NotRun, reason
 	}
 
 	if schema.RequiredPropertyMissing("paragraph", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -683,8 +688,9 @@ func LibraryPropertiesParagraphFieldRepeatsSentence() (result checkresult.Type, 
 
 // LibraryPropertiesCategoryFieldMissing checks for missing library.properties "category" field.
 func LibraryPropertiesCategoryFieldMissing() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
-		return checkresult.NotRun, "Couldn't load library.properties"
+	shouldRun, reason := runRequiredLibraryPropertiesFieldCheck()
+	if !shouldRun {
+		return checkresult.NotRun, reason
 	}
 
 	if schema.RequiredPropertyMissing("category", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -731,8 +737,9 @@ func LibraryPropertiesCategoryFieldUncategorized() (result checkresult.Type, out
 
 // LibraryPropertiesUrlFieldMissing checks for missing library.properties "url" field.
 func LibraryPropertiesUrlFieldMissing() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
-		return checkresult.NotRun, "Couldn't load library.properties"
+	shouldRun, reason := runRequiredLibraryPropertiesFieldCheck()
+	if !shouldRun {
+		return checkresult.NotRun, reason
 	}
 
 	if schema.RequiredPropertyMissing("url", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -785,8 +792,9 @@ func LibraryPropertiesUrlFieldDeadLink() (result checkresult.Type, output string
 
 // LibraryPropertiesArchitecturesFieldMissing checks for missing library.properties "architectures" field.
 func LibraryPropertiesArchitecturesFieldMissing() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
-		return checkresult.NotRun, "Couldn't load library.properties"
+	shouldRun, reason := runRequiredLibraryPropertiesFieldCheck()
+	if !shouldRun {
+		return checkresult.NotRun, reason
 	}
 
 	if schema.RequiredPropertyMissing("architectures", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -841,12 +849,14 @@ func LibraryPropertiesDependsFieldNotInIndex() (result checkresult.Type, output 
 		return checkresult.NotRun, "Field not present"
 	}
 
-	dependencies, err := properties.SplitQuotedString(depends, "", false)
-	if err != nil {
-		panic(err)
-	}
+	dependencies := strings.Split(depends, ",")
+
 	dependenciesNotInIndex := []string{}
 	for _, dependency := range dependencies {
+		dependency = strings.TrimSpace(dependency)
+		if dependency == "" {
+			continue
+		}
 		logrus.Tracef("Checking if dependency %s is in index.", dependency)
 		if !nameInLibraryManagerIndex(dependency) {
 			dependenciesNotInIndex = append(dependenciesNotInIndex, dependency)
@@ -923,12 +933,13 @@ func LibraryPropertiesIncludesFieldItemNotFound() (result checkresult.Type, outp
 		return checkresult.NotRun, "Field not present"
 	}
 
-	includesList, err := properties.SplitQuotedString(includes, "", false)
-	if err != nil {
-		panic(err)
-	}
+	includesList := strings.Split(includes, ",")
 
 	findInclude := func(include string) bool {
+		include = strings.TrimSpace(include)
+		if include == "" {
+			return true
+		}
 		for _, header := range checkdata.SourceHeaders() {
 			logrus.Tracef("Comparing include %s with header file %s", include, header)
 			if include == header {
@@ -1281,7 +1292,7 @@ func spellCheckLibraryPropertiesFieldValue(fieldName string) (result checkresult
 	}
 
 	replaced, diff := checkdata.MisspelledWordsReplacer().Replace(fieldValue)
-	if diff != nil {
+	if len(diff) > 0 {
 		return checkresult.Fail, replaced
 	}
 
@@ -1315,4 +1326,16 @@ func nameInLibraryManagerIndex(name string) bool {
 	}
 
 	return false
+}
+
+func runRequiredLibraryPropertiesFieldCheck() (bool, string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return false, "Couldn't load library.properties"
+	}
+
+	if checkdata.LoadedLibrary().IsLegacy {
+		return false, "Library has legacy format"
+	}
+
+	return true, ""
 }
