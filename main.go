@@ -19,8 +19,13 @@ import (
 	"os"
 
 	"github.com/arduino/arduino-check/cli"
+	"github.com/arduino/arduino-check/configuration"
 	"github.com/arduino/arduino-check/result/feedback"
 )
+
+func init() {
+	configuration.EnableLogging(false)
+}
 
 func main() {
 	rootCommand := cli.Root()
