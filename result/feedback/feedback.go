@@ -49,13 +49,13 @@ func Print(message string) {
 	}
 }
 
-// Errorf behaves like fmt.Printf but also logs the error.
+// Errorf behaves like fmt.Printf but adds a newline and also logs the error.
 func Errorf(format string, v ...interface{}) {
 	Error(fmt.Sprintf(format, v...))
 }
 
-// Error behaves like fmt.Print but also logs the error.
+// Error behaves like fmt.Print but adds a newline and also logs the error.
 func Error(errorMessage string) {
-	fmt.Fprint(os.Stderr, errorMessage)
+	fmt.Fprintln(os.Stderr, errorMessage)
 	logrus.Error(fmt.Sprint(errorMessage))
 }
