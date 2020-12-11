@@ -99,7 +99,7 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 		// Default to using current working directory.
 		workingDirectoryPath, err := os.Getwd()
 		if err != nil {
-			return fmt.Errorf("Error when setting default PROJECT_PATH argument: %s", err)
+			panic(err)
 		}
 		targetPaths.Add(paths.New(workingDirectoryPath))
 	} else {
