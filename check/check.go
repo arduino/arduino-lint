@@ -58,12 +58,6 @@ func RunChecks(project project.Type) {
 			feedback.Println(reportText)
 		}
 	}
-
-	// Checks are finished for this project, so summarize its check results in the report.
-	result.Results.AddProjectSummary(project)
-
-	// Print the project check results summary.
-	feedback.Printf("\n%s\n", result.Results.ProjectSummaryText(project))
 }
 
 // shouldRun returns whether a given check should be run for the given project under the current tool configuration.
