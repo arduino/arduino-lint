@@ -25,6 +25,12 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// VerbosePrintln behaves like Println but only prints when verbosity is enabled.
+func VerbosePrintln(v ...interface{}) {
+	VerbosePrint(v...)
+	VerbosePrint("\n")
+}
+
 // VerbosePrintf behaves like Printf but only prints when verbosity is enabled.
 func VerbosePrintf(format string, v ...interface{}) {
 	VerbosePrint(fmt.Sprintf(format, v...))
@@ -35,6 +41,12 @@ func VerbosePrint(v ...interface{}) {
 	if configuration.Verbose() && (configuration.OutputFormat() == outputformat.Text) {
 		Print(v...)
 	}
+}
+
+// Println behaves like fmt.Println but only prints when output format is set to `text`.
+func Println(v ...interface{}) {
+	Print(v...)
+	Print("\n")
 }
 
 // Printf behaves like fmt.Printf but only prints when output format is set to `text`.
