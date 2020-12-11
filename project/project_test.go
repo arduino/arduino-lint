@@ -131,6 +131,20 @@ func TestFindProjects(t *testing.T) {
 			},
 		},
 		{
+			"Explicit file",
+			"sketch",
+			"",
+			[]string{libraryPath.Join("Library.h").String()},
+			assert.NoError,
+			[]Type{
+				{
+					Path:             libraryPath,
+					ProjectType:      projecttype.Sketch,
+					SuperprojectType: projecttype.Sketch,
+				},
+			},
+		},
+		{
 			"Sketch folder",
 			"all",
 			"",
@@ -198,6 +212,20 @@ func TestFindProjects(t *testing.T) {
 					Path:             packageIndexFolderPath,
 					ProjectType:      projecttype.PackageIndex,
 					SuperprojectType: projecttype.PackageIndex,
+				},
+			},
+		},
+		{
+			"Explicit folder",
+			"sketch",
+			"false",
+			[]string{libraryPath.String()},
+			assert.NoError,
+			[]Type{
+				{
+					Path:             libraryPath,
+					ProjectType:      projecttype.Sketch,
+					SuperprojectType: projecttype.Sketch,
 				},
 			},
 		},
