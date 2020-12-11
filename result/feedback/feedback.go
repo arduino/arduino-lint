@@ -31,9 +31,9 @@ func VerbosePrintf(format string, v ...interface{}) {
 }
 
 // VerbosePrint behaves like Print but only prints when verbosity is enabled.
-func VerbosePrint(message string) {
+func VerbosePrint(v ...interface{}) {
 	if configuration.Verbose() && (configuration.OutputFormat() == outputformat.Text) {
-		Printf(message)
+		Print(v...)
 	}
 }
 
@@ -43,9 +43,9 @@ func Printf(format string, v ...interface{}) {
 }
 
 // Print behaves like fmt.Print but only prints when output format is set to `text`.
-func Print(message string) {
+func Print(v ...interface{}) {
 	if configuration.OutputFormat() == outputformat.Text {
-		fmt.Printf(message)
+		fmt.Print(v...)
 	}
 }
 
@@ -55,7 +55,7 @@ func Errorf(format string, v ...interface{}) {
 }
 
 // Error behaves like fmt.Print but adds a newline and also logs the error.
-func Error(errorMessage string) {
-	fmt.Fprintln(os.Stderr, errorMessage)
-	logrus.Error(fmt.Sprint(errorMessage))
+func Error(v ...interface{}) {
+	fmt.Fprintln(os.Stderr, v...)
+	logrus.Error(fmt.Sprint(v...))
 }
