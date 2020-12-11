@@ -18,6 +18,7 @@ package feedback
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/arduino/arduino-check/configuration"
 	"github.com/arduino/arduino-check/result/outputformat"
@@ -55,6 +56,6 @@ func Errorf(format string, v ...interface{}) {
 
 // Error behaves like fmt.Print but also logs the error.
 func Error(errorMessage string) {
-	fmt.Printf(errorMessage)
+	fmt.Fprint(os.Stderr, errorMessage)
 	logrus.Error(fmt.Sprint(errorMessage))
 }
