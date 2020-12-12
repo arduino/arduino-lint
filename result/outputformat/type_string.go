@@ -12,7 +12,7 @@ func _() {
 	_ = x[JSON-1]
 }
 
-const _Type_name = "textJSON"
+const _Type_name = "textjson"
 
 var _Type_index = [...]uint8{0, 4, 8}
 

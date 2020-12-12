@@ -32,8 +32,8 @@ const (
 	Strict                   Type = iota // strict
 	Specification                        // specification
 	Permissive                           // permissive
-	LibraryManagerSubmission             // --library-manager=submit
-	LibraryManagerIndexed                // --library-manager=update
+	LibraryManagerSubmission             // submit
+	LibraryManagerIndexed                // update
 	Official                             // ARDUINO_CHECK_OFFICIAL
 	Default                              // default
 )
@@ -54,11 +54,11 @@ var Types = map[Type]struct{}{
 // ComplianceModeFromString parses the --compliance flag value and returns the corresponding check mode settings.
 func ComplianceModeFromString(complianceModeString string) (bool, bool, bool, error) {
 	switch strings.ToLower(complianceModeString) {
-	case "strict":
+	case Strict.String():
 		return true, false, false, nil
-	case "specification":
+	case Specification.String():
 		return false, true, false, nil
-	case "permissive":
+	case Permissive.String():
 		return false, false, true, nil
 	default:
 		return false, false, false, fmt.Errorf("No matching compliance mode for string %s", complianceModeString)
@@ -68,9 +68,9 @@ func ComplianceModeFromString(complianceModeString string) (bool, bool, bool, er
 // LibraryManagerModeFromString parses the --library-manager flag value and returns the corresponding check mode settings.
 func LibraryManagerModeFromString(libraryManagerModeString string) (bool, bool, error) {
 	switch strings.ToLower(libraryManagerModeString) {
-	case "submit":
+	case LibraryManagerSubmission.String():
 		return true, false, nil
-	case "update":
+	case LibraryManagerIndexed.String():
 		return false, true, nil
 	case "false":
 		return false, false, nil
