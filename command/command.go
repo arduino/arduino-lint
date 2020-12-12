@@ -67,6 +67,12 @@ func ArduinoCheck(rootCommand *cobra.Command, cliArguments []string) {
 
 	for _, project := range projects {
 		check.RunChecks(project)
+
+		// Checks are finished for this project, so summarize its check results in the report.
+		result.Results.AddProjectSummary(project)
+
+		// Print the project check results summary.
+		feedback.Printf("\n%s\n", result.Results.ProjectSummaryText(project))
 	}
 
 	// All projects have been checked, so summarize their check results in the report.
@@ -75,7 +81,7 @@ func ArduinoCheck(rootCommand *cobra.Command, cliArguments []string) {
 	if configuration.OutputFormat() == outputformat.Text {
 		if len(projects) > 1 {
 			// There are multiple projects, print the summary of check results for all projects.
-			fmt.Print(result.Results.SummaryText())
+			fmt.Printf("\n%s\n", result.Results.SummaryText())
 		}
 	} else {
 		// Print the complete JSON formatted report.

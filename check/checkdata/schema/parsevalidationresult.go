@@ -189,10 +189,10 @@ func validationErrorSchemaPointerValueMatch(
 	schemasPath *paths.Path,
 ) bool {
 	marshalledSchemaPointerValue, err := json.Marshal(schemaPointerValue(schemaURL, schemaPointer, schemasPath))
-	logrus.Tracef("Checking schema pointer value: %s match with regexp: %s", marshalledSchemaPointerValue, schemaPointerValueRegexp)
 	if err != nil {
 		panic(err)
 	}
+	logrus.Tracef("Checking schema pointer value: %s match with regexp: %s", marshalledSchemaPointerValue, schemaPointerValueRegexp)
 	return schemaPointerValueRegexp.Match(marshalledSchemaPointerValue)
 }
 

@@ -21,7 +21,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
-	"os"
 
 	"github.com/arduino/arduino-check/check/checkconfigurations"
 	"github.com/arduino/arduino-check/check/checklevel"
@@ -29,7 +28,6 @@ import (
 	"github.com/arduino/arduino-check/configuration"
 	"github.com/arduino/arduino-check/configuration/checkmode"
 	"github.com/arduino/arduino-check/project"
-	"github.com/arduino/arduino-check/result/feedback"
 	"github.com/arduino/go-paths-helper"
 )
 
@@ -95,11 +93,10 @@ func (results *Type) Initialize() {
 func (results *Type) Record(checkedProject project.Type, checkConfiguration checkconfigurations.Type, checkResult checkresult.Type, checkOutput string) string {
 	checkLevel, err := checklevel.CheckLevel(checkConfiguration, checkResult)
 	if err != nil {
-		feedback.Errorf("Error while determining check level: %v", err)
-		os.Exit(1)
+		panic(fmt.Errorf("Error while determining check level: %v", err))
 	}
 
-	summaryText := fmt.Sprintf("Check %s result: %s\n", checkConfiguration.ID, checkResult)
+	summaryText := fmt.Sprintf("Check %s result: %s", checkConfiguration.ID, checkResult)
 
 	checkMessage := ""
 	if checkResult == checkresult.Fail {
@@ -112,7 +109,7 @@ func (results *Type) Record(checkedProject project.Type, checkConfiguration chec
 
 	// Add explanation of check result if present.
 	if checkMessage != "" {
-		summaryText += fmt.Sprintf("%s: %s\n", checkLevel, checkMessage)
+		summaryText += fmt.Sprintf("\n%s: %s", checkLevel, checkMessage)
 	}
 
 	reportExists, projectReportIndex := results.getProjectReportIndex(checkedProject.Path)
@@ -187,7 +184,7 @@ func (results Type) ProjectSummaryText(checkedProject project.Type) string {
 	}
 
 	projectSummaryReport := results.Projects[projectReportIndex].Summary
-	return fmt.Sprintf("\nFinished checking project. Results:\nWarning count: %v\nError count: %v\nChecks passed: %v\n\n", projectSummaryReport.WarningCount, projectSummaryReport.ErrorCount, projectSummaryReport.Pass)
+	return fmt.Sprintf("Finished checking project. Results:\nWarning count: %v\nError count: %v\nChecks passed: %v", projectSummaryReport.WarningCount, projectSummaryReport.ErrorCount, projectSummaryReport.Pass)
 }
 
 // AddSummary summarizes the check results for all projects and adds it to the report.
@@ -212,7 +209,7 @@ func (results *Type) AddSummary() {
 
 // SummaryText returns a text summary of the cumulative check results.
 func (results Type) SummaryText() string {
-	return fmt.Sprintf("Finished checking projects. Results:\nWarning count: %v\nError count: %v\nChecks passed: %v\n", results.Summary.WarningCount, results.Summary.ErrorCount, results.Summary.Pass)
+	return fmt.Sprintf("Finished checking projects. Results:\nWarning count: %v\nError count: %v\nChecks passed: %v", results.Summary.WarningCount, results.Summary.ErrorCount, results.Summary.Pass)
 }
 
 // JSONReport returns a JSON formatted report of checks on all projects.

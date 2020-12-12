@@ -75,9 +75,9 @@ func TestRecord(t *testing.T) {
 	checkConfiguration := checkconfigurations.Configurations()[0]
 	checkOutput := "foo"
 	summaryText := results.Record(checkedProject, checkConfiguration, checkresult.Fail, checkOutput)
-	assert.Equal(t, fmt.Sprintf("Check %s result: %s\n%s: %s\n", checkConfiguration.ID, checkresult.Fail, checklevel.Error, message(checkConfiguration.MessageTemplate, checkOutput)), summaryText)
+	assert.Equal(t, fmt.Sprintf("Check %s result: %s\n%s: %s", checkConfiguration.ID, checkresult.Fail, checklevel.Error, message(checkConfiguration.MessageTemplate, checkOutput)), summaryText)
 	summaryText = results.Record(checkedProject, checkConfiguration, checkresult.NotRun, checkOutput)
-	assert.Equal(t, fmt.Sprintf("Check %s result: %s\n%s: %s\n", checkConfiguration.ID, checkresult.NotRun, checklevel.Notice, checkOutput), summaryText, "Non-fail result should not use message")
+	assert.Equal(t, fmt.Sprintf("Check %s result: %s\n%s: %s", checkConfiguration.ID, checkresult.NotRun, checklevel.Notice, checkOutput), summaryText, "Non-fail result should not use message")
 	summaryText = results.Record(checkedProject, checkConfiguration, checkresult.Pass, "")
 	assert.Equal(t, "", "", summaryText, "Non-failure result with no check function output should result in an empty summary")
 
@@ -198,7 +198,7 @@ func TestAddProjectSummary(t *testing.T) {
 		assert.Equal(t, testTable.expectedPass, results.Projects[0].Summary.Pass)
 		assert.Equal(t, testTable.expectedWarningCount, results.Projects[0].Summary.WarningCount)
 		assert.Equal(t, testTable.expectedErrorCount, results.Projects[0].Summary.ErrorCount)
-		assert.Equal(t, fmt.Sprintf("\nFinished checking project. Results:\nWarning count: %v\nError count: %v\nChecks passed: %v\n\n", testTable.expectedWarningCount, testTable.expectedErrorCount, testTable.expectedPass), results.ProjectSummaryText(checkedProject))
+		assert.Equal(t, fmt.Sprintf("Finished checking project. Results:\nWarning count: %v\nError count: %v\nChecks passed: %v", testTable.expectedWarningCount, testTable.expectedErrorCount, testTable.expectedPass), results.ProjectSummaryText(checkedProject))
 	}
 }
 
@@ -281,7 +281,7 @@ func TestAddSummary(t *testing.T) {
 		assert.Equal(t, testTable.expectedPass, results.Passed())
 		assert.Equal(t, testTable.expectedWarningCount, results.Summary.WarningCount)
 		assert.Equal(t, testTable.expectedErrorCount, results.Summary.ErrorCount)
-		assert.Equal(t, fmt.Sprintf("Finished checking projects. Results:\nWarning count: %v\nError count: %v\nChecks passed: %v\n", testTable.expectedWarningCount, testTable.expectedErrorCount, testTable.expectedPass), results.SummaryText())
+		assert.Equal(t, fmt.Sprintf("Finished checking projects. Results:\nWarning count: %v\nError count: %v\nChecks passed: %v", testTable.expectedWarningCount, testTable.expectedErrorCount, testTable.expectedPass), results.SummaryText())
 	}
 }
 

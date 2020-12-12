@@ -18,7 +18,6 @@ package check
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/arduino/arduino-check/check/checkconfigurations"
 	"github.com/arduino/arduino-check/check/checkdata"
@@ -33,15 +32,14 @@ import (
 
 // RunChecks runs all checks for the given project and outputs the results.
 func RunChecks(project project.Type) {
-	feedback.Printf("Checking %s in %s\n", project.ProjectType, project.Path)
+	feedback.Printf("\nChecking %s in %s\n", project.ProjectType, project.Path)
 
 	checkdata.Initialize(project, configuration.SchemasPath())
 
 	for _, checkConfiguration := range checkconfigurations.Configurations() {
 		runCheck, err := shouldRun(checkConfiguration, project)
 		if err != nil {
-			feedback.Errorf("Error while determining whether to run check: %v", err)
-			os.Exit(1)
+			panic(err)
 		}
 
 		if !runCheck {
@@ -55,15 +53,9 @@ func RunChecks(project project.Type) {
 		checkResult, checkOutput := checkConfiguration.CheckFunction()
 		reportText := result.Results.Record(project, checkConfiguration, checkResult, checkOutput)
 		if (checkResult == checkresult.Fail) || configuration.Verbose() {
-			feedback.Print(reportText)
+			feedback.Println(reportText)
 		}
 	}
-
-	// Checks are finished for this project, so summarize its check results in the report.
-	result.Results.AddProjectSummary(project)
-
-	// Print the project check results summary.
-	feedback.Print(result.Results.ProjectSummaryText(project))
 }
 
 // shouldRun returns whether a given check should be run for the given project under the current tool configuration.

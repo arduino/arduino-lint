@@ -18,11 +18,18 @@ package feedback
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/arduino/arduino-check/configuration"
 	"github.com/arduino/arduino-check/result/outputformat"
 	"github.com/sirupsen/logrus"
 )
+
+// VerbosePrintln behaves like Println but only prints when verbosity is enabled.
+func VerbosePrintln(v ...interface{}) {
+	VerbosePrint(v...)
+	VerbosePrint("\n")
+}
 
 // VerbosePrintf behaves like Printf but only prints when verbosity is enabled.
 func VerbosePrintf(format string, v ...interface{}) {
@@ -30,10 +37,16 @@ func VerbosePrintf(format string, v ...interface{}) {
 }
 
 // VerbosePrint behaves like Print but only prints when verbosity is enabled.
-func VerbosePrint(message string) {
+func VerbosePrint(v ...interface{}) {
 	if configuration.Verbose() && (configuration.OutputFormat() == outputformat.Text) {
-		Printf(message)
+		Print(v...)
 	}
+}
+
+// Println behaves like fmt.Println but only prints when output format is set to `text`.
+func Println(v ...interface{}) {
+	Print(v...)
+	Print("\n")
 }
 
 // Printf behaves like fmt.Printf but only prints when output format is set to `text`.
@@ -42,19 +55,19 @@ func Printf(format string, v ...interface{}) {
 }
 
 // Print behaves like fmt.Print but only prints when output format is set to `text`.
-func Print(message string) {
+func Print(v ...interface{}) {
 	if configuration.OutputFormat() == outputformat.Text {
-		fmt.Printf(message)
+		fmt.Print(v...)
 	}
 }
 
-// Errorf behaves like fmt.Printf but also logs the error.
+// Errorf behaves like fmt.Printf but adds a newline and also logs the error.
 func Errorf(format string, v ...interface{}) {
 	Error(fmt.Sprintf(format, v...))
 }
 
-// Error behaves like fmt.Print but also logs the error.
-func Error(errorMessage string) {
-	fmt.Printf(errorMessage)
-	logrus.Error(fmt.Sprint(errorMessage))
+// Error behaves like fmt.Print but adds a newline and also logs the error.
+func Error(v ...interface{}) {
+	fmt.Fprintln(os.Stderr, v...)
+	logrus.Error(fmt.Sprint(v...))
 }

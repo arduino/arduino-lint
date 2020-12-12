@@ -120,7 +120,6 @@ func TestInitializeLogFormat(t *testing.T) {
 
 func TestInitializeLogLevel(t *testing.T) {
 	require.Nil(t, Initialize(test.ConfigurationFlags(), projectPaths))
-	assert.Equal(t, defaultLogLevel, logrus.GetLevel(), "Default level")
 
 	os.Setenv("ARDUINO_CHECK_LOG_LEVEL", "foo")
 	assert.Error(t, Initialize(test.ConfigurationFlags(), projectPaths), "Invalid level")
