@@ -52,7 +52,7 @@ func checkSketchCheckFunction(checkFunction Type, testTables []sketchCheckFuncti
 			SuperprojectType: projecttype.Sketch,
 		}
 
-		checkdata.Initialize(testProject, schemasPath)
+		checkdata.Initialize(testProject)
 
 		result, output := checkFunction()
 		assert.Equal(t, testTable.expectedCheckResult, result, testTable.testName)

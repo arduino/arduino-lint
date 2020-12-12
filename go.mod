@@ -45,7 +45,6 @@ require (
 	github.com/xanzy/ssh-agent v0.3.0 // indirect
 	github.com/xeipuuv/gojsonpointer v0.0.0-20190905194746-02993c407bfb // indirect
 	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415
-	github.com/xeipuuv/gojsonschema v1.2.0
 	go.bug.st/relaxed-semver v0.0.0-20190922224835-391e10178d18
 	go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace v0.14.0 // indirect
 	golang.org/x/crypto v0.0.0-20201208171446-5f87f3452ae9 // indirect

@@ -12,6 +12,14 @@ tasks:
       - task: go:test-unit
       - task: schema:compile
 
+  go:generate:
+    desc: Generate Go code
+    cmds:
+      - go get -u "github.com/go-bindata/go-bindata/...@v3.1.1"
+      - go-bindata -nocompress -nometadata -o "./check/checkdata/schema/schemadata/bindata.go" --pkg schemadata --prefix "./etc/schemas/" "./etc/schemas/"
+      - go-bindata -nocompress -nometadata -o "./check/checkdata/schema/testdata/bindata.go" --pkg testdata --prefix "./check/checkdata/schema/testdata/input/" "./check/checkdata/schema/testdata/input/"
+      - task: go:format
+
   go:test-unit:
     desc: Run unit tests
     cmds:

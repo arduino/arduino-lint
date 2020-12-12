@@ -34,7 +34,7 @@ import (
 func RunChecks(project project.Type) {
 	feedback.Printf("\nChecking %s in %s\n", project.ProjectType, project.Path)
 
-	checkdata.Initialize(project, configuration.SchemasPath())
+	checkdata.Initialize(project)
 
 	for _, checkConfiguration := range checkconfigurations.Configurations() {
 		runCheck, err := shouldRun(checkConfiguration, project)

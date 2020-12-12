@@ -54,7 +54,7 @@ func checkPlatformCheckFunction(checkFunction Type, testTables []platformCheckFu
 			SuperprojectType: projecttype.Platform,
 		}
 
-		checkdata.Initialize(testProject, nil)
+		checkdata.Initialize(testProject)
 
 		result, output := checkFunction()
 		assert.Equal(t, testTable.expectedCheckResult, result, testTable.testName)

@@ -16,18 +16,14 @@
 package schema
 
 import (
-	"os"
 	"regexp"
-	"runtime"
 	"testing"
 
-	"github.com/arduino/go-paths-helper"
+	"github.com/arduino/arduino-check/check/checkdata/schema/testdata"
 	"github.com/arduino/go-properties-orderedmap"
 	"github.com/ory/jsonschema/v3"
 	"github.com/stretchr/testify/require"
 )
-
-var schemasPath *paths.Path
 
 var validMap = map[string]string{
 	"property1": "foo",
@@ -37,41 +33,38 @@ var validMap = map[string]string{
 
 var validPropertiesMap = properties.NewFromHashmap(validMap)
 
-var validSchemaWithReferences *jsonschema.Schema
+var validSchemaWithReferences Schema
 
 func init() {
-	workingPath, _ := os.Getwd()
-	schemasPath = paths.New(workingPath).Join("testdata")
-
 	validSchemaWithReferences = Compile(
 		"valid-schema-with-references.json",
 		[]string{
 			"referenced-schema-1.json",
 			"referenced-schema-2.json",
 		},
-		schemasPath,
+		testdata.Asset,
 	)
 }
 
 func TestCompile(t *testing.T) {
 	require.Panics(t, func() {
-		Compile("valid-schema-with-references.json", []string{"nonexistent.json"}, schemasPath)
+		Compile("valid-schema-with-references.json", []string{"nonexistent.json"}, testdata.Asset)
 	})
 
 	require.Panics(t, func() {
-		Compile("valid-schema-with-references.json", []string{"schema-without-id.json"}, schemasPath)
+		Compile("valid-schema-with-references.json", []string{"schema-without-id.json"}, testdata.Asset)
 	})
 
 	require.Panics(t, func() {
-		Compile("invalid-schema.json", []string{}, schemasPath)
+		Compile("invalid-schema.json", []string{}, testdata.Asset)
 	})
 
 	require.Panics(t, func() {
-		Compile("valid-schema-with-references.json", []string{}, schemasPath)
+		Compile("valid-schema-with-references.json", []string{}, testdata.Asset)
 	})
 
 	require.NotPanics(t, func() {
-		Compile("valid-schema.json", []string{}, schemasPath)
+		Compile("valid-schema.json", []string{}, testdata.Asset)
 	})
 
 	require.NotPanics(t, func() {
@@ -81,146 +74,145 @@ func TestCompile(t *testing.T) {
 				"referenced-schema-1.json",
 				"referenced-schema-2.json",
 			},
-			schemasPath,
+			testdata.Asset,
 		)
 	})
 }
 
 func TestValidate(t *testing.T) {
-	schemaObject := Compile("valid-schema.json", []string{}, schemasPath)
+	schemaObject := Compile("valid-schema.json", []string{}, testdata.Asset)
 	propertiesMap := properties.NewFromHashmap(validMap)
-	validationResult := Validate(propertiesMap, schemaObject, schemasPath)
-	require.Nil(t, validationResult)
+	validationResult := Validate(propertiesMap, schemaObject)
+	require.Nil(t, validationResult.Result)
 
-	validationResult = Validate(propertiesMap, validSchemaWithReferences, schemasPath)
-	require.Nil(t, validationResult)
+	validationResult = Validate(propertiesMap, validSchemaWithReferences)
+	require.Nil(t, validationResult.Result)
 
 	propertiesMap.Set("property1", "a")
-	validationResult = Validate(propertiesMap, schemaObject, schemasPath)
-	require.Equal(t, "#/property1", validationResult.InstancePtr)
-	require.Equal(t, "#/properties/property1/minLength", validationResult.SchemaPtr)
+	validationResult = Validate(propertiesMap, schemaObject)
+	require.Equal(t, "#/property1", validationResult.Result.InstancePtr)
+	require.Equal(t, "#/properties/property1/minLength", validationResult.Result.SchemaPtr)
 }
 
 func TestRequiredPropertyMissing(t *testing.T) {
 	propertiesMap := properties.NewFromHashmap(validMap)
-	validationResult := Validate(propertiesMap, validSchemaWithReferences, schemasPath)
-	require.False(t, RequiredPropertyMissing("property1", validationResult, schemasPath))
+	validationResult := Validate(propertiesMap, validSchemaWithReferences)
+	require.False(t, RequiredPropertyMissing("property1", validationResult))
 
 	propertiesMap.Remove("property1")
-	validationResult = Validate(propertiesMap, validSchemaWithReferences, schemasPath)
-	require.True(t, RequiredPropertyMissing("property1", validationResult, schemasPath))
+	validationResult = Validate(propertiesMap, validSchemaWithReferences)
+	require.True(t, RequiredPropertyMissing("property1", validationResult))
 }
 
 func TestPropertyPatternMismatch(t *testing.T) {
 	propertiesMap := properties.NewFromHashmap(validMap)
-	validationResult := Validate(propertiesMap, validSchemaWithReferences, schemasPath)
-	require.False(t, PropertyPatternMismatch("property2", validationResult, schemasPath))
+	validationResult := Validate(propertiesMap, validSchemaWithReferences)
+	require.False(t, PropertyPatternMismatch("property2", validationResult))
 
 	propertiesMap.Set("property2", "fOo")
-	validationResult = Validate(propertiesMap, validSchemaWithReferences, schemasPath)
-	require.True(t, PropertyPatternMismatch("property2", validationResult, schemasPath))
+	validationResult = Validate(propertiesMap, validSchemaWithReferences)
+	require.True(t, PropertyPatternMismatch("property2", validationResult))
 
-	require.False(t, PropertyPatternMismatch("property1", validationResult, schemasPath))
+	require.False(t, PropertyPatternMismatch("property1", validationResult))
 }
 
 func TestPropertyLessThanMinLength(t *testing.T) {
 	propertiesMap := properties.NewFromHashmap(validMap)
-	validationResult := Validate(propertiesMap, validSchemaWithReferences, schemasPath)
-	require.False(t, PropertyLessThanMinLength("property1", validationResult, schemasPath))
+	validationResult := Validate(propertiesMap, validSchemaWithReferences)
+	require.False(t, PropertyLessThanMinLength("property1", validationResult))
 
 	propertiesMap.Set("property1", "a")
-	validationResult = Validate(propertiesMap, validSchemaWithReferences, schemasPath)
-	require.True(t, PropertyLessThanMinLength("property1", validationResult, schemasPath))
+	validationResult = Validate(propertiesMap, validSchemaWithReferences)
+	require.True(t, PropertyLessThanMinLength("property1", validationResult))
 }
 
 func TestPropertyGreaterThanMaxLength(t *testing.T) {
 	propertiesMap := properties.NewFromHashmap(validMap)
-	validationResult := Validate(propertiesMap, validSchemaWithReferences, schemasPath)
-	require.False(t, PropertyGreaterThanMaxLength("property1", validationResult, schemasPath))
+	validationResult := Validate(propertiesMap, validSchemaWithReferences)
+	require.False(t, PropertyGreaterThanMaxLength("property1", validationResult))
 
 	propertiesMap.Set("property1", "12345")
-	validationResult = Validate(propertiesMap, validSchemaWithReferences, schemasPath)
-	require.True(t, PropertyGreaterThanMaxLength("property1", validationResult, schemasPath))
+	validationResult = Validate(propertiesMap, validSchemaWithReferences)
+	require.True(t, PropertyGreaterThanMaxLength("property1", validationResult))
 }
 
 func TestPropertyEnumMismatch(t *testing.T) {
 	propertiesMap := properties.NewFromHashmap(validMap)
-	validationResult := Validate(propertiesMap, validSchemaWithReferences, schemasPath)
-	require.False(t, PropertyEnumMismatch("property3", validationResult, schemasPath))
+	validationResult := Validate(propertiesMap, validSchemaWithReferences)
+	require.False(t, PropertyEnumMismatch("property3", validationResult))
 
 	propertiesMap.Set("property3", "invalid")
-	validationResult = Validate(propertiesMap, validSchemaWithReferences, schemasPath)
-	require.True(t, PropertyEnumMismatch("property3", validationResult, schemasPath))
+	validationResult = Validate(propertiesMap, validSchemaWithReferences)
+	require.True(t, PropertyEnumMismatch("property3", validationResult))
 }
 
 func TestMisspelledOptionalPropertyFound(t *testing.T) {
 	propertiesMap := properties.NewFromHashmap(validMap)
-	validationResult := Validate(propertiesMap, validSchemaWithReferences, schemasPath)
-	require.False(t, MisspelledOptionalPropertyFound(validationResult, schemasPath))
+	validationResult := Validate(propertiesMap, validSchemaWithReferences)
+	require.False(t, MisspelledOptionalPropertyFound(validationResult))
 
 	propertiesMap.Set("porperties", "foo")
-	validationResult = Validate(propertiesMap, validSchemaWithReferences, schemasPath)
-	require.True(t, MisspelledOptionalPropertyFound(validationResult, schemasPath))
+	validationResult = Validate(propertiesMap, validSchemaWithReferences)
+	require.True(t, MisspelledOptionalPropertyFound(validationResult))
 }
 
 func TestValidationErrorMatch(t *testing.T) {
 	propertiesMap := properties.NewFromHashmap(validMap)
-	validationResult := Validate(propertiesMap, validSchemaWithReferences, schemasPath)
-	require.False(t, ValidationErrorMatch("", "", "", "", validationResult, schemasPath))
+	validationResult := Validate(propertiesMap, validSchemaWithReferences)
+	require.False(t, ValidationErrorMatch("", "", "", "", validationResult))
 
 	propertiesMap.Set("property2", "fOo")
-	validationResult = Validate(propertiesMap, validSchemaWithReferences, schemasPath)
-	require.False(t, ValidationErrorMatch("nomatch", "nomatch", "nomatch", "nomatch", validationResult, schemasPath))
-	require.False(t, ValidationErrorMatch("^#/property2$", "nomatch", "nomatch", "nomatch", validationResult, schemasPath))
-	require.False(t, ValidationErrorMatch("^#/property2$", "/pattern$", "nomatch", "nomatch", validationResult, schemasPath))
-	require.False(t, ValidationErrorMatch("^#/property2$", "/pattern$", `^\^\[a-z\]\+\$$`, "nomatch", validationResult, schemasPath))
-	require.True(t, ValidationErrorMatch("^#/property2$", "/pattern$", `^"\^\[a-z\]\+\$"$`, "", validationResult, schemasPath))
-	require.True(t, ValidationErrorMatch("", "", "", "", validationResult, schemasPath))
+	validationResult = Validate(propertiesMap, validSchemaWithReferences)
+	require.False(t, ValidationErrorMatch("nomatch", "nomatch", "nomatch", "nomatch", validationResult))
+	require.False(t, ValidationErrorMatch("^#/property2$", "nomatch", "nomatch", "nomatch", validationResult))
+	require.False(t, ValidationErrorMatch("^#/property2$", "/pattern$", "nomatch", "nomatch", validationResult))
+	require.False(t, ValidationErrorMatch("^#/property2$", "/pattern$", `^\^\[a-z\]\+\$$`, "nomatch", validationResult))
+	require.True(t, ValidationErrorMatch("^#/property2$", "/pattern$", `^"\^\[a-z\]\+\$"$`, "", validationResult))
+	require.True(t, ValidationErrorMatch("", "", "", "", validationResult))
 
 	propertiesMap.Set("property3", "bAz")
-	validationResult = Validate(propertiesMap, validSchemaWithReferences, schemasPath)
-	require.True(t, ValidationErrorMatch("^#/property3$", "/pattern$", "", "", validationResult, schemasPath), "Match pointer below logic inversion keyword")
+	validationResult = Validate(propertiesMap, validSchemaWithReferences)
+	require.True(t, ValidationErrorMatch("^#/property3$", "/pattern$", "", "", validationResult), "Match pointer below logic inversion keyword")
 
 	propertiesMap = properties.NewFromHashmap(validMap)
 	propertiesMap.Remove("property1")
-	validationResult = Validate(propertiesMap, validSchemaWithReferences, schemasPath)
-	require.False(t, ValidationErrorMatch("nomatch", "nomatch", "nomatch", "nomatch", validationResult, schemasPath))
-	require.True(t, ValidationErrorMatch("", "", "", "^#/property1$", validationResult, schemasPath))
+	validationResult = Validate(propertiesMap, validSchemaWithReferences)
+	require.False(t, ValidationErrorMatch("nomatch", "nomatch", "nomatch", "nomatch", validationResult))
+	require.True(t, ValidationErrorMatch("", "", "", "^#/property1$", validationResult))
 }
 
 func Test_loadReferencedSchema(t *testing.T) {
 	compiler := jsonschema.NewCompiler()
 
-	require.Error(t, loadReferencedSchema(compiler, "nonexistent.json", schemasPath))
-	require.Error(t, loadReferencedSchema(compiler, "schema-without-id.json", schemasPath))
-	require.Nil(t, loadReferencedSchema(compiler, "referenced-schema-2.json", schemasPath))
+	require.Panics(
+		t,
+		func() {
+			loadReferencedSchema(compiler, "nonexistent.json", testdata.Asset)
+		},
+	)
+	require.Error(t, loadReferencedSchema(compiler, "schema-without-id.json", testdata.Asset))
+	require.Nil(t, loadReferencedSchema(compiler, "referenced-schema-2.json", testdata.Asset))
 }
 
 func Test_schemaID(t *testing.T) {
-	_, err := schemaID("schema-without-id.json", schemasPath)
+	_, err := schemaID("schema-without-id.json", testdata.Asset)
 	require.NotNil(t, err)
 
-	id, err := schemaID("valid-schema.json", schemasPath)
+	id, err := schemaID("valid-schema.json", testdata.Asset)
 	require.Equal(t, "https://raw.githubusercontent.com/arduino/arduino-check/main/check/checkdata/schema/testdata/schema-with-references.json", id)
 	require.Nil(t, err)
 }
 
-func Test_pathURI(t *testing.T) {
-	switch runtime.GOOS {
-	case "windows":
-		require.Equal(t, "file:///c:/foo%20bar", pathURI(paths.New("c:/foo bar")))
-	default:
-		require.Equal(t, "file:///foo%20bar", pathURI(paths.New("/foo bar")))
-	}
-}
-
 func Test_validationErrorSchemaPointerValue(t *testing.T) {
-	validationError := jsonschema.ValidationError{
-		SchemaURL: "https://raw.githubusercontent.com/arduino/arduino-check/main/check/checkdata/schema/testdata/referenced-schema-1.json",
-		SchemaPtr: "#/definitions/patternObject/pattern",
+	validationError := ValidationResult{
+		Result: &jsonschema.ValidationError{
+			SchemaURL: "https://raw.githubusercontent.com/arduino/arduino-check/main/check/checkdata/schema/testdata/referenced-schema-1.json",
+			SchemaPtr: "#/definitions/patternObject/pattern",
+		},
+		dataLoader: testdata.Asset,
 	}
 
-	schemaPointerValueInterface := validationErrorSchemaPointerValue(&validationError, schemasPath)
+	schemaPointerValueInterface := validationErrorSchemaPointerValue(validationError)
 	schemaPointerValue, ok := schemaPointerValueInterface.(string)
 	require.True(t, ok)
 	require.Equal(t, "^[a-z]+$", schemaPointerValue)

@@ -53,7 +53,7 @@ func TestInitializeForPlatform(t *testing.T) {
 			ProjectType:      projecttype.Platform,
 			SuperprojectType: projecttype.Platform,
 		}
-		Initialize(testProject, nil)
+		Initialize(testProject)
 
 		testTable.boardsTxtLoadErrorAssertion(t, BoardsTxtLoadError(), testTable.testName)
 		if BoardsTxtLoadError() == nil {

@@ -20,39 +20,38 @@ import (
 	"fmt"
 	"regexp"
 
-	"github.com/arduino/go-paths-helper"
 	"github.com/ory/jsonschema/v3"
 	"github.com/sirupsen/logrus"
 )
 
 // RequiredPropertyMissing returns whether the given required property is missing from the document.
-func RequiredPropertyMissing(propertyName string, validationResult *jsonschema.ValidationError, schemasPath *paths.Path) bool {
-	return ValidationErrorMatch("#", "/required$", "", "^#/"+propertyName+"$", validationResult, schemasPath)
+func RequiredPropertyMissing(propertyName string, validationResult ValidationResult) bool {
+	return ValidationErrorMatch("#", "/required$", "", "^#/"+propertyName+"$", validationResult)
 }
 
 // PropertyPatternMismatch returns whether the given property did not match the regular expression defined in the JSON schema.
-func PropertyPatternMismatch(propertyName string, validationResult *jsonschema.ValidationError, schemasPath *paths.Path) bool {
-	return ValidationErrorMatch("#/"+propertyName, "/pattern$", "", "", validationResult, schemasPath)
+func PropertyPatternMismatch(propertyName string, validationResult ValidationResult) bool {
+	return ValidationErrorMatch("#/"+propertyName, "/pattern$", "", "", validationResult)
 }
 
 // PropertyLessThanMinLength returns whether the given property is less than the minimum length allowed by the schema.
-func PropertyLessThanMinLength(propertyName string, validationResult *jsonschema.ValidationError, schemasPath *paths.Path) bool {
-	return ValidationErrorMatch("^#/"+propertyName+"$", "/minLength$", "", "", validationResult, schemasPath)
+func PropertyLessThanMinLength(propertyName string, validationResult ValidationResult) bool {
+	return ValidationErrorMatch("^#/"+propertyName+"$", "/minLength$", "", "", validationResult)
 }
 
 // PropertyGreaterThanMaxLength returns whether the given property is greater than the maximum length allowed by the schema.
-func PropertyGreaterThanMaxLength(propertyName string, validationResult *jsonschema.ValidationError, schemasPath *paths.Path) bool {
-	return ValidationErrorMatch("^#/"+propertyName+"$", "/maxLength$", "", "", validationResult, schemasPath)
+func PropertyGreaterThanMaxLength(propertyName string, validationResult ValidationResult) bool {
+	return ValidationErrorMatch("^#/"+propertyName+"$", "/maxLength$", "", "", validationResult)
 }
 
 // PropertyEnumMismatch returns whether the given property does not match any of the items in the enum array.
-func PropertyEnumMismatch(propertyName string, validationResult *jsonschema.ValidationError, schemasPath *paths.Path) bool {
-	return ValidationErrorMatch("#/"+propertyName, "/enum$", "", "", validationResult, schemasPath)
+func PropertyEnumMismatch(propertyName string, validationResult ValidationResult) bool {
+	return ValidationErrorMatch("#/"+propertyName, "/enum$", "", "", validationResult)
 }
 
 // MisspelledOptionalPropertyFound returns whether a misspelled optional property was found.
-func MisspelledOptionalPropertyFound(validationResult *jsonschema.ValidationError, schemasPath *paths.Path) bool {
-	return ValidationErrorMatch("#/", "/misspelledOptionalProperties/", "", "", validationResult, schemasPath)
+func MisspelledOptionalPropertyFound(validationResult ValidationResult) bool {
+	return ValidationErrorMatch("#/", "/misspelledOptionalProperties/", "", "", validationResult)
 }
 
 // ValidationErrorMatch returns whether the given query matches against the JSON schema validation error.
@@ -62,10 +61,9 @@ func ValidationErrorMatch(
 	schemaPointerQuery,
 	schemaPointerValueQuery,
 	failureContextQuery string,
-	validationResult *jsonschema.ValidationError,
-	schemasPath *paths.Path,
+	validationResult ValidationResult,
 ) bool {
-	if validationResult == nil {
+	if validationResult.Result == nil {
 		// No error, so nothing to match.
 		logrus.Trace("Schema validation passed. No match is possible.")
 		return false
@@ -82,7 +80,7 @@ func ValidationErrorMatch(
 		schemaPointerValueRegexp,
 		failureContextRegexp,
 		validationResult,
-		schemasPath)
+	)
 }
 
 func validationErrorMatch(
@@ -90,20 +88,19 @@ func validationErrorMatch(
 	schemaPointerRegexp,
 	schemaPointerValueRegexp,
 	failureContextRegexp *regexp.Regexp,
-	validationError *jsonschema.ValidationError,
-	schemasPath *paths.Path,
+	validationError ValidationResult,
 ) bool {
 	logrus.Trace("--------Checking schema validation failure match--------")
-	logrus.Tracef("Checking instance pointer: %s match with regexp: %s", validationError.InstancePtr, instancePointerRegexp)
-	if instancePointerRegexp.MatchString(validationError.InstancePtr) {
+	logrus.Tracef("Checking instance pointer: %s match with regexp: %s", validationError.Result.InstancePtr, instancePointerRegexp)
+	if instancePointerRegexp.MatchString(validationError.Result.InstancePtr) {
 		logrus.Tracef("Matched!")
-		matchedSchemaPointer := validationErrorSchemaPointerMatch(schemaPointerRegexp, validationError, schemasPath)
+		matchedSchemaPointer := validationErrorSchemaPointerMatch(schemaPointerRegexp, validationError)
 		if matchedSchemaPointer != "" {
 			logrus.Tracef("Matched!")
-			if validationErrorSchemaPointerValueMatch(schemaPointerValueRegexp, validationError.SchemaURL, matchedSchemaPointer, schemasPath) {
+			if validationErrorSchemaPointerValueMatch(schemaPointerValueRegexp, validationError, matchedSchemaPointer) {
 				logrus.Tracef("Matched!")
-				logrus.Tracef("Checking failure context: %v match with regexp: %s", validationError.Context, failureContextRegexp)
-				if validationErrorContextMatch(failureContextRegexp, validationError) {
+				logrus.Tracef("Checking failure context: %v match with regexp: %s", validationError.Result.Context, failureContextRegexp)
+				if validationErrorContextMatch(failureContextRegexp, validationError.Result) {
 					logrus.Tracef("Matched!")
 					return true
 				}
@@ -112,14 +109,16 @@ func validationErrorMatch(
 	}
 
 	// Recursively check all causes for a match.
-	for _, validationErrorCause := range validationError.Causes {
+	for _, validationErrorCause := range validationError.Result.Causes {
 		if validationErrorMatch(
 			instancePointerRegexp,
 			schemaPointerRegexp,
 			schemaPointerValueRegexp,
 			failureContextRegexp,
-			validationErrorCause,
-			schemasPath,
+			ValidationResult{
+				Result:     validationErrorCause,
+				dataLoader: validationError.dataLoader,
+			},
 		) {
 			return true
 		}
@@ -131,18 +130,17 @@ func validationErrorMatch(
 // validationErrorSchemaPointerMatch matches the JSON schema pointer related to the validation failure against a regular expression.
 func validationErrorSchemaPointerMatch(
 	schemaPointerRegexp *regexp.Regexp,
-	validationError *jsonschema.ValidationError,
-	schemasPath *paths.Path,
+	validationError ValidationResult,
 ) string {
-	logrus.Tracef("Checking schema pointer: %s match with regexp: %s", validationError.SchemaPtr, schemaPointerRegexp)
-	if schemaPointerRegexp.MatchString(validationError.SchemaPtr) {
-		return validationError.SchemaPtr
+	logrus.Tracef("Checking schema pointer: %s match with regexp: %s", validationError.Result.SchemaPtr, schemaPointerRegexp)
+	if schemaPointerRegexp.MatchString(validationError.Result.SchemaPtr) {
+		return validationError.Result.SchemaPtr
 	}
 
 	// The schema validator does not provide full pointer past logic inversion keywords to the lowest level keywords related to the validation error cause.
 	// Therefore, the sub-keywords must be checked for matches in order to be able to interpret the exact cause of the failure.
-	if regexp.MustCompile("(/not)|(/oneOf)$").MatchString(validationError.SchemaPtr) {
-		return validationErrorSchemaSubPointerMatch(schemaPointerRegexp, validationError.SchemaPtr, validationErrorSchemaPointerValue(validationError, schemasPath))
+	if regexp.MustCompile("(/not)|(/oneOf)$").MatchString(validationError.Result.SchemaPtr) {
+		return validationErrorSchemaSubPointerMatch(schemaPointerRegexp, validationError.Result.SchemaPtr, validationErrorSchemaPointerValue(validationError))
 	}
 
 	return ""
@@ -184,11 +182,10 @@ func validationErrorSchemaSubPointerMatch(schemaPointerRegexp *regexp.Regexp, pa
 // it matches against the given regular expression.
 func validationErrorSchemaPointerValueMatch(
 	schemaPointerValueRegexp *regexp.Regexp,
-	schemaURL,
+	validationError ValidationResult,
 	schemaPointer string,
-	schemasPath *paths.Path,
 ) bool {
-	marshalledSchemaPointerValue, err := json.Marshal(schemaPointerValue(schemaURL, schemaPointer, schemasPath))
+	marshalledSchemaPointerValue, err := json.Marshal(schemaPointerValue(validationError.Result.SchemaURL, schemaPointer, validationError.dataLoader))
 	if err != nil {
 		panic(err)
 	}

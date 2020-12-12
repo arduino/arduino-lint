@@ -19,9 +19,9 @@ package libraryproperties
 import (
 	"github.com/arduino/arduino-check/check/checkdata/schema"
 	"github.com/arduino/arduino-check/check/checkdata/schema/compliancelevel"
+	"github.com/arduino/arduino-check/check/checkdata/schema/schemadata"
 	"github.com/arduino/go-paths-helper"
 	"github.com/arduino/go-properties-orderedmap"
-	"github.com/ory/jsonschema/v3"
 )
 
 // Properties parses the library.properties from the given path and returns the data.
@@ -29,26 +29,26 @@ func Properties(libraryPath *paths.Path) (*properties.Map, error) {
 	return properties.SafeLoadFromPath(libraryPath.Join("library.properties"))
 }
 
-var schemaObject = make(map[compliancelevel.Type]*jsonschema.Schema)
+var schemaObject = make(map[compliancelevel.Type]schema.Schema)
 
 // Validate validates library.properties data against the JSON schema and returns a map of the result for each compliance level.
-func Validate(libraryProperties *properties.Map, schemasPath *paths.Path) map[compliancelevel.Type]*jsonschema.ValidationError {
+func Validate(libraryProperties *properties.Map) map[compliancelevel.Type]schema.ValidationResult {
 	referencedSchemaFilenames := []string{
 		"general-definitions-schema.json",
 		"arduino-library-properties-definitions-schema.json",
 	}
 
-	var validationResults = make(map[compliancelevel.Type]*jsonschema.ValidationError)
+	var validationResults = make(map[compliancelevel.Type]schema.ValidationResult)
 
-	if schemaObject[compliancelevel.Permissive] == nil { // Only compile the schemas once.
-		schemaObject[compliancelevel.Permissive] = schema.Compile("arduino-library-properties-permissive-schema.json", referencedSchemaFilenames, schemasPath)
-		schemaObject[compliancelevel.Specification] = schema.Compile("arduino-library-properties-schema.json", referencedSchemaFilenames, schemasPath)
-		schemaObject[compliancelevel.Strict] = schema.Compile("arduino-library-properties-strict-schema.json", referencedSchemaFilenames, schemasPath)
+	if schemaObject[compliancelevel.Permissive].Compiled == nil { // Only compile the schemas once.
+		schemaObject[compliancelevel.Permissive] = schema.Compile("arduino-library-properties-permissive-schema.json", referencedSchemaFilenames, schemadata.Asset)
+		schemaObject[compliancelevel.Specification] = schema.Compile("arduino-library-properties-schema.json", referencedSchemaFilenames, schemadata.Asset)
+		schemaObject[compliancelevel.Strict] = schema.Compile("arduino-library-properties-strict-schema.json", referencedSchemaFilenames, schemadata.Asset)
 	}
 
-	validationResults[compliancelevel.Permissive] = schema.Validate(libraryProperties, schemaObject[compliancelevel.Permissive], schemasPath)
-	validationResults[compliancelevel.Specification] = schema.Validate(libraryProperties, schemaObject[compliancelevel.Specification], schemasPath)
-	validationResults[compliancelevel.Strict] = schema.Validate(libraryProperties, schemaObject[compliancelevel.Strict], schemasPath)
+	validationResults[compliancelevel.Permissive] = schema.Validate(libraryProperties, schemaObject[compliancelevel.Permissive])
+	validationResults[compliancelevel.Specification] = schema.Validate(libraryProperties, schemaObject[compliancelevel.Specification])
+	validationResults[compliancelevel.Strict] = schema.Validate(libraryProperties, schemaObject[compliancelevel.Strict])
 
 	return validationResults
 }

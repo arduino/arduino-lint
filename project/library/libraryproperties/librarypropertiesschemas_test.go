@@ -18,18 +18,13 @@ package libraryproperties_test
 
 import (
 	"fmt"
-	"os"
 	"strings"
 	"testing"
 
 	"github.com/arduino/arduino-check/check/checkdata/schema"
 	"github.com/arduino/arduino-check/check/checkdata/schema/compliancelevel"
 	"github.com/arduino/arduino-check/project/library/libraryproperties"
-	"github.com/arduino/go-paths-helper"
 	"github.com/arduino/go-properties-orderedmap"
-	"github.com/ory/jsonschema/v3"
-	"github.com/sirupsen/logrus"
-	"github.com/xeipuuv/gojsonschema"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -51,13 +46,6 @@ var validLibraryPropertiesMap = map[string]string{
 	"ldflags":       "-lm",
 }
 
-var schemasPath *paths.Path
-
-func init() {
-	workingPath, _ := os.Getwd()
-	schemasPath = paths.New(workingPath).Join("..", "..", "..", "etc", "schemas")
-}
-
 type propertyValueTestTable struct {
 	testName        string
 	propertyValue   string
@@ -67,26 +55,26 @@ type propertyValueTestTable struct {
 
 func checkPropertyPatternMismatch(propertyName string, testTables []propertyValueTestTable, t *testing.T) {
 	libraryProperties := properties.NewFromHashmap(validLibraryPropertiesMap)
-	var validationResult map[compliancelevel.Type]*jsonschema.ValidationError
+	var validationResult map[compliancelevel.Type]schema.ValidationResult
 
 	for _, testTable := range testTables {
 		validationResult = changeValueUpdateValidationResult(propertyName, testTable.propertyValue, libraryProperties, validationResult)
 
 		t.Run(fmt.Sprintf("%s (%s)", testTable.testName, testTable.complianceLevel), func(t *testing.T) {
-			testTable.assertion(t, schema.PropertyPatternMismatch(propertyName, validationResult[testTable.complianceLevel], schemasPath))
+			testTable.assertion(t, schema.PropertyPatternMismatch(propertyName, validationResult[testTable.complianceLevel]))
 		})
 	}
 }
 
 func checkPropertyEnumMismatch(propertyName string, testTables []propertyValueTestTable, t *testing.T) {
 	libraryProperties := properties.NewFromHashmap(validLibraryPropertiesMap)
-	var validationResult map[compliancelevel.Type]*jsonschema.ValidationError
+	var validationResult map[compliancelevel.Type]schema.ValidationResult
 
 	for _, testTable := range testTables {
 		validationResult = changeValueUpdateValidationResult(propertyName, testTable.propertyValue, libraryProperties, validationResult)
 
 		t.Run(fmt.Sprintf("%s (%s)", testTable.testName, testTable.complianceLevel), func(t *testing.T) {
-			testTable.assertion(t, schema.PropertyEnumMismatch(propertyName, validationResult[testTable.complianceLevel], schemasPath))
+			testTable.assertion(t, schema.PropertyEnumMismatch(propertyName, validationResult[testTable.complianceLevel]))
 		})
 	}
 }
@@ -101,63 +89,33 @@ type validationErrorTestTable struct {
 
 func checkValidationErrorMatch(propertyName string, testTables []validationErrorTestTable, t *testing.T) {
 	libraryProperties := properties.NewFromHashmap(validLibraryPropertiesMap)
-	var validationResult map[compliancelevel.Type]*jsonschema.ValidationError
+	var validationResult map[compliancelevel.Type]schema.ValidationResult
 
 	for _, testTable := range testTables {
 		validationResult = changeValueUpdateValidationResult(propertyName, testTable.propertyValue, libraryProperties, validationResult)
 
 		t.Run(fmt.Sprintf("%s (%s)", testTable.testName, testTable.complianceLevel), func(t *testing.T) {
-			testTable.assertion(t, schema.ValidationErrorMatch("#/"+propertyName, testTable.schemaPointerQuery, "", "", validationResult[testTable.complianceLevel], schemasPath))
+			testTable.assertion(t, schema.ValidationErrorMatch("#/"+propertyName, testTable.schemaPointerQuery, "", "", validationResult[testTable.complianceLevel]))
 		})
 	}
 }
 
-func changeValueUpdateValidationResult(propertyName string, propertyValue string, libraryProperties *properties.Map, validationResult map[compliancelevel.Type]*jsonschema.ValidationError) map[compliancelevel.Type]*jsonschema.ValidationError {
+func changeValueUpdateValidationResult(propertyName string, propertyValue string, libraryProperties *properties.Map, validationResult map[compliancelevel.Type]schema.ValidationResult) map[compliancelevel.Type]schema.ValidationResult {
 	if validationResult == nil || libraryProperties.Get(propertyName) != propertyValue {
 		libraryProperties.Set(propertyName, propertyValue)
-		return libraryproperties.Validate(libraryProperties, schemasPath)
+		return libraryproperties.Validate(libraryProperties)
 	}
 
 	// No change to property, return the previous validationResult.
 	return validationResult
 }
 
-func TestCompile(t *testing.T) {
-	schemaLoader := gojsonschema.NewSchemaLoader()
-	schemaLoader.Validate = true // Enable meta-schema validation when schemas are added and compiled
-
-	directoryListing, _ := schemasPath.ReadDir()
-	directoryListing.FilterOutDirs()
-	directoryListing.FilterSuffix(".json")
-
-	referencedSchemaFilenames := []string{}
-	// Generate a list of referenced schemas
-	logrus.Trace("Discovering definition schemas:")
-	for _, schemaPath := range directoryListing {
-		if schemaPath.HasSuffix("definitions-schema.json") {
-			logrus.Trace(schemaPath)
-			referencedSchemaFilenames = append(referencedSchemaFilenames, schemaPath.Base())
-		}
-	}
-
-	// Compile the parent schemas
-	logrus.Trace("Validating schemas:")
-	for _, schemaPath := range directoryListing {
-		if !schemaPath.HasSuffix("definitions-schema.json") {
-			logrus.Trace(schemaPath)
-			assert.NotPanics(t, func() {
-				schema.Compile(schemaPath.Base(), referencedSchemaFilenames, schemasPath)
-			})
-		}
-	}
-}
-
 func TestPropertiesValid(t *testing.T) {
 	libraryProperties := properties.NewFromHashmap(validLibraryPropertiesMap)
-	validationResult := libraryproperties.Validate(libraryProperties, schemasPath)
-	assert.Nil(t, validationResult[compliancelevel.Permissive])
-	assert.Nil(t, validationResult[compliancelevel.Specification])
-	assert.Nil(t, validationResult[compliancelevel.Strict])
+	validationResult := libraryproperties.Validate(libraryProperties)
+	assert.Nil(t, validationResult[compliancelevel.Permissive].Result)
+	assert.Nil(t, validationResult[compliancelevel.Specification].Result)
+	assert.Nil(t, validationResult[compliancelevel.Strict].Result)
 }
 
 func TestPropertiesMinLength(t *testing.T) {
@@ -200,7 +158,7 @@ func TestPropertiesMinLength(t *testing.T) {
 	}
 
 	libraryProperties := properties.NewFromHashmap(validLibraryPropertiesMap)
-	var validationResult map[compliancelevel.Type]*jsonschema.ValidationError
+	var validationResult map[compliancelevel.Type]schema.ValidationResult
 
 	// Test schema validation results with value length < minimum.
 	for _, tt := range tests {
@@ -213,12 +171,12 @@ func TestPropertiesMinLength(t *testing.T) {
 			if !propertyExists || len(value) >= tt.minLength {
 				libraryProperties = properties.NewFromHashmap(validLibraryPropertiesMap)
 				libraryProperties.Set(tt.propertyName, strings.Repeat("a", tt.minLength-1))
-				validationResult = libraryproperties.Validate(libraryProperties, schemasPath)
+				validationResult = libraryproperties.Validate(libraryProperties)
 			}
 		}
 
 		t.Run(fmt.Sprintf("%s less than minimum length of %d (%s)", tt.propertyName, tt.minLength, tt.complianceLevel), func(t *testing.T) {
-			assertion(t, schema.PropertyLessThanMinLength(tt.propertyName, validationResult[tt.complianceLevel], schemasPath))
+			assertion(t, schema.PropertyLessThanMinLength(tt.propertyName, validationResult[tt.complianceLevel]))
 		})
 	}
 
@@ -227,11 +185,11 @@ func TestPropertiesMinLength(t *testing.T) {
 		if len(libraryProperties.Get(tt.propertyName)) < tt.minLength {
 			libraryProperties = properties.NewFromHashmap(validLibraryPropertiesMap)
 			libraryProperties.Set(tt.propertyName, strings.Repeat("a", tt.minLength))
-			validationResult = libraryproperties.Validate(libraryProperties, schemasPath)
+			validationResult = libraryproperties.Validate(libraryProperties)
 		}
 
 		t.Run(fmt.Sprintf("%s at minimum length of %d (%s)", tt.propertyName, tt.minLength, tt.complianceLevel), func(t *testing.T) {
-			assert.False(t, schema.PropertyLessThanMinLength(tt.propertyName, validationResult[tt.complianceLevel], schemasPath))
+			assert.False(t, schema.PropertyLessThanMinLength(tt.propertyName, validationResult[tt.complianceLevel]))
 		})
 	}
 }
@@ -248,18 +206,18 @@ func TestPropertiesMaxLength(t *testing.T) {
 	}
 
 	libraryProperties := properties.NewFromHashmap(validLibraryPropertiesMap)
-	var validationResult map[compliancelevel.Type]*jsonschema.ValidationError
+	var validationResult map[compliancelevel.Type]schema.ValidationResult
 
 	// Test schema validation results with value length > maximum.
 	for _, tt := range tests {
 		if len(libraryProperties.Get(tt.propertyName)) <= tt.maxLength {
 			libraryProperties = properties.NewFromHashmap(validLibraryPropertiesMap)
 			libraryProperties.Set(tt.propertyName, strings.Repeat("a", tt.maxLength+1))
-			validationResult = libraryproperties.Validate(libraryProperties, schemasPath)
+			validationResult = libraryproperties.Validate(libraryProperties)
 		}
 
 		t.Run(fmt.Sprintf("%s greater than maximum length of %d (%s)", tt.propertyName, tt.maxLength, tt.complianceLevel), func(t *testing.T) {
-			assert.True(t, schema.PropertyGreaterThanMaxLength(tt.propertyName, validationResult[tt.complianceLevel], schemasPath))
+			assert.True(t, schema.PropertyGreaterThanMaxLength(tt.propertyName, validationResult[tt.complianceLevel]))
 		})
 	}
 
@@ -268,11 +226,11 @@ func TestPropertiesMaxLength(t *testing.T) {
 		if len(libraryProperties.Get(tt.propertyName)) > tt.maxLength {
 			libraryProperties = properties.NewFromHashmap(validLibraryPropertiesMap)
 			libraryProperties.Set(tt.propertyName, strings.Repeat("a", tt.maxLength))
-			validationResult = libraryproperties.Validate(libraryProperties, schemasPath)
+			validationResult = libraryproperties.Validate(libraryProperties)
 		}
 
 		t.Run(fmt.Sprintf("%s at maximum length of %d (%s)", tt.propertyName, tt.maxLength, tt.complianceLevel), func(t *testing.T) {
-			assert.False(t, schema.PropertyGreaterThanMaxLength(tt.propertyName, validationResult[tt.complianceLevel], schemasPath))
+			assert.False(t, schema.PropertyGreaterThanMaxLength(tt.propertyName, validationResult[tt.complianceLevel]))
 		})
 	}
 }
@@ -462,7 +420,7 @@ func TestPropertyNames(t *testing.T) {
 	}
 
 	libraryProperties := properties.NewFromHashmap(validLibraryPropertiesMap)
-	var validationResult map[compliancelevel.Type]*jsonschema.ValidationError
+	var validationResult map[compliancelevel.Type]schema.ValidationResult
 
 	for _, testTable := range testTables {
 		_, removePropertyPresent := libraryProperties.GetOk(testTable.removePropertyName)
@@ -471,11 +429,11 @@ func TestPropertyNames(t *testing.T) {
 			libraryProperties = properties.NewFromHashmap(validLibraryPropertiesMap)
 			libraryProperties.Remove(testTable.removePropertyName)
 			libraryProperties.Set(testTable.addPropertyName, "foo")
-			validationResult = libraryproperties.Validate(libraryProperties, schemasPath)
+			validationResult = libraryproperties.Validate(libraryProperties)
 		}
 
 		t.Run(fmt.Sprintf("%s (%s)", testTable.testName, testTable.complianceLevel), func(t *testing.T) {
-			testTable.assertion(t, schema.MisspelledOptionalPropertyFound(validationResult[testTable.complianceLevel], schemasPath))
+			testTable.assertion(t, schema.MisspelledOptionalPropertyFound(validationResult[testTable.complianceLevel]))
 		})
 	}
 }
@@ -544,18 +502,18 @@ func TestRequired(t *testing.T) {
 	}
 
 	libraryProperties := properties.NewFromHashmap(validLibraryPropertiesMap)
-	var validationResult map[compliancelevel.Type]*jsonschema.ValidationError
+	var validationResult map[compliancelevel.Type]schema.ValidationResult
 
 	for _, testTable := range testTables {
 		_, propertyExists := libraryProperties.GetOk(testTable.propertyName)
 		if propertyExists {
 			libraryProperties = properties.NewFromHashmap(validLibraryPropertiesMap)
 			libraryProperties.Remove(testTable.propertyName)
-			validationResult = libraryproperties.Validate(libraryProperties, schemasPath)
+			validationResult = libraryproperties.Validate(libraryProperties)
 		}
 
 		t.Run(fmt.Sprintf("%s (%s)", testTable.propertyName, testTable.complianceLevel), func(t *testing.T) {
-			testTable.assertion(t, schema.RequiredPropertyMissing(testTable.propertyName, validationResult[testTable.complianceLevel], schemasPath))
+			testTable.assertion(t, schema.RequiredPropertyMissing(testTable.propertyName, validationResult[testTable.complianceLevel]))
 		})
 	}
 }
@@ -564,19 +522,19 @@ func TestPropertiesMaintainerOrEmailRequired(t *testing.T) {
 	libraryProperties := properties.NewFromHashmap(validLibraryPropertiesMap)
 	libraryProperties.Remove("maintainer")
 	libraryProperties.Set("email", "foo@example.com")
-	validationResult := libraryproperties.Validate(libraryProperties, schemasPath)
+	validationResult := libraryproperties.Validate(libraryProperties)
 	assert.False(
 		t,
-		schema.RequiredPropertyMissing("maintainer", validationResult[compliancelevel.Permissive], schemasPath),
+		schema.RequiredPropertyMissing("maintainer", validationResult[compliancelevel.Permissive]),
 		"maintainer property is not required when email property is defined.",
 	)
 	assert.True(
 		t,
-		schema.RequiredPropertyMissing("maintainer", validationResult[compliancelevel.Specification], schemasPath),
+		schema.RequiredPropertyMissing("maintainer", validationResult[compliancelevel.Specification]),
 		"maintainer property is unconditionally required.",
 	)
 	assert.True(t,
-		schema.RequiredPropertyMissing("maintainer", validationResult[compliancelevel.Strict], schemasPath),
+		schema.RequiredPropertyMissing("maintainer", validationResult[compliancelevel.Strict]),
 		"maintainer property is unconditionally required.",
 	)
 }

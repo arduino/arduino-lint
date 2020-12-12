@@ -223,15 +223,6 @@ func TargetPaths() paths.PathList {
 	return targetPaths
 }
 
-// SchemasPath returns the path to the folder containing the JSON schemas.
-func SchemasPath() *paths.Path {
-	executablePath, err := os.Executable()
-	if err != nil {
-		panic(err)
-	}
-	return paths.New(executablePath).Parent().Join("etc", "schemas")
-}
-
 func EnableLogging(enable bool) {
 	if enable {
 		logrus.SetOutput(defaultLogOutput) // Enable log output.
