@@ -91,8 +91,7 @@ func TestRecord(t *testing.T) {
 	assert.Equal(t, checkedProject.ProjectType.String(), projectReport.ProjectType)
 	projectConfigurationReport := projectReport.Configuration
 	assert.Equal(t, checkmode.Compliance(configuration.CheckModes(checkedProject.ProjectType)), projectConfigurationReport.Compliance)
-	assert.Equal(t, configuration.CheckModes(checkedProject.ProjectType)[checkmode.LibraryManagerSubmission], projectConfigurationReport.LibraryManagerSubmit)
-	assert.Equal(t, configuration.CheckModes(checkedProject.ProjectType)[checkmode.LibraryManagerIndexed], projectConfigurationReport.LibraryManagerUpdate)
+	assert.Equal(t, checkmode.LibraryManager(configuration.CheckModes(checkedProject.ProjectType)), projectConfigurationReport.LibraryManager)
 	assert.Equal(t, configuration.CheckModes(checkedProject.ProjectType)[checkmode.Official], projectConfigurationReport.Official)
 	assert.Equal(t, 1, len(results.Projects[0].Checks), "Passing check reports should be written to report in verbose mode")
 	checkReport := projectReport.Checks[0]

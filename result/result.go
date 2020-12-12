@@ -56,10 +56,9 @@ type projectReportType struct {
 }
 
 type projectConfigurationReportType struct {
-	Compliance           string `json:"compliance"`
-	LibraryManagerSubmit bool   `json:"libraryManagerSubmit"`
-	LibraryManagerUpdate bool   `json:"libraryManagerUpdate"`
-	Official             bool   `json:"official"`
+	Compliance     string `json:"compliance"`
+	LibraryManager string `json:"libraryManager"`
+	Official       bool   `json:"official"`
 }
 
 type checkReportType struct {
@@ -121,10 +120,9 @@ func (results *Type) Record(checkedProject project.Type, checkConfiguration chec
 				Path:        checkedProject.Path,
 				ProjectType: checkedProject.ProjectType.String(),
 				Configuration: projectConfigurationReportType{
-					Compliance:           checkmode.Compliance(configuration.CheckModes(checkedProject.ProjectType)),
-					LibraryManagerSubmit: configuration.CheckModes(checkedProject.ProjectType)[checkmode.LibraryManagerSubmission],
-					LibraryManagerUpdate: configuration.CheckModes(checkedProject.ProjectType)[checkmode.LibraryManagerIndexed],
-					Official:             configuration.CheckModes(checkedProject.ProjectType)[checkmode.Official],
+					Compliance:     checkmode.Compliance(configuration.CheckModes(checkedProject.ProjectType)),
+					LibraryManager: checkmode.LibraryManager(configuration.CheckModes(checkedProject.ProjectType)),
+					Official:       configuration.CheckModes(checkedProject.ProjectType)[checkmode.Official],
 				},
 				Checks: []checkReportType{},
 			},

@@ -105,3 +105,14 @@ func Compliance(checkModes map[Type]bool) string {
 
 	panic(fmt.Errorf("Unrecognized compliance configuration"))
 }
+
+// LibraryManager returns the string identifier for the Library Manager configuration mode.
+func LibraryManager(checkModes map[Type]bool) string {
+	for key, value := range checkModes {
+		if value && (key == LibraryManagerSubmission || key == LibraryManagerIndexed) {
+			return key.String()
+		}
+	}
+
+	return "false"
+}
