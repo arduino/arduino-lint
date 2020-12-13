@@ -84,7 +84,7 @@ tasks:
   go:format:
     desc: Format Go code
     cmds:
-      - go fmt {{ default .DEFAULT_PACKAGES .PACKAGES }}
+      - gofmt -l -w {{ default .DEFAULT_PATHS .PATHS }}
 
   docs:check:
     desc: Lint and check formatting of documentation files
