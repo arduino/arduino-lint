@@ -9,3 +9,9 @@
 - Libraries
 
 For usage instructions, see [the documentation](https://arduino.github.io/arduino-lint/latest/)
+
+## Continuous Integration
+
+There is a GitHub Actions action that makes it easy to use **arduino-lint**` in your CI workflows!
+
+See https://github.com/arduino/arduino-lint-action for more information.
