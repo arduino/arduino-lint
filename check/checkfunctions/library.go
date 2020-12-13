@@ -897,6 +897,72 @@ func LibraryPropertiesArchitecturesFieldSoloAlias() (result checkresult.Type, ou
 	return checkresult.Pass, ""
 }
 
+// LibraryPropertiesArchitecturesFieldValueCase checks for incorrect case of common architectures.
+func LibraryPropertiesArchitecturesFieldValueCase() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, "Couldn't load library.properties"
+	}
+
+	architectures, ok := checkdata.LibraryProperties().GetOk("architectures")
+	if !ok {
+		return checkresult.Skip, "Field not present"
+	}
+
+	architecturesList := commaSeparatedToList(architectures)
+
+	var commonArchitecturesList = []string{
+		"apollo3",
+		"arc32",
+		"avr",
+		"esp32",
+		"esp8266",
+		"i586",
+		"i686",
+		"k210",
+		"mbed",
+		"megaavr",
+		"mraa",
+		"nRF5",
+		"nrf52",
+		"pic32",
+		"sam",
+		"samd",
+		"wiced",
+		"win10",
+	}
+
+	correctArchitecturePresent := func(correctArchitectureQuery string) bool {
+		for _, architecture := range architecturesList {
+			if architecture == correctArchitectureQuery {
+				return true
+			}
+		}
+
+		return false
+	}
+
+	miscasedArchitectures := []string{}
+	for _, architecture := range architecturesList {
+		for _, commonArchitecture := range commonArchitecturesList {
+			if architecture == commonArchitecture {
+				break
+			}
+
+			if strings.EqualFold(architecture, commonArchitecture) && !correctArchitecturePresent(commonArchitecture) {
+				// The architecture has incorrect case and the correctly cased name is not present in the architectures field.
+				miscasedArchitectures = append(miscasedArchitectures, architecture)
+				break
+			}
+		}
+	}
+
+	if len(miscasedArchitectures) > 0 {
+		return checkresult.Fail, strings.Join(miscasedArchitectures, ", ")
+	}
+
+	return checkresult.Pass, ""
+}
+
 // LibraryPropertiesDependsFieldDisallowedCharacters checks for disallowed characters in the library.properties "depends" field.
 func LibraryPropertiesDependsFieldDisallowedCharacters() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
