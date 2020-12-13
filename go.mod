@@ -53,7 +53,7 @@ require (
 	golang.org/x/sys v0.0.0-20201207223542-d4d67f95c62d // indirect
 	golang.org/x/term v0.0.0-20201210144234-2321bbc49cbf // indirect
 	golang.org/x/text v0.3.4 // indirect
-	golang.org/x/tools v0.0.0-20201210181237-6d345e82f1d8 // indirect
+	golang.org/x/tools v0.0.0-20201211192254-72fbef54948b // indirect
 	google.golang.org/genproto v0.0.0-20201210142538-e3217bee35cc // indirect
 	google.golang.org/grpc v1.34.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
