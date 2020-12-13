@@ -64,6 +64,14 @@ jobs:
       - name: Run unit tests
         run: task go:test-unit
 
+      - name: Send unit tests coverage to Codecov
+        if: matrix.operating-system == 'ubuntu-latest'
+        uses: codecov/codecov-action@v1
+        with:
+          file: ./coverage_unit.txt
+          flags: unit
+          fail_ci_if_error: true
+
       - name: Install Python
         uses: actions/setup-python@v2
         with:
