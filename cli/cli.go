@@ -1,9 +1,9 @@
-// This file is part of arduino-check.
+// This file is part of arduino-lint.
 //
 // Copyright 2020 ARDUINO SA (http://www.arduino.cc/)
 //
 // This software is released under the GNU General Public License version 3,
-// which covers the main part of arduino-check.
+// which covers the main part of arduino-lint.
 // The terms of this license can be found at:
 // https://www.gnu.org/licenses/gpl-3.0.en.html
 //
@@ -13,22 +13,22 @@
 // Arduino software without disclosing the source code of your own applications.
 // To purchase a commercial license, send an email to license@arduino.cc.
 
-// Package cli defines the arduino-check command line interface.
+// Package cli defines the arduino-lint command line interface.
 package cli
 
 import (
-	"github.com/arduino/arduino-check/command"
+	"github.com/arduino/arduino-lint/command"
 	"github.com/spf13/cobra"
 )
 
-// Root creates a new arduino-check command root.
+// Root creates a new arduino-lint command root.
 func Root() *cobra.Command {
 	rootCommand := &cobra.Command{
 		Short:                 "Linter for Arduino projects.",
-		Long:                  "arduino-check checks for specification compliance and other common problems with Arduino projects",
+		Long:                  "arduino-lint checks for specification compliance and other common problems with Arduino projects",
 		DisableFlagsInUseLine: true,
-		Use:                   "arduino-check [FLAG]... [PROJECT_PATH]...\n\nRun checks on PROJECT_PATH or current path if no PROJECT_PATH argument provided.",
-		Run:                   command.ArduinoCheck,
+		Use:                   "arduino-lint [FLAG]... [PROJECT_PATH]...\n\nRun checks on PROJECT_PATH or current path if no PROJECT_PATH argument provided.",
+		Run:                   command.ArduinoLint,
 	}
 
 	rootCommand.PersistentFlags().String("compliance", "specification", "Configure how strict the tool is. Can be {strict|specification|permissive}")

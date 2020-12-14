@@ -1,9 +1,9 @@
-// This file is part of arduino-check.
+// This file is part of arduino-lint.
 //
 // Copyright 2020 ARDUINO SA (http://www.arduino.cc/)
 //
 // This software is released under the GNU General Public License version 3,
-// which covers the main part of arduino-check.
+// which covers the main part of arduino-lint.
 // The terms of this license can be found at:
 // https://www.gnu.org/licenses/gpl-3.0.en.html
 //
@@ -19,7 +19,7 @@ import (
 	"regexp"
 	"testing"
 
-	"github.com/arduino/arduino-check/check/checkdata/schema/testdata"
+	"github.com/arduino/arduino-lint/check/checkdata/schema/testdata"
 	"github.com/arduino/go-properties-orderedmap"
 	"github.com/ory/jsonschema/v3"
 	"github.com/stretchr/testify/require"
@@ -199,14 +199,14 @@ func Test_schemaID(t *testing.T) {
 	require.NotNil(t, err)
 
 	id, err := schemaID("valid-schema.json", testdata.Asset)
-	require.Equal(t, "https://raw.githubusercontent.com/arduino/arduino-check/main/check/checkdata/schema/testdata/schema-with-references.json", id)
+	require.Equal(t, "https://raw.githubusercontent.com/arduino/arduino-lint/main/check/checkdata/schema/testdata/schema-with-references.json", id)
 	require.Nil(t, err)
 }
 
 func Test_validationErrorSchemaPointerValue(t *testing.T) {
 	validationError := ValidationResult{
 		Result: &jsonschema.ValidationError{
-			SchemaURL: "https://raw.githubusercontent.com/arduino/arduino-check/main/check/checkdata/schema/testdata/referenced-schema-1.json",
+			SchemaURL: "https://raw.githubusercontent.com/arduino/arduino-lint/main/check/checkdata/schema/testdata/referenced-schema-1.json",
 			SchemaPtr: "#/definitions/patternObject/pattern",
 		},
 		dataLoader: testdata.Asset,

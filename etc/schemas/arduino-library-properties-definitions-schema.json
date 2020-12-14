@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://raw.githubusercontent.com/arduino/arduino-check/main/etc/schema/arduino-library-properties-definitions-schema.json",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schema/arduino-library-properties-definitions-schema.json",
   "title": "Shared definitions for the Arduino library.properties schemas",
   "type": "object",
   "definitions": {

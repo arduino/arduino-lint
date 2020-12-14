@@ -1,4 +1,4 @@
-module github.com/arduino/arduino-check
+module github.com/arduino/arduino-lint
 
 go 1.14
 

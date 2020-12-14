@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "arduino-check"
+name = "arduino-lint"
 version = "0.0.0"
-description = "arduino-check"
+description = "arduino-lint"
 authors = ["Arduino <info@arduino.cc>"]
 
 [tool.poetry.dependencies]

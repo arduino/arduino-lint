@@ -1,9 +1,9 @@
-// This file is part of arduino-check.
+// This file is part of arduino-lint.
 //
 // Copyright 2020 ARDUINO SA (http://www.arduino.cc/)
 //
 // This software is released under the GNU General Public License version 3,
-// which covers the main part of arduino-check.
+// which covers the main part of arduino-lint.
 // The terms of this license can be found at:
 // https://www.gnu.org/licenses/gpl-3.0.en.html
 //
@@ -19,10 +19,10 @@ import (
 	"os"
 	"testing"
 
-	"github.com/arduino/arduino-check/configuration/checkmode"
-	"github.com/arduino/arduino-check/project/projecttype"
-	"github.com/arduino/arduino-check/result/outputformat"
-	"github.com/arduino/arduino-check/util/test"
+	"github.com/arduino/arduino-lint/configuration/checkmode"
+	"github.com/arduino/arduino-lint/project/projecttype"
+	"github.com/arduino/arduino-lint/result/outputformat"
+	"github.com/arduino/arduino-lint/util/test"
 	"github.com/arduino/go-paths-helper"
 	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
@@ -108,23 +108,23 @@ func TestInitializeLibraryManager(t *testing.T) {
 }
 
 func TestInitializeLogFormat(t *testing.T) {
-	os.Setenv("ARDUINO_CHECK_LOG_FORMAT", "foo")
+	os.Setenv("ARDUINO_LINT_LOG_FORMAT", "foo")
 	assert.Error(t, Initialize(test.ConfigurationFlags(), projectPaths), "Invalid format")
 
-	os.Setenv("ARDUINO_CHECK_LOG_FORMAT", "text")
+	os.Setenv("ARDUINO_LINT_LOG_FORMAT", "text")
 	assert.Nil(t, Initialize(test.ConfigurationFlags(), projectPaths), "text format")
 
-	os.Setenv("ARDUINO_CHECK_LOG_FORMAT", "json")
+	os.Setenv("ARDUINO_LINT_LOG_FORMAT", "json")
 	assert.Nil(t, Initialize(test.ConfigurationFlags(), projectPaths), "json format")
 }
 
 func TestInitializeLogLevel(t *testing.T) {
 	require.Nil(t, Initialize(test.ConfigurationFlags(), projectPaths))
 
-	os.Setenv("ARDUINO_CHECK_LOG_LEVEL", "foo")
+	os.Setenv("ARDUINO_LINT_LOG_LEVEL", "foo")
 	assert.Error(t, Initialize(test.ConfigurationFlags(), projectPaths), "Invalid level")
 
-	os.Setenv("ARDUINO_CHECK_LOG_LEVEL", "info")
+	os.Setenv("ARDUINO_LINT_LOG_LEVEL", "info")
 	assert.Nil(t, Initialize(test.ConfigurationFlags(), projectPaths), "Valid level")
 	assert.Equal(t, logrus.InfoLevel, logrus.GetLevel())
 }
@@ -224,15 +224,15 @@ func TestInitializeOfficial(t *testing.T) {
 	assert.Nil(t, Initialize(test.ConfigurationFlags(), projectPaths))
 	assert.False(t, customCheckModes[checkmode.Official], "Default official check mode")
 
-	os.Setenv("ARDUINO_CHECK_OFFICIAL", "true")
+	os.Setenv("ARDUINO_LINT_OFFICIAL", "true")
 	assert.Nil(t, Initialize(test.ConfigurationFlags(), projectPaths))
 	assert.True(t, customCheckModes[checkmode.Official])
 
-	os.Setenv("ARDUINO_CHECK_OFFICIAL", "false")
+	os.Setenv("ARDUINO_LINT_OFFICIAL", "false")
 	assert.Nil(t, Initialize(test.ConfigurationFlags(), projectPaths))
 	assert.False(t, customCheckModes[checkmode.Official])
 
-	os.Setenv("ARDUINO_CHECK_OFFICIAL", "invalid value")
+	os.Setenv("ARDUINO_LINT_OFFICIAL", "invalid value")
 	assert.Error(t, Initialize(test.ConfigurationFlags(), projectPaths))
 }
 
