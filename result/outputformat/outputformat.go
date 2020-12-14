@@ -27,14 +27,14 @@ type Type int
 
 const (
 	Text Type = iota // text
-	JSON             // JSON
+	JSON             // json
 )
 
 // FromString parses the --format flag value and returns the corresponding output format type.
 func FromString(outputFormatString string) (Type, error) {
 	formatType, found := map[string]Type{
-		"text": Text,
-		"json": JSON,
+		Text.String(): Text,
+		JSON.String(): JSON,
 	}[strings.ToLower(outputFormatString)]
 
 	if found {

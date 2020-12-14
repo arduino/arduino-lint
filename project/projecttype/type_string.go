@@ -16,9 +16,9 @@ func _() {
 	_ = x[Not-5]
 }
 
-const _Type_name = "sketchlibraryboards platformBoards Manager package indexany project typeN/A"
+const _Type_name = "sketchlibraryplatformpackage-indexallN/A"
 
-var _Type_index = [...]uint8{0, 6, 13, 28, 56, 72, 75}
+var _Type_index = [...]uint8{0, 6, 13, 21, 34, 37, 40}
 
 func (i Type) String() string {
 	if i < 0 || i >= Type(len(_Type_index)-1) {

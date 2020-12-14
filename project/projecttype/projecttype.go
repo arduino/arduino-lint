@@ -28,20 +28,20 @@ type Type int
 const (
 	Sketch       Type = iota // sketch
 	Library                  // library
-	Platform                 // boards platform
-	PackageIndex             // Boards Manager package index
-	All                      // any project type
+	Platform                 // platform
+	PackageIndex             // package-index
+	All                      // all
 	Not                      // N/A
 )
 
 // FromString parses the --project-type flag value and returns the corresponding project type.
 func FromString(projectTypeString string) (Type, error) {
 	projectType, found := map[string]Type{
-		"sketch":        Sketch,
-		"library":       Library,
-		"platform":      Platform,
-		"package-index": PackageIndex,
-		"all":           All,
+		Sketch.String():       Sketch,
+		Library.String():      Library,
+		Platform.String():     Platform,
+		PackageIndex.String(): PackageIndex,
+		All.String():          All,
 	}[strings.ToLower(projectTypeString)]
 
 	if found {

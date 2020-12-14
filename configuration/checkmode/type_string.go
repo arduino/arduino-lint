@@ -17,9 +17,9 @@ func _() {
 	_ = x[Default-6]
 }
 
-const _Type_name = "strictspecificationpermissive--library-manager=submit--library-manager=updateARDUINO_CHECK_OFFICIALdefault"
+const _Type_name = "strictspecificationpermissivesubmitupdateARDUINO_CHECK_OFFICIALdefault"
 
-var _Type_index = [...]uint8{0, 6, 19, 29, 53, 77, 99, 106}
+var _Type_index = [...]uint8{0, 6, 19, 29, 35, 41, 63, 70}
 
 func (i Type) String() string {
 	if i < 0 || i >= Type(len(_Type_index)-1) {
