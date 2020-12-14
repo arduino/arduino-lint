@@ -57,8 +57,18 @@ func findProjects(targetPath *paths.Path) ([]Type, error) {
 	// If targetPath is a file, targetPath itself is the project, so it's only necessary to determine/verify the type.
 	if targetPath.IsNotDir() {
 		logrus.Debug("Projects path is file")
-		// The filename provides additional information about the project type. So rather than using isProject(), which doesn't make use this information, use a specialized function that does.
-		isProject, projectType := isProjectIndicatorFile(targetPath, configuration.SuperprojectTypeFilter())
+		var isProject bool
+		var projectType projecttype.Type
+		if configuration.SuperprojectTypeFilter() == projecttype.All {
+			// Project type detection is required.
+			// The filename provides additional information about the project type. So rather than using isProject(), which doesn't make use this information, use a specialized function that does.
+			isProject, projectType = isProjectIndicatorFile(targetPath, configuration.SuperprojectTypeFilter())
+		} else {
+			// Project was explicitly defined by user.
+			isProject = true
+			projectType = configuration.SuperprojectTypeFilter()
+		}
+
 		if isProject {
 			var projectPath *paths.Path
 			if projectType == projecttype.PackageIndex {
@@ -81,10 +91,22 @@ func findProjects(targetPath *paths.Path) ([]Type, error) {
 		return nil, fmt.Errorf("specified path %s is not an Arduino project", targetPath)
 	}
 
-	foundParentProjects := findProjectsUnderPath(targetPath, configuration.SuperprojectTypeFilter(), configuration.Recursive())
-	for _, foundParentProject := range foundParentProjects {
-		foundProjects = append(foundProjects, foundParentProject)
-		foundProjects = append(foundProjects, findSubprojects(foundParentProject, foundParentProject.ProjectType)...)
+	if configuration.SuperprojectTypeFilter() == projecttype.All || configuration.Recursive() {
+		// Project discovery and/or type detection is required.
+		foundParentProjects := findProjectsUnderPath(targetPath, configuration.SuperprojectTypeFilter(), configuration.Recursive())
+		for _, foundParentProject := range foundParentProjects {
+			foundProjects = append(foundProjects, foundParentProject)
+			foundProjects = append(foundProjects, findSubprojects(foundParentProject, foundParentProject.ProjectType)...)
+		}
+	} else {
+		// Project was explicitly defined by user.
+		foundProjects = append(foundProjects,
+			Type{
+				Path:             targetPath,
+				ProjectType:      configuration.SuperprojectTypeFilter(),
+				SuperprojectType: configuration.SuperprojectTypeFilter(),
+			},
+		)
 	}
 
 	if foundProjects == nil {
