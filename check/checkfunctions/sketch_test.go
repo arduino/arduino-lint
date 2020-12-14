@@ -98,7 +98,7 @@ func TestPdeSketchExtension(t *testing.T) {
 
 func TestSketchDotJSONJSONFormat(t *testing.T) {
 	testTables := []sketchCheckFunctionTestTable{
-		{"No metadata file", "NoMetadataFile", checkresult.NotRun, ""},
+		{"No metadata file", "NoMetadataFile", checkresult.Skip, ""},
 		{"Valid", "ValidMetadataFile", checkresult.Pass, ""},
 		{"Invalid", "InvalidJSONMetadataFile", checkresult.Fail, ""},
 	}
@@ -108,7 +108,7 @@ func TestSketchDotJSONJSONFormat(t *testing.T) {
 
 func TestSketchDotJSONFormat(t *testing.T) {
 	testTables := []sketchCheckFunctionTestTable{
-		{"No metadata file", "NoMetadataFile", checkresult.NotRun, ""},
+		{"No metadata file", "NoMetadataFile", checkresult.Skip, ""},
 		{"Valid", "ValidMetadataFile", checkresult.Pass, ""},
 		{"Invalid JSON", "InvalidJSONMetadataFile", checkresult.Fail, ""},
 		{"Invalid data", "InvalidDataMetadataFile", checkresult.Fail, ""},

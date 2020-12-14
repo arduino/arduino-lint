@@ -43,7 +43,7 @@ import (
 // LibraryPropertiesFormat checks for invalid library.properties format.
 func LibraryPropertiesFormat() (result checkresult.Type, output string) {
 	if checkdata.LoadedLibrary() != nil && checkdata.LoadedLibrary().IsLegacy {
-		return checkresult.NotRun, "Library has no library.properties"
+		return checkresult.Skip, "Library has no library.properties"
 	}
 
 	if checkdata.LibraryPropertiesLoadError() != nil {
@@ -110,9 +110,12 @@ func RedundantLibraryProperties() (result checkresult.Type, output string) {
 
 // LibraryPropertiesNameFieldMissing checks for missing library.properties "name" field.
 func LibraryPropertiesNameFieldMissing() (result checkresult.Type, output string) {
-	shouldRun, reason := runRequiredLibraryPropertiesFieldCheck()
-	if !shouldRun {
-		return checkresult.NotRun, reason
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, "Couldn't load library.properties"
+	}
+
+	if checkdata.LoadedLibrary().IsLegacy {
+		return checkresult.Skip, "Library has legacy format"
 	}
 
 	if schema.RequiredPropertyMissing("name", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -340,9 +343,12 @@ func LibraryPropertiesNameFieldHeaderMismatch() (result checkresult.Type, output
 
 // LibraryPropertiesVersionFieldMissing checks for missing library.properties "version" field.
 func LibraryPropertiesVersionFieldMissing() (result checkresult.Type, output string) {
-	shouldRun, reason := runRequiredLibraryPropertiesFieldCheck()
-	if !shouldRun {
-		return checkresult.NotRun, reason
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, "Couldn't load library.properties"
+	}
+
+	if checkdata.LoadedLibrary().IsLegacy {
+		return checkresult.Skip, "Library has legacy format"
 	}
 
 	if schema.RequiredPropertyMissing("version", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -390,7 +396,7 @@ func LibraryPropertiesVersionFieldNonSemver() (result checkresult.Type, output s
 // LibraryPropertiesVersionFieldBehindTag checks whether a release tag was made without first bumping the library.properties version value.
 func LibraryPropertiesVersionFieldBehindTag() (result checkresult.Type, output string) {
 	if checkdata.ProjectType() != checkdata.SuperProjectType() {
-		return checkresult.NotRun, "Not relevant for subprojects"
+		return checkresult.Skip, "Not relevant for subprojects"
 	}
 
 	if checkdata.LibraryPropertiesLoadError() != nil {
@@ -410,7 +416,7 @@ func LibraryPropertiesVersionFieldBehindTag() (result checkresult.Type, output s
 
 	repository, err := git.PlainOpen(checkdata.ProjectPath().String())
 	if err != nil {
-		return checkresult.NotRun, "Project path is not a repository"
+		return checkresult.Skip, "Project path is not a repository"
 	}
 
 	headRef, err := repository.Head()
@@ -482,9 +488,12 @@ func LibraryPropertiesVersionFieldBehindTag() (result checkresult.Type, output s
 
 // LibraryPropertiesAuthorFieldMissing checks for missing library.properties "author" field.
 func LibraryPropertiesAuthorFieldMissing() (result checkresult.Type, output string) {
-	shouldRun, reason := runRequiredLibraryPropertiesFieldCheck()
-	if !shouldRun {
-		return checkresult.NotRun, reason
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, "Couldn't load library.properties"
+	}
+
+	if checkdata.LoadedLibrary().IsLegacy {
+		return checkresult.Skip, "Library has legacy format"
 	}
 
 	if schema.RequiredPropertyMissing("author", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -512,9 +521,12 @@ func LibraryPropertiesAuthorFieldLTMinLength() (result checkresult.Type, output 
 
 // LibraryPropertiesMaintainerFieldMissing checks for missing library.properties "maintainer" field.
 func LibraryPropertiesMaintainerFieldMissing() (result checkresult.Type, output string) {
-	shouldRun, reason := runRequiredLibraryPropertiesFieldCheck()
-	if !shouldRun {
-		return checkresult.NotRun, reason
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, "Couldn't load library.properties"
+	}
+
+	if checkdata.LoadedLibrary().IsLegacy {
+		return checkresult.Skip, "Library has legacy format"
 	}
 
 	if schema.RequiredPropertyMissing("maintainer", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -565,7 +577,7 @@ func LibraryPropertiesEmailFieldAsMaintainerAlias() (result checkresult.Type, ou
 	}
 
 	if !checkdata.LibraryProperties().ContainsKey("email") {
-		return checkresult.NotRun, "Field not present"
+		return checkresult.Skip, "Field not present"
 	}
 
 	if !checkdata.LibraryProperties().ContainsKey("maintainer") {
@@ -582,7 +594,7 @@ func LibraryPropertiesEmailFieldLTMinLength() (result checkresult.Type, output s
 	}
 
 	if checkdata.LibraryProperties().ContainsKey("maintainer") || !checkdata.LibraryProperties().ContainsKey("email") {
-		return checkresult.NotRun, "Field not present"
+		return checkresult.Skip, "Field not present"
 	}
 
 	if schema.PropertyLessThanMinLength("email", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -604,7 +616,7 @@ func LibraryPropertiesEmailFieldStartsWithArduino() (result checkresult.Type, ou
 
 	email, ok := checkdata.LibraryProperties().GetOk("email")
 	if !ok {
-		return checkresult.NotRun, "Field not present"
+		return checkresult.Skip, "Field not present"
 	}
 
 	if schema.ValidationErrorMatch("^#/email$", "/patternObjects/notStartsWithArduino", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -616,9 +628,12 @@ func LibraryPropertiesEmailFieldStartsWithArduino() (result checkresult.Type, ou
 
 // LibraryPropertiesSentenceFieldMissing checks for missing library.properties "sentence" field.
 func LibraryPropertiesSentenceFieldMissing() (result checkresult.Type, output string) {
-	shouldRun, reason := runRequiredLibraryPropertiesFieldCheck()
-	if !shouldRun {
-		return checkresult.NotRun, reason
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, "Couldn't load library.properties"
+	}
+
+	if checkdata.LoadedLibrary().IsLegacy {
+		return checkresult.Skip, "Library has legacy format"
 	}
 
 	if schema.RequiredPropertyMissing("sentence", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -651,9 +666,12 @@ func LibraryPropertiesSentenceFieldSpellCheck() (result checkresult.Type, output
 
 // LibraryPropertiesParagraphFieldMissing checks for missing library.properties "paragraph" field.
 func LibraryPropertiesParagraphFieldMissing() (result checkresult.Type, output string) {
-	shouldRun, reason := runRequiredLibraryPropertiesFieldCheck()
-	if !shouldRun {
-		return checkresult.NotRun, reason
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, "Couldn't load library.properties"
+	}
+
+	if checkdata.LoadedLibrary().IsLegacy {
+		return checkresult.Skip, "Library has legacy format"
 	}
 
 	if schema.RequiredPropertyMissing("paragraph", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -688,9 +706,12 @@ func LibraryPropertiesParagraphFieldRepeatsSentence() (result checkresult.Type, 
 
 // LibraryPropertiesCategoryFieldMissing checks for missing library.properties "category" field.
 func LibraryPropertiesCategoryFieldMissing() (result checkresult.Type, output string) {
-	shouldRun, reason := runRequiredLibraryPropertiesFieldCheck()
-	if !shouldRun {
-		return checkresult.NotRun, reason
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, "Couldn't load library.properties"
+	}
+
+	if checkdata.LoadedLibrary().IsLegacy {
+		return checkresult.Skip, "Library has legacy format"
 	}
 
 	if schema.RequiredPropertyMissing("category", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -707,7 +728,7 @@ func LibraryPropertiesCategoryFieldInvalid() (result checkresult.Type, output st
 
 	category, ok := checkdata.LibraryProperties().GetOk("category")
 	if !ok {
-		return checkresult.NotRun, "Field not present"
+		return checkresult.Skip, "Field not present"
 	}
 
 	if schema.PropertyEnumMismatch("category", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -725,7 +746,7 @@ func LibraryPropertiesCategoryFieldUncategorized() (result checkresult.Type, out
 
 	category, ok := checkdata.LibraryProperties().GetOk("category")
 	if !ok {
-		return checkresult.NotRun, "Field not present"
+		return checkresult.Skip, "Field not present"
 	}
 
 	if category == "Uncategorized" {
@@ -737,9 +758,12 @@ func LibraryPropertiesCategoryFieldUncategorized() (result checkresult.Type, out
 
 // LibraryPropertiesUrlFieldMissing checks for missing library.properties "url" field.
 func LibraryPropertiesUrlFieldMissing() (result checkresult.Type, output string) {
-	shouldRun, reason := runRequiredLibraryPropertiesFieldCheck()
-	if !shouldRun {
-		return checkresult.NotRun, reason
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, "Couldn't load library.properties"
+	}
+
+	if checkdata.LoadedLibrary().IsLegacy {
+		return checkresult.Skip, "Library has legacy format"
 	}
 
 	if schema.RequiredPropertyMissing("url", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -792,9 +816,12 @@ func LibraryPropertiesUrlFieldDeadLink() (result checkresult.Type, output string
 
 // LibraryPropertiesArchitecturesFieldMissing checks for missing library.properties "architectures" field.
 func LibraryPropertiesArchitecturesFieldMissing() (result checkresult.Type, output string) {
-	shouldRun, reason := runRequiredLibraryPropertiesFieldCheck()
-	if !shouldRun {
-		return checkresult.NotRun, reason
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, "Couldn't load library.properties"
+	}
+
+	if checkdata.LoadedLibrary().IsLegacy {
+		return checkresult.Skip, "Library has legacy format"
 	}
 
 	if schema.RequiredPropertyMissing("architectures", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -810,7 +837,7 @@ func LibraryPropertiesArchitecturesFieldLTMinLength() (result checkresult.Type, 
 	}
 
 	if !checkdata.LibraryProperties().ContainsKey("architectures") {
-		return checkresult.NotRun, "Field not present"
+		return checkresult.Skip, "Field not present"
 	}
 
 	if schema.PropertyLessThanMinLength("architectures", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -828,7 +855,7 @@ func LibraryPropertiesDependsFieldDisallowedCharacters() (result checkresult.Typ
 
 	depends, ok := checkdata.LibraryProperties().GetOk("depends")
 	if !ok {
-		return checkresult.NotRun, "Field not present"
+		return checkresult.Skip, "Field not present"
 	}
 
 	if schema.PropertyPatternMismatch("depends", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -846,7 +873,7 @@ func LibraryPropertiesDependsFieldNotInIndex() (result checkresult.Type, output 
 
 	depends, hasDepends := checkdata.LibraryProperties().GetOk("depends")
 	if !hasDepends {
-		return checkresult.NotRun, "Field not present"
+		return checkresult.Skip, "Field not present"
 	}
 
 	dependencies := strings.Split(depends, ",")
@@ -878,7 +905,7 @@ func LibraryPropertiesDotALinkageFieldInvalid() (result checkresult.Type, output
 
 	dotALinkage, ok := checkdata.LibraryProperties().GetOk("dot_a_linkage")
 	if !ok {
-		return checkresult.NotRun, "Field not present"
+		return checkresult.Skip, "Field not present"
 	}
 
 	if schema.PropertyEnumMismatch("dot_a_linkage", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -895,7 +922,7 @@ func LibraryPropertiesDotALinkageFieldTrueWithFlatLayout() (result checkresult.T
 	}
 
 	if !checkdata.LibraryProperties().ContainsKey("dot_a_linkage") {
-		return checkresult.NotRun, "Field not present"
+		return checkresult.Skip, "Field not present"
 	}
 
 	if checkdata.LoadedLibrary().DotALinkage && checkdata.LoadedLibrary().Layout == libraries.FlatLayout {
@@ -912,7 +939,7 @@ func LibraryPropertiesIncludesFieldLTMinLength() (result checkresult.Type, outpu
 	}
 
 	if !checkdata.LibraryProperties().ContainsKey("includes") {
-		return checkresult.NotRun, "Field not present"
+		return checkresult.Skip, "Field not present"
 	}
 
 	if schema.PropertyLessThanMinLength("includes", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -930,7 +957,7 @@ func LibraryPropertiesIncludesFieldItemNotFound() (result checkresult.Type, outp
 
 	includes, ok := checkdata.LibraryProperties().GetOk("includes")
 	if !ok {
-		return checkresult.NotRun, "Field not present"
+		return checkresult.Skip, "Field not present"
 	}
 
 	includesList := strings.Split(includes, ",")
@@ -972,7 +999,7 @@ func LibraryPropertiesPrecompiledFieldInvalid() (result checkresult.Type, output
 
 	precompiled, ok := checkdata.LibraryProperties().GetOk("precompiled")
 	if !ok {
-		return checkresult.NotRun, "Field not present"
+		return checkresult.Skip, "Field not present"
 	}
 
 	if schema.PropertyEnumMismatch("precompiled", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -990,7 +1017,7 @@ func LibraryPropertiesPrecompiledFieldEnabledWithFlatLayout() (result checkresul
 
 	precompiled, ok := checkdata.LibraryProperties().GetOk("precompiled")
 	if !ok {
-		return checkresult.NotRun, "Field not present"
+		return checkresult.Skip, "Field not present"
 	}
 
 	if checkdata.LoadedLibrary().Precompiled && checkdata.LoadedLibrary().Layout == libraries.FlatLayout {
@@ -1004,6 +1031,10 @@ func LibraryPropertiesPrecompiledFieldEnabledWithFlatLayout() (result checkresul
 func LibraryPropertiesLdflagsFieldLTMinLength() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Library not loaded"
+	}
+
+	if !checkdata.LibraryProperties().ContainsKey("ldflags") {
+		return checkresult.Skip, "Field not present"
 	}
 
 	if schema.PropertyLessThanMinLength("ldflags", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
@@ -1175,7 +1206,7 @@ func LibraryFolderNameGTMaxLength() (result checkresult.Type, output string) {
 func IncorrectLibrarySrcFolderNameCase() (result checkresult.Type, output string) {
 	if library.ContainsMetadataFile(checkdata.ProjectPath()) && library.ContainsHeaderFile(checkdata.ProjectPath()) {
 		// Flat layout, so no special treatment of src subfolder.
-		return checkresult.NotRun, "Not applicable due to layout type"
+		return checkresult.Skip, "Not applicable due to layout type"
 	}
 
 	// The library is intended to have the recursive layout.
@@ -1270,7 +1301,7 @@ func RecursiveLibraryWithUtilityFolder() (result checkresult.Type, output string
 	}
 
 	if checkdata.LoadedLibrary().Layout == libraries.FlatLayout {
-		return checkresult.NotRun, "Not applicable due to layout type"
+		return checkresult.Skip, "Not applicable due to layout type"
 	}
 
 	if checkdata.ProjectPath().Join("utility").Exist() {
@@ -1288,7 +1319,7 @@ func spellCheckLibraryPropertiesFieldValue(fieldName string) (result checkresult
 
 	fieldValue, ok := checkdata.LibraryProperties().GetOk(fieldName)
 	if !ok {
-		return checkresult.NotRun, "Field not present"
+		return checkresult.Skip, "Field not present"
 	}
 
 	replaced, diff := checkdata.MisspelledWordsReplacer().Replace(fieldValue)
@@ -1326,16 +1357,4 @@ func nameInLibraryManagerIndex(name string) bool {
 	}
 
 	return false
-}
-
-func runRequiredLibraryPropertiesFieldCheck() (bool, string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
-		return false, "Couldn't load library.properties"
-	}
-
-	if checkdata.LoadedLibrary().IsLegacy {
-		return false, "Library has legacy format"
-	}
-
-	return true, ""
 }
