@@ -283,6 +283,17 @@ func TestLibraryPropertiesParagraphFieldSpellCheck(t *testing.T) {
 	checkLibraryCheckFunction(LibraryPropertiesParagraphFieldSpellCheck, testTables, t)
 }
 
+func TestLibraryPropertiesEmailFieldAsMaintainerAlias(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"No email field", "MissingFields", checkresult.Skip, ""},
+		{"email in place of maintainer", "EmailOnly", checkresult.Fail, ""},
+		{"email and maintainer", "EmailAndMaintainer", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesEmailFieldAsMaintainerAlias, testTables, t)
+}
+
 func TestLibraryPropertiesParagraphFieldRepeatsSentence(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
@@ -292,6 +303,18 @@ func TestLibraryPropertiesParagraphFieldRepeatsSentence(t *testing.T) {
 
 	checkLibraryCheckFunction(LibraryPropertiesParagraphFieldRepeatsSentence, testTables, t)
 }
+
+func TestLibraryPropertiesCategoryFieldUncategorized(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"No category field", "MissingFields", checkresult.Skip, ""},
+		{"Uncategorized category", "UncategorizedCategoryValue", checkresult.Fail, ""},
+		{"Valid category value", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesCategoryFieldUncategorized, testTables, t)
+}
+
 func TestLibraryPropertiesUrlFieldDeadLink(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
