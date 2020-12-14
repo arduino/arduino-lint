@@ -1,9 +1,9 @@
-// This file is part of arduino-check.
+// This file is part of arduino-lint.
 //
 // Copyright 2020 ARDUINO SA (http://www.arduino.cc/)
 //
 // This software is released under the GNU General Public License version 3,
-// which covers the main part of arduino-check.
+// which covers the main part of arduino-lint.
 // The terms of this license can be found at:
 // https://www.gnu.org/licenses/gpl-3.0.en.html
 //
@@ -18,8 +18,8 @@ package checkdata
 import (
 	"testing"
 
-	"github.com/arduino/arduino-check/project"
-	"github.com/arduino/arduino-check/project/projecttype"
+	"github.com/arduino/arduino-lint/project"
+	"github.com/arduino/arduino-lint/project/projecttype"
 	"github.com/arduino/go-paths-helper"
 	"github.com/stretchr/testify/assert"
 )

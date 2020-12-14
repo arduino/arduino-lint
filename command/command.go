@@ -1,9 +1,9 @@
-// This file is part of arduino-check.
+// This file is part of arduino-lint.
 //
 // Copyright 2020 ARDUINO SA (http://www.arduino.cc/)
 //
 // This software is released under the GNU General Public License version 3,
-// which covers the main part of arduino-check.
+// which covers the main part of arduino-lint.
 // The terms of this license can be found at:
 // https://www.gnu.org/licenses/gpl-3.0.en.html
 //
@@ -13,7 +13,7 @@
 // Arduino software without disclosing the source code of your own applications.
 // To purchase a commercial license, send an email to license@arduino.cc.
 
-// Package command implements the arduino-check commands.
+// Package command implements the arduino-lint commands.
 package command
 
 import (
@@ -21,17 +21,17 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/arduino/arduino-check/check"
-	"github.com/arduino/arduino-check/configuration"
-	"github.com/arduino/arduino-check/project"
-	"github.com/arduino/arduino-check/result"
-	"github.com/arduino/arduino-check/result/feedback"
-	"github.com/arduino/arduino-check/result/outputformat"
+	"github.com/arduino/arduino-lint/check"
+	"github.com/arduino/arduino-lint/configuration"
+	"github.com/arduino/arduino-lint/project"
+	"github.com/arduino/arduino-lint/result"
+	"github.com/arduino/arduino-lint/result/feedback"
+	"github.com/arduino/arduino-lint/result/outputformat"
 	"github.com/spf13/cobra"
 )
 
-// ArduinoCheck is the root command function.
-func ArduinoCheck(rootCommand *cobra.Command, cliArguments []string) {
+// ArduinoLint is the root command function.
+func ArduinoLint(rootCommand *cobra.Command, cliArguments []string) {
 	if err := configuration.Initialize(rootCommand.Flags(), cliArguments); err != nil {
 		feedback.Errorf("Invalid configuration: %v", err)
 		os.Exit(1)

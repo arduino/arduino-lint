@@ -197,7 +197,7 @@ vars:
   TIMESTAMP:
     sh: echo "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
   LDFLAGS: >
-    -ldflags '-X github.com/arduino/arduino-check/configuration.commit={{.COMMIT}} -X github.com/arduino/arduino-check/configuration.buildTimestamp={{.TIMESTAMP}}'
+    -ldflags '-X github.com/arduino/arduino-lint/configuration.commit={{.COMMIT}} -X github.com/arduino/arduino-lint/configuration.buildTimestamp={{.TIMESTAMP}}'
   GOFLAGS: "-timeout 10m -v -coverpkg=./... -covermode=atomic"
 
   GOLINTFLAGS: "-min_confidence 0.8 -set_exit_status"
@@ -206,5 +206,5 @@ vars:
 
   WORKFLOW_SCHEMA_PATH: "$(mktemp -t gha-workflow-schema-XXXXXXXXXX.json)"
 
-  CODESPELL_SKIP_OPTION: '--skip "./.git,./go.mod,./go.sum,./arduino-check,./arduino-check.exe,./check/checkfunctions/testdata/libraries/MisspelledSentenceParagraphValue/library.properties"'
+  CODESPELL_SKIP_OPTION: '--skip "./.git,./go.mod,./go.sum,./arduino-lint,./arduino-lint.exe,./check/checkfunctions/testdata/libraries/MisspelledSentenceParagraphValue/library.properties"'
   CODESPELL_IGNORE_WORDS_OPTION: "--ignore-words ./etc/codespell-ignore-words-list.txt"

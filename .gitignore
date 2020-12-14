@@ -1,6 +1,6 @@
 # Build artifacts
-arduino-check
-arduino-check.exe
+arduino-lint
+arduino-lint.exe
 
 # Test artifacts
 coverage_unit.txt

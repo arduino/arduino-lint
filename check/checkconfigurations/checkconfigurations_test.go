@@ -1,9 +1,9 @@
-// This file is part of arduino-check.
+// This file is part of arduino-lint.
 //
 // Copyright 2020 ARDUINO SA (http://www.arduino.cc/)
 //
 // This software is released under the GNU General Public License version 3,
-// which covers the main part of arduino-check.
+// which covers the main part of arduino-lint.
 // The terms of this license can be found at:
 // https://www.gnu.org/licenses/gpl-3.0.en.html
 //
@@ -19,10 +19,10 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/arduino/arduino-check/check"
-	"github.com/arduino/arduino-check/check/checkconfigurations"
-	"github.com/arduino/arduino-check/check/checklevel"
-	"github.com/arduino/arduino-check/configuration/checkmode"
+	"github.com/arduino/arduino-lint/check"
+	"github.com/arduino/arduino-lint/check/checkconfigurations"
+	"github.com/arduino/arduino-lint/check/checklevel"
+	"github.com/arduino/arduino-lint/configuration/checkmode"
 	"github.com/stretchr/testify/assert"
 )
 

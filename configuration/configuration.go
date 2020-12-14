@@ -1,9 +1,9 @@
-// This file is part of arduino-check.
+// This file is part of arduino-lint.
 //
 // Copyright 2020 ARDUINO SA (http://www.arduino.cc/)
 //
 // This software is released under the GNU General Public License version 3,
-// which covers the main part of arduino-check.
+// which covers the main part of arduino-lint.
 // The terms of this license can be found at:
 // https://www.gnu.org/licenses/gpl-3.0.en.html
 //
@@ -13,7 +13,7 @@
 // Arduino software without disclosing the source code of your own applications.
 // To purchase a commercial license, send an email to license@arduino.cc.
 
-// Package configuration handles the configuration of the arduino-check tool.
+// Package configuration handles the configuration of the arduino-lint tool.
 package configuration
 
 import (
@@ -23,9 +23,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/arduino/arduino-check/configuration/checkmode"
-	"github.com/arduino/arduino-check/project/projecttype"
-	"github.com/arduino/arduino-check/result/outputformat"
+	"github.com/arduino/arduino-lint/configuration/checkmode"
+	"github.com/arduino/arduino-lint/project/projecttype"
+	"github.com/arduino/arduino-lint/result/outputformat"
 	"github.com/arduino/go-paths-helper"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/pflag"
@@ -57,7 +57,7 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 		}
 	}
 
-	if logFormatString, ok := os.LookupEnv("ARDUINO_CHECK_LOG_FORMAT"); ok {
+	if logFormatString, ok := os.LookupEnv("ARDUINO_LINT_LOG_FORMAT"); ok {
 		logFormat, err := logFormatFromString(logFormatString)
 		if err != nil {
 			return fmt.Errorf("--log-format flag value %s not valid", logFormatString)
@@ -66,7 +66,7 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 		EnableLogging(true)
 	}
 
-	if logLevelString, ok := os.LookupEnv("ARDUINO_CHECK_LOG_LEVEL"); ok {
+	if logLevelString, ok := os.LookupEnv("ARDUINO_LINT_LOG_LEVEL"); ok {
 		logLevel, err := logrus.ParseLevel(logLevelString)
 		if err != nil {
 			return fmt.Errorf("--log-level flag value %s not valid", logLevelString)
@@ -116,10 +116,10 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 		}
 	}
 
-	if officialModeString, ok := os.LookupEnv("ARDUINO_CHECK_OFFICIAL"); ok {
+	if officialModeString, ok := os.LookupEnv("ARDUINO_LINT_OFFICIAL"); ok {
 		customCheckModes[checkmode.Official], err = strconv.ParseBool(officialModeString)
 		if err != nil {
-			return fmt.Errorf("ARDUINO_CHECK_OFFICIAL environment variable value %s not valid", officialModeString)
+			return fmt.Errorf("ARDUINO_LINT_OFFICIAL environment variable value %s not valid", officialModeString)
 		}
 	}
 
