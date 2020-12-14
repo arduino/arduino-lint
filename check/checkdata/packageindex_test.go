@@ -53,7 +53,7 @@ func TestInitializeForPackageIndex(t *testing.T) {
 			ProjectType:      projecttype.PackageIndex,
 			SuperprojectType: projecttype.PackageIndex,
 		}
-		Initialize(testProject, nil)
+		Initialize(testProject)
 
 		testTable.packageIndexLoadErrorAssertion(t, PackageIndexLoadError(), testTable.testName)
 		if PackageIndexLoadError() == nil {

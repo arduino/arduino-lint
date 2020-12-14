@@ -28,7 +28,6 @@ import (
 	"github.com/arduino/arduino-check/check/checkdata/schema"
 	"github.com/arduino/arduino-check/check/checkdata/schema/compliancelevel"
 	"github.com/arduino/arduino-check/check/checkresult"
-	"github.com/arduino/arduino-check/configuration"
 	"github.com/arduino/arduino-check/project/library"
 	"github.com/arduino/arduino-check/project/sketch"
 	"github.com/arduino/arduino-cli/arduino/libraries"
@@ -118,7 +117,7 @@ func LibraryPropertiesNameFieldMissing() (result checkresult.Type, output string
 		return checkresult.Skip, "Library has legacy format"
 	}
 
-	if schema.RequiredPropertyMissing("name", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.RequiredPropertyMissing("name", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 	return checkresult.Pass, ""
@@ -134,7 +133,7 @@ func LibraryPropertiesNameFieldLTMinLength() (result checkresult.Type, output st
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.PropertyLessThanMinLength("name", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.PropertyLessThanMinLength("name", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 
@@ -152,7 +151,7 @@ func LibraryPropertiesNameFieldGTMaxLength() (result checkresult.Type, output st
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.PropertyGreaterThanMaxLength("name", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.PropertyGreaterThanMaxLength("name", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, name
 	}
 
@@ -170,7 +169,7 @@ func LibraryPropertiesNameFieldGTRecommendedLength() (result checkresult.Type, o
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.PropertyGreaterThanMaxLength("name", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict], configuration.SchemasPath()) {
+	if schema.PropertyGreaterThanMaxLength("name", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
 		return checkresult.Fail, name
 	}
 
@@ -188,7 +187,7 @@ func LibraryPropertiesNameFieldDisallowedCharacters() (result checkresult.Type, 
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/allowedCharacters", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/allowedCharacters", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, name
 	}
 
@@ -206,7 +205,7 @@ func LibraryPropertiesNameFieldHasSpaces() (result checkresult.Type, output stri
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/notContainsSpaces", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict], configuration.SchemasPath()) {
+	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/notContainsSpaces", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
 		return checkresult.Fail, name
 	}
 
@@ -224,7 +223,7 @@ func LibraryPropertiesNameFieldStartsWithArduino() (result checkresult.Type, out
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/notStartsWithArduino", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/notStartsWithArduino", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, name
 	}
 
@@ -259,7 +258,7 @@ func LibraryPropertiesNameFieldContainsArduino() (result checkresult.Type, outpu
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/notContainsArduino", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict], configuration.SchemasPath()) {
+	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/notContainsArduino", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
 		return checkresult.Fail, name
 	}
 
@@ -277,7 +276,7 @@ func LibraryPropertiesNameFieldContainsLibrary() (result checkresult.Type, outpu
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/notContainsSuperfluousTerms", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict], configuration.SchemasPath()) {
+	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/notContainsSuperfluousTerms", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
 		return checkresult.Fail, name
 	}
 
@@ -351,7 +350,7 @@ func LibraryPropertiesVersionFieldMissing() (result checkresult.Type, output str
 		return checkresult.Skip, "Library has legacy format"
 	}
 
-	if schema.RequiredPropertyMissing("version", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.RequiredPropertyMissing("version", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 	return checkresult.Pass, ""
@@ -368,7 +367,7 @@ func LibraryPropertiesVersionFieldNonRelaxedSemver() (result checkresult.Type, o
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.PropertyPatternMismatch("version", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.PropertyPatternMismatch("version", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, version
 	}
 
@@ -386,7 +385,7 @@ func LibraryPropertiesVersionFieldNonSemver() (result checkresult.Type, output s
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.PropertyPatternMismatch("version", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict], configuration.SchemasPath()) {
+	if schema.PropertyPatternMismatch("version", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
 		return checkresult.Fail, version
 	}
 
@@ -496,7 +495,7 @@ func LibraryPropertiesAuthorFieldMissing() (result checkresult.Type, output stri
 		return checkresult.Skip, "Library has legacy format"
 	}
 
-	if schema.RequiredPropertyMissing("author", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.RequiredPropertyMissing("author", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 	return checkresult.Pass, ""
@@ -512,7 +511,7 @@ func LibraryPropertiesAuthorFieldLTMinLength() (result checkresult.Type, output 
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.PropertyLessThanMinLength("author", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.PropertyLessThanMinLength("author", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 
@@ -529,7 +528,7 @@ func LibraryPropertiesMaintainerFieldMissing() (result checkresult.Type, output 
 		return checkresult.Skip, "Library has legacy format"
 	}
 
-	if schema.RequiredPropertyMissing("maintainer", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.RequiredPropertyMissing("maintainer", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 	return checkresult.Pass, ""
@@ -545,7 +544,7 @@ func LibraryPropertiesMaintainerFieldLTMinLength() (result checkresult.Type, out
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.PropertyLessThanMinLength("maintainer", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.PropertyLessThanMinLength("maintainer", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 
@@ -563,7 +562,7 @@ func LibraryPropertiesMaintainerFieldStartsWithArduino() (result checkresult.Typ
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.ValidationErrorMatch("^#/maintainer$", "/patternObjects/notStartsWithArduino", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.ValidationErrorMatch("^#/maintainer$", "/patternObjects/notStartsWithArduino", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, maintainer
 	}
 
@@ -597,7 +596,7 @@ func LibraryPropertiesEmailFieldLTMinLength() (result checkresult.Type, output s
 		return checkresult.Skip, "Field not present"
 	}
 
-	if schema.PropertyLessThanMinLength("email", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.PropertyLessThanMinLength("email", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 
@@ -619,7 +618,7 @@ func LibraryPropertiesEmailFieldStartsWithArduino() (result checkresult.Type, ou
 		return checkresult.Skip, "Field not present"
 	}
 
-	if schema.ValidationErrorMatch("^#/email$", "/patternObjects/notStartsWithArduino", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.ValidationErrorMatch("^#/email$", "/patternObjects/notStartsWithArduino", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, email
 	}
 
@@ -636,7 +635,7 @@ func LibraryPropertiesSentenceFieldMissing() (result checkresult.Type, output st
 		return checkresult.Skip, "Library has legacy format"
 	}
 
-	if schema.RequiredPropertyMissing("sentence", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.RequiredPropertyMissing("sentence", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 	return checkresult.Pass, ""
@@ -652,7 +651,7 @@ func LibraryPropertiesSentenceFieldLTMinLength() (result checkresult.Type, outpu
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.PropertyLessThanMinLength("sentence", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.PropertyLessThanMinLength("sentence", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 
@@ -674,7 +673,7 @@ func LibraryPropertiesParagraphFieldMissing() (result checkresult.Type, output s
 		return checkresult.Skip, "Library has legacy format"
 	}
 
-	if schema.RequiredPropertyMissing("paragraph", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.RequiredPropertyMissing("paragraph", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 	return checkresult.Pass, ""
@@ -714,7 +713,7 @@ func LibraryPropertiesCategoryFieldMissing() (result checkresult.Type, output st
 		return checkresult.Skip, "Library has legacy format"
 	}
 
-	if schema.RequiredPropertyMissing("category", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.RequiredPropertyMissing("category", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 	return checkresult.Pass, ""
@@ -731,7 +730,7 @@ func LibraryPropertiesCategoryFieldInvalid() (result checkresult.Type, output st
 		return checkresult.Skip, "Field not present"
 	}
 
-	if schema.PropertyEnumMismatch("category", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.PropertyEnumMismatch("category", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, category
 	}
 
@@ -766,7 +765,7 @@ func LibraryPropertiesUrlFieldMissing() (result checkresult.Type, output string)
 		return checkresult.Skip, "Library has legacy format"
 	}
 
-	if schema.RequiredPropertyMissing("url", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.RequiredPropertyMissing("url", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 	return checkresult.Pass, ""
@@ -783,7 +782,7 @@ func LibraryPropertiesUrlFieldInvalid() (result checkresult.Type, output string)
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.ValidationErrorMatch("^#/url$", "/format$", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.ValidationErrorMatch("^#/url$", "/format$", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, url
 	}
 
@@ -824,7 +823,7 @@ func LibraryPropertiesArchitecturesFieldMissing() (result checkresult.Type, outp
 		return checkresult.Skip, "Library has legacy format"
 	}
 
-	if schema.RequiredPropertyMissing("architectures", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.RequiredPropertyMissing("architectures", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 	return checkresult.Pass, ""
@@ -840,7 +839,7 @@ func LibraryPropertiesArchitecturesFieldLTMinLength() (result checkresult.Type, 
 		return checkresult.Skip, "Field not present"
 	}
 
-	if schema.PropertyLessThanMinLength("architectures", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.PropertyLessThanMinLength("architectures", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 
@@ -858,7 +857,7 @@ func LibraryPropertiesDependsFieldDisallowedCharacters() (result checkresult.Typ
 		return checkresult.Skip, "Field not present"
 	}
 
-	if schema.PropertyPatternMismatch("depends", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.PropertyPatternMismatch("depends", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, depends
 	}
 
@@ -908,7 +907,7 @@ func LibraryPropertiesDotALinkageFieldInvalid() (result checkresult.Type, output
 		return checkresult.Skip, "Field not present"
 	}
 
-	if schema.PropertyEnumMismatch("dot_a_linkage", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.PropertyEnumMismatch("dot_a_linkage", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, dotALinkage
 	}
 
@@ -942,7 +941,7 @@ func LibraryPropertiesIncludesFieldLTMinLength() (result checkresult.Type, outpu
 		return checkresult.Skip, "Field not present"
 	}
 
-	if schema.PropertyLessThanMinLength("includes", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.PropertyLessThanMinLength("includes", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 
@@ -1002,7 +1001,7 @@ func LibraryPropertiesPrecompiledFieldInvalid() (result checkresult.Type, output
 		return checkresult.Skip, "Field not present"
 	}
 
-	if schema.PropertyEnumMismatch("precompiled", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.PropertyEnumMismatch("precompiled", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, precompiled
 	}
 
@@ -1037,7 +1036,7 @@ func LibraryPropertiesLdflagsFieldLTMinLength() (result checkresult.Type, output
 		return checkresult.Skip, "Field not present"
 	}
 
-	if schema.PropertyLessThanMinLength("ldflags", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.PropertyLessThanMinLength("ldflags", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 
@@ -1050,7 +1049,7 @@ func LibraryPropertiesMisspelledOptionalField() (result checkresult.Type, output
 		return checkresult.NotRun, "Library not loaded"
 	}
 
-	if schema.MisspelledOptionalPropertyFound(checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification], configuration.SchemasPath()) {
+	if schema.MisspelledOptionalPropertyFound(checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 

@@ -27,7 +27,7 @@ import (
 )
 
 // Initialize gathers the check data for the specified project.
-func Initialize(project project.Type, schemasPath *paths.Path) {
+func Initialize(project project.Type) {
 	superprojectType = project.SuperprojectType
 	projectType = project.ProjectType
 	projectPath = project.Path
@@ -35,7 +35,7 @@ func Initialize(project project.Type, schemasPath *paths.Path) {
 	case projecttype.Sketch:
 		InitializeForSketch(project)
 	case projecttype.Library:
-		InitializeForLibrary(project, schemasPath)
+		InitializeForLibrary(project)
 	case projecttype.Platform:
 		InitializeForPlatform(project)
 	case projecttype.PackageIndex:

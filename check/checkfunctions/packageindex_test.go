@@ -51,7 +51,7 @@ func checkPackageIndexCheckFunction(checkFunction Type, testTables []packageInde
 			SuperprojectType: projecttype.PackageIndex,
 		}
 
-		checkdata.Initialize(testProject, nil)
+		checkdata.Initialize(testProject)
 
 		result, output := checkFunction()
 		assert.Equal(t, testTable.expectedCheckResult, result, testTable.testName)

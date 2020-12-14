@@ -21,20 +21,19 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/arduino/arduino-check/check/checkdata/schema"
 	"github.com/arduino/arduino-check/check/checkdata/schema/compliancelevel"
 	"github.com/arduino/arduino-check/project"
 	"github.com/arduino/arduino-check/project/library/libraryproperties"
 	"github.com/arduino/arduino-check/result/feedback"
 	"github.com/arduino/arduino-cli/arduino/libraries"
-	"github.com/arduino/go-paths-helper"
 	"github.com/arduino/go-properties-orderedmap"
 	"github.com/client9/misspell"
-	"github.com/ory/jsonschema/v3"
 	"github.com/sirupsen/logrus"
 )
 
 // Initialize gathers the library check data for the specified project.
-func InitializeForLibrary(project project.Type, schemasPath *paths.Path) {
+func InitializeForLibrary(project project.Type) {
 	var err error
 
 	libraryProperties, libraryPropertiesLoadError = libraryproperties.Properties(project.Path)
@@ -43,7 +42,7 @@ func InitializeForLibrary(project project.Type, schemasPath *paths.Path) {
 		// TODO: can I even do this?
 		libraryPropertiesSchemaValidationResult = nil
 	} else {
-		libraryPropertiesSchemaValidationResult = libraryproperties.Validate(libraryProperties, schemasPath)
+		libraryPropertiesSchemaValidationResult = libraryproperties.Validate(libraryProperties)
 	}
 
 	loadedLibrary, err = libraries.Load(project.Path, libraries.User)
@@ -98,10 +97,10 @@ func LibraryProperties() *properties.Map {
 	return libraryProperties
 }
 
-var libraryPropertiesSchemaValidationResult map[compliancelevel.Type]*jsonschema.ValidationError
+var libraryPropertiesSchemaValidationResult map[compliancelevel.Type]schema.ValidationResult
 
 // LibraryPropertiesSchemaValidationResult returns the result of validating library.properties against the JSON schema.
-func LibraryPropertiesSchemaValidationResult() map[compliancelevel.Type]*jsonschema.ValidationError {
+func LibraryPropertiesSchemaValidationResult() map[compliancelevel.Type]schema.ValidationResult {
 	return libraryPropertiesSchemaValidationResult
 }
 

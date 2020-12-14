@@ -9,6 +9,7 @@ on:
       - "go.sum"
       - "**/*.go"
       - "**/testdata/**"
+      - "etc/schemas/**/*.json"
   pull_request:
     paths:
       - ".github/workflows/test.yml"
@@ -17,6 +18,7 @@ on:
       - "go.sum"
       - "**/*.go"
       - "**/testdata/**"
+      - "etc/schemas/**/*.json"
 
 jobs:
   test-go:
@@ -43,6 +45,12 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           version: 3.x
+
+      - name: Generate code
+        run: task go:generate
+
+      - name: Check for forgotten code generation
+        run: git diff --color --exit-code
 
       - name: Build
         run: task build

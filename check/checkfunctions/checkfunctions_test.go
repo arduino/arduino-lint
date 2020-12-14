@@ -54,7 +54,7 @@ func checkCheckFunction(checkFunction Type, testTables []checkFunctionTestTable,
 			SuperprojectType: testTable.superProjectType,
 		}
 
-		checkdata.Initialize(testProject, schemasPath)
+		checkdata.Initialize(testProject)
 
 		result, output := checkFunction()
 		assert.Equal(t, testTable.expectedCheckResult, result, testTable.testName)

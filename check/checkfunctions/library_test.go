@@ -33,12 +33,10 @@ import (
 )
 
 var librariesTestDataPath *paths.Path
-var schemasPath *paths.Path
 
 func init() {
 	workingDirectory, _ := os.Getwd()
 	librariesTestDataPath = paths.New(workingDirectory, "testdata", "libraries")
-	schemasPath = paths.New(workingDirectory, "..", "..", "etc", "schemas")
 }
 
 type libraryCheckFunctionTestTable struct {
@@ -58,7 +56,7 @@ func checkLibraryCheckFunction(checkFunction Type, testTables []libraryCheckFunc
 			SuperprojectType: projecttype.Library,
 		}
 
-		checkdata.Initialize(testProject, schemasPath)
+		checkdata.Initialize(testProject)
 
 		result, output := checkFunction()
 		assert.Equal(t, testTable.expectedCheckResult, result, testTable.testName)
