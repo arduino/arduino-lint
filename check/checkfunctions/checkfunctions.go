@@ -72,7 +72,7 @@ func containsIncorrectPathBaseCase(pathList paths.PathList, correctBaseName stri
 // MissingReadme checks if the project has a readme that will be recognized by GitHub.
 func MissingReadme() (result checkresult.Type, output string) {
 	if checkdata.ProjectType() != checkdata.SuperProjectType() {
-		return checkresult.NotRun, "Readme not required for subprojects"
+		return checkresult.Skip, "Readme not required for subprojects"
 	}
 
 	// https://github.com/github/markup/blob/master/README.md
@@ -91,7 +91,7 @@ func MissingReadme() (result checkresult.Type, output string) {
 // MissingLicenseFile checks if the project has a license file that will be recognized by GitHub.
 func MissingLicenseFile() (result checkresult.Type, output string) {
 	if checkdata.ProjectType() != checkdata.SuperProjectType() {
-		return checkresult.NotRun, "License file not required for subprojects"
+		return checkresult.Skip, "License file not required for subprojects"
 	}
 
 	// https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/licensing-a-repository#detecting-a-license

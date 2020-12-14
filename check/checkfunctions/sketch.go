@@ -106,7 +106,7 @@ func PdeSketchExtension() (result checkresult.Type, output string) {
 func SketchDotJSONJSONFormat() (result checkresult.Type, output string) {
 	metadataPath := sketch.MetadataPath(checkdata.ProjectPath())
 	if metadataPath == nil {
-		return checkresult.NotRun, "No metadata file"
+		return checkresult.Skip, "No metadata file"
 	}
 
 	if isValidJSON(metadataPath) {
@@ -120,7 +120,7 @@ func SketchDotJSONJSONFormat() (result checkresult.Type, output string) {
 func SketchDotJSONFormat() (result checkresult.Type, output string) {
 	metadataPath := sketch.MetadataPath(checkdata.ProjectPath())
 	if metadataPath == nil {
-		return checkresult.NotRun, "No metadata file"
+		return checkresult.Skip, "No metadata file"
 	}
 
 	if checkdata.MetadataLoadError() == nil {

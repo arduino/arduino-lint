@@ -107,7 +107,7 @@ func TestRedundantLibraryProperties(t *testing.T) {
 func TestLibraryPropertiesFormat(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Invalid", "InvalidLibraryProperties", checkresult.Fail, ""},
-		{"Legacy", "Legacy", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.Skip, ""},
 		{"Valid", "Recursive", checkresult.Pass, ""},
 	}
 
@@ -240,11 +240,11 @@ func TestLibraryPropertiesVersionFieldBehindTag(t *testing.T) {
 	}
 
 	testTables := []libraryCheckFunctionTestTable{
-		// TODO: Test NotRun if subproject
+		// TODO: Test Skip if subproject
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
 		{"Legacy", "Legacy", checkresult.NotRun, ""},
 		{"Unparsable version", "VersionFormatInvalid", checkresult.NotRun, ""},
-		{"Not repo", "Recursive", checkresult.NotRun, ""},
+		{"Not repo", "Recursive", checkresult.Skip, ""},
 		{"Tag name not a version", gitInitAndTag(t, TagNotVersionPath, "foo", true), checkresult.Pass, ""},
 		{"Match w/ tag prefix", gitInitAndTag(t, TagMatchWithPrefixPath, "1.0.0", true), checkresult.Pass, ""},
 		{"Pre-release tag greater", gitInitAndTag(t, TagPrereleaseGreaterPath, "1.0.1-rc1", true), checkresult.Pass, ""},
@@ -262,7 +262,7 @@ func TestLibraryPropertiesVersionFieldBehindTag(t *testing.T) {
 func TestLibraryPropertiesSentenceFieldSpellCheck(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
-		{"Not defined", "MissingFields", checkresult.NotRun, ""},
+		{"Not defined", "MissingFields", checkresult.Skip, ""},
 		{"Misspelled word", "MisspelledSentenceParagraphValue", checkresult.Fail, "^grill broccoli now$"},
 		{"Non-nil diff but no typos", "SpuriousMisspelledSentenceParagraphValue", checkresult.Pass, ""},
 		{"Correct spelling", "Recursive", checkresult.Pass, ""},
@@ -274,13 +274,24 @@ func TestLibraryPropertiesSentenceFieldSpellCheck(t *testing.T) {
 func TestLibraryPropertiesParagraphFieldSpellCheck(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
-		{"Not defined", "MissingFields", checkresult.NotRun, ""},
+		{"Not defined", "MissingFields", checkresult.Skip, ""},
 		{"Misspelled word", "MisspelledSentenceParagraphValue", checkresult.Fail, "^There is a zebra$"},
 		{"Non-nil diff but no typos", "SpuriousMisspelledSentenceParagraphValue", checkresult.Pass, ""},
 		{"Correct spelling", "Recursive", checkresult.Pass, ""},
 	}
 
 	checkLibraryCheckFunction(LibraryPropertiesParagraphFieldSpellCheck, testTables, t)
+}
+
+func TestLibraryPropertiesEmailFieldAsMaintainerAlias(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"No email field", "MissingFields", checkresult.Skip, ""},
+		{"email in place of maintainer", "EmailOnly", checkresult.Fail, ""},
+		{"email and maintainer", "EmailAndMaintainer", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesEmailFieldAsMaintainerAlias, testTables, t)
 }
 
 func TestLibraryPropertiesParagraphFieldRepeatsSentence(t *testing.T) {
@@ -292,6 +303,18 @@ func TestLibraryPropertiesParagraphFieldRepeatsSentence(t *testing.T) {
 
 	checkLibraryCheckFunction(LibraryPropertiesParagraphFieldRepeatsSentence, testTables, t)
 }
+
+func TestLibraryPropertiesCategoryFieldUncategorized(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"No category field", "MissingFields", checkresult.Skip, ""},
+		{"Uncategorized category", "UncategorizedCategoryValue", checkresult.Fail, ""},
+		{"Valid category value", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesCategoryFieldUncategorized, testTables, t)
+}
+
 func TestLibraryPropertiesUrlFieldDeadLink(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
@@ -310,7 +333,7 @@ func TestLibraryPropertiesDependsFieldNotInIndex(t *testing.T) {
 		{"Dependency not in index", "DependsNotIndexed", checkresult.Fail, "^NotIndexed$"},
 		{"Dependency in index", "DependsIndexed", checkresult.Pass, ""},
 		{"Depends field empty", "DependsEmpty", checkresult.Pass, ""},
-		{"No depends", "NoDepends", checkresult.NotRun, ""},
+		{"No depends", "NoDepends", checkresult.Skip, ""},
 	}
 
 	checkLibraryCheckFunction(LibraryPropertiesDependsFieldNotInIndex, testTables, t)
@@ -319,7 +342,7 @@ func TestLibraryPropertiesDependsFieldNotInIndex(t *testing.T) {
 func TestLibraryPropertiesDotALinkageFieldTrueWithFlatLayout(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
-		{"Not defined", "MissingFields", checkresult.NotRun, ""},
+		{"Not defined", "MissingFields", checkresult.Skip, ""},
 		{"Flat layout", "DotALinkageFlat", checkresult.Fail, ""},
 		{"Recursive layout", "DotALinkage", checkresult.Pass, ""},
 	}
@@ -330,7 +353,7 @@ func TestLibraryPropertiesDotALinkageFieldTrueWithFlatLayout(t *testing.T) {
 func TestLibraryPropertiesIncludesFieldItemNotFound(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
-		{"Not defined", "MissingFields", checkresult.NotRun, ""},
+		{"Not defined", "MissingFields", checkresult.Skip, ""},
 		{"Missing includes", "MissingIncludes", checkresult.Fail, "^Nonexistent.h$"},
 		{"Present includes", "Recursive", checkresult.Pass, ""},
 	}
@@ -341,11 +364,11 @@ func TestLibraryPropertiesIncludesFieldItemNotFound(t *testing.T) {
 func TestLibraryPropertiesPrecompiledFieldEnabledWithFlatLayout(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
-		{"Not defined", "MissingFields", checkresult.NotRun, ""},
+		{"Not defined", "MissingFields", checkresult.Skip, ""},
 		{"Flat layout", "PrecompiledFlat", checkresult.Fail, "^true$"},
 		{"Recursive layout", "Precompiled", checkresult.Pass, ""},
-		{"Recursive, not precompiled", "NotPrecompiled", checkresult.NotRun, ""},
-		{"Flat, not precompiled", "Flat", checkresult.NotRun, ""},
+		{"Recursive, not precompiled", "NotPrecompiled", checkresult.Skip, ""},
+		{"Flat, not precompiled", "Flat", checkresult.Skip, ""},
 	}
 
 	checkLibraryCheckFunction(LibraryPropertiesPrecompiledFieldEnabledWithFlatLayout, testTables, t)
@@ -444,7 +467,7 @@ func TestLibraryFolderNameGTMaxLength(t *testing.T) {
 
 func TestIncorrectLibrarySrcFolderNameCase(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
-		{"Flat, not precompiled", "Flat", checkresult.NotRun, ""},
+		{"Flat, not precompiled", "Flat", checkresult.Skip, ""},
 		{"Incorrect case", "IncorrectSrcFolderNameCase", checkresult.Fail, ""},
 		{"Correct case", "Recursive", checkresult.Pass, ""},
 	}
@@ -505,7 +528,7 @@ func TestIncorrectExtrasFolderNameCase(t *testing.T) {
 func TestRecursiveLibraryWithUtilityFolder(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
-		{"Flat", "Flat", checkresult.NotRun, ""},
+		{"Flat", "Flat", checkresult.Skip, ""},
 		{"Recursive with utility", "RecursiveWithUtilityFolder", checkresult.Fail, ""},
 		{"Recursive without utility", "Recursive", checkresult.Pass, ""},
 	}

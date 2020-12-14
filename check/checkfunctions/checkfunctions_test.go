@@ -64,7 +64,7 @@ func checkCheckFunction(checkFunction Type, testTables []checkFunctionTestTable,
 
 func TestMissingReadme(t *testing.T) {
 	testTables := []checkFunctionTestTable{
-		{"Subproject", "readme", projecttype.Sketch, projecttype.Library, checkresult.NotRun, ""},
+		{"Subproject", "readme", projecttype.Sketch, projecttype.Library, checkresult.Skip, ""},
 		{"Readme", "readme", projecttype.Sketch, projecttype.Sketch, checkresult.Pass, ""},
 		{"No readme", "no-readme", projecttype.Sketch, projecttype.Sketch, checkresult.Fail, ""},
 	}
@@ -74,7 +74,7 @@ func TestMissingReadme(t *testing.T) {
 
 func TestMissingLicenseFile(t *testing.T) {
 	testTables := []checkFunctionTestTable{
-		{"Subproject", "no-license-file", projecttype.Sketch, projecttype.Library, checkresult.NotRun, ""},
+		{"Subproject", "no-license-file", projecttype.Sketch, projecttype.Library, checkresult.Skip, ""},
 		{"Has license", "license-file", projecttype.Sketch, projecttype.Sketch, checkresult.Pass, ""},
 		{"Has license in subfolder", "license-file-in-subfolder", projecttype.Sketch, projecttype.Sketch, checkresult.Fail, ""},
 		{"No license", "no-license-file", projecttype.Sketch, projecttype.Sketch, checkresult.Fail, ""},
