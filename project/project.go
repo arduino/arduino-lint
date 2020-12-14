@@ -88,7 +88,7 @@ func findProjects(targetPath *paths.Path) ([]Type, error) {
 			return foundProjects, nil
 		}
 
-		return nil, fmt.Errorf("specified path %s is not an Arduino project", targetPath)
+		return nil, fmt.Errorf("Specified path %s is not an Arduino project", targetPath)
 	}
 
 	if configuration.SuperprojectTypeFilter() == projecttype.All || configuration.Recursive() {
@@ -110,7 +110,7 @@ func findProjects(targetPath *paths.Path) ([]Type, error) {
 	}
 
 	if foundProjects == nil {
-		return nil, fmt.Errorf("no projects found under %s", targetPath)
+		return nil, fmt.Errorf("No projects found under %s", targetPath)
 	}
 
 	return foundProjects, nil

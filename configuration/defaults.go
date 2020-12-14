@@ -18,7 +18,7 @@ package configuration
 // The default configuration settings.
 
 import (
-	"io/ioutil"
+	"os"
 
 	"github.com/arduino/arduino-check/configuration/checkmode"
 	"github.com/arduino/arduino-check/project/projecttype"
@@ -61,4 +61,4 @@ var defaultCheckModes = map[projecttype.Type]map[checkmode.Type]bool{
 	},
 }
 
-var defaultLogOutput = ioutil.Discard // Default to no log output.
+var defaultLogOutput = os.Stderr

@@ -62,7 +62,7 @@ func InitializeForLibrary(project project.Type, schemasPath *paths.Path) {
 		url := "http://downloads.arduino.cc/libraries/library_index.json"
 		httpResponse, err := http.Get(url)
 		if err != nil {
-			feedback.Errorf("%s Unable to download Library Manager index from %s", err, url)
+			feedback.Errorf("Unable to download Library Manager index from %s: %s", err, url)
 			os.Exit(1)
 		}
 		defer httpResponse.Body.Close()
