@@ -846,6 +846,123 @@ func LibraryPropertiesArchitecturesFieldLTMinLength() (result checkresult.Type, 
 	return checkresult.Pass, ""
 }
 
+// LibraryPropertiesArchitecturesFieldAlias checks whether an alias architecture name is present, but not its true Arduino architecture name.
+func LibraryPropertiesArchitecturesFieldSoloAlias() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, "Couldn't load library.properties"
+	}
+
+	architectures, ok := checkdata.LibraryProperties().GetOk("architectures")
+	if !ok {
+		return checkresult.Skip, "Field not present"
+	}
+
+	architecturesList := commaSeparatedToList(strings.ToLower(architectures))
+
+	// Must be all lowercase (there is a separate check for incorrect architecture case).
+	var aliases = map[string][]string{
+		"atmelavr":      {"avr"},
+		"atmelmegaavr":  {"megaavr"},
+		"atmelsam":      {"sam", "samd"},
+		"espressif32":   {"esp32"},
+		"espressif8266": {"esp8266"},
+		"intel_arc32":   {"arc32"},
+		"nordicnrf52":   {"nRF5", "nrf52", "mbed"},
+	}
+
+	trueArchitecturePresent := func(trueArchitecturesQuery []string) bool {
+		for _, trueArchitectureQuery := range trueArchitecturesQuery {
+			for _, architecture := range architecturesList {
+				if architecture == trueArchitectureQuery {
+					return true
+				}
+			}
+		}
+
+		return false
+	}
+
+	soloAliases := []string{}
+	for _, architecture := range architecturesList {
+		trueEquivalents, isAlias := aliases[architecture]
+		if isAlias && !trueArchitecturePresent(trueEquivalents) {
+			soloAliases = append(soloAliases, architecture)
+		}
+	}
+
+	if len(soloAliases) > 0 {
+		return checkresult.Fail, strings.Join(soloAliases, ", ")
+	}
+
+	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesArchitecturesFieldValueCase checks for incorrect case of common architectures.
+func LibraryPropertiesArchitecturesFieldValueCase() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, "Couldn't load library.properties"
+	}
+
+	architectures, ok := checkdata.LibraryProperties().GetOk("architectures")
+	if !ok {
+		return checkresult.Skip, "Field not present"
+	}
+
+	architecturesList := commaSeparatedToList(architectures)
+
+	var commonArchitecturesList = []string{
+		"apollo3",
+		"arc32",
+		"avr",
+		"esp32",
+		"esp8266",
+		"i586",
+		"i686",
+		"k210",
+		"mbed",
+		"megaavr",
+		"mraa",
+		"nRF5",
+		"nrf52",
+		"pic32",
+		"sam",
+		"samd",
+		"wiced",
+		"win10",
+	}
+
+	correctArchitecturePresent := func(correctArchitectureQuery string) bool {
+		for _, architecture := range architecturesList {
+			if architecture == correctArchitectureQuery {
+				return true
+			}
+		}
+
+		return false
+	}
+
+	miscasedArchitectures := []string{}
+	for _, architecture := range architecturesList {
+		for _, commonArchitecture := range commonArchitecturesList {
+			if architecture == commonArchitecture {
+				break
+			}
+
+			if strings.EqualFold(architecture, commonArchitecture) && !correctArchitecturePresent(commonArchitecture) {
+				// The architecture has incorrect case and the correctly cased name is not present in the architectures field.
+				miscasedArchitectures = append(miscasedArchitectures, architecture)
+				break
+			}
+		}
+	}
+
+	if len(miscasedArchitectures) > 0 {
+		return checkresult.Fail, strings.Join(miscasedArchitectures, ", ")
+	}
+
+	return checkresult.Pass, ""
+}
+
 // LibraryPropertiesDependsFieldDisallowedCharacters checks for disallowed characters in the library.properties "depends" field.
 func LibraryPropertiesDependsFieldDisallowedCharacters() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
@@ -875,11 +992,10 @@ func LibraryPropertiesDependsFieldNotInIndex() (result checkresult.Type, output 
 		return checkresult.Skip, "Field not present"
 	}
 
-	dependencies := strings.Split(depends, ",")
+	dependencies := commaSeparatedToList(depends)
 
 	dependenciesNotInIndex := []string{}
 	for _, dependency := range dependencies {
-		dependency = strings.TrimSpace(dependency)
 		if dependency == "" {
 			continue
 		}
@@ -959,10 +1075,9 @@ func LibraryPropertiesIncludesFieldItemNotFound() (result checkresult.Type, outp
 		return checkresult.Skip, "Field not present"
 	}
 
-	includesList := strings.Split(includes, ",")
+	includesList := commaSeparatedToList(includes)
 
 	findInclude := func(include string) bool {
-		include = strings.TrimSpace(include)
 		if include == "" {
 			return true
 		}
@@ -1356,4 +1471,14 @@ func nameInLibraryManagerIndex(name string) bool {
 	}
 
 	return false
+}
+
+// commaSeparatedToList returns the list equivalent of a comma-separated string.
+func commaSeparatedToList(commaSeparated string) []string {
+	list := []string{}
+	for _, item := range strings.Split(commaSeparated, ",") {
+		list = append(list, strings.TrimSpace(item))
+	}
+
+	return list
 }

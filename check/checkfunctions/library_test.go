@@ -325,6 +325,30 @@ func TestLibraryPropertiesUrlFieldDeadLink(t *testing.T) {
 	checkLibraryCheckFunction(LibraryPropertiesUrlFieldDeadLink, testTables, t)
 }
 
+func TestLibraryPropertiesArchitecturesFieldSoloAlias(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Not defined", "MissingFields", checkresult.Skip, ""},
+		{"Solo alias", "ArchitectureAliasSolo", checkresult.Fail, ""},
+		{"Alias w/ true", "ArchitectureAliasWithTrue", checkresult.Pass, ""},
+		{"No alias", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesArchitecturesFieldSoloAlias, testTables, t)
+}
+
+func TestLibraryPropertiesArchitecturesFieldValueCase(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Not defined", "MissingFields", checkresult.Skip, ""},
+		{"Miscased", "ArchitectureMiscased", checkresult.Fail, ""},
+		{"Miscased w/ correct case", "ArchitectureMiscasedWithCorrect", checkresult.Pass, ""},
+		{"Correct case", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesArchitecturesFieldValueCase, testTables, t)
+}
+
 func TestLibraryPropertiesDependsFieldNotInIndex(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
