@@ -15,6 +15,7 @@
 import json
 import pathlib
 import platform
+import typing
 
 import dateutil.parser
 import invoke.context
@@ -178,7 +179,7 @@ def test_version(run_command):
 
 
 @pytest.fixture(scope="function")
-def run_command(pytestconfig, working_dir):
+def run_command(pytestconfig, working_dir) -> typing.Callable[..., invoke.runners.Result]:
     """Provide a wrapper around invoke's `run` API so that every test will work in the same temporary folder.
 
     Useful reference:
@@ -187,7 +188,11 @@ def run_command(pytestconfig, working_dir):
 
     arduino_lint_path = pathlib.Path(pytestconfig.rootdir).parent / "arduino-lint"
 
-    def _run(cmd, custom_working_dir=None, custom_env=None):
+    def _run(
+        cmd: list,
+        custom_working_dir: typing.Optional[str] = None,
+        custom_env: typing.Optional[dict] = None
+    ) -> invoke.runners.Result:
         if cmd is None:
             cmd = []
         if not custom_working_dir:
@@ -214,7 +219,7 @@ def run_command(pytestconfig, working_dir):
 
 
 @pytest.fixture(scope="function")
-def working_dir(tmpdir_factory):
+def working_dir(tmpdir_factory) -> str:
     """Create a temporary folder for the test to run in. It will be created before running each test and deleted at the
     end. This way all the tests work in isolation.
     """
