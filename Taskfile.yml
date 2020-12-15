@@ -10,6 +10,7 @@ tasks:
     desc: Run tests
     cmds:
       - task: go:test-unit
+      - task: test-integration
       - task: schema:compile
 
   go:generate:
@@ -27,6 +28,12 @@ tasks:
     cmds:
       - go test -short -run '{{ default ".*" .TEST_REGEX }}' {{ default "-v" .GOFLAGS }} -coverprofile=coverage_unit.txt {{ default .DEFAULT_PACKAGES .PACKAGES }}
 
+  test-integration:
+    desc: Run integration tests
+    cmds:
+      - poetry install --no-root
+      - poetry run pytest test
+
   schema:compile:
     desc: Compile JSON schema
     cmds:
@@ -36,6 +43,7 @@ tasks:
     desc: Lint and check formatting of all files
     cmds:
       - task: go:check
+      - task: python:check
       - task: docs:check
       - task: config:check
       - task: check-spelling
@@ -44,6 +52,7 @@ tasks:
     desc: Lint all files
     cmds:
       - task: go:lint
+      - task: python:lint
       - task: docs:lint
       - task: config:lint
 
@@ -58,6 +67,7 @@ tasks:
     desc: Format all files
     cmds:
       - task: go:format
+      - task: python:format
       - task: docs:format
       - task: config:format
 
@@ -87,6 +97,22 @@ tasks:
     desc: Format Go code
     cmds:
       - gofmt -l -w {{ default .DEFAULT_PATHS .PATHS }}
+
+  python:check:
+    cmds:
+      - task: python:lint
+
+  python:lint:
+    desc: Lint Python code
+    cmds:
+      - poetry install --no-root
+      - poetry run flake8
+
+  python:format:
+    desc: Automatically formats Python files
+    cmds:
+      - poetry install --no-root
+      - poetry run black .
 
   docs:check:
     desc: Lint and check formatting of documentation files
