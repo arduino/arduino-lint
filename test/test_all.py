@@ -25,7 +25,7 @@ test_data_path = pathlib.Path(__file__).resolve().parent.joinpath("testdata")
 
 
 def test_defaults(run_command):
-    result = run_command(cmd_string="", custom_working_dir=test_data_path.joinpath("recursive"))
+    result = run_command(cmd=[], custom_working_dir=test_data_path.joinpath("recursive"))
     assert result.ok
 
 
@@ -40,32 +40,32 @@ def test_compliance(run_command, project_folder, compliance_level):
         if compliance_setting == compliance_level:
             expected_ok = True
 
-        result = run_command(cmd_string="--compliance {} {}".format(compliance_setting, project_path))
+        result = run_command(cmd=["--compliance", compliance_setting, project_path])
         assert result.ok == expected_ok
 
 
 def test_compliance_invalid(run_command):
-    result = run_command(cmd_string="--compliance foo {}".format(test_data_path.joinpath("ValidSketch")))
+    result = run_command(cmd=["--compliance", "foo", test_data_path.joinpath("ValidSketch")])
     assert not result.ok
 
 
 def test_format(run_command):
     project_path = test_data_path.joinpath("ValidSketch")
-    result = run_command(cmd_string="--format text {}".format(project_path))
+    result = run_command(cmd=["--format", "text", project_path])
     assert result.ok
     with pytest.raises(json.JSONDecodeError):
         json.loads(result.stdout)
 
-    result = run_command(cmd_string="--format json {}".format(project_path))
+    result = run_command(cmd=["--format", "json", project_path])
     assert result.ok
     json.loads(result.stdout)
 
-    result = run_command(cmd_string="--format foo {}".format(project_path))
+    result = run_command(cmd=["--format", "foo", project_path])
     assert not result.ok
 
 
 def test_help(run_command):
-    result = run_command(cmd_string="--help")
+    result = run_command(cmd=["--help"])
     assert result.ok
     assert "Usage:" in result.stdout
 
@@ -82,12 +82,12 @@ def test_help(run_command):
 def test_library_manager(run_command, project_folder, expected_exit_statuses):
     project_path = test_data_path.joinpath("library-manager", project_folder)
     for library_manager_setting, expected_exit_status in expected_exit_statuses.items():
-        result = run_command(cmd_string="--library-manager {} {}".format(library_manager_setting, project_path))
+        result = run_command(cmd=["--library-manager", library_manager_setting, project_path])
         assert result.exited == expected_exit_status
 
 
 def test_library_manager_invalid(run_command):
-    result = run_command(cmd_string="--library-manager foo {}".format(test_data_path.joinpath("ValidSketch")))
+    result = run_command(cmd=["--library-manager", "foo", test_data_path.joinpath("ValidSketch")])
     assert not result.ok
 
 
@@ -103,39 +103,39 @@ def test_library_manager_invalid(run_command):
 def test_project_type(run_command, project_folder, expected_exit_statuses):
     project_path = test_data_path.joinpath("project-type", project_folder)
     for project_type, expected_exit_status in expected_exit_statuses.items():
-        result = run_command(cmd_string="--project-type {} {}".format(project_type, project_path))
+        result = run_command(cmd=["--project-type", project_type, project_path])
         assert result.exited == expected_exit_status
 
 
 def test_project_type_invalid(run_command):
-    result = run_command(cmd_string="--project-type foo {}".format(test_data_path.joinpath("ValidSketch")))
+    result = run_command(cmd=["--project-type", "foo", test_data_path.joinpath("ValidSketch")])
     assert not result.ok
 
 
 def test_recursive(run_command):
     valid_projects_path = test_data_path.joinpath("recursive")
-    result = run_command(cmd_string="--recursive true {}".format(valid_projects_path))
+    result = run_command(cmd=["--recursive", "true", valid_projects_path])
     assert result.ok
 
-    result = run_command(cmd_string="--recursive false {}".format(valid_projects_path))
+    result = run_command(cmd=["--recursive", "false", valid_projects_path])
     assert not result.ok
 
 
 def test_recursive_invalid(run_command):
-    result = run_command(cmd_string="--recursive foo {}".format(test_data_path.joinpath("ValidSketch")))
+    result = run_command(cmd=["--recursive", "foo", test_data_path.joinpath("ValidSketch")])
     assert not result.ok
 
 
 def test_report_file(run_command, working_dir):
     project_path = test_data_path.joinpath("ValidSketch")
     report_file_name = "report.json"
-    result = run_command(cmd_string="--report-file {} {}".format(report_file_name, project_path))
+    result = run_command(cmd=["--report-file", report_file_name, project_path])
     assert result.ok
     with pathlib.Path(working_dir, report_file_name).open() as report_file:
         report = json.load(report_file)
 
     assert pathlib.PurePath(report["configuration"]["paths"][0]) == project_path
-    assert report["configuration"]["projectType"] == "any project type"
+    assert report["configuration"]["projectType"] == "all"
     assert report["configuration"]["recursive"]
     assert pathlib.PurePath(report["projects"][0]["path"]) == project_path
     assert report["projects"][0]["projectType"] == "sketch"
@@ -147,22 +147,22 @@ def test_report_file(run_command, working_dir):
 
 def test_verbose(run_command):
     project_path = test_data_path.joinpath("verbose", "HasWarnings")
-    result = run_command(cmd_string="--format text {}".format(project_path))
+    result = run_command(cmd=["--format", "text", project_path])
     assert result.ok
     assert "result: pass" not in result.stdout
     assert "result: fail" in result.stdout
 
-    result = run_command(cmd_string="--format text --verbose {}".format(project_path))
+    result = run_command(cmd=["--format", "text", "--verbose", project_path])
     assert result.ok
     assert "result: pass" in result.stdout
 
-    result = run_command(cmd_string="--format json {}".format(project_path))
+    result = run_command(cmd=["--format", "json", project_path])
     assert result.ok
     report = json.loads(result.stdout)
     assert True not in [check.get("result") == "pass" for check in report["projects"][0]["checks"]]
     assert True in [check.get("result") == "fail" for check in report["projects"][0]["checks"]]
 
-    result = run_command(cmd_string="--format json --verbose {}".format(project_path))
+    result = run_command(cmd=["--format", "json", "--verbose", project_path])
     assert result.ok
     report = json.loads(result.stdout)
     assert True in [check.get("result") == "pass" for check in report["projects"][0]["checks"]]
@@ -170,7 +170,7 @@ def test_verbose(run_command):
 
 
 def test_version(run_command):
-    result = run_command(cmd_string="--version")
+    result = run_command(cmd=["--version"])
     assert result.ok
     output_list = result.stdout.strip().split(sep=" ")
     assert semver.VersionInfo.isvalid(version=output_list[0])
@@ -187,10 +187,15 @@ def run_command(pytestconfig, working_dir):
 
     arduino_lint_path = pathlib.Path(pytestconfig.rootdir).parent / "arduino-lint"
 
-    def _run(cmd_string, custom_working_dir=None, custom_env=None):
+    def _run(cmd, custom_working_dir=None, custom_env=None):
+        if cmd is None:
+            cmd = []
         if not custom_working_dir:
             custom_working_dir = working_dir
-        cli_full_line = '"{}" {}'.format(arduino_lint_path, cmd_string)
+        quoted_cmd = []
+        for token in cmd:
+            quoted_cmd.append(f'"{token}"')
+        cli_full_line = '"{}" {}'.format(arduino_lint_path, " ".join(quoted_cmd))
         run_context = invoke.context.Context()
         # It might happen that we need to change directories between drives on Windows,
         # in that case the "/d" flag must be used otherwise directory wouldn't change
