@@ -59,7 +59,7 @@ var configurations = []Type{
 	{
 		ProjectType:     projecttype.Library,
 		Category:        "structure",
-		Subcategory:     "",
+		Subcategory:     "general",
 		ID:              "",
 		Brief:           "invalid",
 		Description:     "",
@@ -74,7 +74,7 @@ var configurations = []Type{
 	{
 		ProjectType:     projecttype.Library,
 		Category:        "structure",
-		Subcategory:     "",
+		Subcategory:     "root folder",
 		ID:              "",
 		Brief:           "folder name too long",
 		Description:     "This will be problematic for people doing manual installation of the library.",
@@ -89,7 +89,7 @@ var configurations = []Type{
 	{
 		ProjectType:     projecttype.Library,
 		Category:        "structure",
-		Subcategory:     "",
+		Subcategory:     "root folder",
 		ID:              "",
 		Brief:           "disallowed characters in folder name",
 		Description:     "This will be problematic for people doing manual installation of the library.",
@@ -104,7 +104,7 @@ var configurations = []Type{
 	{
 		ProjectType:     projecttype.Library,
 		Category:        "structure",
-		Subcategory:     "",
+		Subcategory:     "miscellaneous",
 		ID:              "",
 		Brief:           "submodule",
 		Description:     "",
@@ -119,7 +119,7 @@ var configurations = []Type{
 	{
 		ProjectType:     projecttype.Library,
 		Category:        "structure",
-		Subcategory:     "general",
+		Subcategory:     "miscellaneous",
 		ID:              "",
 		Brief:           "symlink",
 		Description:     "",
@@ -134,7 +134,7 @@ var configurations = []Type{
 	{
 		ProjectType:     projecttype.Library,
 		Category:        "structure",
-		Subcategory:     "",
+		Subcategory:     "miscellaneous",
 		ID:              "",
 		Brief:           ".development file",
 		Description:     "",
@@ -149,7 +149,7 @@ var configurations = []Type{
 	{
 		ProjectType:     projecttype.Library,
 		Category:        "structure",
-		Subcategory:     "",
+		Subcategory:     "miscellaneous",
 		ID:              "",
 		Brief:           ".exe file",
 		Description:     "",
@@ -164,7 +164,7 @@ var configurations = []Type{
 	{
 		ProjectType:     projecttype.Library,
 		Category:        "structure",
-		Subcategory:     "general",
+		Subcategory:     "source code",
 		ID:              "",
 		Brief:           "name-header mismatch",
 		Description:     `The name value determines the installation folder name and the folder match to the filename in the #include directive influences "folder name priority".`,
@@ -179,7 +179,7 @@ var configurations = []Type{
 	{
 		ProjectType:     projecttype.Library,
 		Category:        "structure",
-		Subcategory:     "",
+		Subcategory:     "source code",
 		ID:              "",
 		Brief:           "incorrect src folder case",
 		Description:     "",
@@ -194,7 +194,7 @@ var configurations = []Type{
 	{
 		ProjectType:     projecttype.Library,
 		Category:        "structure",
-		Subcategory:     "",
+		Subcategory:     "source code",
 		ID:              "",
 		Brief:           "recursive with utility folder",
 		Description:     "",
@@ -209,7 +209,7 @@ var configurations = []Type{
 	{
 		ProjectType:     projecttype.Library,
 		Category:        "structure",
-		Subcategory:     "",
+		Subcategory:     "extras folder",
 		ID:              "",
 		Brief:           "incorrect extras folder name",
 		Description:     "",
@@ -224,7 +224,7 @@ var configurations = []Type{
 	{
 		ProjectType:     projecttype.Library,
 		Category:        "structure",
-		Subcategory:     "",
+		Subcategory:     "extras folder",
 		ID:              "",
 		Brief:           "incorrect extras folder name case",
 		Description:     "",
@@ -1064,7 +1064,7 @@ var configurations = []Type{
 	{
 		ProjectType:     projecttype.Library,
 		Category:        "code",
-		Subcategory:     "",
+		Subcategory:     "miscellaneous",
 		ID:              "",
 		Brief:           "incorrect Arduino.h case",
 		Description:     "This causes compilation failure on filename case-sensitive OS (e.g., Linux).",
@@ -1078,8 +1078,8 @@ var configurations = []Type{
 	},
 	{
 		ProjectType:     projecttype.Library,
-		Category:        "structure",
-		Subcategory:     "",
+		Category:        "documentation",
+		Subcategory:     "miscellaneous",
 		ID:              "",
 		Brief:           "no readme",
 		Description:     "",
@@ -1093,8 +1093,8 @@ var configurations = []Type{
 	},
 	{
 		ProjectType:     projecttype.Library,
-		Category:        "structure",
-		Subcategory:     "",
+		Category:        "documentation",
+		Subcategory:     "miscellaneous",
 		ID:              "",
 		Brief:           "no license file",
 		Description:     "",
@@ -1123,8 +1123,8 @@ var configurations = []Type{
 	},
 	{
 		ProjectType:     projecttype.Library,
-		Category:        "structure",
-		Subcategory:     "",
+		Category:        "documentation",
+		Subcategory:     "examples",
 		ID:              "",
 		Brief:           "no examples",
 		Description:     "",
@@ -1138,8 +1138,8 @@ var configurations = []Type{
 	},
 	{
 		ProjectType:     projecttype.Library,
-		Category:        "structure",
-		Subcategory:     "",
+		Category:        "documentation",
+		Subcategory:     "examples",
 		ID:              "",
 		Brief:           "incorrect examples folder name",
 		Description:     "",
@@ -1153,8 +1153,8 @@ var configurations = []Type{
 	},
 	{
 		ProjectType:     projecttype.Library,
-		Category:        "structure",
-		Subcategory:     "",
+		Category:        "documentation",
+		Subcategory:     "examples",
 		ID:              "",
 		Brief:           "incorrect examples folder name case",
 		Description:     "",
@@ -1169,7 +1169,7 @@ var configurations = []Type{
 	{
 		ProjectType:     projecttype.Sketch,
 		Category:        "structure",
-		Subcategory:     "",
+		Subcategory:     "root folder",
 		ID:              "",
 		Brief:           "name mismatch",
 		Description:     "",
@@ -1184,7 +1184,7 @@ var configurations = []Type{
 	{
 		ProjectType:     projecttype.Sketch,
 		Category:        "structure",
-		Subcategory:     "",
+		Subcategory:     "file name",
 		ID:              "",
 		Brief:           "disallowed characters in file name",
 		Description:     "",
@@ -1199,7 +1199,7 @@ var configurations = []Type{
 	{
 		ProjectType:     projecttype.Sketch,
 		Category:        "structure",
-		Subcategory:     "",
+		Subcategory:     "file name",
 		ID:              "",
 		Brief:           "file name too long",
 		Description:     "",
@@ -1214,7 +1214,7 @@ var configurations = []Type{
 	{
 		ProjectType:     projecttype.Sketch,
 		Category:        "structure",
-		Subcategory:     "",
+		Subcategory:     "file name",
 		ID:              "SS001",
 		Brief:           ".pde extension",
 		Description:     "The .pde extension is used by both Processing sketches and Arduino sketches. Processing sketches should either be in the \"data\" subfolder of the sketch or in the \"extras\" folder of the library. Arduino sketches should use the modern .ino extension.",
@@ -1229,7 +1229,7 @@ var configurations = []Type{
 	{
 		ProjectType:     projecttype.Sketch,
 		Category:        "structure",
-		Subcategory:     "",
+		Subcategory:     "miscellaneous",
 		ID:              "",
 		Brief:           "incorrect src folder case",
 		Description:     "",
@@ -1244,7 +1244,7 @@ var configurations = []Type{
 	{
 		ProjectType:     projecttype.Sketch,
 		Category:        "code",
-		Subcategory:     "",
+		Subcategory:     "miscellaneous",
 		ID:              "",
 		Brief:           "incorrect Arduino.h case",
 		Description:     "This causes compilation failure on filename case-sensitive OS (e.g., Linux).",
@@ -1258,8 +1258,8 @@ var configurations = []Type{
 	},
 	{
 		ProjectType:     projecttype.Sketch,
-		Category:        "structure",
-		Subcategory:     "",
+		Category:        "documentation",
+		Subcategory:     "miscellaneous",
 		ID:              "",
 		Brief:           "no readme",
 		Description:     "",
@@ -1273,8 +1273,8 @@ var configurations = []Type{
 	},
 	{
 		ProjectType:     projecttype.Sketch,
-		Category:        "structure",
-		Subcategory:     "",
+		Category:        "documentation",
+		Subcategory:     "miscellaneous",
 		ID:              "",
 		Brief:           "no license file",
 		Description:     "",
@@ -1288,8 +1288,8 @@ var configurations = []Type{
 	},
 	{
 		ProjectType:     projecttype.Sketch,
-		Category:        "metadata",
-		Subcategory:     "sketch.json",
+		Category:        "sketch.json",
+		Subcategory:     "general",
 		ID:              "",
 		Brief:           "invalid sketch.json JSON format",
 		Description:     "",
@@ -1303,8 +1303,8 @@ var configurations = []Type{
 	},
 	{
 		ProjectType:     projecttype.Sketch,
-		Category:        "metadata",
-		Subcategory:     "sketch.json",
+		Category:        "sketch.json",
+		Subcategory:     "general",
 		ID:              "",
 		Brief:           "invalid sketch.json data format",
 		Description:     "",
@@ -1318,8 +1318,8 @@ var configurations = []Type{
 	},
 	{
 		ProjectType:     projecttype.Platform,
-		Category:        "structure",
-		Subcategory:     "",
+		Category:        "documentation",
+		Subcategory:     "miscellaneous",
 		ID:              "",
 		Brief:           "no readme",
 		Description:     "",
@@ -1333,8 +1333,8 @@ var configurations = []Type{
 	},
 	{
 		ProjectType:     projecttype.Platform,
-		Category:        "structure",
-		Subcategory:     "",
+		Category:        "documentation",
+		Subcategory:     "miscellaneous",
 		ID:              "",
 		Brief:           "no license file",
 		Description:     "",
@@ -1379,7 +1379,7 @@ var configurations = []Type{
 	{
 		ProjectType:     projecttype.Platform,
 		Category:        "code",
-		Subcategory:     "",
+		Subcategory:     "miscellaneous",
 		ID:              "",
 		Brief:           "incorrect Arduino.h case",
 		Description:     "This causes compilation failure on filename case-sensitive OS (e.g., Linux).",
@@ -1394,7 +1394,7 @@ var configurations = []Type{
 	{
 		ProjectType:     projecttype.PackageIndex,
 		Category:        "data",
-		Subcategory:     "",
+		Subcategory:     "general",
 		ID:              "",
 		Brief:           "Invalid JSON format",
 		Description:     "",
@@ -1409,7 +1409,7 @@ var configurations = []Type{
 	{
 		ProjectType:     projecttype.PackageIndex,
 		Category:        "data",
-		Subcategory:     "",
+		Subcategory:     "general",
 		ID:              "",
 		Brief:           "Invalid format",
 		Description:     "",
