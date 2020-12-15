@@ -39,14 +39,199 @@ import (
 	semver "go.bug.st/relaxed-semver"
 )
 
-// LibraryPropertiesFormat checks for invalid library.properties format.
-func LibraryPropertiesFormat() (result checkresult.Type, output string) {
-	if checkdata.LoadedLibrary() != nil && checkdata.LoadedLibrary().IsLegacy {
-		return checkresult.Skip, "Library has no library.properties"
+// LibraryInvalid checks whether the provided path is a valid library.
+func LibraryInvalid() (result checkresult.Type, output string) {
+	if checkdata.LoadedLibrary() != nil && library.ContainsHeaderFile(checkdata.LoadedLibrary().SourceDir) {
+		return checkresult.Pass, ""
 	}
 
+	return checkresult.Fail, ""
+}
+
+// LibraryFolderNameGTMaxLength checks if the library folder name exceeds the maximum length.
+func LibraryFolderNameGTMaxLength() (result checkresult.Type, output string) {
+	if len(checkdata.ProjectPath().Base()) > 63 {
+		return checkresult.Fail, checkdata.ProjectPath().Base()
+	}
+
+	return checkresult.Pass, ""
+}
+
+// ProhibitedCharactersInLibraryFolderName checks for prohibited characters in the library folder name.
+func ProhibitedCharactersInLibraryFolderName() (result checkresult.Type, output string) {
+	if !validProjectPathBaseName(checkdata.ProjectPath().Base()) {
+		return checkresult.Fail, checkdata.ProjectPath().Base()
+	}
+
+	return checkresult.Pass, ""
+}
+
+// LibraryHasSubmodule checks whether the library contains a Git submodule.
+func LibraryHasSubmodule() (result checkresult.Type, output string) {
+	dotGitmodulesPath := checkdata.ProjectPath().Join(".gitmodules")
+	hasDotGitmodules, err := dotGitmodulesPath.ExistCheck()
+	if err != nil {
+		panic(err)
+	}
+
+	if hasDotGitmodules && dotGitmodulesPath.IsNotDir() {
+		return checkresult.Fail, ""
+	}
+
+	return checkresult.Pass, ""
+}
+
+// LibraryContainsSymlinks checks if the library folder contains symbolic links.
+func LibraryContainsSymlinks() (result checkresult.Type, output string) {
+	projectPathListing, err := checkdata.ProjectPath().ReadDirRecursive()
+	if err != nil {
+		panic(err)
+	}
+	projectPathListing.FilterOutDirs()
+
+	symlinkPaths := []string{}
+	for _, projectPathItem := range projectPathListing {
+		projectPathItemStat, err := os.Lstat(projectPathItem.String())
+		if err != nil {
+			panic(err)
+		}
+
+		if projectPathItemStat.Mode()&os.ModeSymlink != 0 {
+			symlinkPaths = append(symlinkPaths, projectPathItem.String())
+		}
+	}
+
+	if len(symlinkPaths) > 0 {
+		return checkresult.Fail, strings.Join(symlinkPaths, ", ")
+	}
+
+	return checkresult.Pass, ""
+}
+
+// LibraryHasDotDevelopmentFile checks whether the library contains a .development flag file.
+func LibraryHasDotDevelopmentFile() (result checkresult.Type, output string) {
+	dotDevelopmentPath := checkdata.ProjectPath().Join(".development")
+	hasDotDevelopment, err := dotDevelopmentPath.ExistCheck()
+	if err != nil {
+		panic(err)
+	}
+
+	if hasDotDevelopment && dotDevelopmentPath.IsNotDir() {
+		return checkresult.Fail, ""
+	}
+
+	return checkresult.Pass, ""
+}
+
+// LibraryHasExe checks whether the library contains files with .exe extension.
+func LibraryHasExe() (result checkresult.Type, output string) {
+	projectPathListing, err := checkdata.ProjectPath().ReadDirRecursive()
+	if err != nil {
+		panic(err)
+	}
+	projectPathListing.FilterOutDirs()
+
+	exePaths := []string{}
+	for _, projectPathItem := range projectPathListing {
+		if projectPathItem.Ext() == ".exe" {
+			exePaths = append(exePaths, projectPathItem.String())
+		}
+	}
+
+	if len(exePaths) > 0 {
+		return checkresult.Fail, strings.Join(exePaths, ", ")
+	}
+
+	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesNameFieldHeaderMismatch checks whether the filename of one of the library's header files matches the Library Manager installation folder name.
+func LibraryPropertiesNameFieldHeaderMismatch() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
-		return checkresult.Fail, checkdata.LibraryPropertiesLoadError().Error()
+		return checkresult.NotRun, "Couldn't load library.properties"
+	}
+
+	name, ok := checkdata.LibraryProperties().GetOk("name")
+	if !ok {
+		return checkresult.NotRun, "Field not present"
+	}
+
+	sanitizedName := utils.SanitizeName(name)
+	for _, header := range checkdata.SourceHeaders() {
+		if strings.TrimSuffix(header, filepath.Ext(header)) == sanitizedName {
+			return checkresult.Pass, ""
+		}
+	}
+
+	return checkresult.Fail, sanitizedName + ".h"
+}
+
+// IncorrectLibrarySrcFolderNameCase checks for incorrect case of src subfolder name in recursive format libraries.
+func IncorrectLibrarySrcFolderNameCase() (result checkresult.Type, output string) {
+	if library.ContainsMetadataFile(checkdata.ProjectPath()) && library.ContainsHeaderFile(checkdata.ProjectPath()) {
+		// Flat layout, so no special treatment of src subfolder.
+		return checkresult.Skip, "Not applicable due to layout type"
+	}
+
+	// The library is intended to have the recursive layout.
+	directoryListing, err := checkdata.ProjectPath().ReadDir()
+	if err != nil {
+		panic(err)
+	}
+	directoryListing.FilterDirs()
+
+	path, found := containsIncorrectPathBaseCase(directoryListing, "src")
+	if found {
+		return checkresult.Fail, path.String()
+	}
+
+	return checkresult.Pass, ""
+}
+
+// RecursiveLibraryWithUtilityFolder checks for presence of a `utility` subfolder in a recursive layout library.
+func RecursiveLibraryWithUtilityFolder() (result checkresult.Type, output string) {
+	if checkdata.LoadedLibrary() == nil {
+		return checkresult.NotRun, "Library not loaded"
+	}
+
+	if checkdata.LoadedLibrary().Layout == libraries.FlatLayout {
+		return checkresult.Skip, "Not applicable due to layout type"
+	}
+
+	if checkdata.ProjectPath().Join("utility").Exist() {
+		return checkresult.Fail, ""
+	}
+
+	return checkresult.Pass, ""
+}
+
+// MisspelledExtrasFolderName checks for incorrectly spelled `extras` folder name.
+func MisspelledExtrasFolderName() (result checkresult.Type, output string) {
+	directoryListing, err := checkdata.ProjectPath().ReadDir()
+	if err != nil {
+		panic(err)
+	}
+	directoryListing.FilterDirs()
+
+	path, found := containsMisspelledPathBaseName(directoryListing, "extras", "(?i)^extra$")
+	if found {
+		return checkresult.Fail, path.String()
+	}
+
+	return checkresult.Pass, ""
+}
+
+// IncorrectExtrasFolderNameCase checks for incorrect `extras` folder name case.
+func IncorrectExtrasFolderNameCase() (result checkresult.Type, output string) {
+	directoryListing, err := checkdata.ProjectPath().ReadDir()
+	if err != nil {
+		panic(err)
+	}
+	directoryListing.FilterDirs()
+
+	path, found := containsIncorrectPathBaseCase(directoryListing, "extras")
+	if found {
+		return checkresult.Fail, path.String()
 	}
 
 	return checkresult.Pass, ""
@@ -102,6 +287,19 @@ func RedundantLibraryProperties() (result checkresult.Type, output string) {
 	redundantLibraryPropertiesPath := checkdata.ProjectPath().Join("src", "library.properties")
 	if redundantLibraryPropertiesPath.Exist() {
 		return checkresult.Fail, redundantLibraryPropertiesPath.String()
+	}
+
+	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesFormat checks for invalid library.properties format.
+func LibraryPropertiesFormat() (result checkresult.Type, output string) {
+	if checkdata.LoadedLibrary() != nil && checkdata.LoadedLibrary().IsLegacy {
+		return checkresult.Skip, "Library has no library.properties"
+	}
+
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.Fail, checkdata.LibraryPropertiesLoadError().Error()
 	}
 
 	return checkresult.Pass, ""
@@ -194,24 +392,6 @@ func LibraryPropertiesNameFieldDisallowedCharacters() (result checkresult.Type, 
 	return checkresult.Pass, ""
 }
 
-// LibraryPropertiesNameFieldHasSpaces checks if the library.properties "name" value contains spaces.
-func LibraryPropertiesNameFieldHasSpaces() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
-		return checkresult.NotRun, "Couldn't load library.properties"
-	}
-
-	name, ok := checkdata.LibraryProperties().GetOk("name")
-	if !ok {
-		return checkresult.NotRun, "Field not present"
-	}
-
-	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/notContainsSpaces", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
-		return checkresult.Fail, name
-	}
-
-	return checkresult.Pass, ""
-}
-
 // LibraryPropertiesNameFieldStartsWithArduino checks if the library.properties "name" value starts with "Arduino".
 func LibraryPropertiesNameFieldStartsWithArduino() (result checkresult.Type, output string) {
 	if checkdata.LibraryPropertiesLoadError() != nil {
@@ -259,6 +439,24 @@ func LibraryPropertiesNameFieldContainsArduino() (result checkresult.Type, outpu
 	}
 
 	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/notContainsArduino", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
+		return checkresult.Fail, name
+	}
+
+	return checkresult.Pass, ""
+}
+
+// LibraryPropertiesNameFieldHasSpaces checks if the library.properties "name" value contains spaces.
+func LibraryPropertiesNameFieldHasSpaces() (result checkresult.Type, output string) {
+	if checkdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.NotRun, "Couldn't load library.properties"
+	}
+
+	name, ok := checkdata.LibraryProperties().GetOk("name")
+	if !ok {
+		return checkresult.NotRun, "Field not present"
+	}
+
+	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/notContainsSpaces", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
 		return checkresult.Fail, name
 	}
 
@@ -317,27 +515,6 @@ func LibraryPropertiesNameFieldNotInIndex() (result checkresult.Type, output str
 	}
 
 	return checkresult.Fail, name
-}
-
-// LibraryPropertiesNameFieldHeaderMismatch checks whether the filename of one of the library's header files matches the Library Manager installation folder name.
-func LibraryPropertiesNameFieldHeaderMismatch() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
-		return checkresult.NotRun, "Couldn't load library.properties"
-	}
-
-	name, ok := checkdata.LibraryProperties().GetOk("name")
-	if !ok {
-		return checkresult.NotRun, "Field not present"
-	}
-
-	sanitizedName := utils.SanitizeName(name)
-	for _, header := range checkdata.SourceHeaders() {
-		if strings.TrimSuffix(header, filepath.Ext(header)) == sanitizedName {
-			return checkresult.Pass, ""
-		}
-	}
-
-	return checkresult.Fail, sanitizedName + ".h"
 }
 
 // LibraryPropertiesVersionFieldMissing checks for missing library.properties "version" field.
@@ -1171,94 +1348,6 @@ func LibraryPropertiesMisspelledOptionalField() (result checkresult.Type, output
 	return checkresult.Pass, ""
 }
 
-// LibraryInvalid checks whether the provided path is a valid library.
-func LibraryInvalid() (result checkresult.Type, output string) {
-	if checkdata.LoadedLibrary() != nil && library.ContainsHeaderFile(checkdata.LoadedLibrary().SourceDir) {
-		return checkresult.Pass, ""
-	}
-
-	return checkresult.Fail, ""
-}
-
-// LibraryHasSubmodule checks whether the library contains a Git submodule.
-func LibraryHasSubmodule() (result checkresult.Type, output string) {
-	dotGitmodulesPath := checkdata.ProjectPath().Join(".gitmodules")
-	hasDotGitmodules, err := dotGitmodulesPath.ExistCheck()
-	if err != nil {
-		panic(err)
-	}
-
-	if hasDotGitmodules && dotGitmodulesPath.IsNotDir() {
-		return checkresult.Fail, ""
-	}
-
-	return checkresult.Pass, ""
-}
-
-// LibraryContainsSymlinks checks if the library folder contains symbolic links.
-func LibraryContainsSymlinks() (result checkresult.Type, output string) {
-	projectPathListing, err := checkdata.ProjectPath().ReadDirRecursive()
-	if err != nil {
-		panic(err)
-	}
-	projectPathListing.FilterOutDirs()
-
-	symlinkPaths := []string{}
-	for _, projectPathItem := range projectPathListing {
-		projectPathItemStat, err := os.Lstat(projectPathItem.String())
-		if err != nil {
-			panic(err)
-		}
-
-		if projectPathItemStat.Mode()&os.ModeSymlink != 0 {
-			symlinkPaths = append(symlinkPaths, projectPathItem.String())
-		}
-	}
-
-	if len(symlinkPaths) > 0 {
-		return checkresult.Fail, strings.Join(symlinkPaths, ", ")
-	}
-
-	return checkresult.Pass, ""
-}
-
-// LibraryHasDotDevelopmentFile checks whether the library contains a .development flag file.
-func LibraryHasDotDevelopmentFile() (result checkresult.Type, output string) {
-	dotDevelopmentPath := checkdata.ProjectPath().Join(".development")
-	hasDotDevelopment, err := dotDevelopmentPath.ExistCheck()
-	if err != nil {
-		panic(err)
-	}
-
-	if hasDotDevelopment && dotDevelopmentPath.IsNotDir() {
-		return checkresult.Fail, ""
-	}
-
-	return checkresult.Pass, ""
-}
-
-// LibraryHasExe checks whether the library contains files with .exe extension.
-func LibraryHasExe() (result checkresult.Type, output string) {
-	projectPathListing, err := checkdata.ProjectPath().ReadDirRecursive()
-	if err != nil {
-		panic(err)
-	}
-	projectPathListing.FilterOutDirs()
-
-	exePaths := []string{}
-	for _, projectPathItem := range projectPathListing {
-		if projectPathItem.Ext() == ".exe" {
-			exePaths = append(exePaths, projectPathItem.String())
-		}
-	}
-
-	if len(exePaths) > 0 {
-		return checkresult.Fail, strings.Join(exePaths, ", ")
-	}
-
-	return checkresult.Pass, ""
-}
-
 // LibraryHasStraySketches checks for sketches outside the `examples` and `extras` folders.
 func LibraryHasStraySketches() (result checkresult.Type, output string) {
 	straySketchPaths := []string{}
@@ -1293,46 +1382,6 @@ func LibraryHasStraySketches() (result checkresult.Type, output string) {
 
 	if len(straySketchPaths) > 0 {
 		return checkresult.Fail, strings.Join(straySketchPaths, ", ")
-	}
-
-	return checkresult.Pass, ""
-}
-
-// ProhibitedCharactersInLibraryFolderName checks for prohibited characters in the library folder name.
-func ProhibitedCharactersInLibraryFolderName() (result checkresult.Type, output string) {
-	if !validProjectPathBaseName(checkdata.ProjectPath().Base()) {
-		return checkresult.Fail, checkdata.ProjectPath().Base()
-	}
-
-	return checkresult.Pass, ""
-}
-
-// LibraryFolderNameGTMaxLength checks if the library folder name exceeds the maximum length.
-func LibraryFolderNameGTMaxLength() (result checkresult.Type, output string) {
-	if len(checkdata.ProjectPath().Base()) > 63 {
-		return checkresult.Fail, checkdata.ProjectPath().Base()
-	}
-
-	return checkresult.Pass, ""
-}
-
-// IncorrectLibrarySrcFolderNameCase checks for incorrect case of src subfolder name in recursive format libraries.
-func IncorrectLibrarySrcFolderNameCase() (result checkresult.Type, output string) {
-	if library.ContainsMetadataFile(checkdata.ProjectPath()) && library.ContainsHeaderFile(checkdata.ProjectPath()) {
-		// Flat layout, so no special treatment of src subfolder.
-		return checkresult.Skip, "Not applicable due to layout type"
-	}
-
-	// The library is intended to have the recursive layout.
-	directoryListing, err := checkdata.ProjectPath().ReadDir()
-	if err != nil {
-		panic(err)
-	}
-	directoryListing.FilterDirs()
-
-	path, found := containsIncorrectPathBaseCase(directoryListing, "src")
-	if found {
-		return checkresult.Fail, path.String()
 	}
 
 	return checkresult.Pass, ""
@@ -1392,37 +1441,17 @@ func IncorrectExamplesFolderNameCase() (result checkresult.Type, output string) 
 	return checkresult.Pass, ""
 }
 
-// MisspelledExtrasFolderName checks for incorrectly spelled `extras` folder name.
-func MisspelledExtrasFolderName() (result checkresult.Type, output string) {
-	directoryListing, err := checkdata.ProjectPath().ReadDir()
-	if err != nil {
-		panic(err)
-	}
-	directoryListing.FilterDirs()
-
-	path, found := containsMisspelledPathBaseName(directoryListing, "extras", "(?i)^extra$")
-	if found {
-		return checkresult.Fail, path.String()
+// nameInLibraryManagerIndex returns whether there is a library in Library Manager index using the given name.
+func nameInLibraryManagerIndex(name string) bool {
+	libraries := checkdata.LibraryManagerIndex()["libraries"].([]interface{})
+	for _, libraryInterface := range libraries {
+		library := libraryInterface.(map[string]interface{})
+		if library["name"].(string) == name {
+			return true
+		}
 	}
 
-	return checkresult.Pass, ""
-}
-
-// RecursiveLibraryWithUtilityFolder checks for presence of a `utility` subfolder in a recursive layout library.
-func RecursiveLibraryWithUtilityFolder() (result checkresult.Type, output string) {
-	if checkdata.LoadedLibrary() == nil {
-		return checkresult.NotRun, "Library not loaded"
-	}
-
-	if checkdata.LoadedLibrary().Layout == libraries.FlatLayout {
-		return checkresult.Skip, "Not applicable due to layout type"
-	}
-
-	if checkdata.ProjectPath().Join("utility").Exist() {
-		return checkresult.Fail, ""
-	}
-
-	return checkresult.Pass, ""
+	return false
 }
 
 // spellCheckLibraryPropertiesFieldValue returns the value of the provided library.properties field with commonly misspelled words corrected.
@@ -1442,35 +1471,6 @@ func spellCheckLibraryPropertiesFieldValue(fieldName string) (result checkresult
 	}
 
 	return checkresult.Pass, ""
-}
-
-// IncorrectExtrasFolderNameCase checks for incorrect `extras` folder name case.
-func IncorrectExtrasFolderNameCase() (result checkresult.Type, output string) {
-	directoryListing, err := checkdata.ProjectPath().ReadDir()
-	if err != nil {
-		panic(err)
-	}
-	directoryListing.FilterDirs()
-
-	path, found := containsIncorrectPathBaseCase(directoryListing, "extras")
-	if found {
-		return checkresult.Fail, path.String()
-	}
-
-	return checkresult.Pass, ""
-}
-
-// nameInLibraryManagerIndex returns whether there is a library in Library Manager index using the given name.
-func nameInLibraryManagerIndex(name string) bool {
-	libraries := checkdata.LibraryManagerIndex()["libraries"].([]interface{})
-	for _, libraryInterface := range libraries {
-		library := libraryInterface.(map[string]interface{})
-		if library["name"].(string) == name {
-			return true
-		}
-	}
-
-	return false
 }
 
 // commaSeparatedToList returns the list equivalent of a comma-separated string.

@@ -32,43 +32,6 @@ import (
 // The `output` result is the contextual information that will be inserted into the check's message template.
 type Type func() (result checkresult.Type, output string)
 
-// validProjectPathBaseName checks whether the provided library folder or sketch filename contains prohibited characters.
-func validProjectPathBaseName(name string) bool {
-	baseNameRegexp := regexp.MustCompile("^[a-zA-Z0-9][a-zA-Z0-9_.-]*$")
-	return baseNameRegexp.MatchString(name)
-}
-
-func containsMisspelledPathBaseName(pathList paths.PathList, correctBaseName string, misspellingQuery string) (*paths.Path, bool) {
-	misspellingRegexp := regexp.MustCompile(misspellingQuery)
-	for _, path := range pathList {
-		if path.Base() == correctBaseName {
-			return nil, false
-		}
-
-		if misspellingRegexp.MatchString(path.Base()) {
-			return path, true
-		}
-	}
-
-	return nil, false
-}
-
-func containsIncorrectPathBaseCase(pathList paths.PathList, correctBaseName string) (*paths.Path, bool) {
-	for _, path := range pathList {
-		if path.Base() == correctBaseName {
-			// There was a case-sensitive match (paths package's Exist() is not always case-sensitive, so can't be used here).
-			return nil, false
-		}
-
-		if strings.EqualFold(path.Base(), correctBaseName) {
-			// There was a case-insensitive match.
-			return path, true
-		}
-	}
-
-	return nil, false
-}
-
 // MissingReadme checks if the project has a readme that will be recognized by GitHub.
 func MissingReadme() (result checkresult.Type, output string) {
 	if checkdata.ProjectType() != checkdata.SuperProjectType() {
@@ -136,6 +99,43 @@ func IncorrectArduinoDotHFileNameCase() (result checkresult.Type, output string)
 	}
 
 	return checkresult.Pass, ""
+}
+
+// validProjectPathBaseName checks whether the provided library folder or sketch filename contains prohibited characters.
+func validProjectPathBaseName(name string) bool {
+	baseNameRegexp := regexp.MustCompile("^[a-zA-Z0-9][a-zA-Z0-9_.-]*$")
+	return baseNameRegexp.MatchString(name)
+}
+
+func containsMisspelledPathBaseName(pathList paths.PathList, correctBaseName string, misspellingQuery string) (*paths.Path, bool) {
+	misspellingRegexp := regexp.MustCompile(misspellingQuery)
+	for _, path := range pathList {
+		if path.Base() == correctBaseName {
+			return nil, false
+		}
+
+		if misspellingRegexp.MatchString(path.Base()) {
+			return path, true
+		}
+	}
+
+	return nil, false
+}
+
+func containsIncorrectPathBaseCase(pathList paths.PathList, correctBaseName string) (*paths.Path, bool) {
+	for _, path := range pathList {
+		if path.Base() == correctBaseName {
+			// There was a case-sensitive match (paths package's Exist() is not always case-sensitive, so can't be used here).
+			return nil, false
+		}
+
+		if strings.EqualFold(path.Base(), correctBaseName) {
+			// There was a case-insensitive match.
+			return path, true
+		}
+	}
+
+	return nil, false
 }
 
 // pathContainsRegexpMatch checks if the provided path contains a file name matching the given regular expression.
