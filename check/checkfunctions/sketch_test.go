@@ -60,13 +60,13 @@ func checkSketchCheckFunction(checkFunction Type, testTables []sketchCheckFuncti
 	}
 }
 
-func TestIncorrectSketchSrcFolderNameCase(t *testing.T) {
+func TestSketchNameMismatch(t *testing.T) {
 	testTables := []sketchCheckFunctionTestTable{
-		{"Incorrect case", "IncorrectSrcFolderNameCase", checkresult.Fail, ""},
-		{"Correct case", "Valid", checkresult.Pass, ""},
+		{"Valid", "Valid", checkresult.Pass, ""},
+		{"Mismatch", "NameMismatch", checkresult.Fail, ""},
 	}
 
-	checkSketchCheckFunction(IncorrectSketchSrcFolderNameCase, testTables, t)
+	checkSketchCheckFunction(SketchNameMismatch, testTables, t)
 }
 
 func TestProhibitedCharactersInSketchFileName(t *testing.T) {
@@ -96,6 +96,15 @@ func TestPdeSketchExtension(t *testing.T) {
 	checkSketchCheckFunction(PdeSketchExtension, testTables, t)
 }
 
+func TestIncorrectSketchSrcFolderNameCase(t *testing.T) {
+	testTables := []sketchCheckFunctionTestTable{
+		{"Incorrect case", "IncorrectSrcFolderNameCase", checkresult.Fail, ""},
+		{"Correct case", "Valid", checkresult.Pass, ""},
+	}
+
+	checkSketchCheckFunction(IncorrectSketchSrcFolderNameCase, testTables, t)
+}
+
 func TestSketchDotJSONJSONFormat(t *testing.T) {
 	testTables := []sketchCheckFunctionTestTable{
 		{"No metadata file", "NoMetadataFile", checkresult.Skip, ""},
@@ -115,13 +124,4 @@ func TestSketchDotJSONFormat(t *testing.T) {
 	}
 
 	checkSketchCheckFunction(SketchDotJSONFormat, testTables, t)
-}
-
-func TestSketchNameMismatch(t *testing.T) {
-	testTables := []sketchCheckFunctionTestTable{
-		{"Valid", "Valid", checkresult.Pass, ""},
-		{"Mismatch", "NameMismatch", checkresult.Fail, ""},
-	}
-
-	checkSketchCheckFunction(SketchNameMismatch, testTables, t)
 }

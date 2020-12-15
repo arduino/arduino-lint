@@ -23,7 +23,9 @@ import (
 	"github.com/arduino/arduino-lint/check/checkconfigurations"
 	"github.com/arduino/arduino-lint/check/checklevel"
 	"github.com/arduino/arduino-lint/configuration/checkmode"
+	"github.com/arduino/arduino-lint/project/projecttype"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestConfigurationResolution(t *testing.T) {
@@ -64,4 +66,32 @@ func checkModeConflict(configurations ...[]checkmode.Type) (bool, checkmode.Type
 		}
 	}
 	return false, checkmode.Default
+}
+
+func TestIncorrectCheckIDPrefix(t *testing.T) {
+	for checkIndex, checkConfiguration := range checkconfigurations.Configurations() {
+		var IDPrefix byte
+		switch checkConfiguration.ProjectType {
+		case projecttype.Sketch:
+			IDPrefix = 'S'
+		case projecttype.Library:
+			IDPrefix = 'L'
+		case projecttype.Platform:
+			IDPrefix = 'P'
+		case projecttype.PackageIndex:
+			IDPrefix = 'I'
+		default:
+			panic(fmt.Errorf("No prefix configured for project type %s", checkConfiguration.ProjectType))
+		}
+		require.NotEmptyf(t, checkConfiguration.ID, "No check ID defined for check configuration #%v", checkIndex)
+		assert.Equalf(t, IDPrefix, checkConfiguration.ID[0], "Check ID %s has incorrect prefix for project type %s.", checkConfiguration.ID, checkConfiguration.ProjectType)
+	}
+}
+
+func TestDuplicateCheckID(t *testing.T) {
+	checkIDMap := make(map[string]bool)
+	for checkIndex, checkConfiguration := range checkconfigurations.Configurations() {
+		checkIDMap[checkConfiguration.ID] = true
+		require.Equalf(t, checkIndex+1, len(checkIDMap), "ID %s of check #%v is a duplicate", checkConfiguration.ID, checkIndex)
+	}
 }

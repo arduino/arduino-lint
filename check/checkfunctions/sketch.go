@@ -26,20 +26,21 @@ import (
 	"github.com/arduino/arduino-lint/project/sketch"
 )
 
-// IncorrectSketchSrcFolderNameCase checks for incorrect case of src subfolder name in recursive format libraries.
-func IncorrectSketchSrcFolderNameCase() (result checkresult.Type, output string) {
-	directoryListing, err := checkdata.ProjectPath().ReadDir()
-	if err != nil {
-		panic(err)
-	}
-	directoryListing.FilterDirs()
+// SketchNameMismatch checks for mismatch between sketch folder name and primary file name.
+func SketchNameMismatch() (result checkresult.Type, output string) {
+	for extension := range globals.MainFileValidExtensions {
+		validPrimarySketchFilePath := checkdata.ProjectPath().Join(checkdata.ProjectPath().Base() + extension)
+		exist, err := validPrimarySketchFilePath.ExistCheck()
+		if err != nil {
+			panic(err)
+		}
 
-	path, found := containsIncorrectPathBaseCase(directoryListing, "src")
-	if found {
-		return checkresult.Fail, path.String()
+		if exist {
+			return checkresult.Pass, ""
+		}
 	}
 
-	return checkresult.Pass, ""
+	return checkresult.Fail, checkdata.ProjectPath().Base() + ".ino"
 }
 
 // ProhibitedCharactersInSketchFileName checks for prohibited characters in the sketch file names.
@@ -102,6 +103,22 @@ func PdeSketchExtension() (result checkresult.Type, output string) {
 	return checkresult.Pass, ""
 }
 
+// IncorrectSketchSrcFolderNameCase checks for incorrect case of src subfolder name in recursive format libraries.
+func IncorrectSketchSrcFolderNameCase() (result checkresult.Type, output string) {
+	directoryListing, err := checkdata.ProjectPath().ReadDir()
+	if err != nil {
+		panic(err)
+	}
+	directoryListing.FilterDirs()
+
+	path, found := containsIncorrectPathBaseCase(directoryListing, "src")
+	if found {
+		return checkresult.Fail, path.String()
+	}
+
+	return checkresult.Pass, ""
+}
+
 // SketchDotJSONJSONFormat checks whether the sketch.json metadata file is a valid JSON document.
 func SketchDotJSONJSONFormat() (result checkresult.Type, output string) {
 	metadataPath := sketch.MetadataPath(checkdata.ProjectPath())
@@ -128,21 +145,4 @@ func SketchDotJSONFormat() (result checkresult.Type, output string) {
 	}
 
 	return checkresult.Fail, checkdata.MetadataLoadError().Error()
-}
-
-// SketchNameMismatch checks for mismatch between sketch folder name and primary file name.
-func SketchNameMismatch() (result checkresult.Type, output string) {
-	for extension := range globals.MainFileValidExtensions {
-		validPrimarySketchFilePath := checkdata.ProjectPath().Join(checkdata.ProjectPath().Base() + extension)
-		exist, err := validPrimarySketchFilePath.ExistCheck()
-		if err != nil {
-			panic(err)
-		}
-
-		if exist {
-			return checkresult.Pass, ""
-		}
-	}
-
-	return checkresult.Fail, checkdata.ProjectPath().Base() + ".ino"
 }

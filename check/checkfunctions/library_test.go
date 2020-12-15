@@ -64,6 +64,148 @@ func checkLibraryCheckFunction(checkFunction Type, testTables []libraryCheckFunc
 	}
 }
 
+func TestLibraryInvalid(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid library.properties", "InvalidLibraryProperties", checkresult.Fail, ""},
+		{"Invalid flat layout", "FlatWithoutHeader", checkresult.Fail, ""},
+		{"Invalid recursive layout", "RecursiveWithoutLibraryProperties", checkresult.Fail, ""},
+		{"Valid library", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryInvalid, testTables, t)
+}
+
+func TestLibraryFolderNameGTMaxLength(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Has folder name > max length", "FolderNameTooLong12345678901234567890123456789012345678901234567890", checkresult.Fail, "^FolderNameTooLong12345678901234567890123456789012345678901234567890$"},
+		{"Folder name <= max length", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryFolderNameGTMaxLength, testTables, t)
+}
+
+func TestProhibitedCharactersInLibraryFolderName(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Has prohibited characters", "Prohibited CharactersInFolderName", checkresult.Fail, ""},
+		{"No prohibited characters", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(ProhibitedCharactersInLibraryFolderName, testTables, t)
+}
+
+func TestLibraryHasSubmodule(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Has submodule", "Submodule", checkresult.Fail, ""},
+		{"No submodule", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryHasSubmodule, testTables, t)
+}
+
+func TestLibraryContainsSymlinks(t *testing.T) {
+	testLibrary := "Recursive"
+	symlinkPath := librariesTestDataPath.Join(testLibrary, "test-symlink")
+	// It's probably most friendly to developers using Windows to create the symlink needed for the test on demand.
+	err := os.Symlink(librariesTestDataPath.Join(testLibrary, "library.properties").String(), symlinkPath.String())
+	require.Nil(t, err, "This test must be run as administrator on Windows to have symlink creation privilege.")
+	defer symlinkPath.RemoveAll() // clean up
+
+	testTables := []libraryCheckFunctionTestTable{
+		{"Has symlink", testLibrary, checkresult.Fail, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryContainsSymlinks, testTables, t)
+
+	err = symlinkPath.RemoveAll()
+	require.Nil(t, err)
+
+	testTables = []libraryCheckFunctionTestTable{
+		{"No symlink", testLibrary, checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryContainsSymlinks, testTables, t)
+}
+
+func TestLibraryHasDotDevelopmentFile(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Has .development file", "DotDevelopment", checkresult.Fail, ""},
+		{"No .development file", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryHasDotDevelopmentFile, testTables, t)
+}
+
+func TestLibraryHasExe(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Has .exe file", "Exe", checkresult.Fail, ""},
+		{"No .exe files", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryHasExe, testTables, t)
+}
+
+func TestLibraryPropertiesNameFieldHeaderMismatch(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Mismatch", "NameHeaderMismatch", checkresult.Fail, "^NameHeaderMismatch.h$"},
+		{"Match", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesNameFieldHeaderMismatch, testTables, t)
+}
+
+func TestIncorrectLibrarySrcFolderNameCase(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Flat, not precompiled", "Flat", checkresult.Skip, ""},
+		{"Incorrect case", "IncorrectSrcFolderNameCase", checkresult.Fail, ""},
+		{"Correct case", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(IncorrectLibrarySrcFolderNameCase, testTables, t)
+}
+
+func TestRecursiveLibraryWithUtilityFolder(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Flat", "Flat", checkresult.Skip, ""},
+		{"Recursive with utility", "RecursiveWithUtilityFolder", checkresult.Fail, ""},
+		{"Recursive without utility", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(RecursiveLibraryWithUtilityFolder, testTables, t)
+}
+
+func TestMisspelledExtrasFolderName(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Correctly spelled", "ExtrasFolder", checkresult.Pass, ""},
+		{"Misspelled", "MisspelledExtrasFolder", checkresult.Fail, ""},
+		{"No extras folder", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(MisspelledExtrasFolderName, testTables, t)
+}
+
+func TestIncorrectExtrasFolderNameCase(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Correct case", "ExtrasFolder", checkresult.Pass, ""},
+		{"Incorrect case", "IncorrectExtrasFolderCase", checkresult.Fail, ""},
+		{"No extras folder", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(IncorrectExtrasFolderNameCase, testTables, t)
+}
+
+func TestLibraryPropertiesMissing(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid non-legacy", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.Fail, ""},
+		{"Flat non-legacy", "Flat", checkresult.Pass, ""},
+		{"Recursive", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesMissing, testTables, t)
+}
+
 func TestMisspelledLibraryPropertiesFileName(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Incorrect", "MisspelledLibraryProperties", checkresult.Fail, ""},
@@ -80,17 +222,6 @@ func TestIncorrectLibraryPropertiesFileNameCase(t *testing.T) {
 	}
 
 	checkLibraryCheckFunction(IncorrectLibraryPropertiesFileNameCase, testTables, t)
-}
-
-func TestLibraryPropertiesMissing(t *testing.T) {
-	testTables := []libraryCheckFunctionTestTable{
-		{"Invalid non-legacy", "InvalidLibraryProperties", checkresult.NotRun, ""},
-		{"Legacy", "Legacy", checkresult.Fail, ""},
-		{"Flat non-legacy", "Flat", checkresult.Pass, ""},
-		{"Recursive", "Recursive", checkresult.Pass, ""},
-	}
-
-	checkLibraryCheckFunction(LibraryPropertiesMissing, testTables, t)
 }
 
 func TestRedundantLibraryProperties(t *testing.T) {
@@ -141,16 +272,6 @@ func TestLibraryPropertiesNameFieldNotInIndex(t *testing.T) {
 	}
 
 	checkLibraryCheckFunction(LibraryPropertiesNameFieldNotInIndex, testTables, t)
-}
-
-func TestLibraryPropertiesNameFieldHeaderMismatch(t *testing.T) {
-	testTables := []libraryCheckFunctionTestTable{
-		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
-		{"Mismatch", "NameHeaderMismatch", checkresult.Fail, "^NameHeaderMismatch.h$"},
-		{"Match", "Recursive", checkresult.Pass, ""},
-	}
-
-	checkLibraryCheckFunction(LibraryPropertiesNameFieldHeaderMismatch, testTables, t)
 }
 
 func TestLibraryPropertiesVersionFieldBehindTag(t *testing.T) {
@@ -257,6 +378,17 @@ func TestLibraryPropertiesVersionFieldBehindTag(t *testing.T) {
 	checkLibraryCheckFunction(LibraryPropertiesVersionFieldBehindTag, testTables, t)
 }
 
+func TestLibraryPropertiesEmailFieldAsMaintainerAlias(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"No email field", "MissingFields", checkresult.Skip, ""},
+		{"email in place of maintainer", "EmailOnly", checkresult.Fail, ""},
+		{"email and maintainer", "EmailAndMaintainer", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesEmailFieldAsMaintainerAlias, testTables, t)
+}
+
 func TestLibraryPropertiesSentenceFieldSpellCheck(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
@@ -279,17 +411,6 @@ func TestLibraryPropertiesParagraphFieldSpellCheck(t *testing.T) {
 	}
 
 	checkLibraryCheckFunction(LibraryPropertiesParagraphFieldSpellCheck, testTables, t)
-}
-
-func TestLibraryPropertiesEmailFieldAsMaintainerAlias(t *testing.T) {
-	testTables := []libraryCheckFunctionTestTable{
-		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
-		{"No email field", "MissingFields", checkresult.Skip, ""},
-		{"email in place of maintainer", "EmailOnly", checkresult.Fail, ""},
-		{"email and maintainer", "EmailAndMaintainer", checkresult.Pass, ""},
-	}
-
-	checkLibraryCheckFunction(LibraryPropertiesEmailFieldAsMaintainerAlias, testTables, t)
 }
 
 func TestLibraryPropertiesParagraphFieldRepeatsSentence(t *testing.T) {
@@ -396,68 +517,6 @@ func TestLibraryPropertiesPrecompiledFieldEnabledWithFlatLayout(t *testing.T) {
 	checkLibraryCheckFunction(LibraryPropertiesPrecompiledFieldEnabledWithFlatLayout, testTables, t)
 }
 
-func TestLibraryInvalid(t *testing.T) {
-	testTables := []libraryCheckFunctionTestTable{
-		{"Invalid library.properties", "InvalidLibraryProperties", checkresult.Fail, ""},
-		{"Invalid flat layout", "FlatWithoutHeader", checkresult.Fail, ""},
-		{"Invalid recursive layout", "RecursiveWithoutLibraryProperties", checkresult.Fail, ""},
-		{"Valid library", "Recursive", checkresult.Pass, ""},
-	}
-
-	checkLibraryCheckFunction(LibraryInvalid, testTables, t)
-}
-
-func TestLibraryHasSubmodule(t *testing.T) {
-	testTables := []libraryCheckFunctionTestTable{
-		{"Has submodule", "Submodule", checkresult.Fail, ""},
-		{"No submodule", "Recursive", checkresult.Pass, ""},
-	}
-
-	checkLibraryCheckFunction(LibraryHasSubmodule, testTables, t)
-}
-
-func TestLibraryContainsSymlinks(t *testing.T) {
-	testLibrary := "Recursive"
-	symlinkPath := librariesTestDataPath.Join(testLibrary, "test-symlink")
-	// It's probably most friendly to developers using Windows to create the symlink needed for the test on demand.
-	err := os.Symlink(librariesTestDataPath.Join(testLibrary, "library.properties").String(), symlinkPath.String())
-	require.Nil(t, err, "This test must be run as administrator on Windows to have symlink creation privilege.")
-	defer symlinkPath.RemoveAll() // clean up
-
-	testTables := []libraryCheckFunctionTestTable{
-		{"Has symlink", testLibrary, checkresult.Fail, ""},
-	}
-
-	checkLibraryCheckFunction(LibraryContainsSymlinks, testTables, t)
-
-	err = symlinkPath.RemoveAll()
-	require.Nil(t, err)
-
-	testTables = []libraryCheckFunctionTestTable{
-		{"No symlink", testLibrary, checkresult.Pass, ""},
-	}
-
-	checkLibraryCheckFunction(LibraryContainsSymlinks, testTables, t)
-}
-
-func TestLibraryHasDotDevelopmentFile(t *testing.T) {
-	testTables := []libraryCheckFunctionTestTable{
-		{"Has .development file", "DotDevelopment", checkresult.Fail, ""},
-		{"No .development file", "Recursive", checkresult.Pass, ""},
-	}
-
-	checkLibraryCheckFunction(LibraryHasDotDevelopmentFile, testTables, t)
-}
-
-func TestLibraryHasExe(t *testing.T) {
-	testTables := []libraryCheckFunctionTestTable{
-		{"Has .exe file", "Exe", checkresult.Fail, ""},
-		{"No .exe files", "Recursive", checkresult.Pass, ""},
-	}
-
-	checkLibraryCheckFunction(LibraryHasExe, testTables, t)
-}
-
 func TestLibraryHasStraySketches(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Sketch in root", "SketchInRoot", checkresult.Fail, ""},
@@ -467,34 +526,6 @@ func TestLibraryHasStraySketches(t *testing.T) {
 	}
 
 	checkLibraryCheckFunction(LibraryHasStraySketches, testTables, t)
-}
-
-func TestProhibitedCharactersInLibraryFolderName(t *testing.T) {
-	testTables := []libraryCheckFunctionTestTable{
-		{"Has prohibited characters", "Prohibited CharactersInFolderName", checkresult.Fail, ""},
-		{"No prohibited characters", "Recursive", checkresult.Pass, ""},
-	}
-
-	checkLibraryCheckFunction(ProhibitedCharactersInLibraryFolderName, testTables, t)
-}
-
-func TestLibraryFolderNameGTMaxLength(t *testing.T) {
-	testTables := []libraryCheckFunctionTestTable{
-		{"Has folder name > max length", "FolderNameTooLong12345678901234567890123456789012345678901234567890", checkresult.Fail, "^FolderNameTooLong12345678901234567890123456789012345678901234567890$"},
-		{"Folder name <= max length", "Recursive", checkresult.Pass, ""},
-	}
-
-	checkLibraryCheckFunction(LibraryFolderNameGTMaxLength, testTables, t)
-}
-
-func TestIncorrectLibrarySrcFolderNameCase(t *testing.T) {
-	testTables := []libraryCheckFunctionTestTable{
-		{"Flat, not precompiled", "Flat", checkresult.Skip, ""},
-		{"Incorrect case", "IncorrectSrcFolderNameCase", checkresult.Fail, ""},
-		{"Correct case", "Recursive", checkresult.Pass, ""},
-	}
-
-	checkLibraryCheckFunction(IncorrectLibrarySrcFolderNameCase, testTables, t)
 }
 
 func TestMissingExamples(t *testing.T) {
@@ -525,35 +556,4 @@ func TestIncorrectExamplesFolderNameCase(t *testing.T) {
 	}
 
 	checkLibraryCheckFunction(IncorrectExamplesFolderNameCase, testTables, t)
-}
-
-func TestMisspelledExtrasFolderName(t *testing.T) {
-	testTables := []libraryCheckFunctionTestTable{
-		{"Correctly spelled", "ExtrasFolder", checkresult.Pass, ""},
-		{"Misspelled", "MisspelledExtrasFolder", checkresult.Fail, ""},
-		{"No extras folder", "Recursive", checkresult.Pass, ""},
-	}
-
-	checkLibraryCheckFunction(MisspelledExtrasFolderName, testTables, t)
-}
-
-func TestIncorrectExtrasFolderNameCase(t *testing.T) {
-	testTables := []libraryCheckFunctionTestTable{
-		{"Correct case", "ExtrasFolder", checkresult.Pass, ""},
-		{"Incorrect case", "IncorrectExtrasFolderCase", checkresult.Fail, ""},
-		{"No extras folder", "Recursive", checkresult.Pass, ""},
-	}
-
-	checkLibraryCheckFunction(IncorrectExtrasFolderNameCase, testTables, t)
-}
-
-func TestRecursiveLibraryWithUtilityFolder(t *testing.T) {
-	testTables := []libraryCheckFunctionTestTable{
-		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
-		{"Flat", "Flat", checkresult.Skip, ""},
-		{"Recursive with utility", "RecursiveWithUtilityFolder", checkresult.Fail, ""},
-		{"Recursive without utility", "Recursive", checkresult.Pass, ""},
-	}
-
-	checkLibraryCheckFunction(RecursiveLibraryWithUtilityFolder, testTables, t)
 }
