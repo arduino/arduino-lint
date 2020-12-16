@@ -1,0 +1,83 @@
+name: Publish documentation
+
+on:
+  push:
+    branches:
+      - main
+      # Release branches have names like 0.8.x, 0.9.x, ...
+      - "[0-9]+.[0-9]+.x"
+    paths:
+      - "docs/**"
+      - "docsgen/**"
+      - "cli/**"
+      - ".github/workflows/publish-docs.yml"
+  # Run on branch or tag creation (will be filtered by the publish-determination job).
+  create:
+
+jobs:
+  publish-determination:
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.determination.outputs.result }}
+    steps:
+      - name: Determine if documentation should be published on this workflow run
+        id: determination
+        run: |
+          RELEASE_BRANCH_REGEX="refs/heads/[0-9]+.[0-9]+.x"
+          if [[ "${{ github.event_name }}" == "push" || ( "${{ github.event_name }}" == "create" && "${{ github.ref }}" =~ $RELEASE_BRANCH_REGEX ) ]]; then
+            RESULT="true"
+          else
+            RESULT="false"
+          fi
+
+          echo "::set-output name=result::$RESULT"
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: publish-determination
+    if: needs.publish-determination.outputs.result == 'true'
+
+    env:
+      DOCUMENTATION_REQUIREMENTS_PATH: ./requirements_docs.txt
+
+    steps:
+      - name: Checkout local repository
+        uses: actions/checkout@v2
+
+      - name: Install Taskfile
+        uses: arduino/actions/setup-taskfile@master
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
+
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: "1.14"
+
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles(env.DOCUMENTATION_REQUIREMENTS_PATH) }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --requirement "${{ env.DOCUMENTATION_REQUIREMENTS_PATH }}"
+
+      - name: Publish documentation
+        # Determine docs version for the commit pushed and publish accordingly using Mike.
+        # Publishing implies creating a git commit on the gh-pages branch, we let @ArduinoBot own these commits.
+        run: |
+          git config --global user.email "bot@arduino.cc"
+          git config --global user.name "ArduinoBot"
+          git fetch --no-tags --prune --depth=1 origin +refs/heads/gh-pages:refs/remotes/origin/gh-pages
+          python docs/build.py

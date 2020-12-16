@@ -1,26 +1,30 @@
-name: Check documentation links
+name: Validate documentation
 
 on:
-  push:
-    paths:
-      - ".github/workflows/check-links.yml"
-      - "Taskfile.yml"
-      - "**.md"
   pull_request:
     paths:
-      - ".github/workflows/check-links.yml"
-      - "Taskfile.yml"
-      - "**.md"
-  schedule:
-    # Run every Tuesday at 03:00 UTC to catch broken links caused by external changes
-    - cron: "0 3 * * 2"
+      # existing docs
+      - "docs/**"
+      # changes to the cli reference generator
+      - "docsgen/**"
+      # potential changes to commands documentation
+      - "cli/**"
+      # changes to the workflow itself
+      - ".github/workflows/validate-docs.yml"
+  push:
+    paths:
+      - "docs/**"
+      - "docsgen/**"
+      - "cli/**"
+      - "rpc/**"
+      - ".github/workflows/validate-docs.yml"
 
 jobs:
-  check-links:
+  validate:
     runs-on: ubuntu-latest
 
     env:
-      DOCUMENTATION_REQUIREMENTS_PATH: ./docs/requirements_docs.txt
+      DOCUMENTATION_REQUIREMENTS_PATH: ./requirements_docs.txt
 
     steps:
       - name: Checkout local repository
@@ -58,6 +62,3 @@ jobs:
       - name: Build documentation website
         # Ensure the documentation can build. These docs won't be published.
         run: task docs:build
-
-      - name: Check links
-        run: task --silent docs:check-links
