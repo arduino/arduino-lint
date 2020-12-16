@@ -248,7 +248,7 @@ Before running the toolchain, run the following command from the root of the Git
 virtual environment, activate it before proceeding):
 
 ```
-pip install -r requirements_docs.txt
+pip install -r docs/requirements_docs.txt
 ```
 
 Now run the command:

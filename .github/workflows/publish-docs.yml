@@ -38,7 +38,7 @@ jobs:
     if: needs.publish-determination.outputs.result == 'true'
 
     env:
-      DOCUMENTATION_REQUIREMENTS_PATH: ./requirements_docs.txt
+      DOCUMENTATION_REQUIREMENTS_PATH: ./docs/requirements_docs.txt
 
     steps:
       - name: Checkout local repository
