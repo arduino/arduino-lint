@@ -203,6 +203,17 @@ tasks:
     cmds:
       - npx {{ .PRETTIER }} --write "**/*.md"
 
+  shell:check-formatting:
+    desc: Format shell scripts
+    cmds:
+      # https://github.com/mvdan/sh#shfmt
+      - shfmt -d .
+
+  shell:format:
+    desc: Format shell scripts
+    cmds:
+      - shfmt -l -w .
+
   config:check:
     desc: Lint and check formatting of configuration files
     cmds:

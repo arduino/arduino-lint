@@ -33,7 +33,7 @@ initDestination() {
 		LBINDIR="$BINDIR"
 	else
 		if [ ! -d "$DEFAULT_BINDIR" ]; then
-		mkdir "$DEFAULT_BINDIR"
+			mkdir "$DEFAULT_BINDIR"
 		fi
 		LBINDIR="$DEFAULT_BINDIR"
 	fi
@@ -43,14 +43,14 @@ initDestination() {
 initArch() {
 	ARCH=$(uname -m)
 	case $ARCH in
-		armv5*) ARCH="armv5";;
-		armv6*) ARCH="ARMv6";;
-		armv7*) ARCH="ARMv7";;
-		aarch64) ARCH="ARM64";;
-		x86) ARCH="32bit";;
-		x86_64) ARCH="64bit";;
-		i686) ARCH="32bit";;
-		i386) ARCH="32bit";;
+	armv5*) ARCH="armv5" ;;
+	armv6*) ARCH="ARMv6" ;;
+	armv7*) ARCH="ARMv7" ;;
+	aarch64) ARCH="ARM64" ;;
+	x86) ARCH="32bit" ;;
+	x86_64) ARCH="64bit" ;;
+	i686) ARCH="32bit" ;;
+	i386) ARCH="32bit" ;;
 	esac
 	echo "ARCH=$ARCH"
 }
@@ -58,18 +58,18 @@ initArch() {
 initOS() {
 	OS=$(uname -s)
 	case "$OS" in
-		Linux*) OS='Linux' ;;
-		Darwin*) OS='macOS' ;;
-		MINGW*) OS='Windows';;
-		MSYS*) OS='Windows';;
+	Linux*) OS='Linux' ;;
+	Darwin*) OS='macOS' ;;
+	MINGW*) OS='Windows' ;;
+	MSYS*) OS='Windows' ;;
 	esac
 	echo "OS=$OS"
 }
 
 initDownloadTool() {
-	if type "curl" > /dev/null; then
+	if type "curl" >/dev/null; then
 		DOWNLOAD_TOOL="curl"
-	elif type "wget" > /dev/null; then
+	elif type "wget" >/dev/null; then
 		DOWNLOAD_TOOL="wget"
 	else
 		fail "You need curl or wget as download tool. Please install it first before continuing"
@@ -106,7 +106,7 @@ get() {
 		body=$(echo "$httpResponse" | sed -e 's/HTTPSTATUS\:.*//g')
 	elif [ "$DOWNLOAD_TOOL" = "wget" ]; then
 		tmpFile=$(mktemp)
-		body=$(wget --server-response --content-on-error -q -O - "$url" 2> $tmpFile || true)
+		body=$(wget --server-response --content-on-error -q -O - "$url" 2>$tmpFile || true)
 		httpStatusCode=$(cat $tmpFile | awk '/^  HTTP/{print $2}')
 	fi
 	if [ "$httpStatusCode" != 200 ]; then
@@ -202,7 +202,6 @@ testVersion() {
 	ARDUINO_LINT_VERSION=$($LBINDIR/$PROJECT_NAME version)
 	echo "$ARDUINO_LINT_VERSION installed successfully in $LBINDIR"
 }
-
 
 # Execution
 
