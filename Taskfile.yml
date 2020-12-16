@@ -186,7 +186,7 @@ tasks:
     desc: Validate GitHub Actions workflows against JSON schema
     cmds:
       - wget --output-document={{ .WORKFLOW_SCHEMA_PATH }} https://json.schemastore.org/github-workflow
-      - npx ajv-cli validate -s {{ .WORKFLOW_SCHEMA_PATH }} -d "./.github/workflows/*.{yml,yaml}"
+      - npx ajv-cli validate --strict=false -s {{ .WORKFLOW_SCHEMA_PATH }} -d "./.github/workflows/*.{yml,yaml}"
 
   config:check-formatting:
     desc: Check formatting of configuration files
