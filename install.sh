@@ -6,14 +6,15 @@
 #
 # Usage:
 #
-# To install the latest version of the CLI:
+# To install the latest version of arduino-lint:
 #    ./install.sh
 #
-# To pin a specific release of the CLI:
+# To pin a specific release of arduino-lint:
 #    ./install.sh 0.9.0
 #
 
-PROJECT_NAME="arduino-cli"
+PROJECT_OWNER="arduino"
+PROJECT_NAME="arduino-lint"
 
 # BINDIR represents the local bin location, defaults to ./bin.
 LBINDIR=""
@@ -81,11 +82,11 @@ checkLatestVersion() {
 	# so we don't get rate-limited.
 	local tag
 	local regex="[0-9][A-Za-z0-9\.-]*"
-	local latest_url="https://github.com/arduino/arduino-cli/releases/latest"
+	local latest_url="https://github.com/${PROJECT_OWNER}/${PROJECT_NAME}/releases/latest"
 	if [ "$DOWNLOAD_TOOL" = "curl" ]; then
-		tag=$(curl -SsL $latest_url | grep -o "<title>Release $regex · arduino/arduino-cli" | grep -o "$regex")
+		tag=$(curl -SsL $latest_url | grep -o "<title>Release $regex · ${PROJECT_OWNER}/${PROJECT_NAME}" | grep -o "$regex")
 	elif [ "$DOWNLOAD_TOOL" = "wget" ]; then
-		tag=$(wget -q -O - $latest_url | grep -o "<title>Release $regex · arduino/arduino-cli" | grep -o "$regex")
+		tag=$(wget -q -O - $latest_url | grep -o "<title>Release $regex · ${PROJECT_OWNER}/${PROJECT_NAME}" | grep -o "$regex")
 	fi
 	if [ "x$tag" = "x" ]; then
 		echo "Cannot determine latest tag."
@@ -133,48 +134,46 @@ downloadFile() {
 	else
 		TAG=$1
 	fi
-	echo "TAG=$TAG"
-	#  arduino-cli_0.4.0-rc1_Linux_64bit.[tar.gz, zip]
+	#  arduino-lint_0.4.0-rc1_Linux_64bit.[tar.gz, zip]
 	if [ "$OS" = "Windows" ]; then
-		CLI_DIST="arduino-cli_${TAG}_${OS}_${ARCH}.zip"
+		ARDUINO_LINT_DIST="${PROJECT_NAME}_${TAG}_${OS}_${ARCH}.zip"
 	else
-		CLI_DIST="arduino-cli_${TAG}_${OS}_${ARCH}.tar.gz"
+		ARDUINO_LINT_DIST="${PROJECT_NAME}_${TAG}_${OS}_${ARCH}.tar.gz"
 	fi
-	echo "CLI_DIST=$CLI_DIST"
-	DOWNLOAD_URL="https://downloads.arduino.cc/arduino-cli/$CLI_DIST"
-	CLI_TMP_FILE="/tmp/$CLI_DIST"
+	DOWNLOAD_URL="https://downloads.arduino.cc/${PROJECT_NAME}/${ARDUINO_LINT_DIST}"
+	ARDUINO_LINT_TMP_FILE="/tmp/$ARDUINO_LINT_DIST"
 	echo "Downloading $DOWNLOAD_URL"
-	httpStatusCode=$(getFile "$DOWNLOAD_URL" "$CLI_TMP_FILE")
+	httpStatusCode=$(getFile "$DOWNLOAD_URL" "$ARDUINO_LINT_TMP_FILE")
 	if [ "$httpStatusCode" -ne 200 ]; then
 		echo "Did not find a release for your system: $OS $ARCH"
 		echo "Trying to find a release using the GitHub API."
-		LATEST_RELEASE_URL="https://api.github.com/repos/arduino/$PROJECT_NAME/releases/tags/$TAG"
+		LATEST_RELEASE_URL="https://api.github.com/repos/${PROJECT_OWNER}/$PROJECT_NAME/releases/tags/$TAG"
 		echo "LATEST_RELEASE_URL=$LATEST_RELEASE_URL"
 		get LATEST_RELEASE_JSON $LATEST_RELEASE_URL
 		# || true forces this command to not catch error if grep does not find anything
-		DOWNLOAD_URL=$(echo "$LATEST_RELEASE_JSON" | grep 'browser_' | cut -d\" -f4 | grep "$CLI_DIST") || true
+		DOWNLOAD_URL=$(echo "$LATEST_RELEASE_JSON" | grep 'browser_' | cut -d\" -f4 | grep "$ARDUINO_LINT_DIST") || true
 		if [ -z "$DOWNLOAD_URL" ]; then
 			echo "Sorry, we dont have a dist for your system: $OS $ARCH"
-			fail "You can request one here: https://github.com/Arduino/$PROJECT_NAME/issues"
+			fail "You can request one here: https://github.com/${PROJECT_OWNER}/$PROJECT_NAME/issues"
 		else
 			echo "Downloading $DOWNLOAD_URL"
-			getFile "$DOWNLOAD_URL" "$CLI_TMP_FILE"
+			getFile "$DOWNLOAD_URL" "$ARDUINO_LINT_TMP_FILE"
 		fi
 	fi
 }
 
 installFile() {
-	CLI_TMP="/tmp/$PROJECT_NAME"
-	mkdir -p "$CLI_TMP"
+	ARDUINO_LINT_TMP="/tmp/$PROJECT_NAME"
+	mkdir -p "$ARDUINO_LINT_TMP"
 	if [ "$OS" = "Windows" ]; then
-		unzip -d "$CLI_TMP" "$CLI_TMP_FILE"
+		unzip -d "$ARDUINO_LINT_TMP" "$ARDUINO_LINT_TMP_FILE"
 	else
-		tar xf "$CLI_TMP_FILE" -C "$CLI_TMP"
+		tar xf "$ARDUINO_LINT_TMP_FILE" -C "$ARDUINO_LINT_TMP"
 	fi
-	CLI_TMP_BIN="$CLI_TMP/$PROJECT_NAME"
-	cp "$CLI_TMP_BIN" "$LBINDIR"
-	rm -rf $CLI_TMP
-	rm -f $CLI_TMP_FILE
+	ARDUINO_LINT_TMP_BIN="$ARDUINO_LINT_TMP/$PROJECT_NAME"
+	cp "$ARDUINO_LINT_TMP_BIN" "$LBINDIR"
+	rm -rf $ARDUINO_LINT_TMP
+	rm -f $ARDUINO_LINT_TMP_FILE
 }
 
 bye() {
@@ -187,21 +186,21 @@ bye() {
 
 testVersion() {
 	set +e
-	CLI="$(which $PROJECT_NAME)"
+	ARDUINO_LINT="$(which $PROJECT_NAME)"
 	if [ "$?" = "1" ]; then
 		echo "$PROJECT_NAME not found. You might want to add "$LBINDIR" to your "'$PATH'
 	else
 		# Convert to resolved, absolute paths before comparison
-		CLI_REALPATH="$(cd -- "$(dirname -- "$CLI")" && pwd -P)"
+		ARDUINO_LINT_REALPATH="$(cd -- "$(dirname -- "$ARDUINO_LINT")" && pwd -P)"
 		LBINDIR_REALPATH="$(cd -- "$LBINDIR" && pwd -P)"
-		if [ "$CLI_REALPATH" != "$LBINDIR_REALPATH" ]; then
-			echo "An existing $PROJECT_NAME was found at $CLI. Please prepend "$LBINDIR" to your "'$PATH'" or remove the existing one."
+		if [ "$ARDUINO_LINT_REALPATH" != "$LBINDIR_REALPATH" ]; then
+			echo "An existing $PROJECT_NAME was found at $ARDUINO_LINT. Please prepend "$LBINDIR" to your "'$PATH'" or remove the existing one."
 		fi
 	fi
 
 	set -e
-	CLI_VERSION=$($LBINDIR/$PROJECT_NAME version)
-	echo "$CLI_VERSION installed successfully in $LBINDIR"
+	ARDUINO_LINT_VERSION=$($LBINDIR/$PROJECT_NAME version)
+	echo "$ARDUINO_LINT_VERSION installed successfully in $LBINDIR"
 }
 
 
