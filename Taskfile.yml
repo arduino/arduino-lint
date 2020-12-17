@@ -131,19 +131,20 @@ tasks:
     desc: Build documentation website contents
     cmds:
       - task: docs:gen
-      - mkdocs build --strict
+      - poetry install --no-root
+      - poetry run mkdocs build --strict
 
   docs:publish:
     desc: Use Mike to build and push versioned docs
     cmds:
       - task: docs:gen
-      - mike deploy --update-aliases --push --remote {{.DOCS_REMOTE}} {{.DOCS_VERSION}} {{.DOCS_ALIAS}}
+      - poetry run mike deploy --update-aliases --push --remote {{.DOCS_REMOTE}} {{.DOCS_VERSION}} {{.DOCS_ALIAS}}
 
   docs:serve:
     desc: Run documentation website locally
     cmds:
       - task: docs:build
-      - mkdocs serve
+      - poetry run mkdocs serve
 
   docs:check:
     desc: Lint and check formatting of documentation files

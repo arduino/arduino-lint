@@ -78,9 +78,10 @@ To build arduino-lint from sources you need the following tools to be available 
 - [Go](https://golang.org/doc/install) version 1.14 or later
 - [Taskfile](https://taskfile.dev/#/installation) to help you run the most common tasks from the command line
 
-If you want to run integration tests you will also need:
+If you want to run integration tests or work on documentation, you will also need:
 
-- A working [Python](https://www.python.org/downloads/) environment, version 3.8 or later
+- A working [Python](https://www.python.org/downloads/) environment, version 3.8 or later.
+- [Poetry](https://python-poetry.org/docs/).
 
 ### Building the source code
 
@@ -145,22 +146,6 @@ input and providing the expected output and proper exit codes.
 
 For these reasons, in addition to regular unit tests the project has a suite of integration tests that actually run
 arduino-lint in a different process and assess the options are correctly understood and the output is what we expect.
-
-##### Software requirements for running integration tests:
-
-A working Python environment. Chances are that you already have Python installed in your system, if this is not the case
-you can [download](https://www.python.org/downloads/) the official distribution or use the package manager provided by
-your Operating System.
-
-Some dependencies need to be installed before running the tests. To avoid polluting your global Python environment with
-dependencies that might be only used by the arduino-lint integration tests, we use [Poetry](https://python-poetry.org/).
-First you need to install it (you might need to `sudo` the following command):
-
-```
-pip3 install --user poetry
-```
-
-For more Poetry installation options read the [official documentation](https://python-poetry.org/docs/).
 
 ##### Running tests
 
@@ -242,16 +227,8 @@ The documentation consists of static content written over several Markdown files
 arduino-lint repository, as well as the dynamically generated [command line reference](commands/arduino-lint.md).
 
 When working on the documentation, it is useful to be able to see the effect the changes will have on the generated
-documentation website. You can build the documentation website and serve it from your personal computer.
-
-Before running the toolchain, run the following command from the root of the Git repository (if you have a Python
-virtual environment, activate it before proceeding):
-
-```
-pip install -r docs/requirements_docs.txt
-```
-
-Now run the command:
+documentation website. You can build the documentation website and serve it from your personal computer by running the
+command:
 
 ```
 task docs:serve
