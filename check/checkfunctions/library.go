@@ -787,7 +787,7 @@ func LibraryPropertiesEmailFieldStartsWithArduino() (result checkresult.Type, ou
 	}
 
 	if checkdata.LibraryProperties().ContainsKey("maintainer") {
-		return checkresult.NotRun, "Field not present"
+		return checkresult.Skip, "No email alias field"
 	}
 
 	email, ok := checkdata.LibraryProperties().GetOk("email")
@@ -890,7 +890,7 @@ func LibraryPropertiesCategoryFieldMissing() (result checkresult.Type, output st
 		return checkresult.Skip, "Library has legacy format"
 	}
 
-	if schema.RequiredPropertyMissing("category", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.RequiredPropertyMissing("category", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
 		return checkresult.Fail, ""
 	}
 	return checkresult.Pass, ""
@@ -1000,7 +1000,7 @@ func LibraryPropertiesArchitecturesFieldMissing() (result checkresult.Type, outp
 		return checkresult.Skip, "Library has legacy format"
 	}
 
-	if schema.RequiredPropertyMissing("architectures", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.RequiredPropertyMissing("architectures", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
 		return checkresult.Fail, ""
 	}
 	return checkresult.Pass, ""
@@ -1341,7 +1341,7 @@ func LibraryPropertiesMisspelledOptionalField() (result checkresult.Type, output
 		return checkresult.NotRun, "Library not loaded"
 	}
 
-	if schema.MisspelledOptionalPropertyFound(checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.MisspelledOptionalPropertyFound(checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
 		return checkresult.Fail, ""
 	}
 
