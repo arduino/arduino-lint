@@ -147,6 +147,7 @@ func TestLibraryHasExe(t *testing.T) {
 func TestLibraryPropertiesNameFieldHeaderMismatch(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.NotRun, ""},
 		{"Mismatch", "NameHeaderMismatch", checkresult.Fail, "^NameHeaderMismatch.h$"},
 		{"Match", "Recursive", checkresult.Pass, ""},
 	}
@@ -243,6 +244,72 @@ func TestLibraryPropertiesFormat(t *testing.T) {
 	checkLibraryCheckFunction(LibraryPropertiesFormat, testTables, t)
 }
 
+func TestLibraryPropertiesNameFieldMissing(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.Skip, ""},
+		{"Field missing", "MissingFields", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesNameFieldMissing, testTables, t)
+}
+
+func TestLibraryPropertiesNameFieldLTMinLength(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.NotRun, ""},
+		{"Name field too short", "NameLTMinLength", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesNameFieldLTMinLength, testTables, t)
+}
+
+func TestLibraryPropertiesNameFieldGTMaxLength(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.NotRun, ""},
+		{"Name field too long", "NameGTMaxLength", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesNameFieldGTMaxLength, testTables, t)
+}
+
+func TestLibraryPropertiesNameFieldGTRecommendedLength(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.NotRun, ""},
+		{"Name field longer than recommended", "NameGTRecommendedLength", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesNameFieldGTRecommendedLength, testTables, t)
+}
+
+func TestLibraryPropertiesNameFieldDisallowedCharacters(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.NotRun, ""},
+		{"Name field has disallowed characters", "NameHasBadChars", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesNameFieldDisallowedCharacters, testTables, t)
+}
+
+func TestLibraryPropertiesNameFieldStartsWithArduino(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.NotRun, ""},
+		{"Name field starts with Arduino", "Arduino_Official", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesNameFieldStartsWithArduino, testTables, t)
+}
+
 func TestLibraryPropertiesNameFieldMissingOfficialPrefix(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
@@ -254,9 +321,43 @@ func TestLibraryPropertiesNameFieldMissingOfficialPrefix(t *testing.T) {
 	checkLibraryCheckFunction(LibraryPropertiesNameFieldMissingOfficialPrefix, testTables, t)
 }
 
+func TestLibraryPropertiesNameFieldContainsArduino(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.NotRun, ""},
+		{"Name field contains Arduino", "NameContainsArduino", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesNameFieldContainsArduino, testTables, t)
+}
+
+func TestLibraryPropertiesNameFieldHasSpaces(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.NotRun, ""},
+		{"Name field contains spaces", "NameHasSpaces", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesNameFieldHasSpaces, testTables, t)
+}
+
+func TestLibraryPropertiesNameFieldContainsLibrary(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.NotRun, ""},
+		{"Name field contains library", "NameHasLibrary", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesNameFieldContainsLibrary, testTables, t)
+}
+
 func TestLibraryPropertiesNameFieldDuplicate(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.NotRun, ""},
 		{"Duplicate", "Indexed", checkresult.Fail, "^Servo$"},
 		{"Not duplicate", "NotIndexed", checkresult.Pass, ""},
 	}
@@ -267,11 +368,45 @@ func TestLibraryPropertiesNameFieldDuplicate(t *testing.T) {
 func TestLibraryPropertiesNameFieldNotInIndex(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.NotRun, ""},
 		{"In index", "Indexed", checkresult.Pass, ""},
 		{"Not in index", "NotIndexed", checkresult.Fail, "^NotIndexed$"},
 	}
 
 	checkLibraryCheckFunction(LibraryPropertiesNameFieldNotInIndex, testTables, t)
+}
+
+func TestLibraryPropertiesVersionFieldMissing(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.Skip, ""},
+		{"Version field missing", "MissingFields", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesVersionFieldMissing, testTables, t)
+}
+
+func TestLibraryPropertiesVersionFieldNonRelaxedSemver(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.NotRun, ""},
+		{"Version not relaxed semver compliant", "VersionNotRelaxedSemver", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesVersionFieldNonRelaxedSemver, testTables, t)
+}
+
+func TestLibraryPropertiesVersionFieldNonSemver(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.NotRun, ""},
+		{"Version not semver compliant", "VersionNotSemver", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesVersionFieldNonSemver, testTables, t)
 }
 
 func TestLibraryPropertiesVersionFieldBehindTag(t *testing.T) {
@@ -378,6 +513,61 @@ func TestLibraryPropertiesVersionFieldBehindTag(t *testing.T) {
 	checkLibraryCheckFunction(LibraryPropertiesVersionFieldBehindTag, testTables, t)
 }
 
+func TestLibraryPropertiesAuthorFieldMissing(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.Skip, ""},
+		{"Field missing", "MissingFields", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesAuthorFieldMissing, testTables, t)
+}
+
+func TestLibraryPropertiesAuthorFieldLTMinLength(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.NotRun, ""},
+		{"Author field too short", "AuthorLTMinLength", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesAuthorFieldLTMinLength, testTables, t)
+}
+
+func TestLibraryPropertiesMaintainerFieldMissing(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.Skip, ""},
+		{"Field missing", "MissingFields", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesMaintainerFieldMissing, testTables, t)
+}
+
+func TestLibraryPropertiesMaintainerFieldLTMinLength(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.NotRun, ""},
+		{"Maintainer field too short", "MaintainerLTMinLength", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesMaintainerFieldLTMinLength, testTables, t)
+}
+
+func TestLibraryPropertiesMaintainerFieldStartsWithArduino(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.NotRun, ""},
+		{"Maintainer field starts w/ Arduino", "MaintainerStartsWithArduino", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesMaintainerFieldStartsWithArduino, testTables, t)
+}
+
 func TestLibraryPropertiesEmailFieldAsMaintainerAlias(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
@@ -387,6 +577,51 @@ func TestLibraryPropertiesEmailFieldAsMaintainerAlias(t *testing.T) {
 	}
 
 	checkLibraryCheckFunction(LibraryPropertiesEmailFieldAsMaintainerAlias, testTables, t)
+}
+
+func TestLibraryPropertiesEmailFieldLTMinLength(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.Skip, ""},
+		{"Email field too short", "EmailLTMinLength", checkresult.Fail, ""},
+		{"Valid", "EmailOnly", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesEmailFieldLTMinLength, testTables, t)
+}
+
+func TestLibraryPropertiesEmailFieldStartsWithArduino(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Not an alias", "EmailAndMaintainer", checkresult.Skip, ""},
+		{"Legacy", "Legacy", checkresult.Skip, ""},
+		{"Email field starts w/ Arduino", "EmailStartsWithArduino", checkresult.Fail, ""},
+		{"Valid", "EmailOnly", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesEmailFieldStartsWithArduino, testTables, t)
+}
+
+func TestLibraryPropertiesSentenceFieldMissing(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.Skip, ""},
+		{"Field missing", "MissingFields", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesSentenceFieldMissing, testTables, t)
+}
+
+func TestLibraryPropertiesSentenceFieldLTMinLength(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.NotRun, ""},
+		{"Sentence field too short", "SentenceLTMinLength", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesSentenceFieldLTMinLength, testTables, t)
 }
 
 func TestLibraryPropertiesSentenceFieldSpellCheck(t *testing.T) {
@@ -399,6 +634,17 @@ func TestLibraryPropertiesSentenceFieldSpellCheck(t *testing.T) {
 	}
 
 	checkLibraryCheckFunction(LibraryPropertiesSentenceFieldSpellCheck, testTables, t)
+}
+
+func TestLibraryPropertiesParagraphFieldMissing(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.Skip, ""},
+		{"Field missing", "MissingFields", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesParagraphFieldMissing, testTables, t)
 }
 
 func TestLibraryPropertiesParagraphFieldSpellCheck(t *testing.T) {
@@ -416,11 +662,34 @@ func TestLibraryPropertiesParagraphFieldSpellCheck(t *testing.T) {
 func TestLibraryPropertiesParagraphFieldRepeatsSentence(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.NotRun, ""},
 		{"Repeat", "ParagraphRepeatsSentence", checkresult.Fail, ""},
 		{"No repeat", "Recursive", checkresult.Pass, ""},
 	}
 
 	checkLibraryCheckFunction(LibraryPropertiesParagraphFieldRepeatsSentence, testTables, t)
+}
+
+func TestLibraryPropertiesCategoryFieldMissing(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.Skip, ""},
+		{"Field missing", "MissingFields", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesCategoryFieldMissing, testTables, t)
+}
+
+func TestLibraryPropertiesCategoryFieldInvalid(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.Skip, ""},
+		{"Unsupported category name", "CategoryInvalid", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesCategoryFieldInvalid, testTables, t)
 }
 
 func TestLibraryPropertiesCategoryFieldUncategorized(t *testing.T) {
@@ -434,6 +703,28 @@ func TestLibraryPropertiesCategoryFieldUncategorized(t *testing.T) {
 	checkLibraryCheckFunction(LibraryPropertiesCategoryFieldUncategorized, testTables, t)
 }
 
+func TestLibraryPropertiesUrlFieldMissing(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.Skip, ""},
+		{"Field missing", "MissingFields", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesUrlFieldMissing, testTables, t)
+}
+
+func TestLibraryPropertiesUrlFieldInvalid(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.NotRun, ""},
+		{"Invalid URL format", "UrlFormatInvalid", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesUrlFieldInvalid, testTables, t)
+}
+
 func TestLibraryPropertiesUrlFieldDeadLink(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
@@ -444,6 +735,28 @@ func TestLibraryPropertiesUrlFieldDeadLink(t *testing.T) {
 	}
 
 	checkLibraryCheckFunction(LibraryPropertiesUrlFieldDeadLink, testTables, t)
+}
+
+func TestLibraryPropertiesArchitecturesFieldMissing(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.Skip, ""},
+		{"Field missing", "MissingFields", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesArchitecturesFieldMissing, testTables, t)
+}
+
+func TestLibraryPropertiesArchitecturesFieldLTMinLength(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.Skip, ""},
+		{"Architectures field too short", "ArchitecturesLTMinLength", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesArchitecturesFieldLTMinLength, testTables, t)
 }
 
 func TestLibraryPropertiesArchitecturesFieldSoloAlias(t *testing.T) {
@@ -470,6 +783,17 @@ func TestLibraryPropertiesArchitecturesFieldValueCase(t *testing.T) {
 	checkLibraryCheckFunction(LibraryPropertiesArchitecturesFieldValueCase, testTables, t)
 }
 
+func TestLibraryPropertiesDependsFieldDisallowedCharacters(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.Skip, ""},
+		{"Depends field has disallowed characters", "DependsHasBadChars", checkresult.Fail, ""},
+		{"Valid", "DependsIndexed", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesDependsFieldDisallowedCharacters, testTables, t)
+}
+
 func TestLibraryPropertiesDependsFieldNotInIndex(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
@@ -480,6 +804,17 @@ func TestLibraryPropertiesDependsFieldNotInIndex(t *testing.T) {
 	}
 
 	checkLibraryCheckFunction(LibraryPropertiesDependsFieldNotInIndex, testTables, t)
+}
+
+func TestLibraryPropertiesDotALinkageFieldInvalid(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.Skip, ""},
+		{"dot_a_linkage field invalid value", "DotALinkageInvalid", checkresult.Fail, ""},
+		{"Valid", "DotALinkage", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesDotALinkageFieldInvalid, testTables, t)
 }
 
 func TestLibraryPropertiesDotALinkageFieldTrueWithFlatLayout(t *testing.T) {
@@ -493,15 +828,38 @@ func TestLibraryPropertiesDotALinkageFieldTrueWithFlatLayout(t *testing.T) {
 	checkLibraryCheckFunction(LibraryPropertiesDotALinkageFieldTrueWithFlatLayout, testTables, t)
 }
 
+func TestLibraryPropertiesIncludesFieldLTMinLength(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.Skip, ""},
+		{"Includes field too short", "IncludesLTMinLength", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesIncludesFieldLTMinLength, testTables, t)
+}
+
 func TestLibraryPropertiesIncludesFieldItemNotFound(t *testing.T) {
 	testTables := []libraryCheckFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", checkresult.NotRun, ""},
 		{"Not defined", "MissingFields", checkresult.Skip, ""},
 		{"Missing includes", "MissingIncludes", checkresult.Fail, "^Nonexistent.h$"},
+		{"Double comma in includes list", "IncludesListSkip", checkresult.Pass, ""},
 		{"Present includes", "Recursive", checkresult.Pass, ""},
 	}
 
 	checkLibraryCheckFunction(LibraryPropertiesIncludesFieldItemNotFound, testTables, t)
+}
+
+func TestLibraryPropertiesPrecompiledFieldInvalid(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.Skip, ""},
+		{"Precompiled field invalid value", "PrecompiledInvalid", checkresult.Fail, ""},
+		{"Valid", "Precompiled", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesPrecompiledFieldInvalid, testTables, t)
 }
 
 func TestLibraryPropertiesPrecompiledFieldEnabledWithFlatLayout(t *testing.T) {
@@ -515,6 +873,31 @@ func TestLibraryPropertiesPrecompiledFieldEnabledWithFlatLayout(t *testing.T) {
 	}
 
 	checkLibraryCheckFunction(LibraryPropertiesPrecompiledFieldEnabledWithFlatLayout, testTables, t)
+}
+
+func TestLibraryPropertiesLdflagsFieldLTMinLength(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Legacy", "Legacy", checkresult.Skip, ""},
+		{"ldflags field too short", "LdflagsLTMinLength", checkresult.Fail, ""},
+		{"Valid", "LdflagsValid", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesLdflagsFieldLTMinLength, testTables, t)
+}
+
+func TestLibraryPropertiesMisspelledOptionalField(t *testing.T) {
+	testTables := []libraryCheckFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", checkresult.NotRun, ""},
+		{"Misspelled depends field name", "DependsFieldMisspelled", checkresult.Fail, ""},
+		{"Misspelled dot_a_linkage field name", "DotALinkageFieldMisspelled", checkresult.Fail, ""},
+		{"Misspelled includes field name", "IncludesFieldMisspelled", checkresult.Fail, ""},
+		{"Misspelled precompiled field name", "PrecompiledFieldMisspelled", checkresult.Fail, ""},
+		{"Misspelled ldflags field name", "LdflagsFieldMisspelled", checkresult.Fail, ""},
+		{"Valid", "Recursive", checkresult.Pass, ""},
+	}
+
+	checkLibraryCheckFunction(LibraryPropertiesMisspelledOptionalField, testTables, t)
 }
 
 func TestLibraryHasStraySketches(t *testing.T) {
