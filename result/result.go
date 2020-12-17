@@ -20,7 +20,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"html/template"
+	"text/template"
 
 	"github.com/arduino/arduino-lint/check/checkconfigurations"
 	"github.com/arduino/arduino-lint/check/checklevel"
