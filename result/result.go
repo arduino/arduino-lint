@@ -90,7 +90,7 @@ func (results *Type) Initialize() {
 
 // Record records the result of a check and returns a text summary for it.
 func (results *Type) Record(checkedProject project.Type, checkConfiguration checkconfigurations.Type, checkResult checkresult.Type, checkOutput string) string {
-	checkLevel, err := checklevel.CheckLevel(checkConfiguration, checkResult)
+	checkLevel, err := checklevel.CheckLevel(checkConfiguration, checkResult, checkedProject)
 	if err != nil {
 		panic(fmt.Errorf("Error while determining check level: %v", err))
 	}
