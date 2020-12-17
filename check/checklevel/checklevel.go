@@ -23,6 +23,7 @@ import (
 	"github.com/arduino/arduino-lint/check/checkresult"
 	"github.com/arduino/arduino-lint/configuration"
 	"github.com/arduino/arduino-lint/configuration/checkmode"
+	"github.com/arduino/arduino-lint/project"
 )
 
 // Type is the type for the check levels.
@@ -38,11 +39,11 @@ const (
 )
 
 // CheckLevel determines the check level assigned to the given result of the given check under the current tool configuration.
-func CheckLevel(checkConfiguration checkconfigurations.Type, checkResult checkresult.Type) (Type, error) {
+func CheckLevel(checkConfiguration checkconfigurations.Type, checkResult checkresult.Type, checkedProject project.Type) (Type, error) {
 	if checkResult != checkresult.Fail {
 		return Notice, nil // Level provided by FailCheckLevel() is only relevant for failure result.
 	}
-	configurationCheckModes := configuration.CheckModes(checkConfiguration.ProjectType)
+	configurationCheckModes := configuration.CheckModes(checkedProject.SuperprojectType)
 	return FailCheckLevel(checkConfiguration, configurationCheckModes)
 }
 

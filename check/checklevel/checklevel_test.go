@@ -22,6 +22,8 @@ import (
 	"github.com/arduino/arduino-lint/check/checkresult"
 	"github.com/arduino/arduino-lint/configuration"
 	"github.com/arduino/arduino-lint/configuration/checkmode"
+	"github.com/arduino/arduino-lint/project"
+	"github.com/arduino/arduino-lint/project/projecttype"
 	"github.com/arduino/arduino-lint/util/test"
 	"github.com/stretchr/testify/assert"
 )
@@ -63,7 +65,11 @@ func TestCheckLevel(t *testing.T) {
 			ErrorModes:   testTable.errorModes,
 		}
 
-		level, err := CheckLevel(checkConfiguration, testTable.checkResult)
+		checkedProject := project.Type{
+			SuperprojectType: projecttype.Sketch,
+		}
+
+		level, err := CheckLevel(checkConfiguration, testTable.checkResult, checkedProject)
 		testTable.errorAssertion(t, err, testTable.testName)
 		if err == nil {
 			assert.Equal(t, testTable.expectedLevel, level, testTable.testName)
