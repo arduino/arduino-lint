@@ -31,6 +31,7 @@ tasks:
   test-integration:
     desc: Run integration tests
     cmds:
+      - task: build
       - poetry install --no-root
       - poetry run pytest test
 
