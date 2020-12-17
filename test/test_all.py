@@ -189,9 +189,7 @@ def run_command(pytestconfig, working_dir) -> typing.Callable[..., invoke.runner
     arduino_lint_path = pathlib.Path(pytestconfig.rootdir).parent / "arduino-lint"
 
     def _run(
-        cmd: list,
-        custom_working_dir: typing.Optional[str] = None,
-        custom_env: typing.Optional[dict] = None
+        cmd: list, custom_working_dir: typing.Optional[str] = None, custom_env: typing.Optional[dict] = None
     ) -> invoke.runners.Result:
         if cmd is None:
             cmd = []
