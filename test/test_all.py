@@ -178,6 +178,45 @@ def test_version(run_command):
     dateutil.parser.isoparse(output_list[1])
 
 
+def test_arduino_lint_official(run_command):
+    project_path = test_data_path.joinpath("ARDUINO_LINT_OFFICIAL")
+
+    result = run_command(cmd=[project_path])
+    assert not result.ok
+
+    result = run_command(cmd=[project_path], custom_env={"ARDUINO_LINT_OFFICIAL": "true"})
+    assert result.ok
+
+    result = run_command(cmd=[project_path], custom_env={"ARDUINO_LINT_OFFICIAL": "false"})
+    assert not result.ok
+
+    result = run_command(cmd=[project_path], custom_env={"ARDUINO_LINT_OFFICIAL": "foo"})
+    assert not result.ok
+
+
+def test_arduino_lint_log_level(run_command):
+    project_path = test_data_path.joinpath("ValidSketch")
+
+    result = run_command(cmd=[project_path], custom_env={"ARDUINO_LINT_LOG_LEVEL": "debug"})
+    assert result.ok
+
+    result = run_command(cmd=[project_path], custom_env={"ARDUINO_LINT_LOG_LEVEL": "foo"})
+    assert not result.ok
+
+
+def test_arduino_lint_log_format(run_command):
+    project_path = test_data_path.joinpath("ValidSketch")
+
+    result = run_command(cmd=[project_path], custom_env={"ARDUINO_LINT_LOG_FORMAT": "text"})
+    assert result.ok
+
+    result = run_command(cmd=[project_path], custom_env={"ARDUINO_LINT_LOG_FORMAT": "json"})
+    assert result.ok
+
+    result = run_command(cmd=[project_path], custom_env={"ARDUINO_LINT_LOG_FORMAT": "foo"})
+    assert not result.ok
+
+
 @pytest.fixture(scope="function")
 def run_command(pytestconfig, working_dir) -> typing.Callable[..., invoke.runners.Result]:
     """Provide a wrapper around invoke's `run` API so that every test will work in the same temporary folder.
