@@ -1,5 +1,8 @@
 version: "3"
 
+includes:
+  dist: ./DistTasks.yml
+
 tasks:
   build:
     desc: Build the project
@@ -264,6 +267,8 @@ tasks:
       - poetry run codespell --write-changes {{ .CODESPELL_SKIP_OPTION }} {{ .CODESPELL_IGNORE_WORDS_OPTION }}
 
 vars:
+  PROJECT_NAME: "arduino-lint"
+  DIST_DIR: "dist"
   DEFAULT_PACKAGES:
     sh: echo `go list ./... | tr '\n' ' '`
   DEFAULT_PATHS:
