@@ -587,7 +587,7 @@ var configurations = []Type{
 	},
 	{
 		ProjectType:      projecttype.Library,
-		SuperprojectType: projecttype.All,
+		SuperprojectType: projecttype.Library,
 		Category:         "library.properties",
 		Subcategory:      "version field",
 		ID:               "LP022",
@@ -1147,7 +1147,7 @@ var configurations = []Type{
 	},
 	{
 		ProjectType:      projecttype.Library,
-		SuperprojectType: projecttype.All,
+		SuperprojectType: projecttype.Library,
 		Category:         "documentation",
 		Subcategory:      "miscellaneous",
 		ID:               "LD001",
@@ -1163,7 +1163,7 @@ var configurations = []Type{
 	},
 	{
 		ProjectType:      projecttype.Library,
-		SuperprojectType: projecttype.All,
+		SuperprojectType: projecttype.Library,
 		Category:         "documentation",
 		Subcategory:      "miscellaneous",
 		ID:               "LD002",
@@ -1339,7 +1339,7 @@ var configurations = []Type{
 	},
 	{
 		ProjectType:      projecttype.Sketch,
-		SuperprojectType: projecttype.All,
+		SuperprojectType: projecttype.Sketch,
 		Category:         "documentation",
 		Subcategory:      "miscellaneous",
 		ID:               "SD001",
@@ -1355,7 +1355,7 @@ var configurations = []Type{
 	},
 	{
 		ProjectType:      projecttype.Sketch,
-		SuperprojectType: projecttype.All,
+		SuperprojectType: projecttype.Sketch,
 		Category:         "documentation",
 		Subcategory:      "miscellaneous",
 		ID:               "SD002",
@@ -1403,7 +1403,7 @@ var configurations = []Type{
 	},
 	{
 		ProjectType:      projecttype.Platform,
-		SuperprojectType: projecttype.All,
+		SuperprojectType: projecttype.Platform,
 		Category:         "documentation",
 		Subcategory:      "miscellaneous",
 		ID:               "PD001",
@@ -1419,7 +1419,7 @@ var configurations = []Type{
 	},
 	{
 		ProjectType:      projecttype.Platform,
-		SuperprojectType: projecttype.All,
+		SuperprojectType: projecttype.Platform,
 		Category:         "documentation",
 		Subcategory:      "miscellaneous",
 		ID:               "PD002",

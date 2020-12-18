@@ -571,10 +571,6 @@ func LibraryPropertiesVersionFieldNonSemver() (result ruleresult.Type, output st
 
 // LibraryPropertiesVersionFieldBehindTag checks whether a release tag was made without first bumping the library.properties version value.
 func LibraryPropertiesVersionFieldBehindTag() (result ruleresult.Type, output string) {
-	if projectdata.ProjectType() != projectdata.SuperProjectType() {
-		return ruleresult.Skip, "Not relevant for subprojects"
-	}
-
 	if projectdata.LibraryPropertiesLoadError() != nil {
 		return ruleresult.NotRun, "Couldn't load library.properties"
 	}
