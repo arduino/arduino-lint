@@ -443,7 +443,7 @@ var configurations = []Type{
 	},
 	{
 		ProjectType:      projecttype.Library,
-		SuperprojectType: projecttype.All,
+		SuperprojectType: projecttype.Library,
 		Category:         "library.properties",
 		Subcategory:      "name field",
 		ID:               "LP013",
