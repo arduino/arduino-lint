@@ -115,6 +115,37 @@ tasks:
       - poetry install --no-root
       - poetry run black .
 
+  docs:gen:
+    desc: Generate command reference
+    dir: ./docsgen
+    cmds:
+      # docs will generate examples using os.Args[0] so we need to call
+      # the generator `arduino-lint`
+      - go build -o arduino-lint{{exeExt}}
+      # we invoke `arduino-lint` like this instead of `./arduino-lint` to remove
+      # the `./` chars from the examples
+      - PATH=. arduino-lint ../docs/commands
+      - task: docs:format
+
+  docs:build:
+    desc: Build documentation website contents
+    cmds:
+      - task: docs:gen
+      - poetry install --no-root
+      - poetry run mkdocs build --strict
+
+  docs:publish:
+    desc: Use Mike to build and push versioned docs
+    cmds:
+      - task: docs:gen
+      - poetry run mike deploy --update-aliases --push --remote {{.DOCS_REMOTE}} {{.DOCS_VERSION}} {{.DOCS_ALIAS}}
+
+  docs:serve:
+    desc: Run documentation website locally
+    cmds:
+      - task: docs:build
+      - poetry run mkdocs serve
+
   docs:check:
     desc: Lint and check formatting of documentation files
     cmds:
@@ -229,9 +260,13 @@ vars:
 
   GOLINTFLAGS: "-min_confidence 0.8 -set_exit_status"
 
+  DOCS_VERSION: dev
+  DOCS_ALIAS: ""
+  DOCS_REMOTE: "origin"
+
   PRETTIER: prettier@2.1.2
 
   WORKFLOW_SCHEMA_PATH: "$(mktemp -t gha-workflow-schema-XXXXXXXXXX.json)"
 
-  CODESPELL_SKIP_OPTION: '--skip "./.git,./go.mod,./go.sum,./arduino-lint,./arduino-lint.exe,./check/checkfunctions/testdata/libraries/MisspelledSentenceParagraphValue/library.properties"'
+  CODESPELL_SKIP_OPTION: '--skip "./.git,go.mod,go.sum,./arduino-lint,./arduino-lint.exe,./check/checkfunctions/testdata/libraries/MisspelledSentenceParagraphValue/library.properties,./site"'
   CODESPELL_IGNORE_WORDS_OPTION: "--ignore-words ./etc/codespell-ignore-words-list.txt"

@@ -12,3 +12,9 @@ coverage_unit.txt
 *.bak
 *.code-workspace
 *.sublime-workspace
+
+# MkDocs
+/site/
+/docsgen/arduino-cli
+/docsgen/arduino-cli.exe
+/docs/commands/*.md

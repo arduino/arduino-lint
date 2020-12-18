@@ -1,0 +1,56 @@
+# Project information
+site_name: arduino-lint
+site_description: Tool to check for problems with Arduino projects
+site_url: https://arduino.github.io/arduino-lint/
+
+# Repository
+repo_name: arduino/arduino-lint
+repo_url: https://github.com/arduino/arduino-lint
+edit_uri: ""
+
+# Copyright
+copyright: Copyright 2020 ARDUINO SA (http://www.arduino.cc/)
+
+# Theme
+theme:
+  name: material
+  logo: img/icon_mac_light.png
+  palette:
+    primary: teal
+    accent: orange
+
+# Extensions
+markdown_extensions:
+  - markdown.extensions.codehilite:
+      guess_lang: false
+  - markdown.extensions.toc:
+      permalink: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:pymdownx.emoji.twemoji
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: arduino
+      repo: arduino-lint
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+  - mdx_truly_sane_lists:
+      nested_indent: 2
+      truly_sane: true
+
+# Navigation
+nav:
+  - Documentation Home: index.md
+  - Command reference: commands/arduino-lint.md
+  - CONTRIBUTING.md
+
+extra_css:
+  - css/version-select.css
+
+extra_javascript:
+  - js/version-select.js

@@ -6,10 +6,20 @@ authors = ["Arduino <info@arduino.cc>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
+
+# Integration tests dependencies.
 invoke = "1.4.1"
 pytest = "6.1.2"
 python-dateutil = "^2.8.1"
 semver = "^2.13.0"
+
+# Documentation generation dependencies.
+click = "<7.2"
+gitpython = "^3.1.1"
+mdx_truly_sane_lists = "^1.2"
+mike = "^0.5.1"
+mkdocs = "<1.2"
+mkdocs-material = "<5"
 
 [tool.poetry.dev-dependencies]
 black = { version = "^20.8b1", allow-prereleases = true }
