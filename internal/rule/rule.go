@@ -62,7 +62,7 @@ func Runner(project project.Type) {
 func shouldRun(ruleConfiguration ruleconfiguration.Type, currentProject project.Type) (bool, error) {
 	configurationRuleModes := configuration.RuleModes(currentProject.SuperprojectType)
 
-	if ruleConfiguration.ProjectType != currentProject.ProjectType {
+	if !ruleConfiguration.ProjectType.Matches(currentProject.ProjectType) {
 		return false, nil
 	}
 
