@@ -39,7 +39,7 @@ var defaultRuleModes = map[projecttype.Type]map[rulemode.Type]bool{
 		rulemode.Strict:                   false,
 		rulemode.Specification:            true,
 		rulemode.Permissive:               false,
-		rulemode.LibraryManagerSubmission: true,
+		rulemode.LibraryManagerSubmission: false,
 		rulemode.LibraryManagerIndexed:    false,
 		rulemode.Official:                 false,
 	},

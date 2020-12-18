@@ -181,13 +181,18 @@ def test_version(run_command):
 def test_arduino_lint_official(run_command):
     project_path = test_data_path.joinpath("ARDUINO_LINT_OFFICIAL")
 
-    result = run_command(cmd=[project_path])
+    # Test default to ARDUINO_LINT_OFFICIAL="false"
+    result = run_command(cmd=["--library-manager", "submit", project_path])
     assert not result.ok
 
-    result = run_command(cmd=[project_path], custom_env={"ARDUINO_LINT_OFFICIAL": "true"})
+    result = run_command(
+        cmd=["--library-manager", "submit", project_path], custom_env={"ARDUINO_LINT_OFFICIAL": "true"}
+    )
     assert result.ok
 
-    result = run_command(cmd=[project_path], custom_env={"ARDUINO_LINT_OFFICIAL": "false"})
+    result = run_command(
+        cmd=["--library-manager", "submit", project_path], custom_env={"ARDUINO_LINT_OFFICIAL": "false"}
+    )
     assert not result.ok
 
     result = run_command(cmd=[project_path], custom_env={"ARDUINO_LINT_OFFICIAL": "foo"})
