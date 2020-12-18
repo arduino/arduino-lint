@@ -18,3 +18,5 @@ coverage_unit.txt
 /docsgen/arduino-cli
 /docsgen/arduino-cli.exe
 /docs/commands/*.md
+
+/dist
