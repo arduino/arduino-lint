@@ -20,12 +20,14 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 
 	"github.com/arduino/arduino-lint/configuration/checkmode"
 	"github.com/arduino/arduino-lint/project/projecttype"
 	"github.com/arduino/arduino-lint/result/outputformat"
+	"github.com/arduino/arduino-lint/version"
 	"github.com/arduino/go-paths-helper"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/pflag"
@@ -199,21 +201,10 @@ func VersionMode() bool {
 	return versionMode
 }
 
-var version string
-var commit string
+var versionInfo = version.NewInfo(filepath.Base(os.Args[0]))
 
-func Version() string {
-	if version == "" {
-		return "0.0.0+" + commit
-	}
-
-	return version
-}
-
-var buildTimestamp string
-
-func BuildTimestamp() string {
-	return buildTimestamp
+func VersionInfo() *version.Info {
+	return versionInfo
 }
 
 var targetPaths paths.PathList

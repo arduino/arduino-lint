@@ -17,10 +17,8 @@ import pathlib
 import platform
 import typing
 
-import dateutil.parser
 import invoke.context
 import pytest
-import semver
 
 test_data_path = pathlib.Path(__file__).resolve().parent.joinpath("testdata")
 
@@ -168,14 +166,6 @@ def test_verbose(run_command):
     report = json.loads(result.stdout)
     assert True in [check.get("result") == "pass" for check in report["projects"][0]["checks"]]
     assert True in [check.get("result") == "fail" for check in report["projects"][0]["checks"]]
-
-
-def test_version(run_command):
-    result = run_command(cmd=["--version"])
-    assert result.ok
-    output_list = result.stdout.strip().split(sep=" ")
-    assert semver.VersionInfo.isvalid(version=output_list[0])
-    dateutil.parser.isoparse(output_list[1])
 
 
 def test_arduino_lint_official(run_command):

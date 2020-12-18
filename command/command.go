@@ -39,16 +39,9 @@ func ArduinoLint(rootCommand *cobra.Command, cliArguments []string) {
 
 	if configuration.VersionMode() {
 		if configuration.OutputFormat() == outputformat.Text {
-			fmt.Println(configuration.Version() + " " + configuration.BuildTimestamp())
+			fmt.Println(configuration.VersionInfo())
 		} else {
-			versionObject := struct {
-				Version        string `json:"version"`
-				BuildTimestamp string `json:"buildTimestamp"`
-			}{
-				Version:        configuration.Version(),
-				BuildTimestamp: configuration.BuildTimestamp(),
-			}
-			versionJSON, err := json.MarshalIndent(versionObject, "", "  ")
+			versionJSON, err := json.MarshalIndent(configuration.VersionInfo(), "", "  ")
 			if err != nil {
 				panic(err)
 			}

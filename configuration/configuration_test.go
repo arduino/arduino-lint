@@ -235,15 +235,3 @@ func TestInitializeOfficial(t *testing.T) {
 	os.Setenv("ARDUINO_LINT_OFFICIAL", "invalid value")
 	assert.Error(t, Initialize(test.ConfigurationFlags(), projectPaths))
 }
-
-func TestVersion(t *testing.T) {
-	commit = "abcd"
-	assert.Equal(t, "0.0.0+"+commit, Version())
-	version = "42.1.2"
-	assert.Equal(t, version, Version())
-}
-
-func TestBuildTimestamp(t *testing.T) {
-	buildTimestamp = "2020-11-27T04:05:19+00:00"
-	assert.Equal(t, buildTimestamp, BuildTimestamp())
-}

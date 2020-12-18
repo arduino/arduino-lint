@@ -30,9 +30,9 @@ builds:
       - amd64
     ldflags:
       - -s -w
-      - -X github.com/arduino/arduino-lint/configuration.version={{.Tag}}
-      - -X github.com/arduino/arduino-lint/configuration.commit={{ .ShortCommit }}
-      - -X github.com/arduino/arduino-lint/configuration.buildTimestamp={{.Date}}
+      - -X github.com/arduino/arduino-lint/version.version={{.Tag}}
+      - -X github.com/arduino/arduino-lint/version.commit={{ .ShortCommit }}
+      - -X github.com/arduino/arduino-lint/version.date={{.Date}}
   - # ARM
     id: arduino_lint_arm
     binary: arduino-lint
@@ -47,9 +47,9 @@ builds:
       - 6
     ldflags:
       - -s -w
-      - -X github.com/arduino/arduino-lint/configuration.version={{.Tag}}
-      - -X github.com/arduino/arduino-lint/configuration.commit={{ .ShortCommit }}
-      - -X github.com/arduino/arduino-lint/configuration.buildTimestamp={{.Date}}
+      - -X github.com/arduino/arduino-lint/version.version={{.Tag}}
+      - -X github.com/arduino/arduino-lint/version.commit={{ .ShortCommit }}
+      - -X github.com/arduino/arduino-lint/version.date={{.Date}}
       - "-extldflags '-static'"
   - # ARMv7
     id: arduino_lint_armv7
@@ -65,9 +65,9 @@ builds:
       - 7
     ldflags:
       - -s -w
-      - -X github.com/arduino/arduino-lint/configuration.version={{.Tag}}
-      - -X github.com/arduino/arduino-lint/configuration.commit={{ .ShortCommit }}
-      - -X github.com/arduino/arduino-lint/configuration.buildTimestamp={{.Date}}
+      - -X github.com/arduino/arduino-lint/version.version={{.Tag}}
+      - -X github.com/arduino/arduino-lint/version.commit={{ .ShortCommit }}
+      - -X github.com/arduino/arduino-lint/version.date={{.Date}}
       - "-extldflags '-static'"
   - # ARM64
     id: arduino_lint_arm64
@@ -81,9 +81,9 @@ builds:
       - arm64
     ldflags:
       - -s -w
-      - -X github.com/arduino/arduino-lint/configuration.version={{.Tag}}
-      - -X github.com/arduino/arduino-lint/configuration.commit={{ .ShortCommit }}
-      - -X github.com/arduino/arduino-lint/configuration.buildTimestamp={{.Date}}
+      - -X github.com/arduino/arduino-lint/version.version={{.Tag}}
+      - -X github.com/arduino/arduino-lint/version.commit={{ .ShortCommit }}
+      - -X github.com/arduino/arduino-lint/version.date={{.Date}}
       - "-extldflags '-static'"
   - # All the other platforms
     id: arduino_lint
@@ -98,9 +98,9 @@ builds:
       - 386
     ldflags:
       - -s -w
-      - -X github.com/arduino/arduino-lint/configuration.version={{.Tag}}
-      - -X github.com/arduino/arduino-lint/configuration.commit={{ .ShortCommit }}
-      - -X github.com/arduino/arduino-lint/configuration.buildTimestamp={{.Date}}
+      - -X github.com/arduino/arduino-lint/version.version={{.Tag}}
+      - -X github.com/arduino/arduino-lint/version.commit={{ .ShortCommit }}
+      - -X github.com/arduino/arduino-lint/version.date={{.Date}}
       - "-extldflags '-static'"
 
 archives:
