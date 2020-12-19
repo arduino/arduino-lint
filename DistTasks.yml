@@ -18,7 +18,7 @@ tasks:
     dir: "{{ .DIST_DIR }}"
     cmds:
       - |
-        docker run -it -v `pwd`/..:/home/lint -w /home/lint \
+        docker run -v `pwd`/..:/home/lint -w /home/lint \
         -e CGO_ENABLED=1 \
         {{ .CONTAINER }}:{{ .CONTAINER_TAG }} \
         --build-cmd "{{ .BUILD_COMMAND }}" \
@@ -40,7 +40,7 @@ tasks:
     dir: "{{ .DIST_DIR }}"
     cmds:
       - |
-        docker run -it -v `pwd`/..:/home/lint -w /home/lint \
+        docker run -v `pwd`/..:/home/lint -w /home/lint \
         -e CGO_ENABLED=1 \
         {{ .CONTAINER }}:{{ .CONTAINER_TAG }} \
         --build-cmd "{{ .BUILD_COMMAND }}" \
@@ -62,7 +62,7 @@ tasks:
     dir: "{{ .DIST_DIR }}"
     cmds:
       - |
-        docker run -it -v `pwd`/..:/home/lint -w /home/lint \
+        docker run -v `pwd`/..:/home/lint -w /home/lint \
         -e CGO_ENABLED=1 \
         {{ .CONTAINER }}:{{ .CONTAINER_TAG }} \
         --build-cmd "{{ .BUILD_COMMAND }}" \
@@ -84,7 +84,7 @@ tasks:
     dir: "{{ .DIST_DIR }}"
     cmds:
       - |
-        docker run -it -v `pwd`/..:/home/lint -w /home/lint \
+        docker run -v `pwd`/..:/home/lint -w /home/lint \
         -e CGO_ENABLED=1 \
         {{ .CONTAINER }}:{{ .CONTAINER_TAG }} \
         --build-cmd "{{ .BUILD_COMMAND }}" \
@@ -106,7 +106,7 @@ tasks:
     dir: "{{ .DIST_DIR }}"
     cmds:
       - |
-        docker run -it -v `pwd`/..:/home/lint -w /home/lint \
+        docker run -v `pwd`/..:/home/lint -w /home/lint \
         -e CGO_ENABLED=1 \
         {{ .CONTAINER }}:{{ .CONTAINER_TAG }} \
         --build-cmd "{{ .BUILD_COMMAND }}" \
@@ -128,7 +128,7 @@ tasks:
     dir: "{{ .DIST_DIR }}"
     cmds:
       - |
-        docker run -it -v `pwd`/..:/home/lint -w /home/lint \
+        docker run -v `pwd`/..:/home/lint -w /home/lint \
         -e CGO_ENABLED=1 \
         {{ .CONTAINER }}:{{ .CONTAINER_TAG }} \
         --build-cmd "{{ .BUILD_COMMAND }}" \
@@ -150,7 +150,7 @@ tasks:
     dir: "{{ .DIST_DIR }}"
     cmds:
       - |
-        docker run -it -v `pwd`/..:/home/lint -w /home/lint \
+        docker run -v `pwd`/..:/home/lint -w /home/lint \
         -e CGO_ENABLED=1 \
         {{ .CONTAINER }}:{{ .CONTAINER_TAG }} \
         --build-cmd "{{ .BUILD_COMMAND }}" \
@@ -172,7 +172,7 @@ tasks:
     dir: "{{ .DIST_DIR }}"
     cmds:
       - |
-        docker run -it -v `pwd`/..:/home/lint -w /home/lint \
+        docker run -v `pwd`/..:/home/lint -w /home/lint \
         -e CGO_ENABLED=1 \
         {{ .CONTAINER }}:{{ .CONTAINER_TAG }} \
         --build-cmd "{{ .BUILD_COMMAND }}" \
