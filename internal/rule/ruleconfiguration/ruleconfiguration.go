@@ -107,7 +107,7 @@ var configurations = []Type{
 	},
 	{
 		ProjectType:      projecttype.Library,
-		SuperprojectType: projecttype.All,
+		SuperprojectType: projecttype.Library,
 		Category:         "structure",
 		Subcategory:      "miscellaneous",
 		ID:               "LS004",
@@ -155,7 +155,7 @@ var configurations = []Type{
 	},
 	{
 		ProjectType:      projecttype.Library,
-		SuperprojectType: projecttype.All,
+		SuperprojectType: projecttype.Library,
 		Category:         "structure",
 		Subcategory:      "miscellaneous",
 		ID:               "LS007",
@@ -523,7 +523,7 @@ var configurations = []Type{
 	},
 	{
 		ProjectType:      projecttype.Library,
-		SuperprojectType: projecttype.All,
+		SuperprojectType: projecttype.Library,
 		Category:         "library.properties",
 		Subcategory:      "name field",
 		ID:               "LP018",
