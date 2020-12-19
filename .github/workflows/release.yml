@@ -19,7 +19,7 @@ jobs:
         uses: arduino/create-changelog@1.0.0
         with:
           tag-regex: '^[0-9]+\.[0-9]+\.[0-9]+$'
-          filter-regex: '^(?i)\[(skip|changelog)[ ,-](skip|changelog)\].*'
+          filter-regex: '^\[([sS][kK][iI][pP]|[cC][hH][aA][nN][gG][eE][lL][oO][gG])[ ,-]([cC][hH][aA][nN][gG][eE][lL][oO][gG]|[sS][kK][iI][pP])\].*'
           changelog-file-path: "dist/CHANGELOG.md"
 
       - name: Build
