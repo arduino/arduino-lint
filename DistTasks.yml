@@ -24,12 +24,12 @@ tasks:
         --build-cmd "{{ .BUILD_COMMAND }}" \
         -p "{{ .BUILD_PLATFORM }}"
 
-        zip {{ .PACKAGE_NAME}} {{ .PLATFORM_DIR }}/{{ .PROJECT_NAME }} ../LICENSE.txt -j
+        zip {{ .PACKAGE_NAME}} {{ .PLATFORM_DIR }}/{{ .PROJECT_NAME }}.exe ../LICENSE.txt -j
         sha256sum {{ .PACKAGE_NAME }} >> {{ .CHECKSUM_FILE }}
 
     vars:
       PLATFORM_DIR: "{{ .PROJECT_NAME }}_windows_386"
-      BUILD_COMMAND: "go build -o {{ .DIST_DIR }}/{{ .PLATFORM_DIR }}/{{ .PROJECT_NAME }} {{ .LDFLAGS }}"
+      BUILD_COMMAND: "go build -o {{ .DIST_DIR }}/{{ .PLATFORM_DIR }}/{{ .PROJECT_NAME }}.exe {{ .LDFLAGS }}"
       BUILD_PLATFORM: "windows/386"
       CONTAINER_TAG: "{{ .GO_VERSION }}-main"
       PACKAGE_PLATFORM: "Windows_32bit"
@@ -46,12 +46,12 @@ tasks:
         --build-cmd "{{ .BUILD_COMMAND }}" \
         -p "{{ .BUILD_PLATFORM }}"
 
-        zip {{ .PACKAGE_NAME}} {{ .PLATFORM_DIR }}/{{ .PROJECT_NAME }} ../LICENSE.txt -j
+        zip {{ .PACKAGE_NAME}} {{ .PLATFORM_DIR }}/{{ .PROJECT_NAME }}.exe ../LICENSE.txt -j
         sha256sum {{ .PACKAGE_NAME }} >> {{ .CHECKSUM_FILE }}
 
     vars:
       PLATFORM_DIR: "{{ .PROJECT_NAME }}_windows_amd64"
-      BUILD_COMMAND: "go build -o {{ .DIST_DIR }}/{{ .PLATFORM_DIR }}/{{ .PROJECT_NAME }} {{ .LDFLAGS }}"
+      BUILD_COMMAND: "go build -o {{ .DIST_DIR }}/{{ .PLATFORM_DIR }}/{{ .PROJECT_NAME }}.exe {{ .LDFLAGS }}"
       BUILD_PLATFORM: "windows/amd64"
       CONTAINER_TAG: "{{ .GO_VERSION }}-main"
       PACKAGE_PLATFORM: "Windows_64bit"
