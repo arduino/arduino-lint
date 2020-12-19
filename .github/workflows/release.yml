@@ -22,6 +22,12 @@ jobs:
           filter-regex: '^\[([sS][kK][iI][pP]|[cC][hH][aA][nN][gG][eE][lL][oO][gG])[ ,-]([cC][hH][aA][nN][gG][eE][lL][oO][gG]|[sS][kK][iI][pP])\].*'
           changelog-file-path: "dist/CHANGELOG.md"
 
+      - name: Install Taskfile
+        uses: arduino/actions/setup-taskfile@master
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
+
       - name: Build
         run: task dist:all
 
