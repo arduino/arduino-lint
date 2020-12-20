@@ -124,7 +124,7 @@ By default, all tests for all arduino-lint's Go packages are run. To run unit te
 packages, you can set the `TARGETS` environment variable, e.g.:
 
 ```
-TARGETS=./check task go:test-unit
+TARGETS=./internal/check task go:test-unit
 ```
 
 Alternatively, to run only some specific test(s), you can specify a regex to match against the test function name, e.g.:
@@ -136,7 +136,7 @@ TEST_REGEX='^TestLibraryProperties.*' task go:test-unit
 Both can be combined as well, typically to run only a specific test:
 
 ```
-TEST_REGEX='^TestFindProjects$' TARGETS=./project task go:test-unit
+TEST_REGEX='^TestFindProjects$' TARGETS=./internal/project task go:test-unit
 ```
 
 #### Integration tests

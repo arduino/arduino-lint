@@ -19,7 +19,7 @@ package main
 import (
 	"os"
 
-	"github.com/arduino/arduino-lint/cli"
+	"github.com/arduino/arduino-lint/internal/cli"
 	"github.com/spf13/cobra/doc"
 )
 
