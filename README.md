@@ -9,6 +9,8 @@
 - Sketches
 - Libraries
 
+## Documentation
+
 For usage instructions, see [the documentation](https://arduino.github.io/arduino-lint/latest/)
 
 ## Continuous Integration
@@ -16,3 +18,15 @@ For usage instructions, see [the documentation](https://arduino.github.io/arduin
 There is a GitHub Actions action that makes it easy to use **arduino-lint**` in your CI workflows!
 
 See https://github.com/arduino/arduino-lint-action for more information.
+
+## How to contribute
+
+Contributions are welcome!
+
+Please see the [How to contribute](https://arduino.github.io/arduino-lint/latest/CONTRIBUTING/) page for information on
+building the source code, running tests, and contributing your changes to the project.
+
+### Beta testing
+
+[Nightly builds](https://arduino.github.io/arduino-lint/latest/installation/#nightly-builds) are available for beta
+testing.
