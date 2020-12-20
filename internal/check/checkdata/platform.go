@@ -13,24 +13,29 @@
 // Arduino software without disclosing the source code of your own applications.
 // To purchase a commercial license, send an email to license@arduino.cc.
 
-package main
+package checkdata
 
 import (
-	"os"
-
-	"github.com/arduino/arduino-lint/internal/cli"
-	"github.com/arduino/arduino-lint/internal/configuration"
-	"github.com/arduino/arduino-lint/internal/result/feedback"
+	"github.com/arduino/arduino-lint/internal/project"
+	"github.com/arduino/arduino-lint/internal/project/platform/boardstxt"
+	"github.com/arduino/go-properties-orderedmap"
 )
 
-func init() {
-	configuration.EnableLogging(false)
+// Initialize gathers the platform check data for the specified project.
+func InitializeForPlatform(project project.Type) {
+	boardsTxt, boardsTxtLoadError = boardstxt.Properties(ProjectPath())
 }
 
-func main() {
-	rootCommand := cli.Root()
-	if err := rootCommand.Execute(); err != nil {
-		feedback.Error(err.Error())
-		os.Exit(1)
-	}
+var boardsTxt *properties.Map
+
+// BoardsTxt returns the data from the boards.txt configuration file.
+func BoardsTxt() *properties.Map {
+	return boardsTxt
+}
+
+var boardsTxtLoadError error
+
+// BoardsTxtLoadError returns the error output from loading the boards.txt configuration file.
+func BoardsTxtLoadError() error {
+	return boardsTxtLoadError
 }

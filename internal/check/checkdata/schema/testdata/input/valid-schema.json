@@ -1,0 +1,11 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/internal/check/checkdata/schema/testdata/schema-with-references.json",
+  "title": "Schema for use in unit tests",
+  "type": "object",
+  "properties": {
+    "property1": {
+      "minLength": 2
+    }
+  }
+}

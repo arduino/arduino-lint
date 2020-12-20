@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/internal/check/checkdata/schema/testdata/referenced-schema-2.json",
+  "title": "Schema for use in unit tests",
+  "definitions": {
+    "minLengthObject": {
+      "minLength": 2
+    },
+    "maxLengthObject": {
+      "maxLength": 4
+    },
+    "enumObject": {
+      "enum": ["baz"]
+    },
+    "notPatternObject": {
+      "not": {
+        "allOf": [
+          {
+            "pattern": "[A-Z]"
+          }
+        ]
+      }
+    },
+    "misspelledOptionalProperties": {
+      "propertyNames": {
+        "not": {
+          "pattern": "porpert([y]|[ies])"
+        }
+      }
+    }
+  }
+}
