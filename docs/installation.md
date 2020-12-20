@@ -6,13 +6,13 @@ script can be run on Windows by installing [Git for Windows](https://gitforwindo
 This script will install the latest version of arduino-lint to `$PWD/bin`:
 
 ```
-curl -fsSL https://raw.githubusercontent.com/arduino/arduino-lint/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/install.sh | sh
 ```
 
 If you want to target a different directory, for example `~/local/bin`, set the `BINDIR` environment variable like this:
 
 ```
-curl -fsSL https://raw.githubusercontent.com/arduino/arduino-lint/main/install.sh | BINDIR=~/local/bin sh
+curl -fsSL https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/install.sh | BINDIR=~/local/bin sh
 ```
 
 If you would like to use the `arduino-lint` command from any location, install arduino-lint to a directory already in
@@ -22,7 +22,7 @@ If you want to download a specific arduino-lint version, for example `0.9.0`, pa
 like this:
 
 ```
-curl -fsSL https://raw.githubusercontent.com/arduino/arduino-lint/main/install.sh | sh -s 0.9.0
+curl -fsSL https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/install.sh | sh -s 0.9.0
 ```
 
 ### Download
