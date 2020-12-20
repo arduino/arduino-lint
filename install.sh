@@ -67,9 +67,9 @@ initOS() {
 }
 
 initDownloadTool() {
-	if type "curl" >/dev/null; then
+	if command -v "curl" >/dev/null 2>&1; then
 		DOWNLOAD_TOOL="curl"
-	elif type "wget" >/dev/null; then
+	elif command -v "wget" >/dev/null 2>&1; then
 		DOWNLOAD_TOOL="wget"
 	else
 		fail "You need curl or wget as download tool. Please install it first before continuing"
@@ -80,52 +80,49 @@ initDownloadTool() {
 checkLatestVersion() {
 	# Use the GitHub releases webpage to find the latest version for this project
 	# so we don't get rate-limited.
-	local tag
-	local regex="[0-9][A-Za-z0-9\.-]*"
-	local latest_url="https://github.com/${PROJECT_OWNER}/${PROJECT_NAME}/releases/latest"
+	CHECKLATESTVERSION_REGEX="[0-9][A-Za-z0-9\.-]*"
+	CHECKLATESTVERSION_LATEST_URL="https://github.com/${PROJECT_OWNER}/${PROJECT_NAME}/releases/latest"
 	if [ "$DOWNLOAD_TOOL" = "curl" ]; then
-		tag=$(curl -SsL $latest_url | grep -o "<title>Release $regex · ${PROJECT_OWNER}/${PROJECT_NAME}" | grep -o "$regex")
+		CHECKLATESTVERSION_TAG=$(curl -SsL $CHECKLATESTVERSION_LATEST_URL | grep -o "<title>Release $CHECKLATESTVERSION_REGEX · ${PROJECT_OWNER}/${PROJECT_NAME}" | grep -o "$CHECKLATESTVERSION_REGEX")
 	elif [ "$DOWNLOAD_TOOL" = "wget" ]; then
-		tag=$(wget -q -O - $latest_url | grep -o "<title>Release $regex · ${PROJECT_OWNER}/${PROJECT_NAME}" | grep -o "$regex")
+		CHECKLATESTVERSION_TAG=$(wget -q -O - $CHECKLATESTVERSION_LATEST_URL | grep -o "<title>Release $CHECKLATESTVERSION_REGEX · ${PROJECT_OWNER}/${PROJECT_NAME}" | grep -o "$CHECKLATESTVERSION_REGEX")
 	fi
-	if [ "x$tag" = "x" ]; then
+	if [ "x$CHECKLATESTVERSION_TAG" = "x" ]; then
 		echo "Cannot determine latest tag."
 		exit 1
 	fi
-	eval "$1='$tag'"
+	eval "$1='$CHECKLATESTVERSION_TAG'"
 }
 
 get() {
-	local url="$2"
-	local body
-	local httpStatusCode
-	echo "Getting $url"
+	GET_URL="$2"
+	echo "Getting $GET_URL"
 	if [ "$DOWNLOAD_TOOL" = "curl" ]; then
-		httpResponse=$(curl -sL --write-out HTTPSTATUS:%{http_code} "$url")
-		httpStatusCode=$(echo $httpResponse | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
-		body=$(echo "$httpResponse" | sed -e 's/HTTPSTATUS\:.*//g')
+		GET_HTTP_RESPONSE=$(curl -sL --write-out 'HTTPSTATUS:%{http_code}' "$GET_URL")
+		GET_HTTP_STATUS_CODE=$(echo $GET_HTTP_RESPONSE | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
+		GET_BODY=$(echo "$GET_HTTP_RESPONSE" | sed -e 's/HTTPSTATUS\:.*//g')
 	elif [ "$DOWNLOAD_TOOL" = "wget" ]; then
-		tmpFile=$(mktemp)
-		body=$(wget --server-response --content-on-error -q -O - "$url" 2>$tmpFile || true)
-		httpStatusCode=$(cat $tmpFile | awk '/^  HTTP/{print $2}')
+		TMP_FILE=$(mktemp)
+		GET_BODY=$(wget --server-response --content-on-error -q -O - "$GET_URL" 2>$TMP_FILE || true)
+		GET_HTTP_STATUS_CODE=$(cat $TMP_FILE | awk '/^  HTTP/{print $2}')
 	fi
-	if [ "$httpStatusCode" != 200 ]; then
-		echo "Request failed with HTTP status code $httpStatusCode"
-		fail "Body: $body"
+	if [ "$GET_HTTP_STATUS_CODE" != 200 ]; then
+		echo "Request failed with HTTP status code $GET_HTTP_STATUS_CODE"
+		fail "Body: $GET_BODY"
 	fi
-	eval "$1='$body'"
+	eval "$1='$GET_BODY'"
 }
 
 getFile() {
-	local url="$1"
-	local filePath="$2"
+	GETFILE_URL="$1"
+	GETFILE_FILE_PATH="$2"
 	if [ "$DOWNLOAD_TOOL" = "curl" ]; then
-		httpStatusCode=$(curl -s -w '%{http_code}' -L "$url" -o "$filePath")
+		GETFILE_HTTP_STATUS_CODE=$(curl -s -w '%{http_code}' -L "$GETFILE_URL" -o "$GETFILE_FILE_PATH")
 	elif [ "$DOWNLOAD_TOOL" = "wget" ]; then
-		body=$(wget --server-response --content-on-error -q -O "$filePath" "$url")
-		httpStatusCode=$(cat $tmpFile | awk '/^  HTTP/{print $2}')
+		GETFILE_BODY=$(wget --server-response --content-on-error -q -O "$GETFILE_FILE_PATH" "$GETFILE_URL")
+		GETFILE_HTTP_STATUS_CODE=$(cat $TMP_FILE | awk '/^  HTTP/{print $2}')
 	fi
-	echo "$httpStatusCode"
+	echo "$GETFILE_HTTP_STATUS_CODE"
 }
 
 downloadFile() {
@@ -177,11 +174,11 @@ installFile() {
 }
 
 bye() {
-	result=$?
-	if [ "$result" != "0" ]; then
+	BYE_RESULT=$?
+	if [ "$BYE_RESULT" != "0" ]; then
 		echo "Failed to install $PROJECT_NAME"
 	fi
-	exit $result
+	exit $BYE_RESULT
 }
 
 testVersion() {
