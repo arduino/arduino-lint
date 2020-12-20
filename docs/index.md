@@ -5,6 +5,10 @@ Its focus is on the structure, metadata, and configuration of Arduino projects, 
 [specification](https://arduino.github.io/arduino-cli/latest/library-specification) compliance, Library Manager
 submission [requirements](https://github.com/arduino/Arduino/wiki/Library-Manager-FAQ), and best practices.
 
+## Installation
+
+See the [installation instructions](installation.md).
+
 ## Getting started
 
 Once installed, you only need to open a terminal at your project folder and run the command:

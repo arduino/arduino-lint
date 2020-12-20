@@ -46,6 +46,7 @@ markdown_extensions:
 # Navigation
 nav:
   - Documentation Home: index.md
+  - installation.md
   - Command reference: commands/arduino-lint.md
   - CONTRIBUTING.md
 
