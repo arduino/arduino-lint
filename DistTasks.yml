@@ -33,7 +33,7 @@ tasks:
       BUILD_PLATFORM: "windows/386"
       CONTAINER_TAG: "{{ .GO_VERSION }}-main"
       PACKAGE_PLATFORM: "Windows_32bit"
-      PACKAGE_NAME: "{{ .PROJECT_NAME }}-{{ .VERSION }}_{{ .PACKAGE_PLATFORM }}.zip"
+      PACKAGE_NAME: "{{ .PROJECT_NAME }}_{{ .VERSION }}_{{ .PACKAGE_PLATFORM }}.zip"
 
   Windows_64bit:
     desc: Builds Windows 64 bit binaries
@@ -55,7 +55,7 @@ tasks:
       BUILD_PLATFORM: "windows/amd64"
       CONTAINER_TAG: "{{ .GO_VERSION }}-main"
       PACKAGE_PLATFORM: "Windows_64bit"
-      PACKAGE_NAME: "{{ .PROJECT_NAME }}-{{ .VERSION }}_{{ .PACKAGE_PLATFORM }}.zip"
+      PACKAGE_NAME: "{{ .PROJECT_NAME }}_{{ .VERSION }}_{{ .PACKAGE_PLATFORM }}.zip"
 
   Linux_32bit:
     desc: Builds Linux 32 bit binaries
@@ -77,7 +77,7 @@ tasks:
       BUILD_PLATFORM: "linux/386"
       CONTAINER_TAG: "{{ .GO_VERSION }}-main"
       PACKAGE_PLATFORM: "Linux_32bit"
-      PACKAGE_NAME: "{{ .PROJECT_NAME }}-{{ .VERSION }}_{{ .PACKAGE_PLATFORM }}.tar.gz"
+      PACKAGE_NAME: "{{ .PROJECT_NAME }}_{{ .VERSION }}_{{ .PACKAGE_PLATFORM }}.tar.gz"
 
   Linux_64bit:
     desc: Builds Linux 64 bit binaries
@@ -99,7 +99,7 @@ tasks:
       BUILD_PLATFORM: "linux/amd64"
       CONTAINER_TAG: "{{ .GO_VERSION }}-main"
       PACKAGE_PLATFORM: "Linux_64bit"
-      PACKAGE_NAME: "{{ .PROJECT_NAME }}-{{ .VERSION }}_{{ .PACKAGE_PLATFORM }}.tar.gz"
+      PACKAGE_NAME: "{{ .PROJECT_NAME }}_{{ .VERSION }}_{{ .PACKAGE_PLATFORM }}.tar.gz"
 
   Linux_ARMv7:
     desc: Builds Linux ARMv7 binaries
@@ -121,7 +121,7 @@ tasks:
       BUILD_PLATFORM: "linux/armv7"
       CONTAINER_TAG: "{{ .GO_VERSION }}-arm"
       PACKAGE_PLATFORM: "Linux_ARMv7"
-      PACKAGE_NAME: "{{ .PROJECT_NAME }}-{{ .VERSION }}_{{ .PACKAGE_PLATFORM }}.tar.gz"
+      PACKAGE_NAME: "{{ .PROJECT_NAME }}_{{ .VERSION }}_{{ .PACKAGE_PLATFORM }}.tar.gz"
 
   Linux_ARMv6:
     desc: Builds Linux ARMv6 binaries
@@ -143,7 +143,7 @@ tasks:
       BUILD_PLATFORM: "linux/armv6"
       CONTAINER_TAG: "{{ .GO_VERSION }}-arm"
       PACKAGE_PLATFORM: "Linux_ARMv6"
-      PACKAGE_NAME: "{{ .PROJECT_NAME }}-{{ .VERSION }}_{{ .PACKAGE_PLATFORM }}.tar.gz"
+      PACKAGE_NAME: "{{ .PROJECT_NAME }}_{{ .VERSION }}_{{ .PACKAGE_PLATFORM }}.tar.gz"
 
   Linux_ARM64:
     desc: Builds Linux ARM64 binaries
@@ -165,7 +165,7 @@ tasks:
       BUILD_PLATFORM: "linux/arm64"
       CONTAINER_TAG: "{{ .GO_VERSION }}-arm"
       PACKAGE_PLATFORM: "Linux_ARM64"
-      PACKAGE_NAME: "{{ .PROJECT_NAME }}-{{ .VERSION }}_{{ .PACKAGE_PLATFORM }}.tar.gz"
+      PACKAGE_NAME: "{{ .PROJECT_NAME }}_{{ .VERSION }}_{{ .PACKAGE_PLATFORM }}.tar.gz"
 
   macOS_64bit:
     desc: Builds Mac OS X 64 bit binaries
@@ -187,7 +187,7 @@ tasks:
       BUILD_PLATFORM: "darwin/amd64"
       CONTAINER_TAG: "{{ .GO_VERSION }}-darwin"
       PACKAGE_PLATFORM: "macOS_64bit"
-      PACKAGE_NAME: "{{ .PROJECT_NAME }}-{{ .VERSION }}_{{ .PACKAGE_PLATFORM }}.tar.gz"
+      PACKAGE_NAME: "{{ .PROJECT_NAME }}_{{ .VERSION }}_{{ .PACKAGE_PLATFORM }}.tar.gz"
 
 vars:
   VERSION:
