@@ -203,6 +203,14 @@ tasks:
     cmds:
       - npx {{ .PRETTIER }} --write "**/*.md"
 
+  shell:lint:
+    desc: Lint shell scripts
+    cmds:
+      # https://github.com/koalaman/shellcheck
+      - |
+        shopt -s globstar # Needed to check all scripts recursively.
+        shellcheck ./**/*.sh
+
   shell:check-formatting:
     desc: Format shell scripts
     cmds:

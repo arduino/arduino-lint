@@ -17,7 +17,7 @@ PROJECT_OWNER="arduino"
 PROJECT_NAME="arduino-lint"
 
 # BINDIR represents the local bin location, defaults to ./bin.
-LBINDIR=""
+EFFECTIVE_BINDIR=""
 DEFAULT_BINDIR="$PWD/bin"
 
 fail() {
@@ -28,16 +28,18 @@ fail() {
 initDestination() {
 	if [ -n "$BINDIR" ]; then
 		if [ ! -d "$BINDIR" ]; then
+			# The second instance of $BINDIR is intentionally a literal in this message.
+			# shellcheck disable=SC2016
 			fail "$BINDIR "'($BINDIR)'" folder not found. Please create it before continuing."
 		fi
-		LBINDIR="$BINDIR"
+		EFFECTIVE_BINDIR="$BINDIR"
 	else
 		if [ ! -d "$DEFAULT_BINDIR" ]; then
 			mkdir "$DEFAULT_BINDIR"
 		fi
-		LBINDIR="$DEFAULT_BINDIR"
+		EFFECTIVE_BINDIR="$DEFAULT_BINDIR"
 	fi
-	echo "Installing in $LBINDIR"
+	echo "Installing in $EFFECTIVE_BINDIR"
 }
 
 initArch() {
@@ -99,12 +101,12 @@ get() {
 	echo "Getting $GET_URL"
 	if [ "$DOWNLOAD_TOOL" = "curl" ]; then
 		GET_HTTP_RESPONSE=$(curl -sL --write-out 'HTTPSTATUS:%{http_code}' "$GET_URL")
-		GET_HTTP_STATUS_CODE=$(echo $GET_HTTP_RESPONSE | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
+		GET_HTTP_STATUS_CODE=$(echo "$GET_HTTP_RESPONSE" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
 		GET_BODY=$(echo "$GET_HTTP_RESPONSE" | sed -e 's/HTTPSTATUS\:.*//g')
 	elif [ "$DOWNLOAD_TOOL" = "wget" ]; then
 		TMP_FILE=$(mktemp)
-		GET_BODY=$(wget --server-response --content-on-error -q -O - "$GET_URL" 2>$TMP_FILE || true)
-		GET_HTTP_STATUS_CODE=$(cat $TMP_FILE | awk '/^  HTTP/{print $2}')
+		GET_BODY=$(wget --server-response --content-on-error -q -O - "$GET_URL" 2>"$TMP_FILE" || true)
+		GET_HTTP_STATUS_CODE=$(awk '/^  HTTP/{print $2}' "$TMP_FILE")
 	fi
 	if [ "$GET_HTTP_STATUS_CODE" != 200 ]; then
 		echo "Request failed with HTTP status code $GET_HTTP_STATUS_CODE"
@@ -119,14 +121,14 @@ getFile() {
 	if [ "$DOWNLOAD_TOOL" = "curl" ]; then
 		GETFILE_HTTP_STATUS_CODE=$(curl -s -w '%{http_code}' -L "$GETFILE_URL" -o "$GETFILE_FILE_PATH")
 	elif [ "$DOWNLOAD_TOOL" = "wget" ]; then
-		GETFILE_BODY=$(wget --server-response --content-on-error -q -O "$GETFILE_FILE_PATH" "$GETFILE_URL")
-		GETFILE_HTTP_STATUS_CODE=$(cat $TMP_FILE | awk '/^  HTTP/{print $2}')
+		wget --server-response --content-on-error -q -O "$GETFILE_FILE_PATH" "$GETFILE_URL"
+		GETFILE_HTTP_STATUS_CODE=$(awk '/^  HTTP/{print $2}' "$TMP_FILE")
 	fi
 	echo "$GETFILE_HTTP_STATUS_CODE"
 }
 
 downloadFile() {
-	if [ -z $1 ]; then
+	if [ -z "$1" ]; then
 		checkLatestVersion TAG
 	else
 		TAG=$1
@@ -146,7 +148,7 @@ downloadFile() {
 		echo "Trying to find a release using the GitHub API."
 		LATEST_RELEASE_URL="https://api.github.com/repos/${PROJECT_OWNER}/$PROJECT_NAME/releases/tags/$TAG"
 		echo "LATEST_RELEASE_URL=$LATEST_RELEASE_URL"
-		get LATEST_RELEASE_JSON $LATEST_RELEASE_URL
+		get LATEST_RELEASE_JSON "$LATEST_RELEASE_URL"
 		# || true forces this command to not catch error if grep does not find anything
 		DOWNLOAD_URL=$(echo "$LATEST_RELEASE_JSON" | grep 'browser_' | cut -d\" -f4 | grep "$ARDUINO_LINT_DIST") || true
 		if [ -z "$DOWNLOAD_URL" ]; then
@@ -168,9 +170,9 @@ installFile() {
 		tar xf "$ARDUINO_LINT_TMP_FILE" -C "$ARDUINO_LINT_TMP"
 	fi
 	ARDUINO_LINT_TMP_BIN="$ARDUINO_LINT_TMP/$PROJECT_NAME"
-	cp "$ARDUINO_LINT_TMP_BIN" "$LBINDIR"
-	rm -rf $ARDUINO_LINT_TMP
-	rm -f $ARDUINO_LINT_TMP_FILE
+	cp "$ARDUINO_LINT_TMP_BIN" "$EFFECTIVE_BINDIR"
+	rm -rf "$ARDUINO_LINT_TMP"
+	rm -f "$ARDUINO_LINT_TMP_FILE"
 }
 
 bye() {
@@ -185,19 +187,22 @@ testVersion() {
 	set +e
 	ARDUINO_LINT="$(which $PROJECT_NAME)"
 	if [ "$?" = "1" ]; then
-		echo "$PROJECT_NAME not found. You might want to add "$LBINDIR" to your "'$PATH'
+		# $PATH is intentionally a literal in this message.
+		# shellcheck disable=SC2016
+		echo "$PROJECT_NAME not found. You might want to add \"$EFFECTIVE_BINDIR\" to your "'$PATH'
 	else
 		# Convert to resolved, absolute paths before comparison
 		ARDUINO_LINT_REALPATH="$(cd -- "$(dirname -- "$ARDUINO_LINT")" && pwd -P)"
-		LBINDIR_REALPATH="$(cd -- "$LBINDIR" && pwd -P)"
-		if [ "$ARDUINO_LINT_REALPATH" != "$LBINDIR_REALPATH" ]; then
-			echo "An existing $PROJECT_NAME was found at $ARDUINO_LINT. Please prepend "$LBINDIR" to your "'$PATH'" or remove the existing one."
+		EFFECTIVE_BINDIR_REALPATH="$(cd -- "$EFFECTIVE_BINDIR" && pwd -P)"
+		if [ "$ARDUINO_LINT_REALPATH" != "$EFFECTIVE_BINDIR_REALPATH" ]; then
+			# shellcheck disable=SC2016
+			echo "An existing $PROJECT_NAME was found at $ARDUINO_LINT. Please prepend \"$EFFECTIVE_BINDIR\" to your "'$PATH'" or remove the existing one."
 		fi
 	fi
 
 	set -e
-	ARDUINO_LINT_VERSION=$($LBINDIR/$PROJECT_NAME version)
-	echo "$ARDUINO_LINT_VERSION installed successfully in $LBINDIR"
+	ARDUINO_LINT_VERSION="$("$EFFECTIVE_BINDIR/$PROJECT_NAME" version)"
+	echo "$ARDUINO_LINT_VERSION installed successfully in $EFFECTIVE_BINDIR"
 }
 
 # Execution
@@ -209,6 +214,6 @@ set -e
 initArch
 initOS
 initDownloadTool
-downloadFile $1
+downloadFile "$1"
 installFile
 testVersion
