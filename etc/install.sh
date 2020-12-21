@@ -201,7 +201,7 @@ testVersion() {
 	fi
 
 	set -e
-	ARDUINO_LINT_VERSION="$("$EFFECTIVE_BINDIR/$PROJECT_NAME" version)"
+	ARDUINO_LINT_VERSION="$("$EFFECTIVE_BINDIR/$PROJECT_NAME" --version)"
 	echo "$ARDUINO_LINT_VERSION installed successfully in $EFFECTIVE_BINDIR"
 }
 
