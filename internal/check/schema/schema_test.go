@@ -19,7 +19,7 @@ import (
 	"regexp"
 	"testing"
 
-	"github.com/arduino/arduino-lint/internal/check/checkdata/schema/testdata"
+	"github.com/arduino/arduino-lint/internal/check/schema/testdata"
 	"github.com/arduino/go-properties-orderedmap"
 	"github.com/ory/jsonschema/v3"
 	"github.com/stretchr/testify/require"
@@ -199,14 +199,14 @@ func Test_schemaID(t *testing.T) {
 	require.NotNil(t, err)
 
 	id, err := schemaID("valid-schema.json", testdata.Asset)
-	require.Equal(t, "https://raw.githubusercontent.com/arduino/arduino-lint/main/internal/check/checkdata/schema/testdata/schema-with-references.json", id)
+	require.Equal(t, "https://raw.githubusercontent.com/arduino/arduino-lint/main/internal/check/schema/testdata/schema-with-references.json", id)
 	require.Nil(t, err)
 }
 
 func Test_validationErrorSchemaPointerValue(t *testing.T) {
 	validationError := ValidationResult{
 		Result: &jsonschema.ValidationError{
-			SchemaURL: "https://raw.githubusercontent.com/arduino/arduino-lint/main/internal/check/checkdata/schema/testdata/referenced-schema-1.json",
+			SchemaURL: "https://raw.githubusercontent.com/arduino/arduino-lint/main/internal/check/schema/testdata/referenced-schema-1.json",
 			SchemaPtr: "#/definitions/patternObject/pattern",
 		},
 		dataLoader: testdata.Asset,

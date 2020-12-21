@@ -26,10 +26,10 @@ import (
 
 	"github.com/arduino/arduino-cli/arduino/libraries"
 	"github.com/arduino/arduino-cli/arduino/utils"
-	"github.com/arduino/arduino-lint/internal/check/checkdata"
-	"github.com/arduino/arduino-lint/internal/check/checkdata/schema"
-	"github.com/arduino/arduino-lint/internal/check/checkdata/schema/compliancelevel"
 	"github.com/arduino/arduino-lint/internal/check/checkresult"
+	"github.com/arduino/arduino-lint/internal/check/schema"
+	"github.com/arduino/arduino-lint/internal/check/schema/compliancelevel"
+	"github.com/arduino/arduino-lint/internal/project/checkdata"
 	"github.com/arduino/arduino-lint/internal/project/library"
 	"github.com/arduino/arduino-lint/internal/project/sketch"
 	"github.com/go-git/go-git/v5"

@@ -21,8 +21,8 @@ import (
 	"strings"
 
 	"github.com/arduino/arduino-cli/arduino/globals"
-	"github.com/arduino/arduino-lint/internal/check/checkdata"
 	"github.com/arduino/arduino-lint/internal/check/checkresult"
+	"github.com/arduino/arduino-lint/internal/project/checkdata"
 	"github.com/arduino/arduino-lint/internal/project/sketch"
 )
 

@@ -20,9 +20,9 @@ import (
 	"regexp"
 	"testing"
 
-	"github.com/arduino/arduino-lint/internal/check/checkdata"
 	"github.com/arduino/arduino-lint/internal/check/checkresult"
 	"github.com/arduino/arduino-lint/internal/project"
+	"github.com/arduino/arduino-lint/internal/project/checkdata"
 	"github.com/arduino/arduino-lint/internal/project/projecttype"
 	"github.com/arduino/go-paths-helper"
 	"github.com/stretchr/testify/assert"

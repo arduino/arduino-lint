@@ -22,8 +22,8 @@ import (
 	"os"
 
 	"github.com/arduino/arduino-cli/arduino/libraries"
-	"github.com/arduino/arduino-lint/internal/check/checkdata/schema"
-	"github.com/arduino/arduino-lint/internal/check/checkdata/schema/compliancelevel"
+	"github.com/arduino/arduino-lint/internal/check/schema"
+	"github.com/arduino/arduino-lint/internal/check/schema/compliancelevel"
 	"github.com/arduino/arduino-lint/internal/project"
 	"github.com/arduino/arduino-lint/internal/project/library/libraryproperties"
 	"github.com/arduino/arduino-lint/internal/result/feedback"

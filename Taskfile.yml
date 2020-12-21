@@ -17,8 +17,8 @@ tasks:
     desc: Generate Go code
     cmds:
       - go get -u "github.com/go-bindata/go-bindata/...@v3.1.1"
-      - go-bindata -nocompress -nometadata -o "./internal/check/checkdata/schema/schemadata/bindata.go" --pkg schemadata --prefix "./etc/schemas/" "./etc/schemas/"
-      - go-bindata -nocompress -nometadata -o "./internal/check/checkdata/schema/testdata/bindata.go" --pkg testdata --prefix "./internal/check/checkdata/schema/testdata/input/" "./internal/check/checkdata/schema/testdata/input/"
+      - go-bindata -nocompress -nometadata -o "./internal/check/schema/schemadata/bindata.go" --pkg schemadata --prefix "./etc/schemas/" "./etc/schemas/"
+      - go-bindata -nocompress -nometadata -o "./internal/check/schema/testdata/bindata.go" --pkg testdata --prefix "./internal/check/schema/testdata/input/" "./internal/check/schema/testdata/input/"
       - go get -u golang.org/x/tools/cmd/stringer@v0.0.0-20201211192254-72fbef54948b
       - go generate ./...
       - task: go:format

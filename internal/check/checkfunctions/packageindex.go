@@ -16,8 +16,8 @@
 package checkfunctions
 
 import (
-	"github.com/arduino/arduino-lint/internal/check/checkdata"
 	"github.com/arduino/arduino-lint/internal/check/checkresult"
+	"github.com/arduino/arduino-lint/internal/project/checkdata"
 )
 
 // The check functions for package indexes.
