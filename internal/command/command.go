@@ -66,7 +66,7 @@ func ArduinoLint(rootCommand *cobra.Command, cliArguments []string) {
 	}
 
 	for _, project := range projects {
-		check.RunChecks(project)
+		check.Runner(project)
 
 		// Checks are finished for this project, so summarize its check results in the report.
 		result.Results.AddProjectSummary(project)

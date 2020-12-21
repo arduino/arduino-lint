@@ -30,8 +30,8 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// RunChecks runs all checks for the given project and outputs the results.
-func RunChecks(project project.Type) {
+// Runner runs all checks for the given project and outputs the results.
+func Runner(project project.Type) {
 	feedback.Printf("\nChecking %s in %s\n", project.ProjectType, project.Path)
 
 	projectdata.Initialize(project)
