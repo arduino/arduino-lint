@@ -14,7 +14,7 @@
 // To purchase a commercial license, send an email to license@arduino.cc.
 
 /*
-Package boardstxt provides functions specific to checking the boards.txt configuration files of Arduino boards platforms.
+Package boardstxt provides functions specific to linting the boards.txt configuration files of Arduino boards platforms.
 See: https://arduino.github.io/arduino-cli/latest/platform-specification/#boardstxt
 */
 package boardstxt

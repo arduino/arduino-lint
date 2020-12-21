@@ -5,7 +5,7 @@
 .ionide/
 
 # Test files
-/internal/check/schema/testdata/input/invalid-schema.json
+/internal/rule/schema/testdata/input/invalid-schema.json
 /internal/project/projectdata/testdata/packageindexes/invalid-JSON/package_foo_index.json
-/internal/check/checkfunctions/testdata/packageindexes/invalid-JSON/package_foo_index.json
-/internal/check/checkfunctions/testdata/sketches/InvalidJSONMetadataFile/sketch.json
+/internal/rule/rulefunction/testdata/packageindexes/invalid-JSON/package_foo_index.json
+/internal/rule/rulefunction/testdata/sketches/InvalidJSONMetadataFile/sketch.json

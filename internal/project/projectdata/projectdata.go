@@ -14,8 +14,8 @@
 // To purchase a commercial license, send an email to license@arduino.cc.
 
 /*
-Package projectdata handles the collection of data specific to a project before running the checks on it.
-This is for data required by multiple checks.
+Package projectdata handles the collection of data specific to a project before running the rules on it.
+This is for data required by multiple rules.
 */
 package projectdata
 

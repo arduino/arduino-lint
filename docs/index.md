@@ -1,7 +1,7 @@
 **arduino-lint** is a command line tool that checks for common problems with [Arduino](https://www.arduino.cc/)
 projects.
 
-Its focus is on the structure, metadata, and configuration of Arduino projects, rather than the code. Checks cover
+Its focus is on the structure, metadata, and configuration of Arduino projects, rather than the code. Rules cover
 [specification](https://arduino.github.io/arduino-cli/latest/library-specification) compliance, Library Manager
 submission [requirements](https://github.com/arduino/Arduino/wiki/Library-Manager-FAQ), and best practices.
 

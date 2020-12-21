@@ -23,7 +23,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/arduino/arduino-lint/internal/configuration/checkmode"
+	"github.com/arduino/arduino-lint/internal/configuration/rulemode"
 	"github.com/arduino/arduino-lint/internal/project/projecttype"
 	"github.com/arduino/arduino-lint/internal/result/outputformat"
 	"github.com/arduino/go-paths-helper"
@@ -37,7 +37,7 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 
 	complianceString, _ := flags.GetString("compliance")
 	if complianceString != "" {
-		customCheckModes[checkmode.Strict], customCheckModes[checkmode.Specification], customCheckModes[checkmode.Permissive], err = checkmode.ComplianceModeFromString(complianceString)
+		customRuleModes[rulemode.Strict], customRuleModes[rulemode.Specification], customRuleModes[rulemode.Permissive], err = rulemode.ComplianceModeFromString(complianceString)
 		if err != nil {
 			return fmt.Errorf("--compliance flag value %s not valid", complianceString)
 		}
@@ -51,7 +51,7 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 
 	libraryManagerModeString, _ := flags.GetString("library-manager")
 	if libraryManagerModeString != "" {
-		customCheckModes[checkmode.LibraryManagerSubmission], customCheckModes[checkmode.LibraryManagerIndexed], err = checkmode.LibraryManagerModeFromString(libraryManagerModeString)
+		customRuleModes[rulemode.LibraryManagerSubmission], customRuleModes[rulemode.LibraryManagerIndexed], err = rulemode.LibraryManagerModeFromString(libraryManagerModeString)
 		if err != nil {
 			return fmt.Errorf("--library-manager flag value %s not valid", libraryManagerModeString)
 		}
@@ -117,17 +117,17 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 	}
 
 	if officialModeString, ok := os.LookupEnv("ARDUINO_LINT_OFFICIAL"); ok {
-		customCheckModes[checkmode.Official], err = strconv.ParseBool(officialModeString)
+		customRuleModes[rulemode.Official], err = strconv.ParseBool(officialModeString)
 		if err != nil {
 			return fmt.Errorf("ARDUINO_LINT_OFFICIAL environment variable value %s not valid", officialModeString)
 		}
 	}
 
 	logrus.WithFields(logrus.Fields{
-		"compliance":                      checkmode.Compliance(customCheckModes),
+		"compliance":                      rulemode.Compliance(customRuleModes),
 		"output format":                   OutputFormat(),
-		"Library Manager submission mode": customCheckModes[checkmode.LibraryManagerSubmission],
-		"Library Manager update mode":     customCheckModes[checkmode.LibraryManagerIndexed],
+		"Library Manager submission mode": customRuleModes[rulemode.LibraryManagerSubmission],
+		"Library Manager update mode":     customRuleModes[rulemode.LibraryManagerIndexed],
 		"log level":                       logrus.GetLevel().String(),
 		"superproject type filter":        SuperprojectTypeFilter(),
 		"recursive":                       Recursive(),
@@ -151,11 +151,11 @@ func logFormatFromString(logFormatString string) (logrus.Formatter, error) {
 	}
 }
 
-var customCheckModes = make(map[checkmode.Type]bool)
+var customRuleModes = make(map[rulemode.Type]bool)
 
-// CheckModes returns the check modes configuration for the given project type.
-func CheckModes(superprojectType projecttype.Type) map[checkmode.Type]bool {
-	return checkmode.Modes(defaultCheckModes, customCheckModes, superprojectType)
+// RuleModes returns the rule modes configuration for the given project type.
+func RuleModes(superprojectType projecttype.Type) map[rulemode.Type]bool {
+	return rulemode.Modes(defaultRuleModes, customRuleModes, superprojectType)
 }
 
 var superprojectTypeFilter projecttype.Type

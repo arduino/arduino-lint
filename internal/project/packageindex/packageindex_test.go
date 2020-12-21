@@ -40,10 +40,10 @@ func TestHasValidExtension(t *testing.T) {
 
 func TestHasValidFilename(t *testing.T) {
 	testTables := []struct {
-		testName          string
-		filename          string
-		officialCheckMode bool
-		assertion         assert.BoolAssertionFunc
+		testName         string
+		filename         string
+		officialRuleMode bool
+		assertion        assert.BoolAssertionFunc
 	}{
 		{"Official, primary", "package_index.json", true, assert.True},
 		{"Official, secondary", "package_foo_index.json", true, assert.True},
@@ -54,7 +54,7 @@ func TestHasValidFilename(t *testing.T) {
 	}
 
 	for _, testTable := range testTables {
-		testTable.assertion(t, HasValidFilename(paths.New("/foo", testTable.filename), testTable.officialCheckMode), testTable.testName)
+		testTable.assertion(t, HasValidFilename(paths.New("/foo", testTable.filename), testTable.officialRuleMode), testTable.testName)
 	}
 }
 

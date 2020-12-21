@@ -22,17 +22,17 @@ import (
 	"os"
 
 	"github.com/arduino/arduino-cli/arduino/libraries"
-	"github.com/arduino/arduino-lint/internal/check/schema"
-	"github.com/arduino/arduino-lint/internal/check/schema/compliancelevel"
 	"github.com/arduino/arduino-lint/internal/project"
 	"github.com/arduino/arduino-lint/internal/project/library/libraryproperties"
 	"github.com/arduino/arduino-lint/internal/result/feedback"
+	"github.com/arduino/arduino-lint/internal/rule/schema"
+	"github.com/arduino/arduino-lint/internal/rule/schema/compliancelevel"
 	"github.com/arduino/go-properties-orderedmap"
 	"github.com/client9/misspell"
 	"github.com/sirupsen/logrus"
 )
 
-// Initialize gathers the library check data for the specified project.
+// Initialize gathers the library rule data for the specified project.
 func InitializeForLibrary(project project.Type) {
 	var err error
 

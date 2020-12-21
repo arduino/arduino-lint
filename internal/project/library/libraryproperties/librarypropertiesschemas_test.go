@@ -21,9 +21,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/arduino/arduino-lint/internal/check/schema"
-	"github.com/arduino/arduino-lint/internal/check/schema/compliancelevel"
 	"github.com/arduino/arduino-lint/internal/project/library/libraryproperties"
+	"github.com/arduino/arduino-lint/internal/rule/schema"
+	"github.com/arduino/arduino-lint/internal/rule/schema/compliancelevel"
 	"github.com/arduino/go-properties-orderedmap"
 
 	"github.com/stretchr/testify/assert"

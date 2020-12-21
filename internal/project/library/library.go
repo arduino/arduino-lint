@@ -13,7 +13,7 @@
 // Arduino software without disclosing the source code of your own applications.
 // To purchase a commercial license, send an email to license@arduino.cc.
 
-// Package library provides functions specific to checking Arduino libraries.
+// Package library provides functions specific to linting Arduino libraries.
 package library
 
 import (
@@ -37,7 +37,7 @@ func HasHeaderFileValidExtension(filePath *paths.Path) bool {
 	return hasHeaderFileValidExtension
 }
 
-// ContainsHeaderFile checks whether the provided path contains a file with valid header extension.
+// ContainsHeaderFile rules whether the provided path contains a file with valid header extension.
 func ContainsHeaderFile(searchPath *paths.Path) bool {
 	if searchPath.NotExist() {
 		panic(fmt.Sprintf("Error: provided path %s does not exist.", searchPath))
@@ -75,7 +75,7 @@ func IsMetadataFile(filePath *paths.Path) bool {
 	return false
 }
 
-// ContainsMetadataFile checks whether the provided path contains an Arduino library metadata file.
+// ContainsMetadataFile rules whether the provided path contains an Arduino library metadata file.
 func ContainsMetadataFile(searchPath *paths.Path) bool {
 	if searchPath.NotExist() {
 		panic(fmt.Sprintf("Error: provided path %s does not exist.", searchPath))

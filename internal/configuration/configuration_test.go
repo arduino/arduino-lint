@@ -19,7 +19,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/arduino/arduino-lint/internal/configuration/checkmode"
+	"github.com/arduino/arduino-lint/internal/configuration/rulemode"
 	"github.com/arduino/arduino-lint/internal/project/projecttype"
 	"github.com/arduino/arduino-lint/internal/result/outputformat"
 	"github.com/arduino/arduino-lint/internal/util/test"
@@ -47,21 +47,21 @@ func TestInitializeCompliance(t *testing.T) {
 
 	flags.Set("compliance", "strict")
 	assert.Nil(t, Initialize(flags, projectPaths))
-	assert.True(t, customCheckModes[checkmode.Strict])
-	assert.False(t, customCheckModes[checkmode.Specification])
-	assert.False(t, customCheckModes[checkmode.Permissive])
+	assert.True(t, customRuleModes[rulemode.Strict])
+	assert.False(t, customRuleModes[rulemode.Specification])
+	assert.False(t, customRuleModes[rulemode.Permissive])
 
 	flags.Set("compliance", "specification")
 	assert.Nil(t, Initialize(flags, projectPaths))
-	assert.False(t, customCheckModes[checkmode.Strict])
-	assert.True(t, customCheckModes[checkmode.Specification])
-	assert.False(t, customCheckModes[checkmode.Permissive])
+	assert.False(t, customRuleModes[rulemode.Strict])
+	assert.True(t, customRuleModes[rulemode.Specification])
+	assert.False(t, customRuleModes[rulemode.Permissive])
 
 	flags.Set("compliance", "permissive")
 	assert.Nil(t, Initialize(flags, projectPaths))
-	assert.False(t, customCheckModes[checkmode.Strict])
-	assert.False(t, customCheckModes[checkmode.Specification])
-	assert.True(t, customCheckModes[checkmode.Permissive])
+	assert.False(t, customRuleModes[rulemode.Strict])
+	assert.False(t, customRuleModes[rulemode.Specification])
+	assert.True(t, customRuleModes[rulemode.Permissive])
 }
 
 func TestInitializeFormat(t *testing.T) {
@@ -83,28 +83,28 @@ func TestInitializeLibraryManager(t *testing.T) {
 	flags.Set("library-manager", "foo")
 	assert.Error(t, Initialize(flags, projectPaths))
 
-	customCheckModes = make(map[checkmode.Type]bool)
+	customRuleModes = make(map[rulemode.Type]bool)
 	flags.Set("library-manager", "")
 	assert.Nil(t, Initialize(flags, projectPaths))
-	_, ok := customCheckModes[checkmode.LibraryManagerSubmission]
+	_, ok := customRuleModes[rulemode.LibraryManagerSubmission]
 	assert.False(t, ok)
-	_, ok = customCheckModes[checkmode.LibraryManagerIndexed]
+	_, ok = customRuleModes[rulemode.LibraryManagerIndexed]
 	assert.False(t, ok)
 
 	flags.Set("library-manager", "submit")
 	assert.Nil(t, Initialize(flags, projectPaths))
-	assert.True(t, customCheckModes[checkmode.LibraryManagerSubmission])
-	assert.False(t, customCheckModes[checkmode.LibraryManagerIndexed])
+	assert.True(t, customRuleModes[rulemode.LibraryManagerSubmission])
+	assert.False(t, customRuleModes[rulemode.LibraryManagerIndexed])
 
 	flags.Set("library-manager", "update")
 	assert.Nil(t, Initialize(flags, projectPaths))
-	assert.False(t, customCheckModes[checkmode.LibraryManagerSubmission])
-	assert.True(t, customCheckModes[checkmode.LibraryManagerIndexed])
+	assert.False(t, customRuleModes[rulemode.LibraryManagerSubmission])
+	assert.True(t, customRuleModes[rulemode.LibraryManagerIndexed])
 
 	flags.Set("library-manager", "false")
 	assert.Nil(t, Initialize(flags, projectPaths))
-	assert.False(t, customCheckModes[checkmode.LibraryManagerSubmission])
-	assert.False(t, customCheckModes[checkmode.LibraryManagerIndexed])
+	assert.False(t, customRuleModes[rulemode.LibraryManagerSubmission])
+	assert.False(t, customRuleModes[rulemode.LibraryManagerIndexed])
 }
 
 func TestInitializeLogFormat(t *testing.T) {
@@ -222,15 +222,15 @@ func TestInitializeProjectPath(t *testing.T) {
 
 func TestInitializeOfficial(t *testing.T) {
 	assert.Nil(t, Initialize(test.ConfigurationFlags(), projectPaths))
-	assert.False(t, customCheckModes[checkmode.Official], "Default official check mode")
+	assert.False(t, customRuleModes[rulemode.Official], "Default official rule mode")
 
 	os.Setenv("ARDUINO_LINT_OFFICIAL", "true")
 	assert.Nil(t, Initialize(test.ConfigurationFlags(), projectPaths))
-	assert.True(t, customCheckModes[checkmode.Official])
+	assert.True(t, customRuleModes[rulemode.Official])
 
 	os.Setenv("ARDUINO_LINT_OFFICIAL", "false")
 	assert.Nil(t, Initialize(test.ConfigurationFlags(), projectPaths))
-	assert.False(t, customCheckModes[checkmode.Official])
+	assert.False(t, customRuleModes[rulemode.Official])
 
 	os.Setenv("ARDUINO_LINT_OFFICIAL", "invalid value")
 	assert.Error(t, Initialize(test.ConfigurationFlags(), projectPaths))

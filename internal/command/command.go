@@ -21,12 +21,12 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/arduino/arduino-lint/internal/check"
 	"github.com/arduino/arduino-lint/internal/configuration"
 	"github.com/arduino/arduino-lint/internal/project"
 	"github.com/arduino/arduino-lint/internal/result"
 	"github.com/arduino/arduino-lint/internal/result/feedback"
 	"github.com/arduino/arduino-lint/internal/result/outputformat"
+	"github.com/arduino/arduino-lint/internal/rule"
 	"github.com/spf13/cobra"
 )
 
@@ -66,21 +66,21 @@ func ArduinoLint(rootCommand *cobra.Command, cliArguments []string) {
 	}
 
 	for _, project := range projects {
-		check.Runner(project)
+		rule.Runner(project)
 
-		// Checks are finished for this project, so summarize its check results in the report.
+		// Rules are finished for this project, so summarize its rule results in the report.
 		result.Results.AddProjectSummary(project)
 
-		// Print the project check results summary.
+		// Print the project rule results summary.
 		feedback.Printf("\n%s\n", result.Results.ProjectSummaryText(project))
 	}
 
-	// All projects have been checked, so summarize their check results in the report.
+	// All projects have been linted, so summarize their rule results in the report.
 	result.Results.AddSummary()
 
 	if configuration.OutputFormat() == outputformat.Text {
 		if len(projects) > 1 {
-			// There are multiple projects, print the summary of check results for all projects.
+			// There are multiple projects, print the summary of rule results for all projects.
 			fmt.Printf("\n%s\n", result.Results.SummaryText())
 		}
 	} else {
