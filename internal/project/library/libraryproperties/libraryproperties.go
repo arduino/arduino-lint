@@ -17,9 +17,9 @@
 package libraryproperties
 
 import (
-	"github.com/arduino/arduino-lint/internal/check/checkdata/schema"
-	"github.com/arduino/arduino-lint/internal/check/checkdata/schema/compliancelevel"
-	"github.com/arduino/arduino-lint/internal/check/checkdata/schema/schemadata"
+	"github.com/arduino/arduino-lint/internal/rule/schema"
+	"github.com/arduino/arduino-lint/internal/rule/schema/compliancelevel"
+	"github.com/arduino/arduino-lint/internal/rule/schema/schemadata"
 	"github.com/arduino/go-paths-helper"
 	"github.com/arduino/go-properties-orderedmap"
 )

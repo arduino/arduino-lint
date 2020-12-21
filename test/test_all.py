@@ -160,14 +160,14 @@ def test_verbose(run_command):
     result = run_command(cmd=["--format", "json", project_path])
     assert result.ok
     report = json.loads(result.stdout)
-    assert True not in [check.get("result") == "pass" for check in report["projects"][0]["checks"]]
-    assert True in [check.get("result") == "fail" for check in report["projects"][0]["checks"]]
+    assert True not in [rule.get("result") == "pass" for rule in report["projects"][0]["rules"]]
+    assert True in [rule.get("result") == "fail" for rule in report["projects"][0]["rules"]]
 
     result = run_command(cmd=["--format", "json", "--verbose", project_path])
     assert result.ok
     report = json.loads(result.stdout)
-    assert True in [check.get("result") == "pass" for check in report["projects"][0]["checks"]]
-    assert True in [check.get("result") == "fail" for check in report["projects"][0]["checks"]]
+    assert True in [rule.get("result") == "pass" for rule in report["projects"][0]["rules"]]
+    assert True in [rule.get("result") == "fail" for rule in report["projects"][0]["rules"]]
 
 
 def test_version(run_command):

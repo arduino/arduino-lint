@@ -17,8 +17,8 @@ tasks:
     desc: Generate Go code
     cmds:
       - go get -u "github.com/go-bindata/go-bindata/...@v3.1.1"
-      - go-bindata -nocompress -nometadata -o "./internal/check/checkdata/schema/schemadata/bindata.go" --pkg schemadata --prefix "./etc/schemas/" "./etc/schemas/"
-      - go-bindata -nocompress -nometadata -o "./internal/check/checkdata/schema/testdata/bindata.go" --pkg testdata --prefix "./internal/check/checkdata/schema/testdata/input/" "./internal/check/checkdata/schema/testdata/input/"
+      - go-bindata -nocompress -nometadata -o "./internal/rule/schema/schemadata/bindata.go" --pkg schemadata --prefix "./etc/schemas/" "./etc/schemas/"
+      - go-bindata -nocompress -nometadata -o "./internal/rule/schema/testdata/bindata.go" --pkg testdata --prefix "./internal/rule/schema/testdata/input/" "./internal/rule/schema/testdata/input/"
       - go get -u golang.org/x/tools/cmd/stringer@v0.0.0-20201211192254-72fbef54948b
       - go generate ./...
       - task: go:format
@@ -268,5 +268,5 @@ vars:
 
   WORKFLOW_SCHEMA_PATH: "$(mktemp -t gha-workflow-schema-XXXXXXXXXX.json)"
 
-  CODESPELL_SKIP_OPTION: '--skip "./.git,go.mod,go.sum,./arduino-lint,./arduino-lint.exe,./internal/check/checkfunctions/testdata/libraries/MisspelledSentenceParagraphValue/library.properties,./site"'
+  CODESPELL_SKIP_OPTION: '--skip "./.git,go.mod,go.sum,./arduino-lint,./arduino-lint.exe,./internal/rule/rulefunction/testdata/libraries/MisspelledSentenceParagraphValue/library.properties,./site"'
   CODESPELL_IGNORE_WORDS_OPTION: "--ignore-words ./etc/codespell-ignore-words-list.txt"

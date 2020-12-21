@@ -13,18 +13,17 @@
 // Arduino software without disclosing the source code of your own applications.
 // To purchase a commercial license, send an email to license@arduino.cc.
 
-/*
-Package boardstxt provides functions specific to linting the boards.txt configuration files of Arduino boards platforms.
-See: https://arduino.github.io/arduino-cli/latest/platform-specification/#boardstxt
-*/
-package boardstxt
+// Package ruleresult defines the possible result values returned by a rule.
+package ruleresult
 
-import (
-	"github.com/arduino/go-paths-helper"
-	"github.com/arduino/go-properties-orderedmap"
+//go:generate stringer -type=Type -linecomment
+type Type int
+
+const (
+	Pass Type = iota // pass
+	Fail             // fail
+	// The rule is configured to be skipped in the current tool configuration mode
+	Skip // skipped
+	// An unrelated error prevented the rule from running
+	NotRun // unable to run
 )
-
-// Properties parses the library.properties from the given path and returns the data.
-func Properties(platformPath *paths.Path) (*properties.Map, error) {
-	return properties.SafeLoadFromPath(platformPath.Join("boards.txt"))
-}

@@ -14,7 +14,7 @@
 // To purchase a commercial license, send an email to license@arduino.cc.
 
 /*
-Package sketch provides functions specific to checking Arduino sketches.
+Package sketch provides functions specific to linting Arduino sketches.
 See: https://arduino.github.io/arduino-cli/latest/sketch-specification/
 */
 package sketch

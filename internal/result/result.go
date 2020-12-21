@@ -13,7 +13,7 @@
 // Arduino software without disclosing the source code of your own applications.
 // To purchase a commercial license, send an email to license@arduino.cc.
 
-// Package result records check results and provides reports and summary text on those results.
+// Package result records rule results and provides reports and summary text on those results.
 package result
 
 import (
@@ -22,19 +22,19 @@ import (
 	"fmt"
 	"text/template"
 
-	"github.com/arduino/arduino-lint/internal/check/checkconfigurations"
-	"github.com/arduino/arduino-lint/internal/check/checklevel"
-	"github.com/arduino/arduino-lint/internal/check/checkresult"
 	"github.com/arduino/arduino-lint/internal/configuration"
-	"github.com/arduino/arduino-lint/internal/configuration/checkmode"
+	"github.com/arduino/arduino-lint/internal/configuration/rulemode"
 	"github.com/arduino/arduino-lint/internal/project"
+	"github.com/arduino/arduino-lint/internal/rule/ruleconfiguration"
+	"github.com/arduino/arduino-lint/internal/rule/rulelevel"
+	"github.com/arduino/arduino-lint/internal/rule/ruleresult"
 	"github.com/arduino/go-paths-helper"
 )
 
-// Results is the global instance of the check results result.Type struct
+// Results is the global instance of the rule results result.Type struct
 var Results Type
 
-// Type is the type for the check results data
+// Type is the type for the rule results data
 type Type struct {
 	Configuration toolConfigurationReportType `json:"configuration"`
 	Projects      []projectReportType         `json:"projects"`
@@ -51,7 +51,7 @@ type projectReportType struct {
 	Path          *paths.Path                    `json:"path"`
 	ProjectType   string                         `json:"projectType"`
 	Configuration projectConfigurationReportType `json:"configuration"`
-	Checks        []checkReportType              `json:"checks"`
+	Rules         []ruleReportType               `json:"rules"`
 	Summary       summaryReportType              `json:"summary"`
 }
 
@@ -61,7 +61,7 @@ type projectConfigurationReportType struct {
 	Official       bool   `json:"official"`
 }
 
-type checkReportType struct {
+type ruleReportType struct {
 	Category    string `json:"category"`
 	Subcategory string `json:"subcategory"`
 	ID          string `json:"ID"`
@@ -88,79 +88,79 @@ func (results *Type) Initialize() {
 	}
 }
 
-// Record records the result of a check and returns a text summary for it.
-func (results *Type) Record(checkedProject project.Type, checkConfiguration checkconfigurations.Type, checkResult checkresult.Type, checkOutput string) string {
-	checkLevel, err := checklevel.CheckLevel(checkConfiguration, checkResult, checkedProject)
+// Record records the result of a rule and returns a text summary for it.
+func (results *Type) Record(lintedProject project.Type, ruleConfiguration ruleconfiguration.Type, ruleResult ruleresult.Type, ruleOutput string) string {
+	ruleLevel, err := rulelevel.RuleLevel(ruleConfiguration, ruleResult, lintedProject)
 	if err != nil {
-		panic(fmt.Errorf("Error while determining check level: %v", err))
+		panic(fmt.Errorf("Error while determining rule level: %v", err))
 	}
 
-	summaryText := fmt.Sprintf("Check %s result: %s", checkConfiguration.ID, checkResult)
+	summaryText := fmt.Sprintf("Rule %s result: %s", ruleConfiguration.ID, ruleResult)
 
-	checkMessage := ""
-	if checkResult == checkresult.Fail {
-		checkMessage = message(checkConfiguration.MessageTemplate, checkOutput)
+	ruleMessage := ""
+	if ruleResult == ruleresult.Fail {
+		ruleMessage = message(ruleConfiguration.MessageTemplate, ruleOutput)
 	} else {
-		// Checks may provide an explanation for their non-fail result.
+		// Rules may provide an explanation for their non-fail result.
 		// The message template should not be used in this case, since it is written for a failure result.
-		checkMessage = checkOutput
+		ruleMessage = ruleOutput
 	}
 
-	// Add explanation of check result if present.
-	if checkMessage != "" {
-		summaryText += fmt.Sprintf("\n%s: %s", checkLevel, checkMessage)
+	// Add explanation of rule result if present.
+	if ruleMessage != "" {
+		summaryText += fmt.Sprintf("\n%s: %s", ruleLevel, ruleMessage)
 	}
 
-	reportExists, projectReportIndex := results.getProjectReportIndex(checkedProject.Path)
+	reportExists, projectReportIndex := results.getProjectReportIndex(lintedProject.Path)
 	if !reportExists {
 		// There is no existing report for this project.
 		results.Projects = append(
 			results.Projects,
 			projectReportType{
-				Path:        checkedProject.Path,
-				ProjectType: checkedProject.ProjectType.String(),
+				Path:        lintedProject.Path,
+				ProjectType: lintedProject.ProjectType.String(),
 				Configuration: projectConfigurationReportType{
-					Compliance:     checkmode.Compliance(configuration.CheckModes(checkedProject.ProjectType)),
-					LibraryManager: checkmode.LibraryManager(configuration.CheckModes(checkedProject.ProjectType)),
-					Official:       configuration.CheckModes(checkedProject.ProjectType)[checkmode.Official],
+					Compliance:     rulemode.Compliance(configuration.RuleModes(lintedProject.ProjectType)),
+					LibraryManager: rulemode.LibraryManager(configuration.RuleModes(lintedProject.ProjectType)),
+					Official:       configuration.RuleModes(lintedProject.ProjectType)[rulemode.Official],
 				},
-				Checks: []checkReportType{},
+				Rules: []ruleReportType{},
 			},
 		)
 	}
 
-	if (checkResult == checkresult.Fail) || configuration.Verbose() {
-		checkReport := checkReportType{
-			Category:    checkConfiguration.Category,
-			Subcategory: checkConfiguration.Subcategory,
-			ID:          checkConfiguration.ID,
-			Brief:       checkConfiguration.Brief,
-			Description: checkConfiguration.Description,
-			Result:      checkResult.String(),
-			Level:       checkLevel.String(),
-			Message:     checkMessage,
+	if (ruleResult == ruleresult.Fail) || configuration.Verbose() {
+		ruleReport := ruleReportType{
+			Category:    ruleConfiguration.Category,
+			Subcategory: ruleConfiguration.Subcategory,
+			ID:          ruleConfiguration.ID,
+			Brief:       ruleConfiguration.Brief,
+			Description: ruleConfiguration.Description,
+			Result:      ruleResult.String(),
+			Level:       ruleLevel.String(),
+			Message:     ruleMessage,
 		}
-		results.Projects[projectReportIndex].Checks = append(results.Projects[projectReportIndex].Checks, checkReport)
+		results.Projects[projectReportIndex].Rules = append(results.Projects[projectReportIndex].Rules, ruleReport)
 	}
 
 	return summaryText
 }
 
-// AddProjectSummary summarizes the results of all checks on the given project and adds it to the report.
-func (results *Type) AddProjectSummary(checkedProject project.Type) {
-	reportExists, projectReportIndex := results.getProjectReportIndex(checkedProject.Path)
+// AddProjectSummary summarizes the results of all rules on the given project and adds it to the report.
+func (results *Type) AddProjectSummary(lintedProject project.Type) {
+	reportExists, projectReportIndex := results.getProjectReportIndex(lintedProject.Path)
 	if !reportExists {
-		panic(fmt.Sprintf("Unable to find report for %v when generating report summary", checkedProject.Path))
+		panic(fmt.Sprintf("Unable to find report for %v when generating report summary", lintedProject.Path))
 	}
 
 	pass := true
 	warningCount := 0
 	errorCount := 0
-	for _, checkReport := range results.Projects[projectReportIndex].Checks {
-		if checkReport.Result == checkresult.Fail.String() {
-			if checkReport.Level == checklevel.Warning.String() {
+	for _, ruleReport := range results.Projects[projectReportIndex].Rules {
+		if ruleReport.Result == ruleresult.Fail.String() {
+			if ruleReport.Level == rulelevel.Warning.String() {
 				warningCount += 1
-			} else if checkReport.Level == checklevel.Error.String() {
+			} else if ruleReport.Level == rulelevel.Error.String() {
 				errorCount += 1
 				pass = false
 			}
@@ -174,18 +174,18 @@ func (results *Type) AddProjectSummary(checkedProject project.Type) {
 	}
 }
 
-// ProjectSummaryText returns a text summary of the check results for the given project.
-func (results Type) ProjectSummaryText(checkedProject project.Type) string {
-	reportExists, projectReportIndex := results.getProjectReportIndex(checkedProject.Path)
+// ProjectSummaryText returns a text summary of the rule results for the given project.
+func (results Type) ProjectSummaryText(lintedProject project.Type) string {
+	reportExists, projectReportIndex := results.getProjectReportIndex(lintedProject.Path)
 	if !reportExists {
-		panic(fmt.Sprintf("Unable to find report for %v when generating report summary text", checkedProject.Path))
+		panic(fmt.Sprintf("Unable to find report for %v when generating report summary text", lintedProject.Path))
 	}
 
 	projectSummaryReport := results.Projects[projectReportIndex].Summary
-	return fmt.Sprintf("Finished checking project. Results:\nWarning count: %v\nError count: %v\nChecks passed: %v", projectSummaryReport.WarningCount, projectSummaryReport.ErrorCount, projectSummaryReport.Pass)
+	return fmt.Sprintf("Finished linting project. Results:\nWarning count: %v\nError count: %v\nRules passed: %v", projectSummaryReport.WarningCount, projectSummaryReport.ErrorCount, projectSummaryReport.Pass)
 }
 
-// AddSummary summarizes the check results for all projects and adds it to the report.
+// AddSummary summarizes the rule results for all projects and adds it to the report.
 func (results *Type) AddSummary() {
 	pass := true
 	warningCount := 0
@@ -205,12 +205,12 @@ func (results *Type) AddSummary() {
 	}
 }
 
-// SummaryText returns a text summary of the cumulative check results.
+// SummaryText returns a text summary of the cumulative rule results.
 func (results Type) SummaryText() string {
-	return fmt.Sprintf("Finished checking projects. Results:\nWarning count: %v\nError count: %v\nChecks passed: %v", results.Summary.WarningCount, results.Summary.ErrorCount, results.Summary.Pass)
+	return fmt.Sprintf("Finished linting projects. Results:\nWarning count: %v\nError count: %v\nRules passed: %v", results.Summary.WarningCount, results.Summary.ErrorCount, results.Summary.Pass)
 }
 
-// JSONReport returns a JSON formatted report of checks on all projects.
+// JSONReport returns a JSON formatted report of rules on all projects.
 func (results Type) JSONReport() string {
 	return string(results.jsonReportRaw())
 }
@@ -218,7 +218,7 @@ func (results Type) JSONReport() string {
 func (results Type) jsonReportRaw() []byte {
 	reportJSON, err := json.MarshalIndent(results, "", "  ")
 	if err != nil {
-		panic(fmt.Sprintf("Error while formatting checks report: %v", err))
+		panic(fmt.Sprintf("Error while formatting rules report: %v", err))
 	}
 
 	return reportJSON
@@ -246,7 +246,7 @@ func (results Type) WriteReport() error {
 	return nil
 }
 
-// Passed returns whether the checks passed cumulatively.
+// Passed returns whether the rules passed cumulatively.
 func (results Type) Passed() bool {
 	return results.Summary.Pass
 }
@@ -264,13 +264,13 @@ func (results Type) getProjectReportIndex(projectPath *paths.Path) (bool, int) {
 	return false, len(results.Projects)
 }
 
-// message fills the message template provided by the check configuration with the check output.
-// TODO: make checkOutput a struct to allow for more advanced message templating
-func message(templateText string, checkOutput string) string {
+// message fills the message template provided by the rule configuration with the rule output.
+// TODO: make ruleOutput a struct to allow for more advanced message templating
+func message(templateText string, ruleOutput string) string {
 	messageTemplate := template.Must(template.New("messageTemplate").Parse(templateText))
 
 	messageBuffer := new(bytes.Buffer)
-	messageTemplate.Execute(messageBuffer, checkOutput)
+	messageTemplate.Execute(messageBuffer, ruleOutput)
 
 	return messageBuffer.String()
 }

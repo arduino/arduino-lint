@@ -14,7 +14,7 @@
 // To purchase a commercial license, send an email to license@arduino.cc.
 
 /*
-Package platform provides functions specific to checking Arduino boards platforms.
+Package platform provides functions specific to linting Arduino boards platforms.
 See: https://arduino.github.io/arduino-cli/latest/platform-specification/
 */
 package platform

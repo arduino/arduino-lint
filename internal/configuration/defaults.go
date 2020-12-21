@@ -20,44 +20,44 @@ package configuration
 import (
 	"os"
 
-	"github.com/arduino/arduino-lint/internal/configuration/checkmode"
+	"github.com/arduino/arduino-lint/internal/configuration/rulemode"
 	"github.com/arduino/arduino-lint/internal/project/projecttype"
 )
 
-// Default check modes for each superproject type.
-// Subprojects use the same check modes as the superproject.
-var defaultCheckModes = map[projecttype.Type]map[checkmode.Type]bool{
+// Default rule modes for each superproject type.
+// Subprojects use the same rule modes as the superproject.
+var defaultRuleModes = map[projecttype.Type]map[rulemode.Type]bool{
 	projecttype.Sketch: {
-		checkmode.Strict:                   false,
-		checkmode.Specification:            true,
-		checkmode.Permissive:               false,
-		checkmode.LibraryManagerSubmission: false,
-		checkmode.LibraryManagerIndexed:    false,
-		checkmode.Official:                 false,
+		rulemode.Strict:                   false,
+		rulemode.Specification:            true,
+		rulemode.Permissive:               false,
+		rulemode.LibraryManagerSubmission: false,
+		rulemode.LibraryManagerIndexed:    false,
+		rulemode.Official:                 false,
 	},
 	projecttype.Library: {
-		checkmode.Strict:                   false,
-		checkmode.Specification:            true,
-		checkmode.Permissive:               false,
-		checkmode.LibraryManagerSubmission: true,
-		checkmode.LibraryManagerIndexed:    false,
-		checkmode.Official:                 false,
+		rulemode.Strict:                   false,
+		rulemode.Specification:            true,
+		rulemode.Permissive:               false,
+		rulemode.LibraryManagerSubmission: true,
+		rulemode.LibraryManagerIndexed:    false,
+		rulemode.Official:                 false,
 	},
 	projecttype.Platform: {
-		checkmode.Strict:                   false,
-		checkmode.Specification:            true,
-		checkmode.Permissive:               false,
-		checkmode.LibraryManagerSubmission: false,
-		checkmode.LibraryManagerIndexed:    false,
-		checkmode.Official:                 false,
+		rulemode.Strict:                   false,
+		rulemode.Specification:            true,
+		rulemode.Permissive:               false,
+		rulemode.LibraryManagerSubmission: false,
+		rulemode.LibraryManagerIndexed:    false,
+		rulemode.Official:                 false,
 	},
 	projecttype.PackageIndex: {
-		checkmode.Strict:                   false,
-		checkmode.Specification:            true,
-		checkmode.Permissive:               false,
-		checkmode.LibraryManagerSubmission: false,
-		checkmode.LibraryManagerIndexed:    false,
-		checkmode.Official:                 false,
+		rulemode.Strict:                   false,
+		rulemode.Specification:            true,
+		rulemode.Permissive:               false,
+		rulemode.LibraryManagerSubmission: false,
+		rulemode.LibraryManagerIndexed:    false,
+		rulemode.Official:                 false,
 	},
 }
 

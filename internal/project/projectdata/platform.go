@@ -13,18 +13,29 @@
 // Arduino software without disclosing the source code of your own applications.
 // To purchase a commercial license, send an email to license@arduino.cc.
 
-/*
-Package boardstxt provides functions specific to linting the boards.txt configuration files of Arduino boards platforms.
-See: https://arduino.github.io/arduino-cli/latest/platform-specification/#boardstxt
-*/
-package boardstxt
+package projectdata
 
 import (
-	"github.com/arduino/go-paths-helper"
+	"github.com/arduino/arduino-lint/internal/project"
+	"github.com/arduino/arduino-lint/internal/project/platform/boardstxt"
 	"github.com/arduino/go-properties-orderedmap"
 )
 
-// Properties parses the library.properties from the given path and returns the data.
-func Properties(platformPath *paths.Path) (*properties.Map, error) {
-	return properties.SafeLoadFromPath(platformPath.Join("boards.txt"))
+// Initialize gathers the platform rule data for the specified project.
+func InitializeForPlatform(project project.Type) {
+	boardsTxt, boardsTxtLoadError = boardstxt.Properties(ProjectPath())
+}
+
+var boardsTxt *properties.Map
+
+// BoardsTxt returns the data from the boards.txt configuration file.
+func BoardsTxt() *properties.Map {
+	return boardsTxt
+}
+
+var boardsTxtLoadError error
+
+// BoardsTxtLoadError returns the error output from loading the boards.txt configuration file.
+func BoardsTxtLoadError() error {
+	return boardsTxtLoadError
 }
