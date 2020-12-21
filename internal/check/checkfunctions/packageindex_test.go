@@ -21,7 +21,7 @@ import (
 
 	"github.com/arduino/arduino-lint/internal/check/checkresult"
 	"github.com/arduino/arduino-lint/internal/project"
-	"github.com/arduino/arduino-lint/internal/project/checkdata"
+	"github.com/arduino/arduino-lint/internal/project/projectdata"
 	"github.com/arduino/arduino-lint/internal/project/projecttype"
 	"github.com/arduino/go-paths-helper"
 	"github.com/stretchr/testify/assert"
@@ -51,7 +51,7 @@ func checkPackageIndexCheckFunction(checkFunction Type, testTables []packageInde
 			SuperprojectType: projecttype.PackageIndex,
 		}
 
-		checkdata.Initialize(testProject)
+		projectdata.Initialize(testProject)
 
 		result, output := checkFunction()
 		assert.Equal(t, testTable.expectedCheckResult, result, testTable.testName)

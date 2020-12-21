@@ -14,10 +14,10 @@
 // To purchase a commercial license, send an email to license@arduino.cc.
 
 /*
-Package checkdata handles the collection of data specific to a project before running the checks on it.
+Package projectdata handles the collection of data specific to a project before running the checks on it.
 This is for data required by multiple checks.
 */
-package checkdata
+package projectdata
 
 import (
 	"github.com/arduino/arduino-lint/internal/project"

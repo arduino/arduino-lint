@@ -24,7 +24,7 @@ import (
 	"github.com/arduino/arduino-lint/internal/configuration"
 	"github.com/arduino/arduino-lint/internal/configuration/checkmode"
 	"github.com/arduino/arduino-lint/internal/project"
-	"github.com/arduino/arduino-lint/internal/project/checkdata"
+	"github.com/arduino/arduino-lint/internal/project/projectdata"
 	"github.com/arduino/arduino-lint/internal/result"
 	"github.com/arduino/arduino-lint/internal/result/feedback"
 	"github.com/sirupsen/logrus"
@@ -34,7 +34,7 @@ import (
 func RunChecks(project project.Type) {
 	feedback.Printf("\nChecking %s in %s\n", project.ProjectType, project.Path)
 
-	checkdata.Initialize(project)
+	projectdata.Initialize(project)
 
 	for _, checkConfiguration := range checkconfigurations.Configurations() {
 		runCheck, err := shouldRun(checkConfiguration, project)

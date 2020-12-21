@@ -6,6 +6,6 @@
 
 # Test files
 /internal/check/schema/testdata/input/invalid-schema.json
-/internal/project/checkdata/testdata/packageindexes/invalid-JSON/package_foo_index.json
+/internal/project/projectdata/testdata/packageindexes/invalid-JSON/package_foo_index.json
 /internal/check/checkfunctions/testdata/packageindexes/invalid-JSON/package_foo_index.json
 /internal/check/checkfunctions/testdata/sketches/InvalidJSONMetadataFile/sketch.json

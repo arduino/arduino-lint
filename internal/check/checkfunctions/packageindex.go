@@ -17,14 +17,14 @@ package checkfunctions
 
 import (
 	"github.com/arduino/arduino-lint/internal/check/checkresult"
-	"github.com/arduino/arduino-lint/internal/project/checkdata"
+	"github.com/arduino/arduino-lint/internal/project/projectdata"
 )
 
 // The check functions for package indexes.
 
 // PackageIndexJSONFormat checks whether the package index file is a valid JSON document.
 func PackageIndexJSONFormat() (result checkresult.Type, output string) {
-	if isValidJSON(checkdata.ProjectPath()) {
+	if isValidJSON(projectdata.ProjectPath()) {
 		return checkresult.Pass, ""
 	}
 
@@ -33,8 +33,8 @@ func PackageIndexJSONFormat() (result checkresult.Type, output string) {
 
 // PackageIndexFormat checks for invalid package index data format.
 func PackageIndexFormat() (result checkresult.Type, output string) {
-	if checkdata.PackageIndexLoadError() != nil {
-		return checkresult.Fail, checkdata.PackageIndexLoadError().Error()
+	if projectdata.PackageIndexLoadError() != nil {
+		return checkresult.Fail, projectdata.PackageIndexLoadError().Error()
 	}
 
 	return checkresult.Pass, ""

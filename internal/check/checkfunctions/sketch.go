@@ -22,14 +22,14 @@ import (
 
 	"github.com/arduino/arduino-cli/arduino/globals"
 	"github.com/arduino/arduino-lint/internal/check/checkresult"
-	"github.com/arduino/arduino-lint/internal/project/checkdata"
+	"github.com/arduino/arduino-lint/internal/project/projectdata"
 	"github.com/arduino/arduino-lint/internal/project/sketch"
 )
 
 // SketchNameMismatch checks for mismatch between sketch folder name and primary file name.
 func SketchNameMismatch() (result checkresult.Type, output string) {
 	for extension := range globals.MainFileValidExtensions {
-		validPrimarySketchFilePath := checkdata.ProjectPath().Join(checkdata.ProjectPath().Base() + extension)
+		validPrimarySketchFilePath := projectdata.ProjectPath().Join(projectdata.ProjectPath().Base() + extension)
 		exist, err := validPrimarySketchFilePath.ExistCheck()
 		if err != nil {
 			panic(err)
@@ -40,12 +40,12 @@ func SketchNameMismatch() (result checkresult.Type, output string) {
 		}
 	}
 
-	return checkresult.Fail, checkdata.ProjectPath().Base() + ".ino"
+	return checkresult.Fail, projectdata.ProjectPath().Base() + ".ino"
 }
 
 // ProhibitedCharactersInSketchFileName checks for prohibited characters in the sketch file names.
 func ProhibitedCharactersInSketchFileName() (result checkresult.Type, output string) {
-	directoryListing, _ := checkdata.ProjectPath().ReadDir()
+	directoryListing, _ := projectdata.ProjectPath().ReadDir()
 	directoryListing.FilterOutDirs()
 
 	foundInvalidSketchFileNames := []string{}
@@ -66,7 +66,7 @@ func ProhibitedCharactersInSketchFileName() (result checkresult.Type, output str
 
 // SketchFileNameGTMaxLength checks if the sketch file names exceed the maximum length.
 func SketchFileNameGTMaxLength() (result checkresult.Type, output string) {
-	directoryListing, _ := checkdata.ProjectPath().ReadDir()
+	directoryListing, _ := projectdata.ProjectPath().ReadDir()
 	directoryListing.FilterOutDirs()
 
 	foundTooLongSketchFileNames := []string{}
@@ -87,7 +87,7 @@ func SketchFileNameGTMaxLength() (result checkresult.Type, output string) {
 
 // PdeSketchExtension checks for use of deprecated .pde sketch file extensions.
 func PdeSketchExtension() (result checkresult.Type, output string) {
-	directoryListing, _ := checkdata.ProjectPath().ReadDir()
+	directoryListing, _ := projectdata.ProjectPath().ReadDir()
 	directoryListing.FilterOutDirs()
 	pdeSketches := []string{}
 	for _, filePath := range directoryListing {
@@ -105,7 +105,7 @@ func PdeSketchExtension() (result checkresult.Type, output string) {
 
 // IncorrectSketchSrcFolderNameCase checks for incorrect case of src subfolder name in recursive format libraries.
 func IncorrectSketchSrcFolderNameCase() (result checkresult.Type, output string) {
-	directoryListing, err := checkdata.ProjectPath().ReadDir()
+	directoryListing, err := projectdata.ProjectPath().ReadDir()
 	if err != nil {
 		panic(err)
 	}
@@ -121,7 +121,7 @@ func IncorrectSketchSrcFolderNameCase() (result checkresult.Type, output string)
 
 // SketchDotJSONJSONFormat checks whether the sketch.json metadata file is a valid JSON document.
 func SketchDotJSONJSONFormat() (result checkresult.Type, output string) {
-	metadataPath := sketch.MetadataPath(checkdata.ProjectPath())
+	metadataPath := sketch.MetadataPath(projectdata.ProjectPath())
 	if metadataPath == nil {
 		return checkresult.Skip, "No metadata file"
 	}
@@ -135,14 +135,14 @@ func SketchDotJSONJSONFormat() (result checkresult.Type, output string) {
 
 // SketchDotJSONFormat checks whether the sketch.json metadata file has the required data format.
 func SketchDotJSONFormat() (result checkresult.Type, output string) {
-	metadataPath := sketch.MetadataPath(checkdata.ProjectPath())
+	metadataPath := sketch.MetadataPath(projectdata.ProjectPath())
 	if metadataPath == nil {
 		return checkresult.Skip, "No metadata file"
 	}
 
-	if checkdata.MetadataLoadError() == nil {
+	if projectdata.MetadataLoadError() == nil {
 		return checkresult.Pass, ""
 	}
 
-	return checkresult.Fail, checkdata.MetadataLoadError().Error()
+	return checkresult.Fail, projectdata.MetadataLoadError().Error()
 }

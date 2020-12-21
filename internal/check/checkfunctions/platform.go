@@ -17,14 +17,14 @@ package checkfunctions
 
 import (
 	"github.com/arduino/arduino-lint/internal/check/checkresult"
-	"github.com/arduino/arduino-lint/internal/project/checkdata"
+	"github.com/arduino/arduino-lint/internal/project/projectdata"
 )
 
 // The check functions for platforms.
 
 // BoardsTxtMissing checks whether the platform contains a boards.txt
 func BoardsTxtMissing() (result checkresult.Type, output string) {
-	boardsTxtPath := checkdata.ProjectPath().Join("boards.txt")
+	boardsTxtPath := projectdata.ProjectPath().Join("boards.txt")
 	exist, err := boardsTxtPath.ExistCheck()
 	if err != nil {
 		panic(err)
@@ -39,13 +39,13 @@ func BoardsTxtMissing() (result checkresult.Type, output string) {
 
 // BoardsTxtFormat checks for invalid boards.txt format.
 func BoardsTxtFormat() (result checkresult.Type, output string) {
-	if !checkdata.ProjectPath().Join("boards.txt").Exist() {
+	if !projectdata.ProjectPath().Join("boards.txt").Exist() {
 		return checkresult.NotRun, "boards.txt missing"
 	}
 
-	if checkdata.BoardsTxtLoadError() == nil {
+	if projectdata.BoardsTxtLoadError() == nil {
 		return checkresult.Pass, ""
 	}
 
-	return checkresult.Fail, checkdata.BoardsTxtLoadError().Error()
+	return checkresult.Fail, projectdata.BoardsTxtLoadError().Error()
 }

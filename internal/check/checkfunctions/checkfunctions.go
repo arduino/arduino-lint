@@ -23,7 +23,7 @@ import (
 	"strings"
 
 	"github.com/arduino/arduino-lint/internal/check/checkresult"
-	"github.com/arduino/arduino-lint/internal/project/checkdata"
+	"github.com/arduino/arduino-lint/internal/project/projectdata"
 	"github.com/arduino/arduino-lint/internal/project/sketch"
 	"github.com/arduino/go-paths-helper"
 )
@@ -34,7 +34,7 @@ type Type func() (result checkresult.Type, output string)
 
 // MissingReadme checks if the project has a readme that will be recognized by GitHub.
 func MissingReadme() (result checkresult.Type, output string) {
-	if checkdata.ProjectType() != checkdata.SuperProjectType() {
+	if projectdata.ProjectType() != projectdata.SuperProjectType() {
 		return checkresult.Skip, "Readme not required for subprojects"
 	}
 
@@ -42,9 +42,9 @@ func MissingReadme() (result checkresult.Type, output string) {
 	readmeRegexp := regexp.MustCompile(`(?i)^readme\.(markdown)|(mdown)|(mkdn)|(md)|(textile)|(rdoc)|(org)|(creole)|(mediawiki)|(wiki)|(rst)|(asciidoc)|(adoc)|(asc)|(pod)|(txt)$`)
 
 	// https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/about-readmes#about-readmes
-	if pathContainsRegexpMatch(checkdata.ProjectPath(), readmeRegexp) ||
-		(checkdata.ProjectPath().Join("docs").Exist() && pathContainsRegexpMatch(checkdata.ProjectPath().Join("docs"), readmeRegexp)) ||
-		(checkdata.ProjectPath().Join(".github").Exist() && pathContainsRegexpMatch(checkdata.ProjectPath().Join(".github"), readmeRegexp)) {
+	if pathContainsRegexpMatch(projectdata.ProjectPath(), readmeRegexp) ||
+		(projectdata.ProjectPath().Join("docs").Exist() && pathContainsRegexpMatch(projectdata.ProjectPath().Join("docs"), readmeRegexp)) ||
+		(projectdata.ProjectPath().Join(".github").Exist() && pathContainsRegexpMatch(projectdata.ProjectPath().Join(".github"), readmeRegexp)) {
 		return checkresult.Pass, ""
 	}
 
@@ -53,7 +53,7 @@ func MissingReadme() (result checkresult.Type, output string) {
 
 // MissingLicenseFile checks if the project has a license file that will be recognized by GitHub.
 func MissingLicenseFile() (result checkresult.Type, output string) {
-	if checkdata.ProjectType() != checkdata.SuperProjectType() {
+	if projectdata.ProjectType() != projectdata.SuperProjectType() {
 		return checkresult.Skip, "License file not required for subprojects"
 	}
 
@@ -64,7 +64,7 @@ func MissingLicenseFile() (result checkresult.Type, output string) {
 	licenseRegexp := regexp.MustCompile(`(?i)^(((un)?licen[sc]e)|(copy(ing|right))|(ofl)|(patents))(\.((md)|(markdown)|(txt)|(html)))?$`)
 
 	// License file must be in root of repo
-	if pathContainsRegexpMatch(checkdata.ProjectPath(), licenseRegexp) {
+	if pathContainsRegexpMatch(projectdata.ProjectPath(), licenseRegexp) {
 		return checkresult.Pass, ""
 	}
 
@@ -75,7 +75,7 @@ func MissingLicenseFile() (result checkresult.Type, output string) {
 func IncorrectArduinoDotHFileNameCase() (result checkresult.Type, output string) {
 	incorrectCaseRegexp := regexp.MustCompile(`^\s*#\s*include\s*["<](a((?i)rduino)|(ARDUINO))\.[hH][">]`)
 
-	directoryListing, err := checkdata.ProjectPath().ReadDirRecursive()
+	directoryListing, err := projectdata.ProjectPath().ReadDirRecursive()
 	if err != nil {
 		panic(err)
 	}

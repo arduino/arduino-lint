@@ -23,7 +23,7 @@ import (
 
 	"github.com/arduino/arduino-lint/internal/check/checkresult"
 	"github.com/arduino/arduino-lint/internal/project"
-	"github.com/arduino/arduino-lint/internal/project/checkdata"
+	"github.com/arduino/arduino-lint/internal/project/projectdata"
 	"github.com/arduino/arduino-lint/internal/project/projecttype"
 	"github.com/arduino/go-paths-helper"
 	"github.com/go-git/go-git/v5"
@@ -56,7 +56,7 @@ func checkLibraryCheckFunction(checkFunction Type, testTables []libraryCheckFunc
 			SuperprojectType: projecttype.Library,
 		}
 
-		checkdata.Initialize(testProject)
+		projectdata.Initialize(testProject)
 
 		result, output := checkFunction()
 		assert.Equal(t, testTable.expectedCheckResult, result, testTable.testName)

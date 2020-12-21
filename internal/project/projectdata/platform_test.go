@@ -13,7 +13,7 @@
 // Arduino software without disclosing the source code of your own applications.
 // To purchase a commercial license, send an email to license@arduino.cc.
 
-package checkdata
+package projectdata
 
 import (
 	"testing"
@@ -24,40 +24,40 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var packageIndexTestDataPath *paths.Path
+var platformTestDataPath *paths.Path
 
 func init() {
 	workingDirectory, err := paths.Getwd()
 	if err != nil {
 		panic(err)
 	}
-	packageIndexTestDataPath = workingDirectory.Join("testdata", "packageindexes")
+	platformTestDataPath = workingDirectory.Join("testdata", "platforms")
 }
 
-func TestInitializeForPackageIndex(t *testing.T) {
+func TestInitializeForPlatform(t *testing.T) {
 	testTables := []struct {
-		testName                       string
-		path                           *paths.Path
-		packageIndexAssertion          assert.ValueAssertionFunc
-		packageIndexLoadErrorAssertion assert.ValueAssertionFunc
+		testName                    string
+		platformFolderName          string
+		boardsTxtAssertion          assert.ValueAssertionFunc
+		boardsTxtLoadErrorAssertion assert.ValueAssertionFunc
 	}{
-		{"Valid", packageIndexTestDataPath.Join("valid-package-index", "package_foo_index.json"), assert.NotNil, assert.Nil},
-		{"Invalid package index", packageIndexTestDataPath.Join("invalid-package-index", "package_foo_index.json"), assert.Nil, assert.NotNil},
-		{"Invalid JSON", packageIndexTestDataPath.Join("invalid-JSON", "package_foo_index.json"), assert.Nil, assert.NotNil},
+		{"Valid", "valid-boards.txt", assert.NotNil, assert.Nil},
+		{"Invalid", "invalid-boards.txt", assert.Nil, assert.NotNil},
+		{"Missing", "missing-boards.txt", assert.NotNil, assert.Nil},
 	}
 
 	for _, testTable := range testTables {
 
 		testProject := project.Type{
-			Path:             testTable.path,
-			ProjectType:      projecttype.PackageIndex,
-			SuperprojectType: projecttype.PackageIndex,
+			Path:             platformTestDataPath.Join(testTable.platformFolderName),
+			ProjectType:      projecttype.Platform,
+			SuperprojectType: projecttype.Platform,
 		}
 		Initialize(testProject)
 
-		testTable.packageIndexLoadErrorAssertion(t, PackageIndexLoadError(), testTable.testName)
-		if PackageIndexLoadError() == nil {
-			testTable.packageIndexAssertion(t, PackageIndex(), testTable.testName)
+		testTable.boardsTxtLoadErrorAssertion(t, BoardsTxtLoadError(), testTable.testName)
+		if BoardsTxtLoadError() == nil {
+			testTable.boardsTxtAssertion(t, BoardsTxt(), testTable.testName)
 		}
 	}
 }

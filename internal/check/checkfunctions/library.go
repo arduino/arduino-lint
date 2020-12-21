@@ -29,8 +29,8 @@ import (
 	"github.com/arduino/arduino-lint/internal/check/checkresult"
 	"github.com/arduino/arduino-lint/internal/check/schema"
 	"github.com/arduino/arduino-lint/internal/check/schema/compliancelevel"
-	"github.com/arduino/arduino-lint/internal/project/checkdata"
 	"github.com/arduino/arduino-lint/internal/project/library"
+	"github.com/arduino/arduino-lint/internal/project/projectdata"
 	"github.com/arduino/arduino-lint/internal/project/sketch"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
@@ -41,7 +41,7 @@ import (
 
 // LibraryInvalid checks whether the provided path is a valid library.
 func LibraryInvalid() (result checkresult.Type, output string) {
-	if checkdata.LoadedLibrary() != nil && library.ContainsHeaderFile(checkdata.LoadedLibrary().SourceDir) {
+	if projectdata.LoadedLibrary() != nil && library.ContainsHeaderFile(projectdata.LoadedLibrary().SourceDir) {
 		return checkresult.Pass, ""
 	}
 
@@ -50,8 +50,8 @@ func LibraryInvalid() (result checkresult.Type, output string) {
 
 // LibraryFolderNameGTMaxLength checks if the library folder name exceeds the maximum length.
 func LibraryFolderNameGTMaxLength() (result checkresult.Type, output string) {
-	if len(checkdata.ProjectPath().Base()) > 63 {
-		return checkresult.Fail, checkdata.ProjectPath().Base()
+	if len(projectdata.ProjectPath().Base()) > 63 {
+		return checkresult.Fail, projectdata.ProjectPath().Base()
 	}
 
 	return checkresult.Pass, ""
@@ -59,8 +59,8 @@ func LibraryFolderNameGTMaxLength() (result checkresult.Type, output string) {
 
 // ProhibitedCharactersInLibraryFolderName checks for prohibited characters in the library folder name.
 func ProhibitedCharactersInLibraryFolderName() (result checkresult.Type, output string) {
-	if !validProjectPathBaseName(checkdata.ProjectPath().Base()) {
-		return checkresult.Fail, checkdata.ProjectPath().Base()
+	if !validProjectPathBaseName(projectdata.ProjectPath().Base()) {
+		return checkresult.Fail, projectdata.ProjectPath().Base()
 	}
 
 	return checkresult.Pass, ""
@@ -68,7 +68,7 @@ func ProhibitedCharactersInLibraryFolderName() (result checkresult.Type, output 
 
 // LibraryHasSubmodule checks whether the library contains a Git submodule.
 func LibraryHasSubmodule() (result checkresult.Type, output string) {
-	dotGitmodulesPath := checkdata.ProjectPath().Join(".gitmodules")
+	dotGitmodulesPath := projectdata.ProjectPath().Join(".gitmodules")
 	hasDotGitmodules, err := dotGitmodulesPath.ExistCheck()
 	if err != nil {
 		panic(err)
@@ -83,7 +83,7 @@ func LibraryHasSubmodule() (result checkresult.Type, output string) {
 
 // LibraryContainsSymlinks checks if the library folder contains symbolic links.
 func LibraryContainsSymlinks() (result checkresult.Type, output string) {
-	projectPathListing, err := checkdata.ProjectPath().ReadDirRecursive()
+	projectPathListing, err := projectdata.ProjectPath().ReadDirRecursive()
 	if err != nil {
 		panic(err)
 	}
@@ -110,7 +110,7 @@ func LibraryContainsSymlinks() (result checkresult.Type, output string) {
 
 // LibraryHasDotDevelopmentFile checks whether the library contains a .development flag file.
 func LibraryHasDotDevelopmentFile() (result checkresult.Type, output string) {
-	dotDevelopmentPath := checkdata.ProjectPath().Join(".development")
+	dotDevelopmentPath := projectdata.ProjectPath().Join(".development")
 	hasDotDevelopment, err := dotDevelopmentPath.ExistCheck()
 	if err != nil {
 		panic(err)
@@ -125,7 +125,7 @@ func LibraryHasDotDevelopmentFile() (result checkresult.Type, output string) {
 
 // LibraryHasExe checks whether the library contains files with .exe extension.
 func LibraryHasExe() (result checkresult.Type, output string) {
-	projectPathListing, err := checkdata.ProjectPath().ReadDirRecursive()
+	projectPathListing, err := projectdata.ProjectPath().ReadDirRecursive()
 	if err != nil {
 		panic(err)
 	}
@@ -147,17 +147,17 @@ func LibraryHasExe() (result checkresult.Type, output string) {
 
 // LibraryPropertiesNameFieldHeaderMismatch checks whether the filename of one of the library's header files matches the Library Manager installation folder name.
 func LibraryPropertiesNameFieldHeaderMismatch() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	name, ok := checkdata.LibraryProperties().GetOk("name")
+	name, ok := projectdata.LibraryProperties().GetOk("name")
 	if !ok {
 		return checkresult.NotRun, "Field not present"
 	}
 
 	sanitizedName := utils.SanitizeName(name)
-	for _, header := range checkdata.SourceHeaders() {
+	for _, header := range projectdata.SourceHeaders() {
 		if strings.TrimSuffix(header, filepath.Ext(header)) == sanitizedName {
 			return checkresult.Pass, ""
 		}
@@ -168,13 +168,13 @@ func LibraryPropertiesNameFieldHeaderMismatch() (result checkresult.Type, output
 
 // IncorrectLibrarySrcFolderNameCase checks for incorrect case of src subfolder name in recursive format libraries.
 func IncorrectLibrarySrcFolderNameCase() (result checkresult.Type, output string) {
-	if library.ContainsMetadataFile(checkdata.ProjectPath()) && library.ContainsHeaderFile(checkdata.ProjectPath()) {
+	if library.ContainsMetadataFile(projectdata.ProjectPath()) && library.ContainsHeaderFile(projectdata.ProjectPath()) {
 		// Flat layout, so no special treatment of src subfolder.
 		return checkresult.Skip, "Not applicable due to layout type"
 	}
 
 	// The library is intended to have the recursive layout.
-	directoryListing, err := checkdata.ProjectPath().ReadDir()
+	directoryListing, err := projectdata.ProjectPath().ReadDir()
 	if err != nil {
 		panic(err)
 	}
@@ -190,15 +190,15 @@ func IncorrectLibrarySrcFolderNameCase() (result checkresult.Type, output string
 
 // RecursiveLibraryWithUtilityFolder checks for presence of a `utility` subfolder in a recursive layout library.
 func RecursiveLibraryWithUtilityFolder() (result checkresult.Type, output string) {
-	if checkdata.LoadedLibrary() == nil {
+	if projectdata.LoadedLibrary() == nil {
 		return checkresult.NotRun, "Library not loaded"
 	}
 
-	if checkdata.LoadedLibrary().Layout == libraries.FlatLayout {
+	if projectdata.LoadedLibrary().Layout == libraries.FlatLayout {
 		return checkresult.Skip, "Not applicable due to layout type"
 	}
 
-	if checkdata.ProjectPath().Join("utility").Exist() {
+	if projectdata.ProjectPath().Join("utility").Exist() {
 		return checkresult.Fail, ""
 	}
 
@@ -207,7 +207,7 @@ func RecursiveLibraryWithUtilityFolder() (result checkresult.Type, output string
 
 // MisspelledExtrasFolderName checks for incorrectly spelled `extras` folder name.
 func MisspelledExtrasFolderName() (result checkresult.Type, output string) {
-	directoryListing, err := checkdata.ProjectPath().ReadDir()
+	directoryListing, err := projectdata.ProjectPath().ReadDir()
 	if err != nil {
 		panic(err)
 	}
@@ -223,7 +223,7 @@ func MisspelledExtrasFolderName() (result checkresult.Type, output string) {
 
 // IncorrectExtrasFolderNameCase checks for incorrect `extras` folder name case.
 func IncorrectExtrasFolderNameCase() (result checkresult.Type, output string) {
-	directoryListing, err := checkdata.ProjectPath().ReadDir()
+	directoryListing, err := projectdata.ProjectPath().ReadDir()
 	if err != nil {
 		panic(err)
 	}
@@ -239,11 +239,11 @@ func IncorrectExtrasFolderNameCase() (result checkresult.Type, output string) {
 
 // LibraryPropertiesMissing checks for presence of library.properties.
 func LibraryPropertiesMissing() (result checkresult.Type, output string) {
-	if checkdata.LoadedLibrary() == nil {
+	if projectdata.LoadedLibrary() == nil {
 		return checkresult.NotRun, "Couldn't load library."
 	}
 
-	if checkdata.LoadedLibrary().IsLegacy {
+	if projectdata.LoadedLibrary().IsLegacy {
 		return checkresult.Fail, ""
 	}
 
@@ -252,7 +252,7 @@ func LibraryPropertiesMissing() (result checkresult.Type, output string) {
 
 // MisspelledLibraryPropertiesFileName checks for incorrectly spelled library.properties file name.
 func MisspelledLibraryPropertiesFileName() (result checkresult.Type, output string) {
-	directoryListing, err := checkdata.ProjectPath().ReadDir()
+	directoryListing, err := projectdata.ProjectPath().ReadDir()
 	if err != nil {
 		panic(err)
 	}
@@ -268,7 +268,7 @@ func MisspelledLibraryPropertiesFileName() (result checkresult.Type, output stri
 
 // IncorrectLibraryPropertiesFileNameCase checks for incorrect library.properties file name case.
 func IncorrectLibraryPropertiesFileNameCase() (result checkresult.Type, output string) {
-	directoryListing, err := checkdata.ProjectPath().ReadDir()
+	directoryListing, err := projectdata.ProjectPath().ReadDir()
 	if err != nil {
 		panic(err)
 	}
@@ -284,7 +284,7 @@ func IncorrectLibraryPropertiesFileNameCase() (result checkresult.Type, output s
 
 // RedundantLibraryProperties checks for redundant copies of the library.properties file.
 func RedundantLibraryProperties() (result checkresult.Type, output string) {
-	redundantLibraryPropertiesPath := checkdata.ProjectPath().Join("src", "library.properties")
+	redundantLibraryPropertiesPath := projectdata.ProjectPath().Join("src", "library.properties")
 	if redundantLibraryPropertiesPath.Exist() {
 		return checkresult.Fail, redundantLibraryPropertiesPath.String()
 	}
@@ -294,12 +294,12 @@ func RedundantLibraryProperties() (result checkresult.Type, output string) {
 
 // LibraryPropertiesFormat checks for invalid library.properties format.
 func LibraryPropertiesFormat() (result checkresult.Type, output string) {
-	if checkdata.LoadedLibrary() != nil && checkdata.LoadedLibrary().IsLegacy {
+	if projectdata.LoadedLibrary() != nil && projectdata.LoadedLibrary().IsLegacy {
 		return checkresult.Skip, "Library has no library.properties"
 	}
 
-	if checkdata.LibraryPropertiesLoadError() != nil {
-		return checkresult.Fail, checkdata.LibraryPropertiesLoadError().Error()
+	if projectdata.LibraryPropertiesLoadError() != nil {
+		return checkresult.Fail, projectdata.LibraryPropertiesLoadError().Error()
 	}
 
 	return checkresult.Pass, ""
@@ -307,15 +307,15 @@ func LibraryPropertiesFormat() (result checkresult.Type, output string) {
 
 // LibraryPropertiesNameFieldMissing checks for missing library.properties "name" field.
 func LibraryPropertiesNameFieldMissing() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	if checkdata.LoadedLibrary().IsLegacy {
+	if projectdata.LoadedLibrary().IsLegacy {
 		return checkresult.Skip, "Library has legacy format"
 	}
 
-	if schema.RequiredPropertyMissing("name", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.RequiredPropertyMissing("name", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 	return checkresult.Pass, ""
@@ -323,15 +323,15 @@ func LibraryPropertiesNameFieldMissing() (result checkresult.Type, output string
 
 // LibraryPropertiesNameFieldLTMinLength checks if the library.properties "name" value is less than the minimum length.
 func LibraryPropertiesNameFieldLTMinLength() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	if !checkdata.LibraryProperties().ContainsKey("name") {
+	if !projectdata.LibraryProperties().ContainsKey("name") {
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.PropertyLessThanMinLength("name", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.PropertyLessThanMinLength("name", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 
@@ -340,16 +340,16 @@ func LibraryPropertiesNameFieldLTMinLength() (result checkresult.Type, output st
 
 // LibraryPropertiesNameFieldGTMaxLength checks if the library.properties "name" value is greater than the maximum length.
 func LibraryPropertiesNameFieldGTMaxLength() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	name, ok := checkdata.LibraryProperties().GetOk("name")
+	name, ok := projectdata.LibraryProperties().GetOk("name")
 	if !ok {
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.PropertyGreaterThanMaxLength("name", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.PropertyGreaterThanMaxLength("name", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, name
 	}
 
@@ -358,16 +358,16 @@ func LibraryPropertiesNameFieldGTMaxLength() (result checkresult.Type, output st
 
 // LibraryPropertiesNameFieldGTRecommendedLength checks if the library.properties "name" value is greater than the recommended length.
 func LibraryPropertiesNameFieldGTRecommendedLength() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	name, ok := checkdata.LibraryProperties().GetOk("name")
+	name, ok := projectdata.LibraryProperties().GetOk("name")
 	if !ok {
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.PropertyGreaterThanMaxLength("name", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
+	if schema.PropertyGreaterThanMaxLength("name", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
 		return checkresult.Fail, name
 	}
 
@@ -376,16 +376,16 @@ func LibraryPropertiesNameFieldGTRecommendedLength() (result checkresult.Type, o
 
 // LibraryPropertiesNameFieldDisallowedCharacters checks for disallowed characters in the library.properties "name" field.
 func LibraryPropertiesNameFieldDisallowedCharacters() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	name, ok := checkdata.LibraryProperties().GetOk("name")
+	name, ok := projectdata.LibraryProperties().GetOk("name")
 	if !ok {
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/allowedCharacters", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/allowedCharacters", "", "", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, name
 	}
 
@@ -394,16 +394,16 @@ func LibraryPropertiesNameFieldDisallowedCharacters() (result checkresult.Type, 
 
 // LibraryPropertiesNameFieldStartsWithArduino checks if the library.properties "name" value starts with "Arduino".
 func LibraryPropertiesNameFieldStartsWithArduino() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	name, ok := checkdata.LibraryProperties().GetOk("name")
+	name, ok := projectdata.LibraryProperties().GetOk("name")
 	if !ok {
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/notStartsWithArduino", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/notStartsWithArduino", "", "", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, name
 	}
 
@@ -412,11 +412,11 @@ func LibraryPropertiesNameFieldStartsWithArduino() (result checkresult.Type, out
 
 // LibraryPropertiesNameFieldMissingOfficialPrefix checks whether the library.properties `name` value uses the prefix required of all new official Arduino libraries.
 func LibraryPropertiesNameFieldMissingOfficialPrefix() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	name, ok := checkdata.LibraryProperties().GetOk("name")
+	name, ok := projectdata.LibraryProperties().GetOk("name")
 	if !ok {
 		return checkresult.NotRun, "Field not present"
 	}
@@ -429,16 +429,16 @@ func LibraryPropertiesNameFieldMissingOfficialPrefix() (result checkresult.Type,
 
 // LibraryPropertiesNameFieldContainsArduino checks if the library.properties "name" value contains "Arduino".
 func LibraryPropertiesNameFieldContainsArduino() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	name, ok := checkdata.LibraryProperties().GetOk("name")
+	name, ok := projectdata.LibraryProperties().GetOk("name")
 	if !ok {
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/notContainsArduino", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
+	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/notContainsArduino", "", "", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
 		return checkresult.Fail, name
 	}
 
@@ -447,16 +447,16 @@ func LibraryPropertiesNameFieldContainsArduino() (result checkresult.Type, outpu
 
 // LibraryPropertiesNameFieldHasSpaces checks if the library.properties "name" value contains spaces.
 func LibraryPropertiesNameFieldHasSpaces() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	name, ok := checkdata.LibraryProperties().GetOk("name")
+	name, ok := projectdata.LibraryProperties().GetOk("name")
 	if !ok {
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/notContainsSpaces", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
+	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/notContainsSpaces", "", "", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
 		return checkresult.Fail, name
 	}
 
@@ -465,16 +465,16 @@ func LibraryPropertiesNameFieldHasSpaces() (result checkresult.Type, output stri
 
 // LibraryPropertiesNameFieldContainsLibrary checks if the library.properties "name" value contains "library".
 func LibraryPropertiesNameFieldContainsLibrary() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	name, ok := checkdata.LibraryProperties().GetOk("name")
+	name, ok := projectdata.LibraryProperties().GetOk("name")
 	if !ok {
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/notContainsSuperfluousTerms", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
+	if schema.ValidationErrorMatch("^#/name$", "/patternObjects/notContainsSuperfluousTerms", "", "", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
 		return checkresult.Fail, name
 	}
 
@@ -483,11 +483,11 @@ func LibraryPropertiesNameFieldContainsLibrary() (result checkresult.Type, outpu
 
 // LibraryPropertiesNameFieldDuplicate checks whether there is an existing entry in the Library Manager index using the the library.properties `name` value.
 func LibraryPropertiesNameFieldDuplicate() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	name, hasName := checkdata.LibraryProperties().GetOk("name")
+	name, hasName := projectdata.LibraryProperties().GetOk("name")
 	if !hasName {
 		return checkresult.NotRun, "Field not present"
 	}
@@ -501,11 +501,11 @@ func LibraryPropertiesNameFieldDuplicate() (result checkresult.Type, output stri
 
 // LibraryPropertiesNameFieldNotInIndex checks whether there is no existing entry in the Library Manager index using the the library.properties `name` value.
 func LibraryPropertiesNameFieldNotInIndex() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	name, hasName := checkdata.LibraryProperties().GetOk("name")
+	name, hasName := projectdata.LibraryProperties().GetOk("name")
 	if !hasName {
 		return checkresult.NotRun, "Field not present"
 	}
@@ -519,15 +519,15 @@ func LibraryPropertiesNameFieldNotInIndex() (result checkresult.Type, output str
 
 // LibraryPropertiesVersionFieldMissing checks for missing library.properties "version" field.
 func LibraryPropertiesVersionFieldMissing() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	if checkdata.LoadedLibrary().IsLegacy {
+	if projectdata.LoadedLibrary().IsLegacy {
 		return checkresult.Skip, "Library has legacy format"
 	}
 
-	if schema.RequiredPropertyMissing("version", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.RequiredPropertyMissing("version", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 	return checkresult.Pass, ""
@@ -535,16 +535,16 @@ func LibraryPropertiesVersionFieldMissing() (result checkresult.Type, output str
 
 // LibraryPropertiesVersionFieldNonRelaxedSemver checks whether the library.properties "version" value is "relaxed semver" compliant.
 func LibraryPropertiesVersionFieldNonRelaxedSemver() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	version, ok := checkdata.LibraryProperties().GetOk("version")
+	version, ok := projectdata.LibraryProperties().GetOk("version")
 	if !ok {
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.PropertyPatternMismatch("version", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.PropertyPatternMismatch("version", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, version
 	}
 
@@ -553,16 +553,16 @@ func LibraryPropertiesVersionFieldNonRelaxedSemver() (result checkresult.Type, o
 
 // LibraryPropertiesVersionFieldNonSemver checks whether the library.properties "version" value is semver compliant.
 func LibraryPropertiesVersionFieldNonSemver() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	version, ok := checkdata.LibraryProperties().GetOk("version")
+	version, ok := projectdata.LibraryProperties().GetOk("version")
 	if !ok {
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.PropertyPatternMismatch("version", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
+	if schema.PropertyPatternMismatch("version", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
 		return checkresult.Fail, version
 	}
 
@@ -571,15 +571,15 @@ func LibraryPropertiesVersionFieldNonSemver() (result checkresult.Type, output s
 
 // LibraryPropertiesVersionFieldBehindTag checks whether a release tag was made without first bumping the library.properties version value.
 func LibraryPropertiesVersionFieldBehindTag() (result checkresult.Type, output string) {
-	if checkdata.ProjectType() != checkdata.SuperProjectType() {
+	if projectdata.ProjectType() != projectdata.SuperProjectType() {
 		return checkresult.Skip, "Not relevant for subprojects"
 	}
 
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	versionString, ok := checkdata.LibraryProperties().GetOk("version")
+	versionString, ok := projectdata.LibraryProperties().GetOk("version")
 	if !ok {
 		return checkresult.NotRun, "Field not present"
 	}
@@ -590,7 +590,7 @@ func LibraryPropertiesVersionFieldBehindTag() (result checkresult.Type, output s
 	}
 	logrus.Tracef("version value: %s", version)
 
-	repository, err := git.PlainOpen(checkdata.ProjectPath().String())
+	repository, err := git.PlainOpen(projectdata.ProjectPath().String())
 	if err != nil {
 		return checkresult.Skip, "Project path is not a repository"
 	}
@@ -664,15 +664,15 @@ func LibraryPropertiesVersionFieldBehindTag() (result checkresult.Type, output s
 
 // LibraryPropertiesAuthorFieldMissing checks for missing library.properties "author" field.
 func LibraryPropertiesAuthorFieldMissing() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	if checkdata.LoadedLibrary().IsLegacy {
+	if projectdata.LoadedLibrary().IsLegacy {
 		return checkresult.Skip, "Library has legacy format"
 	}
 
-	if schema.RequiredPropertyMissing("author", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.RequiredPropertyMissing("author", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 	return checkresult.Pass, ""
@@ -680,15 +680,15 @@ func LibraryPropertiesAuthorFieldMissing() (result checkresult.Type, output stri
 
 // LibraryPropertiesAuthorFieldLTMinLength checks if the library.properties "author" value is less than the minimum length.
 func LibraryPropertiesAuthorFieldLTMinLength() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	if !checkdata.LibraryProperties().ContainsKey("author") {
+	if !projectdata.LibraryProperties().ContainsKey("author") {
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.PropertyLessThanMinLength("author", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.PropertyLessThanMinLength("author", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 
@@ -697,15 +697,15 @@ func LibraryPropertiesAuthorFieldLTMinLength() (result checkresult.Type, output 
 
 // LibraryPropertiesMaintainerFieldMissing checks for missing library.properties "maintainer" field.
 func LibraryPropertiesMaintainerFieldMissing() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	if checkdata.LoadedLibrary().IsLegacy {
+	if projectdata.LoadedLibrary().IsLegacy {
 		return checkresult.Skip, "Library has legacy format"
 	}
 
-	if schema.RequiredPropertyMissing("maintainer", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.RequiredPropertyMissing("maintainer", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 	return checkresult.Pass, ""
@@ -713,15 +713,15 @@ func LibraryPropertiesMaintainerFieldMissing() (result checkresult.Type, output 
 
 // LibraryPropertiesMaintainerFieldLTMinLength checks if the library.properties "maintainer" value is less than the minimum length.
 func LibraryPropertiesMaintainerFieldLTMinLength() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	if !checkdata.LibraryProperties().ContainsKey("maintainer") {
+	if !projectdata.LibraryProperties().ContainsKey("maintainer") {
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.PropertyLessThanMinLength("maintainer", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.PropertyLessThanMinLength("maintainer", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 
@@ -730,16 +730,16 @@ func LibraryPropertiesMaintainerFieldLTMinLength() (result checkresult.Type, out
 
 // LibraryPropertiesMaintainerFieldStartsWithArduino checks if the library.properties "maintainer" value starts with "Arduino".
 func LibraryPropertiesMaintainerFieldStartsWithArduino() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	maintainer, ok := checkdata.LibraryProperties().GetOk("maintainer")
+	maintainer, ok := projectdata.LibraryProperties().GetOk("maintainer")
 	if !ok {
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.ValidationErrorMatch("^#/maintainer$", "/patternObjects/notStartsWithArduino", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.ValidationErrorMatch("^#/maintainer$", "/patternObjects/notStartsWithArduino", "", "", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, maintainer
 	}
 
@@ -748,15 +748,15 @@ func LibraryPropertiesMaintainerFieldStartsWithArduino() (result checkresult.Typ
 
 // LibraryPropertiesEmailFieldAsMaintainerAlias checks whether the library.properties "email" field is being used as an alias for the "maintainer" field.
 func LibraryPropertiesEmailFieldAsMaintainerAlias() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	if !checkdata.LibraryProperties().ContainsKey("email") {
+	if !projectdata.LibraryProperties().ContainsKey("email") {
 		return checkresult.Skip, "Field not present"
 	}
 
-	if !checkdata.LibraryProperties().ContainsKey("maintainer") {
+	if !projectdata.LibraryProperties().ContainsKey("maintainer") {
 		return checkresult.Fail, ""
 	}
 
@@ -765,15 +765,15 @@ func LibraryPropertiesEmailFieldAsMaintainerAlias() (result checkresult.Type, ou
 
 // LibraryPropertiesEmailFieldLTMinLength checks if the library.properties "email" value is less than the minimum length.
 func LibraryPropertiesEmailFieldLTMinLength() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	if checkdata.LibraryProperties().ContainsKey("maintainer") || !checkdata.LibraryProperties().ContainsKey("email") {
+	if projectdata.LibraryProperties().ContainsKey("maintainer") || !projectdata.LibraryProperties().ContainsKey("email") {
 		return checkresult.Skip, "Field not present"
 	}
 
-	if schema.PropertyLessThanMinLength("email", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.PropertyLessThanMinLength("email", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 
@@ -782,20 +782,20 @@ func LibraryPropertiesEmailFieldLTMinLength() (result checkresult.Type, output s
 
 // LibraryPropertiesEmailFieldStartsWithArduino checks if the library.properties "email" value starts with "Arduino".
 func LibraryPropertiesEmailFieldStartsWithArduino() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	if checkdata.LibraryProperties().ContainsKey("maintainer") {
+	if projectdata.LibraryProperties().ContainsKey("maintainer") {
 		return checkresult.Skip, "No email alias field"
 	}
 
-	email, ok := checkdata.LibraryProperties().GetOk("email")
+	email, ok := projectdata.LibraryProperties().GetOk("email")
 	if !ok {
 		return checkresult.Skip, "Field not present"
 	}
 
-	if schema.ValidationErrorMatch("^#/email$", "/patternObjects/notStartsWithArduino", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.ValidationErrorMatch("^#/email$", "/patternObjects/notStartsWithArduino", "", "", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, email
 	}
 
@@ -804,15 +804,15 @@ func LibraryPropertiesEmailFieldStartsWithArduino() (result checkresult.Type, ou
 
 // LibraryPropertiesSentenceFieldMissing checks for missing library.properties "sentence" field.
 func LibraryPropertiesSentenceFieldMissing() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	if checkdata.LoadedLibrary().IsLegacy {
+	if projectdata.LoadedLibrary().IsLegacy {
 		return checkresult.Skip, "Library has legacy format"
 	}
 
-	if schema.RequiredPropertyMissing("sentence", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.RequiredPropertyMissing("sentence", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 	return checkresult.Pass, ""
@@ -820,15 +820,15 @@ func LibraryPropertiesSentenceFieldMissing() (result checkresult.Type, output st
 
 // LibraryPropertiesSentenceFieldLTMinLength checks if the library.properties "sentence" value is less than the minimum length.
 func LibraryPropertiesSentenceFieldLTMinLength() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	if !checkdata.LibraryProperties().ContainsKey("sentence") {
+	if !projectdata.LibraryProperties().ContainsKey("sentence") {
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.PropertyLessThanMinLength("sentence", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.PropertyLessThanMinLength("sentence", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 
@@ -842,15 +842,15 @@ func LibraryPropertiesSentenceFieldSpellCheck() (result checkresult.Type, output
 
 // LibraryPropertiesParagraphFieldMissing checks for missing library.properties "paragraph" field.
 func LibraryPropertiesParagraphFieldMissing() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	if checkdata.LoadedLibrary().IsLegacy {
+	if projectdata.LoadedLibrary().IsLegacy {
 		return checkresult.Skip, "Library has legacy format"
 	}
 
-	if schema.RequiredPropertyMissing("paragraph", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.RequiredPropertyMissing("paragraph", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 	return checkresult.Pass, ""
@@ -863,12 +863,12 @@ func LibraryPropertiesParagraphFieldSpellCheck() (result checkresult.Type, outpu
 
 // LibraryPropertiesParagraphFieldRepeatsSentence checks whether the library.properties `paragraph` value repeats the `sentence` value.
 func LibraryPropertiesParagraphFieldRepeatsSentence() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	sentence, hasSentence := checkdata.LibraryProperties().GetOk("sentence")
-	paragraph, hasParagraph := checkdata.LibraryProperties().GetOk("paragraph")
+	sentence, hasSentence := projectdata.LibraryProperties().GetOk("sentence")
+	paragraph, hasParagraph := projectdata.LibraryProperties().GetOk("paragraph")
 
 	if !hasSentence || !hasParagraph {
 		return checkresult.NotRun, "Field not present"
@@ -882,15 +882,15 @@ func LibraryPropertiesParagraphFieldRepeatsSentence() (result checkresult.Type, 
 
 // LibraryPropertiesCategoryFieldMissing checks for missing library.properties "category" field.
 func LibraryPropertiesCategoryFieldMissing() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	if checkdata.LoadedLibrary().IsLegacy {
+	if projectdata.LoadedLibrary().IsLegacy {
 		return checkresult.Skip, "Library has legacy format"
 	}
 
-	if schema.RequiredPropertyMissing("category", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
+	if schema.RequiredPropertyMissing("category", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
 		return checkresult.Fail, ""
 	}
 	return checkresult.Pass, ""
@@ -898,16 +898,16 @@ func LibraryPropertiesCategoryFieldMissing() (result checkresult.Type, output st
 
 // LibraryPropertiesCategoryFieldInvalid checks for invalid category in the library.properties "category" field.
 func LibraryPropertiesCategoryFieldInvalid() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	category, ok := checkdata.LibraryProperties().GetOk("category")
+	category, ok := projectdata.LibraryProperties().GetOk("category")
 	if !ok {
 		return checkresult.Skip, "Field not present"
 	}
 
-	if schema.PropertyEnumMismatch("category", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.PropertyEnumMismatch("category", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, category
 	}
 
@@ -916,11 +916,11 @@ func LibraryPropertiesCategoryFieldInvalid() (result checkresult.Type, output st
 
 // LibraryPropertiesCategoryFieldUncategorized checks whether the library.properties "category" value is "Uncategorized".
 func LibraryPropertiesCategoryFieldUncategorized() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	category, ok := checkdata.LibraryProperties().GetOk("category")
+	category, ok := projectdata.LibraryProperties().GetOk("category")
 	if !ok {
 		return checkresult.Skip, "Field not present"
 	}
@@ -934,15 +934,15 @@ func LibraryPropertiesCategoryFieldUncategorized() (result checkresult.Type, out
 
 // LibraryPropertiesUrlFieldMissing checks for missing library.properties "url" field.
 func LibraryPropertiesUrlFieldMissing() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	if checkdata.LoadedLibrary().IsLegacy {
+	if projectdata.LoadedLibrary().IsLegacy {
 		return checkresult.Skip, "Library has legacy format"
 	}
 
-	if schema.RequiredPropertyMissing("url", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.RequiredPropertyMissing("url", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 	return checkresult.Pass, ""
@@ -950,16 +950,16 @@ func LibraryPropertiesUrlFieldMissing() (result checkresult.Type, output string)
 
 // LibraryPropertiesUrlFieldInvalid checks whether the library.properties "url" value has a valid URL format.
 func LibraryPropertiesUrlFieldInvalid() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	url, ok := checkdata.LibraryProperties().GetOk("url")
+	url, ok := projectdata.LibraryProperties().GetOk("url")
 	if !ok {
 		return checkresult.NotRun, "Field not present"
 	}
 
-	if schema.ValidationErrorMatch("^#/url$", "/format$", "", "", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.ValidationErrorMatch("^#/url$", "/format$", "", "", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, url
 	}
 
@@ -968,11 +968,11 @@ func LibraryPropertiesUrlFieldInvalid() (result checkresult.Type, output string)
 
 // LibraryPropertiesUrlFieldDeadLink checks whether the URL in the library.properties `url` field can be loaded.
 func LibraryPropertiesUrlFieldDeadLink() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	url, ok := checkdata.LibraryProperties().GetOk("url")
+	url, ok := projectdata.LibraryProperties().GetOk("url")
 	if !ok {
 		return checkresult.NotRun, "Field not present"
 	}
@@ -992,15 +992,15 @@ func LibraryPropertiesUrlFieldDeadLink() (result checkresult.Type, output string
 
 // LibraryPropertiesArchitecturesFieldMissing checks for missing library.properties "architectures" field.
 func LibraryPropertiesArchitecturesFieldMissing() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	if checkdata.LoadedLibrary().IsLegacy {
+	if projectdata.LoadedLibrary().IsLegacy {
 		return checkresult.Skip, "Library has legacy format"
 	}
 
-	if schema.RequiredPropertyMissing("architectures", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
+	if schema.RequiredPropertyMissing("architectures", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
 		return checkresult.Fail, ""
 	}
 	return checkresult.Pass, ""
@@ -1008,15 +1008,15 @@ func LibraryPropertiesArchitecturesFieldMissing() (result checkresult.Type, outp
 
 // LibraryPropertiesArchitecturesFieldLTMinLength checks if the library.properties "architectures" value is less than the minimum length.
 func LibraryPropertiesArchitecturesFieldLTMinLength() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	if !checkdata.LibraryProperties().ContainsKey("architectures") {
+	if !projectdata.LibraryProperties().ContainsKey("architectures") {
 		return checkresult.Skip, "Field not present"
 	}
 
-	if schema.PropertyLessThanMinLength("architectures", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.PropertyLessThanMinLength("architectures", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 
@@ -1025,11 +1025,11 @@ func LibraryPropertiesArchitecturesFieldLTMinLength() (result checkresult.Type, 
 
 // LibraryPropertiesArchitecturesFieldAlias checks whether an alias architecture name is present, but not its true Arduino architecture name.
 func LibraryPropertiesArchitecturesFieldSoloAlias() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	architectures, ok := checkdata.LibraryProperties().GetOk("architectures")
+	architectures, ok := projectdata.LibraryProperties().GetOk("architectures")
 	if !ok {
 		return checkresult.Skip, "Field not present"
 	}
@@ -1076,11 +1076,11 @@ func LibraryPropertiesArchitecturesFieldSoloAlias() (result checkresult.Type, ou
 
 // LibraryPropertiesArchitecturesFieldValueCase checks for incorrect case of common architectures.
 func LibraryPropertiesArchitecturesFieldValueCase() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	architectures, ok := checkdata.LibraryProperties().GetOk("architectures")
+	architectures, ok := projectdata.LibraryProperties().GetOk("architectures")
 	if !ok {
 		return checkresult.Skip, "Field not present"
 	}
@@ -1142,16 +1142,16 @@ func LibraryPropertiesArchitecturesFieldValueCase() (result checkresult.Type, ou
 
 // LibraryPropertiesDependsFieldDisallowedCharacters checks for disallowed characters in the library.properties "depends" field.
 func LibraryPropertiesDependsFieldDisallowedCharacters() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	depends, ok := checkdata.LibraryProperties().GetOk("depends")
+	depends, ok := projectdata.LibraryProperties().GetOk("depends")
 	if !ok {
 		return checkresult.Skip, "Field not present"
 	}
 
-	if schema.PropertyPatternMismatch("depends", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.PropertyPatternMismatch("depends", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, depends
 	}
 
@@ -1160,11 +1160,11 @@ func LibraryPropertiesDependsFieldDisallowedCharacters() (result checkresult.Typ
 
 // LibraryPropertiesDependsFieldNotInIndex checks whether the libraries listed in the library.properties `depends` field are in the Library Manager index.
 func LibraryPropertiesDependsFieldNotInIndex() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	depends, hasDepends := checkdata.LibraryProperties().GetOk("depends")
+	depends, hasDepends := projectdata.LibraryProperties().GetOk("depends")
 	if !hasDepends {
 		return checkresult.Skip, "Field not present"
 	}
@@ -1191,16 +1191,16 @@ func LibraryPropertiesDependsFieldNotInIndex() (result checkresult.Type, output 
 
 // LibraryPropertiesDotALinkageFieldInvalid checks for invalid value in the library.properties "dot_a_linkage" field.
 func LibraryPropertiesDotALinkageFieldInvalid() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Couldn't load library.properties"
 	}
 
-	dotALinkage, ok := checkdata.LibraryProperties().GetOk("dot_a_linkage")
+	dotALinkage, ok := projectdata.LibraryProperties().GetOk("dot_a_linkage")
 	if !ok {
 		return checkresult.Skip, "Field not present"
 	}
 
-	if schema.PropertyEnumMismatch("dot_a_linkage", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.PropertyEnumMismatch("dot_a_linkage", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, dotALinkage
 	}
 
@@ -1209,15 +1209,15 @@ func LibraryPropertiesDotALinkageFieldInvalid() (result checkresult.Type, output
 
 // LibraryPropertiesDotALinkageFieldTrueWithFlatLayout checks whether a library using the "dot_a_linkage" feature has the required recursive layout type.
 func LibraryPropertiesDotALinkageFieldTrueWithFlatLayout() (result checkresult.Type, output string) {
-	if checkdata.LoadedLibrary() == nil {
+	if projectdata.LoadedLibrary() == nil {
 		return checkresult.NotRun, "Library not loaded"
 	}
 
-	if !checkdata.LibraryProperties().ContainsKey("dot_a_linkage") {
+	if !projectdata.LibraryProperties().ContainsKey("dot_a_linkage") {
 		return checkresult.Skip, "Field not present"
 	}
 
-	if checkdata.LoadedLibrary().DotALinkage && checkdata.LoadedLibrary().Layout == libraries.FlatLayout {
+	if projectdata.LoadedLibrary().DotALinkage && projectdata.LoadedLibrary().Layout == libraries.FlatLayout {
 		return checkresult.Fail, ""
 	}
 
@@ -1226,15 +1226,15 @@ func LibraryPropertiesDotALinkageFieldTrueWithFlatLayout() (result checkresult.T
 
 // LibraryPropertiesIncludesFieldLTMinLength checks if the library.properties "includes" value is less than the minimum length.
 func LibraryPropertiesIncludesFieldLTMinLength() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Library not loaded"
 	}
 
-	if !checkdata.LibraryProperties().ContainsKey("includes") {
+	if !projectdata.LibraryProperties().ContainsKey("includes") {
 		return checkresult.Skip, "Field not present"
 	}
 
-	if schema.PropertyLessThanMinLength("includes", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.PropertyLessThanMinLength("includes", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 
@@ -1243,11 +1243,11 @@ func LibraryPropertiesIncludesFieldLTMinLength() (result checkresult.Type, outpu
 
 // LibraryPropertiesIncludesFieldItemNotFound checks whether the header files specified in the library.properties `includes` field are in the library.
 func LibraryPropertiesIncludesFieldItemNotFound() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Library not loaded"
 	}
 
-	includes, ok := checkdata.LibraryProperties().GetOk("includes")
+	includes, ok := projectdata.LibraryProperties().GetOk("includes")
 	if !ok {
 		return checkresult.Skip, "Field not present"
 	}
@@ -1258,7 +1258,7 @@ func LibraryPropertiesIncludesFieldItemNotFound() (result checkresult.Type, outp
 		if include == "" {
 			return true
 		}
-		for _, header := range checkdata.SourceHeaders() {
+		for _, header := range projectdata.SourceHeaders() {
 			logrus.Tracef("Comparing include %s with header file %s", include, header)
 			if include == header {
 				logrus.Tracef("match!")
@@ -1284,16 +1284,16 @@ func LibraryPropertiesIncludesFieldItemNotFound() (result checkresult.Type, outp
 
 // LibraryPropertiesPrecompiledFieldInvalid checks for invalid value in the library.properties "precompiled" field.
 func LibraryPropertiesPrecompiledFieldInvalid() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Library not loaded"
 	}
 
-	precompiled, ok := checkdata.LibraryProperties().GetOk("precompiled")
+	precompiled, ok := projectdata.LibraryProperties().GetOk("precompiled")
 	if !ok {
 		return checkresult.Skip, "Field not present"
 	}
 
-	if schema.PropertyEnumMismatch("precompiled", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.PropertyEnumMismatch("precompiled", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, precompiled
 	}
 
@@ -1302,16 +1302,16 @@ func LibraryPropertiesPrecompiledFieldInvalid() (result checkresult.Type, output
 
 // LibraryPropertiesPrecompiledFieldEnabledWithFlatLayout checks whether a precompiled library has the required recursive layout type.
 func LibraryPropertiesPrecompiledFieldEnabledWithFlatLayout() (result checkresult.Type, output string) {
-	if checkdata.LoadedLibrary() == nil || checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LoadedLibrary() == nil || projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Library not loaded"
 	}
 
-	precompiled, ok := checkdata.LibraryProperties().GetOk("precompiled")
+	precompiled, ok := projectdata.LibraryProperties().GetOk("precompiled")
 	if !ok {
 		return checkresult.Skip, "Field not present"
 	}
 
-	if checkdata.LoadedLibrary().Precompiled && checkdata.LoadedLibrary().Layout == libraries.FlatLayout {
+	if projectdata.LoadedLibrary().Precompiled && projectdata.LoadedLibrary().Layout == libraries.FlatLayout {
 		return checkresult.Fail, precompiled
 	}
 
@@ -1320,15 +1320,15 @@ func LibraryPropertiesPrecompiledFieldEnabledWithFlatLayout() (result checkresul
 
 // LibraryPropertiesLdflagsFieldLTMinLength checks if the library.properties "ldflags" value is less than the minimum length.
 func LibraryPropertiesLdflagsFieldLTMinLength() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Library not loaded"
 	}
 
-	if !checkdata.LibraryProperties().ContainsKey("ldflags") {
+	if !projectdata.LibraryProperties().ContainsKey("ldflags") {
 		return checkresult.Skip, "Field not present"
 	}
 
-	if schema.PropertyLessThanMinLength("ldflags", checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.PropertyLessThanMinLength("ldflags", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Specification]) {
 		return checkresult.Fail, ""
 	}
 
@@ -1337,11 +1337,11 @@ func LibraryPropertiesLdflagsFieldLTMinLength() (result checkresult.Type, output
 
 // LibraryPropertiesMisspelledOptionalField checks if library.properties contains common misspellings of optional fields.
 func LibraryPropertiesMisspelledOptionalField() (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Library not loaded"
 	}
 
-	if schema.MisspelledOptionalPropertyFound(checkdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
+	if schema.MisspelledOptionalPropertyFound(projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
 		return checkresult.Fail, ""
 	}
 
@@ -1351,12 +1351,12 @@ func LibraryPropertiesMisspelledOptionalField() (result checkresult.Type, output
 // LibraryHasStraySketches checks for sketches outside the `examples` and `extras` folders.
 func LibraryHasStraySketches() (result checkresult.Type, output string) {
 	straySketchPaths := []string{}
-	if sketch.ContainsMainSketchFile(checkdata.ProjectPath()) { // Check library root.
-		straySketchPaths = append(straySketchPaths, checkdata.ProjectPath().String())
+	if sketch.ContainsMainSketchFile(projectdata.ProjectPath()) { // Check library root.
+		straySketchPaths = append(straySketchPaths, projectdata.ProjectPath().String())
 	}
 
 	// Check subfolders.
-	projectPathListing, err := checkdata.ProjectPath().ReadDir()
+	projectPathListing, err := projectdata.ProjectPath().ReadDir()
 	if err != nil {
 		panic(err)
 	}
@@ -1390,7 +1390,7 @@ func LibraryHasStraySketches() (result checkresult.Type, output string) {
 // MissingExamples checks whether the library is missing examples.
 func MissingExamples() (result checkresult.Type, output string) {
 	for _, examplesFolderName := range library.ExamplesFolderSupportedNames() {
-		examplesPath := checkdata.ProjectPath().Join(examplesFolderName)
+		examplesPath := projectdata.ProjectPath().Join(examplesFolderName)
 		exists, err := examplesPath.IsDirCheck()
 		if err != nil {
 			panic(err)
@@ -1411,7 +1411,7 @@ func MissingExamples() (result checkresult.Type, output string) {
 
 // MisspelledExamplesFolderName checks for incorrectly spelled `examples` folder name.
 func MisspelledExamplesFolderName() (result checkresult.Type, output string) {
-	directoryListing, err := checkdata.ProjectPath().ReadDir()
+	directoryListing, err := projectdata.ProjectPath().ReadDir()
 	if err != nil {
 		panic(err)
 	}
@@ -1427,7 +1427,7 @@ func MisspelledExamplesFolderName() (result checkresult.Type, output string) {
 
 // IncorrectExamplesFolderNameCase checks for incorrect `examples` folder name case.
 func IncorrectExamplesFolderNameCase() (result checkresult.Type, output string) {
-	directoryListing, err := checkdata.ProjectPath().ReadDir()
+	directoryListing, err := projectdata.ProjectPath().ReadDir()
 	if err != nil {
 		panic(err)
 	}
@@ -1443,7 +1443,7 @@ func IncorrectExamplesFolderNameCase() (result checkresult.Type, output string) 
 
 // nameInLibraryManagerIndex returns whether there is a library in Library Manager index using the given name.
 func nameInLibraryManagerIndex(name string) bool {
-	libraries := checkdata.LibraryManagerIndex()["libraries"].([]interface{})
+	libraries := projectdata.LibraryManagerIndex()["libraries"].([]interface{})
 	for _, libraryInterface := range libraries {
 		library := libraryInterface.(map[string]interface{})
 		if library["name"].(string) == name {
@@ -1456,16 +1456,16 @@ func nameInLibraryManagerIndex(name string) bool {
 
 // spellCheckLibraryPropertiesFieldValue returns the value of the provided library.properties field with commonly misspelled words corrected.
 func spellCheckLibraryPropertiesFieldValue(fieldName string) (result checkresult.Type, output string) {
-	if checkdata.LibraryPropertiesLoadError() != nil {
+	if projectdata.LibraryPropertiesLoadError() != nil {
 		return checkresult.NotRun, "Library not loaded"
 	}
 
-	fieldValue, ok := checkdata.LibraryProperties().GetOk(fieldName)
+	fieldValue, ok := projectdata.LibraryProperties().GetOk(fieldName)
 	if !ok {
 		return checkresult.Skip, "Field not present"
 	}
 
-	replaced, diff := checkdata.MisspelledWordsReplacer().Replace(fieldValue)
+	replaced, diff := projectdata.MisspelledWordsReplacer().Replace(fieldValue)
 	if len(diff) > 0 {
 		return checkresult.Fail, replaced
 	}
