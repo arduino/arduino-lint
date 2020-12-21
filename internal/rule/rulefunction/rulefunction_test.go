@@ -38,8 +38,6 @@ func init() {
 type ruleFunctionTestTable struct {
 	testName            string
 	projectFolderName   string
-	projectType         projecttype.Type
-	superProjectType    projecttype.Type
 	expectedRuleResult  ruleresult.Type
 	expectedOutputQuery string
 }
@@ -50,8 +48,8 @@ func checkRuleFunction(ruleFunction Type, testTables []ruleFunctionTestTable, t 
 
 		testProject := project.Type{
 			Path:             testDataPath.Join(testTable.projectFolderName),
-			ProjectType:      testTable.projectType,
-			SuperprojectType: testTable.superProjectType,
+			ProjectType:      projecttype.Library,
+			SuperprojectType: projecttype.Library,
 		}
 
 		projectdata.Initialize(testProject)
@@ -64,9 +62,8 @@ func checkRuleFunction(ruleFunction Type, testTables []ruleFunctionTestTable, t 
 
 func TestMissingReadme(t *testing.T) {
 	testTables := []ruleFunctionTestTable{
-		{"Subproject", "readme", projecttype.Sketch, projecttype.Library, ruleresult.Skip, ""},
-		{"Readme", "readme", projecttype.Sketch, projecttype.Sketch, ruleresult.Pass, ""},
-		{"No readme", "no-readme", projecttype.Sketch, projecttype.Sketch, ruleresult.Fail, ""},
+		{"Readme", "readme", ruleresult.Pass, ""},
+		{"No readme", "no-readme", ruleresult.Fail, ""},
 	}
 
 	checkRuleFunction(MissingReadme, testTables, t)
@@ -74,10 +71,9 @@ func TestMissingReadme(t *testing.T) {
 
 func TestMissingLicenseFile(t *testing.T) {
 	testTables := []ruleFunctionTestTable{
-		{"Subproject", "no-license-file", projecttype.Sketch, projecttype.Library, ruleresult.Skip, ""},
-		{"Has license", "license-file", projecttype.Sketch, projecttype.Sketch, ruleresult.Pass, ""},
-		{"Has license in subfolder", "license-file-in-subfolder", projecttype.Sketch, projecttype.Sketch, ruleresult.Fail, ""},
-		{"No license", "no-license-file", projecttype.Sketch, projecttype.Sketch, ruleresult.Fail, ""},
+		{"Has license", "license-file", ruleresult.Pass, ""},
+		{"Has license in subfolder", "license-file-in-subfolder", ruleresult.Fail, ""},
+		{"No license", "no-license-file", ruleresult.Fail, ""},
 	}
 
 	checkRuleFunction(MissingLicenseFile, testTables, t)
@@ -85,9 +81,9 @@ func TestMissingLicenseFile(t *testing.T) {
 
 func TestIncorrectArduinoDotHFileNameCase(t *testing.T) {
 	testTables := []ruleFunctionTestTable{
-		{"Incorrect, angle brackets", "arduino.h-angle", projecttype.Sketch, projecttype.Sketch, ruleresult.Fail, ""},
-		{"Incorrect, quotes", "arduino.h-quote", projecttype.Sketch, projecttype.Sketch, ruleresult.Fail, ""},
-		{"Correct case", "Arduino.h", projecttype.Sketch, projecttype.Sketch, ruleresult.Pass, ""},
+		{"Incorrect, angle brackets", "arduino.h-angle", ruleresult.Fail, ""},
+		{"Incorrect, quotes", "arduino.h-quote", ruleresult.Fail, ""},
+		{"Correct case", "Arduino.h", ruleresult.Pass, ""},
 	}
 
 	checkRuleFunction(IncorrectArduinoDotHFileNameCase, testTables, t)

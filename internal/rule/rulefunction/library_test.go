@@ -494,7 +494,6 @@ func TestLibraryPropertiesVersionFieldBehindTag(t *testing.T) {
 	}
 
 	testTables := []libraryRuleFunctionTestTable{
-		// TODO: Test Skip if subproject
 		{"Unable to load", "InvalidLibraryProperties", ruleresult.NotRun, ""},
 		{"Legacy", "Legacy", ruleresult.NotRun, ""},
 		{"Unparsable version", "VersionFormatInvalid", ruleresult.NotRun, ""},

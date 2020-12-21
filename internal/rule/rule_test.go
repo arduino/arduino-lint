@@ -31,7 +31,9 @@ func Test_shouldRun(t *testing.T) {
 	testTables := []struct {
 		testName              string
 		ruleProjectType       projecttype.Type
+		ruleSuperprojectType  projecttype.Type
 		projectType           projecttype.Type
+		superprojectType      projecttype.Type
 		disableModes          []rulemode.Type
 		enableModes           []rulemode.Type
 		libraryManagerSetting string
@@ -39,14 +41,15 @@ func Test_shouldRun(t *testing.T) {
 		shouldRunAssertion    assert.BoolAssertionFunc
 		errorAssertion        assert.ErrorAssertionFunc
 	}{
-		{"Project type mismatch", projecttype.Library, projecttype.Sketch, []rulemode.Type{}, []rulemode.Type{}, "false", "specification", assert.False, assert.NoError},
-		{"Disable mode match", projecttype.Library, projecttype.Library, []rulemode.Type{rulemode.LibraryManagerSubmission}, []rulemode.Type{}, "submit", "specification", assert.False, assert.NoError},
-		{"Enable mode match", projecttype.Library, projecttype.Library, []rulemode.Type{}, []rulemode.Type{rulemode.LibraryManagerSubmission}, "submit", "specification", assert.True, assert.NoError},
-		{"Disable mode default", projecttype.Library, projecttype.Library, []rulemode.Type{rulemode.Default}, []rulemode.Type{rulemode.LibraryManagerSubmission}, "update", "specification", assert.False, assert.NoError},
-		{"Disable mode default override", projecttype.Library, projecttype.Library, []rulemode.Type{rulemode.Default}, []rulemode.Type{rulemode.LibraryManagerSubmission}, "submit", "specification", assert.True, assert.NoError},
-		{"Enable mode default", projecttype.Library, projecttype.Library, []rulemode.Type{rulemode.LibraryManagerSubmission}, []rulemode.Type{rulemode.Default}, "update", "specification", assert.True, assert.NoError},
-		{"Enable mode default override", projecttype.Library, projecttype.Library, []rulemode.Type{rulemode.LibraryManagerSubmission}, []rulemode.Type{rulemode.Default}, "submit", "specification", assert.False, assert.NoError},
-		{"Unable to resolve", projecttype.Library, projecttype.Library, []rulemode.Type{rulemode.LibraryManagerSubmission}, []rulemode.Type{rulemode.LibraryManagerIndexed}, "false", "specification", assert.False, assert.Error},
+		{"Project type mismatch", projecttype.Library, projecttype.All, projecttype.Sketch, projecttype.Sketch, []rulemode.Type{}, []rulemode.Type{}, "false", "specification", assert.False, assert.NoError},
+		{"Superproject type mismatch", projecttype.Sketch, projecttype.Library, projecttype.Sketch, projecttype.Sketch, []rulemode.Type{}, []rulemode.Type{}, "false", "specification", assert.False, assert.NoError},
+		{"Disable mode match", projecttype.Library, projecttype.All, projecttype.Library, projecttype.Library, []rulemode.Type{rulemode.LibraryManagerSubmission}, []rulemode.Type{}, "submit", "specification", assert.False, assert.NoError},
+		{"Enable mode match", projecttype.Library, projecttype.All, projecttype.Library, projecttype.Library, []rulemode.Type{}, []rulemode.Type{rulemode.LibraryManagerSubmission}, "submit", "specification", assert.True, assert.NoError},
+		{"Disable mode default", projecttype.Library, projecttype.All, projecttype.Library, projecttype.Library, []rulemode.Type{rulemode.Default}, []rulemode.Type{rulemode.LibraryManagerSubmission}, "update", "specification", assert.False, assert.NoError},
+		{"Disable mode default override", projecttype.Library, projecttype.All, projecttype.Library, projecttype.Library, []rulemode.Type{rulemode.Default}, []rulemode.Type{rulemode.LibraryManagerSubmission}, "submit", "specification", assert.True, assert.NoError},
+		{"Enable mode default", projecttype.Library, projecttype.All, projecttype.Library, projecttype.Library, []rulemode.Type{rulemode.LibraryManagerSubmission}, []rulemode.Type{rulemode.Default}, "update", "specification", assert.True, assert.NoError},
+		{"Enable mode default override", projecttype.Library, projecttype.All, projecttype.Library, projecttype.Library, []rulemode.Type{rulemode.LibraryManagerSubmission}, []rulemode.Type{rulemode.Default}, "submit", "specification", assert.False, assert.NoError},
+		{"Unable to resolve", projecttype.Library, projecttype.All, projecttype.Library, projecttype.Library, []rulemode.Type{rulemode.LibraryManagerSubmission}, []rulemode.Type{rulemode.LibraryManagerIndexed}, "false", "specification", assert.False, assert.Error},
 	}
 
 	flags := test.ConfigurationFlags()
@@ -58,13 +61,15 @@ func Test_shouldRun(t *testing.T) {
 		configuration.Initialize(flags, []string{"/foo"})
 
 		ruleConfiguration := ruleconfiguration.Type{
-			ProjectType:  testTable.ruleProjectType,
-			DisableModes: testTable.disableModes,
-			EnableModes:  testTable.enableModes,
+			ProjectType:      testTable.ruleProjectType,
+			SuperprojectType: testTable.ruleSuperprojectType,
+			DisableModes:     testTable.disableModes,
+			EnableModes:      testTable.enableModes,
 		}
 
 		project := project.Type{
-			ProjectType: testTable.projectType,
+			ProjectType:      testTable.projectType,
+			SuperprojectType: testTable.superprojectType,
 		}
 		run, err := shouldRun(ruleConfiguration, project)
 		testTable.errorAssertion(t, err, testTable.testName)

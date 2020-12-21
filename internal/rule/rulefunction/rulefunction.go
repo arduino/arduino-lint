@@ -34,10 +34,6 @@ type Type func() (result ruleresult.Type, output string)
 
 // MissingReadme checks if the project has a readme that will be recognized by GitHub.
 func MissingReadme() (result ruleresult.Type, output string) {
-	if projectdata.ProjectType() != projectdata.SuperProjectType() {
-		return ruleresult.Skip, "Readme not required for subprojects"
-	}
-
 	// https://github.com/github/markup/blob/master/README.md
 	readmeRegexp := regexp.MustCompile(`(?i)^readme\.(markdown)|(mdown)|(mkdn)|(md)|(textile)|(rdoc)|(org)|(creole)|(mediawiki)|(wiki)|(rst)|(asciidoc)|(adoc)|(asc)|(pod)|(txt)$`)
 
@@ -53,10 +49,6 @@ func MissingReadme() (result ruleresult.Type, output string) {
 
 // MissingLicenseFile checks if the project has a license file that will be recognized by GitHub.
 func MissingLicenseFile() (result ruleresult.Type, output string) {
-	if projectdata.ProjectType() != projectdata.SuperProjectType() {
-		return ruleresult.Skip, "License file not required for subprojects"
-	}
-
 	// https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/licensing-a-repository#detecting-a-license
 	// https://github.com/licensee/licensee/blob/master/docs/what-we-look-at.md#detecting-the-license-file
 	// Should be `(?i)^(((un)?licen[sc]e)|(copy(ing|right))|(ofl)|(patents))(\.(?!spdx|header|gemspec).+)?$` but regexp package doesn't support negative lookahead, so only using "preferred extensions".
