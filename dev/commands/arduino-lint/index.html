@@ -382,20 +382,20 @@
 <p>arduino-lint checks for specification compliance and other common problems with Arduino projects</p>
 <div class="highlight"><pre><span></span><code>arduino-lint [FLAG]... [PROJECT_PATH]...
 
-Run checks on PROJECT_PATH or current path if no PROJECT_PATH argument provided.
+Run rules on PROJECT_PATH or current path if no PROJECT_PATH argument provided.
 </code></pre></div>
 <h3 id="options">Options<a class="headerlink" href="#options" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>      --compliance string        Configure how strict the tool is. Can be {strict|specification|permissive} (default &quot;specification&quot;)
       --format string            The output format can be {text|json}. (default &quot;text&quot;)
   -h, --help                     help for arduino-lint
-      --library-manager string   Configure the checks for libraries in the Arduino Library Manager index. Can be {submit|update|false}.
-                                 submit: Also run additional checks required to pass before a library is accepted for inclusion in the index.
-                                 update: Also run additional checks required to pass before new releases of a library already in the index are accepted.
-                                 false: Don&#39;t run any Library Manager-specific checks.
+      --library-manager string   Configure the rules for libraries in the Arduino Library Manager index. Can be {submit|update|false}.
+                                 submit: Also run additional rules required to pass before a library is accepted for inclusion in the index.
+                                 update: Also run additional rules required to pass before new releases of a library already in the index are accepted.
+                                 false: Don&#39;t run any Library Manager-specific rules.
       --project-type string      Only check projects of the specified type and their subprojects. Can be {sketch|library|all}. (default &quot;all&quot;)
       --recursive string         Search path recursively for Arduino projects to check. Can be {true|false}. (default &quot;true&quot;)
-      --report-file string       Save a report on the checks to this file.
-  -v, --verbose                  Show more information while running checks.
+      --report-file string       Save a report on the rules to this file.
+  -v, --verbose                  Show more information while running rules.
       --version                  Print version and timestamp of the build.
 </code></pre></div>
                 
