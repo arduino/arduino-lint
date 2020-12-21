@@ -13,7 +13,7 @@
         <meta name="description" content="Tool to check for problems with Arduino projects">
       
       
-        <link rel="canonical" href="https://arduino.github.io/arduino-lint/commands/arduino-lint/">
+        <link rel="canonical" href="https://arduino.github.io/arduino-lint/installation/">
       
       
       
@@ -35,18 +35,18 @@
       
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
-      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-4.6.3">
     
     
       
-        <title>Command reference - arduino-lint</title>
+        <title>Installation - arduino-lint</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.adb8469c.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.adb8469c.css">
       
-        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.a8b3c06d.css">
       
       
         
@@ -55,7 +55,7 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr.86422ebf.js"></script>
+      <script src="../assets/javascripts/modernizr.86422ebf.js"></script>
     
     
       
@@ -64,10 +64,10 @@
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
-    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
     
     
-      <link rel="stylesheet" href="../../css/version-select.css">
+      <link rel="stylesheet" href="../css/version-select.css">
     
     
       
@@ -91,7 +91,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#arduino-lint" tabindex="0" class="md-skip">
+      <a href="#use-the-install-script" tabindex="0" class="md-skip">
         Skip to content
       </a>
     
@@ -102,7 +102,7 @@
       <div class="md-flex__cell md-flex__cell--shrink">
         <a href="https://arduino.github.io/arduino-lint/" title="arduino-lint" aria-label="arduino-lint" class="md-header-nav__button md-logo">
           
-            <img alt="logo" src="../../img/icon_mac_light.png" width="24" height="24">
+            <img alt="logo" src="../img/icon_mac_light.png" width="24" height="24">
           
         </a>
       </div>
@@ -117,7 +117,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                Command reference
+                Installation
               
             </span>
           
@@ -194,7 +194,7 @@
   <label class="md-nav__title md-nav__title--site" for="__drawer">
     <a href="https://arduino.github.io/arduino-lint/" title="arduino-lint" class="md-nav__button md-logo">
       
-        <img alt="logo" src="../../img/icon_mac_light.png" width="48" height="48">
+        <img alt="logo" src="../img/icon_mac_light.png" width="48" height="48">
       
     </a>
     arduino-lint
@@ -228,20 +228,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../.." title="Documentation Home" class="md-nav__link">
+    <a href=".." title="Documentation Home" class="md-nav__link">
       Documentation Home
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../../installation/" title="Installation" class="md-nav__link">
-      Installation
     </a>
   </li>
 
@@ -259,11 +247,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Command reference
+        Installation
       </label>
     
-    <a href="./" title="Command reference" class="md-nav__link md-nav__link--active">
-      Command reference
+    <a href="./" title="Installation" class="md-nav__link md-nav__link--active">
+      Installation
     </a>
     
       
@@ -275,23 +263,43 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#arduino-lint" class="md-nav__link">
-    arduino-lint
+  <a href="#use-the-install-script" class="md-nav__link">
+    Use the install script
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#synopsis" class="md-nav__link">
-    Synopsis
+  <a href="#download" class="md-nav__link">
+    Download
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#latest-release" class="md-nav__link">
+    Latest release
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#options" class="md-nav__link">
-    Options
+  <a href="#previous-versions" class="md-nav__link">
+    Previous versions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-from-source" class="md-nav__link">
+    Build from source
   </a>
   
 </li>
@@ -318,7 +326,19 @@
 
 
   <li class="md-nav__item">
-    <a href="../../CONTRIBUTING/" title="How to contribute" class="md-nav__link">
+    <a href="../commands/arduino-lint/" title="Command reference" class="md-nav__link">
+      Command reference
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../CONTRIBUTING/" title="How to contribute" class="md-nav__link">
       How to contribute
     </a>
   </li>
@@ -343,23 +363,43 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#arduino-lint" class="md-nav__link">
-    arduino-lint
+  <a href="#use-the-install-script" class="md-nav__link">
+    Use the install script
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#synopsis" class="md-nav__link">
-    Synopsis
+  <a href="#download" class="md-nav__link">
+    Download
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#latest-release" class="md-nav__link">
+    Latest release
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#options" class="md-nav__link">
-    Options
+  <a href="#previous-versions" class="md-nav__link">
+    Previous versions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#build-from-source" class="md-nav__link">
+    Build from source
   </a>
   
 </li>
@@ -386,30 +426,65 @@
               
                 
                 
-                  <h1>Command reference</h1>
+                  <h1>Installation</h1>
                 
-                <h2 id="arduino-lint">arduino-lint<a class="headerlink" href="#arduino-lint" title="Permanent link">&para;</a></h2>
-<p>Linter for Arduino projects.</p>
-<h3 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">&para;</a></h3>
-<p>arduino-lint checks for specification compliance and other common problems with Arduino projects</p>
-<div class="highlight"><pre><span></span><code>arduino-lint [FLAG]... [PROJECT_PATH]...
-
-Run rules on PROJECT_PATH or current path if no PROJECT_PATH argument provided.
+                <h2 id="use-the-install-script">Use the install script<a class="headerlink" href="#use-the-install-script" title="Permanent link">&para;</a></h2>
+<p>The script requires <code>sh</code>, which is always available on Linux and macOS. <code>sh</code> is not available by default on Windows. The
+script can be run on Windows by installing <a href="https://gitforwindows.org/">Git for Windows</a>, then running it from Git Bash.</p>
+<p>This script will install the latest version of arduino-lint to <code>$PWD/bin</code>:</p>
+<div class="highlight"><pre><span></span><code>curl -fsSL https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/install.sh | sh
 </code></pre></div>
-<h3 id="options">Options<a class="headerlink" href="#options" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>      --compliance string        Configure how strict the tool is. Can be {strict|specification|permissive} (default &quot;specification&quot;)
-      --format string            The output format can be {text|json}. (default &quot;text&quot;)
-  -h, --help                     help for arduino-lint
-      --library-manager string   Configure the rules for libraries in the Arduino Library Manager index. Can be {submit|update|false}.
-                                 submit: Also run additional rules required to pass before a library is accepted for inclusion in the index.
-                                 update: Also run additional rules required to pass before new releases of a library already in the index are accepted.
-                                 false: Don&#39;t run any Library Manager-specific rules.
-      --project-type string      Only check projects of the specified type and their subprojects. Can be {sketch|library|all}. (default &quot;all&quot;)
-      --recursive string         Search path recursively for Arduino projects to check. Can be {true|false}. (default &quot;true&quot;)
-      --report-file string       Save a report on the rules to this file.
-  -v, --verbose                  Show more information while running rules.
-      --version                  Print version and timestamp of the build.
+<p>If you want to target a different directory, for example <code>~/local/bin</code>, set the <code>BINDIR</code> environment variable like this:</p>
+<div class="highlight"><pre><span></span><code>curl -fsSL https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/install.sh | BINDIR=~/local/bin sh
 </code></pre></div>
+<p>If you would like to use the <code>arduino-lint</code> command from any location, install arduino-lint to a directory already in
+your <code>PATH</code> or add the arduino-lint installation path to your <code>PATH</code> environment variable.</p>
+<p>If you want to download a specific arduino-lint version, for example <code>0.9.0</code>, pass the version number as a parameter
+like this:</p>
+<div class="highlight"><pre><span></span><code>curl -fsSL https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/install.sh | sh -s 0.9.0
+</code></pre></div>
+<h3 id="download">Download<a class="headerlink" href="#download" title="Permanent link">&para;</a></h3>
+<p>Pre-built binaries for all the supported platforms are available for download from the links below.</p>
+<p>If you would like to use the <code>arduino-lint</code> command from any location, extract the downloaded file to a directory
+already in your <code>PATH</code> or add the arduino-lint installation path to your <code>PATH</code> environment variable.</p>
+<h4 id="latest-release">Latest release<a class="headerlink" href="#latest-release" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linux</td>
+<td><a href="https://downloads.arduino.cc/arduino-lint/arduino-lint_latest_Linux_32bit.tar.gz">32 bit</a></td>
+<td><a href="https://downloads.arduino.cc/arduino-lint/arduino-lint_latest_Linux_64bit.tar.gz">64 bit</a></td>
+</tr>
+<tr>
+<td>Linux ARM</td>
+<td><a href="https://downloads.arduino.cc/arduino-lint/arduino-lint_latest_Linux_ARMv7.tar.gz">32 bit</a></td>
+<td><a href="https://downloads.arduino.cc/arduino-lint/arduino-lint_latest_Linux_ARM64.tar.gz">64 bit</a></td>
+</tr>
+<tr>
+<td>Windows</td>
+<td><a href="https://downloads.arduino.cc/arduino-lint/arduino-lint_latest_Windows_32bit.zip">32 bit</a></td>
+<td><a href="https://downloads.arduino.cc/arduino-lint/arduino-lint_latest_Windows_64bit.zip">64 bit</a></td>
+</tr>
+<tr>
+<td>macOS</td>
+<td></td>
+<td><a href="https://downloads.arduino.cc/arduino-lint/arduino-lint_latest_macOS_64bit.tar.gz">64 bit</a></td>
+</tr>
+</tbody>
+</table>
+<h4 id="previous-versions">Previous versions<a class="headerlink" href="#previous-versions" title="Permanent link">&para;</a></h4>
+<p>These are available from the "Assets" sections on the <a href="https://github.com/arduino/arduino-lint/releases">releases page</a>.</p>
+<p><code>https://downloads.arduino.cc/arduino-lint/nightly/nightly-&lt;DATE&gt;-checksums.txt</code></p>
+<h3 id="build-from-source">Build from source<a class="headerlink" href="#build-from-source" title="Permanent link">&para;</a></h3>
+<p>If you’re familiar with Golang or if you want to contribute to the project, you will probably build arduino-lint locally
+with your Go toolchain. See the <a href="../CONTRIBUTING/#building-the-source-code">"How to contribute"</a> page for instructions.</p>
                 
                   
                 
@@ -431,7 +506,7 @@ Run rules on PROJECT_PATH or current path if no PROJECT_PATH argument provided.
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../../installation/" title="Installation" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href=".." title="Documentation Home" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -440,19 +515,19 @@ Run rules on PROJECT_PATH or current path if no PROJECT_PATH argument provided.
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Installation
+                Documentation Home
               </span>
             </div>
           </a>
         
         
-          <a href="../../CONTRIBUTING/" title="How to contribute" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../commands/arduino-lint/" title="Command reference" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                How to contribute
+                Command reference
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
@@ -484,11 +559,11 @@ Run rules on PROJECT_PATH or current path if no PROJECT_PATH argument provided.
       
     </div>
     
-      <script src="../../assets/javascripts/application.c33a9706.js"></script>
+      <script src="../assets/javascripts/application.c33a9706.js"></script>
       
-      <script>app.initialize({version:"1.1.2",url:{base:"../.."}})</script>
+      <script>app.initialize({version:"1.1.2",url:{base:".."}})</script>
       
-        <script src="../../js/version-select.js"></script>
+        <script src="../js/version-select.js"></script>
       
     
   </body>
