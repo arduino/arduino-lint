@@ -107,3 +107,29 @@ jobs:
         shell: bash
         run: |
           "${PWD}/bin/${{ env.TOOL_NAME }}" --version | grep --fixed-strings "${{ env.VERSION }}"
+
+  nightly:
+    strategy:
+      fail-fast: false
+
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout local repository
+        uses: actions/checkout@v2
+
+      - name: Run script with nightly build version argument
+        shell: sh
+        run: |
+          "${{ github.workspace }}/etc/install.sh" "nightly-latest"
+
+      - name: Verify installation
+        shell: bash
+        run: |
+          "${PWD}/bin/${{ env.TOOL_NAME }}" --version | grep "^nightly-"
