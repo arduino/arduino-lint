@@ -26,8 +26,11 @@ test_data_path = pathlib.Path(__file__).resolve().parent.joinpath("testdata")
 
 
 def test_defaults(run_command):
-    result = run_command(cmd=[], custom_working_dir=test_data_path.joinpath("recursive"))
+    result = run_command(cmd=[], custom_working_dir=test_data_path.joinpath("ValidSketch"))
     assert result.ok
+
+    result = run_command(cmd=[], custom_working_dir=test_data_path.joinpath("recursive"))
+    assert not result.ok
 
 
 @pytest.mark.parametrize(
@@ -115,16 +118,11 @@ def test_project_type_invalid(run_command):
 
 def test_recursive(run_command):
     valid_projects_path = test_data_path.joinpath("recursive")
-    result = run_command(cmd=["--recursive", "true", valid_projects_path])
+    result = run_command(cmd=[valid_projects_path])
+    assert not result.ok
+
+    result = run_command(cmd=["--recursive", valid_projects_path])
     assert result.ok
-
-    result = run_command(cmd=["--recursive", "false", valid_projects_path])
-    assert not result.ok
-
-
-def test_recursive_invalid(run_command):
-    result = run_command(cmd=["--recursive", "foo", test_data_path.joinpath("ValidSketch")])
-    assert not result.ok
 
 
 def test_report_file(run_command, working_dir):
@@ -142,7 +140,6 @@ def test_report_file(run_command, working_dir):
             "--project-type",
             project_type,
             "--recursive",
-            "true",
             "--report-file",
             report_file_name,
             project_path,
@@ -206,7 +203,7 @@ def test_version(run_command):
 
 
 def test_arduino_lint_official(run_command):
-    project_path = test_data_path.joinpath("ARDUINO_LINT_OFFICIAL")
+    project_path = test_data_path.joinpath("ARDUINO_LINT_OFFICIAL", "Arduino_Lib")
 
     result = run_command(cmd=[project_path])
     assert not result.ok
