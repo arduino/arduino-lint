@@ -18,8 +18,8 @@ curl -fsSL https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/insta
 If you would like to use the `arduino-lint` command from any location, install arduino-lint to a directory already in
 your `PATH` or add the arduino-lint installation path to your `PATH` environment variable.
 
-If you want to download a specific arduino-lint version, for example `0.9.0`, pass the version number as a parameter
-like this:
+If you want to download a specific arduino-lint version, for example `0.9.0` or `nightly-latest`, pass the version
+number as a parameter like this:
 
 ```
 curl -fsSL https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/install.sh | sh -s 0.9.0
