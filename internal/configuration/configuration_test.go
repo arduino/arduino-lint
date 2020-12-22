@@ -237,10 +237,13 @@ func TestInitializeOfficial(t *testing.T) {
 }
 
 func TestVersion(t *testing.T) {
-	commit = "abcd"
-	assert.Equal(t, "0.0.0+"+commit, Version())
 	version = "42.1.2"
 	assert.Equal(t, version, Version())
+}
+
+func TestCommit(t *testing.T) {
+	commit = "abcd"
+	assert.Equal(t, commit, Commit())
 }
 
 func TestBuildTimestamp(t *testing.T) {

@@ -200,14 +200,16 @@ func VersionMode() bool {
 }
 
 var version string
-var commit string
 
 func Version() string {
-	if version == "" {
-		return "0.0.0+" + commit
-	}
-
 	return version
+}
+
+var commit string
+
+// Commit returns the HEAD commit of the arduino-lint repository when the application was built.
+func Commit() string {
+	return commit
 }
 
 var buildTimestamp string

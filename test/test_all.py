@@ -177,6 +177,14 @@ def test_version(run_command):
     assert semver.VersionInfo.isvalid(version=output_list[0])
     dateutil.parser.isoparse(output_list[1])
 
+    result = run_command(cmd=["--version", "--format", "json"])
+    assert result.ok
+    version_output = json.loads(result.stdout)
+    if version_output["version"] != "":
+        assert semver.VersionInfo.isvalid(version=version_output["version"])
+    assert version_output["commit"] != ""
+    dateutil.parser.isoparse(version_output["buildTimestamp"])
+
 
 def test_arduino_lint_official(run_command):
     project_path = test_data_path.joinpath("ARDUINO_LINT_OFFICIAL")
