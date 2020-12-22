@@ -22,8 +22,21 @@ import (
 
 // The rule functions for package indexes.
 
+// PackageIndexMissing checks whether a file resembling a package index was found in the specified project folder.
+func PackageIndexMissing() (result ruleresult.Type, output string) {
+	if projectdata.ProjectPath() == nil {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
 // PackageIndexJSONFormat checks whether the package index file is a valid JSON document.
 func PackageIndexJSONFormat() (result ruleresult.Type, output string) {
+	if projectdata.ProjectPath() == nil {
+		return ruleresult.NotRun, "Package index not found"
+	}
+
 	if isValidJSON(projectdata.ProjectPath()) {
 		return ruleresult.Pass, ""
 	}
@@ -33,6 +46,10 @@ func PackageIndexJSONFormat() (result ruleresult.Type, output string) {
 
 // PackageIndexFormat checks for invalid package index data format.
 func PackageIndexFormat() (result ruleresult.Type, output string) {
+	if projectdata.ProjectPath() == nil {
+		return ruleresult.NotRun, "Package index not found"
+	}
+
 	if projectdata.PackageIndexLoadError() != nil {
 		return ruleresult.Fail, projectdata.PackageIndexLoadError().Error()
 	}

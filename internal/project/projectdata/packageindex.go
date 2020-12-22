@@ -21,7 +21,9 @@ import (
 
 // InitializeForPackageIndex gathers the package index rule data for the specified project.
 func InitializeForPackageIndex() {
-	packageIndex, packageIndexLoadError = packageindex.LoadIndex(ProjectPath())
+	if ProjectPath() != nil {
+		packageIndex, packageIndexLoadError = packageindex.LoadIndex(ProjectPath())
+	}
 }
 
 var packageIndex *packageindex.Index
