@@ -81,11 +81,7 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 		return fmt.Errorf("--project-type flag value %s not valid", superprojectTypeFilterString)
 	}
 
-	recursiveString, _ := flags.GetString("recursive")
-	recursive, err = strconv.ParseBool(recursiveString)
-	if err != nil {
-		return fmt.Errorf("--recursive flag value %s not valid", recursiveString)
-	}
+	recursive, _ = flags.GetBool("recursive")
 
 	reportFilePathString, _ := flags.GetString("report-file")
 	reportFilePath = paths.New(reportFilePathString)
