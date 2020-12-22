@@ -191,7 +191,7 @@ tasks:
 
 vars:
   TAG:
-    sh: echo "`git describe --tags --abbrev=0`"
+    sh: echo "`git describe --tags --abbrev=0 2> /dev/null`"
   TIMESTAMP_SHORT:
     sh: echo "{{now | date "20060102"}}"
   VERSION: "{{if .CUSTOM_VERSION}}{{.CUSTOM_VERSION}}-{{.TIMESTAMP_SHORT}}{{else}}{{.TAG}}{{end}}"
