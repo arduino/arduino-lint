@@ -129,17 +129,36 @@ def test_recursive_invalid(run_command):
 
 def test_report_file(run_command, working_dir):
     project_path = test_data_path.joinpath("ValidSketch")
+    compliance = "permissive"
+    library_manager = "update"
+    project_type = "sketch"
     report_file_name = "report.json"
-    result = run_command(cmd=["--report-file", report_file_name, project_path])
+    result = run_command(
+        cmd=[
+            "--compliance",
+            compliance,
+            "--library-manager",
+            library_manager,
+            "--project-type",
+            project_type,
+            "--recursive",
+            "true",
+            "--report-file",
+            report_file_name,
+            project_path,
+        ]
+    )
     assert result.ok
     with pathlib.Path(working_dir, report_file_name).open() as report_file:
         report = json.load(report_file)
 
     assert pathlib.PurePath(report["configuration"]["paths"][0]) == project_path
-    assert report["configuration"]["projectType"] == "all"
+    assert report["configuration"]["projectType"] == project_type
     assert report["configuration"]["recursive"]
     assert pathlib.PurePath(report["projects"][0]["path"]) == project_path
     assert report["projects"][0]["projectType"] == "sketch"
+    assert report["projects"][0]["configuration"]["compliance"] == compliance
+    assert report["projects"][0]["configuration"]["libraryManager"] == library_manager
     assert report["projects"][0]["summary"]["pass"]
     assert report["projects"][0]["summary"]["errorCount"] == 0
     assert report["summary"]["pass"]
