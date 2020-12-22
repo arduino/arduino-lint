@@ -190,17 +190,18 @@ tasks:
       PACKAGE_NAME: "{{ .PROJECT_NAME }}_{{ .VERSION }}_{{ .PACKAGE_PLATFORM }}.tar.gz"
 
 vars:
-  VERSION:
+  TAG:
     sh: echo "`git describe --tags --abbrev=0`"
   TIMESTAMP_SHORT:
     sh: echo "{{now | date "20060102"}}"
+  VERSION: "{{if .CUSTOM_VERSION}}{{.CUSTOM_VERSION}}-{{.TIMESTAMP_SHORT}}{{else}}{{.TAG}}{{end}}"
   DIST_LDFLAGS: >-
     -ldflags
     '
-    -X {{ .CONFIGURATION_PACKAGE }}.version={{.VERSION}}
+    -X {{ .CONFIGURATION_PACKAGE }}.version={{.TAG}}
     -X {{ .CONFIGURATION_PACKAGE }}.commit={{.COMMIT}}
     -X {{ .CONFIGURATION_PACKAGE }}.buildTimestamp={{.TIMESTAMP}}
     '
   CONTAINER: "docker.elastic.co/beats-dev/golang-crossbuild"
   GO_VERSION: "1.14.7"
-  CHECKSUM_FILE: "{{ .VERSION }}-{{ .TIMESTAMP_SHORT }}-checksums.txt"
+  CHECKSUM_FILE: "{{ .VERSION }}-checksums.txt"
