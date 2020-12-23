@@ -114,6 +114,7 @@ func containsMisspelledPathBaseName(pathList paths.PathList, correctBaseName str
 	return nil, false
 }
 
+// containsIncorrectPathBaseCase checks whether the list of paths contains an element with base name matching the provided query in all bug case.
 func containsIncorrectPathBaseCase(pathList paths.PathList, correctBaseName string) (*paths.Path, bool) {
 	for _, path := range pathList {
 		if path.Base() == correctBaseName {

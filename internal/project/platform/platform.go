@@ -55,6 +55,7 @@ var bundledLibrariesFolderNames = map[string]struct{}{
 	"libraries": empty,
 }
 
+// BundledLibrariesFolderNames returns a list of supported names for the platform bundled libraries folder.
 func BundledLibrariesFolderNames() []string {
 	folderNames := make([]string, 0, len(bundledLibrariesFolderNames))
 	for folderName := range bundledLibrariesFolderNames {

@@ -21,7 +21,7 @@ import (
 	"github.com/arduino/go-properties-orderedmap"
 )
 
-// Initialize gathers the platform rule data for the specified project.
+// InitializeForPlatform gathers the platform rule data for the specified project.
 func InitializeForPlatform(project project.Type) {
 	boardsTxt, boardsTxtLoadError = boardstxt.Properties(ProjectPath())
 }

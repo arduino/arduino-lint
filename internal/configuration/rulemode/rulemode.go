@@ -96,6 +96,7 @@ func Modes(defaultRuleModes map[projecttype.Type]map[Type]bool, customRuleModes 
 	return ruleModes
 }
 
+// Compliance returns the tool configuration's compliance setting name.
 func Compliance(ruleModes map[Type]bool) string {
 	for key, value := range ruleModes {
 		if value && (key == Strict || key == Specification || key == Permissive) {

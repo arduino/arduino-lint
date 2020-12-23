@@ -195,12 +195,14 @@ func Verbose() bool {
 
 var versionMode bool
 
+// VersionMode returns the --version setting.
 func VersionMode() bool {
 	return versionMode
 }
 
 var version string
 
+// Version returns the build version.
 func Version() string {
 	return version
 }
@@ -214,6 +216,7 @@ func Commit() string {
 
 var buildTimestamp string
 
+// BuildTimestamp returns the timestamp of the build.
 func BuildTimestamp() string {
 	return buildTimestamp
 }
@@ -225,6 +228,7 @@ func TargetPaths() paths.PathList {
 	return targetPaths
 }
 
+// EnableLogging enables or disables logging debug output.
 func EnableLogging(enable bool) {
 	if enable {
 		logrus.SetOutput(defaultLogOutput) // Enable log output.

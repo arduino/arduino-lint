@@ -16,6 +16,7 @@
 // Package ruleresult defines the possible result values returned by a rule.
 package ruleresult
 
+// Type is the type for rule results.
 //go:generate stringer -type=Type -linecomment
 type Type int
 

@@ -47,7 +47,7 @@ from git import Repo
 #
 # In order to avoid unwanted changes to the public website hosting the arduino-lint documentation, only Mike is allowed
 # to push changes to the `gh-pages` branch, and this only happens from within the CI, in the "Publish documentation"
-# workflow: https://github.com/arduino/arduino-lint/blob/master/.github/workflows/publish-docs.yml
+# workflow: https://github.com/arduino/arduino-lint/blob/main/.github/workflows/publish-docs.yml
 #
 # The CI is responsible for guessing which version of arduino-lint we're building docs for, so that generated content
 # will be stored in the appropriate section of the documentation website. Because this guessing might be fairly complex,

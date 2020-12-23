@@ -53,6 +53,7 @@ func HasValidFilename(filePath *paths.Path, officialRuleMode bool) bool {
 	return regex.MatchString(filename)
 }
 
+// Find searches the provided path for a file that has a name resembling a package index and returns the path to that file.
 func Find(folderPath *paths.Path) (*paths.Path, error) {
 	exist, err := folderPath.ExistCheck()
 	if !exist {

@@ -481,7 +481,7 @@ func LibraryPropertiesNameFieldContainsLibrary() (result ruleresult.Type, output
 	return ruleresult.Pass, ""
 }
 
-// LibraryPropertiesNameFieldDuplicate checks whether there is an existing entry in the Library Manager index using the the library.properties `name` value.
+// LibraryPropertiesNameFieldDuplicate checks whether there is an existing entry in the Library Manager index using the library.properties `name` value.
 func LibraryPropertiesNameFieldDuplicate() (result ruleresult.Type, output string) {
 	if projectdata.LibraryPropertiesLoadError() != nil {
 		return ruleresult.NotRun, "Couldn't load library.properties"
@@ -499,7 +499,7 @@ func LibraryPropertiesNameFieldDuplicate() (result ruleresult.Type, output strin
 	return ruleresult.Pass, ""
 }
 
-// LibraryPropertiesNameFieldNotInIndex checks whether there is no existing entry in the Library Manager index using the the library.properties `name` value.
+// LibraryPropertiesNameFieldNotInIndex checks whether there is no existing entry in the Library Manager index using the library.properties `name` value.
 func LibraryPropertiesNameFieldNotInIndex() (result ruleresult.Type, output string) {
 	if projectdata.LibraryPropertiesLoadError() != nil {
 		return ruleresult.NotRun, "Couldn't load library.properties"
@@ -1019,7 +1019,7 @@ func LibraryPropertiesArchitecturesFieldLTMinLength() (result ruleresult.Type, o
 	return ruleresult.Pass, ""
 }
 
-// LibraryPropertiesArchitecturesFieldAlias checks whether an alias architecture name is present, but not its true Arduino architecture name.
+// LibraryPropertiesArchitecturesFieldSoloAlias checks whether an alias architecture name is present, but not its true Arduino architecture name.
 func LibraryPropertiesArchitecturesFieldSoloAlias() (result ruleresult.Type, output string) {
 	if projectdata.LibraryPropertiesLoadError() != nil {
 		return ruleresult.NotRun, "Couldn't load library.properties"
