@@ -13,7 +13,7 @@
 // Arduino software without disclosing the source code of your own applications.
 // To purchase a commercial license, send an email to license@arduino.cc.
 
-// Package compliance level defines the levels of specification compliance.
+// Package compliancelevel defines the levels of specification compliance.
 package compliancelevel
 
 // Type is the type for the compliance levels.

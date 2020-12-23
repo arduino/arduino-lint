@@ -69,6 +69,7 @@ func shouldRun(ruleConfiguration ruleconfiguration.Type, currentProject project.
 	return IsEnabled(ruleConfiguration, configurationRuleModes)
 }
 
+// IsEnabled returns whether a given rule is enabled under a given tool configuration.
 func IsEnabled(ruleConfiguration ruleconfiguration.Type, configurationRuleModes map[rulemode.Type]bool) (bool, error) {
 	for _, disableMode := range ruleConfiguration.DisableModes {
 		if configurationRuleModes[disableMode] {

@@ -41,12 +41,14 @@ type Type struct {
 	Summary       summaryReportType           `json:"summary"`
 }
 
+// toolConfigurationReportType is the type for the arduino-lint tool configuration.
 type toolConfigurationReportType struct {
 	Paths       paths.PathList `json:"paths"`
 	ProjectType string         `json:"projectType"`
 	Recursive   bool           `json:"recursive"`
 }
 
+// projectReportType is the type for the individual project reports.
 type projectReportType struct {
 	Path          *paths.Path                    `json:"path"`
 	ProjectType   string                         `json:"projectType"`
@@ -55,12 +57,14 @@ type projectReportType struct {
 	Summary       summaryReportType              `json:"summary"`
 }
 
+// projectConfigurationReportType is the type for the individual project tool configurations.
 type projectConfigurationReportType struct {
 	Compliance     string `json:"compliance"`
 	LibraryManager string `json:"libraryManager"`
 	Official       bool   `json:"official"`
 }
 
+// ruleReportType is the type of the rule reports.
 type ruleReportType struct {
 	Category    string `json:"category"`
 	Subcategory string `json:"subcategory"`
@@ -72,6 +76,7 @@ type ruleReportType struct {
 	Message     string `json:"message"`
 }
 
+// summaryReportType is the type of the rule result summary reports.
 type summaryReportType struct {
 	Pass         bool `json:"pass"`
 	WarningCount int  `json:"warningCount"`
@@ -210,11 +215,12 @@ func (results Type) SummaryText() string {
 	return fmt.Sprintf("Finished linting projects. Results:\nWarning count: %v\nError count: %v\nRules passed: %v", results.Summary.WarningCount, results.Summary.ErrorCount, results.Summary.Pass)
 }
 
-// JSONReport returns a JSON formatted report of rules on all projects.
+// JSONReport returns a JSON formatted report of rules on all projects in string encoding.
 func (results Type) JSONReport() string {
 	return string(results.jsonReportRaw())
 }
 
+// jsonReportRaw returns the report marshalled into JSON format in byte encoding.
 func (results Type) jsonReportRaw() []byte {
 	reportJSON, err := json.MarshalIndent(results, "", "  ")
 	if err != nil {
@@ -251,6 +257,7 @@ func (results Type) Passed() bool {
 	return results.Summary.Pass
 }
 
+// getProjectReportIndex returns the index of the existing entry in the results.Projects array for the given project, or the next available index if there is no existing entry.
 func (results Type) getProjectReportIndex(projectPath *paths.Path) (bool, int) {
 	var index int
 	var projectReport projectReportType

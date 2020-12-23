@@ -51,6 +51,7 @@ func FindProjects() ([]Type, error) {
 	return foundProjects, nil
 }
 
+// findProjects handles the recursion for FindProjects().
 func findProjects(targetPath *paths.Path) ([]Type, error) {
 	var foundProjects []Type
 

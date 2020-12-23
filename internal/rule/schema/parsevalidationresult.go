@@ -83,6 +83,7 @@ func ValidationErrorMatch(
 	)
 }
 
+// validationErrorMatch handles the recursion for ValidationErrorMatch().
 func validationErrorMatch(
 	instancePointerRegexp,
 	schemaPointerRegexp,

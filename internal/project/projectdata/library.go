@@ -32,14 +32,13 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// Initialize gathers the library rule data for the specified project.
+// InitializeForLibrary gathers the library rule data for the specified project.
 func InitializeForLibrary(project project.Type) {
 	var err error
 
 	libraryProperties, libraryPropertiesLoadError = libraryproperties.Properties(project.Path)
 	if libraryPropertiesLoadError != nil {
 		logrus.Errorf("Error loading library.properties from %s: %s", project.Path, libraryPropertiesLoadError)
-		// TODO: can I even do this?
 		libraryPropertiesSchemaValidationResult = nil
 	} else {
 		libraryPropertiesSchemaValidationResult = libraryproperties.Validate(libraryProperties)
