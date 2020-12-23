@@ -20,6 +20,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"text/template"
 
 	"github.com/arduino/arduino-lint/internal/configuration"
@@ -216,12 +217,18 @@ func (results Type) JSONReport() string {
 }
 
 func (results Type) jsonReportRaw() []byte {
-	reportJSON, err := json.MarshalIndent(results, "", "  ")
+	var marshalledReportBuffer bytes.Buffer
+	jsonEncoder := json.NewEncoder(io.Writer(&marshalledReportBuffer))
+	// By default, the json package HTML-sanitizes strings during marshalling (https://golang.org/pkg/encoding/json/#Marshal)
+	// This means that the simple json.MarshalIndent() approach would result in the report containing gibberish.
+	jsonEncoder.SetEscapeHTML(false)
+	jsonEncoder.SetIndent("", "  ")
+	err := jsonEncoder.Encode(results)
 	if err != nil {
 		panic(fmt.Sprintf("Error while formatting rules report: %v", err))
 	}
 
-	return reportJSON
+	return marshalledReportBuffer.Bytes()
 }
 
 // WriteReport writes a report for all projects to the specified file.
