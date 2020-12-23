@@ -32,7 +32,7 @@ import (
 
 // Runner runs all rules for the given project and outputs the results.
 func Runner(project project.Type) {
-	feedback.Printf("\nLinting %s in %s\n", project.ProjectType, project.Path)
+	feedback.Printf("Linting %s in %s\n", project.ProjectType, project.Path)
 
 	projectdata.Initialize(project)
 
