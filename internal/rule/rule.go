@@ -48,7 +48,7 @@ func Runner(project project.Type) {
 		}
 
 		// Output will be printed after all rules are finished when configured for "json" output format.
-		feedback.VerbosePrintf("Running rule %s...\n", ruleConfiguration.ID)
+		feedback.VerbosePrintf("Running rule %s (%s)...\n", ruleConfiguration.ID, ruleConfiguration.Brief)
 
 		ruleResult, ruleOutput := ruleConfiguration.RuleFunction()
 		reportText := result.Results.Record(project, ruleConfiguration, ruleResult, ruleOutput)
