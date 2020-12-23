@@ -80,6 +80,7 @@ func ArduinoLint(rootCommand *cobra.Command, cliArguments []string) {
 
 		// Print the project rule results summary.
 		feedback.Printf("\n%s\n", result.Results.ProjectSummaryText(project))
+		feedback.Print("\n-------------------\n\n")
 	}
 
 	// All projects have been linted, so summarize their rule results in the report.
@@ -88,7 +89,7 @@ func ArduinoLint(rootCommand *cobra.Command, cliArguments []string) {
 	if configuration.OutputFormat() == outputformat.Text {
 		if len(projects) > 1 {
 			// There are multiple projects, print the summary of rule results for all projects.
-			fmt.Printf("\n%s\n", result.Results.SummaryText())
+			fmt.Println(result.Results.SummaryText())
 		}
 	} else {
 		// Print the complete JSON formatted report.
