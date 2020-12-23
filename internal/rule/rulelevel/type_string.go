@@ -14,7 +14,7 @@ func _() {
 	_ = x[Notice-3]
 }
 
-const _Type_name = "infowarningerrornotice"
+const _Type_name = "INFOWARNINGERRORNOTICE"
 
 var _Type_index = [...]uint8{0, 4, 11, 16, 22}
 

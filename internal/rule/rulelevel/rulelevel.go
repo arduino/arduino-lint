@@ -32,10 +32,10 @@ type Type int
 
 // The line comments set the string for each level.
 const (
-	Info    Type = iota // info
-	Warning             // warning
-	Error               // error
-	Notice              // notice
+	Info    Type = iota // INFO
+	Warning             // WARNING
+	Error               // ERROR
+	Notice              // NOTICE
 )
 
 // RuleLevel determines the rule level assigned to the given result of the given rule under the current tool configuration.
