@@ -46,9 +46,17 @@ func Validate(libraryProperties *properties.Map) map[compliancelevel.Type]schema
 		schemaObject[compliancelevel.Strict] = schema.Compile("arduino-library-properties-strict-schema.json", referencedSchemaFilenames, schemadata.Asset)
 	}
 
-	validationResults[compliancelevel.Permissive] = schema.Validate(libraryProperties, schemaObject[compliancelevel.Permissive])
-	validationResults[compliancelevel.Specification] = schema.Validate(libraryProperties, schemaObject[compliancelevel.Specification])
-	validationResults[compliancelevel.Strict] = schema.Validate(libraryProperties, schemaObject[compliancelevel.Strict])
+	// Convert the library.properties data from the native properties.Map type to the interface type required by the schema
+	// validation package.
+	libraryPropertiesMap := libraryProperties.AsMap()
+	libraryPropertiesInterface := make(map[string]interface{}, len(libraryPropertiesMap))
+	for k, v := range libraryPropertiesMap {
+		libraryPropertiesInterface[k] = v
+	}
+
+	validationResults[compliancelevel.Permissive] = schema.Validate(libraryPropertiesInterface, schemaObject[compliancelevel.Permissive])
+	validationResults[compliancelevel.Specification] = schema.Validate(libraryPropertiesInterface, schemaObject[compliancelevel.Specification])
+	validationResults[compliancelevel.Strict] = schema.Validate(libraryPropertiesInterface, schemaObject[compliancelevel.Strict])
 
 	return validationResults
 }
