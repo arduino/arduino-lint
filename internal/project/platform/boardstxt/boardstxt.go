@@ -24,7 +24,7 @@ import (
 	"github.com/arduino/go-properties-orderedmap"
 )
 
-// Properties parses the library.properties from the given path and returns the data.
+// Properties parses the boards.txt from the given path and returns the data.
 func Properties(platformPath *paths.Path) (*properties.Map, error) {
 	return properties.SafeLoadFromPath(platformPath.Join("boards.txt"))
 }
