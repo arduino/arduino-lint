@@ -70,7 +70,7 @@ func TestFind(t *testing.T) {
 		{"Single", testDataPath.Join("HasPackageIndex"), testDataPath.Join("HasPackageIndex", "package_foo_index.json"), assert.Nil},
 		{"Multiple", testDataPath.Join("HasMultiple"), testDataPath.Join("HasMultiple", "package_foo_index.json"), assert.Nil},
 		{"Valid extension fallback", testDataPath.Join("HasJSON"), testDataPath.Join("HasJSON", "foo.json"), assert.Nil},
-		{"None", testDataPath.Join("HasNone"), nil, assert.NotNil},
+		{"None", testDataPath.Join("HasNone"), nil, assert.Nil},
 	}
 
 	for _, testTable := range testTables {

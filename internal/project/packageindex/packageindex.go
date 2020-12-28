@@ -81,5 +81,5 @@ func Find(folderPath *paths.Path) (*paths.Path, error) {
 		}
 	}
 
-	return nil, fmt.Errorf("No package index file found in %s", folderPath)
+	return nil, nil
 }

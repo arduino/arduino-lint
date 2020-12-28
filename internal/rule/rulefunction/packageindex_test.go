@@ -59,6 +59,15 @@ func checkPackageIndexRuleFunction(ruleFunction Type, testTables []packageIndexR
 	}
 }
 
+func TestPackageIndexMissing(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Missing", "missing", ruleresult.Fail, ""},
+		{"Present", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexMissing, testTables, t)
+}
+
 func TestPackageIndexJSONFormat(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.Fail, ""},
