@@ -41,7 +41,7 @@ tasks:
   schema:compile:
     desc: Compile JSON schema
     cmds:
-      - npx ajv-cli compile -s "./etc/schema/*.json"
+      - npx ajv-cli compile -s "./etc/schemas/*.json"
 
   check:
     desc: Lint and check formatting of all files

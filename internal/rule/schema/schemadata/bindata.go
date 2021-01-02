@@ -60,7 +60,7 @@ func (fi bindataFileInfo) Sys() interface{} {
 
 var _arduinoLibraryPropertiesDefinitionsSchemaJson = []byte(`{
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schema/arduino-library-properties-definitions-schema.json",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-library-properties-definitions-schema.json",
   "title": "Shared definitions for the Arduino library.properties schemas",
   "type": "object",
   "definitions": {
@@ -942,7 +942,7 @@ func arduinoLibraryPropertiesDefinitionsSchemaJson() (*asset, error) {
 
 var _arduinoLibraryPropertiesPermissiveSchemaJson = []byte(`{
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schema/arduino-library-properties-permissive-schema.json",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-library-properties-permissive-schema.json",
   "title": "Arduino library.properties JSON permissive schema",
   "description": "library.properties is the metadata file for Arduino libraries. This schema defines the minimum requirements for this file. See: https://arduino.github.io/arduino-cli/latest/library-specification/#library-metadata",
   "$comment": "For information on the Arduino library.properties format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
@@ -1022,7 +1022,7 @@ func arduinoLibraryPropertiesPermissiveSchemaJson() (*asset, error) {
 
 var _arduinoLibraryPropertiesSchemaJson = []byte(`{
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schema/arduino-library-properties-schema.json",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-library-properties-schema.json",
   "title": "Arduino library.properties JSON schema",
   "description": "library.properties is the metadata file for Arduino libraries. See: https://arduino.github.io/arduino-cli/latest/library-specification/#library-metadata",
   "$comment": "For information on the Arduino library.properties format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
@@ -1102,7 +1102,7 @@ func arduinoLibraryPropertiesSchemaJson() (*asset, error) {
 
 var _arduinoLibraryPropertiesStrictSchemaJson = []byte(`{
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schema/arduino-library-properties-strict-schema.json",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-library-properties-strict-schema.json",
   "title": "Arduino library.properties strict JSON schema",
   "description": "library.properties is the metadata file for Arduino libraries. This schema defines the recommended format. See: https://arduino.github.io/arduino-cli/latest/library-specification/#library-metadata",
   "$comment": "For information on the Arduino library.properties format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
@@ -1182,7 +1182,7 @@ func arduinoLibraryPropertiesStrictSchemaJson() (*asset, error) {
 
 var _generalDefinitionsSchemaJson = []byte(`{
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schema/general-definitions-schema.json",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/general-definitions-schema.json",
   "title": "Shared definitions",
   "description": "Definitions for use in schemas.",
   "type": "object",
