@@ -5,6 +5,7 @@ buno.build.variant=standard
 buno.upload.tool=avrdude
 buno.upload.maximum_size=32256
 buno.upload.maximum_data_size=2048
+buno.upload.use_1200bps_touch=bar
 
 uno.name=Arduino Uno
 uno.build.board=UNO
@@ -13,6 +14,7 @@ uno.build.variant=standard
 uno.upload.tool=avrdude
 uno.upload.maximum_size=32256
 uno.upload.maximum_data_size=2048
+uno.upload.use_1200bps_touch=true
 
 funo.name=Funo
 funo.build.board=FUNO
@@ -21,3 +23,4 @@ funo.build.variant=standard
 funo.upload.tool=avrdude
 funo.upload.maximum_size=32256
 funo.upload.maximum_data_size=2048
+funo.upload.use_1200bps_touch=foo

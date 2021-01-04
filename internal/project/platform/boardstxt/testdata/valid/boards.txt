@@ -1,0 +1,6 @@
+uno.name=Arduino Uno
+uno.build.board=AVR_UNO
+uno.build.core=arduino
+uno.upload.tool=avrdude
+uno.upload.maximum_size=123
+uno.upload.maximum_data_size=123

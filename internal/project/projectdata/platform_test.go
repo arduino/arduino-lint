@@ -43,7 +43,7 @@ func TestInitializeForPlatform(t *testing.T) {
 	}{
 		{"Valid", "valid-boards.txt", assert.NotNil, assert.Nil},
 		{"Invalid", "invalid-boards.txt", assert.Nil, assert.NotNil},
-		{"Missing", "missing-boards.txt", assert.NotNil, assert.Nil},
+		{"Missing", "missing-boards.txt", assert.Nil, assert.NotNil},
 	}
 
 	for _, testTable := range testTables {

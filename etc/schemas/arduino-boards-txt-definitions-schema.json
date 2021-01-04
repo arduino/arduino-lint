@@ -1,0 +1,1031 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-boards-txt-definitions-schema.json",
+  "title": "Shared definitions for the Arduino boards.txt schemas",
+  "definitions": {
+    "propertiesObjects": {
+      "menu": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/menu/base/object"
+              },
+              {
+                "patternProperties": {
+                  "^.+$": {
+                    "$ref": "#/definitions/propertiesObjects/menuMenuID/permissive/object"
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/menu/base/object"
+              },
+              {
+                "patternProperties": {
+                  "^.+$": {
+                    "$ref": "#/definitions/propertiesObjects/menuMenuID/specification/object"
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/menu/base/object"
+              },
+              {
+                "patternProperties": {
+                  ".+": {
+                    "$ref": "#/definitions/propertiesObjects/menuMenuID/permissive/object"
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        }
+      },
+      "menuMenuID": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/menuMenuID/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/menuMenuID/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/menuMenuID/base/object"
+              }
+            ]
+          }
+        }
+      },
+      "boardID": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardID/base/object"
+              },
+              {
+                "properties": {
+                  "name": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDName/permissive/object"
+                  },
+                  "build.board": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDBuildBoard/permissive/object"
+                  },
+                  "build.core": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDBuildCore/permissive/object"
+                  },
+                  "debug.tool": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDDebugTool/permissive/object"
+                  },
+                  "hide": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDHide/permissive/object"
+                  },
+                  "serial.disableDTR": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableDTR/permissive/object"
+                  },
+                  "serial.disableRTS": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableRTS/permissive/object"
+                  },
+                  "upload.maximum_size": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/permissive/object"
+                  },
+                  "upload.maximum_data_size": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/permissive/object"
+                  },
+                  "upload.protocol": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/permissive/object"
+                  },
+                  "upload.tool": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/permissive/object"
+                  },
+                  "upload.use_1200bps_touch": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/permissive/object"
+                  },
+                  "upload.wait_for_upload_port": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/permissive/object"
+                  }
+                }
+              },
+              {
+                "patternProperties": {
+                  "menu\\..+\\..+$": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDMenuMenuIDOptionID/permissive/object"
+                  },
+                  "^[vp]id\\.[0-9]+$": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDXidN/permissive/object"
+                  }
+                }
+              },
+              {
+                "$ref": "#/definitions/propertyNamesObjects/permissive/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/boardID/permissive/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardID/base/object"
+              },
+              {
+                "properties": {
+                  "name": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDName/specification/object"
+                  },
+                  "build.board": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDBuildBoard/specification/object"
+                  },
+                  "build.core": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDBuildCore/specification/object"
+                  },
+                  "debug.tool": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDDebugTool/specification/object"
+                  },
+                  "hide": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDHide/specification/object"
+                  },
+                  "serial.disableDTR": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableDTR/specification/object"
+                  },
+                  "serial.disableRTS": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableRTS/specification/object"
+                  },
+                  "upload.maximum_size": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/specification/object"
+                  },
+                  "upload.maximum_data_size": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/specification/object"
+                  },
+                  "upload.protocol": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/specification/object"
+                  },
+                  "upload.tool": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/specification/object"
+                  },
+                  "upload.use_1200bps_touch": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/specification/object"
+                  },
+                  "upload.wait_for_upload_port": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/specification/object"
+                  }
+                }
+              },
+              {
+                "patternProperties": {
+                  "menu\\..+\\..+$": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDMenuMenuIDOptionID/specification/object"
+                  },
+                  "^[vp]id\\.[0-9]+$": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDXidN/specification/object"
+                  }
+                }
+              },
+              {
+                "$ref": "#/definitions/propertyNamesObjects/specification/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/boardID/specification/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardID/base/object"
+              },
+              {
+                "properties": {
+                  "name": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDName/strict/object"
+                  },
+                  "build.board": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDBuildBoard/strict/object"
+                  },
+                  "build.core": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDBuildCore/strict/object"
+                  },
+                  "debug.tool": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDDebugTool/strict/object"
+                  },
+                  "hide": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDHide/strict/object"
+                  },
+                  "serial.disableDTR": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableDTR/strict/object"
+                  },
+                  "serial.disableRTS": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableRTS/strict/object"
+                  },
+                  "upload.maximum_size": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/strict/object"
+                  },
+                  "upload.maximum_data_size": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/strict/object"
+                  },
+                  "upload.protocol": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/strict/object"
+                  },
+                  "upload.tool": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/strict/object"
+                  },
+                  "upload.use_1200bps_touch": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/strict/object"
+                  },
+                  "upload.wait_for_upload_port": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/strict/object"
+                  }
+                }
+              },
+              {
+                "patternProperties": {
+                  "menu\\..+\\..+$": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDMenuMenuIDOptionID/strict/object"
+                  },
+                  "^[vp]id\\.[0-9]+$": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDXidN/strict/object"
+                  }
+                }
+              },
+              {
+                "$ref": "#/definitions/propertyNamesObjects/strict/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/boardID/strict/object"
+              }
+            ]
+          }
+        }
+      },
+      "boardIDName": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDName/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDName/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDName/base/object"
+              }
+            ]
+          }
+        }
+      },
+      "boardIDBuildBoard": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDBuildBoard/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDBuildBoard/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDBuildBoard/base/object"
+              }
+            ]
+          }
+        }
+      },
+      "boardIDBuildCore": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDBuildBoard/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDBuildBoard/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDBuildBoard/base/object"
+              }
+            ]
+          }
+        }
+      },
+      "boardIDDebugTool": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDDebugTool/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDDebugTool/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDDebugTool/base/object"
+              }
+            ]
+          }
+        }
+      },
+      "boardIDHide": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDHide/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDHide/base/object"
+              },
+              {
+                "enum": [""]
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDHide/specification/object"
+              }
+            ]
+          }
+        }
+      },
+      "boardIDMenuMenuIDOptionID": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDMenuMenuIDOptionID/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDMenuMenuIDOptionID/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDMenuMenuIDOptionID/base/object"
+              }
+            ]
+          }
+        }
+      },
+      "boardIDSerialDisableDTR": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/definitions/enumObjects/booleanString"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableDTR/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableDTR/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableDTR/base/object"
+              }
+            ]
+          }
+        }
+      },
+      "boardIDSerialDisableRTS": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/definitions/enumObjects/booleanString"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableRTS/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableRTS/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableRTS/base/object"
+              }
+            ]
+          }
+        }
+      },
+      "boardIDUploadMaximumSize": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "pattern": "^[0-9]+$"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/base/object"
+              }
+            ]
+          }
+        }
+      },
+      "boardIDUploadMaximumDataSize": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "pattern": "^[0-9]+$"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/base/object"
+              }
+            ]
+          }
+        }
+      },
+      "boardIDUploadProtocol": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/base/object"
+              }
+            ]
+          }
+        }
+      },
+      "boardIDUploadTool": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/base/object"
+              }
+            ]
+          }
+        }
+      },
+      "boardIDUploadUse1200bpsTouch": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/definitions/enumObjects/booleanString"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/base/object"
+              }
+            ]
+          }
+        }
+      },
+      "boardIDUploadWaitForUploadPort": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/definitions/enumObjects/booleanString"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/base/object"
+              }
+            ]
+          }
+        }
+      },
+      "boardIDXidN": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "pattern": "^0[xX][0-9a-fA-F]{4}$"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDXidN/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDXidN/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDXidN/base/object"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "propertyNamesObjects": {
+      "base": {
+        "object": {}
+      },
+      "permissive": {
+        "object": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/propertyNamesObjects/base/object"
+            }
+          ]
+        }
+      },
+      "specification": {
+        "object": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/propertyNamesObjects/base/object"
+            }
+          ]
+        }
+      },
+      "strict": {
+        "definitions": {
+          "userExtraFlagsProperties": {
+            "propertyNames": {
+              "not": {
+                "pattern": "^compiler\\.((c)|(c\\.elf)|(S)|(cpp)|(ar)|(objcopy.eep)|(elf2hex))\\.extra_flags$"
+              }
+            }
+          }
+        },
+        "object": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/propertyNamesObjects/base/object"
+            },
+            {
+              "$ref": "#/definitions/propertyNamesObjects/strict/definitions/userExtraFlagsProperties"
+            }
+          ]
+        }
+      }
+    },
+    "requiredObjects": {
+      "boardID": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "required": ["name", "build.core", "upload.tool"]
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/boardID/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/boardID/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/boardID/base/object"
+              },
+              {
+                "required": ["build.board", "upload.maximum_size", "upload.maximum_data_size"]
+              }
+            ]
+          }
+        }
+      }
+    },
+    "enumObjects": {
+      "booleanString": {
+        "enum": ["true", "false"]
+      }
+    }
+  }
+}
