@@ -139,7 +139,17 @@ downloadFile() {
 	else
 		ARDUINO_LINT_DIST="${PROJECT_NAME}_${TAG}_${OS}_${ARCH}.tar.gz"
 	fi
-	DOWNLOAD_URL="https://downloads.arduino.cc/${PROJECT_NAME}/${ARDUINO_LINT_DIST}"
+
+	# Support specifying nightly build versions (e.g., "nightly-latest") via the script argument.
+	case "$TAG" in
+	nightly*)
+		DOWNLOAD_URL="https://downloads.arduino.cc/${PROJECT_NAME}/nightly/${ARDUINO_LINT_DIST}"
+		;;
+	*)
+		DOWNLOAD_URL="https://downloads.arduino.cc/${PROJECT_NAME}/${ARDUINO_LINT_DIST}"
+		;;
+	esac
+
 	ARDUINO_LINT_TMP_FILE="/tmp/$ARDUINO_LINT_DIST"
 	echo "Downloading $DOWNLOAD_URL"
 	httpStatusCode=$(getFile "$DOWNLOAD_URL" "$ARDUINO_LINT_TMP_FILE")

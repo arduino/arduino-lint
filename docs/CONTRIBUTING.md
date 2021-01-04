@@ -8,11 +8,13 @@ There are several ways you can get involved:
 | ------------------------------------------------- | ------------------------------------------------------- |
 | - Support request<br/>- Question<br/>- Discussion | Post on the [Arduino Forum][forum]                      |
 | - Bug report<br/>- Feature request                | Issue report (read the [issue guidelines][issues])      |
+| Beta testing                                      | Try out the [nightly build][nightly]                    |
 | - Bug fix<br/>- Enhancement                       | Pull Request (read the [pull request guidelines][prs])  |
 | Monetary                                          | - [Donate][donate]<br/>- [Buy official products][store] |
 
 [forum]: https://forum.arduino.cc/index.php?board=3.0
 [issues]: #issue-reports
+[nightly]: installation.md#nightly-builds
 [prs]: #pull-requests
 [donate]: https://www.arduino.cc/en/Main/Contribute
 [store]: https://store.arduino.cc
@@ -26,6 +28,7 @@ High quality bug reports and feature requests are valuable contributions to the 
 
 ### Before reporting an issue
 
+- Give the [nightly build](installation.md#nightly-builds) a test drive to see if your issue was already resolved.
 - Search [existing pull requests and issues](https://github.com/arduino/arduino-lint/issues?q=) to see if it was already
   reported. If you have additional information to provide about an existing issue, please comment there. You can use
   [GitHub's "Reactions" feature](https://github.com/blog/2119-add-reactions-to-pull-requests-issues-and-comments) if you
