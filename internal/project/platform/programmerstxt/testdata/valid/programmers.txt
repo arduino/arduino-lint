@@ -1,0 +1,6 @@
+usbasp.name=USBasp
+usbasp.program.tool=avrdude
+usbasp.program.extra_params=-Pusb
+
+arduinoasisp.name=Arduino as ISP
+arduinoasisp.program.tool=avrdude

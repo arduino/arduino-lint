@@ -80,3 +80,315 @@ func TestBoardsTxtFormat(t *testing.T) {
 
 	checkPlatformRuleFunction(BoardsTxtFormat, testTables, t)
 }
+
+func TestBoardsTxtBoardIDNameMissing(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
+		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
+		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
+		{"Property missing", "boardID-name-missing-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(BoardsTxtBoardIDNameMissing, testTables, t)
+}
+
+func TestBoardsTxtBoardIDNameLTMinLength(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
+		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
+		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
+		{"Property LT min", "boardID-name-LT-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(BoardsTxtBoardIDNameLTMinLength, testTables, t)
+}
+
+func TestBoardsTxtBoardIDBuildBoardMissing(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
+		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
+		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
+		{"Property missing", "boardID-build-board-missing-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(BoardsTxtBoardIDBuildBoardMissing, testTables, t)
+}
+
+func TestBoardsTxtBoardIDBuildBoardLTMinLength(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
+		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
+		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
+		{"Property LT min", "boardID-build-board-LT-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(BoardsTxtBoardIDBuildBoardLTMinLength, testTables, t)
+}
+
+func TestBoardsTxtBoardIDBuildCoreMissing(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
+		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
+		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
+		{"Property missing", "boardID-build-core-missing-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(BoardsTxtBoardIDBuildCoreMissing, testTables, t)
+}
+
+func TestBoardsTxtBoardIDBuildCoreLTMinLength(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
+		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
+		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
+		{"Property LT min", "boardID-build-core-LT-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(BoardsTxtBoardIDBuildCoreLTMinLength, testTables, t)
+}
+
+func TestBoardsTxtUserExtraFlagsUsage(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
+		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
+		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
+		{"Use of user extra flags", "boardID-compiler-x-extra_flags-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(BoardsTxtUserExtraFlagsUsage, testTables, t)
+}
+
+func TestBoardsTxtBoardIDHideInvalid(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
+		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
+		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
+		{"Property invalid", "boardID-hide-invalid-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(BoardsTxtBoardIDHideInvalid, testTables, t)
+}
+
+func TestBoardsTxtMenuMenuIDLTMinLength(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
+		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
+		{"No menus", "no-menus-boards.txt", ruleresult.Skip, ""},
+		{"Menu title too short", "menu-menuID-LT-boards.txt", ruleresult.Fail, "foo, baz"},
+		{"Menu title valid", "menu-menuID-valid-boards.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(BoardsTxtMenuMenuIDLTMinLength, testTables, t)
+}
+
+func TestBoardsTxtBoardIDMenuMenuIDOptionIDLTMinLength(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
+		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
+		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
+		{"Property LT min", "boardID-menu-menuID-LT-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(BoardsTxtBoardIDMenuMenuIDOptionIDLTMinLength, testTables, t)
+}
+
+func TestBoardsTxtBoardIDSerialDisableDTRInvalid(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
+		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
+		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
+		{"Property invalid", "boardID-serial-disableDTR-invalid-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(BoardsTxtBoardIDSerialDisableDTRInvalid, testTables, t)
+}
+
+func TestBoardsTxtBoardIDSerialDisableRTSInvalid(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
+		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
+		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
+		{"Property invalid", "boardID-serial-disableRTS-invalid-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(BoardsTxtBoardIDSerialDisableRTSInvalid, testTables, t)
+}
+
+func TestBoardsTxtBoardIDUploadToolMissing(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
+		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
+		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
+		{"Property missing", "boardID-upload-tool-missing-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(BoardsTxtBoardIDUploadToolMissing, testTables, t)
+}
+
+func TestBoardsTxtBoardIDUploadToolLTMinLength(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
+		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
+		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
+		{"Property LT min", "boardID-upload-tool-LT-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(BoardsTxtBoardIDUploadToolLTMinLength, testTables, t)
+}
+
+func TestBoardsTxtBoardIDUploadMaximumSizeMissing(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
+		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
+		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
+		{"Property missing", "boardID-upload-maximum_size-missing-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(BoardsTxtBoardIDUploadMaximumSizeMissing, testTables, t)
+}
+
+func TestBoardsTxtBoardIDUploadMaximumSizeInvalid(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
+		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
+		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
+		{"Property invalid", "boardID-upload-maximum_size-invalid-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(BoardsTxtBoardIDUploadMaximumSizeInvalid, testTables, t)
+}
+
+func TestBoardsTxtBoardIDUploadMaximumDataSizeMissing(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
+		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
+		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
+		{"Property missing", "boardID-upload-maximum_data_size-missing-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(BoardsTxtBoardIDUploadMaximumDataSizeMissing, testTables, t)
+}
+
+func TestBoardsTxtBoardIDUploadMaximumDataSizeInvalid(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
+		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
+		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
+		{"Property invalid", "boardID-upload-maximum_data_size-invalid-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(BoardsTxtBoardIDUploadMaximumDataSizeInvalid, testTables, t)
+}
+
+func TestBoardsTxtBoardIDUploadUse1200bpsTouchInvalid(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
+		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
+		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
+		{"Property invalid", "boardID-upload-use_1200bps_touch-invalid-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(BoardsTxtBoardIDUploadUse1200bpsTouchInvalid, testTables, t)
+}
+
+func TestBoardsTxtBoardIDUploadWaitForUploadPortInvalid(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
+		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
+		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
+		{"Property invalid", "boardID-upload-wait_for_upload_port-invalid-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(BoardsTxtBoardIDUploadWaitForUploadPortInvalid, testTables, t)
+}
+
+func TestBoardsTxtBoardIDVidNInvalid(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
+		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
+		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
+		{"Property invalid", "boardID-vid-n-invalid-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(BoardsTxtBoardIDVidNInvalid, testTables, t)
+}
+
+func TestBoardsTxtBoardIDPidNInvalid(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
+		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
+		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
+		{"Property invalid", "boardID-pid-n-invalid-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(BoardsTxtBoardIDPidNInvalid, testTables, t)
+}
+
+func TestProgrammersTxtProgrammerIDNameMissing(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-programmers.txt", ruleresult.Skip, ""},
+		{"Invalid", "invalid-programmers.txt", ruleresult.NotRun, ""},
+		{"No programmers", "no-programmers-programmers.txt", ruleresult.Skip, ""},
+		{"Property missing", "programmerID-name-missing-programmers.txt", ruleresult.Fail, "foo, bar"},
+		{"Valid", "valid-programmers.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(ProgrammersTxtProgrammerIDNameMissing, testTables, t)
+}
+
+func TestProgrammersTxtProgrammerIDNameLTMinLength(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-programmers.txt", ruleresult.Skip, ""},
+		{"Invalid", "invalid-programmers.txt", ruleresult.NotRun, ""},
+		{"No programmers", "no-programmers-programmers.txt", ruleresult.Skip, ""},
+		{"Property LT min", "programmerID-name-LT-programmers.txt", ruleresult.Fail, "foo, bar"},
+		{"Valid", "valid-programmers.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(ProgrammersTxtProgrammerIDNameLTMinLength, testTables, t)
+}
+
+func TestProgrammersTxtProgrammerIDProgramToolMissing(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-programmers.txt", ruleresult.Skip, ""},
+		{"Invalid", "invalid-programmers.txt", ruleresult.NotRun, ""},
+		{"No programmers", "no-programmers-programmers.txt", ruleresult.Skip, ""},
+		{"Property missing", "programmerID-program-tool-missing-programmers.txt", ruleresult.Fail, "foo, bar"},
+		{"Valid", "valid-programmers.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(ProgrammersTxtProgrammerIDProgramToolMissing, testTables, t)
+}
+
+func TestProgrammersTxtProgrammerIDProgramToolLTMinLength(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-programmers.txt", ruleresult.Skip, ""},
+		{"Invalid", "invalid-programmers.txt", ruleresult.NotRun, ""},
+		{"No programmers", "no-programmers-programmers.txt", ruleresult.Skip, ""},
+		{"Property LT min", "programmerID-program-tool-LT-programmers.txt", ruleresult.Fail, "foo, bar"},
+		{"Valid", "valid-programmers.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(ProgrammersTxtProgrammerIDProgramToolLTMinLength, testTables, t)
+}

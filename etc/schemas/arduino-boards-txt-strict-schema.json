@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-boards-txt-strict-schema.json",
+  "title": "Arduino boards.txt JSON strict schema",
+  "description": "boards.txt contains the boards definitions of Arduino platforms. See: https://arduino.github.io/arduino-cli/latest/platform-specification/#boardstxt",
+  "$comment": "For information on the boards.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
+  "type": "object",
+  "properties": {
+    "menu": {
+      "$ref": "arduino-boards-txt-definitions-schema.json#/definitions/propertiesObjects/menu/strict/object"
+    }
+  },
+  "patternProperties": {
+    "^([^m].*|m([^e].*)?|me([^n].*)?|men([^u].*)?|menu.+)$": {
+      "$ref": "arduino-boards-txt-definitions-schema.json#/definitions/propertiesObjects/boardID/strict/object"
+    }
+  }
+}

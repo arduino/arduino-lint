@@ -1,0 +1,11 @@
+menu.foo=
+menu.bar=asdf
+menu.baz=
+
+uno.name=Arduino Uno
+uno.build.board=UNO
+uno.build.core=arduino
+uno.build.variant=standard
+uno.upload.tool=avrdude
+uno.upload.maximum_size=32256
+uno.upload.maximum_data_size=2048

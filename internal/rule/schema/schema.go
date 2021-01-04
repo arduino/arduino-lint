@@ -24,7 +24,6 @@ import (
 	"io/ioutil"
 	"path"
 
-	"github.com/arduino/go-properties-orderedmap"
 	"github.com/ory/jsonschema/v3"
 	"github.com/sirupsen/logrus"
 	"github.com/xeipuuv/gojsonreference"
@@ -80,15 +79,7 @@ func Compile(schemaFilename string, referencedSchemaFilenames []string, dataLoad
 
 // Validate validates an instance against a JSON schema and returns nil if it was success, or the
 // jsonschema.ValidationError object otherwise.
-func Validate(instanceObject *properties.Map, schemaObject Schema) ValidationResult {
-	// Convert the instance data from the native properties.Map type to the interface type required by the schema
-	// validation package.
-	instanceObjectMap := instanceObject.AsMap()
-	instanceInterface := make(map[string]interface{}, len(instanceObjectMap))
-	for k, v := range instanceObjectMap {
-		instanceInterface[k] = v
-	}
-
+func Validate(instanceInterface map[string]interface{}, schemaObject Schema) ValidationResult {
 	validationError := schemaObject.Compiled.ValidateInterface(instanceInterface)
 	result, _ := validationError.(*jsonschema.ValidationError)
 	validationResult := ValidationResult{

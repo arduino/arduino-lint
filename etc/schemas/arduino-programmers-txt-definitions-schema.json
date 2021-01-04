@@ -1,0 +1,208 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-programmers-txt-definitions-schema.json",
+  "title": "Shared definitions for the Arduino programmers.txt schemas",
+  "definitions": {
+    "propertiesObjects": {
+      "programmerID": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/programmerID/base/object"
+              },
+              {
+                "properties": {
+                  "name": {
+                    "$ref": "#/definitions/propertiesObjects/programmerIDName/permissive/object"
+                  },
+                  "program.tool": {
+                    "$ref": "#/definitions/propertiesObjects/programmerIDProgramTool/permissive/object"
+                  }
+                }
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/programmerID/permissive/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/programmerID/base/object"
+              },
+              {
+                "properties": {
+                  "name": {
+                    "$ref": "#/definitions/propertiesObjects/programmerIDName/specification/object"
+                  },
+                  "program.tool": {
+                    "$ref": "#/definitions/propertiesObjects/programmerIDProgramTool/specification/object"
+                  }
+                }
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/programmerID/specification/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/programmerID/base/object"
+              },
+              {
+                "properties": {
+                  "name": {
+                    "$ref": "#/definitions/propertiesObjects/programmerIDName/strict/object"
+                  },
+                  "program.tool": {
+                    "$ref": "#/definitions/propertiesObjects/programmerIDProgramTool/strict/object"
+                  }
+                }
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/programmerID/strict/object"
+              }
+            ]
+          }
+        }
+      },
+      "programmerIDName": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/programmerIDName/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/programmerIDName/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/programmerIDName/base/object"
+              }
+            ]
+          }
+        }
+      },
+      "programmerIDProgramTool": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/programmerIDProgramTool/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/programmerIDProgramTool/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/programmerIDProgramTool/base/object"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "requiredObjects": {
+      "programmerID": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "required": ["name", "program.tool"]
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/programmerID/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/programmerID/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/programmerID/base/object"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

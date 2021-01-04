@@ -20,11 +20,63 @@ See: https://arduino.github.io/arduino-cli/latest/platform-specification/#boards
 package boardstxt
 
 import (
+	"github.com/arduino/arduino-lint/internal/project/general"
+	"github.com/arduino/arduino-lint/internal/rule/schema"
+	"github.com/arduino/arduino-lint/internal/rule/schema/compliancelevel"
+	"github.com/arduino/arduino-lint/internal/rule/schema/schemadata"
 	"github.com/arduino/go-paths-helper"
 	"github.com/arduino/go-properties-orderedmap"
 )
 
-// Properties parses the library.properties from the given path and returns the data.
+// Properties parses the boards.txt from the given path and returns the data.
 func Properties(platformPath *paths.Path) (*properties.Map, error) {
-	return properties.SafeLoadFromPath(platformPath.Join("boards.txt"))
+	return properties.LoadFromPath(platformPath.Join("boards.txt"))
+}
+
+var schemaObject = make(map[compliancelevel.Type]schema.Schema)
+
+// Validate validates boards.txt data against the JSON schema and returns a map of the result for each compliance level.
+func Validate(boardsTxt *properties.Map) map[compliancelevel.Type]schema.ValidationResult {
+	referencedSchemaFilenames := []string{
+		"general-definitions-schema.json",
+		"arduino-boards-txt-definitions-schema.json",
+	}
+
+	var validationResults = make(map[compliancelevel.Type]schema.ValidationResult)
+
+	if schemaObject[compliancelevel.Permissive].Compiled == nil { // Only compile the schemas once.
+		schemaObject[compliancelevel.Permissive] = schema.Compile("arduino-boards-txt-permissive-schema.json", referencedSchemaFilenames, schemadata.Asset)
+		schemaObject[compliancelevel.Specification] = schema.Compile("arduino-boards-txt-schema.json", referencedSchemaFilenames, schemadata.Asset)
+		schemaObject[compliancelevel.Strict] = schema.Compile("arduino-boards-txt-strict-schema.json", referencedSchemaFilenames, schemadata.Asset)
+	}
+
+	//Convert the boards.txt data from the native properties.Map type to the interface type required by the schema validation package.
+	boardsTxtInterface := general.PropertiesToFirstLevelExpandedMap(boardsTxt)
+
+	validationResults[compliancelevel.Permissive] = schema.Validate(boardsTxtInterface, schemaObject[compliancelevel.Permissive])
+	validationResults[compliancelevel.Specification] = schema.Validate(boardsTxtInterface, schemaObject[compliancelevel.Specification])
+	validationResults[compliancelevel.Strict] = schema.Validate(boardsTxtInterface, schemaObject[compliancelevel.Strict])
+
+	return validationResults
+}
+
+// MenuIDs returns the list of menu IDs from the given boards.txt properties.
+func MenuIDs(boardsTxt *properties.Map) []string {
+	// Each menu must have a property defining its title with the format `menu.MENU_ID=MENU_TITLE`.
+	return boardsTxt.SubTree("menu").FirstLevelKeys()
+}
+
+// BoardIDs returns the list of board IDs from the given boards.txt properties.
+func BoardIDs(boardsTxt *properties.Map) []string {
+	boardIDs := boardsTxt.FirstLevelKeys()
+	boardIDCount := 0
+	for _, boardID := range boardIDs {
+		if boardID != "menu" {
+			// This element is a board ID, retain it in the section of the array that will be returned.
+			boardIDs[boardIDCount] = boardID
+			boardIDCount++
+		}
+	}
+
+	return boardIDs[:boardIDCount]
 }

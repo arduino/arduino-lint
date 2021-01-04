@@ -1,0 +1,12 @@
+foo.name=Foo
+foo.program.tool=avrdude
+
+usbasp.name=USBasp
+usbasp.communication=usb
+usbasp.protocol=usbasp
+usbasp.program.protocol=usbasp
+usbasp.program.tool=avrdude
+usbasp.program.extra_params=-Pusb
+
+bar.name=Bar
+bar.program.tool=bartool

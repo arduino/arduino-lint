@@ -46,6 +46,23 @@ func init() {
 	)
 }
 
+// propertiesToMap converts properties.Map data structures to map[string]interface.
+func propertiesToMap(propertiesInput *properties.Map) map[string]interface{} {
+	mapOutput := make(map[string]interface{})
+	keys := propertiesInput.FirstLevelKeys()
+	for _, key := range keys {
+		subTree := propertiesInput.SubTree(key)
+		if subTree.Size() > 0 {
+			// This key contains a map, recurse it.
+			mapOutput[key] = propertiesToMap(subTree)
+		} else {
+			// This key contains a string, no more recursion is possible.
+			mapOutput[key] = propertiesInput.Get(key)
+		}
+	}
+	return mapOutput
+}
+
 func TestCompile(t *testing.T) {
 	require.Panics(t, func() {
 		Compile("valid-schema-with-references.json", []string{"nonexistent.json"}, testdata.Asset)
@@ -82,35 +99,35 @@ func TestCompile(t *testing.T) {
 func TestValidate(t *testing.T) {
 	schemaObject := Compile("valid-schema.json", []string{}, testdata.Asset)
 	propertiesMap := properties.NewFromHashmap(validMap)
-	validationResult := Validate(propertiesMap, schemaObject)
+	validationResult := Validate(propertiesToMap(propertiesMap), schemaObject)
 	require.Nil(t, validationResult.Result)
 
-	validationResult = Validate(propertiesMap, validSchemaWithReferences)
+	validationResult = Validate(propertiesToMap(propertiesMap), validSchemaWithReferences)
 	require.Nil(t, validationResult.Result)
 
 	propertiesMap.Set("property1", "a")
-	validationResult = Validate(propertiesMap, schemaObject)
+	validationResult = Validate(propertiesToMap(propertiesMap), schemaObject)
 	require.Equal(t, "#/property1", validationResult.Result.InstancePtr)
 	require.Equal(t, "#/properties/property1/minLength", validationResult.Result.SchemaPtr)
 }
 
 func TestRequiredPropertyMissing(t *testing.T) {
 	propertiesMap := properties.NewFromHashmap(validMap)
-	validationResult := Validate(propertiesMap, validSchemaWithReferences)
+	validationResult := Validate(propertiesToMap(propertiesMap), validSchemaWithReferences)
 	require.False(t, RequiredPropertyMissing("property1", validationResult))
 
 	propertiesMap.Remove("property1")
-	validationResult = Validate(propertiesMap, validSchemaWithReferences)
+	validationResult = Validate(propertiesToMap(propertiesMap), validSchemaWithReferences)
 	require.True(t, RequiredPropertyMissing("property1", validationResult))
 }
 
 func TestPropertyPatternMismatch(t *testing.T) {
 	propertiesMap := properties.NewFromHashmap(validMap)
-	validationResult := Validate(propertiesMap, validSchemaWithReferences)
+	validationResult := Validate(propertiesToMap(propertiesMap), validSchemaWithReferences)
 	require.False(t, PropertyPatternMismatch("property2", validationResult))
 
 	propertiesMap.Set("property2", "fOo")
-	validationResult = Validate(propertiesMap, validSchemaWithReferences)
+	validationResult = Validate(propertiesToMap(propertiesMap), validSchemaWithReferences)
 	require.True(t, PropertyPatternMismatch("property2", validationResult))
 
 	require.False(t, PropertyPatternMismatch("property1", validationResult))
@@ -118,51 +135,51 @@ func TestPropertyPatternMismatch(t *testing.T) {
 
 func TestPropertyLessThanMinLength(t *testing.T) {
 	propertiesMap := properties.NewFromHashmap(validMap)
-	validationResult := Validate(propertiesMap, validSchemaWithReferences)
+	validationResult := Validate(propertiesToMap(propertiesMap), validSchemaWithReferences)
 	require.False(t, PropertyLessThanMinLength("property1", validationResult))
 
 	propertiesMap.Set("property1", "a")
-	validationResult = Validate(propertiesMap, validSchemaWithReferences)
+	validationResult = Validate(propertiesToMap(propertiesMap), validSchemaWithReferences)
 	require.True(t, PropertyLessThanMinLength("property1", validationResult))
 }
 
 func TestPropertyGreaterThanMaxLength(t *testing.T) {
 	propertiesMap := properties.NewFromHashmap(validMap)
-	validationResult := Validate(propertiesMap, validSchemaWithReferences)
+	validationResult := Validate(propertiesToMap(propertiesMap), validSchemaWithReferences)
 	require.False(t, PropertyGreaterThanMaxLength("property1", validationResult))
 
 	propertiesMap.Set("property1", "12345")
-	validationResult = Validate(propertiesMap, validSchemaWithReferences)
+	validationResult = Validate(propertiesToMap(propertiesMap), validSchemaWithReferences)
 	require.True(t, PropertyGreaterThanMaxLength("property1", validationResult))
 }
 
 func TestPropertyEnumMismatch(t *testing.T) {
 	propertiesMap := properties.NewFromHashmap(validMap)
-	validationResult := Validate(propertiesMap, validSchemaWithReferences)
+	validationResult := Validate(propertiesToMap(propertiesMap), validSchemaWithReferences)
 	require.False(t, PropertyEnumMismatch("property3", validationResult))
 
 	propertiesMap.Set("property3", "invalid")
-	validationResult = Validate(propertiesMap, validSchemaWithReferences)
+	validationResult = Validate(propertiesToMap(propertiesMap), validSchemaWithReferences)
 	require.True(t, PropertyEnumMismatch("property3", validationResult))
 }
 
 func TestMisspelledOptionalPropertyFound(t *testing.T) {
 	propertiesMap := properties.NewFromHashmap(validMap)
-	validationResult := Validate(propertiesMap, validSchemaWithReferences)
+	validationResult := Validate(propertiesToMap(propertiesMap), validSchemaWithReferences)
 	require.False(t, MisspelledOptionalPropertyFound(validationResult))
 
 	propertiesMap.Set("porperties", "foo")
-	validationResult = Validate(propertiesMap, validSchemaWithReferences)
+	validationResult = Validate(propertiesToMap(propertiesMap), validSchemaWithReferences)
 	require.True(t, MisspelledOptionalPropertyFound(validationResult))
 }
 
 func TestValidationErrorMatch(t *testing.T) {
 	propertiesMap := properties.NewFromHashmap(validMap)
-	validationResult := Validate(propertiesMap, validSchemaWithReferences)
+	validationResult := Validate(propertiesToMap(propertiesMap), validSchemaWithReferences)
 	require.False(t, ValidationErrorMatch("", "", "", "", validationResult))
 
 	propertiesMap.Set("property2", "fOo")
-	validationResult = Validate(propertiesMap, validSchemaWithReferences)
+	validationResult = Validate(propertiesToMap(propertiesMap), validSchemaWithReferences)
 	require.False(t, ValidationErrorMatch("nomatch", "nomatch", "nomatch", "nomatch", validationResult))
 	require.False(t, ValidationErrorMatch("^#/property2$", "nomatch", "nomatch", "nomatch", validationResult))
 	require.False(t, ValidationErrorMatch("^#/property2$", "/pattern$", "nomatch", "nomatch", validationResult))
@@ -171,12 +188,12 @@ func TestValidationErrorMatch(t *testing.T) {
 	require.True(t, ValidationErrorMatch("", "", "", "", validationResult))
 
 	propertiesMap.Set("property3", "bAz")
-	validationResult = Validate(propertiesMap, validSchemaWithReferences)
+	validationResult = Validate(propertiesToMap(propertiesMap), validSchemaWithReferences)
 	require.True(t, ValidationErrorMatch("^#/property3$", "/pattern$", "", "", validationResult), "Match pointer below logic inversion keyword")
 
 	propertiesMap = properties.NewFromHashmap(validMap)
 	propertiesMap.Remove("property1")
-	validationResult = Validate(propertiesMap, validSchemaWithReferences)
+	validationResult = Validate(propertiesToMap(propertiesMap), validSchemaWithReferences)
 	require.False(t, ValidationErrorMatch("nomatch", "nomatch", "nomatch", "nomatch", validationResult))
 	require.True(t, ValidationErrorMatch("", "", "", "^#/property1$", validationResult))
 }
