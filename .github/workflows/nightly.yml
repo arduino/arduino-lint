@@ -24,7 +24,7 @@ jobs:
 
       - name: Build
         env:
-          CUSTOM_VERSION: nightly
+          NIGHTLY: true
         run: task dist:all
 
       - name: Upload artifacts

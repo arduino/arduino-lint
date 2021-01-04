@@ -278,15 +278,18 @@ vars:
     sh: echo "$(git log -n 1 --format=%h)"
   TIMESTAMP:
     sh: echo "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+  TAG:
+    sh: echo "`git describe --tags --abbrev=0 2> /dev/null`"
+  VERSION: "{{ if .NIGHTLY }}nightly{{ else if .TAG }}{{ .TAG }}{{ else }}snapshot{{ end }}"
   CONFIGURATION_PACKAGE: "github.com/arduino/{{ .PROJECT_NAME }}/internal/configuration"
   LDFLAGS: >-
     -ldflags
     '
+    -X {{ .CONFIGURATION_PACKAGE }}.version={{.VERSION}}
     -X {{ .CONFIGURATION_PACKAGE }}.commit={{.COMMIT}}
     -X {{ .CONFIGURATION_PACKAGE }}.buildTimestamp={{.TIMESTAMP}}
     '
   GOFLAGS: "-timeout 10m -v -coverpkg=./... -covermode=atomic"
-
   GOLINTFLAGS: "-min_confidence 0.8 -set_exit_status"
 
   DOCS_VERSION: dev
