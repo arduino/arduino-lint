@@ -16,10 +16,11 @@ jobs:
           fetch-depth: 0
 
       - name: Create changelog
-        uses: arduino/create-changelog@1.0.0
+        uses: arduino/create-changelog@1.2.0
         with:
           tag-regex: '^[0-9]+\.[0-9]+\.[0-9]+$'
-          filter-regex: '^\[([sS][kK][iI][pP]|[cC][hH][aA][nN][gG][eE][lL][oO][gG])[ ,-]([cC][hH][aA][nN][gG][eE][lL][oO][gG]|[sS][kK][iI][pP])\].*'
+          filter-regex: '^\[(skip|changelog)[ ,-](skip|changelog)\].*'
+          case-insensitive-regex: true
           changelog-file-path: "dist/CHANGELOG.md"
 
       - name: Install Taskfile
