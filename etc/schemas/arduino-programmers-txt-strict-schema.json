@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-programmers-txt-strict-schema.json",
+  "title": "Arduino programmers.txt JSON strict schema",
+  "description": "programmers.txt contains the definitions of Arduino hardware programmers. See: https://arduino.github.io/arduino-cli/latest/platform-specification/#programmerstxt",
+  "$comment": "For information on the programmers.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
+  "type": "object",
+  "patternProperties": {
+    ".+": {
+      "$ref": "arduino-programmers-txt-definitions-schema.json#/definitions/propertiesObjects/programmerID/strict/object"
+    }
+  }
+}

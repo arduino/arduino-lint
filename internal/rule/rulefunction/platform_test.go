@@ -356,3 +356,51 @@ func TestBoardsTxtBoardIDPidNInvalid(t *testing.T) {
 
 	checkPlatformRuleFunction(BoardsTxtBoardIDPidNInvalid, testTables, t)
 }
+
+func TestProgrammersTxtProgrammerIDNameMissing(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-programmers.txt", ruleresult.Skip, ""},
+		{"Invalid", "invalid-programmers.txt", ruleresult.NotRun, ""},
+		{"No programmers", "no-programmers-programmers.txt", ruleresult.Skip, ""},
+		{"Property missing", "programmerID-name-missing-programmers.txt", ruleresult.Fail, "foo, bar"},
+		{"Valid", "valid-programmers.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(ProgrammersTxtProgrammerIDNameMissing, testTables, t)
+}
+
+func TestProgrammersTxtProgrammerIDNameLTMinLength(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-programmers.txt", ruleresult.Skip, ""},
+		{"Invalid", "invalid-programmers.txt", ruleresult.NotRun, ""},
+		{"No programmers", "no-programmers-programmers.txt", ruleresult.Skip, ""},
+		{"Property LT min", "programmerID-name-LT-programmers.txt", ruleresult.Fail, "foo, bar"},
+		{"Valid", "valid-programmers.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(ProgrammersTxtProgrammerIDNameLTMinLength, testTables, t)
+}
+
+func TestProgrammersTxtProgrammerIDProgramToolMissing(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-programmers.txt", ruleresult.Skip, ""},
+		{"Invalid", "invalid-programmers.txt", ruleresult.NotRun, ""},
+		{"No programmers", "no-programmers-programmers.txt", ruleresult.Skip, ""},
+		{"Property missing", "programmerID-program-tool-missing-programmers.txt", ruleresult.Fail, "foo, bar"},
+		{"Valid", "valid-programmers.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(ProgrammersTxtProgrammerIDProgramToolMissing, testTables, t)
+}
+
+func TestProgrammersTxtProgrammerIDProgramToolLTMinLength(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-programmers.txt", ruleresult.Skip, ""},
+		{"Invalid", "invalid-programmers.txt", ruleresult.NotRun, ""},
+		{"No programmers", "no-programmers-programmers.txt", ruleresult.Skip, ""},
+		{"Property LT min", "programmerID-program-tool-LT-programmers.txt", ruleresult.Fail, "foo, bar"},
+		{"Valid", "valid-programmers.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(ProgrammersTxtProgrammerIDProgramToolLTMinLength, testTables, t)
+}

@@ -8,6 +8,10 @@
 // etc/schemas/arduino-library-properties-permissive-schema.json
 // etc/schemas/arduino-library-properties-schema.json
 // etc/schemas/arduino-library-properties-strict-schema.json
+// etc/schemas/arduino-programmers-txt-definitions-schema.json
+// etc/schemas/arduino-programmers-txt-permissive-schema.json
+// etc/schemas/arduino-programmers-txt-schema.json
+// etc/schemas/arduino-programmers-txt-strict-schema.json
 // etc/schemas/general-definitions-schema.json
 package schemadata
 
@@ -2337,6 +2341,321 @@ func arduinoLibraryPropertiesStrictSchemaJson() (*asset, error) {
 	return a, nil
 }
 
+var _arduinoProgrammersTxtDefinitionsSchemaJson = []byte(`{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-programmers-txt-definitions-schema.json",
+  "title": "Shared definitions for the Arduino programmers.txt schemas",
+  "definitions": {
+    "propertiesObjects": {
+      "programmerID": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/programmerID/base/object"
+              },
+              {
+                "properties": {
+                  "name": {
+                    "$ref": "#/definitions/propertiesObjects/programmerIDName/permissive/object"
+                  },
+                  "program.tool": {
+                    "$ref": "#/definitions/propertiesObjects/programmerIDProgramTool/permissive/object"
+                  }
+                }
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/programmerID/permissive/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/programmerID/base/object"
+              },
+              {
+                "properties": {
+                  "name": {
+                    "$ref": "#/definitions/propertiesObjects/programmerIDName/specification/object"
+                  },
+                  "program.tool": {
+                    "$ref": "#/definitions/propertiesObjects/programmerIDProgramTool/specification/object"
+                  }
+                }
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/programmerID/specification/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/programmerID/base/object"
+              },
+              {
+                "properties": {
+                  "name": {
+                    "$ref": "#/definitions/propertiesObjects/programmerIDName/strict/object"
+                  },
+                  "program.tool": {
+                    "$ref": "#/definitions/propertiesObjects/programmerIDProgramTool/strict/object"
+                  }
+                }
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/programmerID/strict/object"
+              }
+            ]
+          }
+        }
+      },
+      "programmerIDName": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/programmerIDName/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/programmerIDName/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/programmerIDName/base/object"
+              }
+            ]
+          }
+        }
+      },
+      "programmerIDProgramTool": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/programmerIDProgramTool/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/programmerIDProgramTool/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/programmerIDProgramTool/base/object"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "requiredObjects": {
+      "programmerID": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "required": ["name", "program.tool"]
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/programmerID/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/programmerID/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/programmerID/base/object"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
+`)
+
+func arduinoProgrammersTxtDefinitionsSchemaJsonBytes() ([]byte, error) {
+	return _arduinoProgrammersTxtDefinitionsSchemaJson, nil
+}
+
+func arduinoProgrammersTxtDefinitionsSchemaJson() (*asset, error) {
+	bytes, err := arduinoProgrammersTxtDefinitionsSchemaJsonBytes()
+	if err != nil {
+		return nil, err
+	}
+
+	info := bindataFileInfo{name: "arduino-programmers-txt-definitions-schema.json", size: 0, mode: os.FileMode(0), modTime: time.Unix(0, 0)}
+	a := &asset{bytes: bytes, info: info}
+	return a, nil
+}
+
+var _arduinoProgrammersTxtPermissiveSchemaJson = []byte(`{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-programmers-txt-permissive-schema.json",
+  "title": "Arduino programmers.txt JSON permissive schema",
+  "description": "programmers.txt contains the definitions of Arduino hardware programmers. See: https://arduino.github.io/arduino-cli/latest/platform-specification/#programmerstxt",
+  "$comment": "For information on the programmers.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
+  "type": "object",
+  "patternProperties": {
+    ".+": {
+      "$ref": "arduino-programmers-txt-definitions-schema.json#/definitions/propertiesObjects/programmerID/permissive/object"
+    }
+  }
+}
+`)
+
+func arduinoProgrammersTxtPermissiveSchemaJsonBytes() ([]byte, error) {
+	return _arduinoProgrammersTxtPermissiveSchemaJson, nil
+}
+
+func arduinoProgrammersTxtPermissiveSchemaJson() (*asset, error) {
+	bytes, err := arduinoProgrammersTxtPermissiveSchemaJsonBytes()
+	if err != nil {
+		return nil, err
+	}
+
+	info := bindataFileInfo{name: "arduino-programmers-txt-permissive-schema.json", size: 0, mode: os.FileMode(0), modTime: time.Unix(0, 0)}
+	a := &asset{bytes: bytes, info: info}
+	return a, nil
+}
+
+var _arduinoProgrammersTxtSchemaJson = []byte(`{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-programmers-txt-schema.json",
+  "title": "Arduino programmers.txt JSON schema",
+  "description": "programmers.txt contains the definitions of Arduino hardware programmers. See: https://arduino.github.io/arduino-cli/latest/platform-specification/#programmerstxt",
+  "$comment": "For information on the programmers.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
+  "type": "object",
+  "patternProperties": {
+    ".+": {
+      "$ref": "arduino-programmers-txt-definitions-schema.json#/definitions/propertiesObjects/programmerID/specification/object"
+    }
+  }
+}
+`)
+
+func arduinoProgrammersTxtSchemaJsonBytes() ([]byte, error) {
+	return _arduinoProgrammersTxtSchemaJson, nil
+}
+
+func arduinoProgrammersTxtSchemaJson() (*asset, error) {
+	bytes, err := arduinoProgrammersTxtSchemaJsonBytes()
+	if err != nil {
+		return nil, err
+	}
+
+	info := bindataFileInfo{name: "arduino-programmers-txt-schema.json", size: 0, mode: os.FileMode(0), modTime: time.Unix(0, 0)}
+	a := &asset{bytes: bytes, info: info}
+	return a, nil
+}
+
+var _arduinoProgrammersTxtStrictSchemaJson = []byte(`{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-programmers-txt-strict-schema.json",
+  "title": "Arduino programmers.txt JSON strict schema",
+  "description": "programmers.txt contains the definitions of Arduino hardware programmers. See: https://arduino.github.io/arduino-cli/latest/platform-specification/#programmerstxt",
+  "$comment": "For information on the programmers.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
+  "type": "object",
+  "patternProperties": {
+    ".+": {
+      "$ref": "arduino-programmers-txt-definitions-schema.json#/definitions/propertiesObjects/programmerID/strict/object"
+    }
+  }
+}
+`)
+
+func arduinoProgrammersTxtStrictSchemaJsonBytes() ([]byte, error) {
+	return _arduinoProgrammersTxtStrictSchemaJson, nil
+}
+
+func arduinoProgrammersTxtStrictSchemaJson() (*asset, error) {
+	bytes, err := arduinoProgrammersTxtStrictSchemaJsonBytes()
+	if err != nil {
+		return nil, err
+	}
+
+	info := bindataFileInfo{name: "arduino-programmers-txt-strict-schema.json", size: 0, mode: os.FileMode(0), modTime: time.Unix(0, 0)}
+	a := &asset{bytes: bytes, info: info}
+	return a, nil
+}
+
 var _generalDefinitionsSchemaJson = []byte(`{
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/general-definitions-schema.json",
@@ -2433,6 +2752,10 @@ var _bindata = map[string]func() (*asset, error){
 	"arduino-library-properties-permissive-schema.json":  arduinoLibraryPropertiesPermissiveSchemaJson,
 	"arduino-library-properties-schema.json":             arduinoLibraryPropertiesSchemaJson,
 	"arduino-library-properties-strict-schema.json":      arduinoLibraryPropertiesStrictSchemaJson,
+	"arduino-programmers-txt-definitions-schema.json":    arduinoProgrammersTxtDefinitionsSchemaJson,
+	"arduino-programmers-txt-permissive-schema.json":     arduinoProgrammersTxtPermissiveSchemaJson,
+	"arduino-programmers-txt-schema.json":                arduinoProgrammersTxtSchemaJson,
+	"arduino-programmers-txt-strict-schema.json":         arduinoProgrammersTxtStrictSchemaJson,
 	"general-definitions-schema.json":                    generalDefinitionsSchemaJson,
 }
 
@@ -2485,6 +2808,10 @@ var _bintree = &bintree{nil, map[string]*bintree{
 	"arduino-library-properties-permissive-schema.json":  &bintree{arduinoLibraryPropertiesPermissiveSchemaJson, map[string]*bintree{}},
 	"arduino-library-properties-schema.json":             &bintree{arduinoLibraryPropertiesSchemaJson, map[string]*bintree{}},
 	"arduino-library-properties-strict-schema.json":      &bintree{arduinoLibraryPropertiesStrictSchemaJson, map[string]*bintree{}},
+	"arduino-programmers-txt-definitions-schema.json":    &bintree{arduinoProgrammersTxtDefinitionsSchemaJson, map[string]*bintree{}},
+	"arduino-programmers-txt-permissive-schema.json":     &bintree{arduinoProgrammersTxtPermissiveSchemaJson, map[string]*bintree{}},
+	"arduino-programmers-txt-schema.json":                &bintree{arduinoProgrammersTxtSchemaJson, map[string]*bintree{}},
+	"arduino-programmers-txt-strict-schema.json":         &bintree{arduinoProgrammersTxtStrictSchemaJson, map[string]*bintree{}},
 	"general-definitions-schema.json":                    &bintree{generalDefinitionsSchemaJson, map[string]*bintree{}},
 }}
 

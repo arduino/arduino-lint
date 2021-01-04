@@ -20,6 +20,7 @@ See: https://arduino.github.io/arduino-cli/latest/platform-specification/#boards
 package boardstxt
 
 import (
+	"github.com/arduino/arduino-lint/internal/project/general"
 	"github.com/arduino/arduino-lint/internal/rule/schema"
 	"github.com/arduino/arduino-lint/internal/rule/schema/compliancelevel"
 	"github.com/arduino/arduino-lint/internal/rule/schema/schemadata"
@@ -49,25 +50,8 @@ func Validate(boardsTxt *properties.Map) map[compliancelevel.Type]schema.Validat
 		schemaObject[compliancelevel.Strict] = schema.Compile("arduino-boards-txt-strict-schema.json", referencedSchemaFilenames, schemadata.Asset)
 	}
 
-	/*
-		Convert the boards.txt data from the native properties.Map type to the interface type required by the schema
-		validation package.
-		Even though boards.txt has a multi-level nested data structure, the format has the odd characteristic of allowing a
-		key to be both an object and a string simultaneously, which is not compatible with Golang maps or JSON. So the data
-		structure used is a map of the first level keys (necessary to accommodate the board IDs) to the full remainder of
-		the keys (rather than recursing through the key levels individually), to string values.
-	*/
-	boardsTxtInterface := make(map[string]interface{})
-	keys := boardsTxt.FirstLevelKeys()
-	for _, key := range keys {
-		subtreeMap := boardsTxt.SubTree(key).AsMap()
-		// This level also must be converted to map[string]interface{}.
-		subtreeInterface := make(map[string]interface{})
-		for subtreeKey, subtreeValue := range subtreeMap {
-			subtreeInterface[subtreeKey] = subtreeValue
-		}
-		boardsTxtInterface[key] = subtreeInterface
-	}
+	//Convert the boards.txt data from the native properties.Map type to the interface type required by the schema validation package.
+	boardsTxtInterface := general.PropertiesToFirstLevelExpandedMap(boardsTxt)
 
 	validationResults[compliancelevel.Permissive] = schema.Validate(boardsTxtInterface, schemaObject[compliancelevel.Permissive])
 	validationResults[compliancelevel.Specification] = schema.Validate(boardsTxtInterface, schemaObject[compliancelevel.Specification])

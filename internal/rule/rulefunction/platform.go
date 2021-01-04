@@ -501,50 +501,195 @@ func BoardsTxtBoardIDPidNInvalid() (result ruleresult.Type, output string) {
 	return ruleresult.Pass, ""
 }
 
-// boardIDMissingRequiredProperty returns the list of board IDs missing the given required property.
-func boardIDMissingRequiredProperty(propertyNameQuery string, complianceLevel compliancelevel.Type) []string {
-	nonCompliantBoardIDs := []string{}
-	for _, boardID := range projectdata.BoardsTxtBoardIds() {
-		if schema.RequiredPropertyMissing(boardID+"/"+propertyNameQuery, projectdata.BoardsTxtSchemaValidationResult()[complianceLevel]) {
-			nonCompliantBoardIDs = append(nonCompliantBoardIDs, boardID)
-		}
+// ProgrammersTxtFormat checks for invalid programmers.txt format.
+func ProgrammersTxtFormat() (result ruleresult.Type, output string) {
+	if !projectdata.ProgrammersTxtExists() {
+		return ruleresult.Skip, "Platform has no programmers.txt"
 	}
 
-	return nonCompliantBoardIDs
+	if projectdata.ProgrammersTxtLoadError() == nil {
+		return ruleresult.Pass, ""
+	}
+
+	return ruleresult.Fail, projectdata.ProgrammersTxtLoadError().Error()
+}
+
+// ProgrammersTxtProgrammerIDNameMissing checks if any of the programmers are missing name properties.
+func ProgrammersTxtProgrammerIDNameMissing() (result ruleresult.Type, output string) {
+	if !projectdata.ProgrammersTxtExists() {
+		return ruleresult.Skip, "Platform has no programmers.txt"
+	}
+
+	if projectdata.ProgrammersTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load programmers.txt"
+	}
+
+	if len(projectdata.ProgrammersTxtProgrammerIds()) == 0 {
+		return ruleresult.Skip, "programmers.txt has no programmers"
+	}
+
+	nonCompliantProgrammerIDs := programmerIDMissingRequiredProperty("name", compliancelevel.Specification)
+
+	if len(nonCompliantProgrammerIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantProgrammerIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// ProgrammersTxtProgrammerIDNameLTMinLength checks if any of the programmer names are less than the minimum length.
+func ProgrammersTxtProgrammerIDNameLTMinLength() (result ruleresult.Type, output string) {
+	if !projectdata.ProgrammersTxtExists() {
+		return ruleresult.Skip, "Platform has no programmers.txt"
+	}
+
+	if projectdata.ProgrammersTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load programmers.txt"
+	}
+
+	if len(projectdata.ProgrammersTxtProgrammerIds()) == 0 {
+		return ruleresult.Skip, "programmers.txt has no programmers"
+	}
+
+	nonCompliantProgrammerIDs := programmerIDValueLTMinLength("name", compliancelevel.Specification)
+
+	if len(nonCompliantProgrammerIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantProgrammerIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// ProgrammersTxtProgrammerIDProgramToolMissing checks if any of the programmers are missing program.tool properties.
+func ProgrammersTxtProgrammerIDProgramToolMissing() (result ruleresult.Type, output string) {
+	if !projectdata.ProgrammersTxtExists() {
+		return ruleresult.Skip, "Platform has no programmers.txt"
+	}
+
+	if projectdata.ProgrammersTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load programmers.txt"
+	}
+
+	if len(projectdata.ProgrammersTxtProgrammerIds()) == 0 {
+		return ruleresult.Skip, "programmers.txt has no programmers"
+	}
+
+	nonCompliantProgrammerIDs := programmerIDMissingRequiredProperty("program\\.tool", compliancelevel.Specification)
+
+	if len(nonCompliantProgrammerIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantProgrammerIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// ProgrammersTxtProgrammerIDProgramToolLTMinLength checks if any of the programmer program.tool properties are less than the minimum length.
+func ProgrammersTxtProgrammerIDProgramToolLTMinLength() (result ruleresult.Type, output string) {
+	if !projectdata.ProgrammersTxtExists() {
+		return ruleresult.Skip, "Platform has no programmers.txt"
+	}
+
+	if projectdata.ProgrammersTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load programmers.txt"
+	}
+
+	if len(projectdata.ProgrammersTxtProgrammerIds()) == 0 {
+		return ruleresult.Skip, "programmers.txt has no programmers"
+	}
+
+	nonCompliantProgrammerIDs := programmerIDValueLTMinLength("program\\.tool", compliancelevel.Specification)
+
+	if len(nonCompliantProgrammerIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantProgrammerIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// boardIDMissingRequiredProperty returns the list of board IDs missing the given required property.
+func boardIDMissingRequiredProperty(propertyNameQuery string, complianceLevel compliancelevel.Type) []string {
+	return iDMissingRequiredProperty(projectdata.BoardsTxtBoardIds(), propertyNameQuery, projectdata.BoardsTxtSchemaValidationResult()[complianceLevel])
 }
 
 // boardIDValueLTMinLength returns the list of board IDs with value of the given property less than the minimum length.
 func boardIDValueLTMinLength(propertyNameQuery string, complianceLevel compliancelevel.Type) []string {
-	nonCompliantBoardIDs := []string{}
-	for _, boardID := range projectdata.BoardsTxtBoardIds() {
-		if schema.PropertyLessThanMinLength(boardID+"/"+propertyNameQuery, projectdata.BoardsTxtSchemaValidationResult()[complianceLevel]) {
-			nonCompliantBoardIDs = append(nonCompliantBoardIDs, boardID)
-		}
-	}
-
-	return nonCompliantBoardIDs
+	return iDValueLTMinLength(projectdata.BoardsTxtBoardIds(), propertyNameQuery, projectdata.BoardsTxtSchemaValidationResult()[complianceLevel])
 }
 
 // boardIDValueEnumMismatch returns the list of board IDs with value of the given property not matching the JSON schema enum.
 func boardIDValueEnumMismatch(propertyNameQuery string, complianceLevel compliancelevel.Type) []string {
-	nonCompliantBoardIDs := []string{}
-	for _, boardID := range projectdata.BoardsTxtBoardIds() {
-		if schema.PropertyEnumMismatch(boardID+"/"+propertyNameQuery, projectdata.BoardsTxtSchemaValidationResult()[complianceLevel]) {
-			nonCompliantBoardIDs = append(nonCompliantBoardIDs, boardID)
-		}
-	}
-
-	return nonCompliantBoardIDs
+	return iDValueEnumMismatch(projectdata.BoardsTxtBoardIds(), propertyNameQuery, projectdata.BoardsTxtSchemaValidationResult()[complianceLevel])
 }
 
 // boardIDValueEnumMismatch returns the list of board IDs with value of the given property not matching the JSON schema pattern.
 func boardIDValuePatternMismatch(propertyNameQuery string, complianceLevel compliancelevel.Type) []string {
-	nonCompliantBoardIDs := []string{}
-	for _, boardID := range projectdata.BoardsTxtBoardIds() {
-		if schema.PropertyPatternMismatch(boardID+"/"+propertyNameQuery, projectdata.BoardsTxtSchemaValidationResult()[complianceLevel]) {
-			nonCompliantBoardIDs = append(nonCompliantBoardIDs, boardID)
+	return iDValuePatternMismatch(projectdata.BoardsTxtBoardIds(), propertyNameQuery, projectdata.BoardsTxtSchemaValidationResult()[complianceLevel])
+}
+
+// programmerIDMissingRequiredProperty returns the list of programmer IDs missing the given required property.
+func programmerIDMissingRequiredProperty(propertyNameQuery string, complianceLevel compliancelevel.Type) []string {
+	return iDMissingRequiredProperty(projectdata.ProgrammersTxtProgrammerIds(), propertyNameQuery, projectdata.ProgrammersTxtSchemaValidationResult()[complianceLevel])
+}
+
+// programmerIDValueLTMinLength returns the list of programmer IDs with value of the given property less than the minimum length.
+func programmerIDValueLTMinLength(propertyNameQuery string, complianceLevel compliancelevel.Type) []string {
+	return iDValueLTMinLength(projectdata.ProgrammersTxtProgrammerIds(), propertyNameQuery, projectdata.ProgrammersTxtSchemaValidationResult()[complianceLevel])
+}
+
+// programmerIDValueEnumMismatch returns the list of programmer IDs with value of the given property not matching the JSON schema enum.
+func programmerIDValueEnumMismatch(propertyNameQuery string, complianceLevel compliancelevel.Type) []string {
+	return iDValueEnumMismatch(projectdata.ProgrammersTxtProgrammerIds(), propertyNameQuery, projectdata.ProgrammersTxtSchemaValidationResult()[complianceLevel])
+}
+
+// programmerIDValueEnumMismatch returns the list of programmer IDs with value of the given property not matching the JSON schema pattern.
+func programmerIDValuePatternMismatch(propertyNameQuery string, complianceLevel compliancelevel.Type) []string {
+	return iDValuePatternMismatch(projectdata.ProgrammersTxtProgrammerIds(), propertyNameQuery, projectdata.ProgrammersTxtSchemaValidationResult()[complianceLevel])
+}
+
+// iDMissingRequiredProperty returns the list of first level keys missing the given required property.
+func iDMissingRequiredProperty(iDs []string, propertyNameQuery string, validationResult schema.ValidationResult) []string {
+	nonCompliantIDs := []string{}
+	for _, iD := range iDs {
+		if schema.RequiredPropertyMissing(iD+"/"+propertyNameQuery, validationResult) {
+			nonCompliantIDs = append(nonCompliantIDs, iD)
 		}
 	}
 
-	return nonCompliantBoardIDs
+	return nonCompliantIDs
+}
+
+// iDValueLTMinLength returns the list of first level keys with value of the given property less than the minimum length.
+func iDValueLTMinLength(iDs []string, propertyNameQuery string, validationResult schema.ValidationResult) []string {
+	nonCompliantIDs := []string{}
+	for _, iD := range iDs {
+		if schema.PropertyLessThanMinLength(iD+"/"+propertyNameQuery, validationResult) {
+			nonCompliantIDs = append(nonCompliantIDs, iD)
+		}
+	}
+
+	return nonCompliantIDs
+}
+
+// iDValueEnumMismatch returns the list of first level keys with value of the given property not matching the JSON schema enum.
+func iDValueEnumMismatch(iDs []string, propertyNameQuery string, validationResult schema.ValidationResult) []string {
+	nonCompliantIDs := []string{}
+	for _, iD := range iDs {
+		if schema.PropertyEnumMismatch(iD+"/"+propertyNameQuery, validationResult) {
+			nonCompliantIDs = append(nonCompliantIDs, iD)
+		}
+	}
+
+	return nonCompliantIDs
+}
+
+// iDValueEnumMismatch returns the list of first level keys with value of the given property not matching the JSON schema pattern.
+func iDValuePatternMismatch(iDs []string, propertyNameQuery string, validationResult schema.ValidationResult) []string {
+	nonCompliantIDs := []string{}
+	for _, iD := range iDs {
+		if schema.PropertyPatternMismatch(iD+"/"+propertyNameQuery, validationResult) {
+			nonCompliantIDs = append(nonCompliantIDs, iD)
+		}
+	}
+
+	return nonCompliantIDs
 }
