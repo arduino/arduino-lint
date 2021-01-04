@@ -192,25 +192,6 @@ func BoardsTxtUserExtraFlagsUsage() (result ruleresult.Type, output string) {
 	return ruleresult.Pass, ""
 }
 
-// BoardsTxtBoardIDDebugToolLTMinLength checks if any of the board debug.tool values are less than the minimum length.
-func BoardsTxtBoardIDDebugToolLTMinLength() (result ruleresult.Type, output string) {
-	if projectdata.BoardsTxtLoadError() != nil {
-		return ruleresult.NotRun, "Couldn't load boards.txt"
-	}
-
-	if len(projectdata.BoardsTxtBoardIds()) == 0 {
-		return ruleresult.Skip, "boards.txt has no boards"
-	}
-
-	nonCompliantBoardIDs := boardIDValueLTMinLength("debug\\.tool", compliancelevel.Specification)
-
-	if len(nonCompliantBoardIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
-	}
-
-	return ruleresult.Pass, ""
-}
-
 // BoardsTxtBoardIDHideInvalid checks if any of the board hide values are less than the minimum length.
 func BoardsTxtBoardIDHideInvalid() (result ruleresult.Type, output string) {
 	if projectdata.BoardsTxtLoadError() != nil {

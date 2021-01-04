@@ -202,9 +202,6 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                   "build.core": {
                     "$ref": "#/definitions/propertiesObjects/boardIDBuildCore/permissive/object"
                   },
-                  "debug.tool": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDDebugTool/permissive/object"
-                  },
                   "hide": {
                     "$ref": "#/definitions/propertiesObjects/boardIDHide/permissive/object"
                   },
@@ -270,9 +267,6 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                   "build.core": {
                     "$ref": "#/definitions/propertiesObjects/boardIDBuildCore/specification/object"
                   },
-                  "debug.tool": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDDebugTool/specification/object"
-                  },
                   "hide": {
                     "$ref": "#/definitions/propertiesObjects/boardIDHide/specification/object"
                   },
@@ -337,9 +331,6 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                   },
                   "build.core": {
                     "$ref": "#/definitions/propertiesObjects/boardIDBuildCore/strict/object"
-                  },
-                  "debug.tool": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDDebugTool/strict/object"
                   },
                   "hide": {
                     "$ref": "#/definitions/propertiesObjects/boardIDHide/strict/object"
@@ -508,47 +499,6 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
             "allOf": [
               {
                 "$ref": "#/definitions/propertiesObjects/boardIDBuildBoard/base/object"
-              }
-            ]
-          }
-        }
-      },
-      "boardIDDebugTool": {
-        "base": {
-          "object": {
-            "allOf": [
-              {
-                "type": "string"
-              },
-              {
-                "minLength": 1
-              }
-            ]
-          }
-        },
-        "permissive": {
-          "object": {
-            "allOf": [
-              {
-                "$ref": "#/definitions/propertiesObjects/boardIDDebugTool/base/object"
-              }
-            ]
-          }
-        },
-        "specification": {
-          "object": {
-            "allOf": [
-              {
-                "$ref": "#/definitions/propertiesObjects/boardIDDebugTool/base/object"
-              }
-            ]
-          }
-        },
-        "strict": {
-          "object": {
-            "allOf": [
-              {
-                "$ref": "#/definitions/propertiesObjects/boardIDDebugTool/base/object"
               }
             ]
           }

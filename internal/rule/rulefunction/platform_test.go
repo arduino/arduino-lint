@@ -165,18 +165,6 @@ func TestBoardsTxtUserExtraFlagsUsage(t *testing.T) {
 	checkPlatformRuleFunction(BoardsTxtUserExtraFlagsUsage, testTables, t)
 }
 
-func TestBoardsTxtBoardIDDebugToolLTMinLength(t *testing.T) {
-	testTables := []platformRuleFunctionTestTable{
-		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
-		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
-		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
-		{"Property LT min", "boardID-debug-tool-LT-boards.txt", ruleresult.Fail, "buno, funo"},
-		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
-	}
-
-	checkPlatformRuleFunction(BoardsTxtBoardIDDebugToolLTMinLength, testTables, t)
-}
-
 func TestBoardsTxtBoardIDHideInvalid(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},

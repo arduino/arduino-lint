@@ -75,10 +75,6 @@ func TestMinLength(t *testing.T) {
 		{"foo.build.core", "foo/build\\.core", 1, compliancelevel.Specification},
 		{"foo.build.core", "foo/build\\.core", 1, compliancelevel.Strict},
 
-		{"foo.debug.tool", "foo/debug\\.tool", 1, compliancelevel.Permissive},
-		{"foo.debug.tool", "foo/debug\\.tool", 1, compliancelevel.Specification},
-		{"foo.debug.tool", "foo/debug\\.tool", 1, compliancelevel.Strict},
-
 		{"foo.menu.bar.baz", "foo/menu\\.bar\\.baz", 1, compliancelevel.Permissive},
 		{"foo.menu.bar.baz", "foo/menu\\.bar\\.baz", 1, compliancelevel.Specification},
 		{"foo.menu.bar.baz", "foo/menu\\.bar\\.baz", 1, compliancelevel.Strict},
