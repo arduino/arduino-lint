@@ -292,6 +292,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#nightly-builds" class="md-nav__link">
+    Nightly builds
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -392,6 +399,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#nightly-builds" class="md-nav__link">
+    Nightly builds
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -439,8 +453,8 @@ script can be run on Windows by installing <a href="https://gitforwindows.org/">
 </code></pre></div>
 <p>If you would like to use the <code>arduino-lint</code> command from any location, install arduino-lint to a directory already in
 your <code>PATH</code> or add the arduino-lint installation path to your <code>PATH</code> environment variable.</p>
-<p>If you want to download a specific arduino-lint version, for example <code>0.9.0</code>, pass the version number as a parameter
-like this:</p>
+<p>If you want to download a specific arduino-lint version, for example <code>0.9.0</code> or <code>nightly-latest</code>, pass the version
+number as a parameter like this:</p>
 <div class="highlight"><pre><span></span><code>curl -fsSL https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/install.sh | sh -s 0.9.0
 </code></pre></div>
 <h3 id="download">Download<a class="headerlink" href="#download" title="Permanent link">&para;</a></h3>
@@ -481,7 +495,46 @@ already in your <code>PATH</code> or add the arduino-lint installation path to y
 </table>
 <h4 id="previous-versions">Previous versions<a class="headerlink" href="#previous-versions" title="Permanent link">&para;</a></h4>
 <p>These are available from the "Assets" sections on the <a href="https://github.com/arduino/arduino-lint/releases">releases page</a>.</p>
-<p><code>https://downloads.arduino.cc/arduino-lint/nightly/nightly-&lt;DATE&gt;-checksums.txt</code></p>
+<h4 id="nightly-builds">Nightly builds<a class="headerlink" href="#nightly-builds" title="Permanent link">&para;</a></h4>
+<p>These builds are generated every day at 01:00 GMT from the <code>main</code> branch and should be considered unstable. In order to
+get the latest nightly build available for the supported platform, use the following links:</p>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linux</td>
+<td><a href="https://downloads.arduino.cc/arduino-lint/nightly/arduino-lint_nightly-latest_Linux_32bit.tar.gz">32 bit</a></td>
+<td><a href="https://downloads.arduino.cc/arduino-lint/nightly/arduino-lint_nightly-latest_Linux_64bit.tar.gz">64 bit</a></td>
+</tr>
+<tr>
+<td>Linux ARM</td>
+<td><a href="https://downloads.arduino.cc/arduino-lint/nightly/arduino-lint_nightly-latest_Linux_ARMv7.tar.gz">32 bit</a></td>
+<td><a href="https://downloads.arduino.cc/arduino-lint/nightly/arduino-lint_nightly-latest_Linux_ARM64.tar.gz">64 bit</a></td>
+</tr>
+<tr>
+<td>Windows</td>
+<td><a href="https://downloads.arduino.cc/arduino-lint/nightly/arduino-lint_nightly-latest_Windows_32bit.zip">32 bit</a></td>
+<td><a href="https://downloads.arduino.cc/arduino-lint/nightly/arduino-lint_nightly-latest_Windows_64bit.zip">64 bit</a></td>
+</tr>
+<tr>
+<td>macOS</td>
+<td></td>
+<td><a href="https://downloads.arduino.cc/arduino-lint/nightly/arduino-lint_nightly-latest_macOS_64bit.tar.gz">64 bit</a></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>These links return a <code>302: Found</code> response, redirecting to latest generated builds by replacing <code>latest</code> with the
+latest available build date, using the format YYYYMMDD (i.e for 2019-08-06 <code>latest</code> is replaced with <code>20190806</code> )</p>
+</blockquote>
+<p>Checksums for the nightly builds are available at
+<code>https://downloads.arduino.cc/arduino-lint/nightly/nightly-&lt;DATE&gt;-checksums.txt</code></p>
 <h3 id="build-from-source">Build from source<a class="headerlink" href="#build-from-source" title="Permanent link">&para;</a></h3>
 <p>If you’re familiar with Golang or if you want to contribute to the project, you will probably build arduino-lint locally
 with your Go toolchain. See the <a href="../CONTRIBUTING/#building-the-source-code">"How to contribute"</a> page for instructions.</p>
