@@ -3,7 +3,7 @@ version: "3"
 # This taskfile is ideally meant to be project agnostic and could be dropped in
 # on other Go projects with minimal or no changes.
 #
-# To use is simply add the following lines to your main taskfile:
+# To use it simply add the following lines to your main taskfile:
 #   includes:
 #     dist: ./DistTasks.yml
 #
@@ -206,8 +206,6 @@ tasks:
       PACKAGE_NAME: "{{ .PROJECT_NAME }}_{{ .VERSION }}_{{ .PACKAGE_PLATFORM }}.tar.gz"
 
 vars:
-  TIMESTAMP_SHORT:
-    sh: echo "{{now | date "20060102"}}"
   CONTAINER: "docker.elastic.co/beats-dev/golang-crossbuild"
   GO_VERSION: "1.14.7"
-  CHECKSUM_FILE: "{{ .VERSION }}-{{ .TIMESTAMP_SHORT }}-checksums.txt"
+  CHECKSUM_FILE: "{{ .VERSION }}-checksums.txt"

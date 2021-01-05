@@ -278,9 +278,11 @@ vars:
     sh: echo "$(git log -n 1 --format=%h)"
   TIMESTAMP:
     sh: echo "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+  TIMESTAMP_SHORT:
+    sh: echo "{{now | date "20060102"}}"
   TAG:
-    sh: echo "`git describe --tags --abbrev=0 2> /dev/null`"
-  VERSION: "{{ if .NIGHTLY }}nightly{{ else if .TAG }}{{ .TAG }}{{ else }}snapshot{{ end }}"
+    sh: echo "`git tag --points-at=HEAD 2> /dev/null`"
+  VERSION: "{{ if .NIGHTLY }}nightly-{{ .TIMESTAMP_SHORT }}{{ else if .TAG }}{{ .TAG }}{{ else }}snapshot{{ end }}"
   CONFIGURATION_PACKAGE: "github.com/arduino/{{ .PROJECT_NAME }}/internal/configuration"
   LDFLAGS: >-
     -ldflags
