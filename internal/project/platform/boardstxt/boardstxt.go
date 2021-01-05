@@ -51,7 +51,7 @@ func Validate(boardsTxt *properties.Map) map[compliancelevel.Type]schema.Validat
 	}
 
 	//Convert the boards.txt data from the native properties.Map type to the interface type required by the schema validation package.
-	boardsTxtInterface := general.PropertiesToFirstLevelExpandedMap(boardsTxt)
+	boardsTxtInterface := general.PropertiesToMap(boardsTxt, 2)
 
 	validationResults[compliancelevel.Permissive] = schema.Validate(boardsTxtInterface, schemaObject[compliancelevel.Permissive])
 	validationResults[compliancelevel.Specification] = schema.Validate(boardsTxtInterface, schemaObject[compliancelevel.Specification])

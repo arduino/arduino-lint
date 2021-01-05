@@ -21,23 +21,33 @@ import (
 )
 
 /*
-PropertiesToFirstLevelExpandedMap converts properties.Map data structures to map[string]interface that maps between .
-Even though boards/properties.txt have a multi-level nested data structure, the format has the odd characteristic of
-allowing a key to be both an object and a string simultaneously, which is not compatible with Golang maps or JSON. So
-the data structure used is a map of the first level keys (necessary to accommodate the board/prograrmmer IDs) to the
-full remainder of the keys (rather than recursing through each key level individually), to string values.
+PropertiesToMap converts properties.Map data structures to map[string]interface with the specified number of key levels.
+The Arduino project configuration fields have an odd usage of the properties.Map format. Dots may sometimes indicate
+nested keys, but in other cases they are merely a character in the key string. There are cases where a completely
+programmatic recursion of the properties into a fully nested structure would result in the impossibility of some keys
+having bot a string and a map type, which is not supported. For this reason, it's necessary to manually configure the
+recursion of key levels on a case-by-case basis.
+In the event a full recursion of key levels is desired, set the levels argument to a value <1.
 */
-func PropertiesToFirstLevelExpandedMap(flatProperties *properties.Map) map[string]interface{} {
+func PropertiesToMap(flatProperties *properties.Map, levels int) map[string]interface{} {
 	propertiesInterface := make(map[string]interface{})
-	keys := flatProperties.FirstLevelKeys()
+
+	var keys []string
+	if levels != 1 {
+		keys = flatProperties.FirstLevelKeys()
+	} else {
+		keys = flatProperties.Keys()
+	}
+
 	for _, key := range keys {
-		subtreeMap := flatProperties.SubTree(key).AsMap()
-		// This level also must be converted to map[string]interface{}.
-		subtreeInterface := make(map[string]interface{})
-		for subtreeKey, subtreeValue := range subtreeMap {
-			subtreeInterface[subtreeKey] = subtreeValue
+		subTree := flatProperties.SubTree(key)
+		if subTree.Size() > 0 {
+			// This key contains a map.
+			propertiesInterface[key] = PropertiesToMap(subTree, levels-1)
+		} else {
+			// This key contains a string, no more recursion is possible.
+			propertiesInterface[key] = flatProperties.Get(key)
 		}
-		propertiesInterface[key] = subtreeInterface
 	}
 
 	return propertiesInterface

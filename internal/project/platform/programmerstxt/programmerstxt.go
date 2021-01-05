@@ -50,7 +50,7 @@ func Validate(programmersTxt *properties.Map) map[compliancelevel.Type]schema.Va
 	}
 
 	//Convert the programmers.txt data from the native properties.Map type to the interface type required by the schema validation package.
-	programmersTxtInterface := general.PropertiesToFirstLevelExpandedMap(programmersTxt)
+	programmersTxtInterface := general.PropertiesToMap(programmersTxt, 2)
 
 	validationResults[compliancelevel.Permissive] = schema.Validate(programmersTxtInterface, schemaObject[compliancelevel.Permissive])
 	validationResults[compliancelevel.Specification] = schema.Validate(programmersTxtInterface, schemaObject[compliancelevel.Specification])

@@ -24,8 +24,10 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestPropertiesToFirstLevelExpandedMap(t *testing.T) {
+func TestPropertiesToMap(t *testing.T) {
 	rawProperties := []byte(`
+		hello=world
+		goodbye=
 		foo.bar=asdf
 		foo.baz=zxcv
 		bar.bat.bam=123
@@ -34,6 +36,18 @@ func TestPropertiesToFirstLevelExpandedMap(t *testing.T) {
 	require.Nil(t, err)
 
 	expectedMapOutput := map[string]interface{}{
+		"hello":       "world",
+		"goodbye":     "",
+		"foo.bar":     "asdf",
+		"foo.baz":     "zxcv",
+		"bar.bat.bam": "123",
+	}
+
+	assert.True(t, reflect.DeepEqual(expectedMapOutput, PropertiesToMap(propertiesInput, 1)))
+
+	expectedMapOutput = map[string]interface{}{
+		"hello":   "world",
+		"goodbye": "",
 		"foo": map[string]interface{}{
 			"bar": "asdf",
 			"baz": "zxcv",
@@ -43,5 +57,22 @@ func TestPropertiesToFirstLevelExpandedMap(t *testing.T) {
 		},
 	}
 
-	assert.True(t, reflect.DeepEqual(expectedMapOutput, PropertiesToFirstLevelExpandedMap(propertiesInput)))
+	assert.True(t, reflect.DeepEqual(expectedMapOutput, PropertiesToMap(propertiesInput, 2)))
+
+	expectedMapOutput = map[string]interface{}{
+		"hello":   "world",
+		"goodbye": "",
+		"foo": map[string]interface{}{
+			"bar": "asdf",
+			"baz": "zxcv",
+		},
+		"bar": map[string]interface{}{
+			"bat": map[string]interface{}{
+				"bam": "123",
+			},
+		},
+	}
+
+	assert.True(t, reflect.DeepEqual(expectedMapOutput, PropertiesToMap(propertiesInput, 3)))
+	assert.True(t, reflect.DeepEqual(expectedMapOutput, PropertiesToMap(propertiesInput, 0)))
 }
