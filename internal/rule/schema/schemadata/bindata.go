@@ -8,6 +8,10 @@
 // etc/schemas/arduino-library-properties-permissive-schema.json
 // etc/schemas/arduino-library-properties-schema.json
 // etc/schemas/arduino-library-properties-strict-schema.json
+// etc/schemas/arduino-platform-txt-definitions-schema.json
+// etc/schemas/arduino-platform-txt-permissive-schema.json
+// etc/schemas/arduino-platform-txt-schema.json
+// etc/schemas/arduino-platform-txt-strict-schema.json
 // etc/schemas/arduino-programmers-txt-definitions-schema.json
 // etc/schemas/arduino-programmers-txt-permissive-schema.json
 // etc/schemas/arduino-programmers-txt-schema.json
@@ -2291,6 +2295,1455 @@ func arduinoLibraryPropertiesStrictSchemaJson() (*asset, error) {
 	return a, nil
 }
 
+var _arduinoPlatformTxtDefinitionsSchemaJson = []byte(`{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-platform-txt-definitions-schema.json",
+  "title": "Shared definitions for the Arduino platform.txt schemas",
+  "definitions": {
+    "propertiesObjects": {
+      "name": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/name/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/name/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/name/base/object"
+              }
+            ]
+          }
+        }
+      },
+      "version": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/version/base/object"
+              },
+              {
+                "$ref": "general-definitions-schema.json#/definitions/patternObjects/relaxedSemver"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/version/base/object"
+              },
+              {
+                "$ref": "general-definitions-schema.json#/definitions/patternObjects/semver"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/version/specification/object"
+              }
+            ]
+          }
+        }
+      },
+      "compilerCExtraFlags": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/compilerCExtraFlags/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/compilerCExtraFlags/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/compilerCExtraFlags/base/object"
+              },
+              {
+                "$comment": "These are default empty properties the user can override.",
+                "enum": [""]
+              }
+            ]
+          }
+        }
+      },
+      "compilerCppExtraFlags": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/compilerCppExtraFlags/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/compilerCppExtraFlags/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/compilerCppExtraFlags/base/object"
+              },
+              {
+                "$comment": "These are default empty properties the user can override.",
+                "enum": [""]
+              }
+            ]
+          }
+        }
+      },
+      "compilerSExtraFlags": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/compilerSExtraFlags/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/compilerSExtraFlags/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/compilerSExtraFlags/base/object"
+              },
+              {
+                "$comment": "These are default empty properties the user can override.",
+                "enum": [""]
+              }
+            ]
+          }
+        }
+      },
+      "compilerArExtraFlags": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/compilerArExtraFlags/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/compilerArExtraFlags/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/compilerArExtraFlags/base/object"
+              },
+              {
+                "$comment": "These are default empty properties the user can override.",
+                "enum": [""]
+              }
+            ]
+          }
+        }
+      },
+      "compilerCElfExtraFlags": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/compilerCElfExtraFlags/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/compilerCElfExtraFlags/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/compilerCElfExtraFlags/base/object"
+              },
+              {
+                "$comment": "These are default empty properties the user can override.",
+                "enum": [""]
+              }
+            ]
+          }
+        }
+      },
+      "recipePreprocMacros": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipePreprocMacros/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipePreprocMacros/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipePreprocMacros/base/object"
+              },
+              {
+                "pattern": "^.*{compiler\\.cpp\\.extra_flags}.*$"
+              }
+            ]
+          }
+        }
+      },
+      "recipeCOPattern": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipeCOPattern/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipeCOPattern/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipeCOPattern/base/object"
+              },
+              {
+                "pattern": "^.*{compiler\\.c\\.extra_flags}.*$"
+              }
+            ]
+          }
+        }
+      },
+      "recipeCppOPattern": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipeCppOPattern/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipeCppOPattern/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipeCppOPattern/base/object"
+              },
+              {
+                "pattern": "^.*{compiler\\.cpp\\.extra_flags}.*$"
+              }
+            ]
+          }
+        }
+      },
+      "recipeSOPattern": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipeSOPattern/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipeSOPattern/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipeSOPattern/base/object"
+              },
+              {
+                "pattern": "^.*{compiler\\.S\\.extra_flags}.*$"
+              }
+            ]
+          }
+        }
+      },
+      "recipeArPattern": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipeArPattern/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipeArPattern/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipeArPattern/base/object"
+              },
+              {
+                "pattern": "^.*{compiler\\.ar\\.extra_flags}.*$"
+              }
+            ]
+          }
+        }
+      },
+      "recipeCCombinePattern": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipeCCombinePattern/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipeCCombinePattern/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipeCCombinePattern/base/object"
+              },
+              {
+                "pattern": "^.*{compiler\\.c\\.elf\\.extra_flags}.*$"
+              }
+            ]
+          }
+        }
+      },
+      "recipeOutputTmpFile": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipeOutputTmpFile/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipeOutputTmpFile/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipeOutputTmpFile/base/object"
+              }
+            ]
+          }
+        }
+      },
+      "recipeOutputSaveFile": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipeOutputSaveFile/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipeOutputSaveFile/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipeOutputSaveFile/base/object"
+              }
+            ]
+          }
+        }
+      },
+      "recipeSizePattern": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipeSizePattern/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipeSizePattern/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/recipeSizePattern/base/object"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        }
+      },
+      "tools": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/tools/base/object"
+              },
+              {
+                "patternProperties": {
+                  "^.+$": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolName/permissive/object"
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/tools/base/object"
+              },
+              {
+                "patternProperties": {
+                  "^.+$": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolName/specification/object"
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/tools/base/object"
+              },
+              {
+                "patternProperties": {
+                  "^.+$": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolName/strict/object"
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        }
+      },
+      "toolsToolName": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolName/base/object"
+              },
+              {
+                "properties": {
+                  "upload": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameUpload/permissive/object"
+                  },
+                  "program": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameProgram/permissive/object"
+                  },
+                  "erase": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameErase/permissive/object"
+                  },
+                  "bootloader": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameBootloader/permissive/object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolName/base/object"
+              },
+              {
+                "properties": {
+                  "upload": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameUpload/specification/object"
+                  },
+                  "program": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameProgram/specification/object"
+                  },
+                  "erase": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameErase/specification/object"
+                  },
+                  "bootloader": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameBootloader/specification/object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolName/base/object"
+              },
+              {
+                "properties": {
+                  "upload": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameUpload/strict/object"
+                  },
+                  "program": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameProgram/strict/object"
+                  },
+                  "erase": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameErase/strict/object"
+                  },
+                  "bootloader": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameBootloader/strict/object"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "toolsToolNameUpload": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameUpload/base/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/permissive/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameUpload/base/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/specification/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameUpload/base/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/strict/object"
+              }
+            ]
+          }
+        }
+      },
+      "toolsToolNameProgram": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameProgram/base/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/permissive/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameProgram/base/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/specification/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameProgram/base/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/strict/object"
+              }
+            ]
+          }
+        }
+      },
+      "toolsToolNameErase": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameErase/base/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/permissive/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameErase/base/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/specification/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameErase/base/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/strict/object"
+              }
+            ]
+          }
+        }
+      },
+      "toolsToolNameBootloader": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameBootloader/base/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/permissive/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameBootloader/base/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/specification/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameBootloader/base/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/strict/object"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "dependenciesObjects": {
+      "root": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "dependencies": {
+                  "compiler.optimization_flags.debug": ["compiler.optimization_flags.release"],
+                  "compiler.optimization_flags.release": ["compiler.optimization_flags.debug"]
+                }
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/dependenciesObjects/root/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/dependenciesObjects/root/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/dependenciesObjects/root/base/object"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "requiredObjects": {
+      "root": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "required": [
+                  "name",
+                  "version",
+                  "compiler.warning_flags.none",
+                  "compiler.warning_flags.default",
+                  "compiler.warning_flags.more",
+                  "compiler.warning_flags.all",
+                  "recipe.c.o.pattern",
+                  "recipe.cpp.o.pattern",
+                  "recipe.S.o.pattern",
+                  "recipe.ar.pattern",
+                  "recipe.c.combine.pattern",
+                  "recipe.output.tmp_file",
+                  "recipe.output.save_file"
+                ]
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/root/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/root/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/root/base/object"
+              },
+              {
+                "required": [
+                  "compiler.c.extra_flags",
+                  "compiler.cpp.extra_flags",
+                  "compiler.S.extra_flags",
+                  "compiler.ar.extra_flags",
+                  "compiler.c.elf.extra_flags",
+                  "recipe.size.pattern",
+                  "recipe.size.regex",
+                  "recipe.size.regex.data"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "toolsToolNameActionName": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "required": ["params.verbose", "params.quiet", "pattern"]
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/base/object"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
+`)
+
+func arduinoPlatformTxtDefinitionsSchemaJsonBytes() ([]byte, error) {
+	return _arduinoPlatformTxtDefinitionsSchemaJson, nil
+}
+
+func arduinoPlatformTxtDefinitionsSchemaJson() (*asset, error) {
+	bytes, err := arduinoPlatformTxtDefinitionsSchemaJsonBytes()
+	if err != nil {
+		return nil, err
+	}
+
+	info := bindataFileInfo{name: "arduino-platform-txt-definitions-schema.json", size: 0, mode: os.FileMode(0), modTime: time.Unix(0, 0)}
+	a := &asset{bytes: bytes, info: info}
+	return a, nil
+}
+
+var _arduinoPlatformTxtPermissiveSchemaJson = []byte(`{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-platform-txt-permissive-schema.json",
+  "title": "Arduino platform.txt JSON permissive schema",
+  "description": "platform.txt contains the platform definitions of Arduino platforms. See: https://arduino.github.io/arduino-cli/latest/platform-specification/#platformtxt",
+  "$comment": "For information on the platform.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
+  "type": "object",
+  "properties": {
+    "name": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/name/permissive/object"
+    },
+    "version": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/version/permissive/object"
+    },
+    "compiler.c.extra_flags": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/compilerCExtraFlags/permissive/object"
+    },
+    "compiler.cpp.extra_flags": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/compilerCppExtraFlags/permissive/object"
+    },
+    "compiler.S.extra_flags": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/compilerSExtraFlags/permissive/object"
+    },
+    "compiler.ar.extra_flags": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/compilerArExtraFlags/permissive/object"
+    },
+    "compiler.c.elf.extra_flags": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/compilerCElfExtraFlags/permissive/object"
+    },
+    "recipe.preproc.macros": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipePreprocMacros/permissive/object"
+    },
+    "recipe.c.o.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeCOPattern/permissive/object"
+    },
+    "recipe.cpp.o.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeCppOPattern/permissive/object"
+    },
+    "recipe.S.o.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeSOPattern/permissive/object"
+    },
+    "recipe.ar.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeArPattern/permissive/object"
+    },
+    "recipe.c.combine.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeCCombinePattern/permissive/object"
+    },
+    "recipe.output.tmp_file": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeOutputTmpFile/permissive/object"
+    },
+    "recipe.output.save_file": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeOutputSaveFile/permissive/object"
+    },
+    "recipe.size.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeSizePattern/permissive/object"
+    },
+    "tools": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/tools/permissive/object"
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/dependenciesObjects/root/permissive/object"
+    },
+    {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/requiredObjects/root/permissive/object"
+    }
+  ]
+}
+`)
+
+func arduinoPlatformTxtPermissiveSchemaJsonBytes() ([]byte, error) {
+	return _arduinoPlatformTxtPermissiveSchemaJson, nil
+}
+
+func arduinoPlatformTxtPermissiveSchemaJson() (*asset, error) {
+	bytes, err := arduinoPlatformTxtPermissiveSchemaJsonBytes()
+	if err != nil {
+		return nil, err
+	}
+
+	info := bindataFileInfo{name: "arduino-platform-txt-permissive-schema.json", size: 0, mode: os.FileMode(0), modTime: time.Unix(0, 0)}
+	a := &asset{bytes: bytes, info: info}
+	return a, nil
+}
+
+var _arduinoPlatformTxtSchemaJson = []byte(`{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-platform-txt-schema.json",
+  "title": "Arduino platform.txt JSON schema",
+  "description": "platform.txt contains the platform definitions of Arduino platforms. See: https://arduino.github.io/arduino-cli/latest/platform-specification/#platformtxt",
+  "$comment": "For information on the platform.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
+  "type": "object",
+  "properties": {
+    "name": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/name/specification/object"
+    },
+    "version": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/version/specification/object"
+    },
+    "compiler.c.extra_flags": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/compilerCExtraFlags/specification/object"
+    },
+    "compiler.cpp.extra_flags": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/compilerCppExtraFlags/specification/object"
+    },
+    "compiler.S.extra_flags": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/compilerSExtraFlags/specification/object"
+    },
+    "compiler.ar.extra_flags": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/compilerArExtraFlags/specification/object"
+    },
+    "compiler.c.elf.extra_flags": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/compilerCElfExtraFlags/specification/object"
+    },
+    "recipe.preproc.macros": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipePreprocMacros/specification/object"
+    },
+    "recipe.c.o.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeCOPattern/specification/object"
+    },
+    "recipe.cpp.o.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeCppOPattern/specification/object"
+    },
+    "recipe.S.o.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeSOPattern/specification/object"
+    },
+    "recipe.ar.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeArPattern/specification/object"
+    },
+    "recipe.c.combine.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeCCombinePattern/specification/object"
+    },
+    "recipe.output.tmp_file": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeOutputTmpFile/specification/object"
+    },
+    "recipe.output.save_file": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeOutputSaveFile/specification/object"
+    },
+    "recipe.size.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeSizePattern/specification/object"
+    },
+    "tools": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/tools/specification/object"
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/dependenciesObjects/root/specification/object"
+    },
+    {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/requiredObjects/root/specification/object"
+    }
+  ]
+}
+`)
+
+func arduinoPlatformTxtSchemaJsonBytes() ([]byte, error) {
+	return _arduinoPlatformTxtSchemaJson, nil
+}
+
+func arduinoPlatformTxtSchemaJson() (*asset, error) {
+	bytes, err := arduinoPlatformTxtSchemaJsonBytes()
+	if err != nil {
+		return nil, err
+	}
+
+	info := bindataFileInfo{name: "arduino-platform-txt-schema.json", size: 0, mode: os.FileMode(0), modTime: time.Unix(0, 0)}
+	a := &asset{bytes: bytes, info: info}
+	return a, nil
+}
+
+var _arduinoPlatformTxtStrictSchemaJson = []byte(`{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-platform-txt-strict-schema.json",
+  "title": "Arduino platform.txt JSON strict schema",
+  "description": "platform.txt contains the platform definitions of Arduino platforms. See: https://arduino.github.io/arduino-cli/latest/platform-specification/#platformtxt",
+  "$comment": "For information on the platform.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
+  "type": "object",
+  "properties": {
+    "name": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/name/strict/object"
+    },
+    "version": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/version/strict/object"
+    },
+    "compiler.c.extra_flags": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/compilerCExtraFlags/strict/object"
+    },
+    "compiler.cpp.extra_flags": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/compilerCppExtraFlags/strict/object"
+    },
+    "compiler.S.extra_flags": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/compilerSExtraFlags/strict/object"
+    },
+    "compiler.ar.extra_flags": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/compilerArExtraFlags/strict/object"
+    },
+    "compiler.c.elf.extra_flags": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/compilerCElfExtraFlags/strict/object"
+    },
+    "recipe.preproc.macros": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipePreprocMacros/strict/object"
+    },
+    "recipe.c.o.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeCOPattern/strict/object"
+    },
+    "recipe.cpp.o.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeCppOPattern/strict/object"
+    },
+    "recipe.S.o.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeSOPattern/strict/object"
+    },
+    "recipe.ar.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeArPattern/strict/object"
+    },
+    "recipe.c.combine.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeCCombinePattern/strict/object"
+    },
+    "recipe.output.tmp_file": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeOutputTmpFile/strict/object"
+    },
+    "recipe.output.save_file": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeOutputSaveFile/strict/object"
+    },
+    "recipe.size.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeSizePattern/strict/object"
+    },
+    "tools": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/tools/strict/object"
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/dependenciesObjects/root/strict/object"
+    },
+    {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/requiredObjects/root/strict/object"
+    }
+  ]
+}
+`)
+
+func arduinoPlatformTxtStrictSchemaJsonBytes() ([]byte, error) {
+	return _arduinoPlatformTxtStrictSchemaJson, nil
+}
+
+func arduinoPlatformTxtStrictSchemaJson() (*asset, error) {
+	bytes, err := arduinoPlatformTxtStrictSchemaJsonBytes()
+	if err != nil {
+		return nil, err
+	}
+
+	info := bindataFileInfo{name: "arduino-platform-txt-strict-schema.json", size: 0, mode: os.FileMode(0), modTime: time.Unix(0, 0)}
+	a := &asset{bytes: bytes, info: info}
+	return a, nil
+}
+
 var _arduinoProgrammersTxtDefinitionsSchemaJson = []byte(`{
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-programmers-txt-definitions-schema.json",
@@ -2702,6 +4155,10 @@ var _bindata = map[string]func() (*asset, error){
 	"arduino-library-properties-permissive-schema.json":  arduinoLibraryPropertiesPermissiveSchemaJson,
 	"arduino-library-properties-schema.json":             arduinoLibraryPropertiesSchemaJson,
 	"arduino-library-properties-strict-schema.json":      arduinoLibraryPropertiesStrictSchemaJson,
+	"arduino-platform-txt-definitions-schema.json":       arduinoPlatformTxtDefinitionsSchemaJson,
+	"arduino-platform-txt-permissive-schema.json":        arduinoPlatformTxtPermissiveSchemaJson,
+	"arduino-platform-txt-schema.json":                   arduinoPlatformTxtSchemaJson,
+	"arduino-platform-txt-strict-schema.json":            arduinoPlatformTxtStrictSchemaJson,
 	"arduino-programmers-txt-definitions-schema.json":    arduinoProgrammersTxtDefinitionsSchemaJson,
 	"arduino-programmers-txt-permissive-schema.json":     arduinoProgrammersTxtPermissiveSchemaJson,
 	"arduino-programmers-txt-schema.json":                arduinoProgrammersTxtSchemaJson,
@@ -2758,6 +4215,10 @@ var _bintree = &bintree{nil, map[string]*bintree{
 	"arduino-library-properties-permissive-schema.json":  &bintree{arduinoLibraryPropertiesPermissiveSchemaJson, map[string]*bintree{}},
 	"arduino-library-properties-schema.json":             &bintree{arduinoLibraryPropertiesSchemaJson, map[string]*bintree{}},
 	"arduino-library-properties-strict-schema.json":      &bintree{arduinoLibraryPropertiesStrictSchemaJson, map[string]*bintree{}},
+	"arduino-platform-txt-definitions-schema.json":       &bintree{arduinoPlatformTxtDefinitionsSchemaJson, map[string]*bintree{}},
+	"arduino-platform-txt-permissive-schema.json":        &bintree{arduinoPlatformTxtPermissiveSchemaJson, map[string]*bintree{}},
+	"arduino-platform-txt-schema.json":                   &bintree{arduinoPlatformTxtSchemaJson, map[string]*bintree{}},
+	"arduino-platform-txt-strict-schema.json":            &bintree{arduinoPlatformTxtStrictSchemaJson, map[string]*bintree{}},
 	"arduino-programmers-txt-definitions-schema.json":    &bintree{arduinoProgrammersTxtDefinitionsSchemaJson, map[string]*bintree{}},
 	"arduino-programmers-txt-permissive-schema.json":     &bintree{arduinoProgrammersTxtPermissiveSchemaJson, map[string]*bintree{}},
 	"arduino-programmers-txt-schema.json":                &bintree{arduinoProgrammersTxtSchemaJson, map[string]*bintree{}},

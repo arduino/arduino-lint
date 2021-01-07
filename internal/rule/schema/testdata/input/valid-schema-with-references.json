@@ -34,6 +34,9 @@
   },
   "allOf": [
     {
+      "$ref": "referenced-schema-2.json#/definitions/dependenciesObject"
+    },
+    {
       "$ref": "referenced-schema-1.json#/definitions/requiredObject"
     },
     {

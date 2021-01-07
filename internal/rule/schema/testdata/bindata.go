@@ -115,6 +115,11 @@ var _referencedSchema2Json = []byte(`{
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/internal/rule/schema/testdata/referenced-schema-2.json",
   "title": "Schema for use in unit tests",
   "definitions": {
+    "dependenciesObject": {
+      "dependencies": {
+        "dependentProperty": ["dependencyProperty"]
+      }
+    },
     "minLengthObject": {
       "minLength": 2
     },
@@ -215,6 +220,9 @@ var _validSchemaWithReferencesJson = []byte(`{
     }
   },
   "allOf": [
+    {
+      "$ref": "referenced-schema-2.json#/definitions/dependenciesObject"
+    },
     {
       "$ref": "referenced-schema-1.json#/definitions/requiredObject"
     },

@@ -587,6 +587,1179 @@ func ProgrammersTxtProgrammerIDProgramToolLTMinLength() (result ruleresult.Type,
 	return ruleresult.Pass, ""
 }
 
+// PlatformTxtFormat checks for invalid platform.txt format.
+func PlatformTxtFormat() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() == nil {
+		return ruleresult.Pass, ""
+	}
+
+	return ruleresult.Fail, projectdata.PlatformTxtLoadError().Error()
+}
+
+// PlatformTxtNameMissing checks for missing name property in platform.txt.
+func PlatformTxtNameMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if schema.RequiredPropertyMissing("name", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtNameLTMinLength checks if the platform.txt name property value is less than the minimum length.
+func PlatformTxtNameLTMinLength() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if !projectdata.PlatformTxt().ContainsKey("name") {
+		return ruleresult.NotRun, "Property not present"
+	}
+
+	if schema.PropertyLessThanMinLength("name", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtVersionMissing checks for missing version property in platform.txt.
+func PlatformTxtVersionMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if schema.RequiredPropertyMissing("version", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtVersionNonRelaxedSemver checks whether the platform.txt version property is "relaxed semver" compliant.
+func PlatformTxtVersionNonRelaxedSemver() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	version, ok := projectdata.PlatformTxt().GetOk("version")
+	if !ok {
+		return ruleresult.NotRun, "Property not present"
+	}
+
+	if schema.PropertyPatternMismatch("version", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, version
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtVersionNonSemver checks whether the platform.txt version property is semver compliant.
+func PlatformTxtVersionNonSemver() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	version, ok := projectdata.PlatformTxt().GetOk("version")
+	if !ok {
+		return ruleresult.NotRun, "Property not present"
+	}
+
+	if schema.PropertyPatternMismatch("version", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
+		return ruleresult.Fail, version
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtCompilerWarningFlagsNoneMissing checks for missing compiler.warning_flags.none property in platform.txt.
+func PlatformTxtCompilerWarningFlagsNoneMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if schema.RequiredPropertyMissing("compiler\\.warning_flags\\.none", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtCompilerWarningFlagsDefaultMissing checks for missing compiler.warning_flags.default property in platform.txt.
+func PlatformTxtCompilerWarningFlagsDefaultMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if schema.RequiredPropertyMissing("compiler\\.warning_flags\\.default", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtCompilerWarningFlagsMoreMissing checks for missing compiler.warning_flags.more property in platform.txt.
+func PlatformTxtCompilerWarningFlagsMoreMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if schema.RequiredPropertyMissing("compiler\\.warning_flags\\.more", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtCompilerWarningFlagsAllMissing checks for missing compiler.warning_flags.all property in platform.txt.
+func PlatformTxtCompilerWarningFlagsAllMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if schema.RequiredPropertyMissing("compiler\\.warning_flags\\.all", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtCompilerOptimizationFlagsDebugMissing checks for missing compiler.optimization_flags.debug property in platform.txt.
+func PlatformTxtCompilerOptimizationFlagsDebugMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if !projectdata.PlatformTxt().ContainsKey("compiler.optimization_flags.release") {
+		return ruleresult.Skip, "Dependent property not present"
+	}
+
+	if schema.PropertyDependenciesMissing("compiler\\.optimization_flags\\.release", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtCompilerOptimizationFlagsReleaseMissing checks for missing compiler.optimization_flags.release property in platform.txt.
+func PlatformTxtCompilerOptimizationFlagsReleaseMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if !projectdata.PlatformTxt().ContainsKey("compiler.optimization_flags.debug") {
+		return ruleresult.Skip, "Dependent property not present"
+	}
+
+	if schema.PropertyDependenciesMissing("compiler\\.optimization_flags\\.debug", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtCompilerCExtraFlagsMissing checks for missing compiler.c.extra_flags property in platform.txt.
+func PlatformTxtCompilerCExtraFlagsMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if schema.RequiredPropertyMissing("compiler\\.c\\.extra_flags", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtCompilerCExtraFlagsNotEmpty checks for non-empty compiler.c.extra_flags property in platform.txt.
+func PlatformTxtCompilerCExtraFlagsNotEmpty() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if !projectdata.PlatformTxt().ContainsKey("compiler.c.extra_flags") {
+		return ruleresult.Skip, "Property not present"
+	}
+
+	if schema.PropertyEnumMismatch("compiler\\.c\\.extra_flags", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtCompilerCppExtraFlagsMissing checks for missing compiler.cpp.extra_flags property in platform.txt.
+func PlatformTxtCompilerCppExtraFlagsMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if schema.RequiredPropertyMissing("compiler\\.cpp\\.extra_flags", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtCompilerCppExtraFlagsNotEmpty checks for non-empty compiler.cpp.extra_flags property in platform.txt.
+func PlatformTxtCompilerCppExtraFlagsNotEmpty() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if !projectdata.PlatformTxt().ContainsKey("compiler.cpp.extra_flags") {
+		return ruleresult.Skip, "Property not present"
+	}
+
+	if schema.PropertyEnumMismatch("compiler\\.cpp\\.extra_flags", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtCompilerSExtraFlagsMissing checks for missing compiler.S.extra_flags property in platform.txt.
+func PlatformTxtCompilerSExtraFlagsMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if schema.RequiredPropertyMissing("compiler\\.S\\.extra_flags", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtCompilerSExtraFlagsNotEmpty checks for non-empty compiler.S.extra_flags property in platform.txt.
+func PlatformTxtCompilerSExtraFlagsNotEmpty() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if !projectdata.PlatformTxt().ContainsKey("compiler.S.extra_flags") {
+		return ruleresult.Skip, "Property not present"
+	}
+
+	if schema.PropertyEnumMismatch("compiler\\.S\\.extra_flags", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtCompilerArExtraFlagsMissing checks for missing compiler.ar.extra_flags property in platform.txt.
+func PlatformTxtCompilerArExtraFlagsMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if schema.RequiredPropertyMissing("compiler\\.ar\\.extra_flags", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtCompilerArExtraFlagsNotEmpty checks for non-empty compiler.ar.extra_flags property in platform.txt.
+func PlatformTxtCompilerArExtraFlagsNotEmpty() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if !projectdata.PlatformTxt().ContainsKey("compiler.ar.extra_flags") {
+		return ruleresult.Skip, "Property not present"
+	}
+
+	if schema.PropertyEnumMismatch("compiler\\.ar\\.extra_flags", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtCompilerCElfExtraFlagsMissing checks for missing compiler.c.elf.extra_flags property in platform.txt.
+func PlatformTxtCompilerCElfExtraFlagsMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if schema.RequiredPropertyMissing("compiler\\.c\\.elf\\.extra_flags", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtCompilerCExtraFlagsNotEmpty checks for non-empty compiler.c.extra_flags property in platform.txt.
+func PlatformTxtCompilerCElfExtraFlagsNotEmpty() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if !projectdata.PlatformTxt().ContainsKey("compiler.c.elf.extra_flags") {
+		return ruleresult.Skip, "Property not present"
+	}
+
+	if schema.PropertyEnumMismatch("compiler\\.c\\.elf\\.extra_flags", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtRecipePreprocMacrosLTMinLength checks if the platform.txt recipe.preproc.macros property value is less than the minimum length.
+func PlatformTxtRecipePreprocMacrosLTMinLength() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if !projectdata.PlatformTxt().ContainsKey("recipe.preproc.macros") {
+		return ruleresult.Skip, "Property not present"
+	}
+
+	if schema.PropertyLessThanMinLength("recipe\\.preproc\\.macros", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtRecipePreprocMacrosExtraFlagsSupport checks if platform.txt recipe.preproc.macros provides support for user extra flags.
+func PlatformTxtRecipePreprocMacrosExtraFlagsSupport() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if !projectdata.PlatformTxt().ContainsKey("recipe.preproc.macros") {
+		return ruleresult.NotRun, "Property not present"
+	}
+
+	if schema.PropertyPatternMismatch("recipe\\.preproc\\.macros", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtRecipeCOPatternMissing checks for missing recipe.c.o.pattern property in platform.txt.
+func PlatformTxtRecipeCOPatternMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if schema.RequiredPropertyMissing("recipe\\.c\\.o\\.pattern", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtRecipeCOPatternLTMinLength checks if the platform.txt recipe.c.o.pattern property value is less than the minimum length.
+func PlatformTxtRecipeCOPatternLTMinLength() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if !projectdata.PlatformTxt().ContainsKey("recipe.c.o.pattern") {
+		return ruleresult.NotRun, "Property not present"
+	}
+
+	if schema.PropertyLessThanMinLength("recipe\\.c\\.o\\.pattern", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtRecipeCOPatternExtraFlagsSupport checks if platform.txt recipe.c.o.pattern provides support for user extra flags.
+func PlatformTxtRecipeCOPatternExtraFlagsSupport() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if !projectdata.PlatformTxt().ContainsKey("recipe.c.o.pattern") {
+		return ruleresult.NotRun, "Property not present"
+	}
+
+	if schema.PropertyPatternMismatch("recipe\\.c\\.o\\.pattern", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtRecipeCppOPatternMissing checks for missing recipe.cpp.o.pattern property in platform.txt.
+func PlatformTxtRecipeCppOPatternMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if schema.RequiredPropertyMissing("recipe\\.cpp\\.o\\.pattern", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtRecipeCppOPatternLTMinLength checks if the platform.txt recipe.cpp.o.pattern property value is less than the minimum length.
+func PlatformTxtRecipeCppOPatternLTMinLength() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if !projectdata.PlatformTxt().ContainsKey("recipe.cpp.o.pattern") {
+		return ruleresult.NotRun, "Property not present"
+	}
+
+	if schema.PropertyLessThanMinLength("recipe\\.cpp\\.o\\.pattern", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtRecipeCppOPatternExtraFlagsSupport checks if platform.txt recipe.cpp.o.pattern provides support for user extra flags.
+func PlatformTxtRecipeCppOPatternExtraFlagsSupport() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if !projectdata.PlatformTxt().ContainsKey("recipe.cpp.o.pattern") {
+		return ruleresult.NotRun, "Property not present"
+	}
+
+	if schema.PropertyPatternMismatch("recipe\\.cpp\\.o\\.pattern", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtRecipeSOPatternMissing checks for missing recipe.S.o.pattern property in platform.txt.
+func PlatformTxtRecipeSOPatternMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if schema.RequiredPropertyMissing("recipe\\.S\\.o\\.pattern", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtRecipeSOPatternLTMinLength checks if the platform.txt recipe.S.o.pattern property value is less than the minimum length.
+func PlatformTxtRecipeSOPatternLTMinLength() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if !projectdata.PlatformTxt().ContainsKey("recipe.S.o.pattern") {
+		return ruleresult.NotRun, "Property not present"
+	}
+
+	if schema.PropertyLessThanMinLength("recipe\\.S\\.o\\.pattern", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtRecipeSOPatternExtraFlagsSupport checks if platform.txt recipe.S.o.pattern provides support for user extra flags.
+func PlatformTxtRecipeSOPatternExtraFlagsSupport() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if !projectdata.PlatformTxt().ContainsKey("recipe.S.o.pattern") {
+		return ruleresult.NotRun, "Property not present"
+	}
+
+	if schema.PropertyPatternMismatch("recipe\\.S\\.o\\.pattern", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtRecipeArPatternMissing checks for missing recipe.ar.o.pattern property in platform.txt.
+func PlatformTxtRecipeArPatternMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if schema.RequiredPropertyMissing("recipe\\.ar\\.pattern", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtRecipeArPatternLTMinLength checks if the platform.txt recipe.ar.pattern property value is less than the minimum length.
+func PlatformTxtRecipeArPatternLTMinLength() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if !projectdata.PlatformTxt().ContainsKey("recipe.ar.pattern") {
+		return ruleresult.NotRun, "Property not present"
+	}
+
+	if schema.PropertyLessThanMinLength("recipe\\.ar\\.pattern", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtRecipeArPatternExtraFlagsSupport checks if platform.txt recipe.ar.o.pattern provides support for user extra flags.
+func PlatformTxtRecipeArPatternExtraFlagsSupport() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if !projectdata.PlatformTxt().ContainsKey("recipe.ar.pattern") {
+		return ruleresult.NotRun, "Property not present"
+	}
+
+	if schema.PropertyPatternMismatch("recipe\\.ar\\.pattern", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtRecipeCCombinePatternMissing checks for missing recipe.c.combine.pattern property in platform.txt.
+func PlatformTxtRecipeCCombinePatternMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if schema.RequiredPropertyMissing("recipe\\.c\\.combine\\.pattern", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtRecipeCCombinePatternLTMinLength checks if the platform.txt recipe.c.combine.pattern property value is less than the minimum length.
+func PlatformTxtRecipeCCombinePatternLTMinLength() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if !projectdata.PlatformTxt().ContainsKey("recipe.c.combine.pattern") {
+		return ruleresult.NotRun, "Property not present"
+	}
+
+	if schema.PropertyLessThanMinLength("recipe\\.c\\.combine\\.pattern", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtRecipeCCombinePatternExtraFlagsSupport checks if platform.txt recipe.c.combine.pattern provides support for user extra flags.
+func PlatformTxtRecipeCCombinePatternExtraFlagsSupport() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if !projectdata.PlatformTxt().ContainsKey("recipe.c.combine.pattern") {
+		return ruleresult.NotRun, "Property not present"
+	}
+
+	if schema.PropertyPatternMismatch("recipe\\.c\\.combine\\.pattern", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtRecipeOutputTmpFileMissing checks for missing recipe.output.tmp_file property in platform.txt.
+func PlatformTxtRecipeOutputTmpFileMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if schema.RequiredPropertyMissing("recipe\\.output\\.tmp_file", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtRecipeOutputTmpFileLTMinLength checks if the platform.txt recipe.output.tmp_file property value is less than the minimum length.
+func PlatformTxtRecipeOutputTmpFileLTMinLength() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if !projectdata.PlatformTxt().ContainsKey("recipe.output.tmp_file") {
+		return ruleresult.NotRun, "Property not present"
+	}
+
+	if schema.PropertyLessThanMinLength("recipe\\.output\\.tmp_file", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtRecipeOutputSaveFileMissing checks for missing recipe.output.save_file property in platform.txt.
+func PlatformTxtRecipeOutputSaveFileMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if schema.RequiredPropertyMissing("recipe\\.output\\.save_file", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtRecipeOutputSaveFileLTMinLength checks if the platform.txt recipe.output.save_file property value is less than the minimum length.
+func PlatformTxtRecipeOutputSaveFileLTMinLength() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if !projectdata.PlatformTxt().ContainsKey("recipe.output.save_file") {
+		return ruleresult.NotRun, "Property not present"
+	}
+
+	if schema.PropertyLessThanMinLength("recipe\\.output\\.save_file", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtRecipeSizePatternMissing checks for missing recipe.size.pattern property in platform.txt.
+func PlatformTxtRecipeSizePatternMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if schema.RequiredPropertyMissing("recipe\\.size\\.pattern", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtRecipeSizePatternLTMinLength checks if the platform.txt recipe.size.pattern property value is less than the minimum length.
+func PlatformTxtRecipeSizePatternLTMinLength() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if !projectdata.PlatformTxt().ContainsKey("recipe.size.pattern") {
+		return ruleresult.Skip, "Property not present"
+	}
+
+	if schema.PropertyLessThanMinLength("recipe\\.size\\.pattern", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtRecipeSizeRegexMissing checks for missing recipe.size.regex property in platform.txt.
+func PlatformTxtRecipeSizeRegexMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if schema.RequiredPropertyMissing("recipe\\.size\\.regex", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtRecipeSizeRegexDataMissing checks for missing recipe.size.regex.data property in platform.txt.
+func PlatformTxtRecipeSizeRegexDataMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if schema.RequiredPropertyMissing("recipe\\.size\\.regex\\.data", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtUploadParamsVerboseMissing checks if any of the tools are missing upload.params.verbose properties.
+func PlatformTxtUploadParamsVerboseMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if len(projectdata.PlatformTxtToolNames()) == 0 {
+		return ruleresult.Skip, "platform.txt has no tools"
+	}
+
+	nonCompliantTools := toolNameMissingRequiredProperty("upload/params\\.verbose", compliancelevel.Specification)
+
+	if len(nonCompliantTools) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtUploadParamsQuietMissing checks if any of the programmers are missing upload.params.quiet properties.
+func PlatformTxtUploadParamsQuietMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if len(projectdata.PlatformTxtToolNames()) == 0 {
+		return ruleresult.Skip, "platform.txt has no tools"
+	}
+
+	nonCompliantTools := toolNameMissingRequiredProperty("upload/params\\.quiet", compliancelevel.Specification)
+
+	if len(nonCompliantTools) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtUploadPatternMissing checks if any of the programmers are missing upload.pattern properties.
+func PlatformTxtUploadPatternMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if len(projectdata.PlatformTxtToolNames()) == 0 {
+		return ruleresult.Skip, "platform.txt has no tools"
+	}
+
+	nonCompliantTools := toolNameMissingRequiredProperty("upload/pattern", compliancelevel.Specification)
+
+	if len(nonCompliantTools) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtProgramParamsVerboseMissing checks if any of the tools are missing program.params.verbose properties.
+func PlatformTxtProgramParamsVerboseMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if len(projectdata.PlatformTxtToolNames()) == 0 {
+		return ruleresult.Skip, "platform.txt has no tools"
+	}
+
+	nonCompliantTools := toolNameMissingRequiredProperty("program/params\\.verbose", compliancelevel.Specification)
+
+	if len(nonCompliantTools) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtProgramParamsQuietMissing checks if any of the programmers are missing program.params.quiet properties.
+func PlatformTxtProgramParamsQuietMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if len(projectdata.PlatformTxtToolNames()) == 0 {
+		return ruleresult.Skip, "platform.txt has no tools"
+	}
+
+	nonCompliantTools := toolNameMissingRequiredProperty("program/params\\.quiet", compliancelevel.Specification)
+
+	if len(nonCompliantTools) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtProgramPatternMissing checks if any of the programmers are missing program.pattern properties.
+func PlatformTxtProgramPatternMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if len(projectdata.PlatformTxtToolNames()) == 0 {
+		return ruleresult.Skip, "platform.txt has no tools"
+	}
+
+	nonCompliantTools := toolNameMissingRequiredProperty("program/pattern", compliancelevel.Specification)
+
+	if len(nonCompliantTools) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtEraseParamsVerboseMissing checks if any of the tools are missing erase.params.verbos properties.
+func PlatformTxtEraseParamsVerboseMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if len(projectdata.PlatformTxtToolNames()) == 0 {
+		return ruleresult.Skip, "platform.txt has no tools"
+	}
+
+	nonCompliantTools := toolNameMissingRequiredProperty("erase/params\\.verbose", compliancelevel.Specification)
+
+	if len(nonCompliantTools) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtEraseParamsQuietMissing checks if any of the programmers are missing erase.params.quiet properties.
+func PlatformTxtEraseParamsQuietMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if len(projectdata.PlatformTxtToolNames()) == 0 {
+		return ruleresult.Skip, "platform.txt has no tools"
+	}
+
+	nonCompliantTools := toolNameMissingRequiredProperty("erase/params\\.quiet", compliancelevel.Specification)
+
+	if len(nonCompliantTools) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtErasePatternMissing checks if any of the programmers are missing erase.pattern properties.
+func PlatformTxtErasePatternMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if len(projectdata.PlatformTxtToolNames()) == 0 {
+		return ruleresult.Skip, "platform.txt has no tools"
+	}
+
+	nonCompliantTools := toolNameMissingRequiredProperty("erase/pattern", compliancelevel.Specification)
+
+	if len(nonCompliantTools) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtBootloaderParamsVerboseMissing checks if any of the tools are missing bootloader.params.verbos properties.
+func PlatformTxtBootloaderParamsVerboseMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if len(projectdata.PlatformTxtToolNames()) == 0 {
+		return ruleresult.Skip, "platform.txt has no tools"
+	}
+
+	nonCompliantTools := toolNameMissingRequiredProperty("bootloader/params\\.verbose", compliancelevel.Specification)
+
+	if len(nonCompliantTools) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtBootloaderParamsQuietMissing checks if any of the programmers are missing bootloader.params.quiet properties.
+func PlatformTxtBootloaderParamsQuietMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if len(projectdata.PlatformTxtToolNames()) == 0 {
+		return ruleresult.Skip, "platform.txt has no tools"
+	}
+
+	nonCompliantTools := toolNameMissingRequiredProperty("bootloader/params\\.quiet", compliancelevel.Specification)
+
+	if len(nonCompliantTools) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtBootloaderPatternMissing checks if any of the programmers are missing bootloader.pattern properties.
+func PlatformTxtBootloaderPatternMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if len(projectdata.PlatformTxtToolNames()) == 0 {
+		return ruleresult.Skip, "platform.txt has no tools"
+	}
+
+	nonCompliantTools := toolNameMissingRequiredProperty("bootloader/pattern", compliancelevel.Specification)
+
+	if len(nonCompliantTools) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
 // boardIDMissingRequiredProperty returns the list of board IDs missing the given required property.
 func boardIDMissingRequiredProperty(propertyNameQuery string, complianceLevel compliancelevel.Type) []string {
 	return iDMissingRequiredProperty(projectdata.BoardsTxtBoardIds(), propertyNameQuery, projectdata.BoardsTxtSchemaValidationResult()[complianceLevel])
@@ -625,6 +1798,18 @@ func programmerIDValueEnumMismatch(propertyNameQuery string, complianceLevel com
 // programmerIDValueEnumMismatch returns the list of programmer IDs with value of the given property not matching the JSON schema pattern.
 func programmerIDValuePatternMismatch(propertyNameQuery string, complianceLevel compliancelevel.Type) []string {
 	return iDValuePatternMismatch(projectdata.ProgrammersTxtProgrammerIds(), propertyNameQuery, projectdata.ProgrammersTxtSchemaValidationResult()[complianceLevel])
+}
+
+// toolNameMissingRequiredProperty returns the list of tool names missing the given required property.
+func toolNameMissingRequiredProperty(propertyNameQuery string, complianceLevel compliancelevel.Type) []string {
+	nonCompliantTools := []string{}
+	for _, tool := range projectdata.PlatformTxtToolNames() {
+		if schema.RequiredPropertyMissing("tools/"+tool+"/"+propertyNameQuery, projectdata.PlatformTxtSchemaValidationResult()[complianceLevel]) {
+			nonCompliantTools = append(nonCompliantTools, tool)
+		}
+	}
+
+	return nonCompliantTools
 }
 
 // iDMissingRequiredProperty returns the list of first level keys missing the given required property.

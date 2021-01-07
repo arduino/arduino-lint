@@ -27,9 +27,11 @@ import (
 )
 
 var validMap = map[string]string{
-	"property1": "foo",
-	"property2": "bar",
-	"property3": "baz",
+	"property1":          "foo",
+	"property2":          "bar",
+	"property3":          "baz",
+	"dependentProperty":  "asdf",
+	"dependencyProperty": "zxcv",
 }
 
 var validPropertiesMap = properties.NewFromHashmap(validMap)
@@ -145,6 +147,16 @@ func TestPropertyEnumMismatch(t *testing.T) {
 	propertiesMap.Set("property3", "invalid")
 	validationResult = Validate(general.PropertiesToMap(propertiesMap, 0), validSchemaWithReferences)
 	require.True(t, PropertyEnumMismatch("property3", validationResult))
+}
+
+func TestPropertyDependenciesMissing(t *testing.T) {
+	propertiesMap := properties.NewFromHashmap(validMap)
+	validationResult := Validate(general.PropertiesToMap(propertiesMap, 0), validSchemaWithReferences)
+	require.False(t, PropertyDependenciesMissing("dependentProperty", validationResult))
+
+	propertiesMap.Remove("dependencyProperty")
+	validationResult = Validate(general.PropertiesToMap(propertiesMap, 0), validSchemaWithReferences)
+	require.True(t, PropertyDependenciesMissing("dependentProperty", validationResult))
 }
 
 func TestMisspelledOptionalPropertyFound(t *testing.T) {

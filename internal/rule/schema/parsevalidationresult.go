@@ -49,6 +49,11 @@ func PropertyEnumMismatch(propertyName string, validationResult ValidationResult
 	return ValidationErrorMatch("#/"+propertyName, "/enum$", "", "", validationResult)
 }
 
+// PropertyDependenciesMissing returns whether property dependencies of the given property are missing.
+func PropertyDependenciesMissing(propertyName string, validationResult ValidationResult) bool {
+	return ValidationErrorMatch("", "/dependencies/"+propertyName+"/[0-9]+$", "", "", validationResult)
+}
+
 // MisspelledOptionalPropertyFound returns whether a misspelled optional property was found.
 func MisspelledOptionalPropertyFound(validationResult ValidationResult) bool {
 	return ValidationErrorMatch("#/", "/misspelledOptionalProperties/", "", "", validationResult)
