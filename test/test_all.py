@@ -190,14 +190,16 @@ def test_version(run_command):
     result = run_command(cmd=["--version"])
     assert result.ok
     output_list = result.stdout.strip().split(sep=" ")
-    assert semver.VersionInfo.isvalid(version=output_list[0])
+    version = output_list[0]
+    assert semver.VersionInfo.isvalid(version=version) or version == "snapshot" or "nightly" in version
     dateutil.parser.isoparse(output_list[1])
 
     result = run_command(cmd=["--version", "--format", "json"])
     assert result.ok
     version_output = json.loads(result.stdout)
     if version_output["version"] != "":
-        assert semver.VersionInfo.isvalid(version=version_output["version"])
+        version = version_output["version"]
+        assert semver.VersionInfo.isvalid(version=version) or version == "snapshot" or "nightly" in version
     assert version_output["commit"] != ""
     dateutil.parser.isoparse(version_output["buildTimestamp"])
 

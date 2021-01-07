@@ -1,5 +1,21 @@
 version: "3"
 
+# This taskfile is ideally meant to be project agnostic and could be dropped in
+# on other Go projects with minimal or no changes.
+#
+# To use it simply add the following lines to your main taskfile:
+#   includes:
+#     dist: ./DistTasks.yml
+#
+# The following variables must be declared in the including taskfile for the
+# build process to work correctly:
+# * DIST_DIR: the folder that will contain the final binaries and packages
+# * PROJECT_NAME: the name of the project, used in package name
+# * VERSION: the version of the project, used in package name and checksum file
+# * LD_FLAGS: flags used at build time
+#
+# The project MUST contain a LICENSE.txt file in the root folder or packaging will fail.
+
 tasks:
   all:
     desc: Build for distribution for all platforms
@@ -18,7 +34,7 @@ tasks:
     dir: "{{ .DIST_DIR }}"
     cmds:
       - |
-        docker run -v `pwd`/..:/home/lint -w /home/lint \
+        docker run -v `pwd`/..:/home/build -w /home/build \
         -e CGO_ENABLED=1 \
         {{ .CONTAINER }}:{{ .CONTAINER_TAG }} \
         --build-cmd "{{ .BUILD_COMMAND }}" \
@@ -29,7 +45,7 @@ tasks:
 
     vars:
       PLATFORM_DIR: "{{ .PROJECT_NAME }}_windows_386"
-      BUILD_COMMAND: "go build -o {{ .DIST_DIR }}/{{ .PLATFORM_DIR }}/{{ .PROJECT_NAME }}.exe {{ .DIST_LDFLAGS }}"
+      BUILD_COMMAND: "go build -o {{ .DIST_DIR }}/{{ .PLATFORM_DIR }}/{{ .PROJECT_NAME }}.exe {{ .LDFLAGS }}"
       BUILD_PLATFORM: "windows/386"
       CONTAINER_TAG: "{{ .GO_VERSION }}-main"
       PACKAGE_PLATFORM: "Windows_32bit"
@@ -40,7 +56,7 @@ tasks:
     dir: "{{ .DIST_DIR }}"
     cmds:
       - |
-        docker run -v `pwd`/..:/home/lint -w /home/lint \
+        docker run -v `pwd`/..:/home/build -w /home/build \
         -e CGO_ENABLED=1 \
         {{ .CONTAINER }}:{{ .CONTAINER_TAG }} \
         --build-cmd "{{ .BUILD_COMMAND }}" \
@@ -51,7 +67,7 @@ tasks:
 
     vars:
       PLATFORM_DIR: "{{ .PROJECT_NAME }}_windows_amd64"
-      BUILD_COMMAND: "go build -o {{ .DIST_DIR }}/{{ .PLATFORM_DIR }}/{{ .PROJECT_NAME }}.exe {{ .DIST_LDFLAGS }}"
+      BUILD_COMMAND: "go build -o {{ .DIST_DIR }}/{{ .PLATFORM_DIR }}/{{ .PROJECT_NAME }}.exe {{ .LDFLAGS }}"
       BUILD_PLATFORM: "windows/amd64"
       CONTAINER_TAG: "{{ .GO_VERSION }}-main"
       PACKAGE_PLATFORM: "Windows_64bit"
@@ -62,7 +78,7 @@ tasks:
     dir: "{{ .DIST_DIR }}"
     cmds:
       - |
-        docker run -v `pwd`/..:/home/lint -w /home/lint \
+        docker run -v `pwd`/..:/home/build -w /home/build \
         -e CGO_ENABLED=1 \
         {{ .CONTAINER }}:{{ .CONTAINER_TAG }} \
         --build-cmd "{{ .BUILD_COMMAND }}" \
@@ -73,7 +89,7 @@ tasks:
 
     vars:
       PLATFORM_DIR: "{{ .PROJECT_NAME }}_linux_amd32"
-      BUILD_COMMAND: "go build -o {{ .DIST_DIR }}/{{ .PLATFORM_DIR }}/{{ .PROJECT_NAME }} {{ .DIST_LDFLAGS }}"
+      BUILD_COMMAND: "go build -o {{ .DIST_DIR }}/{{ .PLATFORM_DIR }}/{{ .PROJECT_NAME }} {{ .LDFLAGS }}"
       BUILD_PLATFORM: "linux/386"
       CONTAINER_TAG: "{{ .GO_VERSION }}-main"
       PACKAGE_PLATFORM: "Linux_32bit"
@@ -84,7 +100,7 @@ tasks:
     dir: "{{ .DIST_DIR }}"
     cmds:
       - |
-        docker run -v `pwd`/..:/home/lint -w /home/lint \
+        docker run -v `pwd`/..:/home/build -w /home/build \
         -e CGO_ENABLED=1 \
         {{ .CONTAINER }}:{{ .CONTAINER_TAG }} \
         --build-cmd "{{ .BUILD_COMMAND }}" \
@@ -95,7 +111,7 @@ tasks:
 
     vars:
       PLATFORM_DIR: "{{ .PROJECT_NAME }}_linux_amd64"
-      BUILD_COMMAND: "go build -o {{ .DIST_DIR }}/{{ .PLATFORM_DIR }}/{{ .PROJECT_NAME }} {{ .DIST_LDFLAGS }}"
+      BUILD_COMMAND: "go build -o {{ .DIST_DIR }}/{{ .PLATFORM_DIR }}/{{ .PROJECT_NAME }} {{ .LDFLAGS }}"
       BUILD_PLATFORM: "linux/amd64"
       CONTAINER_TAG: "{{ .GO_VERSION }}-main"
       PACKAGE_PLATFORM: "Linux_64bit"
@@ -106,7 +122,7 @@ tasks:
     dir: "{{ .DIST_DIR }}"
     cmds:
       - |
-        docker run -v `pwd`/..:/home/lint -w /home/lint \
+        docker run -v `pwd`/..:/home/build -w /home/build \
         -e CGO_ENABLED=1 \
         {{ .CONTAINER }}:{{ .CONTAINER_TAG }} \
         --build-cmd "{{ .BUILD_COMMAND }}" \
@@ -117,7 +133,7 @@ tasks:
 
     vars:
       PLATFORM_DIR: "{{ .PROJECT_NAME }}_linux_arm_7"
-      BUILD_COMMAND: "go build -o {{ .DIST_DIR }}/{{ .PLATFORM_DIR }}/{{ .PROJECT_NAME }} {{ .DIST_LDFLAGS }}"
+      BUILD_COMMAND: "go build -o {{ .DIST_DIR }}/{{ .PLATFORM_DIR }}/{{ .PROJECT_NAME }} {{ .LDFLAGS }}"
       BUILD_PLATFORM: "linux/armv7"
       CONTAINER_TAG: "{{ .GO_VERSION }}-arm"
       PACKAGE_PLATFORM: "Linux_ARMv7"
@@ -128,7 +144,7 @@ tasks:
     dir: "{{ .DIST_DIR }}"
     cmds:
       - |
-        docker run -v `pwd`/..:/home/lint -w /home/lint \
+        docker run -v `pwd`/..:/home/build -w /home/build \
         -e CGO_ENABLED=1 \
         {{ .CONTAINER }}:{{ .CONTAINER_TAG }} \
         --build-cmd "{{ .BUILD_COMMAND }}" \
@@ -139,7 +155,7 @@ tasks:
 
     vars:
       PLATFORM_DIR: "{{ .PROJECT_NAME }}_linux_arm_6"
-      BUILD_COMMAND: "go build -o {{ .DIST_DIR }}/{{ .PLATFORM_DIR }}/{{ .PROJECT_NAME }} {{ .DIST_LDFLAGS }}"
+      BUILD_COMMAND: "go build -o {{ .DIST_DIR }}/{{ .PLATFORM_DIR }}/{{ .PROJECT_NAME }} {{ .LDFLAGS }}"
       BUILD_PLATFORM: "linux/armv6"
       CONTAINER_TAG: "{{ .GO_VERSION }}-arm"
       PACKAGE_PLATFORM: "Linux_ARMv6"
@@ -150,7 +166,7 @@ tasks:
     dir: "{{ .DIST_DIR }}"
     cmds:
       - |
-        docker run -v `pwd`/..:/home/lint -w /home/lint \
+        docker run -v `pwd`/..:/home/build -w /home/build \
         -e CGO_ENABLED=1 \
         {{ .CONTAINER }}:{{ .CONTAINER_TAG }} \
         --build-cmd "{{ .BUILD_COMMAND }}" \
@@ -161,7 +177,7 @@ tasks:
 
     vars:
       PLATFORM_DIR: "{{ .PROJECT_NAME }}_linux_arm_6"
-      BUILD_COMMAND: "go build -o {{ .DIST_DIR }}/{{ .PLATFORM_DIR }}/{{ .PROJECT_NAME }} {{ .DIST_LDFLAGS }}"
+      BUILD_COMMAND: "go build -o {{ .DIST_DIR }}/{{ .PLATFORM_DIR }}/{{ .PROJECT_NAME }} {{ .LDFLAGS }}"
       BUILD_PLATFORM: "linux/arm64"
       CONTAINER_TAG: "{{ .GO_VERSION }}-arm"
       PACKAGE_PLATFORM: "Linux_ARM64"
@@ -172,7 +188,7 @@ tasks:
     dir: "{{ .DIST_DIR }}"
     cmds:
       - |
-        docker run -v `pwd`/..:/home/lint -w /home/lint \
+        docker run -v `pwd`/..:/home/build -w /home/build \
         -e CGO_ENABLED=1 \
         {{ .CONTAINER }}:{{ .CONTAINER_TAG }} \
         --build-cmd "{{ .BUILD_COMMAND }}" \
@@ -183,25 +199,13 @@ tasks:
 
     vars:
       PLATFORM_DIR: "{{ .PROJECT_NAME }}_osx_darwin_amd64"
-      BUILD_COMMAND: "go build -o {{ .DIST_DIR }}/{{ .PLATFORM_DIR }}/{{ .PROJECT_NAME }} {{ .DIST_LDFLAGS }}"
+      BUILD_COMMAND: "go build -o {{ .DIST_DIR }}/{{ .PLATFORM_DIR }}/{{ .PROJECT_NAME }} {{ .LDFLAGS }}"
       BUILD_PLATFORM: "darwin/amd64"
       CONTAINER_TAG: "{{ .GO_VERSION }}-darwin"
       PACKAGE_PLATFORM: "macOS_64bit"
       PACKAGE_NAME: "{{ .PROJECT_NAME }}_{{ .VERSION }}_{{ .PACKAGE_PLATFORM }}.tar.gz"
 
 vars:
-  TAG:
-    sh: echo "`git describe --tags --abbrev=0 2> /dev/null`"
-  TIMESTAMP_SHORT:
-    sh: echo "{{now | date "20060102"}}"
-  VERSION: "{{if .CUSTOM_VERSION}}{{.CUSTOM_VERSION}}-{{.TIMESTAMP_SHORT}}{{else}}{{.TAG}}{{end}}"
-  DIST_LDFLAGS: >-
-    -ldflags
-    '
-    -X {{ .CONFIGURATION_PACKAGE }}.version={{.TAG}}
-    -X {{ .CONFIGURATION_PACKAGE }}.commit={{.COMMIT}}
-    -X {{ .CONFIGURATION_PACKAGE }}.buildTimestamp={{.TIMESTAMP}}
-    '
   CONTAINER: "docker.elastic.co/beats-dev/golang-crossbuild"
   GO_VERSION: "1.14.7"
   CHECKSUM_FILE: "{{ .VERSION }}-checksums.txt"
