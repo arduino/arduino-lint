@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-platform-txt-schema.json",
+  "title": "Arduino platform.txt JSON schema",
+  "description": "platform.txt contains the platform definitions of Arduino platforms. See: https://arduino.github.io/arduino-cli/latest/platform-specification/#platformtxt",
+  "$comment": "For information on the platform.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
+  "type": "object",
+  "properties": {
+    "name": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/name/specification/object"
+    },
+    "version": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/version/specification/object"
+    },
+    "compiler.c.extra_flags": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/compilerCExtraFlags/specification/object"
+    },
+    "compiler.cpp.extra_flags": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/compilerCppExtraFlags/specification/object"
+    },
+    "compiler.S.extra_flags": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/compilerSExtraFlags/specification/object"
+    },
+    "compiler.ar.extra_flags": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/compilerArExtraFlags/specification/object"
+    },
+    "compiler.c.elf.extra_flags": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/compilerCElfExtraFlags/specification/object"
+    },
+    "recipe.preproc.macros": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipePreprocMacros/specification/object"
+    },
+    "recipe.c.o.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeCOPattern/specification/object"
+    },
+    "recipe.cpp.o.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeCppOPattern/specification/object"
+    },
+    "recipe.S.o.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeSOPattern/specification/object"
+    },
+    "recipe.ar.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeArPattern/specification/object"
+    },
+    "recipe.c.combine.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeCCombinePattern/specification/object"
+    },
+    "recipe.output.tmp_file": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeOutputTmpFile/specification/object"
+    },
+    "recipe.output.save_file": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeOutputSaveFile/specification/object"
+    },
+    "recipe.size.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeSizePattern/specification/object"
+    },
+    "tools": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/tools/specification/object"
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/dependenciesObjects/root/specification/object"
+    },
+    {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/requiredObjects/root/specification/object"
+    }
+  ]
+}

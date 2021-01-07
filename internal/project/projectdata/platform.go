@@ -18,6 +18,7 @@ package projectdata
 import (
 	"github.com/arduino/arduino-lint/internal/project"
 	"github.com/arduino/arduino-lint/internal/project/platform/boardstxt"
+	"github.com/arduino/arduino-lint/internal/project/platform/platformtxt"
 	"github.com/arduino/arduino-lint/internal/project/platform/programmerstxt"
 	"github.com/arduino/arduino-lint/internal/rule/schema"
 	"github.com/arduino/arduino-lint/internal/rule/schema/compliancelevel"
@@ -48,6 +49,19 @@ func InitializeForPlatform(project project.Type) {
 		programmersTxtSchemaValidationResult = programmerstxt.Validate(programmersTxt)
 
 		programmersTxtProgrammerIds = programmerstxt.ProgrammerIDs(programmersTxt)
+	}
+
+	platformTxtExists = ProjectPath().Join("platform.txt").Exist()
+
+	platformTxt, platformTxtLoadError = platformtxt.Properties(ProjectPath())
+	if platformTxtLoadError != nil {
+		logrus.Errorf("Error loading platform.txt from %s: %s", project.Path, platformTxtLoadError)
+		platformTxtSchemaValidationResult = nil
+		platformTxtToolNames = nil
+	} else {
+		platformTxtSchemaValidationResult = platformtxt.Validate(platformTxt)
+
+		platformTxtToolNames = platformtxt.ToolNames(platformTxt)
 	}
 }
 
@@ -119,4 +133,39 @@ var programmersTxtProgrammerIds []string
 // ProgrammersTxtProgrammerIds returns the list of board IDs present in the platform's programmers.txt.
 func ProgrammersTxtProgrammerIds() []string {
 	return programmersTxtProgrammerIds
+}
+
+var platformTxtExists bool
+
+// PlatformTxtExists returns whether the platform contains a programmer.txt file.
+func PlatformTxtExists() bool {
+	return platformTxtExists
+}
+
+var platformTxt *properties.Map
+
+// PlatformTxt returns the data from the platform.txt configuration file.
+func PlatformTxt() *properties.Map {
+	return platformTxt
+}
+
+var platformTxtLoadError error
+
+// PlatformTxtLoadError returns the error output from loading the platform.txt configuration file.
+func PlatformTxtLoadError() error {
+	return platformTxtLoadError
+}
+
+var platformTxtSchemaValidationResult map[compliancelevel.Type]schema.ValidationResult
+
+// PlatformTxtSchemaValidationResult returns the result of validating platform.txt against the JSON schema.
+func PlatformTxtSchemaValidationResult() map[compliancelevel.Type]schema.ValidationResult {
+	return platformTxtSchemaValidationResult
+}
+
+var platformTxtToolNames []string
+
+// PlatformTxtToolNames returns the list of tools present in the platform's platform.txt.
+func PlatformTxtToolNames() []string {
+	return platformTxtToolNames
 }

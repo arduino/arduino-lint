@@ -17,6 +17,7 @@
 package libraryproperties
 
 import (
+	"github.com/arduino/arduino-lint/internal/project/general"
 	"github.com/arduino/arduino-lint/internal/rule/schema"
 	"github.com/arduino/arduino-lint/internal/rule/schema/compliancelevel"
 	"github.com/arduino/arduino-lint/internal/rule/schema/schemadata"
@@ -48,11 +49,7 @@ func Validate(libraryProperties *properties.Map) map[compliancelevel.Type]schema
 
 	// Convert the library.properties data from the native properties.Map type to the interface type required by the schema
 	// validation package.
-	libraryPropertiesMap := libraryProperties.AsMap()
-	libraryPropertiesInterface := make(map[string]interface{}, len(libraryPropertiesMap))
-	for k, v := range libraryPropertiesMap {
-		libraryPropertiesInterface[k] = v
-	}
+	libraryPropertiesInterface := general.PropertiesToMap(libraryProperties, 1)
 
 	validationResults[compliancelevel.Permissive] = schema.Validate(libraryPropertiesInterface, schemaObject[compliancelevel.Permissive])
 	validationResults[compliancelevel.Specification] = schema.Validate(libraryPropertiesInterface, schemaObject[compliancelevel.Specification])

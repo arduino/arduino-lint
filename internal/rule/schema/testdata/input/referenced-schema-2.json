@@ -3,6 +3,11 @@
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/internal/rule/schema/testdata/referenced-schema-2.json",
   "title": "Schema for use in unit tests",
   "definitions": {
+    "dependenciesObject": {
+      "dependencies": {
+        "dependentProperty": ["dependencyProperty"]
+      }
+    },
     "minLengthObject": {
       "minLength": 2
     },
