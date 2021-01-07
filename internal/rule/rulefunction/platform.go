@@ -1218,7 +1218,7 @@ func PlatformTxtRecipeSOPatternExtraFlagsSupport() (result ruleresult.Type, outp
 	return ruleresult.Pass, ""
 }
 
-// PlatformTxtRecipeArPatternMissing checks for missing recipe.ar.o.pattern property in platform.txt.
+// PlatformTxtRecipeArPatternMissing checks for missing recipe.ar.pattern property in platform.txt.
 func PlatformTxtRecipeArPatternMissing() (result ruleresult.Type, output string) {
 	if !projectdata.PlatformTxtExists() {
 		return ruleresult.Skip, "Platform has no platform.txt"
@@ -1256,7 +1256,7 @@ func PlatformTxtRecipeArPatternLTMinLength() (result ruleresult.Type, output str
 	return ruleresult.Pass, ""
 }
 
-// PlatformTxtRecipeArPatternExtraFlagsSupport checks if platform.txt recipe.ar.o.pattern provides support for user extra flags.
+// PlatformTxtRecipeArPatternExtraFlagsSupport checks if platform.txt recipe.ar.pattern provides support for user extra flags.
 func PlatformTxtRecipeArPatternExtraFlagsSupport() (result ruleresult.Type, output string) {
 	if !projectdata.PlatformTxtExists() {
 		return ruleresult.Skip, "Platform has no platform.txt"

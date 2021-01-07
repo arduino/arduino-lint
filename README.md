@@ -8,6 +8,7 @@
 
 - Sketches
 - Libraries
+- Boards platforms
 
 ## Documentation
 
