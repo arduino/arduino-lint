@@ -237,7 +237,7 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
               },
               {
                 "patternProperties": {
-                  "menu\\..+\\..+$": {
+                  "^menu\\.[^.]+\\.[^.]+$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDMenuMenuIDOptionID/permissive/object"
                   },
                   "^[vp]id\\.[0-9]+$": {
@@ -302,7 +302,7 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
               },
               {
                 "patternProperties": {
-                  "menu\\..+\\..+$": {
+                  "^menu\\.[^.]+\\.[^.]+$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDMenuMenuIDOptionID/specification/object"
                   },
                   "^[vp]id\\.[0-9]+$": {
@@ -367,7 +367,7 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
               },
               {
                 "patternProperties": {
-                  "menu\\..+\\..+$": {
+                  "^menu\\.[^.]+\\.[^.]+$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDMenuMenuIDOptionID/strict/object"
                   },
                   "^[vp]id\\.[0-9]+$": {
