@@ -245,7 +245,7 @@ func BoardsTxtBoardIDMenuMenuIDOptionIDLTMinLength() (result ruleresult.Type, ou
 		return ruleresult.Skip, "boards.txt has no boards"
 	}
 
-	nonCompliantBoardIDs := boardIDValueLTMinLength("menu\\..+\\..+", compliancelevel.Strict)
+	nonCompliantBoardIDs := boardIDValueLTMinLength("menu\\.[^.]+\\.[^.]+", compliancelevel.Strict)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
