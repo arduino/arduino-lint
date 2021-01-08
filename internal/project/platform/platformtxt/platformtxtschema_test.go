@@ -58,6 +58,9 @@ var validPlatformTxtRaw = []byte(`
 	tools.avrdude.upload.params.verbose=-v
 	tools.avrdude.upload.params.quiet=-q -q
 	tools.avrdude.upload.pattern=asdf
+	tools.avrdude.program.params.verbose=-v
+	tools.avrdude.program.params.quiet=-q -q
+	tools.avrdude.program.pattern=asdf
 	tools.bossac.upload.params.verbose=-v
 	tools.bossac.upload.params.quiet=-q -q
 	tools.bossac.upload.pattern=asdf
@@ -196,25 +199,21 @@ func TestRequired(t *testing.T) {
 		{"recipe.output.tmp_file", "recipe\\.output\\.tmp_file", compliancelevel.Specification, assert.True},
 		{"recipe.output.tmp_file", "recipe\\.output\\.tmp_file", compliancelevel.Strict, assert.True},
 
-		{"tools.avrdude.upload.params.verbose", "tools/avrdude/upload/params\\.verbose", compliancelevel.Permissive, assert.True},
-		{"tools.avrdude.upload.params.verbose", "tools/avrdude/upload/params\\.verbose", compliancelevel.Specification, assert.True},
-		{"tools.avrdude.upload.params.verbose", "tools/avrdude/upload/params\\.verbose", compliancelevel.Strict, assert.True},
-
-		{"tools.avrdude.upload.params.quiet", "tools/avrdude/upload/params\\.quiet", compliancelevel.Permissive, assert.True},
-		{"tools.avrdude.upload.params.quiet", "tools/avrdude/upload/params\\.quiet", compliancelevel.Specification, assert.True},
-		{"tools.avrdude.upload.params.quiet", "tools/avrdude/upload/params\\.quiet", compliancelevel.Strict, assert.True},
-
 		{"tools.avrdude.upload.pattern", "tools/avrdude/upload/pattern", compliancelevel.Permissive, assert.True},
 		{"tools.avrdude.upload.pattern", "tools/avrdude/upload/pattern", compliancelevel.Specification, assert.True},
 		{"tools.avrdude.upload.pattern", "tools/avrdude/upload/pattern", compliancelevel.Strict, assert.True},
 
-		{"tools.bossac.upload.params.verbose", "tools/bossac/upload/params\\.verbose", compliancelevel.Permissive, assert.True},
-		{"tools.bossac.upload.params.verbose", "tools/bossac/upload/params\\.verbose", compliancelevel.Specification, assert.True},
-		{"tools.bossac.upload.params.verbose", "tools/bossac/upload/params\\.verbose", compliancelevel.Strict, assert.True},
+		{"tools.avrdude.program.params.verbose", "tools/avrdude/program/params\\.verbose", compliancelevel.Permissive, assert.True},
+		{"tools.avrdude.program.params.verbose", "tools/avrdude/program/params\\.verbose", compliancelevel.Specification, assert.True},
+		{"tools.avrdude.program.params.verbose", "tools/avrdude/program/params\\.verbose", compliancelevel.Strict, assert.True},
 
-		{"tools.bossac.upload.params.quiet", "tools/bossac/upload/params\\.quiet", compliancelevel.Permissive, assert.True},
-		{"tools.bossac.upload.params.quiet", "tools/bossac/upload/params\\.quiet", compliancelevel.Specification, assert.True},
-		{"tools.bossac.upload.params.quiet", "tools/bossac/upload/params\\.quiet", compliancelevel.Strict, assert.True},
+		{"tools.avrdude.program.params.quiet", "tools/avrdude/program/params\\.quiet", compliancelevel.Permissive, assert.True},
+		{"tools.avrdude.program.params.quiet", "tools/avrdude/program/params\\.quiet", compliancelevel.Specification, assert.True},
+		{"tools.avrdude.program.params.quiet", "tools/avrdude/program/params\\.quiet", compliancelevel.Strict, assert.True},
+
+		{"tools.avrdude.program.pattern", "tools/avrdude/program/pattern", compliancelevel.Permissive, assert.True},
+		{"tools.avrdude.program.pattern", "tools/avrdude/program/pattern", compliancelevel.Specification, assert.True},
+		{"tools.avrdude.program.pattern", "tools/avrdude/program/pattern", compliancelevel.Strict, assert.True},
 
 		{"tools.bossac.upload.pattern", "tools/bossac/upload/pattern", compliancelevel.Permissive, assert.True},
 		{"tools.bossac.upload.pattern", "tools/bossac/upload/pattern", compliancelevel.Specification, assert.True},

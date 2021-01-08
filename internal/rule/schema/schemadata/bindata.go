@@ -3148,7 +3148,7 @@ var _arduinoPlatformTxtDefinitionsSchemaJson = []byte(`{
                 "$ref": "#/definitions/propertiesObjects/toolsToolNameUpload/base/object"
               },
               {
-                "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/permissive/object"
+                "$ref": "#/definitions/requiredObjects/toolsToolNameUpload/permissive/object"
               }
             ]
           }
@@ -3160,7 +3160,7 @@ var _arduinoPlatformTxtDefinitionsSchemaJson = []byte(`{
                 "$ref": "#/definitions/propertiesObjects/toolsToolNameUpload/base/object"
               },
               {
-                "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/specification/object"
+                "$ref": "#/definitions/requiredObjects/toolsToolNameUpload/specification/object"
               }
             ]
           }
@@ -3172,7 +3172,7 @@ var _arduinoPlatformTxtDefinitionsSchemaJson = []byte(`{
                 "$ref": "#/definitions/propertiesObjects/toolsToolNameUpload/base/object"
               },
               {
-                "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/strict/object"
+                "$ref": "#/definitions/requiredObjects/toolsToolNameUpload/strict/object"
               }
             ]
           }
@@ -3461,6 +3461,44 @@ var _arduinoPlatformTxtDefinitionsSchemaJson = []byte(`{
             "allOf": [
               {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/base/object"
+              }
+            ]
+          }
+        }
+      },
+      "toolsToolNameUpload": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "required": ["pattern"]
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameUpload/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameUpload/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameUpload/base/object"
               }
             ]
           }
