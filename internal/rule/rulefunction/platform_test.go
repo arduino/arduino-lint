@@ -934,30 +934,6 @@ func TestPlatformTxtRecipeSizeRegexDataMissing(t *testing.T) {
 	checkPlatformRuleFunction(PlatformTxtRecipeSizeRegexDataMissing, testTables, t)
 }
 
-func TestPlatformTxtUploadParamsVerboseMissing(t *testing.T) {
-	testTables := []platformRuleFunctionTestTable{
-		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
-		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
-		{"No tools", "no-tools-platform.txt", ruleresult.Skip, ""},
-		{"Property missing", "upload-params-verbose-missing-platform.txt", ruleresult.Fail, "avrdude, bossac"},
-		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
-	}
-
-	checkPlatformRuleFunction(PlatformTxtUploadParamsVerboseMissing, testTables, t)
-}
-
-func TestPlatformTxtUploadParamsQuietMissing(t *testing.T) {
-	testTables := []platformRuleFunctionTestTable{
-		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
-		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
-		{"No tools", "no-tools-platform.txt", ruleresult.Skip, ""},
-		{"Property missing", "upload-params-quiet-missing-platform.txt", ruleresult.Fail, "avrdude, bossac"},
-		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
-	}
-
-	checkPlatformRuleFunction(PlatformTxtUploadParamsQuietMissing, testTables, t)
-}
-
 func TestPlatformTxtUploadPatternMissing(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
