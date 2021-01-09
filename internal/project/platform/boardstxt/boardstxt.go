@@ -20,6 +20,8 @@ See: https://arduino.github.io/arduino-cli/latest/platform-specification/#boards
 package boardstxt
 
 import (
+	"strings"
+
 	"github.com/arduino/arduino-lint/internal/project/general"
 	"github.com/arduino/arduino-lint/internal/rule/schema"
 	"github.com/arduino/arduino-lint/internal/rule/schema/compliancelevel"
@@ -51,7 +53,30 @@ func Validate(boardsTxt *properties.Map) map[compliancelevel.Type]schema.Validat
 	}
 
 	//Convert the boards.txt data from the native properties.Map type to the interface type required by the schema validation package.
-	boardsTxtInterface := general.PropertiesToMap(boardsTxt, 2)
+	boardsTxtInterface := make(map[string]interface{})
+	keys := boardsTxt.FirstLevelKeys()
+	for _, key := range keys {
+		if key == "menu" {
+			// Menu title subproperties are flat.
+			boardsTxtInterface[key] = general.PropertiesToMap(boardsTxt.SubTree(key), 1)
+		} else {
+			boardIDInterface := make(map[string]interface{})
+			boardIDProperties := boardsTxt.SubTree(key)
+			boardIDKeys := boardIDProperties.Keys()
+
+			// Add the standard properties for the board.
+			for _, boardIDKey := range boardIDKeys {
+				if !strings.HasPrefix(boardIDKey, "menu.") {
+					boardIDInterface[boardIDKey] = boardIDProperties.Get(boardIDKey)
+				}
+			}
+
+			// Add the custom board option properties for the board, nested down to OPTION_ID.
+			boardIDInterface["menu"] = general.PropertiesToMap(boardIDProperties.SubTree("menu"), 3)
+
+			boardsTxtInterface[key] = boardIDInterface
+		}
+	}
 
 	validationResults[compliancelevel.Permissive] = schema.Validate(boardsTxtInterface, schemaObject[compliancelevel.Permissive])
 	validationResults[compliancelevel.Specification] = schema.Validate(boardsTxtInterface, schemaObject[compliancelevel.Specification])

@@ -22,6 +22,7 @@ import (
 	"github.com/arduino/arduino-lint/internal/rule/ruleresult"
 	"github.com/arduino/arduino-lint/internal/rule/schema"
 	"github.com/arduino/arduino-lint/internal/rule/schema/compliancelevel"
+	"github.com/sirupsen/logrus"
 )
 
 // The rule functions for platforms.
@@ -83,7 +84,7 @@ func BoardsTxtBoardIDNameLTMinLength() (result ruleresult.Type, output string) {
 		return ruleresult.Skip, "boards.txt has no boards"
 	}
 
-	nonCompliantBoardIDs := iDValueLTMinLength(projectdata.BoardsTxtBoardIds(), "name", projectdata.BoardsTxtSchemaValidationResult()[compliancelevel.Specification])
+	nonCompliantBoardIDs := boardIDValueLTMinLength(projectdata.BoardsTxtBoardIds(), "name", compliancelevel.Specification)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -102,7 +103,7 @@ func BoardsTxtBoardIDBuildBoardMissing() (result ruleresult.Type, output string)
 		return ruleresult.Skip, "boards.txt has no boards"
 	}
 
-	nonCompliantBoardIDs := iDMissingRequiredProperty(projectdata.BoardsTxtBoardIds(), "build\\.board", projectdata.BoardsTxtSchemaValidationResult()[compliancelevel.Strict])
+	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtBoardIds(), "build.board")
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -121,7 +122,7 @@ func BoardsTxtBoardIDBuildBoardLTMinLength() (result ruleresult.Type, output str
 		return ruleresult.Skip, "boards.txt has no boards"
 	}
 
-	nonCompliantBoardIDs := iDValueLTMinLength(projectdata.BoardsTxtBoardIds(), "build\\.board", projectdata.BoardsTxtSchemaValidationResult()[compliancelevel.Specification])
+	nonCompliantBoardIDs := boardIDValueLTMinLength(projectdata.BoardsTxtBoardIds(), "build\\.board", compliancelevel.Specification)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -140,7 +141,7 @@ func BoardsTxtBoardIDBuildCoreMissing() (result ruleresult.Type, output string) 
 		return ruleresult.Skip, "boards.txt has no visible boards"
 	}
 
-	nonCompliantBoardIDs := iDMissingRequiredProperty(projectdata.BoardsTxtVisibleBoardIds(), "build\\.core", projectdata.BoardsTxtSchemaValidationResult()[compliancelevel.Specification])
+	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtVisibleBoardIds(), "build.core")
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -159,7 +160,7 @@ func BoardsTxtBoardIDBuildCoreLTMinLength() (result ruleresult.Type, output stri
 		return ruleresult.Skip, "boards.txt has no visible boards"
 	}
 
-	nonCompliantBoardIDs := iDValueLTMinLength(projectdata.BoardsTxtVisibleBoardIds(), "build\\.core", projectdata.BoardsTxtSchemaValidationResult()[compliancelevel.Specification])
+	nonCompliantBoardIDs := boardIDValueLTMinLength(projectdata.BoardsTxtVisibleBoardIds(), "build\\.core", compliancelevel.Specification)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -202,7 +203,7 @@ func BoardsTxtBoardIDHideInvalid() (result ruleresult.Type, output string) {
 		return ruleresult.Skip, "boards.txt has no boards"
 	}
 
-	nonCompliantBoardIDs := iDValueEnumMismatch(projectdata.BoardsTxtBoardIds(), "hide", projectdata.BoardsTxtSchemaValidationResult()[compliancelevel.Specification])
+	nonCompliantBoardIDs := boardIDValueEnumMismatch(projectdata.BoardsTxtBoardIds(), "hide", compliancelevel.Specification)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -235,25 +236,6 @@ func BoardsTxtMenuMenuIDLTMinLength() (result ruleresult.Type, output string) {
 	return ruleresult.Pass, ""
 }
 
-// BoardsTxtBoardIDMenuMenuIDOptionIDLTMinLength checks if any of the board menu.MENU_ID.OPTION_ID values are less than the minimum length.
-func BoardsTxtBoardIDMenuMenuIDOptionIDLTMinLength() (result ruleresult.Type, output string) {
-	if projectdata.BoardsTxtLoadError() != nil {
-		return ruleresult.NotRun, "Couldn't load boards.txt"
-	}
-
-	if len(projectdata.BoardsTxtBoardIds()) == 0 {
-		return ruleresult.Skip, "boards.txt has no boards"
-	}
-
-	nonCompliantBoardIDs := iDValueLTMinLength(projectdata.BoardsTxtBoardIds(), "menu\\.[^.]+\\.[^.]+", projectdata.BoardsTxtSchemaValidationResult()[compliancelevel.Strict])
-
-	if len(nonCompliantBoardIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
-	}
-
-	return ruleresult.Pass, ""
-}
-
 // BoardsTxtBoardIDSerialDisableDTRInvalid checks if any of the board serial.disableDTR values are invalid.
 func BoardsTxtBoardIDSerialDisableDTRInvalid() (result ruleresult.Type, output string) {
 	if projectdata.BoardsTxtLoadError() != nil {
@@ -264,7 +246,7 @@ func BoardsTxtBoardIDSerialDisableDTRInvalid() (result ruleresult.Type, output s
 		return ruleresult.Skip, "boards.txt has no boards"
 	}
 
-	nonCompliantBoardIDs := iDValueEnumMismatch(projectdata.BoardsTxtBoardIds(), "serial\\.disableDTR", projectdata.BoardsTxtSchemaValidationResult()[compliancelevel.Specification])
+	nonCompliantBoardIDs := boardIDValueEnumMismatch(projectdata.BoardsTxtBoardIds(), "serial\\.disableDTR", compliancelevel.Specification)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -283,7 +265,7 @@ func BoardsTxtBoardIDSerialDisableRTSInvalid() (result ruleresult.Type, output s
 		return ruleresult.Skip, "boards.txt has no boards"
 	}
 
-	nonCompliantBoardIDs := iDValueEnumMismatch(projectdata.BoardsTxtBoardIds(), "serial\\.disableRTS", projectdata.BoardsTxtSchemaValidationResult()[compliancelevel.Specification])
+	nonCompliantBoardIDs := boardIDValueEnumMismatch(projectdata.BoardsTxtBoardIds(), "serial\\.disableRTS", compliancelevel.Specification)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -302,7 +284,7 @@ func BoardsTxtBoardIDUploadToolMissing() (result ruleresult.Type, output string)
 		return ruleresult.Skip, "boards.txt has no visible boards"
 	}
 
-	nonCompliantBoardIDs := iDMissingRequiredProperty(projectdata.BoardsTxtVisibleBoardIds(), "upload\\.tool", projectdata.BoardsTxtSchemaValidationResult()[compliancelevel.Specification])
+	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtVisibleBoardIds(), "upload.tool")
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -321,7 +303,7 @@ func BoardsTxtBoardIDUploadToolLTMinLength() (result ruleresult.Type, output str
 		return ruleresult.Skip, "boards.txt has no boards"
 	}
 
-	nonCompliantBoardIDs := iDValueLTMinLength(projectdata.BoardsTxtBoardIds(), "upload\\.tool", projectdata.BoardsTxtSchemaValidationResult()[compliancelevel.Specification])
+	nonCompliantBoardIDs := boardIDValueLTMinLength(projectdata.BoardsTxtBoardIds(), "upload\\.tool", compliancelevel.Specification)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -340,7 +322,7 @@ func BoardsTxtBoardIDUploadMaximumSizeMissing() (result ruleresult.Type, output 
 		return ruleresult.Skip, "boards.txt has no visible boards"
 	}
 
-	nonCompliantBoardIDs := iDMissingRequiredProperty(projectdata.BoardsTxtVisibleBoardIds(), "upload\\.maximum_size", projectdata.BoardsTxtSchemaValidationResult()[compliancelevel.Strict])
+	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtVisibleBoardIds(), "upload.maximum_size")
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -359,7 +341,7 @@ func BoardsTxtBoardIDUploadMaximumSizeInvalid() (result ruleresult.Type, output 
 		return ruleresult.Skip, "boards.txt has no boards"
 	}
 
-	nonCompliantBoardIDs := iDValuePatternMismatch(projectdata.BoardsTxtBoardIds(), "upload\\.maximum_size", projectdata.BoardsTxtSchemaValidationResult()[compliancelevel.Specification])
+	nonCompliantBoardIDs := boardIDValuePatternMismatch(projectdata.BoardsTxtBoardIds(), "upload\\.maximum_size", compliancelevel.Specification)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -378,7 +360,7 @@ func BoardsTxtBoardIDUploadMaximumDataSizeMissing() (result ruleresult.Type, out
 		return ruleresult.Skip, "boards.txt has no visible boards"
 	}
 
-	nonCompliantBoardIDs := iDMissingRequiredProperty(projectdata.BoardsTxtVisibleBoardIds(), "upload\\.maximum_data_size", projectdata.BoardsTxtSchemaValidationResult()[compliancelevel.Strict])
+	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtVisibleBoardIds(), "upload.maximum_data_size")
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -397,7 +379,7 @@ func BoardsTxtBoardIDUploadMaximumDataSizeInvalid() (result ruleresult.Type, out
 		return ruleresult.Skip, "boards.txt has no boards"
 	}
 
-	nonCompliantBoardIDs := iDValuePatternMismatch(projectdata.BoardsTxtBoardIds(), "upload\\.maximum_data_size", projectdata.BoardsTxtSchemaValidationResult()[compliancelevel.Specification])
+	nonCompliantBoardIDs := boardIDValuePatternMismatch(projectdata.BoardsTxtBoardIds(), "upload\\.maximum_data_size", compliancelevel.Specification)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -416,7 +398,7 @@ func BoardsTxtBoardIDUploadUse1200bpsTouchInvalid() (result ruleresult.Type, out
 		return ruleresult.Skip, "boards.txt has no boards"
 	}
 
-	nonCompliantBoardIDs := iDValueEnumMismatch(projectdata.BoardsTxtBoardIds(), "upload\\.use_1200bps_touch", projectdata.BoardsTxtSchemaValidationResult()[compliancelevel.Specification])
+	nonCompliantBoardIDs := boardIDValueEnumMismatch(projectdata.BoardsTxtBoardIds(), "upload\\.use_1200bps_touch", compliancelevel.Specification)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -435,7 +417,7 @@ func BoardsTxtBoardIDUploadWaitForUploadPortInvalid() (result ruleresult.Type, o
 		return ruleresult.Skip, "boards.txt has no boards"
 	}
 
-	nonCompliantBoardIDs := iDValueEnumMismatch(projectdata.BoardsTxtBoardIds(), "upload\\.wait_for_upload_port", projectdata.BoardsTxtSchemaValidationResult()[compliancelevel.Specification])
+	nonCompliantBoardIDs := boardIDValueEnumMismatch(projectdata.BoardsTxtBoardIds(), "upload\\.wait_for_upload_port", compliancelevel.Specification)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -454,7 +436,7 @@ func BoardsTxtBoardIDVidNInvalid() (result ruleresult.Type, output string) {
 		return ruleresult.Skip, "boards.txt has no boards"
 	}
 
-	nonCompliantBoardIDs := iDValuePatternMismatch(projectdata.BoardsTxtBoardIds(), "vid\\.[0-9]+", projectdata.BoardsTxtSchemaValidationResult()[compliancelevel.Specification])
+	nonCompliantBoardIDs := boardIDValuePatternMismatch(projectdata.BoardsTxtBoardIds(), "vid\\.[0-9]+", compliancelevel.Specification)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -473,7 +455,7 @@ func BoardsTxtBoardIDPidNInvalid() (result ruleresult.Type, output string) {
 		return ruleresult.Skip, "boards.txt has no boards"
 	}
 
-	nonCompliantBoardIDs := iDValuePatternMismatch(projectdata.BoardsTxtBoardIds(), "pid\\.[0-9]+", projectdata.BoardsTxtSchemaValidationResult()[compliancelevel.Specification])
+	nonCompliantBoardIDs := boardIDValuePatternMismatch(projectdata.BoardsTxtBoardIds(), "pid\\.[0-9]+", compliancelevel.Specification)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -1758,6 +1740,77 @@ func PlatformTxtBootloaderPatternMissing() (result ruleresult.Type, output strin
 	}
 
 	return ruleresult.Pass, ""
+}
+
+/*
+boardIDMissingRequiredProperty returns the list of board IDs missing the given property.
+Unlike iDMissingRequiredProperty(), this function does a direct check on the properties, rather than using the JSON schema validation.
+This is necessary because JSON schema does not have the capability to account for the custom board options system.
+This function should not be used in cases where the JSON schema does cover a required property.
+*/
+func boardIDMissingRequiredProperty(boardIDs []string, propertyName string) []string {
+	nonCompliantBoardIDs := []string{}
+	for _, boardID := range boardIDs {
+		logrus.Tracef("Board ID: %s", boardID)
+		boardIDHasProperty := func(boardID string, propertyName string) bool {
+			if projectdata.BoardsTxt().ContainsKey(boardID + "." + propertyName) {
+				logrus.Trace("Property defined at top level\n")
+				return true // The board has a first level definition of the property. No need to check custom board options.
+
+			}
+
+			// There is no first level definition of the property, so check if it is provided by the custom board options.
+			menuProvidesProperty := false
+			boardMenuProperties := projectdata.BoardsTxt().SubTree(boardID + ".menu")
+			boardMenuIDs := boardMenuProperties.FirstLevelKeys()
+			for _, boardMenuID := range boardMenuIDs {
+				logrus.Tracef("Menu ID: %s\n", boardMenuID)
+				menuProvidesProperty = true
+
+				boardOptionProperties := boardMenuProperties.SubTree(boardMenuID)
+				boardOptionIDs := boardOptionProperties.FirstLevelKeys()
+				for _, boardOptionID := range boardOptionIDs {
+					if !boardOptionProperties.ContainsKey(boardOptionID + "." + propertyName) {
+						logrus.Tracef("Option ID %s doesn't provide property\n", boardOptionID)
+						menuProvidesProperty = false // Every option associated with the menuID must define the property.
+						break
+					}
+				}
+
+				if menuProvidesProperty {
+					// The menu provided the property so no need to continue.
+					logrus.Trace("Menu provides property\n")
+					return true
+				}
+			}
+
+			return false // None of the menus provided the property.
+		}
+
+		if !boardIDHasProperty(boardID, propertyName) {
+			nonCompliantBoardIDs = append(nonCompliantBoardIDs, boardID)
+		}
+	}
+
+	return nonCompliantBoardIDs
+}
+
+// boardIDValueLTMinLength returns the list of board IDs with value of the given property less than the minimum length.
+func boardIDValueLTMinLength(boardIDs []string, propertyNameQuery string, complianceLevel compliancelevel.Type) []string {
+	nonCompliantBoardIDs := iDValueLTMinLength(boardIDs, propertyNameQuery, projectdata.BoardsTxtSchemaValidationResult()[complianceLevel])
+	return append(nonCompliantBoardIDs, iDValueLTMinLength(boardIDs, "menu/[^.]+/[^.]+/"+propertyNameQuery, projectdata.BoardsTxtSchemaValidationResult()[complianceLevel])...)
+}
+
+// boardIDValueEnumMismatch returns the list of board IDs with value of the given property less than the minimum length.
+func boardIDValueEnumMismatch(boardIDs []string, propertyNameQuery string, complianceLevel compliancelevel.Type) []string {
+	nonCompliantBoardIDs := iDValueEnumMismatch(boardIDs, propertyNameQuery, projectdata.BoardsTxtSchemaValidationResult()[complianceLevel])
+	return append(nonCompliantBoardIDs, iDValueEnumMismatch(boardIDs, "menu/[^.]+/[^.]+/"+propertyNameQuery, projectdata.BoardsTxtSchemaValidationResult()[complianceLevel])...)
+}
+
+// boardIDValuePatternMismatch returns the list of board IDs with value of the given property less than the minimum length.
+func boardIDValuePatternMismatch(boardIDs []string, propertyNameQuery string, complianceLevel compliancelevel.Type) []string {
+	nonCompliantBoardIDs := iDValuePatternMismatch(boardIDs, propertyNameQuery, projectdata.BoardsTxtSchemaValidationResult()[complianceLevel])
+	return append(nonCompliantBoardIDs, iDValuePatternMismatch(boardIDs, "menu/[^.]+/[^.]+/"+propertyNameQuery, projectdata.BoardsTxtSchemaValidationResult()[complianceLevel])...)
 }
 
 // programmerIDMissingRequiredProperty returns the list of programmer IDs missing the given required property.

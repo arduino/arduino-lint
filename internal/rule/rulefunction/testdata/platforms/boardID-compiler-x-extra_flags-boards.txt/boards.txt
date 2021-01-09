@@ -23,3 +23,12 @@ funo.compiler.objcopy.eep.extra_flags=foo
 funo.upload.tool=avrdude
 funo.upload.maximum_size=32256
 funo.upload.maximum_data_size=2048
+
+zuno.name=Zuno
+zuno.build.board=ZUNO
+zuno.build.core=arduino
+zuno.build.variant=standard
+zuno.upload.tool=avrdude
+zuno.upload.maximum_size=32256
+zuno.upload.maximum_data_size=2048
+zuno.menu.foo.bar.compiler.cpp.extra_flags=bar

@@ -87,7 +87,7 @@ func TestBoardsTxtBoardIDNameMissing(t *testing.T) {
 		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
 		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
 		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
-		{"Property missing", "boardID-name-missing-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Property missing", "boardID-name-missing-boards.txt", ruleresult.Fail, "buno, funo, zuno"},
 		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
 	}
 
@@ -123,7 +123,7 @@ func TestBoardsTxtBoardIDBuildBoardLTMinLength(t *testing.T) {
 		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
 		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
 		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
-		{"Property LT min", "boardID-build-board-LT-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Property LT min", "boardID-build-board-LT-boards.txt", ruleresult.Fail, "buno, funo, zuno"},
 		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
 	}
 
@@ -147,7 +147,7 @@ func TestBoardsTxtBoardIDBuildCoreLTMinLength(t *testing.T) {
 		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
 		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
 		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
-		{"Property LT min", "boardID-build-core-LT-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Property LT min", "boardID-build-core-LT-boards.txt", ruleresult.Fail, "buno, funo, zuno"},
 		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
 	}
 
@@ -159,7 +159,7 @@ func TestBoardsTxtUserExtraFlagsUsage(t *testing.T) {
 		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
 		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
 		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
-		{"Use of user extra flags", "boardID-compiler-x-extra_flags-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Use of user extra flags", "boardID-compiler-x-extra_flags-boards.txt", ruleresult.Fail, "buno, funo, zuno"},
 		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
 	}
 
@@ -190,24 +190,12 @@ func TestBoardsTxtMenuMenuIDLTMinLength(t *testing.T) {
 	checkPlatformRuleFunction(BoardsTxtMenuMenuIDLTMinLength, testTables, t)
 }
 
-func TestBoardsTxtBoardIDMenuMenuIDOptionIDLTMinLength(t *testing.T) {
-	testTables := []platformRuleFunctionTestTable{
-		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
-		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
-		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
-		{"Property LT min", "boardID-menu-menuID-LT-boards.txt", ruleresult.Fail, "buno, funo"},
-		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
-	}
-
-	checkPlatformRuleFunction(BoardsTxtBoardIDMenuMenuIDOptionIDLTMinLength, testTables, t)
-}
-
 func TestBoardsTxtBoardIDSerialDisableDTRInvalid(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
 		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
 		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
-		{"Property invalid", "boardID-serial-disableDTR-invalid-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Property invalid", "boardID-serial-disableDTR-invalid-boards.txt", ruleresult.Fail, "buno, funo, zuno"},
 		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
 	}
 
@@ -219,7 +207,7 @@ func TestBoardsTxtBoardIDSerialDisableRTSInvalid(t *testing.T) {
 		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
 		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
 		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
-		{"Property invalid", "boardID-serial-disableRTS-invalid-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Property invalid", "boardID-serial-disableRTS-invalid-boards.txt", ruleresult.Fail, "buno, funo, zuno"},
 		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
 	}
 
@@ -243,7 +231,7 @@ func TestBoardsTxtBoardIDUploadToolLTMinLength(t *testing.T) {
 		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
 		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
 		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
-		{"Property LT min", "boardID-upload-tool-LT-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Property LT min", "boardID-upload-tool-LT-boards.txt", ruleresult.Fail, "buno, funo, zuno"},
 		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
 	}
 
@@ -267,7 +255,7 @@ func TestBoardsTxtBoardIDUploadMaximumSizeInvalid(t *testing.T) {
 		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
 		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
 		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
-		{"Property invalid", "boardID-upload-maximum_size-invalid-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Property invalid", "boardID-upload-maximum_size-invalid-boards.txt", ruleresult.Fail, "buno, funo, zuno"},
 		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
 	}
 
@@ -291,7 +279,7 @@ func TestBoardsTxtBoardIDUploadMaximumDataSizeInvalid(t *testing.T) {
 		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
 		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
 		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
-		{"Property invalid", "boardID-upload-maximum_data_size-invalid-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Property invalid", "boardID-upload-maximum_data_size-invalid-boards.txt", ruleresult.Fail, "buno, funo, zuno"},
 		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
 	}
 
@@ -303,7 +291,7 @@ func TestBoardsTxtBoardIDUploadUse1200bpsTouchInvalid(t *testing.T) {
 		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
 		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
 		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
-		{"Property invalid", "boardID-upload-use_1200bps_touch-invalid-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Property invalid", "boardID-upload-use_1200bps_touch-invalid-boards.txt", ruleresult.Fail, "buno, funo, zuno"},
 		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
 	}
 
@@ -315,7 +303,7 @@ func TestBoardsTxtBoardIDUploadWaitForUploadPortInvalid(t *testing.T) {
 		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
 		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
 		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
-		{"Property invalid", "boardID-upload-wait_for_upload_port-invalid-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Property invalid", "boardID-upload-wait_for_upload_port-invalid-boards.txt", ruleresult.Fail, "buno, funo, zuno"},
 		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
 	}
 
@@ -327,7 +315,7 @@ func TestBoardsTxtBoardIDVidNInvalid(t *testing.T) {
 		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
 		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
 		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
-		{"Property invalid", "boardID-vid-n-invalid-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Property invalid", "boardID-vid-n-invalid-boards.txt", ruleresult.Fail, "buno, funo, zuno"},
 		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
 	}
 
@@ -339,7 +327,7 @@ func TestBoardsTxtBoardIDPidNInvalid(t *testing.T) {
 		{"Missing", "missing-boards.txt", ruleresult.NotRun, ""},
 		{"Invalid", "invalid-boards.txt", ruleresult.NotRun, ""},
 		{"No boards", "no-boards-boards.txt", ruleresult.Skip, ""},
-		{"Property invalid", "boardID-pid-n-invalid-boards.txt", ruleresult.Fail, "buno, funo"},
+		{"Property invalid", "boardID-pid-n-invalid-boards.txt", ruleresult.Fail, "buno, funo, zuno"},
 		{"Valid", "valid-boards.txt", ruleresult.Pass, ""},
 	}
 

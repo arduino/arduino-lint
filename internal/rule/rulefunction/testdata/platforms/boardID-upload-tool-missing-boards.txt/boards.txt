@@ -19,3 +19,11 @@ funo.build.core=arduino
 funo.build.variant=standard
 funo.upload.maximum_size=32256
 funo.upload.maximum_data_size=2048
+
+zuno.name=Zuno
+zuno.build.board=ZUNO
+zuno.build.core=arduino
+zuno.build.variant=standard
+zuno.upload.maximum_size=32256
+zuno.upload.maximum_data_size=2048
+zuno.menu.foo.bar.upload.tool=avrdude
