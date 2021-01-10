@@ -16,6 +16,7 @@
 package rulefunction
 
 import (
+	"fmt"
 	"regexp"
 	"testing"
 
@@ -55,7 +56,7 @@ func checkPackageIndexRuleFunction(ruleFunction Type, testTables []packageIndexR
 
 		result, output := ruleFunction()
 		assert.Equal(t, testTable.expectedRuleResult, result, testTable.testName)
-		assert.True(t, expectedOutputRegexp.MatchString(output), testTable.testName)
+		assert.True(t, expectedOutputRegexp.MatchString(output), fmt.Sprintf("%s (output: %s, assertion regex: %s)", testTable.testName, output, testTable.expectedOutputQuery))
 	}
 }
 

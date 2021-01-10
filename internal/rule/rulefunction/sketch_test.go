@@ -16,6 +16,7 @@
 package rulefunction
 
 import (
+	"fmt"
 	"os"
 	"regexp"
 	"testing"
@@ -56,7 +57,7 @@ func checkSketchRuleFunction(ruleFunction Type, testTables []sketchRuleFunctionT
 
 		result, output := ruleFunction()
 		assert.Equal(t, testTable.expectedRuleResult, result, testTable.testName)
-		assert.True(t, expectedOutputRegexp.MatchString(output), testTable.testName)
+		assert.True(t, expectedOutputRegexp.MatchString(output), fmt.Sprintf("%s (output: %s, assertion regex: %s)", testTable.testName, output, testTable.expectedOutputQuery))
 	}
 }
 
