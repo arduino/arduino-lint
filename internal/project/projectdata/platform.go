@@ -37,6 +37,7 @@ func InitializeForPlatform(project project.Type) {
 
 		boardsTxtMenuIds = boardstxt.MenuIDs(boardsTxt)
 		boardsTxtBoardIds = boardstxt.BoardIDs(boardsTxt)
+		boardsTxtVisibleBoardIds = boardstxt.VisibleBoardIDs(boardsTxt)
 	}
 
 	programmersTxtExists = ProjectPath().Join("programmers.txt").Exist()
@@ -95,9 +96,16 @@ func BoardsTxtMenuIds() []string {
 
 var boardsTxtBoardIds []string
 
-// BoardsTxtMenuIds returns the list of board IDs present in the platform's boards.txt.
+// BoardsTxtBoardIds returns the list of board IDs present in the platform's boards.txt.
 func BoardsTxtBoardIds() []string {
 	return boardsTxtBoardIds
+}
+
+var boardsTxtVisibleBoardIds []string
+
+// BoardsTxtVisibleBoardIds returns the list of IDs for visible boards present in the platform's boards.txt.
+func BoardsTxtVisibleBoardIds() []string {
+	return boardsTxtVisibleBoardIds
 }
 
 var programmersTxtExists bool

@@ -80,3 +80,18 @@ func BoardIDs(boardsTxt *properties.Map) []string {
 
 	return boardIDs[:boardIDCount]
 }
+
+// VisibleBoardIDs returns the list of IDs for non-hidden boards from the given boards.txt properties.
+func VisibleBoardIDs(boardsTxt *properties.Map) []string {
+	boardIDs := BoardIDs(boardsTxt)
+	boardIDCount := 0
+	for _, boardID := range boardIDs {
+		if !boardsTxt.ContainsKey(boardID + ".hide") {
+			// This element is a visible board, retain it in the section of the array that will be returned.
+			boardIDs[boardIDCount] = boardID
+			boardIDCount++
+		}
+	}
+
+	return boardIDs[:boardIDCount]
+}

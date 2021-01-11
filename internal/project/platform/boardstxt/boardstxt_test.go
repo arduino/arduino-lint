@@ -92,3 +92,16 @@ func TestBoardIDs(t *testing.T) {
 	boardsTxt.Set("baz.name", "qwer")
 	assert.ElementsMatch(t, []string{"uno", "baz"}, BoardIDs(boardsTxt))
 }
+
+func TestVisibleBoardIDs(t *testing.T) {
+	boardsTxt := properties.NewFromHashmap(validBoardsTxtMap)
+
+	assert.ElementsMatch(t, []string{"uno"}, VisibleBoardIDs(boardsTxt))
+
+	boardsTxt.Set("menu.foo", "asdf")
+	boardsTxt.Set("menu.bar", "zxcv")
+	boardsTxt.Set("baz.name", "qwer")
+	boardsTxt.Set("bat.name", "sdfg")
+	boardsTxt.Set("bat.hide", "")
+	assert.ElementsMatch(t, []string{"uno", "baz"}, VisibleBoardIDs(boardsTxt))
+}
