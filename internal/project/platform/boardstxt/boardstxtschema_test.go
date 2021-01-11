@@ -124,9 +124,9 @@ func TestRequired(t *testing.T) {
 		complianceLevel             compliancelevel.Type
 		assertion                   assert.BoolAssertionFunc
 	}{
-		{"menu.cpu", "menu", compliancelevel.Permissive, assert.False},
-		{"menu.cpu", "menu", compliancelevel.Specification, assert.False},
-		{"menu.cpu", "menu", compliancelevel.Strict, assert.False},
+		{"menu.cpu", "menu/cpu", compliancelevel.Permissive, assert.False},
+		{"menu.cpu", "menu/cpu", compliancelevel.Specification, assert.False},
+		{"menu.cpu", "menu/cpu", compliancelevel.Strict, assert.False},
 
 		{"nano.name", "nano/name", compliancelevel.Permissive, assert.True},
 		{"nano.name", "nano/name", compliancelevel.Specification, assert.True},
