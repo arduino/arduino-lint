@@ -212,7 +212,7 @@ func Test_schemaID(t *testing.T) {
 	require.NotNil(t, err)
 
 	id, err := schemaID("valid-schema.json", testdata.Asset)
-	require.Equal(t, "https://raw.githubusercontent.com/arduino/arduino-lint/main/internal/rule/schema/testdata/schema-with-references.json", id)
+	require.Equal(t, "https://raw.githubusercontent.com/arduino/arduino-lint/main/internal/rule/schema/testdata/input/valid-schema.json", id)
 	require.Nil(t, err)
 }
 

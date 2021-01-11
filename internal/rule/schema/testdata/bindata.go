@@ -82,7 +82,7 @@ func invalidSchemaJson() (*asset, error) {
 
 var _referencedSchema1Json = []byte(`{
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/internal/rule/schema/testdata/referenced-schema-1.json",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/internal/rule/schema/testdata/input/referenced-schema-1.json",
   "title": "Schema for use in unit tests",
   "definitions": {
     "patternObject": {
@@ -112,7 +112,7 @@ func referencedSchema1Json() (*asset, error) {
 
 var _referencedSchema2Json = []byte(`{
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/internal/rule/schema/testdata/referenced-schema-2.json",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/internal/rule/schema/testdata/input/referenced-schema-2.json",
   "title": "Schema for use in unit tests",
   "definitions": {
     "dependenciesObject": {
@@ -187,7 +187,7 @@ func schemaWithoutIdJson() (*asset, error) {
 
 var _validSchemaWithReferencesJson = []byte(`{
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/internal/rule/schema/testdata/schema-with-references.json",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/internal/rule/schema/testdata/input/valid-schema-with-references.json",
   "title": "Schema for use in unit tests",
   "type": "object",
   "properties": {
@@ -250,7 +250,7 @@ func validSchemaWithReferencesJson() (*asset, error) {
 
 var _validSchemaJson = []byte(`{
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/internal/rule/schema/testdata/schema-with-references.json",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/internal/rule/schema/testdata/input/valid-schema.json",
   "title": "Schema for use in unit tests",
   "type": "object",
   "properties": {
