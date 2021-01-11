@@ -461,39 +461,45 @@
                 <p><strong>arduino-lint</strong> is a command line tool that checks for common problems with <a href="https://www.arduino.cc/">Arduino</a>
 projects.</p>
 <p>Its focus is on the structure, metadata, and configuration of Arduino projects, rather than the code. Rules cover
-<a href="https://arduino.github.io/arduino-cli/latest/library-specification">specification</a> compliance, Library Manager
-submission <a href="https://github.com/arduino/Arduino/wiki/Library-Manager-FAQ">requirements</a>, and best practices.</p>
+specification compliance, Library Manager submission requirements, and best practices.</p>
 <h2 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
 <p>See the <a href="installation/">installation instructions</a>.</p>
 <h2 id="getting-started">Getting started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h2>
 <p>Once installed, you only need to open a terminal at your project folder and run the command:</p>
 <div class="highlight"><pre><span></span><code>arduino-lint
 </code></pre></div>
-<p>This will automatically search for projects, detect their type, and run the appropriate checks on them.</p>
+<p>This will automatically detect the project type and check it against the relevant rules.</p>
 <p>The default configuration of <strong>arduino-lint</strong> provides for the most common use case, but you have the option of changing
 settings via <a href="commands/arduino-lint/">command line flags</a>:</p>
 <h3 id="compliance-setting">Compliance setting<a class="headerlink" href="#compliance-setting" title="Permanent link">&para;</a></h3>
-<p>The <code>--compliance</code> flag allows you to configure the strictness of the checks.</p>
-<p><code>--compliance permissive</code> will cause the checks to fail only when severe problems are found. Although a project that
-passes at the permissive setting will work with the current Arduino development software versions, it may not be fully
-specification-compliant, risking incompatibility or a poor experience for the users.</p>
-<p><code>--compliance specification</code>, the default setting, enforces compliance with the official Arduino project specifications.</p>
-<p><code>--compliance strict</code> enforces best practices, above and beyond the minimum requirements for specification compliance.
-Use this setting to ensure the best experience for the users of the project.</p>
+<p>The <code>--compliance</code> flag allows you to configure the strictness of the applied rules. The three compliance level values
+accepted by this flag are:</p>
+<ul>
+<li><code>permissive</code> - failure will occur only when severe rule violations are found. Although a project that passes at the
+  permissive setting will work with the current Arduino development software versions, it may not be fully
+  specification-compliant, risking incompatibility or a poor experience for the users.</li>
+<li><code>specification</code> - the default setting, enforces compliance with the official Arduino project specifications
+  (<a href="https://arduino.github.io/arduino-cli/latest/sketch-specification/">sketch</a>,
+  <a href="https://arduino.github.io/arduino-cli/latest/library-specification/">library</a>,
+  <a href="https://arduino.github.io/arduino-cli/latest/platform-specification/">platform</a>).</li>
+<li><code>strict</code> - enforces best practices, above and beyond the minimum requirements for specification compliance. Use this
+  setting to ensure the best experience for the users of the project.</li>
+</ul>
 <h3 id="library-manager-setting">Library Manager setting<a class="headerlink" href="#library-manager-setting" title="Permanent link">&para;</a></h3>
-<p>Arduino Library Manager is the best way to provide installation and updates of Arduino libraries. In order to be
-accepted for inclusion in Library Manager, a library is required to meet some requirements.</p>
+<p><a href="https://www.arduino.cc/en/guide/libraries#toc3">Arduino Library Manager</a> is the best way to provide installation and
+updates of Arduino libraries. In order to be accepted for inclusion in Library Manager, a library is required to meet
+<a href="https://github.com/arduino/Arduino/wiki/Library-Manager-FAQ">some requirements</a>.</p>
 <p><strong>arduino-lint</strong> provides checks for these requirements as well, controlled by the <code>--library-manager</code> flag.</p>
-<p>The checks for the Library Manager submission requirements are enabled via <code>--library-manager submit</code>. Even if your
-library isn't yet ready to be added to Library Manager, it's a good idea to use this setting to ensure no
-incompatibilities are introduced.</p>
+<p>The Library Manager submission-specific rules are enabled via <code>--library-manager submit</code>. Even if your library isn't yet
+ready to be added to Library Manager, it's a good idea to use this setting to ensure no incompatibilities are
+introduced.</p>
 <p>Once your library is in the Library Manager index, each release is automatically picked up and made available to the
-Arduino community. Releases are also subjected to special checks, which must pass for it to be added to the index. The
-command <code>arduino-lint --library-manager update</code> will tell you whether your library will pass these checks.</p>
+Arduino community. Releases are also subject to special rules. The command <code>arduino-lint --library-manager update</code> will
+tell you whether your library is compliant with these rules.</p>
 <h3 id="integration">Integration<a class="headerlink" href="#integration" title="Permanent link">&para;</a></h3>
 <p>The <code>--format</code> flag configures the format of <strong>arduino-lint</strong>'s output. The default <code>--format text</code> setting provides
 human readable output. For automation or integration with other tools, the machine readable output provided by
-<code>--format json</code> may be more convenient. This setting exposes all the details of the checks that are run.</p>
+<code>--format json</code> may be more convenient. This setting exposes every detail of the rules that were applied.</p>
 <p>The <code>--report-file</code> flag causes <strong>arduino-lint</strong> to write the JSON output to the specified file.</p>
 <h3 id="environment-variables">Environment variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h3>
 <p>Additional configuration options intended for internal use or development can be set via environment variables:</p>
@@ -510,12 +516,13 @@ human readable output. For automation or integration with other tools, the machi
 </ul>
 <h2 id="continuous-integration">Continuous integration<a class="headerlink" href="#continuous-integration" title="Permanent link">&para;</a></h2>
 <p><strong>arduino-lint</strong> would be a great addition to your
-<a href="https://en.wikipedia.org/wiki/Continuous_integration">continuous integration</a> system. Running the checks after each
-change to the project will allow you to identify any problems that were introduced.</p>
-<p>This is easily done by using the <code>arduino/arduino-lint-action</code> GitHub Actions action:
+<a href="https://en.wikipedia.org/wiki/Continuous_integration">continuous integration</a> system. Running the tool after each
+change to the project can allow you to identify any problems that were introduced.</p>
+<p>This is easily done by using the <code>arduino/arduino-lint-action</code>
+<a href="https://docs.github.com/en/free-pro-team@latest/actions">GitHub Actions</a> action:
 <a href="https://github.com/arduino/arduino-lint-action">https://github.com/arduino/arduino-lint-action</a></p>
-<p>Add a simple workflow file to the repository of your Arduino project and the checks will automatically be run on every
-pull request and push.</p>
+<p>Add <a href="https://github.com/arduino/arduino-lint-action#usage">a simple workflow file</a> to the repository of your Arduino
+project and GitHub will automatically run arduino-lint on every pull request and push.</p>
 <h2 id="support-and-feedback">Support and feedback<a class="headerlink" href="#support-and-feedback" title="Permanent link">&para;</a></h2>
 <p>You can discuss or get assistance with using <strong>arduino-lint</strong> on the
 <a href="https://forum.arduino.cc/index.php?board=3.0">Arduino Forum</a>.</p>
