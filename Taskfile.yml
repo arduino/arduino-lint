@@ -14,7 +14,6 @@ tasks:
     cmds:
       - task: go:test-unit
       - task: test-integration
-      - task: schema:compile
 
   go:generate:
     desc: Generate Go code
@@ -37,11 +36,6 @@ tasks:
       - task: build
       - poetry install --no-root
       - poetry run pytest test
-
-  schema:compile:
-    desc: Compile JSON schema
-    cmds:
-      - npx ajv-cli compile -s "./etc/schemas/*.json"
 
   check:
     desc: Lint and check formatting of all files
