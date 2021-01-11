@@ -192,7 +192,7 @@ func BoardsTxtUserExtraFlagsUsage() (result ruleresult.Type, output string) {
 	return ruleresult.Pass, ""
 }
 
-// BoardsTxtBoardIDHideInvalid checks if any of the board hide values are less than the minimum length.
+// BoardsTxtBoardIDHideInvalid checks if any of the board hide values have invalid format
 func BoardsTxtBoardIDHideInvalid() (result ruleresult.Type, output string) {
 	if projectdata.BoardsTxtLoadError() != nil {
 		return ruleresult.NotRun, "Couldn't load boards.txt"
@@ -1622,7 +1622,7 @@ func PlatformTxtProgramPatternMissing() (result ruleresult.Type, output string) 
 	return ruleresult.Pass, ""
 }
 
-// PlatformTxtEraseParamsVerboseMissing checks if any of the tools are missing erase.params.verbos properties.
+// PlatformTxtEraseParamsVerboseMissing checks if any of the tools are missing erase.params.verbose properties.
 func PlatformTxtEraseParamsVerboseMissing() (result ruleresult.Type, output string) {
 	if !projectdata.PlatformTxtExists() {
 		return ruleresult.Skip, "Platform has no platform.txt"
@@ -1691,7 +1691,7 @@ func PlatformTxtErasePatternMissing() (result ruleresult.Type, output string) {
 	return ruleresult.Pass, ""
 }
 
-// PlatformTxtBootloaderParamsVerboseMissing checks if any of the tools are missing bootloader.params.verbos properties.
+// PlatformTxtBootloaderParamsVerboseMissing checks if any of the tools are missing bootloader.params.verbose properties.
 func PlatformTxtBootloaderParamsVerboseMissing() (result ruleresult.Type, output string) {
 	if !projectdata.PlatformTxtExists() {
 		return ruleresult.Skip, "Platform has no platform.txt"
