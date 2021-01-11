@@ -454,6 +454,8 @@ func TestPlatformTxtCompilerWarningFlagsNoneMissing(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
 		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"Missing boards.txt", "missing-boards.txt", ruleresult.NotRun, "boards.txt"},
+		{"Core reference", "core-reference", ruleresult.Skip, "[cC]ore reference"},
 		{"Property missing", "compiler-warning_flags-none-missing-platform.txt", ruleresult.Fail, ""},
 		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
 	}
@@ -465,6 +467,8 @@ func TestPlatformTxtCompilerWarningFlagsDefaultMissing(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
 		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"Missing boards.txt", "missing-boards.txt", ruleresult.NotRun, "boards.txt"},
+		{"Core reference", "core-reference", ruleresult.Skip, "[cC]ore reference"},
 		{"Property missing", "compiler-warning_flags-default-missing-platform.txt", ruleresult.Fail, ""},
 		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
 	}
@@ -476,6 +480,8 @@ func TestPlatformTxtCompilerWarningFlagsMoreMissing(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
 		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"Missing boards.txt", "missing-boards.txt", ruleresult.NotRun, "boards.txt"},
+		{"Core reference", "core-reference", ruleresult.Skip, "[cC]ore reference"},
 		{"Property missing", "compiler-warning_flags-more-missing-platform.txt", ruleresult.Fail, ""},
 		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
 	}
@@ -487,6 +493,8 @@ func TestPlatformTxtCompilerWarningFlagsAllMissing(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
 		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"Missing boards.txt", "missing-boards.txt", ruleresult.NotRun, "boards.txt"},
+		{"Core reference", "core-reference", ruleresult.Skip, "[cC]ore reference"},
 		{"Property missing", "compiler-warning_flags-all-missing-platform.txt", ruleresult.Fail, ""},
 		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
 	}
@@ -498,6 +506,8 @@ func TestPlatformTxtCompilerOptimizationFlagsDebugMissing(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
 		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"Missing boards.txt", "missing-boards.txt", ruleresult.NotRun, "boards.txt"},
+		{"Core reference", "core-reference", ruleresult.Skip, "[cC]ore reference"},
 		{"Dependent property not present", "properties-missing-platform.txt", ruleresult.Skip, ""},
 		{"Property missing", "compiler-optimization_flags-debug-missing-platform.txt", ruleresult.Fail, ""},
 		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
@@ -510,6 +520,8 @@ func TestPlatformTxtCompilerOptimizationFlagsReleaseMissing(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
 		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"Missing boards.txt", "missing-boards.txt", ruleresult.NotRun, "boards.txt"},
+		{"Core reference", "core-reference", ruleresult.Skip, "[cC]ore reference"},
 		{"Dependent property not present", "properties-missing-platform.txt", ruleresult.Skip, ""},
 		{"Property missing", "compiler-optimization_flags-release-missing-platform.txt", ruleresult.Fail, ""},
 		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
@@ -522,6 +534,8 @@ func TestPlatformTxtCompilerCExtraFlagsMissing(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
 		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"Missing boards.txt", "missing-boards.txt", ruleresult.NotRun, "boards.txt"},
+		{"Core reference", "core-reference", ruleresult.Skip, "[cC]ore reference"},
 		{"Property missing", "compiler-c-extra_flags-missing-platform.txt", ruleresult.Fail, ""},
 		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
 	}
@@ -545,6 +559,8 @@ func TestPlatformTxtCompilerCppExtraFlagsMissing(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
 		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"Missing boards.txt", "missing-boards.txt", ruleresult.NotRun, "boards.txt"},
+		{"Core reference", "core-reference", ruleresult.Skip, "[cC]ore reference"},
 		{"Property missing", "compiler-cpp-extra_flags-missing-platform.txt", ruleresult.Fail, ""},
 		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
 	}
@@ -568,6 +584,8 @@ func TestPlatformTxtCompilerSExtraFlagsMissing(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
 		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"Missing boards.txt", "missing-boards.txt", ruleresult.NotRun, "boards.txt"},
+		{"Core reference", "core-reference", ruleresult.Skip, "[cC]ore reference"},
 		{"Property missing", "compiler-S-extra_flags-missing-platform.txt", ruleresult.Fail, ""},
 		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
 	}
@@ -591,6 +609,8 @@ func TestPlatformTxtCompilerArExtraFlagsMissing(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
 		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"Missing boards.txt", "missing-boards.txt", ruleresult.NotRun, "boards.txt"},
+		{"Core reference", "core-reference", ruleresult.Skip, "[cC]ore reference"},
 		{"Property missing", "compiler-ar-extra_flags-missing-platform.txt", ruleresult.Fail, ""},
 		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
 	}
@@ -614,6 +634,8 @@ func TestPlatformTxtCompilerCElfExtraFlagsMissing(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
 		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"Missing boards.txt", "missing-boards.txt", ruleresult.NotRun, "boards.txt"},
+		{"Core reference", "core-reference", ruleresult.Skip, "[cC]ore reference"},
 		{"Property missing", "compiler-c-elf-extra_flags-missing-platform.txt", ruleresult.Fail, ""},
 		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
 	}
@@ -661,6 +683,8 @@ func TestPlatformTxtRecipeCOPatternMissing(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
 		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"Missing boards.txt", "missing-boards.txt", ruleresult.NotRun, "boards.txt"},
+		{"Core reference", "core-reference", ruleresult.Skip, "[cC]ore reference"},
 		{"Property missing", "recipe-c-o-pattern-missing-platform.txt", ruleresult.Fail, ""},
 		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
 	}
@@ -696,6 +720,8 @@ func TestPlatformTxtRecipeCppOPatternMissing(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
 		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"Missing boards.txt", "missing-boards.txt", ruleresult.NotRun, "boards.txt"},
+		{"Core reference", "core-reference", ruleresult.Skip, "[cC]ore reference"},
 		{"Property missing", "recipe-cpp-o-pattern-missing-platform.txt", ruleresult.Fail, ""},
 		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
 	}
@@ -731,6 +757,8 @@ func TestPlatformTxtRecipeSOPatternMissing(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
 		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"Missing boards.txt", "missing-boards.txt", ruleresult.NotRun, "boards.txt"},
+		{"Core reference", "core-reference", ruleresult.Skip, "[cC]ore reference"},
 		{"Property missing", "recipe-S-o-pattern-missing-platform.txt", ruleresult.Fail, ""},
 		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
 	}
@@ -766,6 +794,8 @@ func TestPlatformTxtRecipeArPatternMissing(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
 		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"Missing boards.txt", "missing-boards.txt", ruleresult.NotRun, "boards.txt"},
+		{"Core reference", "core-reference", ruleresult.Skip, "[cC]ore reference"},
 		{"Property missing", "recipe-ar-pattern-missing-platform.txt", ruleresult.Fail, ""},
 		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
 	}
@@ -801,6 +831,8 @@ func TestPlatformTxtRecipeCCombinePatternMissing(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
 		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"Missing boards.txt", "missing-boards.txt", ruleresult.NotRun, "boards.txt"},
+		{"Core reference", "core-reference", ruleresult.Skip, "[cC]ore reference"},
 		{"Property missing", "recipe-c-combine-pattern-missing-platform.txt", ruleresult.Fail, ""},
 		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
 	}
@@ -836,6 +868,8 @@ func TestPlatformTxtRecipeOutputTmpFileMissing(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
 		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"Missing boards.txt", "missing-boards.txt", ruleresult.NotRun, "boards.txt"},
+		{"Core reference", "core-reference", ruleresult.Skip, "[cC]ore reference"},
 		{"Property missing", "recipe-output-tmp_file-missing-platform.txt", ruleresult.Fail, ""},
 		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
 	}
@@ -859,6 +893,8 @@ func TestPlatformTxtRecipeOutputSaveFileMissing(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
 		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"Missing boards.txt", "missing-boards.txt", ruleresult.NotRun, "boards.txt"},
+		{"Core reference", "core-reference", ruleresult.Skip, "[cC]ore reference"},
 		{"Property missing", "recipe-output-save_file-missing-platform.txt", ruleresult.Fail, ""},
 		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
 	}
@@ -882,6 +918,8 @@ func TestPlatformTxtRecipeSizePatternMissing(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
 		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"Missing boards.txt", "missing-boards.txt", ruleresult.NotRun, "boards.txt"},
+		{"Core reference", "core-reference", ruleresult.Skip, "[cC]ore reference"},
 		{"Property missing", "recipe-size-pattern-missing-platform.txt", ruleresult.Fail, ""},
 		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
 	}
@@ -905,6 +943,8 @@ func TestPlatformTxtRecipeSizeRegexMissing(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
 		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"Missing boards.txt", "missing-boards.txt", ruleresult.NotRun, "boards.txt"},
+		{"Core reference", "core-reference", ruleresult.Skip, "[cC]ore reference"},
 		{"Property missing", "recipe-size-regex-missing-platform.txt", ruleresult.Fail, ""},
 		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
 	}
@@ -916,6 +956,8 @@ func TestPlatformTxtRecipeSizeRegexDataMissing(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
 		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"Missing boards.txt", "missing-boards.txt", ruleresult.NotRun, "boards.txt"},
+		{"Core reference", "core-reference", ruleresult.Skip, "[cC]ore reference"},
 		{"Property missing", "recipe-size-regex-data-missing-platform.txt", ruleresult.Fail, ""},
 		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
 	}

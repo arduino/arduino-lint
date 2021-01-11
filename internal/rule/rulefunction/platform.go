@@ -691,6 +691,14 @@ func PlatformTxtCompilerWarningFlagsNoneMissing() (result ruleresult.Type, outpu
 		return ruleresult.NotRun, "Couldn't load platform.txt"
 	}
 
+	if projectdata.BoardsTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load boards.txt"
+	}
+
+	if platformReferencesCore() {
+		return ruleresult.Skip, "Core reference used"
+	}
+
 	if schema.RequiredPropertyMissing("compiler\\.warning_flags\\.none", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
 		return ruleresult.Fail, ""
 	}
@@ -706,6 +714,14 @@ func PlatformTxtCompilerWarningFlagsDefaultMissing() (result ruleresult.Type, ou
 
 	if projectdata.PlatformTxtLoadError() != nil {
 		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if projectdata.BoardsTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load boards.txt"
+	}
+
+	if platformReferencesCore() {
+		return ruleresult.Skip, "Core reference used"
 	}
 
 	if schema.RequiredPropertyMissing("compiler\\.warning_flags\\.default", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
@@ -725,6 +741,14 @@ func PlatformTxtCompilerWarningFlagsMoreMissing() (result ruleresult.Type, outpu
 		return ruleresult.NotRun, "Couldn't load platform.txt"
 	}
 
+	if projectdata.BoardsTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load boards.txt"
+	}
+
+	if platformReferencesCore() {
+		return ruleresult.Skip, "Core reference used"
+	}
+
 	if schema.RequiredPropertyMissing("compiler\\.warning_flags\\.more", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
 		return ruleresult.Fail, ""
 	}
@@ -742,6 +766,14 @@ func PlatformTxtCompilerWarningFlagsAllMissing() (result ruleresult.Type, output
 		return ruleresult.NotRun, "Couldn't load platform.txt"
 	}
 
+	if projectdata.BoardsTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load boards.txt"
+	}
+
+	if platformReferencesCore() {
+		return ruleresult.Skip, "Core reference used"
+	}
+
 	if schema.RequiredPropertyMissing("compiler\\.warning_flags\\.all", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
 		return ruleresult.Fail, ""
 	}
@@ -757,6 +789,14 @@ func PlatformTxtCompilerOptimizationFlagsDebugMissing() (result ruleresult.Type,
 
 	if projectdata.PlatformTxtLoadError() != nil {
 		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if projectdata.BoardsTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load boards.txt"
+	}
+
+	if platformReferencesCore() {
+		return ruleresult.Skip, "Core reference used"
 	}
 
 	if !projectdata.PlatformTxt().ContainsKey("compiler.optimization_flags.release") {
@@ -780,6 +820,14 @@ func PlatformTxtCompilerOptimizationFlagsReleaseMissing() (result ruleresult.Typ
 		return ruleresult.NotRun, "Couldn't load platform.txt"
 	}
 
+	if projectdata.BoardsTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load boards.txt"
+	}
+
+	if platformReferencesCore() {
+		return ruleresult.Skip, "Core reference used"
+	}
+
 	if !projectdata.PlatformTxt().ContainsKey("compiler.optimization_flags.debug") {
 		return ruleresult.Skip, "Dependent property not present"
 	}
@@ -799,6 +847,14 @@ func PlatformTxtCompilerCExtraFlagsMissing() (result ruleresult.Type, output str
 
 	if projectdata.PlatformTxtLoadError() != nil {
 		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if projectdata.BoardsTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load boards.txt"
+	}
+
+	if platformReferencesCore() {
+		return ruleresult.Skip, "Core reference used"
 	}
 
 	if schema.RequiredPropertyMissing("compiler\\.c\\.extra_flags", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
@@ -839,6 +895,14 @@ func PlatformTxtCompilerCppExtraFlagsMissing() (result ruleresult.Type, output s
 		return ruleresult.NotRun, "Couldn't load platform.txt"
 	}
 
+	if projectdata.BoardsTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load boards.txt"
+	}
+
+	if platformReferencesCore() {
+		return ruleresult.Skip, "Core reference used"
+	}
+
 	if schema.RequiredPropertyMissing("compiler\\.cpp\\.extra_flags", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
 		return ruleresult.Fail, ""
 	}
@@ -875,6 +939,14 @@ func PlatformTxtCompilerSExtraFlagsMissing() (result ruleresult.Type, output str
 
 	if projectdata.PlatformTxtLoadError() != nil {
 		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if projectdata.BoardsTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load boards.txt"
+	}
+
+	if platformReferencesCore() {
+		return ruleresult.Skip, "Core reference used"
 	}
 
 	if schema.RequiredPropertyMissing("compiler\\.S\\.extra_flags", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
@@ -915,6 +987,14 @@ func PlatformTxtCompilerArExtraFlagsMissing() (result ruleresult.Type, output st
 		return ruleresult.NotRun, "Couldn't load platform.txt"
 	}
 
+	if projectdata.BoardsTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load boards.txt"
+	}
+
+	if platformReferencesCore() {
+		return ruleresult.Skip, "Core reference used"
+	}
+
 	if schema.RequiredPropertyMissing("compiler\\.ar\\.extra_flags", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
 		return ruleresult.Fail, ""
 	}
@@ -951,6 +1031,14 @@ func PlatformTxtCompilerCElfExtraFlagsMissing() (result ruleresult.Type, output 
 
 	if projectdata.PlatformTxtLoadError() != nil {
 		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if projectdata.BoardsTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load boards.txt"
+	}
+
+	if platformReferencesCore() {
+		return ruleresult.Skip, "Core reference used"
 	}
 
 	if schema.RequiredPropertyMissing("compiler\\.c\\.elf\\.extra_flags", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
@@ -1033,6 +1121,14 @@ func PlatformTxtRecipeCOPatternMissing() (result ruleresult.Type, output string)
 		return ruleresult.NotRun, "Couldn't load platform.txt"
 	}
 
+	if projectdata.BoardsTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load boards.txt"
+	}
+
+	if platformReferencesCore() {
+		return ruleresult.Skip, "Core reference used"
+	}
+
 	if schema.RequiredPropertyMissing("recipe\\.c\\.o\\.pattern", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
 		return ruleresult.Fail, ""
 	}
@@ -1090,6 +1186,14 @@ func PlatformTxtRecipeCppOPatternMissing() (result ruleresult.Type, output strin
 
 	if projectdata.PlatformTxtLoadError() != nil {
 		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if projectdata.BoardsTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load boards.txt"
+	}
+
+	if platformReferencesCore() {
+		return ruleresult.Skip, "Core reference used"
 	}
 
 	if schema.RequiredPropertyMissing("recipe\\.cpp\\.o\\.pattern", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
@@ -1151,6 +1255,14 @@ func PlatformTxtRecipeSOPatternMissing() (result ruleresult.Type, output string)
 		return ruleresult.NotRun, "Couldn't load platform.txt"
 	}
 
+	if projectdata.BoardsTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load boards.txt"
+	}
+
+	if platformReferencesCore() {
+		return ruleresult.Skip, "Core reference used"
+	}
+
 	if schema.RequiredPropertyMissing("recipe\\.S\\.o\\.pattern", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
 		return ruleresult.Fail, ""
 	}
@@ -1208,6 +1320,14 @@ func PlatformTxtRecipeArPatternMissing() (result ruleresult.Type, output string)
 
 	if projectdata.PlatformTxtLoadError() != nil {
 		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if projectdata.BoardsTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load boards.txt"
+	}
+
+	if platformReferencesCore() {
+		return ruleresult.Skip, "Core reference used"
 	}
 
 	if schema.RequiredPropertyMissing("recipe\\.ar\\.pattern", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
@@ -1269,6 +1389,14 @@ func PlatformTxtRecipeCCombinePatternMissing() (result ruleresult.Type, output s
 		return ruleresult.NotRun, "Couldn't load platform.txt"
 	}
 
+	if projectdata.BoardsTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load boards.txt"
+	}
+
+	if platformReferencesCore() {
+		return ruleresult.Skip, "Core reference used"
+	}
+
 	if schema.RequiredPropertyMissing("recipe\\.c\\.combine\\.pattern", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
 		return ruleresult.Fail, ""
 	}
@@ -1328,6 +1456,14 @@ func PlatformTxtRecipeOutputTmpFileMissing() (result ruleresult.Type, output str
 		return ruleresult.NotRun, "Couldn't load platform.txt"
 	}
 
+	if projectdata.BoardsTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load boards.txt"
+	}
+
+	if platformReferencesCore() {
+		return ruleresult.Skip, "Core reference used"
+	}
+
 	if schema.RequiredPropertyMissing("recipe\\.output\\.tmp_file", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
 		return ruleresult.Fail, ""
 	}
@@ -1364,6 +1500,14 @@ func PlatformTxtRecipeOutputSaveFileMissing() (result ruleresult.Type, output st
 
 	if projectdata.PlatformTxtLoadError() != nil {
 		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if projectdata.BoardsTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load boards.txt"
+	}
+
+	if platformReferencesCore() {
+		return ruleresult.Skip, "Core reference used"
 	}
 
 	if schema.RequiredPropertyMissing("recipe\\.output\\.save_file", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
@@ -1404,6 +1548,14 @@ func PlatformTxtRecipeSizePatternMissing() (result ruleresult.Type, output strin
 		return ruleresult.NotRun, "Couldn't load platform.txt"
 	}
 
+	if projectdata.BoardsTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load boards.txt"
+	}
+
+	if platformReferencesCore() {
+		return ruleresult.Skip, "Core reference used"
+	}
+
 	if schema.RequiredPropertyMissing("recipe\\.size\\.pattern", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
 		return ruleresult.Fail, ""
 	}
@@ -1442,6 +1594,14 @@ func PlatformTxtRecipeSizeRegexMissing() (result ruleresult.Type, output string)
 		return ruleresult.NotRun, "Couldn't load platform.txt"
 	}
 
+	if projectdata.BoardsTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load boards.txt"
+	}
+
+	if platformReferencesCore() {
+		return ruleresult.Skip, "Core reference used"
+	}
+
 	if schema.RequiredPropertyMissing("recipe\\.size\\.regex", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
 		return ruleresult.Fail, ""
 	}
@@ -1457,6 +1617,14 @@ func PlatformTxtRecipeSizeRegexDataMissing() (result ruleresult.Type, output str
 
 	if projectdata.PlatformTxtLoadError() != nil {
 		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if projectdata.BoardsTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load boards.txt"
+	}
+
+	if platformReferencesCore() {
+		return ruleresult.Skip, "Core reference used"
 	}
 
 	if schema.RequiredPropertyMissing("recipe\\.size\\.regex\\.data", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
@@ -1891,4 +2059,27 @@ func iDValuePatternMismatch(iDs []string, propertyNameQuery string, validationRe
 	}
 
 	return nonCompliantIDs
+}
+
+// platformReferencesCore checks whether all boards of the platform use core references.
+// See: https://arduino.github.io/arduino-cli/dev/platform-specification/#core-reference
+func platformReferencesCore() bool {
+	referencesCore := false // Default return value.
+	for _, boardID := range projectdata.BoardsTxt().FirstLevelKeys() {
+		if boardID != "menu" {
+			// It is a board ID.
+			boardProperties := projectdata.BoardsTxt().SubTree(boardID)
+			for _, key := range boardProperties.Keys() {
+				if key == "build.core" || strings.HasSuffix(key, ".build.core") {
+					if !strings.Contains(boardProperties.ExpandPropsInString(boardProperties.Get(key)), ":") {
+						// This board does not use a core reference.
+						return false
+					}
+					referencesCore = true
+				}
+			}
+		}
+	}
+
+	return referencesCore
 }
