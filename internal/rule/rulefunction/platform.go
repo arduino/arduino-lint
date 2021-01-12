@@ -699,7 +699,7 @@ func PlatformTxtCompilerWarningFlagsNoneMissing() (result ruleresult.Type, outpu
 		return ruleresult.Skip, "Core reference used"
 	}
 
-	if schema.RequiredPropertyMissing("compiler\\.warning_flags\\.none", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.RequiredPropertyMissing("compiler\\.warning_flags\\.none", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
 		return ruleresult.Fail, ""
 	}
 
@@ -724,7 +724,7 @@ func PlatformTxtCompilerWarningFlagsDefaultMissing() (result ruleresult.Type, ou
 		return ruleresult.Skip, "Core reference used"
 	}
 
-	if schema.RequiredPropertyMissing("compiler\\.warning_flags\\.default", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.RequiredPropertyMissing("compiler\\.warning_flags\\.default", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
 		return ruleresult.Fail, ""
 	}
 
@@ -749,7 +749,7 @@ func PlatformTxtCompilerWarningFlagsMoreMissing() (result ruleresult.Type, outpu
 		return ruleresult.Skip, "Core reference used"
 	}
 
-	if schema.RequiredPropertyMissing("compiler\\.warning_flags\\.more", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.RequiredPropertyMissing("compiler\\.warning_flags\\.more", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
 		return ruleresult.Fail, ""
 	}
 
@@ -774,7 +774,7 @@ func PlatformTxtCompilerWarningFlagsAllMissing() (result ruleresult.Type, output
 		return ruleresult.Skip, "Core reference used"
 	}
 
-	if schema.RequiredPropertyMissing("compiler\\.warning_flags\\.all", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+	if schema.RequiredPropertyMissing("compiler\\.warning_flags\\.all", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
 		return ruleresult.Fail, ""
 	}
 

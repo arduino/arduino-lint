@@ -3630,10 +3630,6 @@ var _arduinoPlatformTxtDefinitionsSchemaJson = []byte(`{
                 "required": [
                   "name",
                   "version",
-                  "compiler.warning_flags.none",
-                  "compiler.warning_flags.default",
-                  "compiler.warning_flags.more",
-                  "compiler.warning_flags.all",
                   "recipe.c.o.pattern",
                   "recipe.cpp.o.pattern",
                   "recipe.S.o.pattern",
@@ -3672,6 +3668,10 @@ var _arduinoPlatformTxtDefinitionsSchemaJson = []byte(`{
               },
               {
                 "required": [
+                  "compiler.warning_flags.none",
+                  "compiler.warning_flags.default",
+                  "compiler.warning_flags.more",
+                  "compiler.warning_flags.all",
                   "compiler.c.extra_flags",
                   "compiler.cpp.extra_flags",
                   "compiler.S.extra_flags",

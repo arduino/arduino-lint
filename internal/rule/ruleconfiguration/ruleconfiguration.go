@@ -1989,8 +1989,8 @@ var configurations = []Type{
 		DisableModes:     nil,
 		EnableModes:      []rulemode.Type{rulemode.Default},
 		InfoModes:        nil,
-		WarningModes:     nil,
-		ErrorModes:       []rulemode.Type{rulemode.Default},
+		WarningModes:     []rulemode.Type{rulemode.Default},
+		ErrorModes:       []rulemode.Type{rulemode.Strict},
 		RuleFunction:     rulefunction.PlatformTxtCompilerWarningFlagsNoneMissing,
 	},
 	{
@@ -2005,8 +2005,8 @@ var configurations = []Type{
 		DisableModes:     nil,
 		EnableModes:      []rulemode.Type{rulemode.Default},
 		InfoModes:        nil,
-		WarningModes:     nil,
-		ErrorModes:       []rulemode.Type{rulemode.Default},
+		WarningModes:     []rulemode.Type{rulemode.Default},
+		ErrorModes:       []rulemode.Type{rulemode.Strict},
 		RuleFunction:     rulefunction.PlatformTxtCompilerWarningFlagsDefaultMissing,
 	},
 	{
@@ -2021,8 +2021,8 @@ var configurations = []Type{
 		DisableModes:     nil,
 		EnableModes:      []rulemode.Type{rulemode.Default},
 		InfoModes:        nil,
-		WarningModes:     nil,
-		ErrorModes:       []rulemode.Type{rulemode.Default},
+		WarningModes:     []rulemode.Type{rulemode.Default},
+		ErrorModes:       []rulemode.Type{rulemode.Strict},
 		RuleFunction:     rulefunction.PlatformTxtCompilerWarningFlagsMoreMissing,
 	},
 	{
@@ -2037,8 +2037,8 @@ var configurations = []Type{
 		DisableModes:     nil,
 		EnableModes:      []rulemode.Type{rulemode.Default},
 		InfoModes:        nil,
-		WarningModes:     nil,
-		ErrorModes:       []rulemode.Type{rulemode.Default},
+		WarningModes:     []rulemode.Type{rulemode.Default},
+		ErrorModes:       []rulemode.Type{rulemode.Strict},
 		RuleFunction:     rulefunction.PlatformTxtCompilerWarningFlagsAllMissing,
 	},
 	{
