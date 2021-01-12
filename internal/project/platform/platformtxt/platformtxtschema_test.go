@@ -329,6 +329,19 @@ func TestPattern(t *testing.T) {
 		complianceLevel             compliancelevel.Type
 		assertion                   assert.BoolAssertionFunc
 	}{
+		{"version", "version", "1.0.0", compliancelevel.Permissive, assert.False},
+		{"version", "version", "1.0.0", compliancelevel.Specification, assert.False},
+		{"version", "version", "1.0.0", compliancelevel.Strict, assert.False},
+		{"version", "version", "1.0", compliancelevel.Permissive, assert.False},
+		{"version", "version", "1.0", compliancelevel.Specification, assert.True},
+		{"version", "version", "1.0", compliancelevel.Strict, assert.True},
+		{"version", "version", "{foo}", compliancelevel.Permissive, assert.False},
+		{"version", "version", "{foo}", compliancelevel.Specification, assert.False},
+		{"version", "version", "{foo}", compliancelevel.Strict, assert.False},
+		{"version", "version", "foo", compliancelevel.Permissive, assert.True},
+		{"version", "version", "foo", compliancelevel.Specification, assert.True},
+		{"version", "version", "foo", compliancelevel.Strict, assert.True},
+
 		{"recipe.c.o.pattern", "recipe\\.c\\.o\\.pattern", "foo {compiler.c.extra_flags} bar", compliancelevel.Permissive, assert.False},
 		{"recipe.c.o.pattern", "recipe\\.c\\.o\\.pattern", "foo {compiler.c.extra_flags} bar", compliancelevel.Specification, assert.False},
 		{"recipe.c.o.pattern", "recipe\\.c\\.o\\.pattern", "foo {compiler.c.extra_flags} bar", compliancelevel.Strict, assert.False},

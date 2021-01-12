@@ -927,7 +927,7 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                 "type": "string"
               },
               {
-                "pattern": "^[0-9]+$"
+                "pattern": "^([0-9]+)|({.+})$"
               }
             ]
           }
@@ -968,7 +968,7 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                 "type": "string"
               },
               {
-                "pattern": "^[0-9]+$"
+                "pattern": "^([0-9]+)|({.+})$"
               }
             ]
           }
@@ -1170,7 +1170,7 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                 "type": "string"
               },
               {
-                "pattern": "^0[xX][0-9a-fA-F]{4}$"
+                "pattern": "^(0[xX][0-9a-fA-F]{4})|({.+})$"
               }
             ]
           }
@@ -2603,7 +2603,14 @@ var _arduinoPlatformTxtDefinitionsSchemaJson = []byte(`{
                 "$ref": "#/definitions/propertiesObjects/version/base/object"
               },
               {
-                "$ref": "general-definitions-schema.json#/definitions/patternObjects/relaxedSemver"
+                "anyOf": [
+                  {
+                    "$ref": "general-definitions-schema.json#/definitions/patternObjects/relaxedSemver"
+                  },
+                  {
+                    "$ref": "general-definitions-schema.json#/definitions/patternObjects/containsPropertyReference"
+                  }
+                ]
               }
             ]
           }
@@ -2615,7 +2622,14 @@ var _arduinoPlatformTxtDefinitionsSchemaJson = []byte(`{
                 "$ref": "#/definitions/propertiesObjects/version/base/object"
               },
               {
-                "$ref": "general-definitions-schema.json#/definitions/patternObjects/semver"
+                "anyOf": [
+                  {
+                    "$ref": "general-definitions-schema.json#/definitions/patternObjects/semver"
+                  },
+                  {
+                    "$ref": "general-definitions-schema.json#/definitions/patternObjects/containsPropertyReference"
+                  }
+                ]
               }
             ]
           }
@@ -4356,6 +4370,10 @@ var _generalDefinitionsSchemaJson = []byte(`{
       "relaxedSemver": {
         "$comment": "https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string adjusted to also allow MAJOR.MINOR, MAJOR, and with unused non-capturing group syntax removed. For details, see https://go.bug.st/relaxed-semver",
         "pattern": "^(0|[1-9]\\d*)(\\.(0|[1-9]\\d*))?(\\.(0|[1-9]\\d*))?(-((0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(\\.(0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(\\+([0-9a-zA-Z-]+(\\.[0-9a-zA-Z-]+)*))?$"
+      },
+      "containsPropertyReference": {
+        "$comment": "https://arduino.github.io/arduino-cli/dev/platform-specification/#configuration-files-format",
+        "pattern": "{.+}"
       }
     }
   }

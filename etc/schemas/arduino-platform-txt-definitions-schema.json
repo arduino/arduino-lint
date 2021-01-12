@@ -62,7 +62,14 @@
                 "$ref": "#/definitions/propertiesObjects/version/base/object"
               },
               {
-                "$ref": "general-definitions-schema.json#/definitions/patternObjects/relaxedSemver"
+                "anyOf": [
+                  {
+                    "$ref": "general-definitions-schema.json#/definitions/patternObjects/relaxedSemver"
+                  },
+                  {
+                    "$ref": "general-definitions-schema.json#/definitions/patternObjects/containsPropertyReference"
+                  }
+                ]
               }
             ]
           }
@@ -74,7 +81,14 @@
                 "$ref": "#/definitions/propertiesObjects/version/base/object"
               },
               {
-                "$ref": "general-definitions-schema.json#/definitions/patternObjects/semver"
+                "anyOf": [
+                  {
+                    "$ref": "general-definitions-schema.json#/definitions/patternObjects/semver"
+                  },
+                  {
+                    "$ref": "general-definitions-schema.json#/definitions/patternObjects/containsPropertyReference"
+                  }
+                ]
               }
             ]
           }
