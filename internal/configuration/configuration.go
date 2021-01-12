@@ -1,9 +1,9 @@
-// This file is part of arduino-lint.
+// This file is part of Arduino Lint.
 //
 // Copyright 2020 ARDUINO SA (http://www.arduino.cc/)
 //
 // This software is released under the GNU General Public License version 3,
-// which covers the main part of arduino-lint.
+// which covers the main part of Arduino Lint.
 // The terms of this license can be found at:
 // https://www.gnu.org/licenses/gpl-3.0.en.html
 //
@@ -13,7 +13,7 @@
 // Arduino software without disclosing the source code of your own applications.
 // To purchase a commercial license, send an email to license@arduino.cc.
 
-// Package configuration handles the configuration of the arduino-lint tool.
+// Package configuration handles the configuration of the Arduino Lint tool.
 package configuration
 
 import (
@@ -205,7 +205,7 @@ func Version() string {
 
 var commit string
 
-// Commit returns the HEAD commit of the arduino-lint repository when the application was built.
+// Commit returns the HEAD commit of the Arduino Lint repository when the application was built.
 func Commit() string {
 	return commit
 }

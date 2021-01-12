@@ -6,10 +6,10 @@
 #
 # Usage:
 #
-# To install the latest version of arduino-lint:
+# To install the latest version of Arduino Lint:
 #    ./install.sh
 #
-# To pin a specific release of arduino-lint:
+# To pin a specific release of Arduino Lint:
 #    ./install.sh 0.9.0
 #
 

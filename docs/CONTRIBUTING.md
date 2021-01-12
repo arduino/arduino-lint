@@ -21,10 +21,10 @@ There are several ways you can get involved:
 
 ## Issue Reports
 
-Do you need help or have a question about using arduino-lint? Support requests should be made to the
+Do you need help or have a question about using Arduino Lint? Support requests should be made to the
 [Arduino forum](https://forum.arduino.cc/index.php?board=3.0).
 
-High quality bug reports and feature requests are valuable contributions to the arduino-lint project.
+High quality bug reports and feature requests are valuable contributions to the Arduino Lint project.
 
 ### Before reporting an issue
 
@@ -63,7 +63,7 @@ submitting a PR:
 - <a id="breaking"></a> If the PR contains a breaking change, please start the commit message and PR title with the
   string **[breaking]**. Don't forget to describe in the PR description what changes users might need to make in their
   workflow or application due to this PR. A breaking change is a change that forces users to change their command-line
-  invocations or parsing of the JSON formatted output when upgrading from an older version of arduino-lint.
+  invocations or parsing of the JSON formatted output when upgrading from an older version of Arduino Lint.
 - PR titles indirectly become part of the CHANGELOG so it's crucial to provide a good record of **what** change is being
   made in the title; **why** it was made will go in the PR description, along with
   [a link to a GitHub issue](https://docs.github.com/en/free-pro-team@latest/github/managing-your-work-on-github/linking-a-pull-request-to-an-issue)
@@ -76,7 +76,7 @@ submitting a PR:
 
 ### Development prerequisites
 
-To build arduino-lint from sources you need the following tools to be available in your local environment:
+To build Arduino Lint from sources you need the following tools to be available in your local environment:
 
 - [Go](https://golang.org/doc/install) version 1.14 or later
 - [Taskfile](https://taskfile.dev/#/installation) to help you run the most common tasks from the command line
@@ -123,7 +123,7 @@ To run only the Go unit tests, run:
 task go:test-unit
 ```
 
-By default, all tests for all arduino-lint's Go packages are run. To run unit tests for only one or more specific
+By default, all tests for all Arduino Lint's Go packages are run. To run unit tests for only one or more specific
 packages, you can set the `TARGETS` environment variable, e.g.:
 
 ```
@@ -144,11 +144,11 @@ TEST_REGEX='^TestFindProjects$' TARGETS=./internal/project task go:test-unit
 
 #### Integration tests
 
-Being a command line interface, arduino-lint is heavily interactive and it has to stay consistent in accepting the user
+Being a command line interface, Arduino Lint is heavily interactive and it has to stay consistent in accepting the user
 input and providing the expected output and proper exit codes.
 
 For these reasons, in addition to regular unit tests the project has a suite of integration tests that actually run
-arduino-lint in a different process and assess the options are correctly understood and the output is what we expect.
+`arduino-lint` in a different process and assess the options are correctly understood and the output is what we expect.
 
 ##### Running tests
 
@@ -227,7 +227,7 @@ https://arduino.github.io/arduino-lint/dev/
 #### Local development
 
 The documentation consists of static content written over several Markdown files under the `docs` subfolder of the
-arduino-lint repository, as well as the dynamically generated [command line reference](commands/arduino-lint.md).
+Arduino Lint repository, as well as the dynamically generated [command line reference](commands/arduino-lint.md).
 
 When working on the documentation, it is useful to be able to see the effect the changes will have on the generated
 documentation website. You can build the documentation website and serve it from your personal computer by running the
@@ -269,7 +269,7 @@ Checks are automatically run on every pull request to verify that documentation 
 
 #### Documentation publishing
 
-The arduino-lint git repository has a special branch called `gh-pages` that contains the generated HTML code for the
+The Arduino Lint git repository has a special branch called `gh-pages` that contains the generated HTML code for the
 documentation website. Every time a change is pushed to this special branch, GitHub automatically triggers a deployment
 to pull the change and publish a new version of the website. Do not open Pull Requests to push changes to the `gh-pages`
 branch; that will be done exclusively from the CI.

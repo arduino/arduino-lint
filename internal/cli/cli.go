@@ -1,9 +1,9 @@
-// This file is part of arduino-lint.
+// This file is part of Arduino Lint.
 //
 // Copyright 2020 ARDUINO SA (http://www.arduino.cc/)
 //
 // This software is released under the GNU General Public License version 3,
-// which covers the main part of arduino-lint.
+// which covers the main part of Arduino Lint.
 // The terms of this license can be found at:
 // https://www.gnu.org/licenses/gpl-3.0.en.html
 //
@@ -13,7 +13,7 @@
 // Arduino software without disclosing the source code of your own applications.
 // To purchase a commercial license, send an email to license@arduino.cc.
 
-// Package cli defines the arduino-lint command line interface.
+// Package cli defines the Arduino Lint command line interface.
 package cli
 
 import (
@@ -25,7 +25,7 @@ import (
 func Root() *cobra.Command {
 	rootCommand := &cobra.Command{
 		Short:                 "Linter for Arduino projects.",
-		Long:                  "arduino-lint checks for specification compliance and other common problems with Arduino projects",
+		Long:                  "Arduino Lint checks for specification compliance and other common problems with Arduino projects",
 		DisableFlagsInUseLine: true,
 		Use:                   "arduino-lint [FLAG]... [PROJECT_PATH]...\n\nLint project in PROJECT_PATH or current path if no PROJECT_PATH argument provided.",
 		Run:                   command.ArduinoLint,
