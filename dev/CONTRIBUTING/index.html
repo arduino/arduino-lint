@@ -40,7 +40,7 @@
     
     
       
-        <title>How to contribute - arduino-lint</title>
+        <title>How to contribute - Arduino Lint</title>
       
     
     
@@ -100,7 +100,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="https://arduino.github.io/arduino-lint/" title="arduino-lint" aria-label="arduino-lint" class="md-header-nav__button md-logo">
+        <a href="https://arduino.github.io/arduino-lint/" title="Arduino Lint" aria-label="Arduino Lint" class="md-header-nav__button md-logo">
           
             <img alt="logo" src="../img/icon_mac_light.png" width="24" height="24">
           
@@ -113,7 +113,7 @@
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           
             <span class="md-header-nav__topic">
-              arduino-lint
+              Arduino Lint
             </span>
             <span class="md-header-nav__topic">
               
@@ -192,12 +192,12 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="https://arduino.github.io/arduino-lint/" title="arduino-lint" class="md-nav__button md-logo">
+    <a href="https://arduino.github.io/arduino-lint/" title="Arduino Lint" class="md-nav__button md-logo">
       
         <img alt="logo" src="../img/icon_mac_light.png" width="48" height="48">
       
     </a>
-    arduino-lint
+    Arduino Lint
   </label>
   
     <div class="md-nav__source">
@@ -670,9 +670,9 @@
 </tbody>
 </table>
 <h2 id="issue-reports">Issue Reports<a class="headerlink" href="#issue-reports" title="Permanent link">&para;</a></h2>
-<p>Do you need help or have a question about using arduino-lint? Support requests should be made to the
+<p>Do you need help or have a question about using Arduino Lint? Support requests should be made to the
 <a href="https://forum.arduino.cc/index.php?board=3.0">Arduino forum</a>.</p>
-<p>High quality bug reports and feature requests are valuable contributions to the arduino-lint project.</p>
+<p>High quality bug reports and feature requests are valuable contributions to the Arduino Lint project.</p>
 <h3 id="before-reporting-an-issue">Before reporting an issue<a class="headerlink" href="#before-reporting-an-issue" title="Permanent link">&para;</a></h3>
 <ul>
 <li>Give the <a href="../installation/#nightly-builds">nightly build</a> a test drive to see if your issue was already resolved.</li>
@@ -707,7 +707,7 @@ submitting a PR:</p>
 <li><a id="breaking"></a> If the PR contains a breaking change, please start the commit message and PR title with the
   string <strong>[breaking]</strong>. Don't forget to describe in the PR description what changes users might need to make in their
   workflow or application due to this PR. A breaking change is a change that forces users to change their command-line
-  invocations or parsing of the JSON formatted output when upgrading from an older version of arduino-lint.</li>
+  invocations or parsing of the JSON formatted output when upgrading from an older version of Arduino Lint.</li>
 <li>PR titles indirectly become part of the CHANGELOG so it's crucial to provide a good record of <strong>what</strong> change is being
   made in the title; <strong>why</strong> it was made will go in the PR description, along with
   <a href="https://docs.github.com/en/free-pro-team@latest/github/managing-your-work-on-github/linking-a-pull-request-to-an-issue">a link to a GitHub issue</a>
@@ -719,7 +719,7 @@ submitting a PR:</p>
   failures that seem not related to the change you are making.</li>
 </ul>
 <h3 id="development-prerequisites">Development prerequisites<a class="headerlink" href="#development-prerequisites" title="Permanent link">&para;</a></h3>
-<p>To build arduino-lint from sources you need the following tools to be available in your local environment:</p>
+<p>To build Arduino Lint from sources you need the following tools to be available in your local environment:</p>
 <ul>
 <li><a href="https://golang.org/doc/install">Go</a> version 1.14 or later</li>
 <li><a href="https://taskfile.dev/#/installation">Taskfile</a> to help you run the most common tasks from the command line</li>
@@ -749,7 +749,7 @@ of the tests locally.</p>
 <p>To run only the Go unit tests, run:</p>
 <div class="highlight"><pre><span></span><code>task go:test-unit
 </code></pre></div>
-<p>By default, all tests for all arduino-lint's Go packages are run. To run unit tests for only one or more specific
+<p>By default, all tests for all Arduino Lint's Go packages are run. To run unit tests for only one or more specific
 packages, you can set the <code>TARGETS</code> environment variable, e.g.:</p>
 <div class="highlight"><pre><span></span><code>TARGETS=./internal/rule task go:test-unit
 </code></pre></div>
@@ -760,10 +760,10 @@ packages, you can set the <code>TARGETS</code> environment variable, e.g.:</p>
 <div class="highlight"><pre><span></span><code>TEST_REGEX=&#39;^TestFindProjects$&#39; TARGETS=./internal/project task go:test-unit
 </code></pre></div>
 <h4 id="integration-tests">Integration tests<a class="headerlink" href="#integration-tests" title="Permanent link">&para;</a></h4>
-<p>Being a command line interface, arduino-lint is heavily interactive and it has to stay consistent in accepting the user
+<p>Being a command line interface, Arduino Lint is heavily interactive and it has to stay consistent in accepting the user
 input and providing the expected output and proper exit codes.</p>
 <p>For these reasons, in addition to regular unit tests the project has a suite of integration tests that actually run
-arduino-lint in a different process and assess the options are correctly understood and the output is what we expect.</p>
+<code>arduino-lint</code> in a different process and assess the options are correctly understood and the output is what we expect.</p>
 <h5 id="running-tests">Running tests<a class="headerlink" href="#running-tests" title="Permanent link">&para;</a></h5>
 <p>After the software requirements have been installed, you should be able to run the tests with:</p>
 <div class="highlight"><pre><span></span><code>task test-integration
@@ -808,7 +808,7 @@ editors.</p>
 <a href="https://arduino.github.io/arduino-lint/dev/">https://arduino.github.io/arduino-lint/dev/</a></p>
 <h4 id="local-development">Local development<a class="headerlink" href="#local-development" title="Permanent link">&para;</a></h4>
 <p>The documentation consists of static content written over several Markdown files under the <code>docs</code> subfolder of the
-arduino-lint repository, as well as the dynamically generated <a href="../commands/arduino-lint/">command line reference</a>.</p>
+Arduino Lint repository, as well as the dynamically generated <a href="../commands/arduino-lint/">command line reference</a>.</p>
 <p>When working on the documentation, it is useful to be able to see the effect the changes will have on the generated
 documentation website. You can build the documentation website and serve it from your personal computer by running the
 command:</p>
@@ -833,7 +833,7 @@ misconfigured editors.</p>
 </code></pre></div>
 <p>Checks are automatically run on every pull request to verify that documentation is correctly formatted.</p>
 <h4 id="documentation-publishing">Documentation publishing<a class="headerlink" href="#documentation-publishing" title="Permanent link">&para;</a></h4>
-<p>The arduino-lint git repository has a special branch called <code>gh-pages</code> that contains the generated HTML code for the
+<p>The Arduino Lint git repository has a special branch called <code>gh-pages</code> that contains the generated HTML code for the
 documentation website. Every time a change is pushed to this special branch, GitHub automatically triggers a deployment
 to pull the change and publish a new version of the website. Do not open Pull Requests to push changes to the <code>gh-pages</code>
 branch; that will be done exclusively from the CI.</p>

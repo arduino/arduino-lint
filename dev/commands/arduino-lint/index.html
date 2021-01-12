@@ -40,7 +40,7 @@
     
     
       
-        <title>Command reference - arduino-lint</title>
+        <title>Command reference - Arduino Lint</title>
       
     
     
@@ -100,7 +100,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="https://arduino.github.io/arduino-lint/" title="arduino-lint" aria-label="arduino-lint" class="md-header-nav__button md-logo">
+        <a href="https://arduino.github.io/arduino-lint/" title="Arduino Lint" aria-label="Arduino Lint" class="md-header-nav__button md-logo">
           
             <img alt="logo" src="../../img/icon_mac_light.png" width="24" height="24">
           
@@ -113,7 +113,7 @@
         <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
           
             <span class="md-header-nav__topic">
-              arduino-lint
+              Arduino Lint
             </span>
             <span class="md-header-nav__topic">
               
@@ -192,12 +192,12 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="https://arduino.github.io/arduino-lint/" title="arduino-lint" class="md-nav__button md-logo">
+    <a href="https://arduino.github.io/arduino-lint/" title="Arduino Lint" class="md-nav__button md-logo">
       
         <img alt="logo" src="../../img/icon_mac_light.png" width="48" height="48">
       
     </a>
-    arduino-lint
+    Arduino Lint
   </label>
   
     <div class="md-nav__source">
@@ -391,10 +391,10 @@
                 <h2 id="arduino-lint">arduino-lint<a class="headerlink" href="#arduino-lint" title="Permanent link">&para;</a></h2>
 <p>Linter for Arduino projects.</p>
 <h3 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">&para;</a></h3>
-<p>arduino-lint checks for specification compliance and other common problems with Arduino projects</p>
+<p>Arduino Lint checks for specification compliance and other common problems with Arduino projects</p>
 <div class="highlight"><pre><span></span><code>arduino-lint [FLAG]... [PROJECT_PATH]...
 
-Run rules on PROJECT_PATH or current path if no PROJECT_PATH argument provided.
+Lint project in PROJECT_PATH or current path if no PROJECT_PATH argument provided.
 </code></pre></div>
 <h3 id="options">Options<a class="headerlink" href="#options" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code>      --compliance string        Configure how strict the tool is. Can be {strict|specification|permissive} (default &quot;specification&quot;)
@@ -404,8 +404,8 @@ Run rules on PROJECT_PATH or current path if no PROJECT_PATH argument provided.
                                  submit: Also run additional rules required to pass before a library is accepted for inclusion in the index.
                                  update: Also run additional rules required to pass before new releases of a library already in the index are accepted.
                                  false: Don&#39;t run any Library Manager-specific rules.
-      --project-type string      Only check projects of the specified type and their subprojects. Can be {sketch|library|platform|all}. (default &quot;all&quot;)
-      --recursive                Search path recursively for Arduino projects to check. Can be {true|false}.
+      --project-type string      Only lint projects of the specified type and their subprojects. Can be {sketch|library|platform|all}. (default &quot;all&quot;)
+      --recursive                Search path recursively for Arduino projects to lint. Can be {true|false}.
       --report-file string       Save a report on the rules to this file.
   -v, --verbose                  Show more information while running rules.
       --version                  Print version and timestamp of the build.
