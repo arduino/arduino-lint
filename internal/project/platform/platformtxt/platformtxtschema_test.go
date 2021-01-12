@@ -159,20 +159,20 @@ func TestRequired(t *testing.T) {
 		{"version", "version", compliancelevel.Specification, assert.True},
 		{"version", "version", compliancelevel.Strict, assert.True},
 
-		{"compiler.warning_flags.none", "compiler\\.warning_flags\\.none", compliancelevel.Permissive, assert.True},
-		{"compiler.warning_flags.none", "compiler\\.warning_flags\\.none", compliancelevel.Specification, assert.True},
+		{"compiler.warning_flags.none", "compiler\\.warning_flags\\.none", compliancelevel.Permissive, assert.False},
+		{"compiler.warning_flags.none", "compiler\\.warning_flags\\.none", compliancelevel.Specification, assert.False},
 		{"compiler.warning_flags.none", "compiler\\.warning_flags\\.none", compliancelevel.Strict, assert.True},
 
-		{"compiler.warning_flags.default", "compiler\\.warning_flags\\.default", compliancelevel.Permissive, assert.True},
-		{"compiler.warning_flags.default", "compiler\\.warning_flags\\.default", compliancelevel.Specification, assert.True},
+		{"compiler.warning_flags.default", "compiler\\.warning_flags\\.default", compliancelevel.Permissive, assert.False},
+		{"compiler.warning_flags.default", "compiler\\.warning_flags\\.default", compliancelevel.Specification, assert.False},
 		{"compiler.warning_flags.default", "compiler\\.warning_flags\\.default", compliancelevel.Strict, assert.True},
 
-		{"compiler.warning_flags.more", "compiler\\.warning_flags\\.more", compliancelevel.Permissive, assert.True},
-		{"compiler.warning_flags.more", "compiler\\.warning_flags\\.more", compliancelevel.Specification, assert.True},
+		{"compiler.warning_flags.more", "compiler\\.warning_flags\\.more", compliancelevel.Permissive, assert.False},
+		{"compiler.warning_flags.more", "compiler\\.warning_flags\\.more", compliancelevel.Specification, assert.False},
 		{"compiler.warning_flags.more", "compiler\\.warning_flags\\.more", compliancelevel.Strict, assert.True},
 
-		{"compiler.warning_flags.all", "compiler\\.warning_flags\\.all", compliancelevel.Permissive, assert.True},
-		{"compiler.warning_flags.all", "compiler\\.warning_flags\\.all", compliancelevel.Specification, assert.True},
+		{"compiler.warning_flags.all", "compiler\\.warning_flags\\.all", compliancelevel.Permissive, assert.False},
+		{"compiler.warning_flags.all", "compiler\\.warning_flags\\.all", compliancelevel.Specification, assert.False},
 		{"compiler.warning_flags.all", "compiler\\.warning_flags\\.all", compliancelevel.Strict, assert.True},
 
 		{"recipe.c.o.pattern", "recipe\\.c\\.o\\.pattern", compliancelevel.Permissive, assert.True},
