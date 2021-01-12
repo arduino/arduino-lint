@@ -13,6 +13,10 @@
       "relaxedSemver": {
         "$comment": "https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string adjusted to also allow MAJOR.MINOR, MAJOR, and with unused non-capturing group syntax removed. For details, see https://go.bug.st/relaxed-semver",
         "pattern": "^(0|[1-9]\\d*)(\\.(0|[1-9]\\d*))?(\\.(0|[1-9]\\d*))?(-((0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(\\.(0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(\\+([0-9a-zA-Z-]+(\\.[0-9a-zA-Z-]+)*))?$"
+      },
+      "containsPropertyReference": {
+        "$comment": "https://arduino.github.io/arduino-cli/dev/platform-specification/#configuration-files-format",
+        "pattern": "{.+}"
       }
     }
   }
