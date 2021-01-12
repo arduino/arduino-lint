@@ -209,6 +209,9 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                   "hide": {
                     "$ref": "#/definitions/propertiesObjects/boardIDHide/permissive/object"
                   },
+                  "menu": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDMenu/permissive/object"
+                  },
                   "serial.disableDTR": {
                     "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableDTR/permissive/object"
                   },
@@ -237,9 +240,6 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
               },
               {
                 "patternProperties": {
-                  "^menu\\.[^.]+\\.[^.]+$": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDMenuMenuIDOptionID/permissive/object"
-                  },
                   "^[vp]id\\.[0-9]+$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDXidN/permissive/object"
                   }
@@ -274,6 +274,9 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                   "hide": {
                     "$ref": "#/definitions/propertiesObjects/boardIDHide/specification/object"
                   },
+                  "menu": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDMenu/specification/object"
+                  },
                   "serial.disableDTR": {
                     "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableDTR/specification/object"
                   },
@@ -302,9 +305,6 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
               },
               {
                 "patternProperties": {
-                  "^menu\\.[^.]+\\.[^.]+$": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDMenuMenuIDOptionID/specification/object"
-                  },
                   "^[vp]id\\.[0-9]+$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDXidN/specification/object"
                   }
@@ -339,6 +339,9 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                   "hide": {
                     "$ref": "#/definitions/propertiesObjects/boardIDHide/strict/object"
                   },
+                  "menu": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDMenu/strict/object"
+                  },
                   "serial.disableDTR": {
                     "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableDTR/strict/object"
                   },
@@ -367,9 +370,6 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
               },
               {
                 "patternProperties": {
-                  "^menu\\.[^.]+\\.[^.]+$": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDMenuMenuIDOptionID/strict/object"
-                  },
                   "^[vp]id\\.[0-9]+$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDXidN/strict/object"
                   }
@@ -549,15 +549,130 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
           }
         }
       },
+      "boardIDMenu": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDMenu/base/object"
+              },
+              {
+                "patternProperties": {
+                  "^.+$": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDMenuMenuID/permissive/object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDMenu/base/object"
+              },
+              {
+                "patternProperties": {
+                  "^.+$": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDMenuMenuID/specification/object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDMenu/base/object"
+              },
+              {
+                "patternProperties": {
+                  ".+": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDMenuMenuID/strict/object"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "boardIDMenuMenuID": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDMenuMenuID/base/object"
+              },
+              {
+                "patternProperties": {
+                  "^.+$": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDMenuMenuIDOptionID/permissive/object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDMenuMenuID/base/object"
+              },
+              {
+                "patternProperties": {
+                  "^.+$": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDMenuMenuIDOptionID/specification/object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boardIDMenuMenuID/base/object"
+              },
+              {
+                "patternProperties": {
+                  ".+": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDMenuMenuIDOptionID/strict/object"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
       "boardIDMenuMenuIDOptionID": {
         "base": {
           "object": {
             "allOf": [
               {
-                "type": "string"
-              },
-              {
-                "minLength": 1
+                "type": "object"
               }
             ]
           }
@@ -567,6 +682,50 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
             "allOf": [
               {
                 "$ref": "#/definitions/propertiesObjects/boardIDMenuMenuIDOptionID/base/object"
+              },
+              {
+                "properties": {
+                  "build.board": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDBuildBoard/permissive/object"
+                  },
+                  "build.core": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDBuildCore/permissive/object"
+                  },
+                  "serial.disableDTR": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableDTR/permissive/object"
+                  },
+                  "serial.disableRTS": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableRTS/permissive/object"
+                  },
+                  "upload.maximum_size": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/permissive/object"
+                  },
+                  "upload.maximum_data_size": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/permissive/object"
+                  },
+                  "upload.protocol": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/permissive/object"
+                  },
+                  "upload.tool": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/permissive/object"
+                  },
+                  "upload.use_1200bps_touch": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/permissive/object"
+                  },
+                  "upload.wait_for_upload_port": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/permissive/object"
+                  }
+                }
+              },
+              {
+                "patternProperties": {
+                  "^[vp]id\\.[0-9]+$": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDXidN/permissive/object"
+                  }
+                }
+              },
+              {
+                "$ref": "#/definitions/propertyNamesObjects/permissive/object"
               }
             ]
           }
@@ -576,6 +735,50 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
             "allOf": [
               {
                 "$ref": "#/definitions/propertiesObjects/boardIDMenuMenuIDOptionID/base/object"
+              },
+              {
+                "properties": {
+                  "build.board": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDBuildBoard/specification/object"
+                  },
+                  "build.core": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDBuildCore/specification/object"
+                  },
+                  "serial.disableDTR": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableDTR/specification/object"
+                  },
+                  "serial.disableRTS": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableRTS/specification/object"
+                  },
+                  "upload.maximum_size": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/specification/object"
+                  },
+                  "upload.maximum_data_size": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/specification/object"
+                  },
+                  "upload.protocol": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/specification/object"
+                  },
+                  "upload.tool": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/specification/object"
+                  },
+                  "upload.use_1200bps_touch": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/specification/object"
+                  },
+                  "upload.wait_for_upload_port": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/specification/object"
+                  }
+                }
+              },
+              {
+                "patternProperties": {
+                  "^[vp]id\\.[0-9]+$": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDXidN/specification/object"
+                  }
+                }
+              },
+              {
+                "$ref": "#/definitions/propertyNamesObjects/specification/object"
               }
             ]
           }
@@ -585,6 +788,50 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
             "allOf": [
               {
                 "$ref": "#/definitions/propertiesObjects/boardIDMenuMenuIDOptionID/base/object"
+              },
+              {
+                "properties": {
+                  "build.board": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDBuildBoard/strict/object"
+                  },
+                  "build.core": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDBuildCore/strict/object"
+                  },
+                  "serial.disableDTR": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableDTR/strict/object"
+                  },
+                  "serial.disableRTS": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableRTS/strict/object"
+                  },
+                  "upload.maximum_size": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/strict/object"
+                  },
+                  "upload.maximum_data_size": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/strict/object"
+                  },
+                  "upload.protocol": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/strict/object"
+                  },
+                  "upload.tool": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/strict/object"
+                  },
+                  "upload.use_1200bps_touch": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/strict/object"
+                  },
+                  "upload.wait_for_upload_port": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/strict/object"
+                  }
+                }
+              },
+              {
+                "patternProperties": {
+                  "^[vp]id\\.[0-9]+$": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDXidN/strict/object"
+                  }
+                }
+              },
+              {
+                "$ref": "#/definitions/propertyNamesObjects/strict/object"
               }
             ]
           }
@@ -984,7 +1231,7 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
           "userExtraFlagsProperties": {
             "propertyNames": {
               "not": {
-                "pattern": "^compiler\\.((c)|(c\\.elf)|(S)|(cpp)|(ar)|(objcopy.eep)|(elf2hex))\\.extra_flags$"
+                "pattern": "^compiler\\.((c)|(c\\.elf)|(S)|(cpp)|(ar)|(objcopy\\.eep)|(elf2hex))\\.extra_flags$"
               }
             }
           }
@@ -1007,7 +1254,7 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
           "object": {
             "allOf": [
               {
-                "required": ["name", "build.core", "upload.tool"]
+                "required": ["name"]
               }
             ]
           }
@@ -1035,9 +1282,6 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
             "allOf": [
               {
                 "$ref": "#/definitions/requiredObjects/boardID/base/object"
-              },
-              {
-                "required": ["build.board", "upload.maximum_size", "upload.maximum_data_size"]
               }
             ]
           }

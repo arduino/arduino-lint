@@ -39,6 +39,7 @@ var validBoardsTxtRaw = []byte(`
 	nano.build.board=AVR_NANO
 	nano.build.core=arduino
 	nano.menu.cpu.atmega328=ATmega328P
+	nano.menu.cpu.atmega328.upload.maximum_size=30720
 `)
 
 func TestSchemaValid(t *testing.T) {
@@ -71,17 +72,25 @@ func TestMinLength(t *testing.T) {
 		{"foo.build.board", "foo/build\\.board", 1, compliancelevel.Specification},
 		{"foo.build.board", "foo/build\\.board", 1, compliancelevel.Strict},
 
+		{"foo.menu.bar.baz.build.board", "foo/menu/bar/baz/build\\.board", 1, compliancelevel.Permissive},
+		{"foo.menu.bar.baz.build.board", "foo/menu/bar/baz/build\\.board", 1, compliancelevel.Specification},
+		{"foo.menu.bar.baz.build.board", "foo/menu/bar/baz/build\\.board", 1, compliancelevel.Strict},
+
 		{"foo.build.core", "foo/build\\.core", 1, compliancelevel.Permissive},
 		{"foo.build.core", "foo/build\\.core", 1, compliancelevel.Specification},
 		{"foo.build.core", "foo/build\\.core", 1, compliancelevel.Strict},
 
-		{"foo.menu.bar.baz", "foo/menu\\.bar\\.baz", 1, compliancelevel.Permissive},
-		{"foo.menu.bar.baz", "foo/menu\\.bar\\.baz", 1, compliancelevel.Specification},
-		{"foo.menu.bar.baz", "foo/menu\\.bar\\.baz", 1, compliancelevel.Strict},
+		{"foo.menu.bar.baz.build.core", "foo/menu/bar/baz/build\\.core", 1, compliancelevel.Permissive},
+		{"foo.menu.bar.baz.build.core", "foo/menu/bar/baz/build\\.core", 1, compliancelevel.Specification},
+		{"foo.menu.bar.baz.build.core", "foo/menu/bar/baz/build\\.core", 1, compliancelevel.Strict},
 
 		{"foo.upload.tool", "foo/upload\\.tool", 1, compliancelevel.Permissive},
 		{"foo.upload.tool", "foo/upload\\.tool", 1, compliancelevel.Specification},
 		{"foo.upload.tool", "foo/upload\\.tool", 1, compliancelevel.Strict},
+
+		{"foo.menu.bar.baz.upload.tool", "foo/menu/bar/baz/upload\\.tool", 1, compliancelevel.Permissive},
+		{"foo.menu.bar.baz.upload.tool", "foo/menu/bar/baz/upload\\.tool", 1, compliancelevel.Specification},
+		{"foo.menu.bar.baz.upload.tool", "foo/menu/bar/baz/upload\\.tool", 1, compliancelevel.Strict},
 	}
 
 	// Test schema validation results with value length < minimum.
@@ -132,29 +141,9 @@ func TestRequired(t *testing.T) {
 		{"nano.name", "nano/name", compliancelevel.Specification, assert.True},
 		{"nano.name", "nano/name", compliancelevel.Strict, assert.True},
 
-		{"nano.upload.tool", "nano/upload\\.tool", compliancelevel.Permissive, assert.True},
-		{"nano.upload.tool", "nano/upload\\.tool", compliancelevel.Specification, assert.True},
-		{"nano.upload.tool", "nano/upload\\.tool", compliancelevel.Strict, assert.True},
-
-		{"nano.upload.maximum_size", "nano/upload\\.maximum_size", compliancelevel.Permissive, assert.False},
-		{"nano.upload.maximum_size", "nano/upload\\.maximum_size", compliancelevel.Specification, assert.False},
-		{"nano.upload.maximum_size", "nano/upload\\.maximum_size", compliancelevel.Strict, assert.True},
-
-		{"nano.upload.maximum_data_size", "nano/upload\\.maximum_data_size", compliancelevel.Permissive, assert.False},
-		{"nano.upload.maximum_data_size", "nano/upload\\.maximum_data_size", compliancelevel.Specification, assert.False},
-		{"nano.upload.maximum_data_size", "nano/upload\\.maximum_data_size", compliancelevel.Strict, assert.True},
-
-		{"nano.upload.protocol", "nano/upload\\.protocol", compliancelevel.Permissive, assert.False},
-		{"nano.upload.protocol", "nano/upload\\.protocol", compliancelevel.Specification, assert.False},
-		{"nano.upload.protocol", "nano/upload\\.protocol", compliancelevel.Strict, assert.False},
-
-		{"nano.build.board", "nano/build\\.board", compliancelevel.Permissive, assert.False},
-		{"nano.build.board", "nano/build\\.board", compliancelevel.Specification, assert.False},
-		{"nano.build.board", "nano/build\\.board", compliancelevel.Strict, assert.True},
-
-		{"nano.build.core", "nano/build\\.core", compliancelevel.Permissive, assert.True},
-		{"nano.build.core", "nano/build\\.core", compliancelevel.Specification, assert.True},
-		{"nano.build.core", "nano/build\\.core", compliancelevel.Strict, assert.True},
+		{"nano.upload.tool", "nano/upload\\.tool", compliancelevel.Permissive, assert.False},
+		{"nano.upload.tool", "nano/upload\\.tool", compliancelevel.Specification, assert.False},
+		{"nano.upload.tool", "nano/upload\\.tool", compliancelevel.Strict, assert.False},
 	}
 
 	for _, testTable := range testTables {
@@ -197,6 +186,16 @@ func TestEnum(t *testing.T) {
 		{"nano.serial.disableDTR", "nano/serial\\.disableDTR", "foo", compliancelevel.Specification, assert.True},
 		{"nano.serial.disableDTR", "nano/serial\\.disableDTR", "foo", compliancelevel.Strict, assert.True},
 
+		{"nano.menu.bar.baz.serial.disableDTR", "nano/menu/bar/baz/serial\\.disableDTR", "true", compliancelevel.Permissive, assert.False},
+		{"nano.menu.bar.baz.serial.disableDTR", "nano/menu/bar/baz/serial\\.disableDTR", "true", compliancelevel.Specification, assert.False},
+		{"nano.menu.bar.baz.serial.disableDTR", "nano/menu/bar/baz/serial\\.disableDTR", "true", compliancelevel.Strict, assert.False},
+		{"nano.menu.bar.baz.serial.disableDTR", "nano/menu/bar/baz/serial\\.disableDTR", "false", compliancelevel.Permissive, assert.False},
+		{"nano.menu.bar.baz.serial.disableDTR", "nano/menu/bar/baz/serial\\.disableDTR", "false", compliancelevel.Specification, assert.False},
+		{"nano.menu.bar.baz.serial.disableDTR", "nano/menu/bar/baz/serial\\.disableDTR", "false", compliancelevel.Strict, assert.False},
+		{"nano.menu.bar.baz.serial.disableDTR", "nano/menu/bar/baz/serial\\.disableDTR", "foo", compliancelevel.Permissive, assert.True},
+		{"nano.menu.bar.baz.serial.disableDTR", "nano/menu/bar/baz/serial\\.disableDTR", "foo", compliancelevel.Specification, assert.True},
+		{"nano.menu.bar.baz.serial.disableDTR", "nano/menu/bar/baz/serial\\.disableDTR", "foo", compliancelevel.Strict, assert.True},
+
 		{"nano.serial.disableRTS", "nano/serial\\.disableRTS", "true", compliancelevel.Permissive, assert.False},
 		{"nano.serial.disableRTS", "nano/serial\\.disableRTS", "true", compliancelevel.Specification, assert.False},
 		{"nano.serial.disableRTS", "nano/serial\\.disableRTS", "true", compliancelevel.Strict, assert.False},
@@ -206,6 +205,16 @@ func TestEnum(t *testing.T) {
 		{"nano.serial.disableRTS", "nano/serial\\.disableRTS", "foo", compliancelevel.Permissive, assert.True},
 		{"nano.serial.disableRTS", "nano/serial\\.disableRTS", "foo", compliancelevel.Specification, assert.True},
 		{"nano.serial.disableRTS", "nano/serial\\.disableRTS", "foo", compliancelevel.Strict, assert.True},
+
+		{"nano.menu.bar.baz.serial.disableRTS", "nano/menu/bar/baz/serial\\.disableRTS", "true", compliancelevel.Permissive, assert.False},
+		{"nano.menu.bar.baz.serial.disableRTS", "nano/menu/bar/baz/serial\\.disableRTS", "true", compliancelevel.Specification, assert.False},
+		{"nano.menu.bar.baz.serial.disableRTS", "nano/menu/bar/baz/serial\\.disableRTS", "true", compliancelevel.Strict, assert.False},
+		{"nano.menu.bar.baz.serial.disableRTS", "nano/menu/bar/baz/serial\\.disableRTS", "false", compliancelevel.Permissive, assert.False},
+		{"nano.menu.bar.baz.serial.disableRTS", "nano/menu/bar/baz/serial\\.disableRTS", "false", compliancelevel.Specification, assert.False},
+		{"nano.menu.bar.baz.serial.disableRTS", "nano/menu/bar/baz/serial\\.disableRTS", "false", compliancelevel.Strict, assert.False},
+		{"nano.menu.bar.baz.serial.disableRTS", "nano/menu/bar/baz/serial\\.disableRTS", "foo", compliancelevel.Permissive, assert.True},
+		{"nano.menu.bar.baz.serial.disableRTS", "nano/menu/bar/baz/serial\\.disableRTS", "foo", compliancelevel.Specification, assert.True},
+		{"nano.menu.bar.baz.serial.disableRTS", "nano/menu/bar/baz/serial\\.disableRTS", "foo", compliancelevel.Strict, assert.True},
 
 		{"nano.upload.use_1200bps_touch", "nano/upload\\.use_1200bps_touch", "true", compliancelevel.Permissive, assert.False},
 		{"nano.upload.use_1200bps_touch", "nano/upload\\.use_1200bps_touch", "true", compliancelevel.Specification, assert.False},
@@ -217,6 +226,16 @@ func TestEnum(t *testing.T) {
 		{"nano.upload.use_1200bps_touch", "nano/upload\\.use_1200bps_touch", "foo", compliancelevel.Specification, assert.True},
 		{"nano.upload.use_1200bps_touch", "nano/upload\\.use_1200bps_touch", "foo", compliancelevel.Strict, assert.True},
 
+		{"nano.menu.bar.baz.upload.use_1200bps_touch", "nano/menu/bar/baz/upload\\.use_1200bps_touch", "true", compliancelevel.Permissive, assert.False},
+		{"nano.menu.bar.baz.upload.use_1200bps_touch", "nano/menu/bar/baz/upload\\.use_1200bps_touch", "true", compliancelevel.Specification, assert.False},
+		{"nano.menu.bar.baz.upload.use_1200bps_touch", "nano/menu/bar/baz/upload\\.use_1200bps_touch", "true", compliancelevel.Strict, assert.False},
+		{"nano.menu.bar.baz.upload.use_1200bps_touch", "nano/menu/bar/baz/upload\\.use_1200bps_touch", "false", compliancelevel.Permissive, assert.False},
+		{"nano.menu.bar.baz.upload.use_1200bps_touch", "nano/menu/bar/baz/upload\\.use_1200bps_touch", "false", compliancelevel.Specification, assert.False},
+		{"nano.menu.bar.baz.upload.use_1200bps_touch", "nano/menu/bar/baz/upload\\.use_1200bps_touch", "false", compliancelevel.Strict, assert.False},
+		{"nano.menu.bar.baz.upload.use_1200bps_touch", "nano/menu/bar/baz/upload\\.use_1200bps_touch", "foo", compliancelevel.Permissive, assert.True},
+		{"nano.menu.bar.baz.upload.use_1200bps_touch", "nano/menu/bar/baz/upload\\.use_1200bps_touch", "foo", compliancelevel.Specification, assert.True},
+		{"nano.menu.bar.baz.upload.use_1200bps_touch", "nano/menu/bar/baz/upload\\.use_1200bps_touch", "foo", compliancelevel.Strict, assert.True},
+
 		{"nano.upload.wait_for_upload_port", "nano/upload\\.wait_for_upload_port", "true", compliancelevel.Permissive, assert.False},
 		{"nano.upload.wait_for_upload_port", "nano/upload\\.wait_for_upload_port", "true", compliancelevel.Specification, assert.False},
 		{"nano.upload.wait_for_upload_port", "nano/upload\\.wait_for_upload_port", "true", compliancelevel.Strict, assert.False},
@@ -226,6 +245,16 @@ func TestEnum(t *testing.T) {
 		{"nano.upload.wait_for_upload_port", "nano/upload\\.wait_for_upload_port", "foo", compliancelevel.Permissive, assert.True},
 		{"nano.upload.wait_for_upload_port", "nano/upload\\.wait_for_upload_port", "foo", compliancelevel.Specification, assert.True},
 		{"nano.upload.wait_for_upload_port", "nano/upload\\.wait_for_upload_port", "foo", compliancelevel.Strict, assert.True},
+
+		{"nano.menu.bar.baz.upload.wait_for_upload_port", "nano/menu/bar/baz/upload\\.wait_for_upload_port", "true", compliancelevel.Permissive, assert.False},
+		{"nano.menu.bar.baz.upload.wait_for_upload_port", "nano/menu/bar/baz/upload\\.wait_for_upload_port", "true", compliancelevel.Specification, assert.False},
+		{"nano.menu.bar.baz.upload.wait_for_upload_port", "nano/menu/bar/baz/upload\\.wait_for_upload_port", "true", compliancelevel.Strict, assert.False},
+		{"nano.menu.bar.baz.upload.wait_for_upload_port", "nano/menu/bar/baz/upload\\.wait_for_upload_port", "false", compliancelevel.Permissive, assert.False},
+		{"nano.menu.bar.baz.upload.wait_for_upload_port", "nano/menu/bar/baz/upload\\.wait_for_upload_port", "false", compliancelevel.Specification, assert.False},
+		{"nano.menu.bar.baz.upload.wait_for_upload_port", "nano/menu/bar/baz/upload\\.wait_for_upload_port", "false", compliancelevel.Strict, assert.False},
+		{"nano.menu.bar.baz.upload.wait_for_upload_port", "nano/menu/bar/baz/upload\\.wait_for_upload_port", "foo", compliancelevel.Permissive, assert.True},
+		{"nano.menu.bar.baz.upload.wait_for_upload_port", "nano/menu/bar/baz/upload\\.wait_for_upload_port", "foo", compliancelevel.Specification, assert.True},
+		{"nano.menu.bar.baz.upload.wait_for_upload_port", "nano/menu/bar/baz/upload\\.wait_for_upload_port", "foo", compliancelevel.Strict, assert.True},
 	}
 
 	for _, testTable := range testTables {
@@ -256,12 +285,26 @@ func TestPattern(t *testing.T) {
 		{"nano.upload.maximum_size", "nano/upload\\.maximum_size", "foo", compliancelevel.Specification, assert.True},
 		{"nano.upload.maximum_size", "nano/upload\\.maximum_size", "foo", compliancelevel.Strict, assert.True},
 
+		{"nano.menu.bar.baz.upload.maximum_size", "nano/menu/bar/baz/upload\\.maximum_size", "123", compliancelevel.Permissive, assert.False},
+		{"nano.menu.bar.baz.upload.maximum_size", "nano/menu/bar/baz/upload\\.maximum_size", "123", compliancelevel.Specification, assert.False},
+		{"nano.menu.bar.baz.upload.maximum_size", "nano/menu/bar/baz/upload\\.maximum_size", "123", compliancelevel.Strict, assert.False},
+		{"nano.menu.bar.baz.upload.maximum_size", "nano/menu/bar/baz/upload\\.maximum_size", "foo", compliancelevel.Permissive, assert.True},
+		{"nano.menu.bar.baz.upload.maximum_size", "nano/menu/bar/baz/upload\\.maximum_size", "foo", compliancelevel.Specification, assert.True},
+		{"nano.menu.bar.baz.upload.maximum_size", "nano/menu/bar/baz/upload\\.maximum_size", "foo", compliancelevel.Strict, assert.True},
+
 		{"nano.upload.maximum_data_size", "nano/upload\\.maximum_data_size", "123", compliancelevel.Permissive, assert.False},
 		{"nano.upload.maximum_data_size", "nano/upload\\.maximum_data_size", "123", compliancelevel.Specification, assert.False},
 		{"nano.upload.maximum_data_size", "nano/upload\\.maximum_data_size", "123", compliancelevel.Strict, assert.False},
 		{"nano.upload.maximum_data_size", "nano/upload\\.maximum_data_size", "foo", compliancelevel.Permissive, assert.True},
 		{"nano.upload.maximum_data_size", "nano/upload\\.maximum_data_size", "foo", compliancelevel.Specification, assert.True},
 		{"nano.upload.maximum_data_size", "nano/upload\\.maximum_data_size", "foo", compliancelevel.Strict, assert.True},
+
+		{"nano.menu.bar.baz.upload.maximum_data_size", "nano/menu/bar/baz/upload\\.maximum_data_size", "123", compliancelevel.Permissive, assert.False},
+		{"nano.menu.bar.baz.upload.maximum_data_size", "nano/menu/bar/baz/upload\\.maximum_data_size", "123", compliancelevel.Specification, assert.False},
+		{"nano.menu.bar.baz.upload.maximum_data_size", "nano/menu/bar/baz/upload\\.maximum_data_size", "123", compliancelevel.Strict, assert.False},
+		{"nano.menu.bar.baz.upload.maximum_data_size", "nano/menu/bar/baz/upload\\.maximum_data_size", "foo", compliancelevel.Permissive, assert.True},
+		{"nano.menu.bar.baz.upload.maximum_data_size", "nano/menu/bar/baz/upload\\.maximum_data_size", "foo", compliancelevel.Specification, assert.True},
+		{"nano.menu.bar.baz.upload.maximum_data_size", "nano/menu/bar/baz/upload\\.maximum_data_size", "foo", compliancelevel.Strict, assert.True},
 
 		{"nano.vid.0", "nano/vid\\.0", "0xABCD", compliancelevel.Permissive, assert.False},
 		{"nano.vid.0", "nano/vid\\.0", "0xABCD", compliancelevel.Specification, assert.False},
@@ -270,12 +313,26 @@ func TestPattern(t *testing.T) {
 		{"nano.vid.0", "nano/vid\\.0", "foo", compliancelevel.Specification, assert.True},
 		{"nano.vid.0", "nano/vid\\.0", "foo", compliancelevel.Strict, assert.True},
 
+		{"nano.menu.bar.baz.vid.0", "nano/menu/bar/baz/vid\\.0", "0xABCD", compliancelevel.Permissive, assert.False},
+		{"nano.menu.bar.baz.vid.0", "nano/menu/bar/baz/vid\\.0", "0xABCD", compliancelevel.Specification, assert.False},
+		{"nano.menu.bar.baz.vid.0", "nano/menu/bar/baz/vid\\.0", "0xABCD", compliancelevel.Strict, assert.False},
+		{"nano.menu.bar.baz.vid.0", "nano/menu/bar/baz/vid\\.0", "foo", compliancelevel.Permissive, assert.True},
+		{"nano.menu.bar.baz.vid.0", "nano/menu/bar/baz/vid\\.0", "foo", compliancelevel.Specification, assert.True},
+		{"nano.menu.bar.baz.vid.0", "nano/menu/bar/baz/vid\\.0", "foo", compliancelevel.Strict, assert.True},
+
 		{"nano.pid.0", "nano/pid\\.0", "0xABCD", compliancelevel.Permissive, assert.False},
 		{"nano.pid.0", "nano/pid\\.0", "0xABCD", compliancelevel.Specification, assert.False},
 		{"nano.pid.0", "nano/pid\\.0", "0xABCD", compliancelevel.Strict, assert.False},
 		{"nano.pid.0", "nano/pid\\.0", "foo", compliancelevel.Permissive, assert.True},
 		{"nano.pid.0", "nano/pid\\.0", "foo", compliancelevel.Specification, assert.True},
 		{"nano.pid.0", "nano/pid\\.0", "foo", compliancelevel.Strict, assert.True},
+
+		{"nano.menu.bar.baz.pid.0", "nano/menu/bar/baz/pid\\.0", "0xABCD", compliancelevel.Permissive, assert.False},
+		{"nano.menu.bar.baz.pid.0", "nano/menu/bar/baz/pid\\.0", "0xABCD", compliancelevel.Specification, assert.False},
+		{"nano.menu.bar.baz.pid.0", "nano/menu/bar/baz/pid\\.0", "0xABCD", compliancelevel.Strict, assert.False},
+		{"nano.menu.bar.baz.pid.0", "nano/menu/bar/baz/pid\\.0", "foo", compliancelevel.Permissive, assert.True},
+		{"nano.menu.bar.baz.pid.0", "nano/menu/bar/baz/pid\\.0", "foo", compliancelevel.Specification, assert.True},
+		{"nano.menu.bar.baz.pid.0", "nano/menu/bar/baz/pid\\.0", "foo", compliancelevel.Strict, assert.True},
 	}
 
 	for _, testTable := range testTables {
@@ -325,6 +382,10 @@ func TestPropertyNames(t *testing.T) {
 		{"nano.compiler.elf2hex.extra_flags", "nano/compiler\\.elf2hex\\.extra_flags", compliancelevel.Permissive, assert.False},
 		{"nano.compiler.elf2hex.extra_flags", "nano/compiler\\.elf2hex\\.extra_flags", compliancelevel.Specification, assert.False},
 		{"nano.compiler.elf2hex.extra_flags", "nano/compiler\\.elf2hex\\.extra_flags", compliancelevel.Strict, assert.True},
+
+		{"nano.menu.foo.bar.compiler.c.extra_flags", "nano/menu/foo/bar/compiler\\.c\\.extra_flags", compliancelevel.Permissive, assert.False},
+		{"nano.menu.foo.bar.compiler.c.extra_flags", "nano/menu/foo/bar/compiler\\.c\\.extra_flags", compliancelevel.Specification, assert.False},
+		{"nano.menu.foo.bar.compiler.c.extra_flags", "nano/menu/foo/bar/compiler\\.c\\.extra_flags", compliancelevel.Strict, assert.True},
 	}
 
 	for _, testTable := range testTables {
