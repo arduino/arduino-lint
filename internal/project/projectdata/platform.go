@@ -44,7 +44,7 @@ func InitializeForPlatform(project project.Type) {
 
 	programmersTxt, programmersTxtLoadError = programmerstxt.Properties(ProjectPath())
 	if programmersTxtLoadError != nil {
-		logrus.Errorf("Error loading programmers.txt from %s: %s", project.Path, programmersTxtLoadError)
+		logrus.Tracef("Error loading programmers.txt from %s: %s", project.Path, programmersTxtLoadError)
 		programmersTxtSchemaValidationResult = nil
 	} else {
 		programmersTxtSchemaValidationResult = programmerstxt.Validate(programmersTxt)
@@ -56,7 +56,7 @@ func InitializeForPlatform(project project.Type) {
 
 	platformTxt, platformTxtLoadError = platformtxt.Properties(ProjectPath())
 	if platformTxtLoadError != nil {
-		logrus.Errorf("Error loading platform.txt from %s: %s", project.Path, platformTxtLoadError)
+		logrus.Tracef("Error loading platform.txt from %s: %s", project.Path, platformTxtLoadError)
 		platformTxtSchemaValidationResult = nil
 		platformTxtToolNames = nil
 	} else {

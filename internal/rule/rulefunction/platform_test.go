@@ -25,12 +25,14 @@ import (
 	"github.com/arduino/arduino-lint/internal/project/projecttype"
 	"github.com/arduino/arduino-lint/internal/rule/ruleresult"
 	"github.com/arduino/go-paths-helper"
+	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 )
 
 var platformTestDataPath *paths.Path
 
 func init() {
+	logrus.SetLevel(logrus.FatalLevel)
 	workingDirectory, err := paths.Getwd()
 	if err != nil {
 		panic(err)
