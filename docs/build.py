@@ -1,9 +1,9 @@
-# This file is part of arduino-lint.
+# This file is part of Arduino Lint.
 
 # Copyright 2020 ARDUINO SA (http://www.arduino.cc/)
 
 # This software is released under the GNU General Public License version 3,
-# which covers the main part of arduino-lint.
+# which covers the main part of Arduino Lint.
 # The terms of this license can be found at:
 # https://www.gnu.org/licenses/gpl-3.0.en.html
 
@@ -21,37 +21,37 @@ import subprocess
 import click
 from git import Repo
 
-# In order to provide support for multiple arduino-lint releases, Documentation is versioned so that visitors can select
+# In order to provide support for multiple Arduino Lint releases, Documentation is versioned so that visitors can select
 # which version of the documentation website should be displayed. Unfortunately this feature isn't provided by GitHub
 # pages or MkDocs, so we had to implement it on top of the generation process.
 #
 # Before delving into the details of the generation process, here follow some requirements that were established to
 # provide versioned documentation:
 #
-# - A special version of the documentation called `dev` is provided to reflect the status of the arduino-lint on the
+# - A special version of the documentation called `dev` is provided to reflect the status of Arduino Lint on the
 #   `main` branch - this includes unreleased features and bugfixes.
-# - Docs are versioned after the minor version of an arduino-lint release. For example, arduino-lint `0.99.1` and
+# - Docs are versioned after the minor version of an Arduino Lint release. For example, Arduino Lint `0.99.1` and
 #   `0.99.2` will be both covered by documentation version `0.99`.
 # - The landing page of the documentation website will automatically redirect visitors to the documentation of the most
-#   recently released version of arduino-lint.
+#   recently released version of Arduino Lint.
 #
 # To implement the requirements above, the execution of MkDocs is wrapped using a CLI tool called Mike
 # (https://github.com/jimporter/mike) that does a few things for us:
 #
-# - It runs MkDocs targeting subfolders named after the arduino-lint version, e.g. documentation for version `0.10.1`
+# - It runs MkDocs targeting subfolders named after the Arduino Lint version, e.g. documentation for version `0.10.1`
 #   can be found under the folder `0.10`.
 # - It injects an HTML control into the documentation website that lets visitors choose which version of the docs to
 #   browse from a dropdown list.
 # - It provides a redirect to a version we decide when visitors hit the landing page of the documentation website.
 # - It pushes generated contents to the `gh-pages` branch.
 #
-# In order to avoid unwanted changes to the public website hosting the arduino-lint documentation, only Mike is allowed
+# In order to avoid unwanted changes to the public website hosting the Arduino Lint documentation, only Mike is allowed
 # to push changes to the `gh-pages` branch, and this only happens from within the CI, in the "Publish documentation"
 # workflow: https://github.com/arduino/arduino-lint/blob/main/.github/workflows/publish-docs.yml
 #
-# The CI is responsible for guessing which version of arduino-lint we're building docs for, so that generated content
+# The CI is responsible for guessing which version of Arduino Lint we're building docs for, so that generated content
 # will be stored in the appropriate section of the documentation website. Because this guessing might be fairly complex,
-# the logic is implemented in this Python script. The script will determine the version of arduino-lint that was
+# the logic is implemented in this Python script. The script will determine the version of Arduino Lint that was
 # modified in the current commit (either `dev` or an official, numbered release) and whether the redirect to the latest
 # version that happens on the landing page should be updated or not.
 

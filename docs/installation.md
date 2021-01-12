@@ -3,7 +3,7 @@
 The script requires `sh`, which is always available on Linux and macOS. `sh` is not available by default on Windows. The
 script can be run on Windows by installing [Git for Windows](https://gitforwindows.org/), then running it from Git Bash.
 
-This script will install the latest version of arduino-lint to `$PWD/bin`:
+This script will install the latest version of Arduino Lint to `$PWD/bin`:
 
 ```
 curl -fsSL https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/install.sh | sh
@@ -15,10 +15,10 @@ If you want to target a different directory, for example `~/local/bin`, set the 
 curl -fsSL https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/install.sh | BINDIR=~/local/bin sh
 ```
 
-If you would like to use the `arduino-lint` command from any location, install arduino-lint to a directory already in
-your `PATH` or add the arduino-lint installation path to your `PATH` environment variable.
+If you would like to use the `arduino-lint` command from any location, install Arduino Lint to a directory already in
+your `PATH` or add the Arduino Lint installation path to your `PATH` environment variable.
 
-If you want to download a specific arduino-lint version, for example `0.9.0` or `nightly-latest`, pass the version
+If you want to download a specific Arduino Lint version, for example `0.9.0` or `nightly-latest`, pass the version
 number as a parameter like this:
 
 ```
@@ -30,7 +30,7 @@ curl -fsSL https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/insta
 Pre-built binaries for all the supported platforms are available for download from the links below.
 
 If you would like to use the `arduino-lint` command from any location, extract the downloaded file to a directory
-already in your `PATH` or add the arduino-lint installation path to your `PATH` environment variable.
+already in your `PATH` or add the Arduino Lint installation path to your `PATH` environment variable.
 
 #### Latest release
 
@@ -81,5 +81,5 @@ Checksums for the nightly builds are available at
 
 ### Build from source
 
-If you’re familiar with Golang or if you want to contribute to the project, you will probably build arduino-lint locally
+If you’re familiar with Golang or if you want to contribute to the project, you will probably build Arduino Lint locally
 with your Go toolchain. See the ["How to contribute"](CONTRIBUTING.md#building-the-source-code) page for instructions.

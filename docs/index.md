@@ -1,4 +1,4 @@
-**arduino-lint** is a command line tool that checks for common problems with [Arduino](https://www.arduino.cc/)
+**Arduino Lint** is a command line tool that checks for common problems with [Arduino](https://www.arduino.cc/)
 projects.
 
 Its focus is on the structure, metadata, and configuration of Arduino projects, rather than the code. Rules cover
@@ -18,7 +18,7 @@ arduino-lint
 
 This will automatically detect the project type and check it against the relevant rules.
 
-The default configuration of **arduino-lint** provides for the most common use case, but you have the option of changing
+The default configuration of **Arduino Lint** provides for the most common use case, but you have the option of changing
 settings via [command line flags](commands/arduino-lint.md):
 
 ### Compliance setting
@@ -42,7 +42,7 @@ accepted by this flag are:
 updates of Arduino libraries. In order to be accepted for inclusion in Library Manager, a library is required to meet
 [some requirements](https://github.com/arduino/Arduino/wiki/Library-Manager-FAQ).
 
-**arduino-lint** provides checks for these requirements as well, controlled by the `--library-manager` flag.
+**Arduino Lint** provides checks for these requirements as well, controlled by the `--library-manager` flag.
 
 The Library Manager submission-specific rules are enabled via `--library-manager submit`. Even if your library isn't yet
 ready to be added to Library Manager, it's a good idea to use this setting to ensure no incompatibilities are
@@ -54,11 +54,11 @@ tell you whether your library is compliant with these rules.
 
 ### Integration
 
-The `--format` flag configures the format of **arduino-lint**'s output. The default `--format text` setting provides
-human readable output. For automation or integration with other tools, the machine readable output provided by
-`--format json` may be more convenient. This setting exposes every detail of the rules that were applied.
+The `--format` flag configures the format of `arduino-lint`'s output. The default `--format text` setting provides human
+readable output. For automation or integration with other tools, the machine readable output provided by `--format json`
+may be more convenient. This setting exposes every detail of the rules that were applied.
 
-The `--report-file` flag causes **arduino-lint** to write the JSON output to the specified file.
+The `--report-file` flag causes `arduino-lint` to write the JSON output to the specified file.
 
 ### Environment variables
 
@@ -72,7 +72,7 @@ Additional configuration options intended for internal use or development can be
 
 ## Continuous integration
 
-**arduino-lint** would be a great addition to your
+**Arduino Lint** would be a great addition to your
 [continuous integration](https://en.wikipedia.org/wiki/Continuous_integration) system. Running the tool after each
 change to the project can allow you to identify any problems that were introduced.
 
@@ -81,11 +81,11 @@ This is easily done by using the `arduino/arduino-lint-action`
 https://github.com/arduino/arduino-lint-action
 
 Add [a simple workflow file](https://github.com/arduino/arduino-lint-action#usage) to the repository of your Arduino
-project and GitHub will automatically run arduino-lint on every pull request and push.
+project and GitHub will automatically run Arduino Lint on every pull request and push.
 
 ## Support and feedback
 
-You can discuss or get assistance with using **arduino-lint** on the
+You can discuss or get assistance with using **Arduino Lint** on the
 [Arduino Forum](https://forum.arduino.cc/index.php?board=3.0).
 
 Feedback is welcome! Please submit feature requests or bug reports to the

@@ -1,5 +1,5 @@
 # Project information
-site_name: arduino-lint
+site_name: Arduino Lint
 site_description: Tool to check for problems with Arduino projects
 site_url: https://arduino.github.io/arduino-lint/
 

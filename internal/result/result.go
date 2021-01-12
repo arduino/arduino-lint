@@ -1,9 +1,9 @@
-// This file is part of arduino-lint.
+// This file is part of Arduino Lint.
 //
 // Copyright 2020 ARDUINO SA (http://www.arduino.cc/)
 //
 // This software is released under the GNU General Public License version 3,
-// which covers the main part of arduino-lint.
+// which covers the main part of Arduino Lint.
 // The terms of this license can be found at:
 // https://www.gnu.org/licenses/gpl-3.0.en.html
 //
@@ -42,7 +42,7 @@ type Type struct {
 	Summary       summaryReportType           `json:"summary"`
 }
 
-// toolConfigurationReportType is the type for the arduino-lint tool configuration.
+// toolConfigurationReportType is the type for the Arduino Lint tool configuration.
 type toolConfigurationReportType struct {
 	Paths       paths.PathList `json:"paths"`
 	ProjectType string         `json:"projectType"`
