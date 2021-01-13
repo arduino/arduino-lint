@@ -1,0 +1,135 @@
+name: Test install script
+
+on:
+  push:
+    paths:
+      - ".github/workflows/test-install.yml"
+      - "etc/install.sh"
+  pull_request:
+    paths:
+      - ".github/workflows/test-install.yml"
+      - "etc/install.sh"
+  schedule:
+    # Run every day at 03:00 UTC to catch breakage caused by external events
+    - cron: "0 3 * * *"
+  # workflow_dispatch event allows the workflow to be triggered manually.
+  # See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows#workflow_dispatch
+  workflow_dispatch:
+
+env:
+  TOOL_NAME: arduino-lint # The executable's file name
+
+jobs:
+  default:
+    strategy:
+      fail-fast: false
+
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout local repository
+        uses: actions/checkout@v2
+
+      - name: Run script with defaults
+        shell: sh
+        run: |
+          "${{ github.workspace }}/etc/install.sh"
+
+      - name: Verify installation
+        shell: bash
+        run: |
+          "${PWD}/bin/${{ env.TOOL_NAME }}" --version
+
+  bindir:
+    strategy:
+      fail-fast: false
+
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Set install path environment variable
+        shell: bash
+        run: |
+          # See: https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
+          echo "BINDIR=${{ runner.temp }}/custom-installation-folder" >> "$GITHUB_ENV"
+
+      - name: Checkout local repository
+        uses: actions/checkout@v2
+
+      - name: Run script with custom install location
+        shell: sh
+        run: |
+          mkdir -p "${{ env.BINDIR }}"
+          "${{ github.workspace }}/etc/install.sh"
+
+      - name: Verify installation
+        shell: bash
+        run: |
+          "${{ env.BINDIR }}/${{ env.TOOL_NAME }}" --version
+
+  version:
+    strategy:
+      fail-fast: false
+
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+
+    runs-on: ${{ matrix.os }}
+
+    env:
+      VERSION: "1.0.0"
+
+    steps:
+      - name: Checkout local repository
+        uses: actions/checkout@v2
+
+      - name: Run script with version argument
+        shell: sh
+        run: |
+          "${{ github.workspace }}/etc/install.sh" "${{ env.VERSION }}"
+
+      - name: Verify installation
+        shell: bash
+        run: |
+          "${PWD}/bin/${{ env.TOOL_NAME }}" --version | grep --fixed-strings "${{ env.VERSION }}"
+
+  nightly:
+    strategy:
+      fail-fast: false
+
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout local repository
+        uses: actions/checkout@v2
+
+      - name: Run script with nightly build version argument
+        shell: sh
+        run: |
+          "${{ github.workspace }}/etc/install.sh" "nightly-latest"
+
+      - name: Verify installation
+        shell: bash
+        run: |
+          "${PWD}/bin/${{ env.TOOL_NAME }}" --version | grep "^nightly-"
