@@ -28,15 +28,20 @@ import (
 
 // SketchNameMismatch checks for mismatch between sketch folder name and primary file name.
 func SketchNameMismatch() (result ruleresult.Type, output string) {
-	for extension := range globals.MainFileValidExtensions {
-		validPrimarySketchFilePath := projectdata.ProjectPath().Join(projectdata.ProjectPath().Base() + extension)
-		exist, err := validPrimarySketchFilePath.ExistCheck()
-		if err != nil {
-			panic(err)
-		}
+	primarySketchFilePrefix := projectdata.ProjectPath().Base()
 
-		if exist {
-			return ruleresult.Pass, ""
+	directoryListing, err := projectdata.ProjectPath().ReadDir()
+	if err != nil {
+		panic(err)
+	}
+	directoryListing.FilterOutDirs()
+
+	for _, filePath := range directoryListing {
+		for extension := range globals.MainFileValidExtensions {
+			if filePath.Base() == primarySketchFilePrefix+extension {
+				// There was a case-sensitive match (paths package's Exist() is not always case-sensitive, so can't be used here).
+				return ruleresult.Pass, ""
+			}
 		}
 	}
 

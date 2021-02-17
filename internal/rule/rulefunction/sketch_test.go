@@ -64,7 +64,8 @@ func checkSketchRuleFunction(ruleFunction Type, testTables []sketchRuleFunctionT
 func TestSketchNameMismatch(t *testing.T) {
 	testTables := []sketchRuleFunctionTestTable{
 		{"Valid", "Valid", ruleresult.Pass, ""},
-		{"Mismatch", "NameMismatch", ruleresult.Fail, ""},
+		{"Name Mismatch", "NameMismatch", ruleresult.Fail, ""},
+		{"Case Mismatch", "CaseMismatch", ruleresult.Fail, ""},
 	}
 
 	checkSketchRuleFunction(SketchNameMismatch, testTables, t)
