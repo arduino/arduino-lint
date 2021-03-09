@@ -35,7 +35,7 @@ type Type func() (result ruleresult.Type, output string)
 // MissingReadme checks if the project has a readme that will be recognized by GitHub.
 func MissingReadme() (result ruleresult.Type, output string) {
 	// https://github.com/github/markup/blob/master/README.md
-	readmeRegexp := regexp.MustCompile(`(?i)^readme\.(markdown)|(mdown)|(mkdn)|(md)|(textile)|(rdoc)|(org)|(creole)|(mediawiki)|(wiki)|(rst)|(asciidoc)|(adoc)|(asc)|(pod)|(txt)$`)
+	readmeRegexp := regexp.MustCompile(`(?i)^readme\.((markdown)|(mdown)|(mkdn)|(md)|(textile)|(rdoc)|(org)|(creole)|(mediawiki)|(wiki)|(rst)|(asciidoc)|(adoc)|(asc)|(pod)|(txt))$`)
 
 	// https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/about-readmes#about-readmes
 	if pathContainsRegexpMatch(projectdata.ProjectPath(), readmeRegexp) ||
