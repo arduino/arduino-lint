@@ -16,6 +16,7 @@
 package project
 
 import (
+	"fmt"
 	"os"
 	"reflect"
 	"testing"
@@ -53,16 +54,16 @@ func TestFindProjects(t *testing.T) {
 
 	testTables := []struct {
 		testName               string
-		superprojectTypeFilter string
-		recursive              string
+		superprojectTypeFilter []string
+		recursive              []string
 		projectPaths           []string
 		errorAssertion         assert.ErrorAssertionFunc
 		expectedProjects       []Type
 	}{
 		{
 			"Sketch file",
-			"all",
-			"",
+			[]string{"all", "sketch"},
+			[]string{"true", "false"},
 			[]string{sketchPath.Join("Sketch.ino").String()},
 			assert.NoError,
 			[]Type{
@@ -75,8 +76,8 @@ func TestFindProjects(t *testing.T) {
 		},
 		{
 			"Library file",
-			"all",
-			"",
+			[]string{"all", "library"},
+			[]string{"true", "false"},
 			[]string{libraryPath.Join("Library.h").String()},
 			assert.NoError,
 			[]Type{
@@ -94,8 +95,8 @@ func TestFindProjects(t *testing.T) {
 		},
 		{
 			"Platform file",
-			"all",
-			"",
+			[]string{"all", "platform"},
+			[]string{"true", "false"},
 			[]string{platformPath.Join("boards.txt").String()},
 			assert.NoError,
 			[]Type{
@@ -118,8 +119,8 @@ func TestFindProjects(t *testing.T) {
 		},
 		{
 			"Package index file",
-			"all",
-			"",
+			[]string{"all", "package-index"},
+			[]string{"true", "false"},
 			[]string{packageIndexFilePath.String()},
 			assert.NoError,
 			[]Type{
@@ -132,8 +133,8 @@ func TestFindProjects(t *testing.T) {
 		},
 		{
 			"Explicit file",
-			"sketch",
-			"",
+			[]string{"sketch"},
+			[]string{"true", "false"},
 			[]string{libraryPath.Join("Library.h").String()},
 			assert.NoError,
 			[]Type{
@@ -146,8 +147,8 @@ func TestFindProjects(t *testing.T) {
 		},
 		{
 			"Sketch folder",
-			"all",
-			"",
+			[]string{"all", "sketch"},
+			[]string{"true", "false"},
 			[]string{sketchPath.String()},
 			assert.NoError,
 			[]Type{
@@ -160,8 +161,8 @@ func TestFindProjects(t *testing.T) {
 		},
 		{
 			"Library folder",
-			"all",
-			"",
+			[]string{"all", "library"},
+			[]string{"true", "false"},
 			[]string{libraryPath.String()},
 			assert.NoError,
 			[]Type{
@@ -179,8 +180,8 @@ func TestFindProjects(t *testing.T) {
 		},
 		{
 			"Platform folder",
-			"all",
-			"",
+			[]string{"all", "platform"},
+			[]string{"true", "false"},
 			[]string{platformPath.String()},
 			assert.NoError,
 			[]Type{
@@ -203,8 +204,8 @@ func TestFindProjects(t *testing.T) {
 		},
 		{
 			"Package index folder",
-			"all",
-			"",
+			[]string{"all", "package-index"},
+			[]string{"true", "false"},
 			[]string{packageIndexFolderPath.String()},
 			assert.NoError,
 			[]Type{
@@ -217,8 +218,8 @@ func TestFindProjects(t *testing.T) {
 		},
 		{
 			"Explicit folder",
-			"sketch",
-			"false",
+			[]string{"sketch"},
+			[]string{"false"},
 			[]string{libraryPath.String()},
 			assert.NoError,
 			[]Type{
@@ -230,9 +231,23 @@ func TestFindProjects(t *testing.T) {
 			},
 		},
 		{
-			"Projects folder, recursive",
-			"all",
-			"true",
+			"Explicit folder",
+			[]string{"sketch"},
+			[]string{"true"},
+			[]string{libraryPath.String()},
+			assert.NoError,
+			[]Type{
+				{
+					Path:             libraryExamplePath,
+					ProjectType:      projecttype.Sketch,
+					SuperprojectType: projecttype.Sketch,
+				},
+			},
+		},
+		{
+			"Projects folder",
+			[]string{"all"},
+			[]string{"true"},
 			[]string{projectsPath.String()},
 			assert.NoError,
 			[]Type{
@@ -254,17 +269,36 @@ func TestFindProjects(t *testing.T) {
 			},
 		},
 		{
+			"Projects folder",
+			[]string{"sketch"},
+			[]string{"true"},
+			[]string{projectsPath.String()},
+			assert.NoError,
+			[]Type{
+				{
+					Path:             projectsPathLibraryExample,
+					ProjectType:      projecttype.Sketch,
+					SuperprojectType: projecttype.Sketch,
+				},
+				{
+					Path:             projectsPathSketch,
+					ProjectType:      projecttype.Sketch,
+					SuperprojectType: projecttype.Sketch,
+				},
+			},
+		},
+		{
 			"Projects folder, non-recursive",
-			"all",
-			"false",
+			[]string{"all"},
+			[]string{"false"},
 			[]string{projectsPath.String()},
 			assert.Error,
 			[]Type{},
 		},
 		{
 			"Multiple target folders",
-			"all",
-			"true",
+			[]string{"all"},
+			[]string{"true"},
 			[]string{projectsPath.String(), sketchPath.String()},
 			assert.NoError,
 			[]Type{
@@ -290,38 +324,32 @@ func TestFindProjects(t *testing.T) {
 				},
 			},
 		},
-		{
-			"superproject type filter",
-			"sketch",
-			"true",
-			[]string{projectsPath.String()},
-			assert.NoError,
-			[]Type{
-				{
-					Path:             projectsPathLibraryExample,
-					ProjectType:      projecttype.Sketch,
-					SuperprojectType: projecttype.Sketch,
-				},
-				{
-					Path:             projectsPathSketch,
-					ProjectType:      projecttype.Sketch,
-					SuperprojectType: projecttype.Sketch,
-				},
-			},
-		},
 	}
 
 	for _, testTable := range testTables {
-		flags := test.ConfigurationFlags()
-		flags.Set("project-type", testTable.superprojectTypeFilter)
-		if testTable.recursive != "" {
-			flags.Set("recursive", testTable.recursive)
-		}
-		configuration.Initialize(flags, testTable.projectPaths)
-		foundProjects, err := FindProjects()
-		testTable.errorAssertion(t, err)
-		if err == nil {
-			assert.True(t, reflect.DeepEqual(foundProjects, testTable.expectedProjects), testTable.testName)
+		for _, superprojectTypeFilter := range testTable.superprojectTypeFilter {
+			for _, recursive := range testTable.recursive {
+				flags := test.ConfigurationFlags()
+				flags.Set("project-type", superprojectTypeFilter)
+				if recursive != "" {
+					flags.Set("recursive", recursive)
+				}
+				configuration.Initialize(flags, testTable.projectPaths)
+				foundProjects, err := FindProjects()
+				testTable.errorAssertion(t, err)
+				if err == nil {
+					assert.True(
+						t,
+						reflect.DeepEqual(foundProjects, testTable.expectedProjects),
+						fmt.Sprintf(
+							"%s (%s project-type=%s recursive=%s)",
+							testTable.testName,
+							testTable.projectPaths,
+							superprojectTypeFilter, recursive,
+						),
+					)
+				}
+			}
 		}
 	}
 }
