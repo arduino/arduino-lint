@@ -32,3 +32,11 @@ building the source code, running tests, and contributing your changes to the pr
 
 [Nightly builds](https://arduino.github.io/arduino-lint/latest/installation/#nightly-builds) are available for beta
 testing.
+
+## Security
+
+If you think you found a vulnerability or other security-related bug in this project, please read our
+[security policy](https://github.com/arduino/arduino-lint/security/policy) and report the bug to our Security Team 🛡️
+Thank you!
+
+e-mail contact: security@arduino.cc
