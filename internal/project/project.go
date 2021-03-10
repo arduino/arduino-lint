@@ -53,7 +53,7 @@ func FindProjects() ([]Type, error) {
 
 // findProjects handles the recursion for FindProjects().
 func findProjects(targetPath *paths.Path) ([]Type, error) {
-	var foundProjects []Type
+	var foundParentProjects []Type
 
 	// If targetPath is a file, targetPath itself is the project, so it's only necessary to determine/verify the type.
 	if targetPath.IsNotDir() {
@@ -82,36 +82,33 @@ func findProjects(targetPath *paths.Path) ([]Type, error) {
 				ProjectType:      projectType,
 				SuperprojectType: projectType,
 			}
-			foundProjects = append(foundProjects, foundProject)
-
-			foundProjects = append(foundProjects, findSubprojects(foundProject, projectType)...)
-
-			return foundProjects, nil
-		}
-
-		return nil, fmt.Errorf("Specified path %s is not an Arduino project", targetPath)
-	}
-
-	if configuration.SuperprojectTypeFilter() == projecttype.All || configuration.Recursive() {
-		// Project discovery and/or type detection is required.
-		foundParentProjects := findProjectsUnderPath(targetPath, configuration.SuperprojectTypeFilter(), configuration.Recursive())
-		for _, foundParentProject := range foundParentProjects {
-			foundProjects = append(foundProjects, foundParentProject)
-			foundProjects = append(foundProjects, findSubprojects(foundParentProject, foundParentProject.ProjectType)...)
+			foundParentProjects = append(foundParentProjects, foundProject)
 		}
 	} else {
-		// Project was explicitly defined by user.
-		foundProjects = append(foundProjects,
-			Type{
-				Path:             targetPath,
-				ProjectType:      configuration.SuperprojectTypeFilter(),
-				SuperprojectType: configuration.SuperprojectTypeFilter(),
-			},
-		)
+		if configuration.SuperprojectTypeFilter() == projecttype.All || configuration.Recursive() {
+			// Project discovery and/or type detection is required.
+			foundParentProjects = findProjectsUnderPath(targetPath, configuration.SuperprojectTypeFilter(), configuration.Recursive())
+		} else {
+			// Project was explicitly defined by user.
+			foundParentProjects = append(foundParentProjects,
+				Type{
+					Path:             targetPath,
+					ProjectType:      configuration.SuperprojectTypeFilter(),
+					SuperprojectType: configuration.SuperprojectTypeFilter(),
+				},
+			)
+		}
+	}
+
+	// Discover subprojects of all found projects.
+	var foundProjects []Type
+	for _, foundParentProject := range foundParentProjects {
+		foundProjects = append(foundProjects, foundParentProject)
+		foundProjects = append(foundProjects, findSubprojects(foundParentProject, foundParentProject.ProjectType)...)
 	}
 
 	if foundProjects == nil {
-		return nil, fmt.Errorf("No projects found under %s", targetPath)
+		return nil, fmt.Errorf("No projects found with project path %s", targetPath)
 	}
 
 	return foundProjects, nil
