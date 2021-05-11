@@ -40,11 +40,13 @@ func TestMode(t *testing.T) {
 		projecttype.Sketch: {
 			LibraryManagerSubmission: false,
 			LibraryManagerIndexed:    false,
+			LibraryManagerIndexing:   false,
 			Official:                 false,
 		},
 		projecttype.Library: {
 			LibraryManagerSubmission: true,
 			LibraryManagerIndexed:    false,
+			LibraryManagerIndexing:   false,
 			Official:                 false,
 		},
 	}

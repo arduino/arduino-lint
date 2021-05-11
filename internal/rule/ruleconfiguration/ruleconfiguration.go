@@ -134,7 +134,7 @@ var configurations = []Type{
 		EnableModes:      []rulemode.Type{rulemode.Default},
 		InfoModes:        nil,
 		WarningModes:     []rulemode.Type{rulemode.Default},
-		ErrorModes:       []rulemode.Type{rulemode.LibraryManagerSubmission, rulemode.LibraryManagerIndexed},
+		ErrorModes:       []rulemode.Type{rulemode.LibraryManagerSubmission, rulemode.LibraryManagerIndexed, rulemode.LibraryManagerIndexing},
 		RuleFunction:     rulefunction.LibraryContainsSymlinks,
 	},
 	{
@@ -150,7 +150,7 @@ var configurations = []Type{
 		EnableModes:      []rulemode.Type{rulemode.Default},
 		InfoModes:        nil,
 		WarningModes:     []rulemode.Type{rulemode.Default},
-		ErrorModes:       []rulemode.Type{rulemode.LibraryManagerSubmission, rulemode.LibraryManagerIndexed, rulemode.Strict},
+		ErrorModes:       []rulemode.Type{rulemode.LibraryManagerSubmission, rulemode.LibraryManagerIndexed, rulemode.LibraryManagerIndexing, rulemode.Strict},
 		RuleFunction:     rulefunction.LibraryHasDotDevelopmentFile,
 	},
 	{
@@ -163,7 +163,7 @@ var configurations = []Type{
 		Description:      "",
 		MessageTemplate:  ".exe file(s) found: {{.}}. Presence of these files blocks addition to the Library Manager index.",
 		DisableModes:     []rulemode.Type{rulemode.Default},
-		EnableModes:      []rulemode.Type{rulemode.LibraryManagerSubmission, rulemode.LibraryManagerIndexed},
+		EnableModes:      []rulemode.Type{rulemode.LibraryManagerSubmission, rulemode.LibraryManagerIndexed, rulemode.LibraryManagerIndexing},
 		InfoModes:        nil,
 		WarningModes:     nil,
 		ErrorModes:       []rulemode.Type{rulemode.Default},
@@ -262,7 +262,7 @@ var configurations = []Type{
 		EnableModes:      []rulemode.Type{rulemode.Default},
 		InfoModes:        nil,
 		WarningModes:     []rulemode.Type{rulemode.Default},
-		ErrorModes:       []rulemode.Type{rulemode.LibraryManagerSubmission, rulemode.LibraryManagerIndexed, rulemode.Strict},
+		ErrorModes:       []rulemode.Type{rulemode.LibraryManagerSubmission, rulemode.LibraryManagerIndexed, rulemode.LibraryManagerIndexing, rulemode.Strict},
 		RuleFunction:     rulefunction.LibraryPropertiesMissing,
 	},
 	{

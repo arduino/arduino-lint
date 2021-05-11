@@ -65,6 +65,8 @@ The `--report-file` flag causes `arduino-lint` to write the JSON output to the s
 Additional configuration options intended for internal use or development can be set via environment variables:
 
 - `ARDUINO_LINT_OFFICIAL` - Set to `"true"` to run the checks that only apply to official Arduino projects.
+- `ARDUINO_LINT_LIBRARY_MANAGER_INDEXING` - Set to `"true"` to run the checks that apply when adding releases to the
+  Library Manager index.
 - `ARDUINO_LINT_LOG_LEVEL` - Messages with this level and above will be logged.
   - Supported values: `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic`
 - `ARDUINO_LINT_LOG_FORMAT` - The output format for the logs.

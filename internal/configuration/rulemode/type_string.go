@@ -13,13 +13,14 @@ func _() {
 	_ = x[Permissive-2]
 	_ = x[LibraryManagerSubmission-3]
 	_ = x[LibraryManagerIndexed-4]
-	_ = x[Official-5]
-	_ = x[Default-6]
+	_ = x[LibraryManagerIndexing-5]
+	_ = x[Official-6]
+	_ = x[Default-7]
 }
 
-const _Type_name = "strictspecificationpermissivesubmitupdateARDUINO_LINT_OFFICIALdefault"
+const _Type_name = "strictspecificationpermissivesubmitupdateARDUINO_LINT_LIBRARY_MANAGER_INDEXINGARDUINO_LINT_OFFICIALdefault"
 
-var _Type_index = [...]uint8{0, 6, 19, 29, 35, 41, 62, 69}
+var _Type_index = [...]uint8{0, 6, 19, 29, 35, 41, 78, 99, 106}
 
 func (i Type) String() string {
 	if i < 0 || i >= Type(len(_Type_index)-1) {
