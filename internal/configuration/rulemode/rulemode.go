@@ -34,6 +34,7 @@ const (
 	Permissive                           // permissive
 	LibraryManagerSubmission             // submit
 	LibraryManagerIndexed                // update
+	LibraryManagerIndexing               // ARDUINO_LINT_LIBRARY_MANAGER_INDEXING
 	Official                             // ARDUINO_LINT_OFFICIAL
 	Default                              // default
 )
@@ -47,6 +48,7 @@ var Types = map[Type]struct{}{
 	Permissive:               empty,
 	LibraryManagerSubmission: empty,
 	LibraryManagerIndexed:    empty,
+	LibraryManagerIndexing:   empty,
 	Official:                 empty,
 	Default:                  empty,
 }
@@ -66,16 +68,16 @@ func ComplianceModeFromString(complianceModeString string) (bool, bool, bool, er
 }
 
 // LibraryManagerModeFromString parses the --library-manager flag value and returns the corresponding rule mode settings.
-func LibraryManagerModeFromString(libraryManagerModeString string) (bool, bool, error) {
+func LibraryManagerModeFromString(libraryManagerModeString string) (bool, bool, bool, error) {
 	switch strings.ToLower(libraryManagerModeString) {
 	case LibraryManagerSubmission.String():
-		return true, false, nil
+		return true, false, false, nil
 	case LibraryManagerIndexed.String():
-		return false, true, nil
+		return false, true, false, nil
 	case "false":
-		return false, false, nil
+		return false, false, false, nil
 	default:
-		return false, false, fmt.Errorf("No matching Library Manager mode for string %s", libraryManagerModeString)
+		return false, false, false, fmt.Errorf("No matching Library Manager mode for string %s", libraryManagerModeString)
 	}
 }
 
@@ -110,7 +112,7 @@ func Compliance(ruleModes map[Type]bool) string {
 // LibraryManager returns the string identifier for the Library Manager configuration mode.
 func LibraryManager(ruleModes map[Type]bool) string {
 	for key, value := range ruleModes {
-		if value && (key == LibraryManagerSubmission || key == LibraryManagerIndexed) {
+		if value && (key == LibraryManagerSubmission || key == LibraryManagerIndexed || key == LibraryManagerIndexing) {
 			return key.String()
 		}
 	}

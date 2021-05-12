@@ -95,6 +95,20 @@ def test_library_manager_invalid(run_command):
     assert not result.ok
 
 
+def test_library_manager_indexing(run_command):
+    result = run_command(
+        cmd=[test_data_path.joinpath("library-manager", "Update")],
+        custom_env={"ARDUINO_LINT_LIBRARY_MANAGER_INDEXING": "true"},
+    )
+    assert result.ok
+
+    result = run_command(
+        cmd=[test_data_path.joinpath("library-manager", "Update")],
+        custom_env={"ARDUINO_LINT_LIBRARY_MANAGER_INDEXING": "foo"},
+    )
+    assert not result.ok
+
+
 @pytest.mark.parametrize(
     "project_folder, expected_exit_statuses",
     [

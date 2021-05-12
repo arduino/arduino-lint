@@ -22,6 +22,8 @@ import (
 	"os"
 
 	"github.com/arduino/arduino-cli/arduino/libraries"
+	"github.com/arduino/arduino-lint/internal/configuration"
+	"github.com/arduino/arduino-lint/internal/configuration/rulemode"
 	"github.com/arduino/arduino-lint/internal/project"
 	"github.com/arduino/arduino-lint/internal/project/library/libraryproperties"
 	"github.com/arduino/arduino-lint/internal/result/feedback"
@@ -56,7 +58,8 @@ func InitializeForLibrary(project project.Type) {
 		}
 	}
 
-	if libraryManagerIndex == nil { // Only download the Library Manager index once.
+	// Download the Library Manager index if needed.
+	if !configuration.RuleModes(project.SuperprojectType)[rulemode.LibraryManagerIndexing] && libraryManagerIndex == nil {
 		url := "http://downloads.arduino.cc/libraries/library_index.json"
 		httpResponse, err := http.Get(url)
 		if err != nil {

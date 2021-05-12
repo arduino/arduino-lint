@@ -33,6 +33,7 @@ var defaultRuleModes = map[projecttype.Type]map[rulemode.Type]bool{
 		rulemode.Permissive:               false,
 		rulemode.LibraryManagerSubmission: false,
 		rulemode.LibraryManagerIndexed:    false,
+		rulemode.LibraryManagerIndexing:   false,
 		rulemode.Official:                 false,
 	},
 	projecttype.Library: {
@@ -41,6 +42,7 @@ var defaultRuleModes = map[projecttype.Type]map[rulemode.Type]bool{
 		rulemode.Permissive:               false,
 		rulemode.LibraryManagerSubmission: true,
 		rulemode.LibraryManagerIndexed:    false,
+		rulemode.LibraryManagerIndexing:   false,
 		rulemode.Official:                 false,
 	},
 	projecttype.Platform: {
@@ -49,6 +51,7 @@ var defaultRuleModes = map[projecttype.Type]map[rulemode.Type]bool{
 		rulemode.Permissive:               false,
 		rulemode.LibraryManagerSubmission: false,
 		rulemode.LibraryManagerIndexed:    false,
+		rulemode.LibraryManagerIndexing:   false,
 		rulemode.Official:                 false,
 	},
 	projecttype.PackageIndex: {
@@ -57,6 +60,7 @@ var defaultRuleModes = map[projecttype.Type]map[rulemode.Type]bool{
 		rulemode.Permissive:               false,
 		rulemode.LibraryManagerSubmission: false,
 		rulemode.LibraryManagerIndexed:    false,
+		rulemode.LibraryManagerIndexing:   false,
 		rulemode.Official:                 false,
 	},
 }

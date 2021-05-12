@@ -51,9 +51,21 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 
 	libraryManagerModeString, _ := flags.GetString("library-manager")
 	if libraryManagerModeString != "" {
-		customRuleModes[rulemode.LibraryManagerSubmission], customRuleModes[rulemode.LibraryManagerIndexed], err = rulemode.LibraryManagerModeFromString(libraryManagerModeString)
+		customRuleModes[rulemode.LibraryManagerSubmission], customRuleModes[rulemode.LibraryManagerIndexed], customRuleModes[rulemode.LibraryManagerIndexing], err = rulemode.LibraryManagerModeFromString(libraryManagerModeString)
 		if err != nil {
 			return fmt.Errorf("--library-manager flag value %s not valid", libraryManagerModeString)
+		}
+	}
+
+	if libraryManagerModeString, ok := os.LookupEnv("ARDUINO_LINT_LIBRARY_MANAGER_INDEXING"); ok {
+		indexing, err := strconv.ParseBool(libraryManagerModeString)
+		if err != nil {
+			return fmt.Errorf("ARDUINO_LINT_LIBRARY_MANAGER_INDEXING environment variable value %s not valid", libraryManagerModeString)
+		}
+		if indexing {
+			customRuleModes[rulemode.LibraryManagerSubmission] = false
+			customRuleModes[rulemode.LibraryManagerIndexed] = false
+			customRuleModes[rulemode.LibraryManagerIndexing] = true
 		}
 	}
 
@@ -124,6 +136,7 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 		"output format":                   OutputFormat(),
 		"Library Manager submission mode": customRuleModes[rulemode.LibraryManagerSubmission],
 		"Library Manager update mode":     customRuleModes[rulemode.LibraryManagerIndexed],
+		"Library Manager indexing mode":   customRuleModes[rulemode.LibraryManagerIndexing],
 		"log level":                       logrus.GetLevel().String(),
 		"superproject type filter":        SuperprojectTypeFilter(),
 		"recursive":                       Recursive(),

@@ -105,6 +105,16 @@ func TestInitializeLibraryManager(t *testing.T) {
 	assert.Nil(t, Initialize(flags, projectPaths))
 	assert.False(t, customRuleModes[rulemode.LibraryManagerSubmission])
 	assert.False(t, customRuleModes[rulemode.LibraryManagerIndexed])
+
+	os.Setenv("ARDUINO_LINT_LIBRARY_MANAGER_INDEXING", "foo")
+	assert.Error(t, Initialize(flags, projectPaths))
+
+	flags.Set("library-manager", "")
+	os.Setenv("ARDUINO_LINT_LIBRARY_MANAGER_INDEXING", "true")
+	assert.Nil(t, Initialize(flags, projectPaths))
+	assert.False(t, customRuleModes[rulemode.LibraryManagerSubmission])
+	assert.False(t, customRuleModes[rulemode.LibraryManagerIndexed])
+	assert.True(t, customRuleModes[rulemode.LibraryManagerIndexing])
 }
 
 func TestInitializeLogFormat(t *testing.T) {

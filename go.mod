@@ -48,7 +48,7 @@ require (
 	go.bug.st/relaxed-semver v0.0.0-20190922224835-391e10178d18
 	go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace v0.14.0 // indirect
 	golang.org/x/crypto v0.0.0-20201208171446-5f87f3452ae9 // indirect
-	golang.org/x/mod v0.4.1 // indirect
+	golang.org/x/mod v0.4.2 // indirect
 	golang.org/x/net v0.0.0-20201209123823-ac852fbbde11 // indirect
 	golang.org/x/sys v0.0.0-20201207223542-d4d67f95c62d // indirect
 	golang.org/x/term v0.0.0-20201210144234-2321bbc49cbf // indirect
