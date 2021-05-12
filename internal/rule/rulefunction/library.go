@@ -1041,6 +1041,7 @@ func LibraryPropertiesArchitecturesFieldSoloAlias() (result ruleresult.Type, out
 		"espressif8266": {"esp8266"},
 		"intel_arc32":   {"arc32"},
 		"nordicnrf52":   {"nRF5", "nrf52", "mbed", "mbed_edge", "mbed_nano"},
+		"raspberrypi":   {"mbed_nano", "mbed_rp2040", "rp2040"},
 	}
 
 	trueArchitecturePresent := func(trueArchitecturesQuery []string) bool {
