@@ -1010,7 +1010,7 @@ var configurations = []Type{
 		Brief:            "depends not in index",
 		Description:      "This field should be used to define the dependencies available from Library Manager. Library names are case-sensitive.",
 		MessageTemplate:  "library.properties depends field item(s) {{.}} not found in the Library Manager index.",
-		DisableModes:     nil,
+		DisableModes:     []rulemode.Type{rulemode.LibraryManagerIndexing},
 		EnableModes:      []rulemode.Type{rulemode.Default},
 		InfoModes:        nil,
 		WarningModes:     []rulemode.Type{rulemode.Default},
