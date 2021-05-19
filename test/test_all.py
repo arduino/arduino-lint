@@ -97,13 +97,13 @@ def test_library_manager_invalid(run_command):
 
 def test_library_manager_indexing(run_command):
     result = run_command(
-        cmd=[test_data_path.joinpath("library-manager", "Update")],
+        cmd=[test_data_path.joinpath("library-manager", "ARDUINO_LINT_LIBRARY_MANAGER_INDEXING", "Servo")],
         custom_env={"ARDUINO_LINT_LIBRARY_MANAGER_INDEXING": "true"},
     )
     assert result.ok
 
     result = run_command(
-        cmd=[test_data_path.joinpath("library-manager", "Update")],
+        cmd=[test_data_path.joinpath("library-manager", "ARDUINO_LINT_LIBRARY_MANAGER_INDEXING", "Servo")],
         custom_env={"ARDUINO_LINT_LIBRARY_MANAGER_INDEXING": "foo"},
     )
     assert not result.ok
