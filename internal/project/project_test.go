@@ -20,12 +20,14 @@ import (
 	"os"
 	"reflect"
 	"testing"
+	"time"
 
 	"github.com/arduino/arduino-lint/internal/configuration"
 	"github.com/arduino/arduino-lint/internal/project/projecttype"
 	"github.com/arduino/arduino-lint/internal/util/test"
 	"github.com/arduino/go-paths-helper"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 var testDataPath *paths.Path
@@ -36,6 +38,50 @@ func init() {
 		panic(err)
 	}
 	testDataPath = paths.New(workingDirectory, "testdata")
+}
+
+func TestSymlinkLoop(t *testing.T) {
+	// Set up directory structure of test library.
+	libraryPath, err := paths.TempDir().MkTempDir("TestSymlinkLoop")
+	defer libraryPath.RemoveAll() // Clean up after the test.
+	require.Nil(t, err)
+	err = libraryPath.Join("TestSymlinkLoop.h").WriteFile([]byte{})
+	require.Nil(t, err)
+	examplesPath := libraryPath.Join("examples")
+	err = examplesPath.Mkdir()
+	require.Nil(t, err)
+
+	// It's probably most friendly for contributors using Windows to create the symlinks needed for the test on demand.
+	err = os.Symlink(examplesPath.Join("..").String(), examplesPath.Join("UpGoer1").String())
+	require.Nil(t, err, "This test must be run as administrator on Windows to have symlink creation privilege.")
+	// It's necessary to have multiple symlinks to a parent directory to create the loop.
+	err = os.Symlink(examplesPath.Join("..").String(), examplesPath.Join("UpGoer2").String())
+	require.Nil(t, err)
+
+	configuration.Initialize(test.ConfigurationFlags(), []string{libraryPath.String()})
+
+	// The failure condition is FindProjects() never returning, testing for which requires setting up a timeout.
+	done := make(chan bool)
+	go func() {
+		_, err = FindProjects()
+		done <- true
+	}()
+
+	assert.Eventually(
+		t,
+		func() bool {
+			select {
+			case <-done:
+				return true
+			default:
+				return false
+			}
+		},
+		20*time.Second,
+		10*time.Millisecond,
+		"Infinite symlink loop during project discovery",
+	)
+	require.Nil(t, err)
 }
 
 func TestFindProjects(t *testing.T) {
