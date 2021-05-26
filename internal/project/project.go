@@ -18,6 +18,7 @@ package project
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/arduino/arduino-lint/internal/configuration"
 	"github.com/arduino/arduino-lint/internal/project/library"
@@ -87,7 +88,7 @@ func findProjects(targetPath *paths.Path) ([]Type, error) {
 	} else {
 		if configuration.SuperprojectTypeFilter() == projecttype.All || configuration.Recursive() {
 			// Project discovery and/or type detection is required.
-			foundParentProjects = findProjectsUnderPath(targetPath, configuration.SuperprojectTypeFilter(), configuration.Recursive())
+			foundParentProjects = findProjectsUnderPath(targetPath, configuration.SuperprojectTypeFilter(), configuration.Recursive(), 0)
 		} else {
 			// Project was explicitly defined by user.
 			foundParentProjects = append(foundParentProjects,
@@ -115,7 +116,7 @@ func findProjects(targetPath *paths.Path) ([]Type, error) {
 }
 
 // findProjectsUnderPath finds projects of the given type under the given path. It returns a slice containing the definitions of all found projects.
-func findProjectsUnderPath(targetPath *paths.Path, projectTypeFilter projecttype.Type, recursive bool) []Type {
+func findProjectsUnderPath(targetPath *paths.Path, projectTypeFilter projecttype.Type, recursive bool, symlinkDepth int) []Type {
 	var foundProjects []Type
 
 	isProject, foundProjectType := isProject(targetPath, projectTypeFilter)
@@ -133,12 +134,24 @@ func findProjectsUnderPath(targetPath *paths.Path, projectTypeFilter projecttype
 		return foundProjects
 	}
 
-	if recursive {
+	if recursive && symlinkDepth < 10 {
 		// targetPath was not a project, so search the subfolders.
 		directoryListing, _ := targetPath.ReadDir()
 		directoryListing.FilterDirs()
 		for _, potentialProjectDirectory := range directoryListing {
-			foundProjects = append(foundProjects, findProjectsUnderPath(potentialProjectDirectory, projectTypeFilter, recursive)...)
+			// It is possible for a combination of symlinks to parent paths to cause project discovery to get stuck in
+			// an endless loop of recursion. This is avoided by keeping count of the depth of symlinks and discontinuing
+			// recursion when it exceeds reason.
+			pathStat, err := os.Lstat(potentialProjectDirectory.String())
+			if err != nil {
+				panic(err)
+			}
+			depthDelta := 0
+			if pathStat.Mode()&os.ModeSymlink != 0 {
+				depthDelta = 1
+			}
+
+			foundProjects = append(foundProjects, findProjectsUnderPath(potentialProjectDirectory, projectTypeFilter, recursive, symlinkDepth+depthDelta)...)
 		}
 	}
 
@@ -184,7 +197,7 @@ func findSubprojects(superproject Type, apexSuperprojectType projecttype.Type) [
 			directoryListing.FilterDirs()
 
 			for _, subprojectPath := range directoryListing {
-				immediateSubprojects = append(immediateSubprojects, findProjectsUnderPath(subprojectPath, subProjectType, searchPathsRecursively)...)
+				immediateSubprojects = append(immediateSubprojects, findProjectsUnderPath(subprojectPath, subProjectType, searchPathsRecursively, 0)...)
 			}
 		}
 	}
