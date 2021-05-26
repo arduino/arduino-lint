@@ -26,6 +26,7 @@ import (
 	"github.com/arduino/arduino-lint/internal/util/test"
 	"github.com/arduino/go-paths-helper"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 var testDataPath *paths.Path
@@ -36,6 +37,29 @@ func init() {
 		panic(err)
 	}
 	testDataPath = paths.New(workingDirectory, "testdata")
+}
+
+func TestSymlinkLoop(t *testing.T) {
+	// Set up directory structure of test library.
+	libraryPath, err := paths.TempDir().MkTempDir("TestSymlinkLoop")
+	defer libraryPath.RemoveAll() // Clean up after the test.
+	require.Nil(t, err)
+	err = libraryPath.Join("TestSymlinkLoop.h").WriteFile([]byte{})
+	require.Nil(t, err)
+	examplesPath := libraryPath.Join("examples")
+	err = examplesPath.Mkdir()
+	require.Nil(t, err)
+
+	// It's probably most friendly for contributors using Windows to create the symlinks needed for the test on demand.
+	err = os.Symlink(examplesPath.Join("..").String(), examplesPath.Join("UpGoer1").String())
+	require.Nil(t, err, "This test must be run as administrator on Windows to have symlink creation privilege.")
+	// It's necessary to have multiple symlinks to a parent directory to create the loop.
+	err = os.Symlink(examplesPath.Join("..").String(), examplesPath.Join("UpGoer2").String())
+	require.Nil(t, err)
+
+	configuration.Initialize(test.ConfigurationFlags(), []string{libraryPath.String()})
+
+	assert.Panics(t, func() { FindProjects() }, "Infinite symlink loop encountered during project discovery")
 }
 
 func TestFindProjects(t *testing.T) {
