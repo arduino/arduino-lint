@@ -20,7 +20,6 @@ import (
 	"os"
 	"reflect"
 	"testing"
-	"time"
 
 	"github.com/arduino/arduino-lint/internal/configuration"
 	"github.com/arduino/arduino-lint/internal/project/projecttype"
@@ -60,28 +59,7 @@ func TestSymlinkLoop(t *testing.T) {
 
 	configuration.Initialize(test.ConfigurationFlags(), []string{libraryPath.String()})
 
-	// The failure condition is FindProjects() never returning, testing for which requires setting up a timeout.
-	done := make(chan bool)
-	go func() {
-		_, err = FindProjects()
-		done <- true
-	}()
-
-	assert.Eventually(
-		t,
-		func() bool {
-			select {
-			case <-done:
-				return true
-			default:
-				return false
-			}
-		},
-		20*time.Second,
-		10*time.Millisecond,
-		"Infinite symlink loop during project discovery",
-	)
-	require.Nil(t, err)
+	assert.Panics(t, func() { FindProjects() }, "Infinite symlink loop encountered during project discovery")
 }
 
 func TestFindProjects(t *testing.T) {

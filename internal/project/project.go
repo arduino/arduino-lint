@@ -134,7 +134,10 @@ func findProjectsUnderPath(targetPath *paths.Path, projectTypeFilter projecttype
 		return foundProjects
 	}
 
-	if recursive && symlinkDepth < 10 {
+	if recursive {
+		if symlinkDepth > 10 {
+			panic(fmt.Sprintf("symlink depth exceeded maximum while finding projects under %s", targetPath))
+		}
 		// targetPath was not a project, so search the subfolders.
 		directoryListing, _ := targetPath.ReadDir()
 		directoryListing.FilterDirs()
