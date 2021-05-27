@@ -944,6 +944,23 @@ func LibraryPropertiesUrlFieldMissing() (result ruleresult.Type, output string) 
 	return ruleresult.Pass, ""
 }
 
+// LibraryPropertiesUrlFieldLTMinLength checks if the library.properties "url" value is less than the minimum length.
+func LibraryPropertiesUrlFieldLTMinLength() (result ruleresult.Type, output string) {
+	if projectdata.LibraryPropertiesLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load library.properties"
+	}
+
+	if !projectdata.LibraryProperties().ContainsKey("url") {
+		return ruleresult.NotRun, "Field not present"
+	}
+
+	if schema.PropertyLessThanMinLength("url", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Permissive]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
 // LibraryPropertiesUrlFieldInvalid checks whether the library.properties "url" value has a valid URL format.
 func LibraryPropertiesUrlFieldInvalid() (result ruleresult.Type, output string) {
 	if projectdata.LibraryPropertiesLoadError() != nil {

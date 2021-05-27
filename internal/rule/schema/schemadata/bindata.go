@@ -1832,6 +1832,9 @@ var _arduinoLibraryPropertiesDefinitionsSchemaJson = []byte(`{
             "allOf": [
               {
                 "type": "string"
+              },
+              {
+                "minLength": 1
               }
             ]
           }
