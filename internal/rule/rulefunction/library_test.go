@@ -714,6 +714,17 @@ func TestLibraryPropertiesUrlFieldMissing(t *testing.T) {
 	checkLibraryRuleFunction(LibraryPropertiesUrlFieldMissing, testTables, t)
 }
 
+func TestLibraryPropertiesUrlFieldLTMinLength(t *testing.T) {
+	testTables := []libraryRuleFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", ruleresult.NotRun, ""},
+		{"Legacy", "Legacy", ruleresult.NotRun, ""},
+		{"url field too short", "UrlLTMinLength", ruleresult.Fail, ""},
+		{"Valid", "Recursive", ruleresult.Pass, ""},
+	}
+
+	checkLibraryRuleFunction(LibraryPropertiesUrlFieldLTMinLength, testTables, t)
+}
+
 func TestLibraryPropertiesUrlFieldInvalid(t *testing.T) {
 	testTables := []libraryRuleFunctionTestTable{
 		{"Invalid", "InvalidLibraryProperties", ruleresult.NotRun, ""},
