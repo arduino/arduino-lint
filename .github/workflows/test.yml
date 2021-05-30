@@ -61,9 +61,6 @@ jobs:
       - name: Check for forgotten code generation
         run: git diff --color --exit-code
 
-      - name: Build
-        run: task build
-
       - name: Run unit tests
         run: task go:test-unit
 
