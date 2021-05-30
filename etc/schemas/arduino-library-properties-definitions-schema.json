@@ -10,6 +10,11 @@
           "not": {
             "pattern": "^[aA][rR][dD][uU][iI][nN][oO].*$"
           }
+        },
+        "notContainsArduino": {
+          "not": {
+            "pattern": "^.+[aA][rR][dD][uU][iI][nN][oO].*$"
+          }
         }
       }
     },
@@ -77,11 +82,6 @@
                   "pattern": "^.* .*$"
                 }
               },
-              "notContainsArduino": {
-                "not": {
-                  "pattern": "^.+[aA][rR][dD][uU][iI][nN][oO].*$"
-                }
-              },
               "notContainsSuperfluousTerms": {
                 "not": {
                   "pattern": "^.*[lL][iI][bB][rR][aA][rR][yY].*$"
@@ -101,7 +101,7 @@
                 "$ref": "#/definitions/propertiesObjects/name/strict/definitions/patternObjects/notContainsSpaces"
               },
               {
-                "$ref": "#/definitions/propertiesObjects/name/strict/definitions/patternObjects/notContainsArduino"
+                "$ref": "#/definitions/general/patternObjects/notContainsArduino"
               },
               {
                 "$ref": "#/definitions/propertiesObjects/name/strict/definitions/patternObjects/notContainsSuperfluousTerms"
@@ -238,6 +238,9 @@
             "allOf": [
               {
                 "$ref": "#/definitions/propertiesObjects/maintainer/specification/object"
+              },
+              {
+                "$ref": "#/definitions/general/patternObjects/notContainsArduino"
               }
             ]
           }

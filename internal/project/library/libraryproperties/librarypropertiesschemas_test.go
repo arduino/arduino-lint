@@ -291,8 +291,11 @@ func TestPropertiesVersionPattern(t *testing.T) {
 func TestPropertiesMaintainerPattern(t *testing.T) {
 	testTables := []propertyValueTestTable{
 		{"Starts with arduino", "arduinofoo", compliancelevel.Permissive, assert.False},
+		{"Contains arduino", "fooarduinobar", compliancelevel.Permissive, assert.False},
 		{"Starts with arduino", "arduinofoo", compliancelevel.Specification, assert.True},
+		{"Contains arduino", "fooarduinobar", compliancelevel.Specification, assert.False},
 		{"Starts with arduino", "arduinofoo", compliancelevel.Strict, assert.True},
+		{"Contains arduino", "fooarduinobar", compliancelevel.Strict, assert.True},
 	}
 
 	checkPropertyPatternMismatch("maintainer", testTables, t)

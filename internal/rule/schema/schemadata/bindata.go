@@ -1429,6 +1429,11 @@ var _arduinoLibraryPropertiesDefinitionsSchemaJson = []byte(`{
           "not": {
             "pattern": "^[aA][rR][dD][uU][iI][nN][oO].*$"
           }
+        },
+        "notContainsArduino": {
+          "not": {
+            "pattern": "^.+[aA][rR][dD][uU][iI][nN][oO].*$"
+          }
         }
       }
     },
@@ -1496,11 +1501,6 @@ var _arduinoLibraryPropertiesDefinitionsSchemaJson = []byte(`{
                   "pattern": "^.* .*$"
                 }
               },
-              "notContainsArduino": {
-                "not": {
-                  "pattern": "^.+[aA][rR][dD][uU][iI][nN][oO].*$"
-                }
-              },
               "notContainsSuperfluousTerms": {
                 "not": {
                   "pattern": "^.*[lL][iI][bB][rR][aA][rR][yY].*$"
@@ -1520,7 +1520,7 @@ var _arduinoLibraryPropertiesDefinitionsSchemaJson = []byte(`{
                 "$ref": "#/definitions/propertiesObjects/name/strict/definitions/patternObjects/notContainsSpaces"
               },
               {
-                "$ref": "#/definitions/propertiesObjects/name/strict/definitions/patternObjects/notContainsArduino"
+                "$ref": "#/definitions/general/patternObjects/notContainsArduino"
               },
               {
                 "$ref": "#/definitions/propertiesObjects/name/strict/definitions/patternObjects/notContainsSuperfluousTerms"
@@ -1657,6 +1657,9 @@ var _arduinoLibraryPropertiesDefinitionsSchemaJson = []byte(`{
             "allOf": [
               {
                 "$ref": "#/definitions/propertiesObjects/maintainer/specification/object"
+              },
+              {
+                "$ref": "#/definitions/general/patternObjects/notContainsArduino"
               }
             ]
           }

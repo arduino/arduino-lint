@@ -568,6 +568,17 @@ func TestLibraryPropertiesMaintainerFieldStartsWithArduino(t *testing.T) {
 	checkLibraryRuleFunction(LibraryPropertiesMaintainerFieldStartsWithArduino, testTables, t)
 }
 
+func TestLibraryPropertiesMaintainerFieldContainsArduino(t *testing.T) {
+	testTables := []libraryRuleFunctionTestTable{
+		{"Invalid", "InvalidLibraryProperties", ruleresult.NotRun, ""},
+		{"Legacy", "Legacy", ruleresult.NotRun, ""},
+		{"Maintainer field contains Arduino", "MaintainerContainsArduino", ruleresult.Fail, ""},
+		{"Valid", "Recursive", ruleresult.Pass, ""},
+	}
+
+	checkLibraryRuleFunction(LibraryPropertiesMaintainerFieldContainsArduino, testTables, t)
+}
+
 func TestLibraryPropertiesEmailFieldAsMaintainerAlias(t *testing.T) {
 	testTables := []libraryRuleFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", ruleresult.NotRun, ""},
