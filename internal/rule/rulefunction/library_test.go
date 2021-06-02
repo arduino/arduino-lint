@@ -808,8 +808,11 @@ func TestLibraryPropertiesDependsFieldInvalidFormat(t *testing.T) {
 func TestLibraryPropertiesDependsFieldNotInIndex(t *testing.T) {
 	testTables := []libraryRuleFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", ruleresult.NotRun, ""},
+		{"Legacy", "Legacy", ruleresult.Skip, ""},
+		{"No depends field", "MissingFields", ruleresult.Skip, ""},
 		{"Dependency not in index", "DependsNotIndexed", ruleresult.Fail, "^NotIndexed$"},
-		{"Dependency in index", "DependsIndexed", ruleresult.Pass, ""},
+		{"Dependency constraint not in index", "DependsConstraintNotIndexed", ruleresult.Fail, "^Servo \\(=0\\.0\\.1\\)$"},
+		{"Dependencies in index", "DependsIndexed", ruleresult.Pass, ""},
 		{"Depends field empty", "DependsEmpty", ruleresult.Pass, ""},
 		{"No depends", "NoDepends", ruleresult.Skip, ""},
 	}
