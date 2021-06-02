@@ -1461,15 +1461,8 @@ func IncorrectExamplesFolderNameCase() (result ruleresult.Type, output string) {
 
 // nameInLibraryManagerIndex returns whether there is a library in Library Manager index using the given name.
 func nameInLibraryManagerIndex(name string) bool {
-	libraries := projectdata.LibraryManagerIndex()["libraries"].([]interface{})
-	for _, libraryInterface := range libraries {
-		library := libraryInterface.(map[string]interface{})
-		if library["name"].(string) == name {
-			return true
-		}
-	}
-
-	return false
+	library := projectdata.LibraryManagerIndex().Index.FindIndexedLibrary(&libraries.Library{Name: name})
+	return library != nil
 }
 
 // spellCheckLibraryPropertiesFieldValue returns the value of the provided library.properties field with commonly misspelled words corrected.
