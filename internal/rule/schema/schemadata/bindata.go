@@ -1440,13 +1440,7 @@ var _arduinoLibraryPropertiesDefinitionsSchemaJson = []byte(`{
               "allowedCharacters": {
                 "allOf": [
                   {
-                    "$ref": "#/definitions/propertiesObjects/depends/base/definitions/patternObject"
-                  },
-                  {
-                    "not": {
-                      "$comment": "The depends property is a comma separated list of names, so a valid name pattern is a valid depends pattern with the comma excluded",
-                      "pattern": "^.*,.*$"
-                    }
+                    "pattern": "^(([a-zA-Z][a-zA-Z0-9 _.\\-]*)|([0-9][a-zA-Z0-9 _.\\-]*[a-zA-Z][a-zA-Z0-9 _.\\-]*))*$"
                   }
                 ]
               }
@@ -1913,18 +1907,14 @@ var _arduinoLibraryPropertiesDefinitionsSchemaJson = []byte(`{
       },
       "depends": {
         "base": {
-          "definitions": {
-            "patternObject": {
-              "pattern": "^(([a-zA-Z][a-zA-Z0-9 _\\.\\-,]*)|([0-9][a-zA-Z0-9 _\\.\\-]*[a-zA-Z][a-zA-Z0-9 _\\.\\-,]*))*$"
-            }
-          },
           "object": {
             "allOf": [
               {
                 "type": "string"
               },
               {
-                "$ref": "#/definitions/propertiesObjects/depends/base/definitions/patternObject"
+                "$comment": "Based on #/definitions/propertiesObjects/name/base/definitions/patternObjects/allowedCharacters and general-definitions-schema.json#/definitions/patternObjects/relaxedSemver",
+                "pattern": "^((((([a-zA-Z][a-zA-Z0-9 _.\\-]*)|([0-9][a-zA-Z0-9 _.\\-]*[a-zA-Z][a-zA-Z0-9 _.\\-]*))+( \\( *(<|<=|=|>=|>)(0|[1-9]\\d*)(\\.(0|[1-9]\\d*))?(\\.(0|[1-9]\\d*))?(-((0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(\\.(0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(\\+([0-9a-zA-Z-]+(\\.[0-9a-zA-Z-]+)*))? *\\) *)?), *)*((([a-zA-Z][a-zA-Z0-9 _.\\-]*)|([0-9][a-zA-Z0-9 _.\\-]*[a-zA-Z][a-zA-Z0-9 _.\\-]*))+( \\( *(<|<=|=|>=|>)(0|[1-9]\\d*)(\\.(0|[1-9]\\d*))?(\\.(0|[1-9]\\d*))?(-((0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(\\.(0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(\\+([0-9a-zA-Z-]+(\\.[0-9a-zA-Z-]+)*))? *\\) *)?))?$"
               }
             ]
           }

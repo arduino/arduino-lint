@@ -1158,8 +1158,8 @@ func LibraryPropertiesArchitecturesFieldValueCase() (result ruleresult.Type, out
 	return ruleresult.Pass, ""
 }
 
-// LibraryPropertiesDependsFieldDisallowedCharacters checks for disallowed characters in the library.properties "depends" field.
-func LibraryPropertiesDependsFieldDisallowedCharacters() (result ruleresult.Type, output string) {
+// LibraryPropertiesDependsFieldInvalidFormat checks for the library.properties "depends" field having an invalid format.
+func LibraryPropertiesDependsFieldInvalidFormat() (result ruleresult.Type, output string) {
 	if projectdata.LibraryPropertiesLoadError() != nil {
 		return ruleresult.NotRun, "Couldn't load library.properties"
 	}

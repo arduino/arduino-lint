@@ -794,15 +794,15 @@ func TestLibraryPropertiesArchitecturesFieldValueCase(t *testing.T) {
 	checkLibraryRuleFunction(LibraryPropertiesArchitecturesFieldValueCase, testTables, t)
 }
 
-func TestLibraryPropertiesDependsFieldDisallowedCharacters(t *testing.T) {
+func TestLibraryPropertiesDependsFieldInvalidFormat(t *testing.T) {
 	testTables := []libraryRuleFunctionTestTable{
 		{"Invalid", "InvalidLibraryProperties", ruleresult.NotRun, ""},
 		{"Legacy", "Legacy", ruleresult.Skip, ""},
 		{"Depends field has disallowed characters", "DependsHasBadChars", ruleresult.Fail, ""},
-		{"Valid", "DependsIndexed", ruleresult.Pass, ""},
+		{"Valid", "DependsValid", ruleresult.Pass, ""},
 	}
 
-	checkLibraryRuleFunction(LibraryPropertiesDependsFieldDisallowedCharacters, testTables, t)
+	checkLibraryRuleFunction(LibraryPropertiesDependsFieldInvalidFormat, testTables, t)
 }
 
 func TestLibraryPropertiesDependsFieldNotInIndex(t *testing.T) {

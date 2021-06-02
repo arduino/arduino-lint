@@ -330,6 +330,18 @@ func TestPropertiesUrlFormat(t *testing.T) {
 
 func TestPropertiesDependsPattern(t *testing.T) {
 	testTables := []propertyValueTestTable{
+		{"Valid name", "foo", compliancelevel.Permissive, assert.False},
+		{"Valid name", "foo", compliancelevel.Specification, assert.False},
+		{"Valid name", "foo", compliancelevel.Strict, assert.False},
+
+		{"Valid names", "foo,bar", compliancelevel.Permissive, assert.False},
+		{"Valid names", "foo,bar", compliancelevel.Specification, assert.False},
+		{"Valid names", "foo,bar", compliancelevel.Strict, assert.False},
+
+		{"Trailing comma", "foo,", compliancelevel.Permissive, assert.True},
+		{"Trailing comma", "foo,", compliancelevel.Specification, assert.True},
+		{"Trailing comma", "foo,", compliancelevel.Strict, assert.True},
+
 		{"Invalid characters", "-foo", compliancelevel.Permissive, assert.True},
 		{"Invalid characters", "-foo", compliancelevel.Specification, assert.True},
 		{"Invalid characters", "-foo", compliancelevel.Strict, assert.True},
@@ -337,6 +349,41 @@ func TestPropertiesDependsPattern(t *testing.T) {
 		{"Empty", "", compliancelevel.Permissive, assert.False},
 		{"Empty", "", compliancelevel.Specification, assert.False},
 		{"Empty", "", compliancelevel.Strict, assert.False},
+
+		{"<version", "foo (<1.2.3)", compliancelevel.Permissive, assert.False},
+		{"<version", "foo (<1.2.3)", compliancelevel.Specification, assert.False},
+		{"<version", "foo (<1.2.3)", compliancelevel.Strict, assert.False},
+		{"<=version", "foo (<=1.2.3)", compliancelevel.Permissive, assert.False},
+		{"<=version", "foo (<=1.2.3)", compliancelevel.Specification, assert.False},
+		{"<=version", "foo (<=1.2.3)", compliancelevel.Strict, assert.False},
+		{"=version", "foo (=1.2.3)", compliancelevel.Permissive, assert.False},
+		{"=version", "foo (=1.2.3)", compliancelevel.Specification, assert.False},
+		{"=version", "foo (=1.2.3)", compliancelevel.Strict, assert.False},
+		{">=version", "foo (>=1.2.3)", compliancelevel.Permissive, assert.False},
+		{">=version", "foo (>=1.2.3)", compliancelevel.Specification, assert.False},
+		{">=version", "foo (>=1.2.3)", compliancelevel.Strict, assert.False},
+		{">version", "foo (>1.2.3)", compliancelevel.Permissive, assert.False},
+		{">version", "foo (>1.2.3)", compliancelevel.Specification, assert.False},
+		{">version", "foo (>1.2.3)", compliancelevel.Strict, assert.False},
+
+		{"Relaxed version", "foo (=1.2)", compliancelevel.Permissive, assert.False},
+		{"Relaxed version", "foo (=1.2)", compliancelevel.Specification, assert.False},
+		{"Relaxed version", "foo (=1.2)", compliancelevel.Strict, assert.False},
+		{"Pre-release version", "foo (=1.2.3-rc1)", compliancelevel.Permissive, assert.False},
+		{"Pre-release version", "foo (=1.2.3-rc1)", compliancelevel.Specification, assert.False},
+		{"Pre-release version", "foo (=1.2.3-rc1)", compliancelevel.Strict, assert.False},
+
+		{"Invalid version", "foo (bar)", compliancelevel.Permissive, assert.True},
+		{"Invalid version", "foo (bar)", compliancelevel.Specification, assert.True},
+		{"Invalid version", "foo (bar)", compliancelevel.Strict, assert.True},
+
+		{"Version w/o space", "foo(>1.2.3)", compliancelevel.Permissive, assert.True},
+		{"Version w/o space", "foo(>1.2.3)", compliancelevel.Specification, assert.True},
+		{"Version w/o space", "foo(>1.2.3)", compliancelevel.Strict, assert.True},
+
+		{"Names w/ version", "foo (<=1.2.3),bar", compliancelevel.Permissive, assert.False},
+		{"Names w/ version", "foo (<=1.2.3),bar", compliancelevel.Specification, assert.False},
+		{"Names w/ version", "foo (<=1.2.3),bar", compliancelevel.Strict, assert.False},
 	}
 
 	checkPropertyPatternMismatch("depends", testTables, t)
