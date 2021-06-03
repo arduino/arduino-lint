@@ -794,22 +794,25 @@ func TestLibraryPropertiesArchitecturesFieldValueCase(t *testing.T) {
 	checkLibraryRuleFunction(LibraryPropertiesArchitecturesFieldValueCase, testTables, t)
 }
 
-func TestLibraryPropertiesDependsFieldDisallowedCharacters(t *testing.T) {
+func TestLibraryPropertiesDependsFieldInvalidFormat(t *testing.T) {
 	testTables := []libraryRuleFunctionTestTable{
 		{"Invalid", "InvalidLibraryProperties", ruleresult.NotRun, ""},
 		{"Legacy", "Legacy", ruleresult.Skip, ""},
 		{"Depends field has disallowed characters", "DependsHasBadChars", ruleresult.Fail, ""},
-		{"Valid", "DependsIndexed", ruleresult.Pass, ""},
+		{"Valid", "DependsValid", ruleresult.Pass, ""},
 	}
 
-	checkLibraryRuleFunction(LibraryPropertiesDependsFieldDisallowedCharacters, testTables, t)
+	checkLibraryRuleFunction(LibraryPropertiesDependsFieldInvalidFormat, testTables, t)
 }
 
 func TestLibraryPropertiesDependsFieldNotInIndex(t *testing.T) {
 	testTables := []libraryRuleFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", ruleresult.NotRun, ""},
+		{"Legacy", "Legacy", ruleresult.Skip, ""},
+		{"No depends field", "MissingFields", ruleresult.Skip, ""},
 		{"Dependency not in index", "DependsNotIndexed", ruleresult.Fail, "^NotIndexed$"},
-		{"Dependency in index", "DependsIndexed", ruleresult.Pass, ""},
+		{"Dependency constraint not in index", "DependsConstraintNotIndexed", ruleresult.Fail, "^Servo \\(=0\\.0\\.1\\)$"},
+		{"Dependencies in index", "DependsIndexed", ruleresult.Pass, ""},
 		{"Depends field empty", "DependsEmpty", ruleresult.Pass, ""},
 		{"No depends", "NoDepends", ruleresult.Skip, ""},
 	}

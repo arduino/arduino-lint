@@ -16,12 +16,12 @@
 package projectdata
 
 import (
-	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"os"
 
 	"github.com/arduino/arduino-cli/arduino/libraries"
+	"github.com/arduino/arduino-cli/arduino/libraries/librariesmanager"
 	"github.com/arduino/arduino-lint/internal/configuration"
 	"github.com/arduino/arduino-lint/internal/configuration/rulemode"
 	"github.com/arduino/arduino-lint/internal/project"
@@ -29,6 +29,7 @@ import (
 	"github.com/arduino/arduino-lint/internal/result/feedback"
 	"github.com/arduino/arduino-lint/internal/rule/schema"
 	"github.com/arduino/arduino-lint/internal/rule/schema/compliancelevel"
+	"github.com/arduino/go-paths-helper"
 	"github.com/arduino/go-properties-orderedmap"
 	"github.com/client9/misspell"
 	"github.com/sirupsen/logrus"
@@ -60,23 +61,34 @@ func InitializeForLibrary(project project.Type) {
 
 	// Download the Library Manager index if needed.
 	if !configuration.RuleModes(project.SuperprojectType)[rulemode.LibraryManagerIndexing] && libraryManagerIndex == nil {
-		url := "http://downloads.arduino.cc/libraries/library_index.json"
-		httpResponse, err := http.Get(url)
+		// Set up the temporary folder for the index
+		libraryIndexFolderPath, err := paths.TempDir().MkTempDir("arduino-lint-library-index-folder")
+		defer libraryIndexFolderPath.RemoveAll()
 		if err != nil {
-			feedback.Errorf("Unable to download Library Manager index from %s: %s", err, url)
+			panic(err)
+		}
+		libraryIndexPath := libraryIndexFolderPath.Join("library_index.json")
+
+		// Download the index data
+		httpResponse, err := http.Get(librariesmanager.LibraryIndexURL.String())
+		if err != nil {
+			feedback.Errorf("Unable to download Library Manager index from %s: %s", err, librariesmanager.LibraryIndexURL)
 			os.Exit(1)
 		}
 		defer httpResponse.Body.Close()
 
-		bytes, err := ioutil.ReadAll(httpResponse.Body)
+		// Write the index data to file
+		libraryIndexFile, err := libraryIndexPath.Create()
+		defer libraryIndexFile.Close()
 		if err != nil {
+			panic(err)
+		}
+		if _, err := io.Copy(libraryIndexFile, httpResponse.Body); err != nil {
 			panic(err)
 		}
 
-		err = json.Unmarshal(bytes, &libraryManagerIndex)
-		if err != nil {
-			panic(err)
-		}
+		libraryManagerIndex = librariesmanager.NewLibraryManager(libraryIndexFolderPath, nil)
+		libraryManagerIndex.LoadIndex()
 	}
 
 	if misspelledWordsReplacer == nil { // The replacer only needs to be compiled once per run.
@@ -120,10 +132,10 @@ func SourceHeaders() []string {
 	return sourceHeaders
 }
 
-var libraryManagerIndex map[string]interface{}
+var libraryManagerIndex *librariesmanager.LibrariesManager
 
 // LibraryManagerIndex returns the Library Manager index data.
-func LibraryManagerIndex() map[string]interface{} {
+func LibraryManagerIndex() *librariesmanager.LibrariesManager {
 	return libraryManagerIndex
 }
 

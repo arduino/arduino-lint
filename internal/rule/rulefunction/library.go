@@ -22,9 +22,11 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 
 	"github.com/arduino/arduino-cli/arduino/libraries"
+	"github.com/arduino/arduino-cli/arduino/libraries/librariesindex"
 	"github.com/arduino/arduino-cli/arduino/utils"
 	"github.com/arduino/arduino-lint/internal/project/library"
 	"github.com/arduino/arduino-lint/internal/project/projectdata"
@@ -1158,8 +1160,8 @@ func LibraryPropertiesArchitecturesFieldValueCase() (result ruleresult.Type, out
 	return ruleresult.Pass, ""
 }
 
-// LibraryPropertiesDependsFieldDisallowedCharacters checks for disallowed characters in the library.properties "depends" field.
-func LibraryPropertiesDependsFieldDisallowedCharacters() (result ruleresult.Type, output string) {
+// LibraryPropertiesDependsFieldInvalidFormat checks for the library.properties "depends" field having an invalid format.
+func LibraryPropertiesDependsFieldInvalidFormat() (result ruleresult.Type, output string) {
 	if projectdata.LibraryPropertiesLoadError() != nil {
 		return ruleresult.NotRun, "Couldn't load library.properties"
 	}
@@ -1187,21 +1189,55 @@ func LibraryPropertiesDependsFieldNotInIndex() (result ruleresult.Type, output s
 		return ruleresult.Skip, "Field not present"
 	}
 
-	dependencies := commaSeparatedToList(depends)
+	dependsList := commaSeparatedToList(depends)
 
-	dependenciesNotInIndex := []string{}
-	for _, dependency := range dependencies {
-		if dependency == "" {
+	var dependencyRegexp = regexp.MustCompile("^([^()]+?) *(?:\\((.+)\\))?$")
+	dependsNotInIndex := []string{}
+	for _, depend := range dependsList {
+		// Process raw depend string into a dependency object
+		if depend == "" {
+			// This is the responsibility of LibraryPropertiesDependsFieldInvalidFormat()
 			continue
 		}
-		logrus.Tracef("Checking if dependency %s is in index.", dependency)
-		if !nameInLibraryManagerIndex(dependency) {
-			dependenciesNotInIndex = append(dependenciesNotInIndex, dependency)
+		dependencyData := dependencyRegexp.FindAllStringSubmatch(depend, -1)
+		if dependencyData == nil {
+			// This is the responsibility of LibraryPropertiesDependsFieldInvalidFormat()
+			continue
+		}
+		dependencyConstraint, err := semver.ParseConstraint(dependencyData[0][2])
+		if err != nil {
+			// This is the responsibility of LibraryPropertiesDependsFieldInvalidFormat()
+			continue
+		}
+		var dependency semver.Dependency = &librariesindex.Dependency{
+			Name:              dependencyData[0][1],
+			VersionConstraint: dependencyConstraint,
+		}
+
+		logrus.Tracef("Checking if dependency %s is in index.", depend)
+		// Get all releases of the dependency
+		library := projectdata.LibraryManagerIndex().Index.FindIndexedLibrary(&libraries.Library{Name: dependency.GetName()})
+		if library == nil {
+			logrus.Tracef("Dependency is not in the index.")
+			dependsNotInIndex = append(dependsNotInIndex, depend)
+			continue
+		}
+		// Convert the dependency's libraries.Library object to a semver.Releases object
+		var releases semver.Releases
+		for _, release := range library.Releases {
+			releases = append(releases, release)
+		}
+		// Filter the dependency's releases according to the dependency's constraint
+		dependencyReleases := releases.FilterBy(dependency)
+		if len(dependencyReleases) == 0 {
+			logrus.Tracef("No releases match dependency's constraint.")
+			dependsNotInIndex = append(dependsNotInIndex, depend)
+			continue
 		}
 	}
 
-	if len(dependenciesNotInIndex) > 0 {
-		return ruleresult.Fail, strings.Join(dependenciesNotInIndex, ", ")
+	if len(dependsNotInIndex) > 0 {
+		return ruleresult.Fail, strings.Join(dependsNotInIndex, ", ")
 	}
 
 	return ruleresult.Pass, ""
@@ -1461,15 +1497,8 @@ func IncorrectExamplesFolderNameCase() (result ruleresult.Type, output string) {
 
 // nameInLibraryManagerIndex returns whether there is a library in Library Manager index using the given name.
 func nameInLibraryManagerIndex(name string) bool {
-	libraries := projectdata.LibraryManagerIndex()["libraries"].([]interface{})
-	for _, libraryInterface := range libraries {
-		library := libraryInterface.(map[string]interface{})
-		if library["name"].(string) == name {
-			return true
-		}
-	}
-
-	return false
+	library := projectdata.LibraryManagerIndex().Index.FindIndexedLibrary(&libraries.Library{Name: name})
+	return library != nil
 }
 
 // spellCheckLibraryPropertiesFieldValue returns the value of the provided library.properties field with commonly misspelled words corrected.
