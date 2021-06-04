@@ -744,6 +744,24 @@ func LibraryPropertiesMaintainerFieldStartsWithArduino() (result ruleresult.Type
 	return ruleresult.Pass, ""
 }
 
+// LibraryPropertiesMaintainerFieldContainsArduino checks if the library.properties "maintainer" value contains "Arduino".
+func LibraryPropertiesMaintainerFieldContainsArduino() (result ruleresult.Type, output string) {
+	if projectdata.LibraryPropertiesLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load library.properties"
+	}
+
+	maintainer, ok := projectdata.LibraryProperties().GetOk("maintainer")
+	if !ok {
+		return ruleresult.NotRun, "Field not present"
+	}
+
+	if schema.ValidationErrorMatch("^#/maintainer$", "/patternObjects/notContainsArduino", "", "", projectdata.LibraryPropertiesSchemaValidationResult()[compliancelevel.Strict]) {
+		return ruleresult.Fail, maintainer
+	}
+
+	return ruleresult.Pass, ""
+}
+
 // LibraryPropertiesEmailFieldAsMaintainerAlias checks whether the library.properties "email" field is being used as an alias for the "maintainer" field.
 func LibraryPropertiesEmailFieldAsMaintainerAlias() (result ruleresult.Type, output string) {
 	if projectdata.LibraryPropertiesLoadError() != nil {
