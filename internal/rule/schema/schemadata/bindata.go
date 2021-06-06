@@ -1425,11 +1425,6 @@ var _arduinoLibraryPropertiesDefinitionsSchemaJson = []byte(`{
   "definitions": {
     "general": {
       "patternObjects": {
-        "notStartsWithArduino": {
-          "not": {
-            "pattern": "^[aA][rR][dD][uU][iI][nN][oO].*$"
-          }
-        },
         "notContainsArduino": {
           "not": {
             "pattern": "^.+[aA][rR][dD][uU][iI][nN][oO].*$"
@@ -1488,7 +1483,7 @@ var _arduinoLibraryPropertiesDefinitionsSchemaJson = []byte(`{
               },
               {
                 "$comment": "Only official Arduino libraries are allowed to have names starting with \"Arduino\"",
-                "$ref": "#/definitions/general/patternObjects/notStartsWithArduino"
+                "$ref": "general-definitions-schema.json#/definitions/patternObjects/notStartsWithArduino"
               }
             ]
           }
@@ -1647,7 +1642,7 @@ var _arduinoLibraryPropertiesDefinitionsSchemaJson = []byte(`{
               },
               {
                 "$comment": "Only official Arduino libraries are allowed to have maintainer field starting with \"Arduino\"",
-                "$ref": "#/definitions/general/patternObjects/notStartsWithArduino"
+                "$ref": "general-definitions-schema.json#/definitions/patternObjects/notStartsWithArduino"
               }
             ]
           }
@@ -4370,6 +4365,11 @@ var _generalDefinitionsSchemaJson = []byte(`{
       "containsPropertyReference": {
         "$comment": "https://arduino.github.io/arduino-cli/dev/platform-specification/#configuration-files-format",
         "pattern": "{.+}"
+      },
+      "notStartsWithArduino": {
+        "not": {
+          "pattern": "^[aA][rR][dD][uU][iI][nN][oO].*$"
+        }
       }
     }
   }

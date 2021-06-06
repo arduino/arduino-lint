@@ -6,11 +6,6 @@
   "definitions": {
     "general": {
       "patternObjects": {
-        "notStartsWithArduino": {
-          "not": {
-            "pattern": "^[aA][rR][dD][uU][iI][nN][oO].*$"
-          }
-        },
         "notContainsArduino": {
           "not": {
             "pattern": "^.+[aA][rR][dD][uU][iI][nN][oO].*$"
@@ -69,7 +64,7 @@
               },
               {
                 "$comment": "Only official Arduino libraries are allowed to have names starting with \"Arduino\"",
-                "$ref": "#/definitions/general/patternObjects/notStartsWithArduino"
+                "$ref": "general-definitions-schema.json#/definitions/patternObjects/notStartsWithArduino"
               }
             ]
           }
@@ -228,7 +223,7 @@
               },
               {
                 "$comment": "Only official Arduino libraries are allowed to have maintainer field starting with \"Arduino\"",
-                "$ref": "#/definitions/general/patternObjects/notStartsWithArduino"
+                "$ref": "general-definitions-schema.json#/definitions/patternObjects/notStartsWithArduino"
               }
             ]
           }
