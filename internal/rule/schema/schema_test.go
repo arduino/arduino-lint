@@ -153,6 +153,29 @@ func TestPropertyEnumMismatch(t *testing.T) {
 	assert.True(t, PropertyEnumMismatch("property3", validationResult))
 }
 
+func TestPropertyTypeMismatch(t *testing.T) {
+	propertyName := "TestPropertyTypeMismatch"
+	instanceTemplate := `
+{
+	"%s": "foo"
+}
+`
+	rawInstance := fmt.Sprintf(instanceTemplate, propertyName)
+	var instance map[string]interface{}
+	json.Unmarshal([]byte(rawInstance), &instance)
+
+	assert.False(t, PropertyTypeMismatch(propertyName, Validate(instance, validSchemaWithReferences)), "Property type is correct")
+
+	// Change property to incorrect type.
+	pointerString := "/" + propertyName
+	pointer, err := gojsonpointer.NewJsonPointer(pointerString)
+	require.NoError(t, err)
+	_, err = pointer.Set(instance, 1)
+	require.NoError(t, err)
+
+	assert.True(t, PropertyTypeMismatch(propertyName, Validate(instance, validSchemaWithReferences)), "Property type is incorrect")
+}
+
 func TestPropertyFormatMismatch(t *testing.T) {
 	propertyName := "TestPropertyFormatMismatch"
 	instanceTemplate := `

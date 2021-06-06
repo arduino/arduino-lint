@@ -138,6 +138,11 @@ var _referencedSchema2Json = []byte(`{
         ]
       }
     },
+    "TestPropertyTypeMismatch": {
+      "object": {
+        "type": "string"
+      }
+    },
     "TestPropertyFormatMismatch": {
       "object": {
         "format": "uri"
@@ -220,6 +225,13 @@ var _validSchemaWithReferencesJson = []byte(`{
         },
         {
           "$ref": "referenced-schema-2.json#/definitions/notPatternObject"
+        }
+      ]
+    },
+    "TestPropertyTypeMismatch": {
+      "allOf": [
+        {
+          "$ref": "referenced-schema-2.json#/definitions/TestPropertyTypeMismatch/object"
         }
       ]
     },
