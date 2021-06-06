@@ -16,6 +16,8 @@
 package schema
 
 import (
+	"encoding/json"
+	"fmt"
 	"regexp"
 	"testing"
 
@@ -25,6 +27,7 @@ import (
 	"github.com/ory/jsonschema/v3"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/xeipuuv/gojsonpointer"
 )
 
 var validMap = map[string]string{
@@ -148,6 +151,29 @@ func TestPropertyEnumMismatch(t *testing.T) {
 	propertiesMap.Set("property3", "invalid")
 	validationResult = Validate(general.PropertiesToMap(propertiesMap, 0), validSchemaWithReferences)
 	assert.True(t, PropertyEnumMismatch("property3", validationResult))
+}
+
+func TestPropertyFormatMismatch(t *testing.T) {
+	propertyName := "TestPropertyFormatMismatch"
+	instanceTemplate := `
+{
+	"%s": "http://example.com"
+}
+`
+	rawInstance := fmt.Sprintf(instanceTemplate, propertyName)
+	var instance map[string]interface{}
+	json.Unmarshal([]byte(rawInstance), &instance)
+
+	assert.False(t, PropertyFormatMismatch(propertyName, Validate(instance, validSchemaWithReferences)), "Property format is correct")
+
+	// Change property to incorrect type.
+	pointerString := "/" + propertyName
+	pointer, err := gojsonpointer.NewJsonPointer(pointerString)
+	require.NoError(t, err)
+	_, err = pointer.Set(instance, "foo")
+	require.NoError(t, err)
+
+	assert.True(t, PropertyFormatMismatch(propertyName, Validate(instance, validSchemaWithReferences)), "Property format is incorrect")
 }
 
 func TestPropertyDependenciesMissing(t *testing.T) {

@@ -54,6 +54,11 @@ func PropertyDependenciesMissing(propertyName string, validationResult Validatio
 	return ValidationErrorMatch("", "/dependencies/"+propertyName+"/[0-9]+$", "", "", validationResult)
 }
 
+// PropertyFormatMismatch returns whether the given property has incorrect format.
+func PropertyFormatMismatch(propertyName string, validationResult ValidationResult) bool {
+	return ValidationErrorMatch("^#/"+propertyName+"$", "/format$", "", "", validationResult)
+}
+
 // MisspelledOptionalPropertyFound returns whether a misspelled optional property was found.
 func MisspelledOptionalPropertyFound(validationResult ValidationResult) bool {
 	return ValidationErrorMatch("#/", "/misspelledOptionalProperties/", "", "", validationResult)

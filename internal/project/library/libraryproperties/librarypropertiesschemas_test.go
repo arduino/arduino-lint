@@ -79,6 +79,19 @@ func checkPropertyEnumMismatch(propertyName string, testTables []propertyValueTe
 	}
 }
 
+func checkPropertyFormatMismatch(propertyName string, testTables []propertyValueTestTable, t *testing.T) {
+	libraryProperties := properties.NewFromHashmap(validLibraryPropertiesMap)
+	var validationResult map[compliancelevel.Type]schema.ValidationResult
+
+	for _, testTable := range testTables {
+		validationResult = changeValueUpdateValidationResult(propertyName, testTable.propertyValue, libraryProperties, validationResult)
+
+		t.Run(fmt.Sprintf("%s (%s)", testTable.testName, testTable.complianceLevel), func(t *testing.T) {
+			testTable.assertion(t, schema.PropertyFormatMismatch(propertyName, validationResult[testTable.complianceLevel]))
+		})
+	}
+}
+
 type validationErrorTestTable struct {
 	testName           string
 	propertyValue      string
@@ -322,13 +335,13 @@ func TestPropertiesCategoryEnum(t *testing.T) {
 }
 
 func TestPropertiesUrlFormat(t *testing.T) {
-	testTables := []validationErrorTestTable{
-		{"Invalid URL format", "foo", "/format$", compliancelevel.Permissive, assert.False},
-		{"Invalid URL format", "foo", "/format$", compliancelevel.Specification, assert.True},
-		{"Invalid URL format", "foo", "/format$", compliancelevel.Strict, assert.True},
+	testTables := []propertyValueTestTable{
+		{"Invalid URL format", "foo", compliancelevel.Permissive, assert.False},
+		{"Invalid URL format", "foo", compliancelevel.Specification, assert.True},
+		{"Invalid URL format", "foo", compliancelevel.Strict, assert.True},
 	}
 
-	checkValidationErrorMatch("url", testTables, t)
+	checkPropertyFormatMismatch("url", testTables, t)
 }
 
 func TestPropertiesDependsPattern(t *testing.T) {
