@@ -16,6 +16,7 @@
 package rulefunction
 
 import (
+	"github.com/arduino/arduino-lint/internal/project/packageindex"
 	"github.com/arduino/arduino-lint/internal/project/projectdata"
 	"github.com/arduino/arduino-lint/internal/rule/ruleresult"
 )
@@ -29,6 +30,32 @@ func PackageIndexMissing() (result ruleresult.Type, output string) {
 	}
 
 	return ruleresult.Pass, ""
+}
+
+// PackageIndexFilenameInvalid checks whether the package index's filename is valid for 3rd party projects.
+func PackageIndexFilenameInvalid() (result ruleresult.Type, output string) {
+	if projectdata.ProjectPath() == nil {
+		return ruleresult.NotRun, "Package index not found"
+	}
+
+	if packageindex.HasValidFilename(projectdata.ProjectPath(), false) {
+		return ruleresult.Pass, ""
+	}
+
+	return ruleresult.Fail, projectdata.ProjectPath().Base()
+}
+
+// PackageIndexOfficialFilenameInvalid checks whether the package index's filename is valid for official projects.
+func PackageIndexOfficialFilenameInvalid() (result ruleresult.Type, output string) {
+	if projectdata.ProjectPath() == nil {
+		return ruleresult.NotRun, "Package index not found"
+	}
+
+	if packageindex.HasValidFilename(projectdata.ProjectPath(), true) {
+		return ruleresult.Pass, ""
+	}
+
+	return ruleresult.Fail, projectdata.ProjectPath().Base()
 }
 
 // PackageIndexJSONFormat checks whether the package index file is a valid JSON document.
