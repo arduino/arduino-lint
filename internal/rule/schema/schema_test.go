@@ -19,6 +19,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"regexp"
+	"strings"
 	"testing"
 
 	"github.com/arduino/arduino-lint/internal/project/general"
@@ -197,6 +198,48 @@ func TestPropertyFormatMismatch(t *testing.T) {
 	require.NoError(t, err)
 
 	assert.True(t, PropertyFormatMismatch(propertyName, Validate(instance, validSchemaWithReferences)), "Property format is incorrect")
+}
+
+func TestProhibitedAdditionalProperties(t *testing.T) {
+	propertyName := "TestProhibitedAdditionalProperties"
+	instanceTemplate := `
+{
+	"%s": {
+		"additionalPropertiesTrue": {
+			"fooProperty": "bar"
+		},
+		"additionalPropertiesFalse": {
+			"fooProperty": "bar"
+		}
+	}
+}
+`
+
+	testTables := []struct {
+		objectPointerString string
+		assertion           assert.BoolAssertionFunc
+	}{
+		{"/TestProhibitedAdditionalProperties/additionalPropertiesTrue", assert.False},
+		{"/TestProhibitedAdditionalProperties/additionalPropertiesFalse", assert.True},
+	}
+
+	for _, testTable := range testTables {
+		rawInstance := fmt.Sprintf(instanceTemplate, propertyName)
+		var instance map[string]interface{}
+		json.Unmarshal([]byte(rawInstance), &instance)
+
+		assert.False(t, ProhibitedAdditionalProperties(strings.TrimPrefix(testTable.objectPointerString, "/"), Validate(instance, validSchemaWithReferences)), fmt.Sprintf("No additional properties in %s", testTable.objectPointerString))
+
+		// Add additional property to object.
+		pointer, err := gojsonpointer.NewJsonPointer(testTable.objectPointerString + "/fooAdditionalProperty")
+		require.NoError(t, err)
+		_, err = pointer.Set(instance, "bar")
+		require.NoError(t, err)
+
+		t.Run(fmt.Sprintf("Additional property in the %s object", testTable.objectPointerString), func(t *testing.T) {
+			testTable.assertion(t, ProhibitedAdditionalProperties(strings.TrimPrefix(testTable.objectPointerString, "/"), Validate(instance, validSchemaWithReferences)))
+		})
+	}
 }
 
 func TestPropertyDependenciesMissing(t *testing.T) {

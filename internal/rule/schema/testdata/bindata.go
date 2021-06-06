@@ -241,6 +241,22 @@ var _validSchemaWithReferencesJson = []byte(`{
           "$ref": "referenced-schema-2.json#/definitions/TestPropertyFormatMismatch/object"
         }
       ]
+    },
+    "TestProhibitedAdditionalProperties": {
+      "properties": {
+        "additionalPropertiesTrue": {
+          "properties": {
+            "fooProperty": {}
+          },
+          "additionalProperties": true
+        },
+        "additionalPropertiesFalse": {
+          "properties": {
+            "fooProperty": {}
+          },
+          "additionalProperties": false
+        }
+      }
     }
   },
   "allOf": [

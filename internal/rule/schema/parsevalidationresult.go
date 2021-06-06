@@ -64,6 +64,11 @@ func PropertyFormatMismatch(propertyName string, validationResult ValidationResu
 	return ValidationErrorMatch("^#/"+propertyName+"$", "/format$", "", "", validationResult)
 }
 
+// ProhibitedAdditionalProperty returns whether the given property has prohibited additional subproperty(s).
+func ProhibitedAdditionalProperties(propertyName string, validationResult ValidationResult) bool {
+	return ValidationErrorMatch("^#/?"+propertyName+"$", "/additionalProperties$", "", "", validationResult)
+}
+
 // MisspelledOptionalPropertyFound returns whether a misspelled optional property was found.
 func MisspelledOptionalPropertyFound(validationResult ValidationResult) bool {
 	return ValidationErrorMatch("#/", "/misspelledOptionalProperties/", "", "", validationResult)
