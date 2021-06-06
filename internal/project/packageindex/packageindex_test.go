@@ -21,6 +21,7 @@ import (
 
 	"github.com/arduino/go-paths-helper"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 var testDataPath *paths.Path
@@ -31,6 +32,13 @@ func init() {
 		panic(err)
 	}
 	testDataPath = paths.New(workingDirectory, "testdata")
+}
+
+func TestProperties(t *testing.T) {
+	packageIndex, err := Properties(testDataPath.Join("package_valid_index.json"))
+	require.Nil(t, err)
+
+	assert.NotNil(t, packageIndex)
 }
 
 func TestHasValidExtension(t *testing.T) {
