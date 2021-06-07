@@ -69,6 +69,28 @@ func TestPackageIndexMissing(t *testing.T) {
 	checkPackageIndexRuleFunction(PackageIndexMissing, testTables, t)
 }
 
+func TestPackageIndexFilenameInvalid(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Missing", "missing", ruleresult.NotRun, ""},
+		{"Valid 3rd party", "3rd-party-filename", ruleresult.Pass, ""},
+		{"Valid official", "official-filename", ruleresult.Fail, "^package_index.json$"},
+		{"Invalid", "invalid-filename", ruleresult.Fail, "^invalid-filename.json$"},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexFilenameInvalid, testTables, t)
+}
+
+func TestPackageIndexOfficialFilenameInvalid(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Missing", "missing", ruleresult.NotRun, ""},
+		{"Valid 3rd party", "3rd-party-filename", ruleresult.Pass, ""},
+		{"Valid official", "official-filename", ruleresult.Pass, ""},
+		{"Invalid", "invalid-filename", ruleresult.Fail, "^invalid-filename.json$"},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexOfficialFilenameInvalid, testTables, t)
+}
+
 func TestPackageIndexJSONFormat(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.Fail, ""},
