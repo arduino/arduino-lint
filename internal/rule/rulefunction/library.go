@@ -19,7 +19,6 @@ package rulefunction
 
 import (
 	"fmt"
-	"net/http"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -1010,17 +1009,12 @@ func LibraryPropertiesUrlFieldDeadLink() (result ruleresult.Type, output string)
 		return ruleresult.NotRun, "Field not present"
 	}
 
-	logrus.Tracef("Checking URL: %s", url)
-	httpResponse, err := http.Head(url)
+	err := checkURL(url)
 	if err != nil {
 		return ruleresult.Fail, err.Error()
 	}
 
-	if httpResponse.StatusCode == http.StatusOK {
-		return ruleresult.Pass, ""
-	}
-
-	return ruleresult.Fail, httpResponse.Status
+	return ruleresult.Pass, ""
 }
 
 // LibraryPropertiesArchitecturesFieldMissing checks for missing library.properties "architectures" field.

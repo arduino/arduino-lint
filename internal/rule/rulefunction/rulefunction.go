@@ -19,6 +19,7 @@ package rulefunction
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
 	"regexp"
 	"strings"
 
@@ -26,6 +27,7 @@ import (
 	"github.com/arduino/arduino-lint/internal/project/sketch"
 	"github.com/arduino/arduino-lint/internal/rule/ruleresult"
 	"github.com/arduino/go-paths-helper"
+	"github.com/sirupsen/logrus"
 )
 
 // Type is the function signature for the rule functions.
@@ -155,4 +157,18 @@ func isValidJSON(path *paths.Path) bool {
 		panic(err)
 	}
 	return json.Valid(data)
+}
+
+func checkURL(url string) error {
+	logrus.Tracef("Checking URL: %s", url)
+	response, err := http.Head(url)
+	if err != nil {
+		return err
+	}
+
+	if response.StatusCode != http.StatusOK {
+		return fmt.Errorf("%s", response.Status)
+	}
+
+	return nil
 }
