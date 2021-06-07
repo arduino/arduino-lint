@@ -17,6 +17,11 @@
       "containsPropertyReference": {
         "$comment": "https://arduino.github.io/arduino-cli/dev/platform-specification/#configuration-files-format",
         "pattern": "{.+}"
+      },
+      "notStartsWithArduino": {
+        "not": {
+          "pattern": "^[aA][rR][dD][uU][iI][nN][oO].*$"
+        }
       }
     }
   }

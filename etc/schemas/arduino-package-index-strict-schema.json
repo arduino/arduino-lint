@@ -1,0 +1,11 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-package-index-strict-schema.json",
+  "title": "Arduino Package Index JSON strict schema",
+  "description": "Package indexes define Arduino hardware packages. See: https://arduino.github.io/arduino-cli/latest/package_index_json-specification/. This schema defines the best practices for the data format, above and beyond the specification.",
+  "allOf": [
+    {
+      "$ref": "arduino-package-index-definitions-schema.json#/definitions/root/strict/object"
+    }
+  ]
+}

@@ -16,7 +16,10 @@
 package schema
 
 import (
+	"encoding/json"
+	"fmt"
 	"regexp"
+	"strings"
 	"testing"
 
 	"github.com/arduino/arduino-lint/internal/project/general"
@@ -25,6 +28,7 @@ import (
 	"github.com/ory/jsonschema/v3"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/xeipuuv/gojsonpointer"
 )
 
 var validMap = map[string]string{
@@ -148,6 +152,94 @@ func TestPropertyEnumMismatch(t *testing.T) {
 	propertiesMap.Set("property3", "invalid")
 	validationResult = Validate(general.PropertiesToMap(propertiesMap, 0), validSchemaWithReferences)
 	assert.True(t, PropertyEnumMismatch("property3", validationResult))
+}
+
+func TestPropertyTypeMismatch(t *testing.T) {
+	propertyName := "TestPropertyTypeMismatch"
+	instanceTemplate := `
+{
+	"%s": "foo"
+}
+`
+	rawInstance := fmt.Sprintf(instanceTemplate, propertyName)
+	var instance map[string]interface{}
+	json.Unmarshal([]byte(rawInstance), &instance)
+
+	assert.False(t, PropertyTypeMismatch(propertyName, Validate(instance, validSchemaWithReferences)), "Property type is correct")
+
+	// Change property to incorrect type.
+	pointerString := "/" + propertyName
+	pointer, err := gojsonpointer.NewJsonPointer(pointerString)
+	require.NoError(t, err)
+	_, err = pointer.Set(instance, 1)
+	require.NoError(t, err)
+
+	assert.True(t, PropertyTypeMismatch(propertyName, Validate(instance, validSchemaWithReferences)), "Property type is incorrect")
+}
+
+func TestPropertyFormatMismatch(t *testing.T) {
+	propertyName := "TestPropertyFormatMismatch"
+	instanceTemplate := `
+{
+	"%s": "http://example.com"
+}
+`
+	rawInstance := fmt.Sprintf(instanceTemplate, propertyName)
+	var instance map[string]interface{}
+	json.Unmarshal([]byte(rawInstance), &instance)
+
+	assert.False(t, PropertyFormatMismatch(propertyName, Validate(instance, validSchemaWithReferences)), "Property format is correct")
+
+	// Change property to incorrect type.
+	pointerString := "/" + propertyName
+	pointer, err := gojsonpointer.NewJsonPointer(pointerString)
+	require.NoError(t, err)
+	_, err = pointer.Set(instance, "foo")
+	require.NoError(t, err)
+
+	assert.True(t, PropertyFormatMismatch(propertyName, Validate(instance, validSchemaWithReferences)), "Property format is incorrect")
+}
+
+func TestProhibitedAdditionalProperties(t *testing.T) {
+	propertyName := "TestProhibitedAdditionalProperties"
+	instanceTemplate := `
+{
+	"%s": {
+		"additionalPropertiesTrue": {
+			"fooProperty": "bar"
+		},
+		"additionalPropertiesFalse": {
+			"fooProperty": "bar"
+		}
+	}
+}
+`
+
+	testTables := []struct {
+		objectPointerString string
+		assertion           assert.BoolAssertionFunc
+	}{
+		{"/TestProhibitedAdditionalProperties/additionalPropertiesTrue", assert.False},
+		{"/TestProhibitedAdditionalProperties/additionalPropertiesFalse", assert.True},
+	}
+
+	for _, testTable := range testTables {
+		rawInstance := fmt.Sprintf(instanceTemplate, propertyName)
+		var instance map[string]interface{}
+		json.Unmarshal([]byte(rawInstance), &instance)
+
+		assert.False(t, ProhibitedAdditionalProperties(strings.TrimPrefix(testTable.objectPointerString, "/"), Validate(instance, validSchemaWithReferences)), fmt.Sprintf("No additional properties in %s", testTable.objectPointerString))
+
+		// Add additional property to object.
+		pointer, err := gojsonpointer.NewJsonPointer(testTable.objectPointerString + "/fooAdditionalProperty")
+		require.NoError(t, err)
+		_, err = pointer.Set(instance, "bar")
+		require.NoError(t, err)
+
+		t.Run(fmt.Sprintf("Additional property in the %s object", testTable.objectPointerString), func(t *testing.T) {
+			testTable.assertion(t, ProhibitedAdditionalProperties(strings.TrimPrefix(testTable.objectPointerString, "/"), Validate(instance, validSchemaWithReferences)))
+		})
+	}
 }
 
 func TestPropertyDependenciesMissing(t *testing.T) {

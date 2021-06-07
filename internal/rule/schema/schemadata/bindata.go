@@ -8,6 +8,10 @@
 // etc/schemas/arduino-library-properties-permissive-schema.json
 // etc/schemas/arduino-library-properties-schema.json
 // etc/schemas/arduino-library-properties-strict-schema.json
+// etc/schemas/arduino-package-index-definitions-schema.json
+// etc/schemas/arduino-package-index-permissive-schema.json
+// etc/schemas/arduino-package-index-schema.json
+// etc/schemas/arduino-package-index-strict-schema.json
 // etc/schemas/arduino-platform-txt-definitions-schema.json
 // etc/schemas/arduino-platform-txt-permissive-schema.json
 // etc/schemas/arduino-platform-txt-schema.json
@@ -1425,11 +1429,6 @@ var _arduinoLibraryPropertiesDefinitionsSchemaJson = []byte(`{
   "definitions": {
     "general": {
       "patternObjects": {
-        "notStartsWithArduino": {
-          "not": {
-            "pattern": "^[aA][rR][dD][uU][iI][nN][oO].*$"
-          }
-        },
         "notContainsArduino": {
           "not": {
             "pattern": "^.+[aA][rR][dD][uU][iI][nN][oO].*$"
@@ -1488,7 +1487,7 @@ var _arduinoLibraryPropertiesDefinitionsSchemaJson = []byte(`{
               },
               {
                 "$comment": "Only official Arduino libraries are allowed to have names starting with \"Arduino\"",
-                "$ref": "#/definitions/general/patternObjects/notStartsWithArduino"
+                "$ref": "general-definitions-schema.json#/definitions/patternObjects/notStartsWithArduino"
               }
             ]
           }
@@ -1647,7 +1646,7 @@ var _arduinoLibraryPropertiesDefinitionsSchemaJson = []byte(`{
               },
               {
                 "$comment": "Only official Arduino libraries are allowed to have maintainer field starting with \"Arduino\"",
-                "$ref": "#/definitions/general/patternObjects/notStartsWithArduino"
+                "$ref": "general-definitions-schema.json#/definitions/patternObjects/notStartsWithArduino"
               }
             ]
           }
@@ -2531,6 +2530,1431 @@ func arduinoLibraryPropertiesStrictSchemaJson() (*asset, error) {
 	}
 
 	info := bindataFileInfo{name: "arduino-library-properties-strict-schema.json", size: 0, mode: os.FileMode(0), modTime: time.Unix(0, 0)}
+	a := &asset{bytes: bytes, info: info}
+	return a, nil
+}
+
+var _arduinoPackageIndexDefinitionsSchemaJson = []byte(`{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-package-index-definitions-schema.json",
+  "title": "Shared definitions for the Arduino Package Index schemas",
+  "definitions": {
+    "root": {
+      "base": {
+        "object": {
+          "type": "object",
+          "required": ["packages"]
+        }
+      },
+      "permissive": {
+        "object": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/root/base/object"
+            },
+            {
+              "properties": {
+                "packages": {
+                  "$ref": "#/definitions/propertiesObjects/packages/permissive/object"
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "specification": {
+        "object": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/root/base/object"
+            },
+            {
+              "properties": {
+                "packages": {
+                  "$ref": "#/definitions/propertiesObjects/packages/specification/object"
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "strict": {
+        "object": {
+          "allOf": [
+            {
+              "$ref": "#/definitions/root/base/object"
+            },
+            {
+              "properties": {
+                "packages": {
+                  "$ref": "#/definitions/propertiesObjects/packages/strict/object"
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
+        }
+      }
+    },
+    "propertiesObjects": {
+      "packages": {
+        "base": {
+          "object": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "$comment": "help property is currently undocumented, so considered optional.",
+              "required": ["name", "maintainer", "websiteURL", "email", "platforms", "tools"]
+            }
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/packages/base/object"
+              },
+              {
+                "items": {
+                  "properties": {
+                    "name": {
+                      "$ref": "#/definitions/propertiesObjects/packageName/permissive/object"
+                    },
+                    "maintainer": {
+                      "$ref": "#/definitions/propertiesObjects/maintainer/permissive/object"
+                    },
+                    "websiteURL": {
+                      "$ref": "#/definitions/propertiesObjects/websiteURL/permissive/object"
+                    },
+                    "email": {
+                      "$ref": "#/definitions/propertiesObjects/email/permissive/object"
+                    },
+                    "help": {
+                      "$ref": "#/definitions/propertiesObjects/help/permissive/object"
+                    },
+                    "platforms": {
+                      "$ref": "#/definitions/propertiesObjects/platforms/permissive/object"
+                    },
+                    "tools": {
+                      "$ref": "#/definitions/propertiesObjects/tools/permissive/object"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/packages/base/object"
+              },
+              {
+                "items": {
+                  "properties": {
+                    "name": {
+                      "$ref": "#/definitions/propertiesObjects/packageName/specification/object"
+                    },
+                    "maintainer": {
+                      "$ref": "#/definitions/propertiesObjects/maintainer/specification/object"
+                    },
+                    "websiteURL": {
+                      "$ref": "#/definitions/propertiesObjects/websiteURL/specification/object"
+                    },
+                    "email": {
+                      "$ref": "#/definitions/propertiesObjects/email/specification/object"
+                    },
+                    "help": {
+                      "$ref": "#/definitions/propertiesObjects/help/specification/object"
+                    },
+                    "platforms": {
+                      "$ref": "#/definitions/propertiesObjects/platforms/specification/object"
+                    },
+                    "tools": {
+                      "$ref": "#/definitions/propertiesObjects/tools/specification/object"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/packages/base/object"
+              },
+              {
+                "items": {
+                  "properties": {
+                    "name": {
+                      "$ref": "#/definitions/propertiesObjects/packageName/strict/object"
+                    },
+                    "maintainer": {
+                      "$ref": "#/definitions/propertiesObjects/maintainer/strict/object"
+                    },
+                    "websiteURL": {
+                      "$ref": "#/definitions/propertiesObjects/websiteURL/strict/object"
+                    },
+                    "email": {
+                      "$ref": "#/definitions/propertiesObjects/email/strict/object"
+                    },
+                    "help": {
+                      "$ref": "#/definitions/propertiesObjects/help/strict/object"
+                    },
+                    "platforms": {
+                      "$ref": "#/definitions/propertiesObjects/platforms/strict/object"
+                    },
+                    "tools": {
+                      "$ref": "#/definitions/propertiesObjects/tools/strict/object"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        }
+      },
+      "packageName": {
+        "base": {
+          "object": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "permissive": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/packageName/base/object"
+          }
+        },
+        "specification": {
+          "definitions": {
+            "patternObjects": {
+              "notArduino": {
+                "not": {
+                  "pattern": "^[aA][rR][dD][uU][iI][nN][oO]$"
+                }
+              }
+            }
+          },
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/packageName/base/object"
+              },
+              {
+                "$comment": "Only official Arduino packages are allowed to use the \"arduino\" vendor name",
+                "$ref": "#/definitions/propertiesObjects/packageName/specification/definitions/patternObjects/notArduino"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/packageName/specification/object"
+          }
+        }
+      },
+      "maintainer": {
+        "base": {
+          "object": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "permissive": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/maintainer/base/object"
+          }
+        },
+        "specification": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/maintainer/base/object"
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/maintainer/specification/object"
+              },
+              {
+                "$comment": "Only official Arduino packages are allowed to have maintainer field starting with \"Arduino\"",
+                "$ref": "general-definitions-schema.json#/definitions/patternObjects/notStartsWithArduino"
+              }
+            ]
+          }
+        }
+      },
+      "websiteURL": {
+        "base": {
+          "object": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "permissive": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/websiteURL/base/object"
+          }
+        },
+        "specification": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/websiteURL/base/object"
+          }
+        },
+        "strict": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/websiteURL/specification/object"
+          }
+        }
+      },
+      "email": {
+        "base": {
+          "object": {
+            "type": "string"
+          }
+        },
+        "permissive": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/email/base/object"
+          }
+        },
+        "specification": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/email/base/object"
+          }
+        },
+        "strict": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/email/specification/object"
+          }
+        }
+      },
+      "help": {
+        "$comment": "Schema for package and platform help objects.",
+        "base": {
+          "object": {
+            "type": "object",
+            "required": ["online"]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/help/base/object"
+              },
+              {
+                "properties": {
+                  "online": {
+                    "$ref": "#/definitions/propertiesObjects/online/permissive/object"
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/help/base/object"
+              },
+              {
+                "properties": {
+                  "online": {
+                    "$ref": "#/definitions/propertiesObjects/online/specification/object"
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/help/base/object"
+              },
+              {
+                "properties": {
+                  "online": {
+                    "$ref": "#/definitions/propertiesObjects/online/strict/object"
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        }
+      },
+      "online": {
+        "base": {
+          "object": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "permissive": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/online/base/object"
+          }
+        },
+        "specification": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/online/base/object"
+          }
+        },
+        "strict": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/online/specification/object"
+          }
+        }
+      },
+      "platforms": {
+        "base": {
+          "object": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "name",
+                "architecture",
+                "version",
+                "category",
+                "help",
+                "url",
+                "archiveFileName",
+                "checksum",
+                "size",
+                "boards",
+                "toolsDependencies"
+              ]
+            }
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/platforms/base/object"
+              },
+              {
+                "items": {
+                  "properties": {
+                    "name": {
+                      "$ref": "#/definitions/propertiesObjects/platformName/permissive/object"
+                    },
+                    "architecture": {
+                      "$ref": "#/definitions/propertiesObjects/architecture/permissive/object"
+                    },
+                    "version": {
+                      "$ref": "#/definitions/propertiesObjects/platformVersion/permissive/object"
+                    },
+                    "category": {
+                      "$ref": "#/definitions/propertiesObjects/category/permissive/object"
+                    },
+                    "help": {
+                      "$ref": "#/definitions/propertiesObjects/help/permissive/object"
+                    },
+                    "url": {
+                      "$ref": "#/definitions/propertiesObjects/archiveUrl/permissive/object"
+                    },
+                    "archiveFileName": {
+                      "$ref": "#/definitions/propertiesObjects/archiveFileName/permissive/object"
+                    },
+                    "checksum": {
+                      "$ref": "#/definitions/propertiesObjects/checksum/permissive/object"
+                    },
+                    "size": {
+                      "$ref": "#/definitions/propertiesObjects/size/permissive/object"
+                    },
+                    "boards": {
+                      "$ref": "#/definitions/propertiesObjects/boards/permissive/object"
+                    },
+                    "toolsDependencies": {
+                      "$ref": "#/definitions/propertiesObjects/toolsDependencies/permissive/object"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/platforms/base/object"
+              },
+              {
+                "items": {
+                  "properties": {
+                    "name": {
+                      "$ref": "#/definitions/propertiesObjects/platformName/specification/object"
+                    },
+                    "architecture": {
+                      "$ref": "#/definitions/propertiesObjects/architecture/specification/object"
+                    },
+                    "version": {
+                      "$ref": "#/definitions/propertiesObjects/platformVersion/specification/object"
+                    },
+                    "category": {
+                      "$ref": "#/definitions/propertiesObjects/category/specification/object"
+                    },
+                    "help": {
+                      "$ref": "#/definitions/propertiesObjects/help/specification/object"
+                    },
+                    "url": {
+                      "$ref": "#/definitions/propertiesObjects/archiveUrl/specification/object"
+                    },
+                    "archiveFileName": {
+                      "$ref": "#/definitions/propertiesObjects/archiveFileName/specification/object"
+                    },
+                    "checksum": {
+                      "$ref": "#/definitions/propertiesObjects/checksum/specification/object"
+                    },
+                    "size": {
+                      "$ref": "#/definitions/propertiesObjects/size/specification/object"
+                    },
+                    "boards": {
+                      "$ref": "#/definitions/propertiesObjects/boards/specification/object"
+                    },
+                    "toolsDependencies": {
+                      "$ref": "#/definitions/propertiesObjects/toolsDependencies/specification/object"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/platforms/base/object"
+              },
+              {
+                "items": {
+                  "properties": {
+                    "name": {
+                      "$ref": "#/definitions/propertiesObjects/platformName/strict/object"
+                    },
+                    "architecture": {
+                      "$ref": "#/definitions/propertiesObjects/architecture/strict/object"
+                    },
+                    "version": {
+                      "$ref": "#/definitions/propertiesObjects/platformVersion/strict/object"
+                    },
+                    "category": {
+                      "$ref": "#/definitions/propertiesObjects/category/strict/object"
+                    },
+                    "help": {
+                      "$ref": "#/definitions/propertiesObjects/help/strict/object"
+                    },
+                    "url": {
+                      "$ref": "#/definitions/propertiesObjects/archiveUrl/strict/object"
+                    },
+                    "archiveFileName": {
+                      "$ref": "#/definitions/propertiesObjects/archiveFileName/strict/object"
+                    },
+                    "checksum": {
+                      "$ref": "#/definitions/propertiesObjects/checksum/strict/object"
+                    },
+                    "size": {
+                      "$ref": "#/definitions/propertiesObjects/size/strict/object"
+                    },
+                    "boards": {
+                      "$ref": "#/definitions/propertiesObjects/boards/strict/object"
+                    },
+                    "toolsDependencies": {
+                      "$ref": "#/definitions/propertiesObjects/toolsDependencies/strict/object"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        }
+      },
+      "platformName": {
+        "base": {
+          "object": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "permissive": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/platformName/base/object"
+          }
+        },
+        "specification": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/platformName/base/object"
+          }
+        },
+        "strict": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/platformName/specification/object"
+          }
+        }
+      },
+      "architecture": {
+        "base": {
+          "object": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "permissive": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/architecture/base/object"
+          }
+        },
+        "specification": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/architecture/base/object"
+          }
+        },
+        "strict": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/architecture/specification/object"
+          }
+        }
+      },
+      "platformVersion": {
+        "base": {
+          "object": {
+            "type": "string"
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/platformVersion/base/object"
+              },
+              {
+                "$ref": "general-definitions-schema.json#/definitions/patternObjects/relaxedSemver"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/platformVersion/base/object"
+              },
+              {
+                "$ref": "general-definitions-schema.json#/definitions/patternObjects/relaxedSemver"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/platformVersion/base/object"
+              },
+              {
+                "$ref": "general-definitions-schema.json#/definitions/patternObjects/semver"
+              }
+            ]
+          }
+        }
+      },
+      "category": {
+        "base": {
+          "object": {
+            "type": "string",
+            "enum": ["Contributed"]
+          }
+        },
+        "permissive": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/category/base/object"
+          }
+        },
+        "specification": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/category/base/object"
+          }
+        },
+        "strict": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/category/specification/object"
+          }
+        }
+      },
+      "archiveUrl": {
+        "$comment": "Schema for platform and tool archive URLs",
+        "base": {
+          "object": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "permissive": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/archiveUrl/base/object"
+          }
+        },
+        "specification": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/archiveUrl/base/object"
+          }
+        },
+        "strict": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/archiveUrl/specification/object"
+          }
+        }
+      },
+      "archiveFileName": {
+        "$comment": "Schema for platform and tool archive filenames.",
+        "base": {
+          "definitions": {
+            "validExtensionPattern": {
+              "pattern": "^.+\\.(tar\\.bz2|tar\\.gz|zip)$"
+            }
+          },
+          "object": {
+            "allOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "$ref": "#/definitions/propertiesObjects/archiveFileName/base/definitions/validExtensionPattern"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/archiveFileName/base/object"
+          }
+        },
+        "specification": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/archiveFileName/base/object"
+          }
+        },
+        "strict": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/archiveFileName/specification/object"
+          }
+        }
+      },
+      "checksum": {
+        "$comment": "Schema for platform and tool archive checksums.",
+        "base": {
+          "object": {
+            "type": "string",
+            "pattern": "^(MD5|SHA-1|SHA-256):[0-9a-fA-F]+$"
+          }
+        },
+        "permissive": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/checksum/base/object"
+          }
+        },
+        "specification": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/checksum/base/object"
+          }
+        },
+        "strict": {
+          "definitions": {
+            "patternObjects": {
+              "usesSHA256": {
+                "pattern": "^SHA-256:"
+              }
+            }
+          },
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/checksum/specification/object"
+              },
+              {
+                "$ref": "#/definitions/propertiesObjects/checksum/strict/definitions/patternObjects/usesSHA256"
+              }
+            ]
+          }
+        }
+      },
+      "size": {
+        "$comment": "Schema for platform and tool archive file sizes.",
+        "base": {
+          "object": {
+            "type": "string",
+            "pattern": "[0-9]+"
+          }
+        },
+        "permissive": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/size/base/object"
+          }
+        },
+        "specification": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/size/base/object"
+          }
+        },
+        "strict": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/size/specification/object"
+          }
+        }
+      },
+      "boards": {
+        "base": {
+          "object": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name"]
+            }
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boards/base/object"
+              },
+              {
+                "items": {
+                  "properties": {
+                    "name": {
+                      "$ref": "#/definitions/propertiesObjects/boardName/permissive/object"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boards/base/object"
+              },
+              {
+                "items": {
+                  "properties": {
+                    "name": {
+                      "$ref": "#/definitions/propertiesObjects/boardName/specification/object"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/boards/base/object"
+              },
+              {
+                "items": {
+                  "properties": {
+                    "name": {
+                      "$ref": "#/definitions/propertiesObjects/boardName/strict/object"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        }
+      },
+      "boardName": {
+        "base": {
+          "object": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "permissive": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/boardName/base/object"
+          }
+        },
+        "specification": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/boardName/base/object"
+          }
+        },
+        "strict": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/boardName/specification/object"
+          }
+        }
+      },
+      "toolsDependencies": {
+        "base": {
+          "object": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["packager", "name", "version"]
+            }
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsDependencies/base/object"
+              },
+              {
+                "items": {
+                  "properties": {
+                    "packager": {
+                      "$ref": "#/definitions/propertiesObjects/packager/permissive/object"
+                    },
+                    "name": {
+                      "$ref": "#/definitions/propertiesObjects/toolName/permissive/object"
+                    },
+                    "version": {
+                      "$ref": "#/definitions/propertiesObjects/toolVersion/permissive/object"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsDependencies/base/object"
+              },
+              {
+                "items": {
+                  "properties": {
+                    "packager": {
+                      "$ref": "#/definitions/propertiesObjects/packager/specification/object"
+                    },
+                    "name": {
+                      "$ref": "#/definitions/propertiesObjects/toolName/specification/object"
+                    },
+                    "version": {
+                      "$ref": "#/definitions/propertiesObjects/toolVersion/specification/object"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsDependencies/base/object"
+              },
+              {
+                "items": {
+                  "properties": {
+                    "packager": {
+                      "$ref": "#/definitions/propertiesObjects/packager/strict/object"
+                    },
+                    "name": {
+                      "$ref": "#/definitions/propertiesObjects/toolName/strict/object"
+                    },
+                    "version": {
+                      "$ref": "#/definitions/propertiesObjects/toolVersion/strict/object"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        }
+      },
+      "packager": {
+        "base": {
+          "object": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "permissive": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/packager/base/object"
+          }
+        },
+        "specification": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/packager/base/object"
+          }
+        },
+        "strict": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/packager/specification/object"
+          }
+        }
+      },
+      "tools": {
+        "base": {
+          "object": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["name", "version", "systems"]
+            }
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/tools/base/object"
+              },
+              {
+                "items": {
+                  "properties": {
+                    "name": {
+                      "$ref": "#/definitions/propertiesObjects/toolName/permissive/object"
+                    },
+                    "version": {
+                      "$ref": "#/definitions/propertiesObjects/toolVersion/permissive/object"
+                    },
+                    "systems": {
+                      "$ref": "#/definitions/propertiesObjects/systems/permissive/object"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/tools/base/object"
+              },
+              {
+                "items": {
+                  "properties": {
+                    "name": {
+                      "$ref": "#/definitions/propertiesObjects/toolName/specification/object"
+                    },
+                    "version": {
+                      "$ref": "#/definitions/propertiesObjects/toolVersion/specification/object"
+                    },
+                    "systems": {
+                      "$ref": "#/definitions/propertiesObjects/systems/specification/object"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/tools/base/object"
+              },
+              {
+                "items": {
+                  "properties": {
+                    "name": {
+                      "$ref": "#/definitions/propertiesObjects/toolName/strict/object"
+                    },
+                    "version": {
+                      "$ref": "#/definitions/propertiesObjects/toolVersion/strict/object"
+                    },
+                    "systems": {
+                      "$ref": "#/definitions/propertiesObjects/systems/strict/object"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        }
+      },
+      "toolName": {
+        "base": {
+          "object": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "permissive": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/toolName/base/object"
+          }
+        },
+        "specification": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/toolName/base/object"
+          }
+        },
+        "strict": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/toolName/specification/object"
+          }
+        }
+      },
+      "toolVersion": {
+        "base": {
+          "object": {
+            "type": "string"
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolVersion/base/object"
+              },
+              {
+                "$ref": "general-definitions-schema.json#/definitions/patternObjects/relaxedSemver"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolVersion/base/object"
+              },
+              {
+                "$ref": "general-definitions-schema.json#/definitions/patternObjects/relaxedSemver"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolVersion/base/object"
+              },
+              {
+                "$ref": "general-definitions-schema.json#/definitions/patternObjects/semver"
+              }
+            ]
+          }
+        }
+      },
+      "systems": {
+        "base": {
+          "object": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["host", "url", "archiveFileName", "size", "checksum"]
+            }
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/systems/base/object"
+              },
+              {
+                "items": {
+                  "properties": {
+                    "host": {
+                      "$ref": "#/definitions/propertiesObjects/host/permissive/object"
+                    },
+                    "url": {
+                      "$ref": "#/definitions/propertiesObjects/archiveUrl/permissive/object"
+                    },
+                    "archiveFileName": {
+                      "$ref": "#/definitions/propertiesObjects/archiveFileName/permissive/object"
+                    },
+                    "checksum": {
+                      "$ref": "#/definitions/propertiesObjects/checksum/permissive/object"
+                    },
+                    "size": {
+                      "$ref": "#/definitions/propertiesObjects/size/permissive/object"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/systems/base/object"
+              },
+              {
+                "items": {
+                  "properties": {
+                    "host": {
+                      "$ref": "#/definitions/propertiesObjects/host/specification/object"
+                    },
+                    "url": {
+                      "$ref": "#/definitions/propertiesObjects/archiveUrl/specification/object"
+                    },
+                    "archiveFileName": {
+                      "$ref": "#/definitions/propertiesObjects/archiveFileName/specification/object"
+                    },
+                    "checksum": {
+                      "$ref": "#/definitions/propertiesObjects/checksum/specification/object"
+                    },
+                    "size": {
+                      "$ref": "#/definitions/propertiesObjects/size/specification/object"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/systems/base/object"
+              },
+              {
+                "items": {
+                  "properties": {
+                    "host": {
+                      "$ref": "#/definitions/propertiesObjects/host/strict/object"
+                    },
+                    "url": {
+                      "$ref": "#/definitions/propertiesObjects/archiveUrl/strict/object"
+                    },
+                    "archiveFileName": {
+                      "$ref": "#/definitions/propertiesObjects/archiveFileName/strict/object"
+                    },
+                    "checksum": {
+                      "$ref": "#/definitions/propertiesObjects/checksum/strict/object"
+                    },
+                    "size": {
+                      "$ref": "#/definitions/propertiesObjects/size/strict/object"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        }
+      },
+      "host": {
+        "base": {
+          "definitions": {
+            "patternObjects": {
+              "validHost": {
+                "$comment": "https://github.com/arduino/arduino-cli/blob/cdbebe98f895c18146ea2607cfb706d002b01191/arduino/cores/tools.go#L144-L155",
+                "anyOf": [
+                  {
+                    "pattern": "^arm.*-linux-gnueabihf$"
+                  },
+                  {
+                    "pattern": "^(aarch64|arm64)-linux-gnu$"
+                  },
+                  {
+                    "pattern": "^x86_64-.*linux-gnu$"
+                  },
+                  {
+                    "pattern": "^i[3456]86-.*linux-gnu$"
+                  },
+                  {
+                    "pattern": "^i[3456]86-.*(mingw32|cygwin)$"
+                  },
+                  {
+                    "pattern": "^(amd64|x86_64)-.*(mingw32|cygwin)$"
+                  },
+                  {
+                    "pattern": "^x86_64-apple-darwin.*$"
+                  },
+                  {
+                    "pattern": "^i[3456]86-apple-darwin.*$"
+                  },
+                  {
+                    "pattern": "^arm64-apple-darwin.*$"
+                  },
+                  {
+                    "pattern": "^arm.*-freebsd[0-9]*$"
+                  },
+                  {
+                    "pattern": "^i?[3456]86-freebsd[0-9]*$"
+                  },
+                  {
+                    "pattern": "^amd64-freebsd[0-9]*$"
+                  }
+                ]
+              }
+            }
+          },
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/definitions/propertiesObjects/host/base/definitions/patternObjects/validHost"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/host/base/object"
+          }
+        },
+        "specification": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/host/base/object"
+          }
+        },
+        "strict": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/host/specification/object"
+          }
+        }
+      }
+    }
+  }
+}
+`)
+
+func arduinoPackageIndexDefinitionsSchemaJsonBytes() ([]byte, error) {
+	return _arduinoPackageIndexDefinitionsSchemaJson, nil
+}
+
+func arduinoPackageIndexDefinitionsSchemaJson() (*asset, error) {
+	bytes, err := arduinoPackageIndexDefinitionsSchemaJsonBytes()
+	if err != nil {
+		return nil, err
+	}
+
+	info := bindataFileInfo{name: "arduino-package-index-definitions-schema.json", size: 0, mode: os.FileMode(0), modTime: time.Unix(0, 0)}
+	a := &asset{bytes: bytes, info: info}
+	return a, nil
+}
+
+var _arduinoPackageIndexPermissiveSchemaJson = []byte(`{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-package-index-permissive-schema.json",
+  "title": "Arduino Package Index JSON permissive schema",
+  "description": "Package indexes define Arduino hardware packages. See: https://arduino.github.io/arduino-cli/latest/package_index_json-specification/. This schema defines the minimum accepted data format.",
+  "allOf": [
+    {
+      "$ref": "arduino-package-index-definitions-schema.json#/definitions/root/permissive/object"
+    }
+  ]
+}
+`)
+
+func arduinoPackageIndexPermissiveSchemaJsonBytes() ([]byte, error) {
+	return _arduinoPackageIndexPermissiveSchemaJson, nil
+}
+
+func arduinoPackageIndexPermissiveSchemaJson() (*asset, error) {
+	bytes, err := arduinoPackageIndexPermissiveSchemaJsonBytes()
+	if err != nil {
+		return nil, err
+	}
+
+	info := bindataFileInfo{name: "arduino-package-index-permissive-schema.json", size: 0, mode: os.FileMode(0), modTime: time.Unix(0, 0)}
+	a := &asset{bytes: bytes, info: info}
+	return a, nil
+}
+
+var _arduinoPackageIndexSchemaJson = []byte(`{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-package-index-schema.json",
+  "title": "Arduino Package Index JSON schema",
+  "description": "Package indexes define Arduino hardware packages. See: https://arduino.github.io/arduino-cli/latest/package_index_json-specification/. This schema defines the data format per the specification.",
+  "allOf": [
+    {
+      "$ref": "arduino-package-index-definitions-schema.json#/definitions/root/specification/object"
+    }
+  ]
+}
+`)
+
+func arduinoPackageIndexSchemaJsonBytes() ([]byte, error) {
+	return _arduinoPackageIndexSchemaJson, nil
+}
+
+func arduinoPackageIndexSchemaJson() (*asset, error) {
+	bytes, err := arduinoPackageIndexSchemaJsonBytes()
+	if err != nil {
+		return nil, err
+	}
+
+	info := bindataFileInfo{name: "arduino-package-index-schema.json", size: 0, mode: os.FileMode(0), modTime: time.Unix(0, 0)}
+	a := &asset{bytes: bytes, info: info}
+	return a, nil
+}
+
+var _arduinoPackageIndexStrictSchemaJson = []byte(`{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-package-index-strict-schema.json",
+  "title": "Arduino Package Index JSON strict schema",
+  "description": "Package indexes define Arduino hardware packages. See: https://arduino.github.io/arduino-cli/latest/package_index_json-specification/. This schema defines the best practices for the data format, above and beyond the specification.",
+  "allOf": [
+    {
+      "$ref": "arduino-package-index-definitions-schema.json#/definitions/root/strict/object"
+    }
+  ]
+}
+`)
+
+func arduinoPackageIndexStrictSchemaJsonBytes() ([]byte, error) {
+	return _arduinoPackageIndexStrictSchemaJson, nil
+}
+
+func arduinoPackageIndexStrictSchemaJson() (*asset, error) {
+	bytes, err := arduinoPackageIndexStrictSchemaJsonBytes()
+	if err != nil {
+		return nil, err
+	}
+
+	info := bindataFileInfo{name: "arduino-package-index-strict-schema.json", size: 0, mode: os.FileMode(0), modTime: time.Unix(0, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -4370,6 +5794,11 @@ var _generalDefinitionsSchemaJson = []byte(`{
       "containsPropertyReference": {
         "$comment": "https://arduino.github.io/arduino-cli/dev/platform-specification/#configuration-files-format",
         "pattern": "{.+}"
+      },
+      "notStartsWithArduino": {
+        "not": {
+          "pattern": "^[aA][rR][dD][uU][iI][nN][oO].*$"
+        }
       }
     }
   }
@@ -4451,6 +5880,10 @@ var _bindata = map[string]func() (*asset, error){
 	"arduino-library-properties-permissive-schema.json":  arduinoLibraryPropertiesPermissiveSchemaJson,
 	"arduino-library-properties-schema.json":             arduinoLibraryPropertiesSchemaJson,
 	"arduino-library-properties-strict-schema.json":      arduinoLibraryPropertiesStrictSchemaJson,
+	"arduino-package-index-definitions-schema.json":      arduinoPackageIndexDefinitionsSchemaJson,
+	"arduino-package-index-permissive-schema.json":       arduinoPackageIndexPermissiveSchemaJson,
+	"arduino-package-index-schema.json":                  arduinoPackageIndexSchemaJson,
+	"arduino-package-index-strict-schema.json":           arduinoPackageIndexStrictSchemaJson,
 	"arduino-platform-txt-definitions-schema.json":       arduinoPlatformTxtDefinitionsSchemaJson,
 	"arduino-platform-txt-permissive-schema.json":        arduinoPlatformTxtPermissiveSchemaJson,
 	"arduino-platform-txt-schema.json":                   arduinoPlatformTxtSchemaJson,
@@ -4511,6 +5944,10 @@ var _bintree = &bintree{nil, map[string]*bintree{
 	"arduino-library-properties-permissive-schema.json":  &bintree{arduinoLibraryPropertiesPermissiveSchemaJson, map[string]*bintree{}},
 	"arduino-library-properties-schema.json":             &bintree{arduinoLibraryPropertiesSchemaJson, map[string]*bintree{}},
 	"arduino-library-properties-strict-schema.json":      &bintree{arduinoLibraryPropertiesStrictSchemaJson, map[string]*bintree{}},
+	"arduino-package-index-definitions-schema.json":      &bintree{arduinoPackageIndexDefinitionsSchemaJson, map[string]*bintree{}},
+	"arduino-package-index-permissive-schema.json":       &bintree{arduinoPackageIndexPermissiveSchemaJson, map[string]*bintree{}},
+	"arduino-package-index-schema.json":                  &bintree{arduinoPackageIndexSchemaJson, map[string]*bintree{}},
+	"arduino-package-index-strict-schema.json":           &bintree{arduinoPackageIndexStrictSchemaJson, map[string]*bintree{}},
 	"arduino-platform-txt-definitions-schema.json":       &bintree{arduinoPlatformTxtDefinitionsSchemaJson, map[string]*bintree{}},
 	"arduino-platform-txt-permissive-schema.json":        &bintree{arduinoPlatformTxtPermissiveSchemaJson, map[string]*bintree{}},
 	"arduino-platform-txt-schema.json":                   &bintree{arduinoPlatformTxtSchemaJson, map[string]*bintree{}},

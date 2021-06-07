@@ -20,11 +20,54 @@ See: https://arduino.github.io/arduino-cli/latest/package_index_json-specificati
 package packageindex
 
 import (
+	"encoding/json"
 	"fmt"
 	"regexp"
 
+	"github.com/arduino/arduino-lint/internal/rule/schema"
+	"github.com/arduino/arduino-lint/internal/rule/schema/compliancelevel"
+	"github.com/arduino/arduino-lint/internal/rule/schema/schemadata"
 	"github.com/arduino/go-paths-helper"
 )
+
+// Properties parses the package index from the given path and returns the data.
+func Properties(packageIndexPath *paths.Path) (map[string]interface{}, error) {
+	rawIndex, err := packageIndexPath.ReadFile()
+	if err != nil {
+		panic(err)
+	}
+	var indexData map[string]interface{}
+	err = json.Unmarshal(rawIndex, &indexData)
+	if err != nil {
+		return nil, err
+	}
+
+	return indexData, nil
+}
+
+var schemaObject = make(map[compliancelevel.Type]schema.Schema)
+
+// Validate validates boards.txt data against the JSON schema and returns a map of the result for each compliance level.
+func Validate(packageIndex map[string]interface{}) map[compliancelevel.Type]schema.ValidationResult {
+	referencedSchemaFilenames := []string{
+		"general-definitions-schema.json",
+		"arduino-package-index-definitions-schema.json",
+	}
+
+	var validationResults = make(map[compliancelevel.Type]schema.ValidationResult)
+
+	if schemaObject[compliancelevel.Permissive].Compiled == nil { // Only compile the schemas once.
+		schemaObject[compliancelevel.Permissive] = schema.Compile("arduino-package-index-permissive-schema.json", referencedSchemaFilenames, schemadata.Asset)
+		schemaObject[compliancelevel.Specification] = schema.Compile("arduino-package-index-schema.json", referencedSchemaFilenames, schemadata.Asset)
+		schemaObject[compliancelevel.Strict] = schema.Compile("arduino-package-index-strict-schema.json", referencedSchemaFilenames, schemadata.Asset)
+	}
+
+	validationResults[compliancelevel.Permissive] = schema.Validate(packageIndex, schemaObject[compliancelevel.Permissive])
+	validationResults[compliancelevel.Specification] = schema.Validate(packageIndex, schemaObject[compliancelevel.Specification])
+	validationResults[compliancelevel.Strict] = schema.Validate(packageIndex, schemaObject[compliancelevel.Strict])
+
+	return validationResults
+}
 
 var empty struct{}
 

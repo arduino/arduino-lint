@@ -138,6 +138,16 @@ var _referencedSchema2Json = []byte(`{
         ]
       }
     },
+    "TestPropertyTypeMismatch": {
+      "object": {
+        "type": "string"
+      }
+    },
+    "TestPropertyFormatMismatch": {
+      "object": {
+        "format": "uri"
+      }
+    },
     "misspelledOptionalProperties": {
       "propertyNames": {
         "not": {
@@ -217,6 +227,36 @@ var _validSchemaWithReferencesJson = []byte(`{
           "$ref": "referenced-schema-2.json#/definitions/notPatternObject"
         }
       ]
+    },
+    "TestPropertyTypeMismatch": {
+      "allOf": [
+        {
+          "$ref": "referenced-schema-2.json#/definitions/TestPropertyTypeMismatch/object"
+        }
+      ]
+    },
+    "TestPropertyFormatMismatch": {
+      "allOf": [
+        {
+          "$ref": "referenced-schema-2.json#/definitions/TestPropertyFormatMismatch/object"
+        }
+      ]
+    },
+    "TestProhibitedAdditionalProperties": {
+      "properties": {
+        "additionalPropertiesTrue": {
+          "properties": {
+            "fooProperty": {}
+          },
+          "additionalProperties": true
+        },
+        "additionalPropertiesFalse": {
+          "properties": {
+            "fooProperty": {}
+          },
+          "additionalProperties": false
+        }
+      }
     }
   },
   "allOf": [

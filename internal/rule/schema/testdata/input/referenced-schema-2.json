@@ -26,6 +26,16 @@
         ]
       }
     },
+    "TestPropertyTypeMismatch": {
+      "object": {
+        "type": "string"
+      }
+    },
+    "TestPropertyFormatMismatch": {
+      "object": {
+        "format": "uri"
+      }
+    },
     "misspelledOptionalProperties": {
       "propertyNames": {
         "not": {
