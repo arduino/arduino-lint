@@ -751,7 +751,7 @@ func TestLibraryPropertiesUrlFieldDeadLink(t *testing.T) {
 	testTables := []libraryRuleFunctionTestTable{
 		{"Unable to load", "InvalidLibraryProperties", ruleresult.NotRun, ""},
 		{"Not defined", "MissingFields", ruleresult.NotRun, ""},
-		{"Bad URL", "BadURL", ruleresult.Fail, "^Get \"http://invalid/\": dial tcp: lookup invalid:"},
+		{"Bad URL", "BadURL", ruleresult.Fail, "^Head \"http://invalid/\": dial tcp: lookup invalid:"},
 		{"HTTP error 404", "URL404", ruleresult.Fail, "^404 Not Found$"},
 		{"Good URL", "Recursive", ruleresult.Pass, ""},
 	}
