@@ -1011,7 +1011,7 @@ func LibraryPropertiesUrlFieldDeadLink() (result ruleresult.Type, output string)
 	}
 
 	logrus.Tracef("Checking URL: %s", url)
-	httpResponse, err := http.Get(url)
+	httpResponse, err := http.Head(url)
 	if err != nil {
 		return ruleresult.Fail, err.Error()
 	}
