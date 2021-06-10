@@ -77,8 +77,8 @@ func PackageIndexFormat() (result ruleresult.Type, output string) {
 		return ruleresult.NotRun, "Package index not found"
 	}
 
-	if projectdata.PackageIndexLoadError() != nil {
-		return ruleresult.Fail, projectdata.PackageIndexLoadError().Error()
+	if projectdata.PackageIndexCLILoadError() != nil {
+		return ruleresult.Fail, projectdata.PackageIndexCLILoadError().Error()
 	}
 
 	return ruleresult.Pass, ""
