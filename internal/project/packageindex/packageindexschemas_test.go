@@ -157,14 +157,14 @@ func TestMinLength(t *testing.T) {
 		require.NoError(t, err)
 
 		t.Run(fmt.Sprintf("%s less than minimum length of %d (%s)", testTable.propertyPointerString, testTable.minLength, testTable.complianceLevel), func(t *testing.T) {
-			assert.True(t, schema.PropertyLessThanMinLength(strings.TrimPrefix(testTable.propertyPointerString, "/"), packageindex.Validate(packageIndex)[testTable.complianceLevel]))
+			assert.True(t, schema.PropertyLessThanMinLength(testTable.propertyPointerString, packageindex.Validate(packageIndex)[testTable.complianceLevel]))
 		})
 
 		// Test schema validation results with minimum value length.
 		propertyPointer.Set(packageIndex, strings.Repeat("a", testTable.minLength))
 
 		t.Run(fmt.Sprintf("%s at minimum length of %d (%s)", testTable.propertyPointerString, testTable.minLength, testTable.complianceLevel), func(t *testing.T) {
-			assert.False(t, schema.PropertyLessThanMinLength(strings.TrimPrefix(testTable.propertyPointerString, "/"), packageindex.Validate(packageIndex)[testTable.complianceLevel]))
+			assert.False(t, schema.PropertyLessThanMinLength(testTable.propertyPointerString, packageindex.Validate(packageIndex)[testTable.complianceLevel]))
 		})
 	}
 }
@@ -316,7 +316,7 @@ func TestRequired(t *testing.T) {
 
 		validationResult := packageindex.Validate(packageIndex)
 		t.Run(fmt.Sprintf("%s (%s)", testTable.propertyPointerString, testTable.complianceLevel), func(t *testing.T) {
-			testTable.assertion(t, schema.RequiredPropertyMissing(strings.TrimPrefix(testTable.propertyPointerString, "/"), validationResult[testTable.complianceLevel]))
+			testTable.assertion(t, schema.RequiredPropertyMissing(testTable.propertyPointerString, validationResult[testTable.complianceLevel]))
 		})
 	}
 }
@@ -348,7 +348,7 @@ func TestEnum(t *testing.T) {
 		require.NoError(t, err)
 
 		t.Run(fmt.Sprintf("%s: %s (%s)", testTable.propertyPointerString, testTable.propertyValue, testTable.complianceLevel), func(t *testing.T) {
-			testTable.assertion(t, schema.PropertyEnumMismatch(strings.TrimPrefix(testTable.propertyPointerString, "/"), packageindex.Validate(packageIndex)[testTable.complianceLevel]))
+			testTable.assertion(t, schema.PropertyEnumMismatch(testTable.propertyPointerString, packageindex.Validate(packageIndex)[testTable.complianceLevel]))
 		})
 	}
 }
@@ -512,7 +512,7 @@ func TestPattern(t *testing.T) {
 		require.NoError(t, err)
 
 		t.Run(fmt.Sprintf("%s: %s (%s)", testTable.propertyPointerString, testTable.propertyValue, testTable.complianceLevel), func(t *testing.T) {
-			testTable.assertion(t, schema.PropertyPatternMismatch(strings.TrimPrefix(testTable.propertyPointerString, "/"), packageindex.Validate(packageIndex)[testTable.complianceLevel]))
+			testTable.assertion(t, schema.PropertyPatternMismatch(testTable.propertyPointerString, packageindex.Validate(packageIndex)[testTable.complianceLevel]))
 		})
 	}
 }
@@ -567,7 +567,7 @@ func TestType(t *testing.T) {
 			_, err = propertyPointer.Set(packageIndex, testTable.propertyValue)
 
 			t.Run(fmt.Sprintf("%s: %v (%s)", testTable.propertyPointerString, testTable.propertyValue, complianceLevel), func(t *testing.T) {
-				testTable.assertion(t, schema.PropertyTypeMismatch(strings.TrimPrefix(testTable.propertyPointerString, "/"), packageindex.Validate(packageIndex)[complianceLevel]))
+				testTable.assertion(t, schema.PropertyTypeMismatch(testTable.propertyPointerString, packageindex.Validate(packageIndex)[complianceLevel]))
 			})
 		}
 	}
@@ -632,7 +632,7 @@ func TestFormat(t *testing.T) {
 		require.NoError(t, err)
 
 		t.Run(fmt.Sprintf("%s: %s (%s)", testTable.propertyPointerString, testTable.propertyValue, testTable.complianceLevel), func(t *testing.T) {
-			testTable.assertion(t, schema.PropertyFormatMismatch(strings.TrimPrefix(testTable.propertyPointerString, "/"), packageindex.Validate(packageIndex)[testTable.complianceLevel]))
+			testTable.assertion(t, schema.PropertyFormatMismatch(testTable.propertyPointerString, packageindex.Validate(packageIndex)[testTable.complianceLevel]))
 		})
 	}
 }
@@ -693,7 +693,7 @@ func TestAdditionalProperties(t *testing.T) {
 		require.NoError(t, err)
 
 		t.Run(fmt.Sprintf("Additional property in the %s object (%s)", testTable.propertyPointerString, testTable.complianceLevel), func(t *testing.T) {
-			testTable.assertion(t, schema.ProhibitedAdditionalProperties(strings.TrimPrefix(testTable.propertyPointerString, "/"), packageindex.Validate(packageIndex)[testTable.complianceLevel]))
+			testTable.assertion(t, schema.ProhibitedAdditionalProperties(testTable.propertyPointerString, packageindex.Validate(packageIndex)[testTable.complianceLevel]))
 		})
 	}
 }

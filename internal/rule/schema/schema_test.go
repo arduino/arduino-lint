@@ -19,7 +19,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"regexp"
-	"strings"
 	"testing"
 
 	"github.com/arduino/arduino-lint/internal/project/general"
@@ -228,7 +227,7 @@ func TestProhibitedAdditionalProperties(t *testing.T) {
 		var instance map[string]interface{}
 		json.Unmarshal([]byte(rawInstance), &instance)
 
-		assert.False(t, ProhibitedAdditionalProperties(strings.TrimPrefix(testTable.objectPointerString, "/"), Validate(instance, validSchemaWithReferences)), fmt.Sprintf("No additional properties in %s", testTable.objectPointerString))
+		assert.False(t, ProhibitedAdditionalProperties(testTable.objectPointerString, Validate(instance, validSchemaWithReferences)), fmt.Sprintf("No additional properties in %s", testTable.objectPointerString))
 
 		// Add additional property to object.
 		pointer, err := gojsonpointer.NewJsonPointer(testTable.objectPointerString + "/fooAdditionalProperty")
@@ -237,7 +236,7 @@ func TestProhibitedAdditionalProperties(t *testing.T) {
 		require.NoError(t, err)
 
 		t.Run(fmt.Sprintf("Additional property in the %s object", testTable.objectPointerString), func(t *testing.T) {
-			testTable.assertion(t, ProhibitedAdditionalProperties(strings.TrimPrefix(testTable.objectPointerString, "/"), Validate(instance, validSchemaWithReferences)))
+			testTable.assertion(t, ProhibitedAdditionalProperties(testTable.objectPointerString, Validate(instance, validSchemaWithReferences)))
 		})
 	}
 }

@@ -26,42 +26,42 @@ import (
 
 // RequiredPropertyMissing returns whether the given required property is missing from the document.
 func RequiredPropertyMissing(propertyName string, validationResult ValidationResult) bool {
-	return ValidationErrorMatch("#", "/required$", "", "^#/"+propertyName+"$", validationResult)
+	return ValidationErrorMatch("#", "/required$", "", "^#/?"+propertyName+"$", validationResult)
 }
 
 // PropertyPatternMismatch returns whether the given property did not match the regular expression defined in the JSON schema.
 func PropertyPatternMismatch(propertyName string, validationResult ValidationResult) bool {
-	return ValidationErrorMatch("#/"+propertyName, "/pattern$", "", "", validationResult)
+	return ValidationErrorMatch("#/?"+propertyName, "/pattern$", "", "", validationResult)
 }
 
 // PropertyLessThanMinLength returns whether the given property is less than the minimum length allowed by the schema.
 func PropertyLessThanMinLength(propertyName string, validationResult ValidationResult) bool {
-	return ValidationErrorMatch("^#/"+propertyName+"$", "/minLength$", "", "", validationResult)
+	return ValidationErrorMatch("^#/?"+propertyName+"$", "/minLength$", "", "", validationResult)
 }
 
 // PropertyGreaterThanMaxLength returns whether the given property is greater than the maximum length allowed by the schema.
 func PropertyGreaterThanMaxLength(propertyName string, validationResult ValidationResult) bool {
-	return ValidationErrorMatch("^#/"+propertyName+"$", "/maxLength$", "", "", validationResult)
+	return ValidationErrorMatch("^#/?"+propertyName+"$", "/maxLength$", "", "", validationResult)
 }
 
 // PropertyEnumMismatch returns whether the given property does not match any of the items in the enum array.
 func PropertyEnumMismatch(propertyName string, validationResult ValidationResult) bool {
-	return ValidationErrorMatch("#/"+propertyName, "/enum$", "", "", validationResult)
+	return ValidationErrorMatch("#/?"+propertyName, "/enum$", "", "", validationResult)
 }
 
 // PropertyDependenciesMissing returns whether property dependencies of the given property are missing.
 func PropertyDependenciesMissing(propertyName string, validationResult ValidationResult) bool {
-	return ValidationErrorMatch("", "/dependencies/"+propertyName+"/[0-9]+$", "", "", validationResult)
+	return ValidationErrorMatch("", "/dependencies/?"+propertyName+"/[0-9]+$", "", "", validationResult)
 }
 
 // PropertyTypeMismatch returns whether the given property has incorrect type.
 func PropertyTypeMismatch(propertyName string, validationResult ValidationResult) bool {
-	return ValidationErrorMatch("^#/"+propertyName+"$", "/type$", "", "", validationResult)
+	return ValidationErrorMatch("^#/?"+propertyName+"$", "/type$", "", "", validationResult)
 }
 
 // PropertyFormatMismatch returns whether the given property has incorrect format.
 func PropertyFormatMismatch(propertyName string, validationResult ValidationResult) bool {
-	return ValidationErrorMatch("^#/"+propertyName+"$", "/format$", "", "", validationResult)
+	return ValidationErrorMatch("^#/?"+propertyName+"$", "/format$", "", "", validationResult)
 }
 
 // ProhibitedAdditionalProperty returns whether the given property has prohibited additional subproperty(s).
