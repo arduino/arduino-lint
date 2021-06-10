@@ -110,3 +110,54 @@ func TestPackageIndexFormat(t *testing.T) {
 
 	checkPackageIndexRuleFunction(PackageIndexFormat, testTables, t)
 }
+
+func TestPackageIndexPackagesWebsiteURLDeadLink(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Dead URLs", "packages-websiteurl-dead", ruleresult.Fail, "^myboard1, myboard2$"},
+		{"Invalid URL", "packages-websiteurl-invalid", ruleresult.Fail, "^myboard$"},
+		{"Valid URL", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesWebsiteURLDeadLink, testTables, t)
+}
+
+func TestPackageIndexPackagesHelpOnlineDeadLink(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Dead URLs", "packages-help-online-dead", ruleresult.Fail, "^myboard1, myboard2$"},
+		{"Valid URL", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesHelpOnlineDeadLink, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsHelpOnlineDeadLink(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Dead URLs", "packages-platforms-help-online-dead", ruleresult.Fail, "^myboard:avr@1\\.0\\.0, myboard:samd@1\\.0\\.0$"},
+		{"Valid URL", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsHelpOnlineDeadLink, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsURLDeadLink(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Dead URLs", "packages-platforms-url-dead", ruleresult.Fail, "^myboard:avr@1\\.0\\.0, myboard:samd@1\\.0\\.0$"},
+		{"Valid URL", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsURLDeadLink, testTables, t)
+}
+
+func TestPackageIndexPackagesToolsSystemsURLDeadLink(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Dead URLs", "packages-tools-systems-url-dead", ruleresult.Fail, "^myboard:CMSIS@4\\.0\\.0-atmel - arm-linux-gnueabihf, myboard:CMSIS@4\\.0\\.0-atmel - i686-mingw32$"},
+		{"Valid URL", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesToolsSystemsURLDeadLink, testTables, t)
+}
