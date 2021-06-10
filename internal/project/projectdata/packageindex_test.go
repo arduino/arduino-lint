@@ -42,9 +42,27 @@ func TestInitializeForPackageIndex(t *testing.T) {
 		packageIndexLoadErrorAssertion    assert.ValueAssertionFunc
 		packageIndexCLILoadErrorAssertion assert.ValueAssertionFunc
 	}{
-		{"Valid", packageIndexTestDataPath.Join("valid-package-index", "package_foo_index.json"), assert.NotNil, assert.Nil, assert.Nil},
-		{"Invalid package index", packageIndexTestDataPath.Join("invalid-package-index", "package_foo_index.json"), assert.Nil, assert.NotNil, assert.NotNil},
-		{"Invalid JSON", packageIndexTestDataPath.Join("invalid-JSON", "package_foo_index.json"), assert.Nil, assert.NotNil, assert.NotNil},
+		{
+			testName:                          "Valid",
+			path:                              packageIndexTestDataPath.Join("valid-package-index", "package_foo_index.json"),
+			packageIndexAssertion:             assert.NotNil,
+			packageIndexLoadErrorAssertion:    assert.Nil,
+			packageIndexCLILoadErrorAssertion: assert.Nil,
+		},
+		{
+			testName:                          "Invalid package index",
+			path:                              packageIndexTestDataPath.Join("invalid-package-index", "package_foo_index.json"),
+			packageIndexAssertion:             assert.Nil,
+			packageIndexLoadErrorAssertion:    assert.NotNil,
+			packageIndexCLILoadErrorAssertion: assert.NotNil,
+		},
+		{
+			testName:                          "Invalid JSON",
+			path:                              packageIndexTestDataPath.Join("invalid-JSON", "package_foo_index.json"),
+			packageIndexAssertion:             assert.Nil,
+			packageIndexLoadErrorAssertion:    assert.NotNil,
+			packageIndexCLILoadErrorAssertion: assert.NotNil,
+		},
 	}
 
 	for _, testTable := range testTables {
