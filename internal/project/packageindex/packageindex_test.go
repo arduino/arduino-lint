@@ -35,10 +35,14 @@ func init() {
 }
 
 func TestProperties(t *testing.T) {
-	packageIndex, err := Properties(testDataPath.Join("package_valid_index.json"))
-	require.Nil(t, err)
+	assert.NotPanics(t, func() { Properties(nil) }, "Don't panic when package index was not found")
+	packageIndex, err := Properties(nil)
+	assert.Error(t, err, "Error when package index was not found")
 
-	assert.NotNil(t, packageIndex)
+	packageIndex, err = Properties(testDataPath.Join("package_valid_index.json"))
+	require.Nil(t, err, "No error on valid package index")
+
+	assert.NotNil(t, packageIndex, "Package index data present")
 }
 
 func TestHasValidExtension(t *testing.T) {

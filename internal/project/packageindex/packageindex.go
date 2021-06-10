@@ -32,9 +32,12 @@ import (
 
 // Properties parses the package index from the given path and returns the data.
 func Properties(packageIndexPath *paths.Path) (map[string]interface{}, error) {
+	if packageIndexPath == nil {
+		return nil, fmt.Errorf("Package index path is nil")
+	}
 	rawIndex, err := packageIndexPath.ReadFile()
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 	var indexData map[string]interface{}
 	err = json.Unmarshal(rawIndex, &indexData)
