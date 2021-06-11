@@ -1,7 +1,7 @@
 {
   "packages": [
     {
-      "name": "myboard",
+      "name": "foopackager",
       "maintainer": "Jane Developer",
       "websiteURL": "http://httpstat.us/404",
       "email": "jane@example.com",

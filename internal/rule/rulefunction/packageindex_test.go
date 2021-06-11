@@ -114,8 +114,8 @@ func TestPackageIndexFormat(t *testing.T) {
 func TestPackageIndexPackagesWebsiteURLDeadLink(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"Dead URLs", "packages-websiteurl-dead", ruleresult.Fail, "^myboard1, myboard2$"},
-		{"Invalid URL", "packages-websiteurl-invalid", ruleresult.Fail, "^myboard$"},
+		{"Dead URLs", "packages-websiteurl-dead", ruleresult.Fail, "^foopackager1, foopackager2$"},
+		{"Invalid URL", "packages-websiteurl-invalid", ruleresult.Fail, "^foopackager$"},
 		{"Valid URL", "valid-package-index", ruleresult.Pass, ""},
 	}
 
@@ -125,7 +125,7 @@ func TestPackageIndexPackagesWebsiteURLDeadLink(t *testing.T) {
 func TestPackageIndexPackagesHelpOnlineDeadLink(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"Dead URLs", "packages-help-online-dead", ruleresult.Fail, "^myboard1, myboard2$"},
+		{"Dead URLs", "packages-help-online-dead", ruleresult.Fail, "^foopackager1, foopackager2$"},
 		{"Valid URL", "valid-package-index", ruleresult.Pass, ""},
 	}
 
@@ -135,7 +135,7 @@ func TestPackageIndexPackagesHelpOnlineDeadLink(t *testing.T) {
 func TestPackageIndexPackagesPlatformsHelpOnlineDeadLink(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"Dead URLs", "packages-platforms-help-online-dead", ruleresult.Fail, "^myboard:avr@1\\.0\\.0, myboard:samd@1\\.0\\.0$"},
+		{"Dead URLs", "packages-platforms-help-online-dead", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0, foopackager:samd@1\\.0\\.0$"},
 		{"Valid URL", "valid-package-index", ruleresult.Pass, ""},
 	}
 
@@ -145,7 +145,7 @@ func TestPackageIndexPackagesPlatformsHelpOnlineDeadLink(t *testing.T) {
 func TestPackageIndexPackagesPlatformsURLDeadLink(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"Dead URLs", "packages-platforms-url-dead", ruleresult.Fail, "^myboard:avr@1\\.0\\.0, myboard:samd@1\\.0\\.0$"},
+		{"Dead URLs", "packages-platforms-url-dead", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0, foopackager:samd@1\\.0\\.0$"},
 		{"Valid URL", "valid-package-index", ruleresult.Pass, ""},
 	}
 
@@ -155,7 +155,7 @@ func TestPackageIndexPackagesPlatformsURLDeadLink(t *testing.T) {
 func TestPackageIndexPackagesToolsSystemsURLDeadLink(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"Dead URLs", "packages-tools-systems-url-dead", ruleresult.Fail, "^myboard:CMSIS@4\\.0\\.0-atmel - arm-linux-gnueabihf, myboard:CMSIS@4\\.0\\.0-atmel - i686-mingw32$"},
+		{"Dead URLs", "packages-tools-systems-url-dead", ruleresult.Fail, "^foopackager:CMSIS@4\\.0\\.0-atmel - arm-linux-gnueabihf, foopackager:CMSIS@4\\.0\\.0-atmel - i686-mingw32$"},
 		{"Valid URL", "valid-package-index", ruleresult.Pass, ""},
 	}
 

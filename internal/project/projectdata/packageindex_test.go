@@ -59,60 +59,60 @@ func TestInitializeForPackageIndex(t *testing.T) {
 			packageIndexPackagesAssertion:     assert.NotNil,
 			packageIndexPackagesDataAssertion: []PackageIndexData{
 				{
-					ID:          "myboard1",
+					ID:          "foopackager1",
 					JSONPointer: "/packages/0",
 				},
 				{
-					ID:          "myboard2",
+					ID:          "foopackager2",
 					JSONPointer: "/packages/1",
 				},
 			},
 			packageIndexPlatformsAssertion: assert.NotNil,
 			packageIndexPlatformsDataAssertion: []PackageIndexData{
 				{
-					ID:          "myboard1:avr@1.0.0",
+					ID:          "foopackager1:avr@1.0.0",
 					JSONPointer: "/packages/0/platforms/0",
 				},
 				{
-					ID:          "myboard1:avr@1.0.1",
+					ID:          "foopackager1:avr@1.0.1",
 					JSONPointer: "/packages/0/platforms/1",
 				},
 				{
-					ID:          "myboard2:samd@2.0.0",
+					ID:          "foopackager2:samd@2.0.0",
 					JSONPointer: "/packages/1/platforms/0",
 				},
 				{
-					ID:          "myboard2:mbed@1.1.1",
+					ID:          "foopackager2:mbed@1.1.1",
 					JSONPointer: "/packages/1/platforms/1",
 				},
 			},
 			packageIndexToolsAssertion: assert.NotNil,
 			packageIndexToolsDataAssertion: []PackageIndexData{
 				{
-					ID:          "myboard2:openocd@0.10.0-arduino1-static",
+					ID:          "foopackager2:openocd@0.10.0-arduino1-static",
 					JSONPointer: "/packages/1/tools/0",
 				},
 				{
-					ID:          "myboard2:CMSIS@4.0.0-atmel",
+					ID:          "foopackager2:CMSIS@4.0.0-atmel",
 					JSONPointer: "/packages/1/tools/1",
 				},
 			},
 			packageIndexSystemsAssertion: assert.NotNil,
 			packageIndexSystemsDataAssertion: []PackageIndexData{
 				{
-					ID:          "myboard2:openocd@0.10.0-arduino1-static - i386-apple-darwin11",
+					ID:          "foopackager2:openocd@0.10.0-arduino1-static - i386-apple-darwin11",
 					JSONPointer: "/packages/1/tools/0/systems/0",
 				},
 				{
-					ID:          "myboard2:openocd@0.10.0-arduino1-static - x86_64-linux-gnu",
+					ID:          "foopackager2:openocd@0.10.0-arduino1-static - x86_64-linux-gnu",
 					JSONPointer: "/packages/1/tools/0/systems/1",
 				},
 				{
-					ID:          "myboard2:CMSIS@4.0.0-atmel - arm-linux-gnueabihf",
+					ID:          "foopackager2:CMSIS@4.0.0-atmel - arm-linux-gnueabihf",
 					JSONPointer: "/packages/1/tools/1/systems/0",
 				},
 				{
-					ID:          "myboard2:CMSIS@4.0.0-atmel - i686-mingw32",
+					ID:          "foopackager2:CMSIS@4.0.0-atmel - i686-mingw32",
 					JSONPointer: "/packages/1/tools/1/systems/1",
 				},
 			},

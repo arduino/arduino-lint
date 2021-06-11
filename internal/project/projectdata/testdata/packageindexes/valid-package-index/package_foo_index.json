@@ -1,7 +1,7 @@
 {
   "packages": [
     {
-      "name": "myboard1",
+      "name": "foopackager1",
       "maintainer": "Jane Developer",
       "websiteURL": "https://github.com/janedeveloper/myboard",
       "email": "jane@example.com",
@@ -65,7 +65,7 @@
       "tools": []
     },
     {
-      "name": "myboard2",
+      "name": "foopackager2",
       "maintainer": "Jane Developer",
       "websiteURL": "https://github.com/janedeveloper/myboard",
       "email": "jane@example.com",
