@@ -127,24 +127,31 @@ func getPackageIndexData(interfaceObject map[string]interface{}, pointerPrefix s
 		}
 
 		objectID := func() string {
+			// In the event missing data prevents creating a standard reference ID for the data, use the JSON pointer.
+			fallbackID := interfaceElementData.JSONPointer
+
 			if iDPrefix != "" && strings.HasPrefix(iDPrefix, pointerPrefix) {
 				// Parent object uses fallback ID, so this one must even if it was possible to generate a true suffix.
-				return interfaceElementData.JSONPointer
+				return fallbackID
 			}
 			iD := iDPrefix
 
 			iDSuffix, ok := object[iDKey].(string)
 			if !ok {
-				// Use fallback ID.
-				return interfaceElementData.JSONPointer
+				return fallbackID
+			}
+			if iDSuffix == "" {
+				return fallbackID
 			}
 			iD += iDSuffix
 
 			if versionKey != "" {
 				iDVersion, ok := object[versionKey].(string)
 				if !ok {
-					// Use fallback ID.
-					return interfaceElementData.JSONPointer
+					return fallbackID
+				}
+				if iDVersion == "" {
+					return fallbackID
 				}
 				iD += "@" + iDVersion
 			}
