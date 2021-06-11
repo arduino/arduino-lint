@@ -159,32 +159,32 @@ func TestInitializeForPackageIndex(t *testing.T) {
 		testTable.packageIndexPackagesAssertion(t, PackageIndexPackages(), testTable.testName)
 		if PackageIndexPackages() != nil {
 			for index, packageIndexPackage := range PackageIndexPackages() {
-				assert.Equal(t, packageIndexPackage.ID, testTable.packageIndexPackagesDataAssertion[index].ID, testTable.testName)
-				assert.Equal(t, packageIndexPackage.JSONPointer, testTable.packageIndexPackagesDataAssertion[index].JSONPointer, testTable.testName)
+				assert.Equal(t, testTable.packageIndexPackagesDataAssertion[index].ID, packageIndexPackage.ID, testTable.testName)
+				assert.Equal(t, testTable.packageIndexPackagesDataAssertion[index].JSONPointer, packageIndexPackage.JSONPointer, testTable.testName)
 			}
 		}
 
 		testTable.packageIndexPlatformsAssertion(t, PackageIndexPlatforms(), testTable.testName)
 		if PackageIndexPlatforms() != nil {
 			for index, packageIndexPlatform := range PackageIndexPlatforms() {
-				assert.Equal(t, packageIndexPlatform.ID, testTable.packageIndexPlatformsDataAssertion[index].ID, testTable.testName)
-				assert.Equal(t, packageIndexPlatform.JSONPointer, testTable.packageIndexPlatformsDataAssertion[index].JSONPointer, testTable.testName)
+				assert.Equal(t, testTable.packageIndexPlatformsDataAssertion[index].ID, packageIndexPlatform.ID, testTable.testName)
+				assert.Equal(t, testTable.packageIndexPlatformsDataAssertion[index].JSONPointer, packageIndexPlatform.JSONPointer, testTable.testName)
 			}
 		}
 
 		testTable.packageIndexToolsAssertion(t, PackageIndexTools(), testTable.testName)
 		if PackageIndexTools() != nil {
 			for index, packageIndexTool := range PackageIndexTools() {
-				assert.Equal(t, packageIndexTool.ID, testTable.packageIndexToolsDataAssertion[index].ID, testTable.testName)
-				assert.Equal(t, packageIndexTool.JSONPointer, testTable.packageIndexToolsDataAssertion[index].JSONPointer, testTable.testName)
+				assert.Equal(t, testTable.packageIndexToolsDataAssertion[index].ID, packageIndexTool.ID, testTable.testName)
+				assert.Equal(t, testTable.packageIndexToolsDataAssertion[index].JSONPointer, packageIndexTool.JSONPointer, testTable.testName)
 			}
 		}
 
 		testTable.packageIndexSystemsAssertion(t, PackageIndexSystems(), testTable.testName)
 		if PackageIndexSystems() != nil {
 			for index, packageIndexSystem := range PackageIndexSystems() {
-				assert.Equal(t, packageIndexSystem.ID, testTable.packageIndexSystemsDataAssertion[index].ID, testTable.testName)
-				assert.Equal(t, packageIndexSystem.JSONPointer, testTable.packageIndexSystemsDataAssertion[index].JSONPointer, testTable.testName)
+				assert.Equal(t, testTable.packageIndexSystemsDataAssertion[index].ID, packageIndexSystem.ID, testTable.testName)
+				assert.Equal(t, testTable.packageIndexSystemsDataAssertion[index].JSONPointer, packageIndexSystem.JSONPointer, testTable.testName)
 			}
 		}
 	}
