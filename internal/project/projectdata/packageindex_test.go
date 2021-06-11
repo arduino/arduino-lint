@@ -36,14 +36,15 @@ func init() {
 
 func TestInitializeForPackageIndex(t *testing.T) {
 	testTables := []struct {
-		testName                       string
-		path                           *paths.Path
-		packageIndexAssertion          assert.ValueAssertionFunc
-		packageIndexLoadErrorAssertion assert.ValueAssertionFunc
+		testName                          string
+		path                              *paths.Path
+		packageIndexAssertion             assert.ValueAssertionFunc
+		packageIndexLoadErrorAssertion    assert.ValueAssertionFunc
+		packageIndexCLILoadErrorAssertion assert.ValueAssertionFunc
 	}{
-		{"Valid", packageIndexTestDataPath.Join("valid-package-index", "package_foo_index.json"), assert.NotNil, assert.Nil},
-		{"Invalid package index", packageIndexTestDataPath.Join("invalid-package-index", "package_foo_index.json"), assert.Nil, assert.NotNil},
-		{"Invalid JSON", packageIndexTestDataPath.Join("invalid-JSON", "package_foo_index.json"), assert.Nil, assert.NotNil},
+		{"Valid", packageIndexTestDataPath.Join("valid-package-index", "package_foo_index.json"), assert.NotNil, assert.Nil, assert.Nil},
+		{"Invalid package index", packageIndexTestDataPath.Join("invalid-package-index", "package_foo_index.json"), assert.Nil, assert.NotNil, assert.NotNil},
+		{"Invalid JSON", packageIndexTestDataPath.Join("invalid-JSON", "package_foo_index.json"), assert.Nil, assert.NotNil, assert.NotNil},
 	}
 
 	for _, testTable := range testTables {
@@ -56,6 +57,7 @@ func TestInitializeForPackageIndex(t *testing.T) {
 		Initialize(testProject)
 
 		testTable.packageIndexLoadErrorAssertion(t, PackageIndexLoadError(), testTable.testName)
+		testTable.packageIndexCLILoadErrorAssertion(t, PackageIndexCLILoadError(), testTable.testName)
 		if PackageIndexLoadError() == nil {
 			testTable.packageIndexAssertion(t, PackageIndex(), testTable.testName)
 		}
