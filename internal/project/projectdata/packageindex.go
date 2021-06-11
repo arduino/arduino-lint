@@ -17,6 +17,7 @@ package projectdata
 
 import (
 	"fmt"
+	"strings"
 
 	clipackageindex "github.com/arduino/arduino-cli/arduino/cores/packageindex"
 	"github.com/arduino/arduino-lint/internal/project/packageindex"
@@ -115,33 +116,44 @@ func getPackageIndexData(interfaceObject map[string]interface{}, pointerPrefix s
 	}
 
 	for index, interfaceElement := range interfaceSlice {
+		interfaceElementData := PackageIndexData{
+			JSONPointer: fmt.Sprintf("%s/%s/%v", pointerPrefix, dataKey, index),
+			Object:      nil,
+		}
+
 		object, ok := interfaceElement.(map[string]interface{})
-		if !ok {
-			continue
+		if ok {
+			interfaceElementData.Object = object
 		}
 
-		var iD string
-		iDSuffix, ok := object[iDKey].(string)
-		if !ok {
-			continue
-		}
-		iD = iDPrefix + iDSuffix
-		if versionKey != "" {
-			iDVersion, ok := object[versionKey].(string)
-			if !ok {
-				continue
+		objectID := func() string {
+			if iDPrefix != "" && strings.HasPrefix(iDPrefix, pointerPrefix) {
+				// Parent object uses fallback ID, so this one must even if it was possible to generate a true suffix.
+				return interfaceElementData.JSONPointer
 			}
-			iD = iD + "@" + iDVersion
-		}
+			iD := iDPrefix
 
-		data = append(
-			data,
-			PackageIndexData{
-				ID:          iD,
-				JSONPointer: fmt.Sprintf("%s/%s/%v", pointerPrefix, dataKey, index),
-				Object:      object,
-			},
-		)
+			iDSuffix, ok := object[iDKey].(string)
+			if !ok {
+				// Use fallback ID.
+				return interfaceElementData.JSONPointer
+			}
+			iD += iDSuffix
+
+			if versionKey != "" {
+				iDVersion, ok := object[versionKey].(string)
+				if !ok {
+					// Use fallback ID.
+					return interfaceElementData.JSONPointer
+				}
+				iD += "@" + iDVersion
+			}
+
+			return iD
+		}
+		interfaceElementData.ID = objectID()
+
+		data = append(data, interfaceElementData)
 	}
 
 	return data
