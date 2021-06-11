@@ -1,0 +1,26 @@
+{
+  "packages": [
+    {
+      "name": "myboard1",
+      "maintainer": "Jane Developer",
+      "websiteURL": "http://example.com",
+      "email": "jane@example.com",
+      "help": {
+        "online": "http://httpstat.us/403"
+      },
+      "platforms": [],
+      "tools": []
+    },
+    {
+      "name": "myboard2",
+      "maintainer": "Jane Developer",
+      "websiteURL": "http://example.com",
+      "email": "jane@example.com",
+      "help": {
+        "online": "http://httpstat.us/404"
+      },
+      "platforms": [],
+      "tools": []
+    }
+  ]
+}

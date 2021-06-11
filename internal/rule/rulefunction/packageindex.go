@@ -16,6 +16,8 @@
 package rulefunction
 
 import (
+	"strings"
+
 	"github.com/arduino/arduino-lint/internal/project/packageindex"
 	"github.com/arduino/arduino-lint/internal/project/projectdata"
 	"github.com/arduino/arduino-lint/internal/rule/ruleresult"
@@ -79,6 +81,171 @@ func PackageIndexFormat() (result ruleresult.Type, output string) {
 
 	if projectdata.PackageIndexCLILoadError() != nil {
 		return ruleresult.Fail, projectdata.PackageIndexCLILoadError().Error()
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesWebsiteURLDeadLink checks for dead links in packages[].websiteURL.
+func PackageIndexPackagesWebsiteURLDeadLink() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, data := range projectdata.PackageIndexPackages() {
+		url, ok := data.Object["websiteURL"].(string)
+		if !ok {
+			continue
+		}
+
+		if url == "" {
+			continue
+		}
+
+		if checkURL(url) == nil {
+			continue
+		}
+
+		nonCompliantIDs = append(nonCompliantIDs, data.ID)
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesHelpOnlineDeadLink checks for dead links in packages[].help.online.
+func PackageIndexPackagesHelpOnlineDeadLink() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, data := range projectdata.PackageIndexPackages() {
+		help, ok := data.Object["help"].(map[string]interface{})
+		if !ok {
+			continue
+		}
+
+		url, ok := help["online"].(string)
+		if !ok {
+			continue
+		}
+
+		if url == "" {
+			continue
+		}
+
+		if checkURL(url) == nil {
+			continue
+		}
+
+		nonCompliantIDs = append(nonCompliantIDs, data.ID)
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesPlatformsHelpOnlineDeadLink checks for dead links in packages[].platforms[].help.online.
+func PackageIndexPackagesPlatformsHelpOnlineDeadLink() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, data := range projectdata.PackageIndexPlatforms() {
+		help, ok := data.Object["help"].(map[string]interface{})
+		if !ok {
+			continue
+		}
+
+		url, ok := help["online"].(string)
+		if !ok {
+			continue
+		}
+
+		if url == "" {
+			continue
+		}
+
+		if checkURL(url) == nil {
+			continue
+		}
+
+		nonCompliantIDs = append(nonCompliantIDs, data.ID)
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesPlatformsURLDeadLink checks for dead links in packages[].platforms[].url.
+func PackageIndexPackagesPlatformsURLDeadLink() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, data := range projectdata.PackageIndexPlatforms() {
+		url, ok := data.Object["url"].(string)
+		if !ok {
+			continue
+		}
+
+		if url == "" {
+			continue
+		}
+
+		if checkURL(url) == nil {
+			continue
+		}
+
+		nonCompliantIDs = append(nonCompliantIDs, data.ID)
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesToolsSystemsURLDeadLink checks for dead links in packages[].tools[].systems[].url.
+func PackageIndexPackagesToolsSystemsURLDeadLink() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, data := range projectdata.PackageIndexSystems() {
+		url, ok := data.Object["url"].(string)
+		if !ok {
+			continue
+		}
+
+		if url == "" {
+			continue
+		}
+
+		if checkURL(url) == nil {
+			continue
+		}
+
+		nonCompliantIDs = append(nonCompliantIDs, data.ID)
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
 	}
 
 	return ruleresult.Pass, ""

@@ -3,10 +3,10 @@
     {
       "name": "myboard",
       "maintainer": "Jane Developer",
-      "websiteURL": "https://github.com/janedeveloper/myboard",
+      "websiteURL": "http://example.com",
       "email": "jane@example.com",
       "help": {
-        "online": "http://example.com/forum/myboard"
+        "online": "http://example.com"
       },
       "platforms": [
         {
@@ -15,9 +15,9 @@
           "version": "1.0.0",
           "category": "Contributed",
           "help": {
-            "online": "http://example.com/forum/myboard"
+            "online": "http://example.com"
           },
-          "url": "https://janedeveloper.github.io/myboard/myboard-1.0.0.zip",
+          "url": "http://example.com",
           "archiveFileName": "myboard-1.0.0.zip",
           "checksum": "SHA-256:ec3ff8a1dc96d3ba6f432b9b837a35fd4174a34b3d2927de1d51010e8b94f9f1",
           "size": "15005",
@@ -41,9 +41,9 @@
           "version": "1.0.1",
           "category": "Contributed",
           "help": {
-            "online": "http://example.com/forum/myboard"
+            "online": "http://example.com"
           },
-          "url": "https://janedeveloper.github.io/myboard/myboard-1.0.1.zip",
+          "url": "http://example.com",
           "archiveFileName": "myboard-1.0.1.zip",
           "checksum": "SHA-256:9c86ee28a7ce9fe33e8b07ec643316131e0031b0d22e63bb398902a5fdadbca9",
           "size": "15125",

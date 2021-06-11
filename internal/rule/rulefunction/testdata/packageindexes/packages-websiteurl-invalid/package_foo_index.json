@@ -1,0 +1,15 @@
+{
+  "packages": [
+    {
+      "name": "myboard",
+      "maintainer": "Jane Developer",
+      "websiteURL": "invalid",
+      "email": "jane@example.com",
+      "help": {
+        "online": "http://example.com/forum/myboard"
+      },
+      "platforms": [],
+      "tools": []
+    }
+  ]
+}
