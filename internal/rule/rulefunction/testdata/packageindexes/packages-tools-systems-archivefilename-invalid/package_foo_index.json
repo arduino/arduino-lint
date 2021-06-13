@@ -1,0 +1,72 @@
+{
+  "packages": [
+    {
+      "name": "foopackager",
+      "maintainer": "Jane Developer",
+      "websiteURL": "http://example.com",
+      "email": "jane@example.com",
+      "help": {
+        "online": "http://example.com"
+      },
+      "platforms": [
+        {
+          "name": "My Board",
+          "architecture": "avr",
+          "version": "1.0.0",
+          "category": "Contributed",
+          "help": {
+            "online": "http://example.com"
+          },
+          "url": "http://example.com",
+          "archiveFileName": "myboard-1.0.0.zip",
+          "checksum": "MD5:6c0f556759894aa1a45e8af423a08ce8",
+          "size": "15005",
+          "boards": [],
+          "toolsDependencies": []
+        }
+      ],
+      "tools": [
+        {
+          "name": "openocd",
+          "version": "0.11.0-arduino2",
+          "systems": [
+            {
+              "size": "1902818",
+              "checksum": "SHA-256:a1aa7f1435a61eafb72ee90722f2496d6a34a7a0f085d0315c2613e4a548b824",
+              "host": "aarch64-linux-gnu",
+              "archiveFileName": "foo",
+              "url": "http://example.com"
+            },
+            {
+              "size": "1986716",
+              "checksum": "SHA-256:57041130160be086e69387cceb4616eefc9819a0ef75de1f7c11aea57fb92699",
+              "host": "arm-linux-gnueabihf",
+              "archiveFileName": "openocd-0.11.0-arduino2-static-arm-linux-gnueabihf.tar.bz2",
+              "url": "http://example.com"
+            }
+          ]
+        },
+        {
+          "name": "CMSIS",
+          "version": "4.0.0-atmel",
+          "systems": [
+            {
+              "host": "arm-linux-gnueabihf",
+              "url": "http://example.com",
+              "archiveFileName": "CMSIS-4.0.0.tar.bz2",
+              "checksum": "SHA-256:7d637d2d7a0c6bacc22065848a201db2fff124268e4a56868260d0f472b4bbb7",
+              "size": "17642623"
+            },
+            {
+              "host": "i686-mingw32",
+              "url": "http://example.com",
+              "archiveFileName": "CMSIS-4.0.0.tar.bz2",
+              "checksum": "SHA-256:7d637d2d7a0c6bacc22065848a201db2fff124268e4a56868260d0f472b4bbb7",
+              "size": "17642623"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
