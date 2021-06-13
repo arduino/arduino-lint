@@ -21,6 +21,8 @@ import (
 
 	clipackageindex "github.com/arduino/arduino-cli/arduino/cores/packageindex"
 	"github.com/arduino/arduino-lint/internal/project/packageindex"
+	"github.com/arduino/arduino-lint/internal/rule/schema"
+	"github.com/arduino/arduino-lint/internal/rule/schema/compliancelevel"
 )
 
 // PackageIndexData is the type for package index data.
@@ -41,6 +43,7 @@ func InitializeForPackageIndex() {
 	packageIndexPlatforms = nil
 	packageIndexTools = nil
 	packageIndexSystems = nil
+	packageIndexSchemaValidationResult = nil
 	if packageIndexLoadError == nil {
 		packageIndexPackages = getPackageIndexData(PackageIndex(), "", "packages", "", "name", "")
 
@@ -55,6 +58,8 @@ func InitializeForPackageIndex() {
 		for _, toolData := range PackageIndexTools() {
 			packageIndexSystems = append(packageIndexSystems, getPackageIndexData(toolData.Object, toolData.JSONPointer, "systems", toolData.ID+" - ", "host", "")...)
 		}
+
+		packageIndexSchemaValidationResult = packageindex.Validate(PackageIndex())
 	}
 }
 
@@ -105,6 +110,13 @@ var packageIndexSystems []PackageIndexData
 // PackageIndexSystems returns the slice of system data for the package index.
 func PackageIndexSystems() []PackageIndexData {
 	return packageIndexSystems
+}
+
+var packageIndexSchemaValidationResult map[compliancelevel.Type]schema.ValidationResult
+
+// PackageIndexSchemaValidationResult returns the result of validating the package index against the JSON schema.
+func PackageIndexSchemaValidationResult() map[compliancelevel.Type]schema.ValidationResult {
+	return packageIndexSchemaValidationResult
 }
 
 func getPackageIndexData(interfaceObject map[string]interface{}, pointerPrefix string, dataKey string, iDPrefix string, iDKey string, versionKey string) []PackageIndexData {
