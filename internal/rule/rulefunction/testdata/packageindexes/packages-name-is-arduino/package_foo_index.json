@@ -1,0 +1,15 @@
+{
+  "packages": [
+    {
+      "name": "arduino",
+      "maintainer": "Jane Developer",
+      "websiteURL": "http://example.com",
+      "email": "jane@example.com",
+      "help": {
+        "online": "http://example.com"
+      },
+      "platforms": [],
+      "tools": []
+    }
+  ]
+}

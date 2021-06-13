@@ -21,6 +21,8 @@ import (
 	"github.com/arduino/arduino-lint/internal/project/packageindex"
 	"github.com/arduino/arduino-lint/internal/project/projectdata"
 	"github.com/arduino/arduino-lint/internal/rule/ruleresult"
+	"github.com/arduino/arduino-lint/internal/rule/schema"
+	"github.com/arduino/arduino-lint/internal/rule/schema/compliancelevel"
 )
 
 // The rule functions for package indexes.
@@ -86,6 +88,299 @@ func PackageIndexFormat() (result ruleresult.Type, output string) {
 	return ruleresult.Pass, ""
 }
 
+// PackageIndexAdditionalProperties checks for additional properties in the package index root.
+func PackageIndexAdditionalProperties() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	if schema.ProhibitedAdditionalProperties("", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesMissing checks for missing packages property.
+func PackageIndexPackagesMissing() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	if schema.RequiredPropertyMissing("/packages", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesIncorrectType checks for incorrect type of packages[].
+func PackageIndexPackagesIncorrectType() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	if schema.PropertyTypeMismatch("/packages", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesAdditionalProperties checks for additional properties in packages[].
+func PackageIndexPackagesAdditionalProperties() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, packageData := range projectdata.PackageIndexPackages() {
+		if schema.ProhibitedAdditionalProperties(packageData.JSONPointer, projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliantIDs = append(nonCompliantIDs, packageData.ID)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesNameMissing checks for missing packages[].name property.
+func PackageIndexPackagesNameMissing() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, packageData := range projectdata.PackageIndexPackages() {
+		if schema.RequiredPropertyMissing(packageData.JSONPointer+"/name", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliantIDs = append(nonCompliantIDs, packageData.ID)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesNameIncorrectType checks for incorrect type of the packages[].name property.
+func PackageIndexPackagesNameIncorrectType() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, packageData := range projectdata.PackageIndexPackages() {
+		if schema.PropertyTypeMismatch(packageData.JSONPointer+"/name", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliantIDs = append(nonCompliantIDs, packageData.ID)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesNameLTMinLength checks for incorrect type of the packages[].name property.
+func PackageIndexPackagesNameLTMinLength() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, packageData := range projectdata.PackageIndexPackages() {
+		if schema.PropertyLessThanMinLength(packageData.JSONPointer+"/name", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliantIDs = append(nonCompliantIDs, packageData.ID)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesNameIsArduino checks for packages[].name being "arduino".
+func PackageIndexPackagesNameIsArduino() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, packageData := range projectdata.PackageIndexPackages() {
+		if schema.ValidationErrorMatch(
+			"^#"+packageData.JSONPointer+"/name$",
+			"/patternObjects/notArduino",
+			"",
+			"",
+			projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification],
+		) {
+			// Since the package name is implicit in the rule itself, it makes most sense to use the JSON pointer to identify.
+			nonCompliantIDs = append(nonCompliantIDs, packageData.JSONPointer)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesMaintainerMissing checks for missing packages[].maintainer property.
+func PackageIndexPackagesMaintainerMissing() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, packageData := range projectdata.PackageIndexPackages() {
+		if schema.RequiredPropertyMissing(packageData.JSONPointer+"/maintainer", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliantIDs = append(nonCompliantIDs, packageData.ID)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesMaintainerIncorrectType checks for incorrect type of the packages[].maintainer property.
+func PackageIndexPackagesMaintainerIncorrectType() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, packageData := range projectdata.PackageIndexPackages() {
+		if schema.PropertyTypeMismatch(packageData.JSONPointer+"/maintainer", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliantIDs = append(nonCompliantIDs, packageData.ID)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesMaintainerLTMinLength checks for incorrect type of the packages[].maintainer property.
+func PackageIndexPackagesMaintainerLTMinLength() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, packageData := range projectdata.PackageIndexPackages() {
+		if schema.PropertyLessThanMinLength(packageData.JSONPointer+"/maintainer", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliantIDs = append(nonCompliantIDs, packageData.ID)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesMaintainerStartsWithArduino checks for packages[].maintainer starting with "arduino".
+func PackageIndexPackagesMaintainerStartsWithArduino() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, packageData := range projectdata.PackageIndexPackages() {
+		if schema.ValidationErrorMatch(
+			"^#"+packageData.JSONPointer+"/maintainer$",
+			"/patternObjects/notStartsWithArduino",
+			"",
+			"",
+			projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Strict],
+		) {
+			// Since the package name is implicit in the rule itself, it makes most sense to use the JSON pointer to identify.
+			nonCompliantIDs = append(nonCompliantIDs, packageData.JSONPointer)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesWebsiteURLMissing checks for missing packages[].websiteURL property.
+func PackageIndexPackagesWebsiteURLMissing() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, packageData := range projectdata.PackageIndexPackages() {
+		if schema.RequiredPropertyMissing(packageData.JSONPointer+"/websiteURL", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliantIDs = append(nonCompliantIDs, packageData.ID)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesWebsiteURLIncorrectType checks for incorrect type of the packages[].websiteURL property.
+func PackageIndexPackagesWebsiteURLIncorrectType() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, packageData := range projectdata.PackageIndexPackages() {
+		if schema.PropertyTypeMismatch(packageData.JSONPointer+"/websiteURL", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliantIDs = append(nonCompliantIDs, packageData.ID)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesWebsiteURLInvalidFormat checks for incorrect format of the packages[].websiteURL property.
+func PackageIndexPackagesWebsiteURLInvalidFormat() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, packageData := range projectdata.PackageIndexPackages() {
+		if schema.PropertyFormatMismatch(packageData.JSONPointer+"/websiteURL", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliantIDs = append(nonCompliantIDs, packageData.ID)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
 // PackageIndexPackagesWebsiteURLDeadLink checks for dead links in packages[].websiteURL.
 func PackageIndexPackagesWebsiteURLDeadLink() (result ruleresult.Type, output string) {
 	if projectdata.PackageIndexLoadError() != nil {
@@ -108,6 +403,146 @@ func PackageIndexPackagesWebsiteURLDeadLink() (result ruleresult.Type, output st
 		}
 
 		nonCompliantIDs = append(nonCompliantIDs, data.ID)
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesEmailMissing checks for missing packages[].email property.
+func PackageIndexPackagesEmailMissing() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, packageData := range projectdata.PackageIndexPackages() {
+		if schema.RequiredPropertyMissing(packageData.JSONPointer+"/email", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliantIDs = append(nonCompliantIDs, packageData.ID)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesEmailIncorrectType checks for incorrect type of the packages[].email property.
+func PackageIndexPackagesEmailIncorrectType() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, packageData := range projectdata.PackageIndexPackages() {
+		if schema.PropertyTypeMismatch(packageData.JSONPointer+"/email", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliantIDs = append(nonCompliantIDs, packageData.ID)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesHelpIncorrectType checks for incorrect type of the packages[].help property.
+func PackageIndexPackagesHelpIncorrectType() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, packageData := range projectdata.PackageIndexPackages() {
+		if schema.PropertyTypeMismatch(packageData.JSONPointer+"/help", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliantIDs = append(nonCompliantIDs, packageData.ID)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesHelpAdditionalProperties checks for additional properties in packages[].help.
+func PackageIndexPackagesHelpAdditionalProperties() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, packageData := range projectdata.PackageIndexPackages() {
+		if schema.ProhibitedAdditionalProperties(packageData.JSONPointer+"/help", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliantIDs = append(nonCompliantIDs, packageData.ID)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesHelpOnlineMissing checks for missing packages[].help.online property.
+func PackageIndexPackagesHelpOnlineMissing() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, packageData := range projectdata.PackageIndexPackages() {
+		if schema.RequiredPropertyMissing(packageData.JSONPointer+"/help/online", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliantIDs = append(nonCompliantIDs, packageData.ID)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesHelpOnlineIncorrectType checks for incorrect type of the packages[].help.online property.
+func PackageIndexPackagesHelpOnlineIncorrectType() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, packageData := range projectdata.PackageIndexPackages() {
+		if schema.PropertyTypeMismatch(packageData.JSONPointer+"/help/online", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliantIDs = append(nonCompliantIDs, packageData.ID)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesHelpOnlineInvalidFormat checks for incorrect format of the packages[].help.online property.
+func PackageIndexPackagesHelpOnlineInvalidFormat() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, packageData := range projectdata.PackageIndexPackages() {
+		if schema.PropertyFormatMismatch(packageData.JSONPointer+"/help/online", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliantIDs = append(nonCompliantIDs, packageData.ID)
+		}
 	}
 
 	if len(nonCompliantIDs) > 0 {

@@ -1,0 +1,15 @@
+{
+  "packages": [
+    {
+      "name": "foopackager",
+      "maintainer": "Arduino Fan",
+      "websiteURL": "http://example.com",
+      "email": "jane@example.com",
+      "help": {
+        "online": "http://example.com"
+      },
+      "platforms": [],
+      "tools": []
+    }
+  ]
+}
