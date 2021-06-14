@@ -118,6 +118,81 @@ func TestInitializeForPackageIndex(t *testing.T) {
 			},
 		},
 		{
+			testName:                          "Missing IDs",
+			path:                              packageIndexTestDataPath.Join("missing-ids", "package_foo_index.json"),
+			packageIndexAssertion:             assert.NotNil,
+			packageIndexLoadErrorAssertion:    assert.Nil,
+			packageIndexCLILoadErrorAssertion: assert.Nil,
+			packageIndexPackagesAssertion:     assert.NotNil,
+			packageIndexPackagesDataAssertion: []PackageIndexData{
+				{
+					ID:          "/packages/0",
+					JSONPointer: "/packages/0",
+				},
+				{
+					ID:          "foopackager2",
+					JSONPointer: "/packages/1",
+				},
+			},
+			packageIndexPlatformsAssertion: assert.NotNil,
+			packageIndexPlatformsDataAssertion: []PackageIndexData{
+				{
+					ID:          "/packages/0/platforms/0",
+					JSONPointer: "/packages/0/platforms/0",
+				},
+				{
+					ID:          "/packages/0/platforms/1",
+					JSONPointer: "/packages/0/platforms/1",
+				},
+				{
+					ID:          "/packages/1/platforms/0",
+					JSONPointer: "/packages/1/platforms/0",
+				},
+				{
+					ID:          "/packages/1/platforms/1",
+					JSONPointer: "/packages/1/platforms/1",
+				},
+			},
+			packageIndexToolsAssertion: assert.NotNil,
+			packageIndexToolsDataAssertion: []PackageIndexData{
+				{
+					ID:          "/packages/1/tools/0",
+					JSONPointer: "/packages/1/tools/0",
+				},
+				{
+					ID:          "/packages/1/tools/1",
+					JSONPointer: "/packages/1/tools/1",
+				},
+				{
+					ID:          "foopackager2:bossac@1.9.1-arduino2",
+					JSONPointer: "/packages/1/tools/2",
+				},
+			},
+			packageIndexSystemsAssertion: assert.NotNil,
+			packageIndexSystemsDataAssertion: []PackageIndexData{
+				{
+					ID:          "/packages/1/tools/0/systems/0",
+					JSONPointer: "/packages/1/tools/0/systems/0",
+				},
+				{
+					ID:          "/packages/1/tools/0/systems/1",
+					JSONPointer: "/packages/1/tools/0/systems/1",
+				},
+				{
+					ID:          "/packages/1/tools/1/systems/0",
+					JSONPointer: "/packages/1/tools/1/systems/0",
+				},
+				{
+					ID:          "/packages/1/tools/1/systems/1",
+					JSONPointer: "/packages/1/tools/1/systems/1",
+				},
+				{
+					ID:          "/packages/1/tools/2/systems/0",
+					JSONPointer: "/packages/1/tools/2/systems/0",
+				},
+			},
+		},
+		{
 			testName:                          "Invalid package index",
 			path:                              packageIndexTestDataPath.Join("invalid-package-index", "package_foo_index.json"),
 			packageIndexAssertion:             assert.Nil,
