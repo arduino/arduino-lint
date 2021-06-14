@@ -59,60 +59,60 @@ func TestInitializeForPackageIndex(t *testing.T) {
 			packageIndexPackagesAssertion:     assert.NotNil,
 			packageIndexPackagesDataAssertion: []PackageIndexData{
 				{
-					ID:          "myboard1",
+					ID:          "foopackager1",
 					JSONPointer: "/packages/0",
 				},
 				{
-					ID:          "myboard2",
+					ID:          "foopackager2",
 					JSONPointer: "/packages/1",
 				},
 			},
 			packageIndexPlatformsAssertion: assert.NotNil,
 			packageIndexPlatformsDataAssertion: []PackageIndexData{
 				{
-					ID:          "myboard1:avr@1.0.0",
+					ID:          "foopackager1:avr@1.0.0",
 					JSONPointer: "/packages/0/platforms/0",
 				},
 				{
-					ID:          "myboard1:avr@1.0.1",
+					ID:          "foopackager1:avr@1.0.1",
 					JSONPointer: "/packages/0/platforms/1",
 				},
 				{
-					ID:          "myboard2:samd@2.0.0",
+					ID:          "foopackager2:samd@2.0.0",
 					JSONPointer: "/packages/1/platforms/0",
 				},
 				{
-					ID:          "myboard2:mbed@1.1.1",
+					ID:          "foopackager2:mbed@1.1.1",
 					JSONPointer: "/packages/1/platforms/1",
 				},
 			},
 			packageIndexToolsAssertion: assert.NotNil,
 			packageIndexToolsDataAssertion: []PackageIndexData{
 				{
-					ID:          "myboard2:openocd@0.10.0-arduino1-static",
+					ID:          "foopackager2:openocd@0.10.0-arduino1-static",
 					JSONPointer: "/packages/1/tools/0",
 				},
 				{
-					ID:          "myboard2:CMSIS@4.0.0-atmel",
+					ID:          "foopackager2:CMSIS@4.0.0-atmel",
 					JSONPointer: "/packages/1/tools/1",
 				},
 			},
 			packageIndexSystemsAssertion: assert.NotNil,
 			packageIndexSystemsDataAssertion: []PackageIndexData{
 				{
-					ID:          "myboard2:openocd@0.10.0-arduino1-static - i386-apple-darwin11",
+					ID:          "foopackager2:openocd@0.10.0-arduino1-static - i386-apple-darwin11",
 					JSONPointer: "/packages/1/tools/0/systems/0",
 				},
 				{
-					ID:          "myboard2:openocd@0.10.0-arduino1-static - x86_64-linux-gnu",
+					ID:          "foopackager2:openocd@0.10.0-arduino1-static - x86_64-linux-gnu",
 					JSONPointer: "/packages/1/tools/0/systems/1",
 				},
 				{
-					ID:          "myboard2:CMSIS@4.0.0-atmel - arm-linux-gnueabihf",
+					ID:          "foopackager2:CMSIS@4.0.0-atmel - arm-linux-gnueabihf",
 					JSONPointer: "/packages/1/tools/1/systems/0",
 				},
 				{
-					ID:          "myboard2:CMSIS@4.0.0-atmel - i686-mingw32",
+					ID:          "foopackager2:CMSIS@4.0.0-atmel - i686-mingw32",
 					JSONPointer: "/packages/1/tools/1/systems/1",
 				},
 			},
@@ -159,32 +159,32 @@ func TestInitializeForPackageIndex(t *testing.T) {
 		testTable.packageIndexPackagesAssertion(t, PackageIndexPackages(), testTable.testName)
 		if PackageIndexPackages() != nil {
 			for index, packageIndexPackage := range PackageIndexPackages() {
-				assert.Equal(t, packageIndexPackage.ID, testTable.packageIndexPackagesDataAssertion[index].ID)
-				assert.Equal(t, packageIndexPackage.JSONPointer, testTable.packageIndexPackagesDataAssertion[index].JSONPointer)
+				assert.Equal(t, testTable.packageIndexPackagesDataAssertion[index].ID, packageIndexPackage.ID, testTable.testName)
+				assert.Equal(t, testTable.packageIndexPackagesDataAssertion[index].JSONPointer, packageIndexPackage.JSONPointer, testTable.testName)
 			}
 		}
 
 		testTable.packageIndexPlatformsAssertion(t, PackageIndexPlatforms(), testTable.testName)
 		if PackageIndexPlatforms() != nil {
 			for index, packageIndexPlatform := range PackageIndexPlatforms() {
-				assert.Equal(t, packageIndexPlatform.ID, testTable.packageIndexPlatformsDataAssertion[index].ID)
-				assert.Equal(t, packageIndexPlatform.JSONPointer, testTable.packageIndexPlatformsDataAssertion[index].JSONPointer)
+				assert.Equal(t, testTable.packageIndexPlatformsDataAssertion[index].ID, packageIndexPlatform.ID, testTable.testName)
+				assert.Equal(t, testTable.packageIndexPlatformsDataAssertion[index].JSONPointer, packageIndexPlatform.JSONPointer, testTable.testName)
 			}
 		}
 
 		testTable.packageIndexToolsAssertion(t, PackageIndexTools(), testTable.testName)
 		if PackageIndexTools() != nil {
 			for index, packageIndexTool := range PackageIndexTools() {
-				assert.Equal(t, packageIndexTool.ID, testTable.packageIndexToolsDataAssertion[index].ID)
-				assert.Equal(t, packageIndexTool.JSONPointer, testTable.packageIndexToolsDataAssertion[index].JSONPointer)
+				assert.Equal(t, testTable.packageIndexToolsDataAssertion[index].ID, packageIndexTool.ID, testTable.testName)
+				assert.Equal(t, testTable.packageIndexToolsDataAssertion[index].JSONPointer, packageIndexTool.JSONPointer, testTable.testName)
 			}
 		}
 
 		testTable.packageIndexSystemsAssertion(t, PackageIndexSystems(), testTable.testName)
 		if PackageIndexSystems() != nil {
 			for index, packageIndexSystem := range PackageIndexSystems() {
-				assert.Equal(t, packageIndexSystem.ID, testTable.packageIndexSystemsDataAssertion[index].ID)
-				assert.Equal(t, packageIndexSystem.JSONPointer, testTable.packageIndexSystemsDataAssertion[index].JSONPointer)
+				assert.Equal(t, testTable.packageIndexSystemsDataAssertion[index].ID, packageIndexSystem.ID, testTable.testName)
+				assert.Equal(t, testTable.packageIndexSystemsDataAssertion[index].JSONPointer, packageIndexSystem.JSONPointer, testTable.testName)
 			}
 		}
 	}
