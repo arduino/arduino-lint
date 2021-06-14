@@ -1,0 +1,186 @@
+{
+  "packages": [
+    {
+      "name": "",
+      "maintainer": "Jane Developer",
+      "websiteURL": "https://github.com/janedeveloper/myboard",
+      "email": "jane@example.com",
+      "help": {
+        "online": "http://example.com/forum/myboard"
+      },
+      "platforms": [
+        {
+          "name": "My Board",
+          "architecture": "avr",
+          "version": "1.0.0",
+          "category": "Contributed",
+          "help": {
+            "online": "http://example.com/forum/myboard"
+          },
+          "url": "https://janedeveloper.github.io/myboard/myboard-1.0.0.zip",
+          "archiveFileName": "myboard-1.0.0.zip",
+          "checksum": "SHA-256:ec3ff8a1dc96d3ba6f432b9b837a35fd4174a34b3d2927de1d51010e8b94f9f1",
+          "size": "15005",
+          "boards": [{ "name": "My Board" }, { "name": "My Board Pro" }],
+          "toolsDependencies": [
+            {
+              "packager": "arduino",
+              "name": "avr-gcc",
+              "version": "4.8.1-arduino5"
+            },
+            {
+              "packager": "arduino",
+              "name": "avrdude",
+              "version": "6.0.1-arduino5"
+            }
+          ]
+        },
+        {
+          "name": "My Board",
+          "architecture": "avr",
+          "version": "1.0.1",
+          "category": "Contributed",
+          "help": {
+            "online": "http://example.com/forum/myboard"
+          },
+          "url": "https://janedeveloper.github.io/myboard/myboard-1.0.1.zip",
+          "archiveFileName": "myboard-1.0.1.zip",
+          "checksum": "SHA-256:9c86ee28a7ce9fe33e8b07ec643316131e0031b0d22e63bb398902a5fdadbca9",
+          "size": "15125",
+          "boards": [{ "name": "My Board" }, { "name": "My Board Pro" }],
+          "toolsDependencies": [
+            {
+              "packager": "arduino",
+              "name": "avr-gcc",
+              "version": "4.8.1-arduino5"
+            },
+            {
+              "packager": "arduino",
+              "name": "avrdude",
+              "version": "6.0.1-arduino5"
+            }
+          ]
+        }
+      ],
+      "tools": []
+    },
+    {
+      "name": "foopackager2",
+      "maintainer": "Jane Developer",
+      "websiteURL": "https://github.com/janedeveloper/myboard",
+      "email": "jane@example.com",
+      "help": {
+        "online": "http://example.com/forum/myboard"
+      },
+      "platforms": [
+        {
+          "name": "My Board",
+          "architecture": "",
+          "version": "2.0.0",
+          "category": "Contributed",
+          "help": {
+            "online": "http://example.com/forum/myboard"
+          },
+          "url": "https://janedeveloper.github.io/myboard/myboard-1.0.0.zip",
+          "archiveFileName": "myboard-1.0.0.zip",
+          "checksum": "SHA-256:ec3ff8a1dc96d3ba6f432b9b837a35fd4174a34b3d2927de1d51010e8b94f9f1",
+          "size": "15005",
+          "boards": [{ "name": "My Board" }, { "name": "My Board Pro" }],
+          "toolsDependencies": [
+            {
+              "packager": "arduino",
+              "name": "avr-gcc",
+              "version": "4.8.1-arduino5"
+            },
+            {
+              "packager": "arduino",
+              "name": "avrdude",
+              "version": "6.0.1-arduino5"
+            }
+          ]
+        },
+        {
+          "name": "My Board",
+          "architecture": "mbed",
+          "version": "",
+          "category": "Contributed",
+          "help": {
+            "online": "http://example.com/forum/myboard"
+          },
+          "url": "https://janedeveloper.github.io/myboard/myboard-1.0.1.zip",
+          "archiveFileName": "myboard-1.0.1.zip",
+          "checksum": "SHA-256:9c86ee28a7ce9fe33e8b07ec643316131e0031b0d22e63bb398902a5fdadbca9",
+          "size": "15125",
+          "boards": [{ "name": "My Board" }, { "name": "My Board Pro" }],
+          "toolsDependencies": [
+            {
+              "packager": "arduino",
+              "name": "avr-gcc",
+              "version": "4.8.1-arduino5"
+            },
+            {
+              "packager": "arduino",
+              "name": "avrdude",
+              "version": "6.0.1-arduino5"
+            }
+          ]
+        }
+      ],
+      "tools": [
+        {
+          "name": "",
+          "version": "0.10.0-arduino1-static",
+          "systems": [
+            {
+              "host": "i386-apple-darwin11",
+              "url": "http://downloads.arduino.cc/arduino.org/OpenOCD-0.10.0-nrf52-osx-static.tar.gz",
+              "archiveFileName": "OpenOCD-0.10.0-nrf52-osx-static.tar.gz",
+              "size": "1529841",
+              "checksum": "SHA-256:46bd02c1d42c5d94c4936e4d4a0ff29697b621840be9a6f882e316203122049d"
+            },
+            {
+              "host": "x86_64-linux-gnu",
+              "url": "http://downloads.arduino.cc/arduino.org/OpenOCD-0.10.0-nrf52-linux64-static.tar.gz",
+              "archiveFileName": "OpenOCD-0.10.0-nrf52-linux64-static.tar.gz",
+              "size": "1777984",
+              "checksum": "SHA-256:1c9ae77930dd7377d8c13f84abe7307b67fdcd6da74cc1ce269a79e138e7a00a"
+            }
+          ]
+        },
+        {
+          "name": "CMSIS",
+          "version": "",
+          "systems": [
+            {
+              "host": "arm-linux-gnueabihf",
+              "url": "http://example.com",
+              "archiveFileName": "CMSIS-4.0.0.tar.bz2",
+              "checksum": "SHA-256:7d637d2d7a0c6bacc22065848a201db2fff124268e4a56868260d0f472b4bbb7",
+              "size": "17642623"
+            },
+            {
+              "host": "i686-mingw32",
+              "url": "http://example.com",
+              "archiveFileName": "CMSIS-4.0.0.tar.bz2",
+              "checksum": "SHA-256:7d637d2d7a0c6bacc22065848a201db2fff124268e4a56868260d0f472b4bbb7",
+              "size": "17642623"
+            }
+          ]
+        },
+        {
+          "name": "bossac",
+          "version": "1.9.1-arduino2",
+          "systems": [
+            {
+              "host": "",
+              "url": "http://downloads.arduino.cc/tools/bossac-1.9.1-arduino2-linuxaarch64.tar.gz",
+              "archiveFileName": "bossac-1.9.1-arduino2-linuxaarch64.tar.gz",
+              "checksum": "SHA-256:c167fa0ea223966f4d21f5592da3888bcbfbae385be6c5c4e41f8abff35f5cb1",
+              "size": "442853"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
