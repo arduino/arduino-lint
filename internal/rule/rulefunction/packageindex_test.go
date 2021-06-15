@@ -111,6 +111,156 @@ func TestPackageIndexFormat(t *testing.T) {
 	checkPackageIndexRuleFunction(PackageIndexFormat, testTables, t)
 }
 
+func TestPackageIndexAdditionalProperties(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Additional root properties", "root-additional-properties", ruleresult.Fail, ""},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexAdditionalProperties, testTables, t)
+}
+
+func TestPackageIndexPackagesMissing(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Packages key missing", "packages-missing", ruleresult.Fail, ""},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesMissing, testTables, t)
+}
+
+func TestPackageIndexPackagesIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages type", "packages-incorrect-type", ruleresult.Fail, ""},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesAdditionalProperties(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Additional packages properties", "packages-additional-properties", ruleresult.Fail, "^foopackager$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesAdditionalProperties, testTables, t)
+}
+
+func TestPackageIndexPackagesNameMissing(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].name missing", "packages-name-missing", ruleresult.Fail, "^/packages/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesNameMissing, testTables, t)
+}
+
+func TestPackageIndexPackagesNameIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].name type", "packages-name-incorrect-type", ruleresult.Fail, "^/packages/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesNameIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesNameLTMinLength(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].name < min length", "packages-name-length-lt", ruleresult.Fail, "^/packages/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesNameLTMinLength, testTables, t)
+}
+
+func TestPackageIndexPackagesNameIsArduino(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].name is arduino", "packages-name-is-arduino", ruleresult.Fail, "^/packages/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesNameIsArduino, testTables, t)
+}
+
+func TestPackageIndexPackagesMaintainerMissing(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].maintainer missing", "packages-maintainer-missing", ruleresult.Fail, "^foopackager$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesMaintainerMissing, testTables, t)
+}
+
+func TestPackageIndexPackagesMaintainerIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].maintainer type", "packages-maintainer-incorrect-type", ruleresult.Fail, "^foopackager$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesMaintainerIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesMaintainerLTMinLength(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].maintainer < min length", "packages-maintainer-length-lt", ruleresult.Fail, "^foopackager$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesMaintainerLTMinLength, testTables, t)
+}
+
+func TestPackageIndexPackagesMaintainerStartsWithArduino(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].maintainer starts with arduino", "packages-maintainer-starts-with-arduino", ruleresult.Fail, "^/packages/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesMaintainerStartsWithArduino, testTables, t)
+}
+
+func TestPackageIndexPackagesWebsiteURLMissing(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].websiteURL missing", "packages-websiteurl-missing", ruleresult.Fail, "^foopackager$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesWebsiteURLMissing, testTables, t)
+}
+
+func TestPackageIndexPackagesWebsiteURLIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].websiteURL type", "packages-websiteurl-incorrect-type", ruleresult.Fail, "^foopackager$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesWebsiteURLIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesWebsiteURLInvalidFormat(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].websiteURL format", "packages-websiteurl-invalid-format", ruleresult.Fail, "^foopackager$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesWebsiteURLInvalidFormat, testTables, t)
+}
+
 func TestPackageIndexPackagesWebsiteURLDeadLink(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
@@ -120,6 +270,76 @@ func TestPackageIndexPackagesWebsiteURLDeadLink(t *testing.T) {
 	}
 
 	checkPackageIndexRuleFunction(PackageIndexPackagesWebsiteURLDeadLink, testTables, t)
+}
+
+func TestPackageIndexPackagesEmailMissing(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].email missing", "packages-email-missing", ruleresult.Fail, "^foopackager$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesEmailMissing, testTables, t)
+}
+
+func TestPackageIndexPackagesEmailIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].email type", "packages-email-incorrect-type", ruleresult.Fail, "^foopackager$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesEmailIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesHelpIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].help type", "packages-help-incorrect-type", ruleresult.Fail, "^foopackager$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesHelpIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesHelpAdditionalProperties(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Additional packages[].help properties", "packages-help-additional-properties", ruleresult.Fail, "^foopackager$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesHelpAdditionalProperties, testTables, t)
+}
+
+func TestPackageIndexPackagesHelpOnlineMissing(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].help.online missing", "packages-help-online-missing", ruleresult.Fail, "^foopackager$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesHelpOnlineMissing, testTables, t)
+}
+
+func TestPackageIndexPackagesHelpOnlineIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].help.online type", "packages-help-online-incorrect-type", ruleresult.Fail, "^foopackager$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesHelpOnlineIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesHelpOnlineInvalidFormat(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].help.online format", "packages-help-online-invalid-format", ruleresult.Fail, "^foopackager$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesHelpOnlineInvalidFormat, testTables, t)
 }
 
 func TestPackageIndexPackagesHelpOnlineDeadLink(t *testing.T) {

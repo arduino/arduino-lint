@@ -1,0 +1,14 @@
+{
+  "packages": [
+    {
+      "name": "foopackager",
+      "maintainer": "Jane Developer",
+      "email": "jane@example.com",
+      "help": {
+        "online": "http://example.com"
+      },
+      "platforms": [],
+      "tools": []
+    }
+  ]
+}

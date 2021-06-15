@@ -1,0 +1,16 @@
+{
+  "packages": [
+    {
+      "name": "foopackager",
+      "maintainer": "Jane Developer",
+      "websiteURL": "http://example.com",
+      "email": "jane@example.com",
+      "help": {
+        "online": "http://example.com"
+      },
+      "platforms": [],
+      "tools": [],
+      "foo": "bar"
+    }
+  ]
+}
