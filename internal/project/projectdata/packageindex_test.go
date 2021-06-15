@@ -36,19 +36,20 @@ func init() {
 
 func TestInitializeForPackageIndex(t *testing.T) {
 	testTables := []struct {
-		testName                           string
-		path                               *paths.Path
-		packageIndexAssertion              assert.ValueAssertionFunc
-		packageIndexLoadErrorAssertion     assert.ValueAssertionFunc
-		packageIndexCLILoadErrorAssertion  assert.ValueAssertionFunc
-		packageIndexPackagesAssertion      assert.ValueAssertionFunc
-		packageIndexPackagesDataAssertion  []PackageIndexData
-		packageIndexPlatformsAssertion     assert.ValueAssertionFunc
-		packageIndexPlatformsDataAssertion []PackageIndexData
-		packageIndexToolsAssertion         assert.ValueAssertionFunc
-		packageIndexToolsDataAssertion     []PackageIndexData
-		packageIndexSystemsAssertion       assert.ValueAssertionFunc
-		packageIndexSystemsDataAssertion   []PackageIndexData
+		testName                                    string
+		path                                        *paths.Path
+		packageIndexAssertion                       assert.ValueAssertionFunc
+		packageIndexLoadErrorAssertion              assert.ValueAssertionFunc
+		packageIndexCLILoadErrorAssertion           assert.ValueAssertionFunc
+		packageIndexPackagesAssertion               assert.ValueAssertionFunc
+		packageIndexPackagesDataAssertion           []PackageIndexData
+		packageIndexPlatformsAssertion              assert.ValueAssertionFunc
+		packageIndexPlatformsDataAssertion          []PackageIndexData
+		packageIndexToolsAssertion                  assert.ValueAssertionFunc
+		packageIndexToolsDataAssertion              []PackageIndexData
+		packageIndexSystemsAssertion                assert.ValueAssertionFunc
+		packageIndexSystemsDataAssertion            []PackageIndexData
+		packageIndexSchemaValidationResultAssertion assert.ValueAssertionFunc
 	}{
 		{
 			testName:                          "Valid",
@@ -116,6 +117,7 @@ func TestInitializeForPackageIndex(t *testing.T) {
 					JSONPointer: "/packages/1/tools/1/systems/1",
 				},
 			},
+			packageIndexSchemaValidationResultAssertion: assert.NotNil,
 		},
 		{
 			testName:                          "Missing IDs",
@@ -191,6 +193,7 @@ func TestInitializeForPackageIndex(t *testing.T) {
 					JSONPointer: "/packages/1/tools/2/systems/0",
 				},
 			},
+			packageIndexSchemaValidationResultAssertion: assert.NotNil,
 		},
 		{
 			testName:                          "Empty IDs",
@@ -266,28 +269,31 @@ func TestInitializeForPackageIndex(t *testing.T) {
 					JSONPointer: "/packages/1/tools/2/systems/0",
 				},
 			},
+			packageIndexSchemaValidationResultAssertion: assert.NotNil,
 		},
 		{
-			testName:                          "Invalid package index",
-			path:                              packageIndexTestDataPath.Join("invalid-package-index", "package_foo_index.json"),
-			packageIndexAssertion:             assert.Nil,
-			packageIndexLoadErrorAssertion:    assert.NotNil,
-			packageIndexCLILoadErrorAssertion: assert.NotNil,
-			packageIndexPackagesAssertion:     assert.Nil,
-			packageIndexPlatformsAssertion:    assert.Nil,
-			packageIndexToolsAssertion:        assert.Nil,
-			packageIndexSystemsAssertion:      assert.Nil,
+			testName:                                    "Invalid package index",
+			path:                                        packageIndexTestDataPath.Join("invalid-package-index", "package_foo_index.json"),
+			packageIndexAssertion:                       assert.Nil,
+			packageIndexLoadErrorAssertion:              assert.NotNil,
+			packageIndexCLILoadErrorAssertion:           assert.NotNil,
+			packageIndexPackagesAssertion:               assert.Nil,
+			packageIndexPlatformsAssertion:              assert.Nil,
+			packageIndexToolsAssertion:                  assert.Nil,
+			packageIndexSystemsAssertion:                assert.Nil,
+			packageIndexSchemaValidationResultAssertion: assert.Nil,
 		},
 		{
-			testName:                          "Invalid JSON",
-			path:                              packageIndexTestDataPath.Join("invalid-JSON", "package_foo_index.json"),
-			packageIndexAssertion:             assert.Nil,
-			packageIndexLoadErrorAssertion:    assert.NotNil,
-			packageIndexCLILoadErrorAssertion: assert.NotNil,
-			packageIndexPackagesAssertion:     assert.Nil,
-			packageIndexPlatformsAssertion:    assert.Nil,
-			packageIndexToolsAssertion:        assert.Nil,
-			packageIndexSystemsAssertion:      assert.Nil,
+			testName:                                    "Invalid JSON",
+			path:                                        packageIndexTestDataPath.Join("invalid-JSON", "package_foo_index.json"),
+			packageIndexAssertion:                       assert.Nil,
+			packageIndexLoadErrorAssertion:              assert.NotNil,
+			packageIndexCLILoadErrorAssertion:           assert.NotNil,
+			packageIndexPackagesAssertion:               assert.Nil,
+			packageIndexPlatformsAssertion:              assert.Nil,
+			packageIndexToolsAssertion:                  assert.Nil,
+			packageIndexSystemsAssertion:                assert.Nil,
+			packageIndexSchemaValidationResultAssertion: assert.Nil,
 		},
 	}
 
