@@ -124,6 +124,32 @@
               "version": "6.0.1-arduino5"
             }
           ]
+        },
+        {
+          "name": "My Board",
+          "architecture": "megaavr",
+          "version": "1.0.0",
+          "category": "Contributed",
+          "help": {
+            "online": "http://example.com/forum/myboard"
+          },
+          "url": "https://janedeveloper.github.io/myboard/myboard-1.0.1.zip",
+          "archiveFileName": "myboard-1.0.1.zip",
+          "checksum": "SHA-256:9c86ee28a7ce9fe33e8b07ec643316131e0031b0d22e63bb398902a5fdadbca9",
+          "size": "15125",
+          "boards": [{ "name": "" }, { "name": "My Board Pro" }],
+          "toolsDependencies": [
+            {
+              "packager": "arduino",
+              "name": "avr-gcc",
+              "version": "4.8.1-arduino5"
+            },
+            {
+              "packager": "arduino",
+              "name": "avrdude",
+              "version": "6.0.1-arduino5"
+            }
+          ]
         }
       ],
       "tools": [
