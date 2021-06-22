@@ -187,7 +187,7 @@ func PackageIndexPackagesNameIncorrectType() (result ruleresult.Type, output str
 	return ruleresult.Pass, ""
 }
 
-// PackageIndexPackagesNameLTMinLength checks for incorrect type of the packages[].name property.
+// PackageIndexPackagesNameLTMinLength checks for packages[].name property less than the minimum length.
 func PackageIndexPackagesNameLTMinLength() (result ruleresult.Type, output string) {
 	if projectdata.PackageIndexLoadError() != nil {
 		return ruleresult.NotRun, "Error loading package index"
@@ -274,7 +274,7 @@ func PackageIndexPackagesMaintainerIncorrectType() (result ruleresult.Type, outp
 	return ruleresult.Pass, ""
 }
 
-// PackageIndexPackagesMaintainerLTMinLength checks for incorrect type of the packages[].maintainer property.
+// PackageIndexPackagesMaintainerLTMinLength checks for packages[].maintainer property less than the minimum length.
 func PackageIndexPackagesMaintainerLTMinLength() (result ruleresult.Type, output string) {
 	if projectdata.PackageIndexLoadError() != nil {
 		return ruleresult.NotRun, "Error loading package index"
