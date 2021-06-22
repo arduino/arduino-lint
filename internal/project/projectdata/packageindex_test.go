@@ -45,6 +45,8 @@ func TestInitializeForPackageIndex(t *testing.T) {
 		packageIndexPackagesDataAssertion           []PackageIndexData
 		packageIndexPlatformsAssertion              assert.ValueAssertionFunc
 		packageIndexPlatformsDataAssertion          []PackageIndexData
+		packageIndexBoardsAssertion                 assert.ValueAssertionFunc
+		packageIndexBoardsDataAssertion             []PackageIndexData
 		packageIndexToolsAssertion                  assert.ValueAssertionFunc
 		packageIndexToolsDataAssertion              []PackageIndexData
 		packageIndexSystemsAssertion                assert.ValueAssertionFunc
@@ -85,6 +87,41 @@ func TestInitializeForPackageIndex(t *testing.T) {
 				{
 					ID:          "foopackager2:mbed@1.1.1",
 					JSONPointer: "/packages/1/platforms/1",
+				},
+			},
+			packageIndexBoardsAssertion: assert.NotNil,
+			packageIndexBoardsDataAssertion: []PackageIndexData{
+				{
+					ID:          "foopackager1:avr@1.0.0 - My Board",
+					JSONPointer: "/packages/0/platforms/0/boards/0",
+				},
+				{
+					ID:          "foopackager1:avr@1.0.0 - My Board Pro",
+					JSONPointer: "/packages/0/platforms/0/boards/1",
+				},
+				{
+					ID:          "foopackager1:avr@1.0.1 - My Board",
+					JSONPointer: "/packages/0/platforms/1/boards/0",
+				},
+				{
+					ID:          "foopackager1:avr@1.0.1 - My Board Pro",
+					JSONPointer: "/packages/0/platforms/1/boards/1",
+				},
+				{
+					ID:          "foopackager2:samd@2.0.0 - My Board",
+					JSONPointer: "/packages/1/platforms/0/boards/0",
+				},
+				{
+					ID:          "foopackager2:samd@2.0.0 - My Board Pro",
+					JSONPointer: "/packages/1/platforms/0/boards/1",
+				},
+				{
+					ID:          "foopackager2:mbed@1.1.1 - My Board",
+					JSONPointer: "/packages/1/platforms/1/boards/0",
+				},
+				{
+					ID:          "foopackager2:mbed@1.1.1 - My Board Pro",
+					JSONPointer: "/packages/1/platforms/1/boards/1",
 				},
 			},
 			packageIndexToolsAssertion: assert.NotNil,
@@ -153,6 +190,53 @@ func TestInitializeForPackageIndex(t *testing.T) {
 				{
 					ID:          "/packages/1/platforms/1",
 					JSONPointer: "/packages/1/platforms/1",
+				},
+				{
+					ID:          "foopackager2:megaavr@1.0.0",
+					JSONPointer: "/packages/1/platforms/2",
+				},
+			},
+			packageIndexBoardsAssertion: assert.NotNil,
+			packageIndexBoardsDataAssertion: []PackageIndexData{
+				{
+					ID:          "/packages/0/platforms/0/boards/0",
+					JSONPointer: "/packages/0/platforms/0/boards/0",
+				},
+				{
+					ID:          "/packages/0/platforms/0/boards/1",
+					JSONPointer: "/packages/0/platforms/0/boards/1",
+				},
+				{
+					ID:          "/packages/0/platforms/1/boards/0",
+					JSONPointer: "/packages/0/platforms/1/boards/0",
+				},
+				{
+					ID:          "/packages/0/platforms/1/boards/1",
+					JSONPointer: "/packages/0/platforms/1/boards/1",
+				},
+				{
+					ID:          "/packages/1/platforms/0/boards/0",
+					JSONPointer: "/packages/1/platforms/0/boards/0",
+				},
+				{
+					ID:          "/packages/1/platforms/0/boards/1",
+					JSONPointer: "/packages/1/platforms/0/boards/1",
+				},
+				{
+					ID:          "/packages/1/platforms/1/boards/0",
+					JSONPointer: "/packages/1/platforms/1/boards/0",
+				},
+				{
+					ID:          "/packages/1/platforms/1/boards/1",
+					JSONPointer: "/packages/1/platforms/1/boards/1",
+				},
+				{
+					ID:          "/packages/1/platforms/2/boards/0",
+					JSONPointer: "/packages/1/platforms/2/boards/0",
+				},
+				{
+					ID:          "foopackager2:megaavr@1.0.0 - My Board Pro",
+					JSONPointer: "/packages/1/platforms/2/boards/1",
 				},
 			},
 			packageIndexToolsAssertion: assert.NotNil,
@@ -230,6 +314,53 @@ func TestInitializeForPackageIndex(t *testing.T) {
 					ID:          "/packages/1/platforms/1",
 					JSONPointer: "/packages/1/platforms/1",
 				},
+				{
+					ID:          "foopackager2:megaavr@1.0.0",
+					JSONPointer: "/packages/1/platforms/2",
+				},
+			},
+			packageIndexBoardsAssertion: assert.NotNil,
+			packageIndexBoardsDataAssertion: []PackageIndexData{
+				{
+					ID:          "/packages/0/platforms/0/boards/0",
+					JSONPointer: "/packages/0/platforms/0/boards/0",
+				},
+				{
+					ID:          "/packages/0/platforms/0/boards/1",
+					JSONPointer: "/packages/0/platforms/0/boards/1",
+				},
+				{
+					ID:          "/packages/0/platforms/1/boards/0",
+					JSONPointer: "/packages/0/platforms/1/boards/0",
+				},
+				{
+					ID:          "/packages/0/platforms/1/boards/1",
+					JSONPointer: "/packages/0/platforms/1/boards/1",
+				},
+				{
+					ID:          "/packages/1/platforms/0/boards/0",
+					JSONPointer: "/packages/1/platforms/0/boards/0",
+				},
+				{
+					ID:          "/packages/1/platforms/0/boards/1",
+					JSONPointer: "/packages/1/platforms/0/boards/1",
+				},
+				{
+					ID:          "/packages/1/platforms/1/boards/0",
+					JSONPointer: "/packages/1/platforms/1/boards/0",
+				},
+				{
+					ID:          "/packages/1/platforms/1/boards/1",
+					JSONPointer: "/packages/1/platforms/1/boards/1",
+				},
+				{
+					ID:          "/packages/1/platforms/2/boards/0",
+					JSONPointer: "/packages/1/platforms/2/boards/0",
+				},
+				{
+					ID:          "foopackager2:megaavr@1.0.0 - My Board Pro",
+					JSONPointer: "/packages/1/platforms/2/boards/1",
+				},
 			},
 			packageIndexToolsAssertion: assert.NotNil,
 			packageIndexToolsDataAssertion: []PackageIndexData{
@@ -279,6 +410,7 @@ func TestInitializeForPackageIndex(t *testing.T) {
 			packageIndexCLILoadErrorAssertion:           assert.NotNil,
 			packageIndexPackagesAssertion:               assert.Nil,
 			packageIndexPlatformsAssertion:              assert.Nil,
+			packageIndexBoardsAssertion:                 assert.Nil,
 			packageIndexToolsAssertion:                  assert.Nil,
 			packageIndexSystemsAssertion:                assert.Nil,
 			packageIndexSchemaValidationResultAssertion: assert.Nil,
@@ -291,6 +423,7 @@ func TestInitializeForPackageIndex(t *testing.T) {
 			packageIndexCLILoadErrorAssertion:           assert.NotNil,
 			packageIndexPackagesAssertion:               assert.Nil,
 			packageIndexPlatformsAssertion:              assert.Nil,
+			packageIndexBoardsAssertion:                 assert.Nil,
 			packageIndexToolsAssertion:                  assert.Nil,
 			packageIndexSystemsAssertion:                assert.Nil,
 			packageIndexSchemaValidationResultAssertion: assert.Nil,
@@ -325,6 +458,14 @@ func TestInitializeForPackageIndex(t *testing.T) {
 			for index, packageIndexPlatform := range PackageIndexPlatforms() {
 				assert.Equal(t, testTable.packageIndexPlatformsDataAssertion[index].ID, packageIndexPlatform.ID, testTable.testName)
 				assert.Equal(t, testTable.packageIndexPlatformsDataAssertion[index].JSONPointer, packageIndexPlatform.JSONPointer, testTable.testName)
+			}
+		}
+
+		testTable.packageIndexBoardsAssertion(t, PackageIndexBoards(), testTable.testName)
+		if PackageIndexBoards() != nil {
+			for index, packageIndexBoard := range PackageIndexBoards() {
+				assert.Equal(t, testTable.packageIndexBoardsDataAssertion[index].ID, packageIndexBoard.ID, testTable.testName)
+				assert.Equal(t, testTable.packageIndexBoardsDataAssertion[index].JSONPointer, packageIndexBoard.JSONPointer, testTable.testName)
 			}
 		}
 
