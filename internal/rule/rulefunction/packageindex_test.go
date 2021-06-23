@@ -352,6 +352,226 @@ func TestPackageIndexPackagesHelpOnlineDeadLink(t *testing.T) {
 	checkPackageIndexRuleFunction(PackageIndexPackagesHelpOnlineDeadLink, testTables, t)
 }
 
+func TestPackageIndexPackagesPlatformsMissing(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms missing", "packages-platforms-missing", ruleresult.Fail, "^foopackager$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsMissing, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].platforms type", "packages-platforms-incorrect-type", ruleresult.Fail, "^foopackager$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsAdditionalProperties(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Additional packages[].platforms[] properties", "packages-platforms-additional-properties", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsAdditionalProperties, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsNameMissing(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].name missing", "packages-platforms-name-missing", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsNameMissing, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsNameIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].platforms[].name type", "packages-platforms-name-incorrect-type", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsNameIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsNameLTMinLength(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].name < min length", "packages-platforms-name-length-lt", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsNameLTMinLength, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsArchitectureMissing(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].architecture missing", "packages-platforms-architecture-missing", ruleresult.Fail, "^/packages/0/platforms/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsArchitectureMissing, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsArchitectureIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].platforms[].architecture type", "packages-platforms-architecture-incorrect-type", ruleresult.Fail, "^/packages/0/platforms/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsArchitectureIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsArchitectureLTMinLength(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].architecture < min length", "packages-platforms-architecture-length-lt", ruleresult.Fail, "^/packages/0/platforms/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsArchitectureLTMinLength, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsVersionMissing(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].architecture missing", "packages-platforms-version-missing", ruleresult.Fail, "^/packages/0/platforms/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsVersionMissing, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsVersionIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].platforms[].version type", "packages-platforms-version-incorrect-type", ruleresult.Fail, "^/packages/0/platforms/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsVersionIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsVersionNonRelaxedSemver(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].version not relaxed semver", "packages-platforms-version-non-relaxed-semver", ruleresult.Fail, "^foopackager:avr@foo$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsVersionNonRelaxedSemver, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsVersionNonSemver(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].version not semver", "packages-platforms-version-not-semver", ruleresult.Fail, "^foopackager:avr@1.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsVersionNonSemver, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsCategoryMissing(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].category missing", "packages-platforms-category-missing", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsCategoryMissing, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsCategoryIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].platforms[].category type", "packages-platforms-category-incorrect-type", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsCategoryIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsCategoryThirdPartyInvalid(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].category not valid for 3rd party", "packages-platforms-category-non-third-party", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsCategoryThirdPartyInvalid, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsHelpMissing(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].help missing", "packages-platforms-help-missing", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsHelpMissing, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsHelpIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].platforms[].help type", "packages-platforms-help-incorrect-type", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsHelpIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsHelpAdditionalProperties(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Additional packages[].platforms[].help properties", "packages-platforms-help-additional-properties", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsHelpAdditionalProperties, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsHelpOnlineMissing(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].help.online missing", "packages-platforms-help-online-missing", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsHelpOnlineMissing, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsHelpOnlineIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].platforms[].help.online type", "packages-platforms-help-online-incorrect-type", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsHelpOnlineIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsHelpOnlineInvalidFormat(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].platforms[].help.online format", "packages-platforms-help-online-invalid-format", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsHelpOnlineInvalidFormat, testTables, t)
+}
+
 func TestPackageIndexPackagesPlatformsHelpOnlineDeadLink(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
@@ -362,6 +582,36 @@ func TestPackageIndexPackagesPlatformsHelpOnlineDeadLink(t *testing.T) {
 	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsHelpOnlineDeadLink, testTables, t)
 }
 
+func TestPackageIndexPackagesPlatformsUrlMissing(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].url missing", "packages-platforms-url-missing", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsUrlMissing, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsUrlIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].platforms[].url type", "packages-platforms-url-incorrect-type", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsUrlIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsUrlInvalidFormat(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].platforms[].url format", "packages-platforms-url-invalid-format", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsUrlInvalidFormat, testTables, t)
+}
+
 func TestPackageIndexPackagesPlatformsURLDeadLink(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
@@ -370,6 +620,306 @@ func TestPackageIndexPackagesPlatformsURLDeadLink(t *testing.T) {
 	}
 
 	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsURLDeadLink, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsArchiveFileNameMissing(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].archiveFileName missing", "packages-platforms-archivefilename-missing", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsArchiveFileNameMissing, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsArchiveFileNameIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].platforms[].archiveFileName type", "packages-platforms-archivefilename-incorrect-type", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsArchiveFileNameIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsArchiveFileNameLTMinLength(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].archiveFileName < min length", "packages-platforms-archivefilename-length-lt", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsArchiveFileNameLTMinLength, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsArchiveFileNameInvalid(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Invalid filename", "packages-platforms-archivefilename-invalid", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsArchiveFileNameInvalid, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsChecksumMissing(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].checksum missing", "packages-platforms-checksum-missing", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsChecksumMissing, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsChecksumIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].platforms[].checksum type", "packages-platforms-checksum-incorrect-type", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsChecksumIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsChecksumInvalid(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Invalid packages[].platforms[].checksum format", "packages-platforms-checksum-invalid", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsChecksumInvalid, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsChecksumDiscouragedAlgorithm(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].checksum uses discouraged algorithm", "packages-platforms-checksum-discouraged", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsChecksumDiscouragedAlgorithm, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsSizeMissing(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].size missing", "packages-platforms-size-missing", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsSizeMissing, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsSizeIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].platforms[].size type", "packages-platforms-size-incorrect-type", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsSizeIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsSizeInvalid(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Invalid packages[].platforms[].size format", "packages-platforms-size-invalid", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsSizeInvalid, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsBoardsMissing(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].boards[] missing", "packages-platforms-boards-missing", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsBoardsMissing, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsBoardsIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].platforms[].boards type", "packages-platforms-boards-incorrect-type", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsBoardsIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsBoardsAdditionalProperties(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Additional packages[].platforms[].boards[] properties", "packages-platforms-boards-additional-properties", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0 - My Board$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsBoardsAdditionalProperties, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsBoardsNameMissing(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].boards[].name missing", "packages-platforms-boards-name-missing", ruleresult.Fail, "^/packages/0/platforms/0/boards/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsBoardsNameMissing, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsBoardsNameIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].platforms[].boards[].name type", "packages-platforms-boards-name-incorrect-type", ruleresult.Fail, "^/packages/0/platforms/0/boards/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsBoardsNameIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsBoardsNameLTMinLength(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].boards[].name < min length", "packages-platforms-boards-name-length-lt", ruleresult.Fail, "^/packages/0/platforms/0/boards/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsBoardsNameLTMinLength, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsToolsDependenciesMissing(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].toolsDependencies missing", "packages-platforms-toolsdependencies-missing", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsToolsDependenciesMissing, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsToolsDependenciesIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].platforms[].toolsDependencies type", "packages-platforms-toolsdependencies-incorrect-type", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsToolsDependenciesIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsToolsDependenciesAdditionalProperties(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Additional packages[].platforms[].toolsDependencies[] properties", "packages-platforms-toolsdependencies-additional-properties", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0 - arduino:avr-gcc@7\\.3\\.0-atmel3\\.6\\.1-arduino7$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsToolsDependenciesAdditionalProperties, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsToolsDependenciesPackagerMissing(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].toolsDependencies[].packager missing", "packages-platforms-toolsdependencies-packager-missing", ruleresult.Fail, "^/packages/0/platforms/0/toolsDependencies/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsToolsDependenciesPackagerMissing, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsToolsDependenciesPackagerIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].platforms[].toolsDependencies[].packager type", "packages-platforms-toolsdependencies-packager-incorrect-type", ruleresult.Fail, "^/packages/0/platforms/0/toolsDependencies/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsToolsDependenciesPackagerIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsToolsDependenciesPackagerLTMinLength(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].toolsDependencies[].packager < min length", "packages-platforms-toolsdependencies-packager-length-lt", ruleresult.Fail, "^/packages/0/platforms/0/toolsDependencies/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsToolsDependenciesPackagerLTMinLength, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsToolsDependenciesNameMissing(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].toolsDependencies[].name missing", "packages-platforms-toolsdependencies-name-missing", ruleresult.Fail, "^/packages/0/platforms/0/toolsDependencies/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsToolsDependenciesNameMissing, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsToolsDependenciesNameIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].platforms[].toolsDependencies[].name type", "packages-platforms-toolsdependencies-name-incorrect-type", ruleresult.Fail, "^/packages/0/platforms/0/toolsDependencies/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsToolsDependenciesNameIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsToolsDependenciesNameLTMinLength(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].toolsDependencies[].name < min length", "packages-platforms-toolsdependencies-name-length-lt", ruleresult.Fail, "^/packages/0/platforms/0/toolsDependencies/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsToolsDependenciesNameLTMinLength, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsToolsDependenciesVersionMissing(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].toolsDependencies[].version missing", "packages-platforms-toolsdependencies-version-missing", ruleresult.Fail, "^/packages/0/platforms/0/toolsDependencies/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsToolsDependenciesVersionMissing, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsToolsDependenciesVersionIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].platforms[].toolsDependencies[].version type", "packages-platforms-toolsdependencies-version-incorrect-type", ruleresult.Fail, "^/packages/0/platforms/0/toolsDependencies/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsToolsDependenciesVersionIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsToolsDependenciesVersionNonRelaxedSemver(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].toolsDependencies[].version not relaxed semver", "packages-platforms-toolsdependencies-version-non-relaxed-semver", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0 - arduino:avr-gcc@foo$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsToolsDependenciesVersionNonRelaxedSemver, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsToolsDependenciesVersionNonSemver(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].toolsDependencies[].version not semver", "packages-platforms-toolsdependencies-version-not-semver", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0 - arduino:avr-gcc@7\\.3$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsToolsDependenciesVersionNonSemver, testTables, t)
 }
 
 func TestPackageIndexPackagesToolsSystemsURLDeadLink(t *testing.T) {
