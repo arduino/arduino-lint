@@ -43,6 +43,7 @@ func InitializeForPackageIndex() {
 	packageIndexPackages = nil
 	packageIndexPlatforms = nil
 	packageIndexBoards = nil
+	packageIndexToolsDependencies = nil
 	packageIndexTools = nil
 	packageIndexSystems = nil
 	packageIndexSchemaValidationResult = nil
@@ -55,6 +56,10 @@ func InitializeForPackageIndex() {
 
 		for _, platformData := range PackageIndexPlatforms() {
 			packageIndexBoards = append(packageIndexBoards, getPackageIndexData(platformData.Object, platformData.JSONPointer, "boards", platformData.ID, " - {{index . 0}}", []string{"name"})...)
+		}
+
+		for _, platformData := range PackageIndexPlatforms() {
+			packageIndexToolsDependencies = append(packageIndexToolsDependencies, getPackageIndexData(platformData.Object, platformData.JSONPointer, "toolsDependencies", platformData.ID, " - {{index . 0}}:{{index . 1}}@{{index . 2}}", []string{"packager", "name", "version"})...)
 		}
 
 		for _, packageData := range PackageIndexPackages() {
@@ -109,6 +114,13 @@ var packageIndexBoards []PackageIndexData
 // PackageIndexBoards returns the slice of board data for the package index.
 func PackageIndexBoards() []PackageIndexData {
 	return packageIndexBoards
+}
+
+var packageIndexToolsDependencies []PackageIndexData
+
+// PackageIndexToolsDependencies returns the slice of tool dependency data for the package index.
+func PackageIndexToolsDependencies() []PackageIndexData {
+	return packageIndexToolsDependencies
 }
 
 var packageIndexTools []PackageIndexData
