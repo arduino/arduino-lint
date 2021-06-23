@@ -52,12 +52,12 @@
             {
               "packager": "arduino",
               "name": "avr-gcc",
-              "version": "4.8.1-arduino5"
+              "version": "7.3.0-atmel3.6.1-arduino7"
             },
             {
               "packager": "arduino",
               "name": "avrdude",
-              "version": "6.0.1-arduino5"
+              "version": "6.3.0-arduino17"
             }
           ]
         }
@@ -89,13 +89,13 @@
           "toolsDependencies": [
             {
               "packager": "arduino",
-              "name": "avr-gcc",
-              "version": "4.8.1-arduino5"
+              "name": "arm-none-eabi-gcc",
+              "version": "7-2017q4"
             },
             {
               "packager": "arduino",
-              "name": "avrdude",
-              "version": "6.0.1-arduino5"
+              "name": "bossac",
+              "version": "1.7.0-arduino3"
             }
           ]
         },
@@ -115,13 +115,13 @@
           "toolsDependencies": [
             {
               "packager": "arduino",
-              "name": "avr-gcc",
-              "version": "4.8.1-arduino5"
+              "name": "openocd",
+              "version": "0.11.0-arduino2"
             },
             {
               "packager": "arduino",
-              "name": "avrdude",
-              "version": "6.0.1-arduino5"
+              "name": "arm-none-eabi-gcc",
+              "version": "7-2017q4"
             }
           ]
         },
@@ -140,14 +140,24 @@
           "boards": [{ "name": "" }, { "name": "My Board Pro" }],
           "toolsDependencies": [
             {
-              "packager": "arduino",
+              "packager": "",
               "name": "avr-gcc",
               "version": "4.8.1-arduino5"
             },
             {
               "packager": "arduino",
-              "name": "avrdude",
+              "name": "",
               "version": "6.0.1-arduino5"
+            },
+            {
+              "packager": "arduino",
+              "name": "openocd",
+              "version": ""
+            },
+            {
+              "packager": "arduino",
+              "name": "CMSIS",
+              "version": "4.5.0"
             }
           ]
         }
