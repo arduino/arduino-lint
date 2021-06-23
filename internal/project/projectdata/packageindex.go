@@ -16,8 +16,9 @@
 package projectdata
 
 import (
+	"bytes"
 	"fmt"
-	"strings"
+	"text/template"
 
 	clipackageindex "github.com/arduino/arduino-cli/arduino/cores/packageindex"
 	"github.com/arduino/arduino-lint/internal/project/packageindex"
@@ -46,22 +47,22 @@ func InitializeForPackageIndex() {
 	packageIndexSystems = nil
 	packageIndexSchemaValidationResult = nil
 	if packageIndexLoadError == nil {
-		packageIndexPackages = getPackageIndexData(PackageIndex(), "", "packages", "", "name", "")
+		packageIndexPackages = getPackageIndexData(PackageIndex(), "", "packages", "", "{{index . 0}}", []string{"name"})
 
 		for _, packageData := range PackageIndexPackages() {
-			packageIndexPlatforms = append(packageIndexPlatforms, getPackageIndexData(packageData.Object, packageData.JSONPointer, "platforms", packageData.ID+":", "architecture", "version")...)
+			packageIndexPlatforms = append(packageIndexPlatforms, getPackageIndexData(packageData.Object, packageData.JSONPointer, "platforms", packageData.ID, ":{{index . 0}}@{{index . 1}}", []string{"architecture", "version"})...)
 		}
 
 		for _, platformData := range PackageIndexPlatforms() {
-			packageIndexBoards = append(packageIndexBoards, getPackageIndexData(platformData.Object, platformData.JSONPointer, "boards", platformData.ID+" - ", "name", "")...)
+			packageIndexBoards = append(packageIndexBoards, getPackageIndexData(platformData.Object, platformData.JSONPointer, "boards", platformData.ID, " - {{index . 0}}", []string{"name"})...)
 		}
 
 		for _, packageData := range PackageIndexPackages() {
-			packageIndexTools = append(packageIndexTools, getPackageIndexData(packageData.Object, packageData.JSONPointer, "tools", packageData.ID+":", "name", "version")...)
+			packageIndexTools = append(packageIndexTools, getPackageIndexData(packageData.Object, packageData.JSONPointer, "tools", packageData.ID, ":{{index . 0}}@{{index . 1}}", []string{"name", "version"})...)
 		}
 
 		for _, toolData := range PackageIndexTools() {
-			packageIndexSystems = append(packageIndexSystems, getPackageIndexData(toolData.Object, toolData.JSONPointer, "systems", toolData.ID+" - ", "host", "")...)
+			packageIndexSystems = append(packageIndexSystems, getPackageIndexData(toolData.Object, toolData.JSONPointer, "systems", toolData.ID, " - {{index . 0}}", []string{"host"})...)
 		}
 
 		packageIndexSchemaValidationResult = packageindex.Validate(PackageIndex())
@@ -131,7 +132,7 @@ func PackageIndexSchemaValidationResult() map[compliancelevel.Type]schema.Valida
 	return packageIndexSchemaValidationResult
 }
 
-func getPackageIndexData(interfaceObject map[string]interface{}, pointerPrefix string, dataKey string, iDPrefix string, iDKey string, versionKey string) []PackageIndexData {
+func getPackageIndexData(interfaceObject map[string]interface{}, pointerPrefix string, dataKey string, iDPrefix string, iDSuffixTemplateString string, iDSuffixKeys []string) []PackageIndexData {
 	var data []PackageIndexData
 
 	interfaceSlice, ok := interfaceObject[dataKey].([]interface{})
@@ -154,33 +155,30 @@ func getPackageIndexData(interfaceObject map[string]interface{}, pointerPrefix s
 			// In the event missing data prevents creating a standard reference ID for the data, use the JSON pointer.
 			fallbackID := interfaceElementData.JSONPointer
 
-			if iDPrefix != "" && strings.HasPrefix(iDPrefix, pointerPrefix) {
+			if iDPrefix != "" && iDPrefix == pointerPrefix {
 				// Parent object uses fallback ID, so this one must even if it was possible to generate a true suffix.
 				return fallbackID
 			}
-			iD := iDPrefix
 
-			iDSuffix, ok := object[iDKey].(string)
-			if !ok {
-				return fallbackID
-			}
-			if iDSuffix == "" {
-				return fallbackID
-			}
-			iD += iDSuffix
-
-			if versionKey != "" {
-				iDVersion, ok := object[versionKey].(string)
+			// Gather the ID suffix components.
+			iDSuffixComponents := []string{}
+			for _, key := range iDSuffixKeys {
+				component, ok := object[key].(string)
 				if !ok {
 					return fallbackID
 				}
-				if iDVersion == "" {
+				if component == "" {
 					return fallbackID
 				}
-				iD += "@" + iDVersion
+				iDSuffixComponents = append(iDSuffixComponents, component)
 			}
 
-			return iD
+			// Fill the ID suffix components into the template.
+			iDSuffixTemplate := template.Must(template.New("iDSuffixTemplate").Parse(iDSuffixTemplateString))
+			iDSuffix := new(bytes.Buffer)
+			iDSuffixTemplate.Execute(iDSuffix, iDSuffixComponents)
+
+			return iDPrefix + iDSuffix.String()
 		}
 		interfaceElementData.ID = objectID()
 
