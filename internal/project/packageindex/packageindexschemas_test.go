@@ -412,9 +412,9 @@ func TestPattern(t *testing.T) {
 		{"/packages/0/platforms/0/size", "42", compliancelevel.Specification, assert.False},
 		{"/packages/0/platforms/0/size", "42", compliancelevel.Strict, assert.False},
 
-		{"/packages/0/platforms/0/size", "foo", compliancelevel.Permissive, assert.True},
-		{"/packages/0/platforms/0/size", "foo", compliancelevel.Specification, assert.True},
-		{"/packages/0/platforms/0/size", "foo", compliancelevel.Strict, assert.True},
+		{"/packages/0/platforms/0/size", "42B", compliancelevel.Permissive, assert.True},
+		{"/packages/0/platforms/0/size", "42B", compliancelevel.Specification, assert.True},
+		{"/packages/0/platforms/0/size", "42B", compliancelevel.Strict, assert.True},
 
 		{"/packages/0/tools/0/systems/0/archiveFileName", "foo.tar.bz2", compliancelevel.Permissive, assert.False},
 		{"/packages/0/tools/0/systems/0/archiveFileName", "foo.tar.bz2", compliancelevel.Specification, assert.False},
