@@ -47,6 +47,8 @@ func TestInitializeForPackageIndex(t *testing.T) {
 		packageIndexPlatformsDataAssertion          []PackageIndexData
 		packageIndexBoardsAssertion                 assert.ValueAssertionFunc
 		packageIndexBoardsDataAssertion             []PackageIndexData
+		packageIndexToolsDependenciesAssertion      assert.ValueAssertionFunc
+		packageIndexToolsDependenciesDataAssertion  []PackageIndexData
 		packageIndexToolsAssertion                  assert.ValueAssertionFunc
 		packageIndexToolsDataAssertion              []PackageIndexData
 		packageIndexSystemsAssertion                assert.ValueAssertionFunc
@@ -122,6 +124,41 @@ func TestInitializeForPackageIndex(t *testing.T) {
 				{
 					ID:          "foopackager2:mbed@1.1.1 - My Board Pro",
 					JSONPointer: "/packages/1/platforms/1/boards/1",
+				},
+			},
+			packageIndexToolsDependenciesAssertion: assert.NotNil,
+			packageIndexToolsDependenciesDataAssertion: []PackageIndexData{
+				{
+					ID:          "foopackager1:avr@1.0.0 - arduino:avr-gcc@4.8.1-arduino5",
+					JSONPointer: "/packages/0/platforms/0/toolsDependencies/0",
+				},
+				{
+					ID:          "foopackager1:avr@1.0.0 - arduino:avrdude@6.0.1-arduino5",
+					JSONPointer: "/packages/0/platforms/0/toolsDependencies/1",
+				},
+				{
+					ID:          "foopackager1:avr@1.0.1 - arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7",
+					JSONPointer: "/packages/0/platforms/1/toolsDependencies/0",
+				},
+				{
+					ID:          "foopackager1:avr@1.0.1 - arduino:avrdude@6.3.0-arduino17",
+					JSONPointer: "/packages/0/platforms/1/toolsDependencies/1",
+				},
+				{
+					ID:          "foopackager2:samd@2.0.0 - arduino:arm-none-eabi-gcc@7-2017q4",
+					JSONPointer: "/packages/1/platforms/0/toolsDependencies/0",
+				},
+				{
+					ID:          "foopackager2:samd@2.0.0 - arduino:bossac@1.7.0-arduino3",
+					JSONPointer: "/packages/1/platforms/0/toolsDependencies/1",
+				},
+				{
+					ID:          "foopackager2:mbed@1.1.1 - arduino:openocd@0.11.0-arduino2",
+					JSONPointer: "/packages/1/platforms/1/toolsDependencies/0",
+				},
+				{
+					ID:          "foopackager2:mbed@1.1.1 - arduino:arm-none-eabi-gcc@7-2017q4",
+					JSONPointer: "/packages/1/platforms/1/toolsDependencies/1",
 				},
 			},
 			packageIndexToolsAssertion: assert.NotNil,
@@ -237,6 +274,57 @@ func TestInitializeForPackageIndex(t *testing.T) {
 				{
 					ID:          "foopackager2:megaavr@1.0.0 - My Board Pro",
 					JSONPointer: "/packages/1/platforms/2/boards/1",
+				},
+			},
+			packageIndexToolsDependenciesAssertion: assert.NotNil,
+			packageIndexToolsDependenciesDataAssertion: []PackageIndexData{
+				{
+					ID:          "/packages/0/platforms/0/toolsDependencies/0",
+					JSONPointer: "/packages/0/platforms/0/toolsDependencies/0",
+				},
+				{
+					ID:          "/packages/0/platforms/0/toolsDependencies/1",
+					JSONPointer: "/packages/0/platforms/0/toolsDependencies/1",
+				},
+				{
+					ID:          "/packages/0/platforms/1/toolsDependencies/0",
+					JSONPointer: "/packages/0/platforms/1/toolsDependencies/0",
+				},
+				{
+					ID:          "/packages/0/platforms/1/toolsDependencies/1",
+					JSONPointer: "/packages/0/platforms/1/toolsDependencies/1",
+				},
+				{
+					ID:          "/packages/1/platforms/0/toolsDependencies/0",
+					JSONPointer: "/packages/1/platforms/0/toolsDependencies/0",
+				},
+				{
+					ID:          "/packages/1/platforms/0/toolsDependencies/1",
+					JSONPointer: "/packages/1/platforms/0/toolsDependencies/1",
+				},
+				{
+					ID:          "/packages/1/platforms/1/toolsDependencies/0",
+					JSONPointer: "/packages/1/platforms/1/toolsDependencies/0",
+				},
+				{
+					ID:          "/packages/1/platforms/1/toolsDependencies/1",
+					JSONPointer: "/packages/1/platforms/1/toolsDependencies/1",
+				},
+				{
+					ID:          "/packages/1/platforms/2/toolsDependencies/0",
+					JSONPointer: "/packages/1/platforms/2/toolsDependencies/0",
+				},
+				{
+					ID:          "/packages/1/platforms/2/toolsDependencies/1",
+					JSONPointer: "/packages/1/platforms/2/toolsDependencies/1",
+				},
+				{
+					ID:          "/packages/1/platforms/2/toolsDependencies/2",
+					JSONPointer: "/packages/1/platforms/2/toolsDependencies/2",
+				},
+				{
+					ID:          "foopackager2:megaavr@1.0.0 - arduino:CMSIS@4.5.0",
+					JSONPointer: "/packages/1/platforms/2/toolsDependencies/3",
 				},
 			},
 			packageIndexToolsAssertion: assert.NotNil,
@@ -362,6 +450,57 @@ func TestInitializeForPackageIndex(t *testing.T) {
 					JSONPointer: "/packages/1/platforms/2/boards/1",
 				},
 			},
+			packageIndexToolsDependenciesAssertion: assert.NotNil,
+			packageIndexToolsDependenciesDataAssertion: []PackageIndexData{
+				{
+					ID:          "/packages/0/platforms/0/toolsDependencies/0",
+					JSONPointer: "/packages/0/platforms/0/toolsDependencies/0",
+				},
+				{
+					ID:          "/packages/0/platforms/0/toolsDependencies/1",
+					JSONPointer: "/packages/0/platforms/0/toolsDependencies/1",
+				},
+				{
+					ID:          "/packages/0/platforms/1/toolsDependencies/0",
+					JSONPointer: "/packages/0/platforms/1/toolsDependencies/0",
+				},
+				{
+					ID:          "/packages/0/platforms/1/toolsDependencies/1",
+					JSONPointer: "/packages/0/platforms/1/toolsDependencies/1",
+				},
+				{
+					ID:          "/packages/1/platforms/0/toolsDependencies/0",
+					JSONPointer: "/packages/1/platforms/0/toolsDependencies/0",
+				},
+				{
+					ID:          "/packages/1/platforms/0/toolsDependencies/1",
+					JSONPointer: "/packages/1/platforms/0/toolsDependencies/1",
+				},
+				{
+					ID:          "/packages/1/platforms/1/toolsDependencies/0",
+					JSONPointer: "/packages/1/platforms/1/toolsDependencies/0",
+				},
+				{
+					ID:          "/packages/1/platforms/1/toolsDependencies/1",
+					JSONPointer: "/packages/1/platforms/1/toolsDependencies/1",
+				},
+				{
+					ID:          "/packages/1/platforms/2/toolsDependencies/0",
+					JSONPointer: "/packages/1/platforms/2/toolsDependencies/0",
+				},
+				{
+					ID:          "/packages/1/platforms/2/toolsDependencies/1",
+					JSONPointer: "/packages/1/platforms/2/toolsDependencies/1",
+				},
+				{
+					ID:          "/packages/1/platforms/2/toolsDependencies/2",
+					JSONPointer: "/packages/1/platforms/2/toolsDependencies/2",
+				},
+				{
+					ID:          "foopackager2:megaavr@1.0.0 - arduino:CMSIS@4.5.0",
+					JSONPointer: "/packages/1/platforms/2/toolsDependencies/3",
+				},
+			},
 			packageIndexToolsAssertion: assert.NotNil,
 			packageIndexToolsDataAssertion: []PackageIndexData{
 				{
@@ -411,6 +550,7 @@ func TestInitializeForPackageIndex(t *testing.T) {
 			packageIndexPackagesAssertion:               assert.Nil,
 			packageIndexPlatformsAssertion:              assert.Nil,
 			packageIndexBoardsAssertion:                 assert.Nil,
+			packageIndexToolsDependenciesAssertion:      assert.Nil,
 			packageIndexToolsAssertion:                  assert.Nil,
 			packageIndexSystemsAssertion:                assert.Nil,
 			packageIndexSchemaValidationResultAssertion: assert.Nil,
@@ -424,6 +564,7 @@ func TestInitializeForPackageIndex(t *testing.T) {
 			packageIndexPackagesAssertion:               assert.Nil,
 			packageIndexPlatformsAssertion:              assert.Nil,
 			packageIndexBoardsAssertion:                 assert.Nil,
+			packageIndexToolsDependenciesAssertion:      assert.Nil,
 			packageIndexToolsAssertion:                  assert.Nil,
 			packageIndexSystemsAssertion:                assert.Nil,
 			packageIndexSchemaValidationResultAssertion: assert.Nil,
@@ -466,6 +607,14 @@ func TestInitializeForPackageIndex(t *testing.T) {
 			for index, packageIndexBoard := range PackageIndexBoards() {
 				assert.Equal(t, testTable.packageIndexBoardsDataAssertion[index].ID, packageIndexBoard.ID, testTable.testName)
 				assert.Equal(t, testTable.packageIndexBoardsDataAssertion[index].JSONPointer, packageIndexBoard.JSONPointer, testTable.testName)
+			}
+		}
+
+		testTable.packageIndexToolsDependenciesAssertion(t, PackageIndexToolsDependencies(), testTable.testName)
+		if PackageIndexToolsDependencies() != nil {
+			for index, packageIndexToolsDependency := range PackageIndexToolsDependencies() {
+				assert.Equal(t, testTable.packageIndexToolsDependenciesDataAssertion[index].ID, packageIndexToolsDependency.ID, testTable.testName)
+				assert.Equal(t, testTable.packageIndexToolsDependenciesDataAssertion[index].JSONPointer, packageIndexToolsDependency.JSONPointer, testTable.testName)
 			}
 		}
 
