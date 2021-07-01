@@ -58,8 +58,6 @@ submitting a PR:
 - Maintain [**clean commit history**](http://www.freshconsulting.com/atomic-commits) and use
   [**meaningful commit messages**](http://chris.beams.io/posts/git-commit). PRs with messy commit history are difficult
   to review and require a lot of work to be merged.
-- If your PR doesn't need to be included in the changelog, please start the commit message and PR title with the string
-  **[skip changelog]**
 - <a id="breaking"></a> If the PR contains a breaking change, please start the commit message and PR title with the
   string **[breaking]**. Don't forget to describe in the PR description what changes users might need to make in their
   workflow or application due to this PR. A breaking change is a change that forces users to change their command-line
