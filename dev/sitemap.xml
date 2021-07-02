@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url>
      <loc>https://arduino.github.io/arduino-lint/</loc>
-     <lastmod>2021-05-20</lastmod>
+     <lastmod>2021-07-02</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://arduino.github.io/arduino-lint/installation/</loc>
-     <lastmod>2021-05-20</lastmod>
+     <lastmod>2021-07-02</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://arduino.github.io/arduino-lint/commands/arduino-lint/</loc>
-     <lastmod>2021-05-20</lastmod>
+     <lastmod>2021-07-02</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://arduino.github.io/arduino-lint/CONTRIBUTING/</loc>
-     <lastmod>2021-05-20</lastmod>
+     <lastmod>2021-07-02</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>
