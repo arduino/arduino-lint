@@ -1,0 +1,56 @@
+{
+  "packages": [
+    {
+      "name": "foopackager",
+      "maintainer": "Jane Developer",
+      "websiteURL": "http://example.com",
+      "email": "jane@example.com",
+      "help": {
+        "online": "http://example.com"
+      },
+      "platforms": [
+        {
+          "name": "My Board",
+          "architecture": "avr",
+          "version": "1.0.0",
+          "category": "Contributed",
+          "help": {
+            "online": "http://example.com"
+          },
+          "url": "http://example.com",
+          "archiveFileName": "myboard-1.0.0.zip",
+          "checksum": "MD5:6c0f556759894aa1a45e8af423a08ce8",
+          "size": "15005",
+          "boards": [],
+          "toolsDependencies": []
+        }
+      ],
+      "tools": [
+        {
+          "name": "openocd",
+          "version": "0.11.0-arduino2"
+        },
+        {
+          "name": "CMSIS",
+          "version": "4.0.0-atmel",
+          "systems": [
+            {
+              "host": "arm-linux-gnueabihf",
+              "url": "http://example.com",
+              "archiveFileName": "CMSIS-4.0.0.tar.bz2",
+              "checksum": "SHA-256:7d637d2d7a0c6bacc22065848a201db2fff124268e4a56868260d0f472b4bbb7",
+              "size": "17642623"
+            },
+            {
+              "host": "i686-mingw32",
+              "url": "http://example.com",
+              "archiveFileName": "CMSIS-4.0.0.tar.bz2",
+              "checksum": "SHA-256:7d637d2d7a0c6bacc22065848a201db2fff124268e4a56868260d0f472b4bbb7",
+              "size": "17642623"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
