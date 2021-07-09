@@ -46,6 +46,7 @@ var validIndexRaw = []byte(`
 					"name": "Arduino AVR Boards",
 					"architecture": "avr",
 					"version": "1.8.3",
+					"deprecated": false,
 					"category": "Contributed",
 					"help": {
 						"online": "http://www.arduino.cc/en/Reference/HomePage"
@@ -226,6 +227,10 @@ func TestRequired(t *testing.T) {
 		{"/packages/0/platforms/0/category", compliancelevel.Permissive, assert.True},
 		{"/packages/0/platforms/0/category", compliancelevel.Specification, assert.True},
 		{"/packages/0/platforms/0/category", compliancelevel.Strict, assert.True},
+
+		{"/packages/0/platforms/0/deprecated", compliancelevel.Permissive, assert.False},
+		{"/packages/0/platforms/0/deprecated", compliancelevel.Specification, assert.False},
+		{"/packages/0/platforms/0/deprecated", compliancelevel.Strict, assert.False},
 
 		{"/packages/0/platforms/0/help", compliancelevel.Permissive, assert.True},
 		{"/packages/0/platforms/0/help", compliancelevel.Specification, assert.True},
@@ -534,6 +539,7 @@ func TestType(t *testing.T) {
 		{"/packages/0/platforms/0/name", 42, assert.True},
 		{"/packages/0/platforms/0/architecture", 42, assert.True},
 		{"/packages/0/platforms/0/version", 42, assert.True},
+		{"/packages/0/platforms/0/deprecated", 42, assert.True},
 		{"/packages/0/platforms/0/help", 42, assert.True},
 		{"/packages/0/platforms/0/help/online", 42, assert.True},
 		{"/packages/0/platforms/0/category", 42, assert.True},
