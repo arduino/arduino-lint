@@ -848,6 +848,26 @@ func PackageIndexPackagesPlatformsVersionNonSemver() (result ruleresult.Type, ou
 	return ruleresult.Pass, ""
 }
 
+// PackageIndexPackagesPlatformsDeprecatedIncorrectType checks for incorrect type of the packages[].platforms[].deprecated property.
+func PackageIndexPackagesPlatformsDeprecatedIncorrectType() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, platformData := range projectdata.PackageIndexPlatforms() {
+		if schema.PropertyTypeMismatch(platformData.JSONPointer+"/deprecated", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliantIDs = append(nonCompliantIDs, platformData.ID)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
 // PackageIndexPackagesPlatformsCategoryMissing checks for missing packages[].platforms[].category property.
 func PackageIndexPackagesPlatformsCategoryMissing() (result ruleresult.Type, output string) {
 	if projectdata.PackageIndexLoadError() != nil {

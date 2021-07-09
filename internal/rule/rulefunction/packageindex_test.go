@@ -482,6 +482,16 @@ func TestPackageIndexPackagesPlatformsVersionNonSemver(t *testing.T) {
 	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsVersionNonSemver, testTables, t)
 }
 
+func TestPackageIndexPackagesPlatformsDeprecatedIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].platforms[].deprecated type", "packages-platforms-deprecated-incorrect-type", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsDeprecatedIncorrectType, testTables, t)
+}
+
 func TestPackageIndexPackagesPlatformsCategoryMissing(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},

@@ -2961,6 +2961,9 @@ var _arduinoPackageIndexDefinitionsSchemaJson = []byte(`{
                     "version": {
                       "$ref": "#/definitions/propertiesObjects/platformVersion/permissive/object"
                     },
+                    "deprecated": {
+                      "$ref": "#/definitions/propertiesObjects/deprecated/permissive/object"
+                    },
                     "category": {
                       "$ref": "#/definitions/propertiesObjects/category/permissive/object"
                     },
@@ -3010,6 +3013,9 @@ var _arduinoPackageIndexDefinitionsSchemaJson = []byte(`{
                     "version": {
                       "$ref": "#/definitions/propertiesObjects/platformVersion/specification/object"
                     },
+                    "deprecated": {
+                      "$ref": "#/definitions/propertiesObjects/deprecated/specification/object"
+                    },
                     "category": {
                       "$ref": "#/definitions/propertiesObjects/category/specification/object"
                     },
@@ -3058,6 +3064,9 @@ var _arduinoPackageIndexDefinitionsSchemaJson = []byte(`{
                     },
                     "version": {
                       "$ref": "#/definitions/propertiesObjects/platformVersion/strict/object"
+                    },
+                    "deprecated": {
+                      "$ref": "#/definitions/propertiesObjects/deprecated/strict/object"
                     },
                     "category": {
                       "$ref": "#/definitions/propertiesObjects/category/strict/object"
@@ -3177,6 +3186,28 @@ var _arduinoPackageIndexDefinitionsSchemaJson = []byte(`{
                 "$ref": "general-definitions-schema.json#/definitions/patternObjects/semver"
               }
             ]
+          }
+        }
+      },
+      "deprecated": {
+        "base": {
+          "object": {
+            "type": "boolean"
+          }
+        },
+        "permissive": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/deprecated/base/object"
+          }
+        },
+        "specification": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/deprecated/base/object"
+          }
+        },
+        "strict": {
+          "object": {
+            "$ref": "#/definitions/propertiesObjects/deprecated/specification/object"
           }
         }
       },
