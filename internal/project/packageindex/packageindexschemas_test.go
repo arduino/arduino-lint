@@ -551,6 +551,7 @@ func TestType(t *testing.T) {
 		{"/packages/0/platforms/0/boards/0/name", 42, assert.True},
 		{"/packages/0/platforms/0/toolsDependencies", 42, assert.True},
 		{"/packages/0/platforms/0/toolsDependencies/0/packager", 42, assert.True},
+		{"/packages/0/platforms/0/toolsDependencies/0/version", 42, assert.True},
 		{"/packages/0/tools", 42, assert.True},
 		{"/packages/0/tools/0/name", 42, assert.True},
 		{"/packages/0/tools/0/version", 42, assert.True},
