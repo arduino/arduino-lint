@@ -59,6 +59,16 @@
               "name": "avrdude",
               "version": "6.3.0-arduino17"
             }
+          ],
+          "discoveryDependencies": [
+            {
+              "packager": "arduino",
+              "name": "ble-discovery"
+            },
+            {
+              "packager": "barpackager",
+              "name": "carrier-pigeon-discovery"
+            }
           ]
         }
       ],
@@ -97,6 +107,16 @@
               "name": "bossac",
               "version": "1.7.0-arduino3"
             }
+          ],
+          "discoveryDependencies": [
+            {
+              "packager": "arduino",
+              "name": "ble-discovery"
+            },
+            {
+              "packager": "bazpackager",
+              "name": "signal-flag-discovery"
+            }
           ]
         },
         {
@@ -122,6 +142,12 @@
               "packager": "arduino",
               "name": "arm-none-eabi-gcc",
               "version": "7-2017q4"
+            }
+          ],
+          "discoveryDependencies": [
+            {
+              "packager": "quxpackager",
+              "name": "sneakernet-discovery"
             }
           ]
         }

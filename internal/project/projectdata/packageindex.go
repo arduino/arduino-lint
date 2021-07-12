@@ -44,6 +44,7 @@ func InitializeForPackageIndex() {
 	packageIndexPlatforms = nil
 	packageIndexBoards = nil
 	packageIndexToolsDependencies = nil
+	packageIndexDiscoveryDependencies = nil
 	packageIndexTools = nil
 	packageIndexSystems = nil
 	packageIndexSchemaValidationResult = nil
@@ -60,6 +61,10 @@ func InitializeForPackageIndex() {
 
 		for _, platformData := range PackageIndexPlatforms() {
 			packageIndexToolsDependencies = append(packageIndexToolsDependencies, getPackageIndexData(platformData.Object, platformData.JSONPointer, "toolsDependencies", platformData.ID, " - {{index . 0}}:{{index . 1}}@{{index . 2}}", []string{"packager", "name", "version"})...)
+		}
+
+		for _, platformData := range PackageIndexPlatforms() {
+			packageIndexDiscoveryDependencies = append(packageIndexDiscoveryDependencies, getPackageIndexData(platformData.Object, platformData.JSONPointer, "discoveryDependencies", platformData.ID, " - {{index . 0}}:{{index . 1}}", []string{"packager", "name"})...)
 		}
 
 		for _, packageData := range PackageIndexPackages() {
@@ -121,6 +126,13 @@ var packageIndexToolsDependencies []PackageIndexData
 // PackageIndexToolsDependencies returns the slice of tool dependency data for the package index.
 func PackageIndexToolsDependencies() []PackageIndexData {
 	return packageIndexToolsDependencies
+}
+
+var packageIndexDiscoveryDependencies []PackageIndexData
+
+// PackageIndexDiscoveryDependencies returns the slice of pluggable discovery tool dependency data for the package index.
+func PackageIndexDiscoveryDependencies() []PackageIndexData {
+	return packageIndexDiscoveryDependencies
 }
 
 var packageIndexTools []PackageIndexData
