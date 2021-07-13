@@ -36,24 +36,26 @@ func init() {
 
 func TestInitializeForPackageIndex(t *testing.T) {
 	testTables := []struct {
-		testName                                    string
-		path                                        *paths.Path
-		packageIndexAssertion                       assert.ValueAssertionFunc
-		packageIndexLoadErrorAssertion              assert.ValueAssertionFunc
-		packageIndexCLILoadErrorAssertion           assert.ValueAssertionFunc
-		packageIndexPackagesAssertion               assert.ValueAssertionFunc
-		packageIndexPackagesDataAssertion           []PackageIndexData
-		packageIndexPlatformsAssertion              assert.ValueAssertionFunc
-		packageIndexPlatformsDataAssertion          []PackageIndexData
-		packageIndexBoardsAssertion                 assert.ValueAssertionFunc
-		packageIndexBoardsDataAssertion             []PackageIndexData
-		packageIndexToolsDependenciesAssertion      assert.ValueAssertionFunc
-		packageIndexToolsDependenciesDataAssertion  []PackageIndexData
-		packageIndexToolsAssertion                  assert.ValueAssertionFunc
-		packageIndexToolsDataAssertion              []PackageIndexData
-		packageIndexSystemsAssertion                assert.ValueAssertionFunc
-		packageIndexSystemsDataAssertion            []PackageIndexData
-		packageIndexSchemaValidationResultAssertion assert.ValueAssertionFunc
+		testName                                       string
+		path                                           *paths.Path
+		packageIndexAssertion                          assert.ValueAssertionFunc
+		packageIndexLoadErrorAssertion                 assert.ValueAssertionFunc
+		packageIndexCLILoadErrorAssertion              assert.ValueAssertionFunc
+		packageIndexPackagesAssertion                  assert.ValueAssertionFunc
+		packageIndexPackagesDataAssertion              []PackageIndexData
+		packageIndexPlatformsAssertion                 assert.ValueAssertionFunc
+		packageIndexPlatformsDataAssertion             []PackageIndexData
+		packageIndexBoardsAssertion                    assert.ValueAssertionFunc
+		packageIndexBoardsDataAssertion                []PackageIndexData
+		packageIndexToolsDependenciesAssertion         assert.ValueAssertionFunc
+		packageIndexToolsDependenciesDataAssertion     []PackageIndexData
+		packageIndexDiscoveryDependenciesAssertion     assert.ValueAssertionFunc
+		packageIndexDiscoveryDependenciesDataAssertion []PackageIndexData
+		packageIndexToolsAssertion                     assert.ValueAssertionFunc
+		packageIndexToolsDataAssertion                 []PackageIndexData
+		packageIndexSystemsAssertion                   assert.ValueAssertionFunc
+		packageIndexSystemsDataAssertion               []PackageIndexData
+		packageIndexSchemaValidationResultAssertion    assert.ValueAssertionFunc
 	}{
 		{
 			testName:                          "Valid",
@@ -159,6 +161,29 @@ func TestInitializeForPackageIndex(t *testing.T) {
 				{
 					ID:          "foopackager2:mbed@1.1.1 - arduino:arm-none-eabi-gcc@7-2017q4",
 					JSONPointer: "/packages/1/platforms/1/toolsDependencies/1",
+				},
+			},
+			packageIndexDiscoveryDependenciesAssertion: assert.NotNil,
+			packageIndexDiscoveryDependenciesDataAssertion: []PackageIndexData{
+				{
+					ID:          "foopackager1:avr@1.0.1 - arduino:ble-discovery",
+					JSONPointer: "/packages/0/platforms/1/discoveryDependencies/0",
+				},
+				{
+					ID:          "foopackager1:avr@1.0.1 - barpackager:carrier-pigeon-discovery",
+					JSONPointer: "/packages/0/platforms/1/discoveryDependencies/1",
+				},
+				{
+					ID:          "foopackager2:samd@2.0.0 - arduino:ble-discovery",
+					JSONPointer: "/packages/1/platforms/0/discoveryDependencies/0",
+				},
+				{
+					ID:          "foopackager2:samd@2.0.0 - bazpackager:signal-flag-discovery",
+					JSONPointer: "/packages/1/platforms/0/discoveryDependencies/1",
+				},
+				{
+					ID:          "foopackager2:mbed@1.1.1 - quxpackager:sneakernet-discovery",
+					JSONPointer: "/packages/1/platforms/1/discoveryDependencies/0",
 				},
 			},
 			packageIndexToolsAssertion: assert.NotNil,
@@ -325,6 +350,53 @@ func TestInitializeForPackageIndex(t *testing.T) {
 				{
 					ID:          "foopackager2:megaavr@1.0.0 - arduino:CMSIS@4.5.0",
 					JSONPointer: "/packages/1/platforms/2/toolsDependencies/3",
+				},
+			},
+			packageIndexDiscoveryDependenciesAssertion: assert.NotNil,
+			packageIndexDiscoveryDependenciesDataAssertion: []PackageIndexData{
+				{
+					ID:          "/packages/0/platforms/0/discoveryDependencies/0",
+					JSONPointer: "/packages/0/platforms/0/discoveryDependencies/0",
+				},
+				{
+					ID:          "/packages/0/platforms/0/discoveryDependencies/1",
+					JSONPointer: "/packages/0/platforms/0/discoveryDependencies/1",
+				},
+				{
+					ID:          "/packages/0/platforms/1/discoveryDependencies/0",
+					JSONPointer: "/packages/0/platforms/1/discoveryDependencies/0",
+				},
+				{
+					ID:          "/packages/0/platforms/1/discoveryDependencies/1",
+					JSONPointer: "/packages/0/platforms/1/discoveryDependencies/1",
+				},
+				{
+					ID:          "/packages/1/platforms/0/discoveryDependencies/0",
+					JSONPointer: "/packages/1/platforms/0/discoveryDependencies/0",
+				},
+				{
+					ID:          "/packages/1/platforms/0/discoveryDependencies/1",
+					JSONPointer: "/packages/1/platforms/0/discoveryDependencies/1",
+				},
+				{
+					ID:          "/packages/1/platforms/1/discoveryDependencies/0",
+					JSONPointer: "/packages/1/platforms/1/discoveryDependencies/0",
+				},
+				{
+					ID:          "/packages/1/platforms/1/discoveryDependencies/1",
+					JSONPointer: "/packages/1/platforms/1/discoveryDependencies/1",
+				},
+				{
+					ID:          "/packages/1/platforms/2/discoveryDependencies/0",
+					JSONPointer: "/packages/1/platforms/2/discoveryDependencies/0",
+				},
+				{
+					ID:          "/packages/1/platforms/2/discoveryDependencies/1",
+					JSONPointer: "/packages/1/platforms/2/discoveryDependencies/1",
+				},
+				{
+					ID:          "foopackager2:megaavr@1.0.0 - quxpackager:sneakernet-discovery",
+					JSONPointer: "/packages/1/platforms/2/discoveryDependencies/3",
 				},
 			},
 			packageIndexToolsAssertion: assert.NotNil,
@@ -501,6 +573,53 @@ func TestInitializeForPackageIndex(t *testing.T) {
 					JSONPointer: "/packages/1/platforms/2/toolsDependencies/3",
 				},
 			},
+			packageIndexDiscoveryDependenciesAssertion: assert.NotNil,
+			packageIndexDiscoveryDependenciesDataAssertion: []PackageIndexData{
+				{
+					ID:          "/packages/0/platforms/0/discoveryDependencies/0",
+					JSONPointer: "/packages/0/platforms/0/discoveryDependencies/0",
+				},
+				{
+					ID:          "/packages/0/platforms/0/discoveryDependencies/1",
+					JSONPointer: "/packages/0/platforms/0/discoveryDependencies/1",
+				},
+				{
+					ID:          "/packages/0/platforms/1/discoveryDependencies/0",
+					JSONPointer: "/packages/0/platforms/1/discoveryDependencies/0",
+				},
+				{
+					ID:          "/packages/0/platforms/1/discoveryDependencies/1",
+					JSONPointer: "/packages/0/platforms/1/discoveryDependencies/1",
+				},
+				{
+					ID:          "/packages/1/platforms/0/discoveryDependencies/0",
+					JSONPointer: "/packages/1/platforms/0/discoveryDependencies/0",
+				},
+				{
+					ID:          "/packages/1/platforms/0/discoveryDependencies/1",
+					JSONPointer: "/packages/1/platforms/0/discoveryDependencies/1",
+				},
+				{
+					ID:          "/packages/1/platforms/1/discoveryDependencies/0",
+					JSONPointer: "/packages/1/platforms/1/discoveryDependencies/0",
+				},
+				{
+					ID:          "/packages/1/platforms/1/discoveryDependencies/1",
+					JSONPointer: "/packages/1/platforms/1/discoveryDependencies/1",
+				},
+				{
+					ID:          "/packages/1/platforms/2/discoveryDependencies/0",
+					JSONPointer: "/packages/1/platforms/2/discoveryDependencies/0",
+				},
+				{
+					ID:          "/packages/1/platforms/2/discoveryDependencies/1",
+					JSONPointer: "/packages/1/platforms/2/discoveryDependencies/1",
+				},
+				{
+					ID:          "foopackager2:megaavr@1.0.0 - quxpackager:sneakernet-discovery",
+					JSONPointer: "/packages/1/platforms/2/discoveryDependencies/3",
+				},
+			},
 			packageIndexToolsAssertion: assert.NotNil,
 			packageIndexToolsDataAssertion: []PackageIndexData{
 				{
@@ -551,6 +670,7 @@ func TestInitializeForPackageIndex(t *testing.T) {
 			packageIndexPlatformsAssertion:              assert.Nil,
 			packageIndexBoardsAssertion:                 assert.Nil,
 			packageIndexToolsDependenciesAssertion:      assert.Nil,
+			packageIndexDiscoveryDependenciesAssertion:  assert.Nil,
 			packageIndexToolsAssertion:                  assert.Nil,
 			packageIndexSystemsAssertion:                assert.Nil,
 			packageIndexSchemaValidationResultAssertion: assert.Nil,
@@ -565,6 +685,7 @@ func TestInitializeForPackageIndex(t *testing.T) {
 			packageIndexPlatformsAssertion:              assert.Nil,
 			packageIndexBoardsAssertion:                 assert.Nil,
 			packageIndexToolsDependenciesAssertion:      assert.Nil,
+			packageIndexDiscoveryDependenciesAssertion:  assert.Nil,
 			packageIndexToolsAssertion:                  assert.Nil,
 			packageIndexSystemsAssertion:                assert.Nil,
 			packageIndexSchemaValidationResultAssertion: assert.Nil,

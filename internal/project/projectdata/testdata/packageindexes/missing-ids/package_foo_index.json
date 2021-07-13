@@ -32,6 +32,16 @@
               "name": "avrdude",
               "version": "6.0.1-arduino5"
             }
+          ],
+          "discoveryDependencies": [
+            {
+              "packager": "arduino",
+              "name": "ble-discovery"
+            },
+            {
+              "packager": "barpackager",
+              "name": "carrier-pigeon-discovery"
+            }
           ]
         },
         {
@@ -57,6 +67,16 @@
               "packager": "arduino",
               "name": "avrdude",
               "version": "6.3.0-arduino17"
+            }
+          ],
+          "discoveryDependencies": [
+            {
+              "packager": "arduino",
+              "name": "ble-discovery"
+            },
+            {
+              "packager": "barpackager",
+              "name": "carrier-pigeon-discovery"
             }
           ]
         }
@@ -95,6 +115,16 @@
               "name": "bossac",
               "version": "1.7.0-arduino3"
             }
+          ],
+          "discoveryDependencies": [
+            {
+              "packager": "arduino",
+              "name": "ble-discovery"
+            },
+            {
+              "packager": "bazpackager",
+              "name": "signal-flag-discovery"
+            }
           ]
         },
         {
@@ -119,6 +149,16 @@
               "packager": "arduino",
               "name": "arm-none-eabi-gcc",
               "version": "7-2017q4"
+            }
+          ],
+          "discoveryDependencies": [
+            {
+              "packager": "arduino",
+              "name": "ble-discovery"
+            },
+            {
+              "packager": "bazpackager",
+              "name": "signal-flag-discovery"
             }
           ]
         },
@@ -152,6 +192,18 @@
               "packager": "arduino",
               "name": "CMSIS",
               "version": "4.5.0"
+            }
+          ],
+          "discoveryDependencies": [
+            {
+              "name": "ble-discovery"
+            },
+            {
+              "packager": "bazpackager"
+            },
+            {
+              "packager": "quxpackager",
+              "name": "sneakernet-discovery"
             }
           ]
         }

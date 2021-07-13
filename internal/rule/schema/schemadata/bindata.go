@@ -2987,6 +2987,9 @@ var _arduinoPackageIndexDefinitionsSchemaJson = []byte(`{
                     },
                     "toolsDependencies": {
                       "$ref": "#/definitions/propertiesObjects/toolsDependencies/permissive/object"
+                    },
+                    "discoveryDependencies": {
+                      "$ref": "#/definitions/propertiesObjects/discoveryDependencies/permissive/object"
                     }
                   },
                   "additionalProperties": false
@@ -3039,6 +3042,9 @@ var _arduinoPackageIndexDefinitionsSchemaJson = []byte(`{
                     },
                     "toolsDependencies": {
                       "$ref": "#/definitions/propertiesObjects/toolsDependencies/specification/object"
+                    },
+                    "discoveryDependencies": {
+                      "$ref": "#/definitions/propertiesObjects/discoveryDependencies/specification/object"
                     }
                   },
                   "additionalProperties": false
@@ -3091,6 +3097,9 @@ var _arduinoPackageIndexDefinitionsSchemaJson = []byte(`{
                     },
                     "toolsDependencies": {
                       "$ref": "#/definitions/propertiesObjects/toolsDependencies/strict/object"
+                    },
+                    "discoveryDependencies": {
+                      "$ref": "#/definitions/propertiesObjects/discoveryDependencies/strict/object"
                     }
                   },
                   "additionalProperties": false
@@ -3524,6 +3533,83 @@ var _arduinoPackageIndexDefinitionsSchemaJson = []byte(`{
                     },
                     "version": {
                       "$ref": "#/definitions/propertiesObjects/toolVersion/strict/object"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        }
+      },
+      "discoveryDependencies": {
+        "base": {
+          "object": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["packager", "name"]
+            }
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/discoveryDependencies/base/object"
+              },
+              {
+                "items": {
+                  "properties": {
+                    "packager": {
+                      "$ref": "#/definitions/propertiesObjects/packager/permissive/object"
+                    },
+                    "name": {
+                      "$ref": "#/definitions/propertiesObjects/toolName/permissive/object"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/discoveryDependencies/base/object"
+              },
+              {
+                "items": {
+                  "properties": {
+                    "packager": {
+                      "$ref": "#/definitions/propertiesObjects/packager/specification/object"
+                    },
+                    "name": {
+                      "$ref": "#/definitions/propertiesObjects/toolName/specification/object"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/discoveryDependencies/base/object"
+              },
+              {
+                "items": {
+                  "properties": {
+                    "packager": {
+                      "$ref": "#/definitions/propertiesObjects/packager/strict/object"
+                    },
+                    "name": {
+                      "$ref": "#/definitions/propertiesObjects/toolName/strict/object"
                     }
                   },
                   "additionalProperties": false
