@@ -26,7 +26,6 @@ import (
 	"github.com/arduino/arduino-lint/internal/result"
 	"github.com/arduino/arduino-lint/internal/result/feedback"
 	"github.com/arduino/arduino-lint/internal/rule/ruleconfiguration"
-	"github.com/arduino/arduino-lint/internal/rule/ruleresult"
 	"github.com/sirupsen/logrus"
 )
 
@@ -52,9 +51,7 @@ func Runner(project project.Type) {
 
 		ruleResult, ruleOutput := ruleConfiguration.RuleFunction()
 		reportText := result.Results.Record(project, ruleConfiguration, ruleResult, ruleOutput)
-		if (ruleResult == ruleresult.Fail) || configuration.Verbose() {
-			feedback.Println(reportText)
-		}
+		feedback.Print(reportText)
 	}
 }
 

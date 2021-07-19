@@ -101,8 +101,6 @@ func (results *Type) Record(lintedProject project.Type, ruleConfiguration ruleco
 		panic(fmt.Errorf("Error while determining rule level: %v", err))
 	}
 
-	summaryText := fmt.Sprintf("Rule %s result: %s", ruleConfiguration.ID, ruleResult)
-
 	ruleMessage := ""
 	if ruleResult == ruleresult.Fail {
 		ruleMessage = message(ruleConfiguration.MessageTemplate, ruleOutput)
@@ -112,9 +110,14 @@ func (results *Type) Record(lintedProject project.Type, ruleConfiguration ruleco
 		ruleMessage = ruleOutput
 	}
 
-	// Add explanation of rule result if present.
-	if ruleMessage != "" {
-		summaryText += fmt.Sprintf("\n%s: %s", ruleLevel, ruleMessage)
+	summaryText := ""
+	if (ruleResult == ruleresult.Fail) || configuration.Verbose() {
+		summaryText = fmt.Sprintf("Rule %s result: %s", ruleConfiguration.ID, ruleResult)
+		// Add explanation of rule result if present.
+		if ruleMessage != "" {
+			summaryText += fmt.Sprintf("\n%s: %s", ruleLevel, ruleMessage)
+		}
+		summaryText += "\n"
 	}
 
 	reportExists, projectReportIndex := results.getProjectReportIndex(lintedProject.Path)
