@@ -105,6 +105,7 @@ func TestLibraryHasSubmodule(t *testing.T) {
 
 func TestLibraryContainsSymlinks(t *testing.T) {
 	testLibrary := "Recursive"
+	// Set up a library with a file target symlink.
 	symlinkPath := librariesTestDataPath.Join(testLibrary, "test-symlink")
 	// It's probably most friendly to developers using Windows to create the symlink needed for the test on demand.
 	err := os.Symlink(librariesTestDataPath.Join(testLibrary, "library.properties").String(), symlinkPath.String())
@@ -112,7 +113,20 @@ func TestLibraryContainsSymlinks(t *testing.T) {
 	defer symlinkPath.RemoveAll() // clean up
 
 	testTables := []libraryRuleFunctionTestTable{
-		{"Has symlink", testLibrary, ruleresult.Fail, ""},
+		{"Has file target symlink", testLibrary, ruleresult.Fail, ""},
+	}
+
+	checkLibraryRuleFunction(LibraryContainsSymlinks, testTables, t)
+
+	err = symlinkPath.RemoveAll()
+	require.Nil(t, err)
+
+	// Set up a library with a folder target symlink.
+	err = os.Symlink(librariesTestDataPath.Join(testLibrary, "src").String(), symlinkPath.String())
+	require.Nil(t, err)
+
+	testTables = []libraryRuleFunctionTestTable{
+		{"Has folder target symlink", testLibrary, ruleresult.Fail, ""},
 	}
 
 	checkLibraryRuleFunction(LibraryContainsSymlinks, testTables, t)
