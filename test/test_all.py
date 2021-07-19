@@ -181,7 +181,7 @@ def test_verbose(run_command):
     result = run_command(cmd=["--format", "text", project_path])
     assert result.ok
     assert "result: pass" not in result.stdout
-    assert "result: fail" in result.stdout
+    assert "WARNING:" in result.stdout
 
     result = run_command(cmd=["--format", "text", "--verbose", project_path])
     assert result.ok
