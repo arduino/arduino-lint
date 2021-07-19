@@ -194,8 +194,15 @@ func (results Type) ProjectSummaryText(lintedProject project.Type) string {
 		panic(fmt.Sprintf("Unable to find report for %v when generating report summary text", lintedProject.Path))
 	}
 
-	projectSummaryReport := results.Projects[projectReportIndex].Summary
-	return fmt.Sprintf("Finished linting project. Results:\nWarning count: %v\nError count: %v\nRules passed: %v", projectSummaryReport.WarningCount, projectSummaryReport.ErrorCount, projectSummaryReport.Pass)
+	projectSummaryReport := "Linter results for project: "
+	projectSummaryData := results.Projects[projectReportIndex].Summary
+	if projectSummaryData.ErrorCount == 0 && projectSummaryData.WarningCount == 0 {
+		projectSummaryReport += "no errors or warnings"
+	} else {
+		projectSummaryReport += fmt.Sprintf("%v ERRORS, %v WARNINGS", projectSummaryData.ErrorCount, projectSummaryData.WarningCount)
+	}
+
+	return projectSummaryReport
 }
 
 // AddSummary summarizes the rule results for all projects and adds it to the report.
@@ -220,7 +227,14 @@ func (results *Type) AddSummary() {
 
 // SummaryText returns a text summary of the cumulative rule results.
 func (results Type) SummaryText() string {
-	return fmt.Sprintf("Finished linting projects. Results:\nWarning count: %v\nError count: %v\nRules passed: %v", results.Summary.WarningCount, results.Summary.ErrorCount, results.Summary.Pass)
+	summaryReport := "Linter results for projects: "
+	if results.Summary.ErrorCount == 0 && results.Summary.WarningCount == 0 {
+		summaryReport += "no errors or warnings"
+	} else {
+		summaryReport += fmt.Sprintf("%v ERRORS, %v WARNINGS", results.Summary.ErrorCount, results.Summary.WarningCount)
+	}
+
+	return summaryReport
 }
 
 // JSONReport returns a JSON formatted report of rules on all projects in string encoding.

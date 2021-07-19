@@ -207,7 +207,11 @@ func TestAddProjectSummary(t *testing.T) {
 		assert.Equal(t, testTable.expectedPass, results.Projects[0].Summary.Pass)
 		assert.Equal(t, testTable.expectedWarningCount, results.Projects[0].Summary.WarningCount)
 		assert.Equal(t, testTable.expectedErrorCount, results.Projects[0].Summary.ErrorCount)
-		assert.Equal(t, fmt.Sprintf("Finished linting project. Results:\nWarning count: %v\nError count: %v\nRules passed: %v", testTable.expectedWarningCount, testTable.expectedErrorCount, testTable.expectedPass), results.ProjectSummaryText(lintedProject))
+		if testTable.expectedErrorCount == 0 && testTable.expectedWarningCount == 0 {
+			assert.Equal(t, "Linter results for project: no errors or warnings", results.ProjectSummaryText(lintedProject))
+		} else {
+			assert.Equal(t, fmt.Sprintf("Linter results for project: %v ERRORS, %v WARNINGS", testTable.expectedErrorCount, testTable.expectedWarningCount), results.ProjectSummaryText(lintedProject))
+		}
 	}
 }
 
@@ -290,7 +294,11 @@ func TestAddSummary(t *testing.T) {
 		assert.Equal(t, testTable.expectedPass, results.Passed())
 		assert.Equal(t, testTable.expectedWarningCount, results.Summary.WarningCount)
 		assert.Equal(t, testTable.expectedErrorCount, results.Summary.ErrorCount)
-		assert.Equal(t, fmt.Sprintf("Finished linting projects. Results:\nWarning count: %v\nError count: %v\nRules passed: %v", testTable.expectedWarningCount, testTable.expectedErrorCount, testTable.expectedPass), results.SummaryText())
+		if testTable.expectedErrorCount == 0 && testTable.expectedWarningCount == 0 {
+			assert.Equal(t, "Linter results for projects: no errors or warnings", results.SummaryText())
+		} else {
+			assert.Equal(t, fmt.Sprintf("Linter results for projects: %v ERRORS, %v WARNINGS", testTable.expectedErrorCount, testTable.expectedWarningCount), results.SummaryText())
+		}
 	}
 }
 
