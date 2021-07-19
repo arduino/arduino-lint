@@ -79,7 +79,7 @@ func TestRecord(t *testing.T) {
 	summaryText = results.Record(lintedProject, ruleConfiguration, ruleresult.NotRun, ruleOutput)
 	assert.Equal(t, fmt.Sprintf("Rule %s result: %s\n%s: %s", ruleConfiguration.ID, ruleresult.NotRun, rulelevel.Notice, ruleOutput), summaryText, "Non-fail result should not use message")
 	summaryText = results.Record(lintedProject, ruleConfiguration, ruleresult.Pass, "")
-	assert.Equal(t, "", "", summaryText, "Non-failure result with no rule function output should result in an empty summary")
+	assert.Equal(t, fmt.Sprintf("Rule %s result: %s", ruleConfiguration.ID, ruleresult.Pass), summaryText, "Non-failure result with no rule function output should only use preface")
 
 	flags.Set("verbose", "true")
 	require.Nil(t, configuration.Initialize(flags, projectPaths))
