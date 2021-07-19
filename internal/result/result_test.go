@@ -85,7 +85,7 @@ func TestRecord(t *testing.T) {
 	flags.Set("verbose", "false")
 	require.Nil(t, configuration.Initialize(flags, projectPaths))
 	summaryText = results.Record(lintedProject, ruleConfiguration, ruleresult.Fail, ruleOutput)
-	assert.Equal(t, fmt.Sprintf("Rule %s result: %s\n%s: %s\n", ruleConfiguration.ID, ruleresult.Fail, rulelevel.Error, message(ruleConfiguration.MessageTemplate, ruleOutput)), summaryText)
+	assert.Equal(t, fmt.Sprintf("%s: %s (Rule %s)\n", rulelevel.Error, message(ruleConfiguration.MessageTemplate, ruleOutput), ruleConfiguration.ID), summaryText)
 	summaryText = results.Record(lintedProject, ruleConfiguration, ruleresult.NotRun, ruleOutput)
 	assert.Equal(t, "", summaryText, "Non-fail result should not result in output in non-verbose mode")
 	summaryText = results.Record(lintedProject, ruleConfiguration, ruleresult.Pass, "")

@@ -111,13 +111,17 @@ func (results *Type) Record(lintedProject project.Type, ruleConfiguration ruleco
 	}
 
 	summaryText := ""
-	if (ruleResult == ruleresult.Fail) || configuration.Verbose() {
+	if configuration.Verbose() {
 		summaryText = fmt.Sprintf("Rule %s result: %s", ruleConfiguration.ID, ruleResult)
 		// Add explanation of rule result if present.
 		if ruleMessage != "" {
 			summaryText += fmt.Sprintf("\n%s: %s", ruleLevel, ruleMessage)
 		}
 		summaryText += "\n"
+	} else {
+		if ruleResult == ruleresult.Fail {
+			summaryText = fmt.Sprintf("%s: %s (Rule %s)\n", ruleLevel, ruleMessage, ruleConfiguration.ID)
+		}
 	}
 
 	reportExists, projectReportIndex := results.getProjectReportIndex(lintedProject.Path)
