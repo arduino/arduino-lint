@@ -28,6 +28,7 @@ require (
 	github.com/kevinburke/ssh_config v0.0.0-20201106050909-4977a11b4351 // indirect
 	github.com/magiconair/properties v1.8.4 // indirect
 	github.com/mitchellh/mapstructure v1.4.0 // indirect
+	github.com/olekukonko/tablewriter v0.0.5
 	github.com/ory/go-acc v0.2.6 // indirect
 	github.com/ory/herodot v0.9.1 // indirect
 	github.com/ory/jsonschema/v3 v3.0.1

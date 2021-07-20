@@ -21,6 +21,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"strings"
 	"text/template"
 
 	"github.com/arduino/arduino-lint/internal/configuration"
@@ -30,6 +31,7 @@ import (
 	"github.com/arduino/arduino-lint/internal/rule/rulelevel"
 	"github.com/arduino/arduino-lint/internal/rule/ruleresult"
 	"github.com/arduino/go-paths-helper"
+	"github.com/olekukonko/tablewriter"
 )
 
 // Results is the global instance of the rule results result.Type struct
@@ -111,16 +113,32 @@ func (results *Type) Record(lintedProject project.Type, ruleConfiguration ruleco
 	}
 
 	summaryText := ""
+
+	formatRuleText := func(level rulelevel.Type, message string) string {
+		width := 120 // Wrap text to this width
+		prefix := fmt.Sprintf("%s: ", level)
+
+		formattedOutput := &strings.Builder{}
+		table := tablewriter.NewWriter(formattedOutput)
+		table.SetBorder(false)
+		table.SetColumnSeparator("")
+		table.SetNoWhiteSpace(true)
+		table.SetColWidth(width - len(prefix))
+		table.Append([]string{prefix, message})
+		table.Render()
+
+		return formattedOutput.String()
+	}
+
 	if configuration.Verbose() {
-		summaryText = fmt.Sprintf("Rule %s result: %s", ruleConfiguration.ID, ruleResult)
+		summaryText = fmt.Sprintf("Rule %s result: %s\n", ruleConfiguration.ID, ruleResult)
 		// Add explanation of rule result if present.
 		if ruleMessage != "" {
-			summaryText += fmt.Sprintf("\n%s: %s", ruleLevel, ruleMessage)
+			summaryText += formatRuleText(ruleLevel, ruleMessage)
 		}
-		summaryText += "\n"
 	} else {
 		if ruleResult == ruleresult.Fail {
-			summaryText = fmt.Sprintf("%s: %s (Rule %s)\n", ruleLevel, ruleMessage, ruleConfiguration.ID)
+			summaryText = formatRuleText(ruleLevel, fmt.Sprintf("%s (Rule %s)", ruleMessage, ruleConfiguration.ID))
 		}
 	}
 
