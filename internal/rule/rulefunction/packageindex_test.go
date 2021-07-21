@@ -765,7 +765,7 @@ func TestPackageIndexPackagesPlatformsBoardsIncorrectType(t *testing.T) {
 func TestPackageIndexPackagesPlatformsBoardsAdditionalProperties(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"Additional packages[].platforms[].boards[] properties", "packages-platforms-boards-additional-properties", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0 - My Board$"},
+		{"Additional packages[].platforms[].boards[] properties", "packages-platforms-boards-additional-properties", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0 >> My Board$"},
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
@@ -825,7 +825,7 @@ func TestPackageIndexPackagesPlatformsToolsDependenciesIncorrectType(t *testing.
 func TestPackageIndexPackagesPlatformsToolsDependenciesAdditionalProperties(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"Additional packages[].platforms[].toolsDependencies[] properties", "packages-platforms-toolsdependencies-additional-properties", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0 - arduino:avr-gcc@7\\.3\\.0-atmel3\\.6\\.1-arduino7$"},
+		{"Additional packages[].platforms[].toolsDependencies[] properties", "packages-platforms-toolsdependencies-additional-properties", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0 >> arduino:avr-gcc@7\\.3\\.0-atmel3\\.6\\.1-arduino7$"},
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
@@ -915,7 +915,7 @@ func TestPackageIndexPackagesPlatformsToolsDependenciesVersionIncorrectType(t *t
 func TestPackageIndexPackagesPlatformsToolsDependenciesVersionNonRelaxedSemver(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"packages[].platforms[].toolsDependencies[].version not relaxed semver", "packages-platforms-toolsdependencies-version-non-relaxed-semver", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0 - arduino:avr-gcc@foo$"},
+		{"packages[].platforms[].toolsDependencies[].version not relaxed semver", "packages-platforms-toolsdependencies-version-non-relaxed-semver", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0 >> arduino:avr-gcc@foo$"},
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
@@ -925,7 +925,7 @@ func TestPackageIndexPackagesPlatformsToolsDependenciesVersionNonRelaxedSemver(t
 func TestPackageIndexPackagesPlatformsToolsDependenciesVersionNonSemver(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"packages[].platforms[].toolsDependencies[].version not semver", "packages-platforms-toolsdependencies-version-not-semver", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0 - arduino:avr-gcc@7\\.3$"},
+		{"packages[].platforms[].toolsDependencies[].version not semver", "packages-platforms-toolsdependencies-version-not-semver", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0 >> arduino:avr-gcc@7\\.3$"},
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
@@ -945,7 +945,7 @@ func TestPackageIndexPackagesPlatformsDiscoveryDependenciesIncorrectType(t *test
 func TestPackageIndexPackagesPlatformsDiscoveryDependenciesAdditionalProperties(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"Additional packages[].platforms[].discoveryDependencies[] properties", "packages-platforms-discoverydependencies-additional-properties", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0 - arduino:ble-discovery$"},
+		{"Additional packages[].platforms[].discoveryDependencies[] properties", "packages-platforms-discoverydependencies-additional-properties", ruleresult.Fail, "^foopackager:avr@1\\.0\\.0 >> arduino:ble-discovery$"},
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
@@ -1135,7 +1135,7 @@ func TestPackageIndexPackagesToolsSystemsIncorrectType(t *testing.T) {
 func TestPackageIndexPackagesToolsSystemsAdditionalProperties(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"Additional packages[].tools[].systems[] properties", "packages-tools-systems-additional-properties", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 - aarch64-linux-gnu$"},
+		{"Additional packages[].tools[].systems[] properties", "packages-tools-systems-additional-properties", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 >> aarch64-linux-gnu$"},
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
@@ -1165,7 +1165,7 @@ func TestPackageIndexPackagesToolsSystemsHostIncorrectType(t *testing.T) {
 func TestPackageIndexPackagesToolsSystemsHostInvalid(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"Invalid packages[].tools[].systems[].host format", "packages-tools-systems-host-invalid", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 - foo$"},
+		{"Invalid packages[].tools[].systems[].host format", "packages-tools-systems-host-invalid", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 >> foo$"},
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
@@ -1175,7 +1175,7 @@ func TestPackageIndexPackagesToolsSystemsHostInvalid(t *testing.T) {
 func TestPackageIndexPackagesToolsSystemsUrlMissing(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"packages[].tools[].systems[].url missing", "packages-tools-systems-url-missing", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 - aarch64-linux-gnu$"},
+		{"packages[].tools[].systems[].url missing", "packages-tools-systems-url-missing", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 >> aarch64-linux-gnu$"},
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
@@ -1185,7 +1185,7 @@ func TestPackageIndexPackagesToolsSystemsUrlMissing(t *testing.T) {
 func TestPackageIndexPackagesToolsSystemsUrlIncorrectType(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"Incorrect packages[].tools[].systems[].url type", "packages-tools-systems-url-incorrect-type", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 - aarch64-linux-gnu$"},
+		{"Incorrect packages[].tools[].systems[].url type", "packages-tools-systems-url-incorrect-type", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 >> aarch64-linux-gnu$"},
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
@@ -1195,7 +1195,7 @@ func TestPackageIndexPackagesToolsSystemsUrlIncorrectType(t *testing.T) {
 func TestPackageIndexPackagesToolsSystemsUrlInvalidFormat(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"Incorrect packages[].tools[].systems[].url format", "packages-tools-systems-url-invalid-format", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 - aarch64-linux-gnu$"},
+		{"Incorrect packages[].tools[].systems[].url format", "packages-tools-systems-url-invalid-format", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 >> aarch64-linux-gnu$"},
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
@@ -1205,7 +1205,7 @@ func TestPackageIndexPackagesToolsSystemsUrlInvalidFormat(t *testing.T) {
 func TestPackageIndexPackagesToolsSystemsURLDeadLink(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"Dead URLs", "packages-tools-systems-url-dead", ruleresult.Fail, "^foopackager:CMSIS@4\\.0\\.0-atmel - arm-linux-gnueabihf, foopackager:CMSIS@4\\.0\\.0-atmel - i686-mingw32$"},
+		{"Dead URLs", "packages-tools-systems-url-dead", ruleresult.Fail, "^foopackager:CMSIS@4\\.0\\.0-atmel >> arm-linux-gnueabihf, foopackager:CMSIS@4\\.0\\.0-atmel >> i686-mingw32$"},
 		{"Valid URL", "valid-package-index", ruleresult.Pass, ""},
 	}
 
@@ -1215,7 +1215,7 @@ func TestPackageIndexPackagesToolsSystemsURLDeadLink(t *testing.T) {
 func TestPackageIndexPackagesToolsSystemsArchiveFileNameMissing(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"packages[].tools[].systems[].archiveFileName missing", "packages-tools-systems-archivefilename-missing", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 - aarch64-linux-gnu$"},
+		{"packages[].tools[].systems[].archiveFileName missing", "packages-tools-systems-archivefilename-missing", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 >> aarch64-linux-gnu$"},
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
@@ -1225,7 +1225,7 @@ func TestPackageIndexPackagesToolsSystemsArchiveFileNameMissing(t *testing.T) {
 func TestPackageIndexPackagesToolsSystemsArchiveFileNameIncorrectType(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"Incorrect packages[].tools[].systems[].archiveFileName type", "packages-tools-systems-archivefilename-incorrect-type", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 - aarch64-linux-gnu$"},
+		{"Incorrect packages[].tools[].systems[].archiveFileName type", "packages-tools-systems-archivefilename-incorrect-type", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 >> aarch64-linux-gnu$"},
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
@@ -1235,7 +1235,7 @@ func TestPackageIndexPackagesToolsSystemsArchiveFileNameIncorrectType(t *testing
 func TestPackageIndexPackagesToolsSystemsArchiveFileNameLTMinLength(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"packages[].tools[].systems[].archiveFileName < min length", "packages-tools-systems-archivefilename-length-lt", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 - aarch64-linux-gnu$"},
+		{"packages[].tools[].systems[].archiveFileName < min length", "packages-tools-systems-archivefilename-length-lt", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 >> aarch64-linux-gnu$"},
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
@@ -1245,7 +1245,7 @@ func TestPackageIndexPackagesToolsSystemsArchiveFileNameLTMinLength(t *testing.T
 func TestPackageIndexPackagesToolsSystemsArchiveFileNameInvalid(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"Invalid packages[].tools[].systems[].archiveFileName format", "packages-tools-systems-archivefilename-invalid", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 - aarch64-linux-gnu$"},
+		{"Invalid packages[].tools[].systems[].archiveFileName format", "packages-tools-systems-archivefilename-invalid", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 >> aarch64-linux-gnu$"},
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
@@ -1255,7 +1255,7 @@ func TestPackageIndexPackagesToolsSystemsArchiveFileNameInvalid(t *testing.T) {
 func TestPackageIndexPackagesToolsSystemsChecksumMissing(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"packages[].tools[].systems[].checksum missing", "packages-tools-systems-checksum-missing", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 - aarch64-linux-gnu$"},
+		{"packages[].tools[].systems[].checksum missing", "packages-tools-systems-checksum-missing", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 >> aarch64-linux-gnu$"},
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
@@ -1265,7 +1265,7 @@ func TestPackageIndexPackagesToolsSystemsChecksumMissing(t *testing.T) {
 func TestPackageIndexPackagesToolsSystemsChecksumIncorrectType(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"Incorrect packages[].tools[].systems[].checksum type", "packages-tools-systems-checksum-incorrect-type", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 - aarch64-linux-gnu$"},
+		{"Incorrect packages[].tools[].systems[].checksum type", "packages-tools-systems-checksum-incorrect-type", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 >> aarch64-linux-gnu$"},
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
@@ -1275,7 +1275,7 @@ func TestPackageIndexPackagesToolsSystemsChecksumIncorrectType(t *testing.T) {
 func TestPackageIndexPackagesToolsSystemsChecksumInvalid(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"Invalid packages[].tools[].systems[].checksum format", "packages-tools-systems-checksum-invalid", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 - aarch64-linux-gnu$"},
+		{"Invalid packages[].tools[].systems[].checksum format", "packages-tools-systems-checksum-invalid", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 >> aarch64-linux-gnu$"},
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
@@ -1285,7 +1285,7 @@ func TestPackageIndexPackagesToolsSystemsChecksumInvalid(t *testing.T) {
 func TestPackageIndexPackagesToolsSystemsChecksumDiscouragedAlgorithm(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"packages[].tools[].systems[].checksum uses discouraged algorithm", "packages-tools-systems-checksum-discouraged", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 - aarch64-linux-gnu$"},
+		{"packages[].tools[].systems[].checksum uses discouraged algorithm", "packages-tools-systems-checksum-discouraged", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 >> aarch64-linux-gnu$"},
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
@@ -1295,7 +1295,7 @@ func TestPackageIndexPackagesToolsSystemsChecksumDiscouragedAlgorithm(t *testing
 func TestPackageIndexPackagesToolsSystemsSizeMissing(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"packages[].tools[].systems[].size missing", "packages-tools-systems-size-missing", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 - aarch64-linux-gnu$"},
+		{"packages[].tools[].systems[].size missing", "packages-tools-systems-size-missing", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 >> aarch64-linux-gnu$"},
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
@@ -1305,7 +1305,7 @@ func TestPackageIndexPackagesToolsSystemsSizeMissing(t *testing.T) {
 func TestPackageIndexPackagesToolsSystemsSizeIncorrectType(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"Incorrect packages[].tools[].systems[].size type", "packages-tools-systems-size-incorrect-type", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 - aarch64-linux-gnu$"},
+		{"Incorrect packages[].tools[].systems[].size type", "packages-tools-systems-size-incorrect-type", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 >> aarch64-linux-gnu$"},
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
@@ -1315,7 +1315,7 @@ func TestPackageIndexPackagesToolsSystemsSizeIncorrectType(t *testing.T) {
 func TestPackageIndexPackagesToolsSystemsSizeInvalid(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"Invalid packages[].tools[].systems[].size format", "packages-tools-systems-size-invalid", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 - aarch64-linux-gnu$"},
+		{"Invalid packages[].tools[].systems[].size format", "packages-tools-systems-size-invalid", ruleresult.Fail, "^foopackager:openocd@0\\.11\\.0-arduino2 >> aarch64-linux-gnu$"},
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
