@@ -56,15 +56,15 @@ func InitializeForPackageIndex() {
 		}
 
 		for _, platformData := range PackageIndexPlatforms() {
-			packageIndexBoards = append(packageIndexBoards, getPackageIndexData(platformData.Object, platformData.JSONPointer, "boards", platformData.ID, " - {{index . 0}}", []string{"name"})...)
+			packageIndexBoards = append(packageIndexBoards, getPackageIndexData(platformData.Object, platformData.JSONPointer, "boards", platformData.ID, " >> {{index . 0}}", []string{"name"})...)
 		}
 
 		for _, platformData := range PackageIndexPlatforms() {
-			packageIndexToolsDependencies = append(packageIndexToolsDependencies, getPackageIndexData(platformData.Object, platformData.JSONPointer, "toolsDependencies", platformData.ID, " - {{index . 0}}:{{index . 1}}@{{index . 2}}", []string{"packager", "name", "version"})...)
+			packageIndexToolsDependencies = append(packageIndexToolsDependencies, getPackageIndexData(platformData.Object, platformData.JSONPointer, "toolsDependencies", platformData.ID, " >> {{index . 0}}:{{index . 1}}@{{index . 2}}", []string{"packager", "name", "version"})...)
 		}
 
 		for _, platformData := range PackageIndexPlatforms() {
-			packageIndexDiscoveryDependencies = append(packageIndexDiscoveryDependencies, getPackageIndexData(platformData.Object, platformData.JSONPointer, "discoveryDependencies", platformData.ID, " - {{index . 0}}:{{index . 1}}", []string{"packager", "name"})...)
+			packageIndexDiscoveryDependencies = append(packageIndexDiscoveryDependencies, getPackageIndexData(platformData.Object, platformData.JSONPointer, "discoveryDependencies", platformData.ID, " >> {{index . 0}}:{{index . 1}}", []string{"packager", "name"})...)
 		}
 
 		for _, packageData := range PackageIndexPackages() {
@@ -72,7 +72,7 @@ func InitializeForPackageIndex() {
 		}
 
 		for _, toolData := range PackageIndexTools() {
-			packageIndexSystems = append(packageIndexSystems, getPackageIndexData(toolData.Object, toolData.JSONPointer, "systems", toolData.ID, " - {{index . 0}}", []string{"host"})...)
+			packageIndexSystems = append(packageIndexSystems, getPackageIndexData(toolData.Object, toolData.JSONPointer, "systems", toolData.ID, " >> {{index . 0}}", []string{"host"})...)
 		}
 
 		packageIndexSchemaValidationResult = packageindex.Validate(PackageIndex())

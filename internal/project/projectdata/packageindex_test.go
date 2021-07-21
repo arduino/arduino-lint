@@ -96,93 +96,93 @@ func TestInitializeForPackageIndex(t *testing.T) {
 			packageIndexBoardsAssertion: assert.NotNil,
 			packageIndexBoardsDataAssertion: []PackageIndexData{
 				{
-					ID:          "foopackager1:avr@1.0.0 - My Board",
+					ID:          "foopackager1:avr@1.0.0 >> My Board",
 					JSONPointer: "/packages/0/platforms/0/boards/0",
 				},
 				{
-					ID:          "foopackager1:avr@1.0.0 - My Board Pro",
+					ID:          "foopackager1:avr@1.0.0 >> My Board Pro",
 					JSONPointer: "/packages/0/platforms/0/boards/1",
 				},
 				{
-					ID:          "foopackager1:avr@1.0.1 - My Board",
+					ID:          "foopackager1:avr@1.0.1 >> My Board",
 					JSONPointer: "/packages/0/platforms/1/boards/0",
 				},
 				{
-					ID:          "foopackager1:avr@1.0.1 - My Board Pro",
+					ID:          "foopackager1:avr@1.0.1 >> My Board Pro",
 					JSONPointer: "/packages/0/platforms/1/boards/1",
 				},
 				{
-					ID:          "foopackager2:samd@2.0.0 - My Board",
+					ID:          "foopackager2:samd@2.0.0 >> My Board",
 					JSONPointer: "/packages/1/platforms/0/boards/0",
 				},
 				{
-					ID:          "foopackager2:samd@2.0.0 - My Board Pro",
+					ID:          "foopackager2:samd@2.0.0 >> My Board Pro",
 					JSONPointer: "/packages/1/platforms/0/boards/1",
 				},
 				{
-					ID:          "foopackager2:mbed@1.1.1 - My Board",
+					ID:          "foopackager2:mbed@1.1.1 >> My Board",
 					JSONPointer: "/packages/1/platforms/1/boards/0",
 				},
 				{
-					ID:          "foopackager2:mbed@1.1.1 - My Board Pro",
+					ID:          "foopackager2:mbed@1.1.1 >> My Board Pro",
 					JSONPointer: "/packages/1/platforms/1/boards/1",
 				},
 			},
 			packageIndexToolsDependenciesAssertion: assert.NotNil,
 			packageIndexToolsDependenciesDataAssertion: []PackageIndexData{
 				{
-					ID:          "foopackager1:avr@1.0.0 - arduino:avr-gcc@4.8.1-arduino5",
+					ID:          "foopackager1:avr@1.0.0 >> arduino:avr-gcc@4.8.1-arduino5",
 					JSONPointer: "/packages/0/platforms/0/toolsDependencies/0",
 				},
 				{
-					ID:          "foopackager1:avr@1.0.0 - arduino:avrdude@6.0.1-arduino5",
+					ID:          "foopackager1:avr@1.0.0 >> arduino:avrdude@6.0.1-arduino5",
 					JSONPointer: "/packages/0/platforms/0/toolsDependencies/1",
 				},
 				{
-					ID:          "foopackager1:avr@1.0.1 - arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7",
+					ID:          "foopackager1:avr@1.0.1 >> arduino:avr-gcc@7.3.0-atmel3.6.1-arduino7",
 					JSONPointer: "/packages/0/platforms/1/toolsDependencies/0",
 				},
 				{
-					ID:          "foopackager1:avr@1.0.1 - arduino:avrdude@6.3.0-arduino17",
+					ID:          "foopackager1:avr@1.0.1 >> arduino:avrdude@6.3.0-arduino17",
 					JSONPointer: "/packages/0/platforms/1/toolsDependencies/1",
 				},
 				{
-					ID:          "foopackager2:samd@2.0.0 - arduino:arm-none-eabi-gcc@7-2017q4",
+					ID:          "foopackager2:samd@2.0.0 >> arduino:arm-none-eabi-gcc@7-2017q4",
 					JSONPointer: "/packages/1/platforms/0/toolsDependencies/0",
 				},
 				{
-					ID:          "foopackager2:samd@2.0.0 - arduino:bossac@1.7.0-arduino3",
+					ID:          "foopackager2:samd@2.0.0 >> arduino:bossac@1.7.0-arduino3",
 					JSONPointer: "/packages/1/platforms/0/toolsDependencies/1",
 				},
 				{
-					ID:          "foopackager2:mbed@1.1.1 - arduino:openocd@0.11.0-arduino2",
+					ID:          "foopackager2:mbed@1.1.1 >> arduino:openocd@0.11.0-arduino2",
 					JSONPointer: "/packages/1/platforms/1/toolsDependencies/0",
 				},
 				{
-					ID:          "foopackager2:mbed@1.1.1 - arduino:arm-none-eabi-gcc@7-2017q4",
+					ID:          "foopackager2:mbed@1.1.1 >> arduino:arm-none-eabi-gcc@7-2017q4",
 					JSONPointer: "/packages/1/platforms/1/toolsDependencies/1",
 				},
 			},
 			packageIndexDiscoveryDependenciesAssertion: assert.NotNil,
 			packageIndexDiscoveryDependenciesDataAssertion: []PackageIndexData{
 				{
-					ID:          "foopackager1:avr@1.0.1 - arduino:ble-discovery",
+					ID:          "foopackager1:avr@1.0.1 >> arduino:ble-discovery",
 					JSONPointer: "/packages/0/platforms/1/discoveryDependencies/0",
 				},
 				{
-					ID:          "foopackager1:avr@1.0.1 - barpackager:carrier-pigeon-discovery",
+					ID:          "foopackager1:avr@1.0.1 >> barpackager:carrier-pigeon-discovery",
 					JSONPointer: "/packages/0/platforms/1/discoveryDependencies/1",
 				},
 				{
-					ID:          "foopackager2:samd@2.0.0 - arduino:ble-discovery",
+					ID:          "foopackager2:samd@2.0.0 >> arduino:ble-discovery",
 					JSONPointer: "/packages/1/platforms/0/discoveryDependencies/0",
 				},
 				{
-					ID:          "foopackager2:samd@2.0.0 - bazpackager:signal-flag-discovery",
+					ID:          "foopackager2:samd@2.0.0 >> bazpackager:signal-flag-discovery",
 					JSONPointer: "/packages/1/platforms/0/discoveryDependencies/1",
 				},
 				{
-					ID:          "foopackager2:mbed@1.1.1 - quxpackager:sneakernet-discovery",
+					ID:          "foopackager2:mbed@1.1.1 >> quxpackager:sneakernet-discovery",
 					JSONPointer: "/packages/1/platforms/1/discoveryDependencies/0",
 				},
 			},
@@ -200,19 +200,19 @@ func TestInitializeForPackageIndex(t *testing.T) {
 			packageIndexSystemsAssertion: assert.NotNil,
 			packageIndexSystemsDataAssertion: []PackageIndexData{
 				{
-					ID:          "foopackager2:openocd@0.10.0-arduino1-static - i386-apple-darwin11",
+					ID:          "foopackager2:openocd@0.10.0-arduino1-static >> i386-apple-darwin11",
 					JSONPointer: "/packages/1/tools/0/systems/0",
 				},
 				{
-					ID:          "foopackager2:openocd@0.10.0-arduino1-static - x86_64-linux-gnu",
+					ID:          "foopackager2:openocd@0.10.0-arduino1-static >> x86_64-linux-gnu",
 					JSONPointer: "/packages/1/tools/0/systems/1",
 				},
 				{
-					ID:          "foopackager2:CMSIS@4.0.0-atmel - arm-linux-gnueabihf",
+					ID:          "foopackager2:CMSIS@4.0.0-atmel >> arm-linux-gnueabihf",
 					JSONPointer: "/packages/1/tools/1/systems/0",
 				},
 				{
-					ID:          "foopackager2:CMSIS@4.0.0-atmel - i686-mingw32",
+					ID:          "foopackager2:CMSIS@4.0.0-atmel >> i686-mingw32",
 					JSONPointer: "/packages/1/tools/1/systems/1",
 				},
 			},
@@ -297,7 +297,7 @@ func TestInitializeForPackageIndex(t *testing.T) {
 					JSONPointer: "/packages/1/platforms/2/boards/0",
 				},
 				{
-					ID:          "foopackager2:megaavr@1.0.0 - My Board Pro",
+					ID:          "foopackager2:megaavr@1.0.0 >> My Board Pro",
 					JSONPointer: "/packages/1/platforms/2/boards/1",
 				},
 			},
@@ -348,7 +348,7 @@ func TestInitializeForPackageIndex(t *testing.T) {
 					JSONPointer: "/packages/1/platforms/2/toolsDependencies/2",
 				},
 				{
-					ID:          "foopackager2:megaavr@1.0.0 - arduino:CMSIS@4.5.0",
+					ID:          "foopackager2:megaavr@1.0.0 >> arduino:CMSIS@4.5.0",
 					JSONPointer: "/packages/1/platforms/2/toolsDependencies/3",
 				},
 			},
@@ -395,7 +395,7 @@ func TestInitializeForPackageIndex(t *testing.T) {
 					JSONPointer: "/packages/1/platforms/2/discoveryDependencies/1",
 				},
 				{
-					ID:          "foopackager2:megaavr@1.0.0 - quxpackager:sneakernet-discovery",
+					ID:          "foopackager2:megaavr@1.0.0 >> quxpackager:sneakernet-discovery",
 					JSONPointer: "/packages/1/platforms/2/discoveryDependencies/3",
 				},
 			},
@@ -518,7 +518,7 @@ func TestInitializeForPackageIndex(t *testing.T) {
 					JSONPointer: "/packages/1/platforms/2/boards/0",
 				},
 				{
-					ID:          "foopackager2:megaavr@1.0.0 - My Board Pro",
+					ID:          "foopackager2:megaavr@1.0.0 >> My Board Pro",
 					JSONPointer: "/packages/1/platforms/2/boards/1",
 				},
 			},
@@ -569,7 +569,7 @@ func TestInitializeForPackageIndex(t *testing.T) {
 					JSONPointer: "/packages/1/platforms/2/toolsDependencies/2",
 				},
 				{
-					ID:          "foopackager2:megaavr@1.0.0 - arduino:CMSIS@4.5.0",
+					ID:          "foopackager2:megaavr@1.0.0 >> arduino:CMSIS@4.5.0",
 					JSONPointer: "/packages/1/platforms/2/toolsDependencies/3",
 				},
 			},
@@ -616,7 +616,7 @@ func TestInitializeForPackageIndex(t *testing.T) {
 					JSONPointer: "/packages/1/platforms/2/discoveryDependencies/1",
 				},
 				{
-					ID:          "foopackager2:megaavr@1.0.0 - quxpackager:sneakernet-discovery",
+					ID:          "foopackager2:megaavr@1.0.0 >> quxpackager:sneakernet-discovery",
 					JSONPointer: "/packages/1/platforms/2/discoveryDependencies/3",
 				},
 			},
