@@ -85,9 +85,15 @@ func TestRecord(t *testing.T) {
 	assert.Equal(t, fmt.Sprintf("Rule %s result: %s\n", ruleConfiguration.ID, ruleresult.Pass), summaryText, "Non-failure result with no rule function output should only use preface")
 	flags.Set("verbose", "false")
 	require.Nil(t, configuration.Initialize(flags, projectPaths))
-	summaryText = results.Record(lintedProject, ruleConfiguration, ruleresult.Fail, ruleOutput)
-	outputAssertion = "ERROR: Path does not contain a valid Arduino library. See:                                                              \n       https://arduino.github.io/arduino-cli/latest/library-specification (Rule LS001)                                  \n"
-	assert.Equal(t, outputAssertion, summaryText)
+	ruleConfigurationCopy := ruleConfiguration
+	ruleConfigurationCopy.MessageTemplate = "bar"
+	summaryText = results.Record(lintedProject, ruleConfigurationCopy, ruleresult.Fail, ruleOutput)
+	outputAssertion = "ERROR: bar (Rule LS001)\n"
+	assert.Equal(t, outputAssertion, summaryText, "Rule ID is appended to non-verbose fail message on same line when rule message is single line")
+	ruleConfigurationCopy.MessageTemplate = "bar\nbaz"
+	summaryText = results.Record(lintedProject, ruleConfigurationCopy, ruleresult.Fail, ruleOutput)
+	outputAssertion = "ERROR: bar         \n       baz         \n       (Rule LS001)\n"
+	assert.Equal(t, outputAssertion, summaryText, "Rule ID is appended to non-verbose fail message on same line when rule message is multiple lines")
 	summaryText = results.Record(lintedProject, ruleConfiguration, ruleresult.NotRun, ruleOutput)
 	assert.Equal(t, "", summaryText, "Non-fail result should not result in output in non-verbose mode")
 	summaryText = results.Record(lintedProject, ruleConfiguration, ruleresult.Pass, "")

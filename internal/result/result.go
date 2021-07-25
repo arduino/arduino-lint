@@ -144,7 +144,11 @@ func (results *Type) Record(lintedProject project.Type, ruleConfiguration ruleco
 		}
 	} else {
 		if ruleResult == ruleresult.Fail {
-			summaryText = formatRuleText(ruleLevel, fmt.Sprintf("%s (Rule %s)", ruleMessage, ruleConfiguration.ID))
+			if strings.Contains(ruleMessage, "\n") {
+				summaryText = formatRuleText(ruleLevel, fmt.Sprintf("%s\n(Rule %s)", ruleMessage, ruleConfiguration.ID))
+			} else {
+				summaryText = formatRuleText(ruleLevel, fmt.Sprintf("%s (Rule %s)", ruleMessage, ruleConfiguration.ID))
+			}
 		}
 	}
 
