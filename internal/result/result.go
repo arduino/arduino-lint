@@ -21,6 +21,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"regexp"
 	"strings"
 	"text/template"
 
@@ -96,6 +97,8 @@ func (results *Type) Initialize() {
 	}
 }
 
+var blankLineRegexp = regexp.MustCompile("\n[[:space:]]*\n")
+
 // Record records the result of a rule and returns a text summary for it.
 func (results *Type) Record(lintedProject project.Type, ruleConfiguration ruleconfiguration.Type, ruleResult ruleresult.Type, ruleOutput string) string {
 	ruleLevel, err := rulelevel.RuleLevel(ruleConfiguration, ruleResult, lintedProject)
@@ -124,10 +127,13 @@ func (results *Type) Record(lintedProject project.Type, ruleConfiguration ruleco
 		table.SetColumnSeparator("")
 		table.SetNoWhiteSpace(true)
 		table.SetColWidth(width - len(prefix))
+		table.SetReflowDuringAutoWrap(false) // Reflow removes explicit line breaks.
 		table.Append([]string{prefix, message})
 		table.Render()
+		// Remove blank lines on explicit line breaks caused by tablewriter bug.
+		cleanedOutput := blankLineRegexp.ReplaceAllLiteralString(formattedOutput.String(), "\n")
 
-		return formattedOutput.String()
+		return cleanedOutput
 	}
 
 	if configuration.Verbose() {
