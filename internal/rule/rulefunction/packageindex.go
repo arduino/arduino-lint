@@ -642,7 +642,7 @@ func PackageIndexPackagesPlatformsAdditionalProperties() (result ruleresult.Type
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -662,7 +662,7 @@ func PackageIndexPackagesPlatformsNameMissing() (result ruleresult.Type, output 
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -682,7 +682,7 @@ func PackageIndexPackagesPlatformsNameIncorrectType() (result ruleresult.Type, o
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -702,7 +702,7 @@ func PackageIndexPackagesPlatformsNameLTMinLength() (result ruleresult.Type, out
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -722,7 +722,7 @@ func PackageIndexPackagesPlatformsArchitectureMissing() (result ruleresult.Type,
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -742,7 +742,7 @@ func PackageIndexPackagesPlatformsArchitectureIncorrectType() (result ruleresult
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -762,7 +762,7 @@ func PackageIndexPackagesPlatformsArchitectureLTMinLength() (result ruleresult.T
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -782,7 +782,7 @@ func PackageIndexPackagesPlatformsVersionMissing() (result ruleresult.Type, outp
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -802,7 +802,7 @@ func PackageIndexPackagesPlatformsVersionIncorrectType() (result ruleresult.Type
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -822,7 +822,7 @@ func PackageIndexPackagesPlatformsVersionNonRelaxedSemver() (result ruleresult.T
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -842,7 +842,7 @@ func PackageIndexPackagesPlatformsVersionNonSemver() (result ruleresult.Type, ou
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -862,7 +862,7 @@ func PackageIndexPackagesPlatformsDeprecatedIncorrectType() (result ruleresult.T
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -882,7 +882,7 @@ func PackageIndexPackagesPlatformsCategoryMissing() (result ruleresult.Type, out
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -902,7 +902,7 @@ func PackageIndexPackagesPlatformsCategoryIncorrectType() (result ruleresult.Typ
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -922,7 +922,7 @@ func PackageIndexPackagesPlatformsCategoryThirdPartyInvalid() (result ruleresult
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -942,7 +942,7 @@ func PackageIndexPackagesPlatformsHelpMissing() (result ruleresult.Type, output 
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -962,7 +962,7 @@ func PackageIndexPackagesPlatformsHelpIncorrectType() (result ruleresult.Type, o
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -982,7 +982,7 @@ func PackageIndexPackagesPlatformsHelpAdditionalProperties() (result ruleresult.
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1002,7 +1002,7 @@ func PackageIndexPackagesPlatformsHelpOnlineMissing() (result ruleresult.Type, o
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1022,7 +1022,7 @@ func PackageIndexPackagesPlatformsHelpOnlineIncorrectType() (result ruleresult.T
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1042,7 +1042,7 @@ func PackageIndexPackagesPlatformsHelpOnlineInvalidFormat() (result ruleresult.T
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1078,7 +1078,7 @@ func PackageIndexPackagesPlatformsHelpOnlineDeadLink() (result ruleresult.Type, 
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1098,7 +1098,7 @@ func PackageIndexPackagesPlatformsUrlMissing() (result ruleresult.Type, output s
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1118,7 +1118,7 @@ func PackageIndexPackagesPlatformsUrlIncorrectType() (result ruleresult.Type, ou
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1138,7 +1138,7 @@ func PackageIndexPackagesPlatformsUrlInvalidFormat() (result ruleresult.Type, ou
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1169,7 +1169,7 @@ func PackageIndexPackagesPlatformsURLDeadLink() (result ruleresult.Type, output 
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1189,7 +1189,7 @@ func PackageIndexPackagesPlatformsArchiveFileNameMissing() (result ruleresult.Ty
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1209,7 +1209,7 @@ func PackageIndexPackagesPlatformsArchiveFileNameIncorrectType() (result ruleres
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1229,7 +1229,7 @@ func PackageIndexPackagesPlatformsArchiveFileNameLTMinLength() (result ruleresul
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1249,7 +1249,7 @@ func PackageIndexPackagesPlatformsArchiveFileNameInvalid() (result ruleresult.Ty
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1269,7 +1269,7 @@ func PackageIndexPackagesPlatformsChecksumMissing() (result ruleresult.Type, out
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1289,7 +1289,7 @@ func PackageIndexPackagesPlatformsChecksumIncorrectType() (result ruleresult.Typ
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1309,7 +1309,7 @@ func PackageIndexPackagesPlatformsChecksumInvalid() (result ruleresult.Type, out
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1329,7 +1329,7 @@ func PackageIndexPackagesPlatformsChecksumDiscouragedAlgorithm() (result ruleres
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1349,7 +1349,7 @@ func PackageIndexPackagesPlatformsSizeMissing() (result ruleresult.Type, output 
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1369,7 +1369,7 @@ func PackageIndexPackagesPlatformsSizeIncorrectType() (result ruleresult.Type, o
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1389,7 +1389,7 @@ func PackageIndexPackagesPlatformsSizeInvalid() (result ruleresult.Type, output 
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1409,7 +1409,7 @@ func PackageIndexPackagesPlatformsBoardsMissing() (result ruleresult.Type, outpu
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1429,7 +1429,7 @@ func PackageIndexPackagesPlatformsBoardsIncorrectType() (result ruleresult.Type,
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1449,7 +1449,7 @@ func PackageIndexPackagesPlatformsBoardsAdditionalProperties() (result ruleresul
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1469,7 +1469,7 @@ func PackageIndexPackagesPlatformsBoardsNameMissing() (result ruleresult.Type, o
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1489,7 +1489,7 @@ func PackageIndexPackagesPlatformsBoardsNameIncorrectType() (result ruleresult.T
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1509,7 +1509,7 @@ func PackageIndexPackagesPlatformsBoardsNameLTMinLength() (result ruleresult.Typ
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1529,7 +1529,7 @@ func PackageIndexPackagesPlatformsToolsDependenciesMissing() (result ruleresult.
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1549,7 +1549,7 @@ func PackageIndexPackagesPlatformsToolsDependenciesIncorrectType() (result ruler
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1569,7 +1569,7 @@ func PackageIndexPackagesPlatformsToolsDependenciesAdditionalProperties() (resul
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1589,7 +1589,7 @@ func PackageIndexPackagesPlatformsToolsDependenciesPackagerMissing() (result rul
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1609,7 +1609,7 @@ func PackageIndexPackagesPlatformsToolsDependenciesPackagerIncorrectType() (resu
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1629,7 +1629,7 @@ func PackageIndexPackagesPlatformsToolsDependenciesPackagerLTMinLength() (result
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1649,7 +1649,7 @@ func PackageIndexPackagesPlatformsToolsDependenciesNameMissing() (result ruleres
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1669,7 +1669,7 @@ func PackageIndexPackagesPlatformsToolsDependenciesNameIncorrectType() (result r
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1689,7 +1689,7 @@ func PackageIndexPackagesPlatformsToolsDependenciesNameLTMinLength() (result rul
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1709,7 +1709,7 @@ func PackageIndexPackagesPlatformsToolsDependenciesVersionMissing() (result rule
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1729,7 +1729,7 @@ func PackageIndexPackagesPlatformsToolsDependenciesVersionIncorrectType() (resul
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1749,7 +1749,7 @@ func PackageIndexPackagesPlatformsToolsDependenciesVersionNonRelaxedSemver() (re
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1769,7 +1769,7 @@ func PackageIndexPackagesPlatformsToolsDependenciesVersionNonSemver() (result ru
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1789,7 +1789,7 @@ func PackageIndexPackagesPlatformsDiscoveryDependenciesIncorrectType() (result r
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1809,7 +1809,7 @@ func PackageIndexPackagesPlatformsDiscoveryDependenciesAdditionalProperties() (r
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1829,7 +1829,7 @@ func PackageIndexPackagesPlatformsDiscoveryDependenciesPackagerMissing() (result
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1849,7 +1849,7 @@ func PackageIndexPackagesPlatformsDiscoveryDependenciesPackagerIncorrectType() (
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1869,7 +1869,7 @@ func PackageIndexPackagesPlatformsDiscoveryDependenciesPackagerLTMinLength() (re
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1889,7 +1889,7 @@ func PackageIndexPackagesPlatformsDiscoveryDependenciesNameMissing() (result rul
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1909,7 +1909,7 @@ func PackageIndexPackagesPlatformsDiscoveryDependenciesNameIncorrectType() (resu
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1929,7 +1929,7 @@ func PackageIndexPackagesPlatformsDiscoveryDependenciesNameLTMinLength() (result
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -1989,7 +1989,7 @@ func PackageIndexPackagesToolsAdditionalProperties() (result ruleresult.Type, ou
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2009,7 +2009,7 @@ func PackageIndexPackagesToolsNameMissing() (result ruleresult.Type, output stri
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2029,7 +2029,7 @@ func PackageIndexPackagesToolsNameIncorrectType() (result ruleresult.Type, outpu
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2049,7 +2049,7 @@ func PackageIndexPackagesToolsNameLTMinLength() (result ruleresult.Type, output 
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2069,7 +2069,7 @@ func PackageIndexPackagesToolsVersionMissing() (result ruleresult.Type, output s
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2089,7 +2089,7 @@ func PackageIndexPackagesToolsVersionIncorrectType() (result ruleresult.Type, ou
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2109,7 +2109,7 @@ func PackageIndexPackagesToolsVersionNonRelaxedSemver() (result ruleresult.Type,
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2129,7 +2129,7 @@ func PackageIndexPackagesToolsVersionNonSemver() (result ruleresult.Type, output
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2149,7 +2149,7 @@ func PackageIndexPackagesToolsSystemsMissing() (result ruleresult.Type, output s
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2169,7 +2169,7 @@ func PackageIndexPackagesToolsSystemsIncorrectType() (result ruleresult.Type, ou
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2189,7 +2189,7 @@ func PackageIndexPackagesToolsSystemsAdditionalProperties() (result ruleresult.T
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2209,7 +2209,7 @@ func PackageIndexPackagesToolsSystemsHostMissing() (result ruleresult.Type, outp
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2229,7 +2229,7 @@ func PackageIndexPackagesToolsSystemsHostIncorrectType() (result ruleresult.Type
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2249,7 +2249,7 @@ func PackageIndexPackagesToolsSystemsHostInvalid() (result ruleresult.Type, outp
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2269,7 +2269,7 @@ func PackageIndexPackagesToolsSystemsUrlMissing() (result ruleresult.Type, outpu
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2289,7 +2289,7 @@ func PackageIndexPackagesToolsSystemsUrlIncorrectType() (result ruleresult.Type,
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2309,7 +2309,7 @@ func PackageIndexPackagesToolsSystemsUrlInvalidFormat() (result ruleresult.Type,
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2340,7 +2340,7 @@ func PackageIndexPackagesToolsSystemsURLDeadLink() (result ruleresult.Type, outp
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2360,7 +2360,7 @@ func PackageIndexPackagesToolsSystemsArchiveFileNameMissing() (result ruleresult
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2380,7 +2380,7 @@ func PackageIndexPackagesToolsSystemsArchiveFileNameIncorrectType() (result rule
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2400,7 +2400,7 @@ func PackageIndexPackagesToolsSystemsArchiveFileNameLTMinLength() (result rulere
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2420,7 +2420,7 @@ func PackageIndexPackagesToolsSystemsArchiveFileNameInvalid() (result ruleresult
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2440,7 +2440,7 @@ func PackageIndexPackagesToolsSystemsChecksumMissing() (result ruleresult.Type, 
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2460,7 +2460,7 @@ func PackageIndexPackagesToolsSystemsChecksumIncorrectType() (result ruleresult.
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2480,7 +2480,7 @@ func PackageIndexPackagesToolsSystemsChecksumInvalid() (result ruleresult.Type, 
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2500,7 +2500,7 @@ func PackageIndexPackagesToolsSystemsChecksumDiscouragedAlgorithm() (result rule
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2520,7 +2520,7 @@ func PackageIndexPackagesToolsSystemsSizeMissing() (result ruleresult.Type, outp
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2540,7 +2540,7 @@ func PackageIndexPackagesToolsSystemsSizeIncorrectType() (result ruleresult.Type
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""
@@ -2560,7 +2560,7 @@ func PackageIndexPackagesToolsSystemsSizeInvalid() (result ruleresult.Type, outp
 	}
 
 	if len(nonCompliantIDs) > 0 {
-		return ruleresult.Fail, strings.Join(nonCompliantIDs, ", ")
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
 	}
 
 	return ruleresult.Pass, ""

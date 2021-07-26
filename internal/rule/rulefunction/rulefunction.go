@@ -95,6 +95,13 @@ func IncorrectArduinoDotHFileNameCase() (result ruleresult.Type, output string) 
 	return ruleresult.Pass, ""
 }
 
+const brokenOutputListIndent = "  " // Use this as indent for rule output that takes the form of newline-separated list.
+
+// brokenOutputList formats the rule output as a newline-separated list.
+func brokenOutputList(list []string) string {
+	return brokenOutputListIndent + strings.Join(list, "\n"+brokenOutputListIndent)
+}
+
 // validProjectPathBaseName checks whether the provided library folder or sketch filename contains prohibited characters.
 func validProjectPathBaseName(name string) bool {
 	baseNameRegexp := regexp.MustCompile("^[a-zA-Z0-9][a-zA-Z0-9_.-]*$")
