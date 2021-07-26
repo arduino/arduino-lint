@@ -102,7 +102,7 @@ func LibraryContainsSymlinks() (result ruleresult.Type, output string) {
 	}
 
 	if len(symlinkPaths) > 0 {
-		return ruleresult.Fail, strings.Join(symlinkPaths, ", ")
+		return ruleresult.Fail, brokenOutputList(symlinkPaths)
 	}
 
 	return ruleresult.Pass, ""
@@ -139,7 +139,7 @@ func LibraryHasExe() (result ruleresult.Type, output string) {
 	}
 
 	if len(exePaths) > 0 {
-		return ruleresult.Fail, strings.Join(exePaths, ", ")
+		return ruleresult.Fail, brokenOutputList(exePaths)
 	}
 
 	return ruleresult.Pass, ""
@@ -1446,7 +1446,7 @@ func LibraryHasStraySketches() (result ruleresult.Type, output string) {
 	}
 
 	if len(straySketchPaths) > 0 {
-		return ruleresult.Fail, strings.Join(straySketchPaths, ", ")
+		return ruleresult.Fail, brokenOutputList(straySketchPaths)
 	}
 
 	return ruleresult.Pass, ""
