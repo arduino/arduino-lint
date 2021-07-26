@@ -3041,7 +3041,7 @@ var configurations = []Type{
 		ID:               "IA007",
 		Brief:            "packages[].name is arduino",
 		Description:      "Case insensitive.",
-		MessageTemplate:  "packages[].name value is \"arduino\" in package {{.}}. This name is reserved for official packages.",
+		MessageTemplate:  "Use of packages[].name value \"arduino\" found. This name is reserved for official packages.",
 		DisableModes:     []rulemode.Type{rulemode.Official},
 		EnableModes:      []rulemode.Type{rulemode.Default},
 		InfoModes:        nil,
