@@ -27,7 +27,6 @@ jobs:
       (github.event_name != 'pull_request' && github.repository == 'arduino/arduino-lint') ||
       (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'arduino/arduino-lint')
     runs-on: ubuntu-latest
-
     strategy:
       fail-fast: false
 
