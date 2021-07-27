@@ -84,7 +84,7 @@ tasks:
   go:format:
     desc: Format Go code
     cmds:
-      - gofmt -l -w {{ default .DEFAULT_PATHS .PATHS }}
+      - go fmt {{default .DEFAULT_PACKAGES .PACKAGES}}
 
   python:check:
     cmds:
@@ -255,8 +255,6 @@ vars:
   DIST_DIR: "dist"
   DEFAULT_PACKAGES:
     sh: echo `go list ./... | tr '\n' ' '`
-  DEFAULT_PATHS:
-    sh: echo '`go list -f '{{"{{"}}.Dir{{"}}"}}' ./...`'
   # build vars
   COMMIT:
     sh: echo "$(git log -n 1 --format=%h)"
