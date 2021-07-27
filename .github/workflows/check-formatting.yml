@@ -37,7 +37,10 @@ jobs:
           version: 3.x
 
       - name: Check Go code formatting
-        run: task go:check-formatting
+        run: task go:format
+
+      - name: Check formatting
+        run: git diff --color --exit-code
 
       - name: Check shell script formatting
         # https://github.com/mvdan/sh

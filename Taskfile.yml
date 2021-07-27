@@ -57,7 +57,6 @@ tasks:
   check-formatting:
     desc: Check formatting of all files
     cmds:
-      - task: go:check-formatting
       - task: docs:check-formatting
       - task: config:check-formatting
 
@@ -73,7 +72,6 @@ tasks:
     desc: Lint and check formatting of Go code
     cmds:
       - task: go:lint
-      - task: go:check-formatting
 
   go:lint:
     desc: Lint Go code
@@ -82,14 +80,6 @@ tasks:
       - |
         GOLINT_PATH="$(go list -f '{{"{{"}}.Target{{"}}"}}' golang.org/x/lint/golint || echo "false")"
         "$GOLINT_PATH" {{.GOLINTFLAGS}} "{{ default .DEFAULT_TARGETS .TARGETS }}"
-
-  go:check-formatting:
-    desc: Check Go code formatting
-    cmds:
-      - |
-        RESULTS="$(gofmt -l {{ default .DEFAULT_PATHS .PATHS }})"
-        echo "$RESULTS"
-        test -z "$RESULTS"
 
   go:format:
     desc: Format Go code
