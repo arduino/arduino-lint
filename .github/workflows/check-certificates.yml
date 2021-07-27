@@ -13,6 +13,7 @@ on:
     # run every 10 hours
     - cron: "0 */10 * * *"
   workflow_dispatch:
+  repository_dispatch:
 
 env:
   # Begin notifications when there are less than this many days remaining before expiration
