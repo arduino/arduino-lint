@@ -70,8 +70,8 @@ tasks:
       - task: config:format
 
   go:check:
-    desc: Lint and check formatting of Go code
-    cmds:
+    desc: Check for problems with Go code
+    deps:
       - task: go:vet
       - task: go:lint
 
