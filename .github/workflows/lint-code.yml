@@ -63,4 +63,4 @@ jobs:
           go get golang.org/x/lint/golint
 
       - name: Lint Go code
-        run: task go:lint
+        run: task --silent go:lint

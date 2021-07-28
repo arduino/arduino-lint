@@ -81,12 +81,21 @@ tasks:
     cmds:
       - go vet {{default .DEFAULT_PACKAGES .PACKAGES}}
 
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-go-task/Taskfile.yml
   go:lint:
     desc: Lint Go code
     cmds:
       - |
+        PROJECT_PATH="$PWD"
+        # `go get` and `go list` commands must be run from a temporary folder to avoid polluting go.mod
+        cd "$(mktemp -d "${TMPDIR-${TMP-/tmp}}/task-temporary-XXXXX")"
+        go get golang.org/x/lint/golint
         GOLINT_PATH="$(go list -f '{{"{{"}}.Target{{"}}"}}' golang.org/x/lint/golint || echo "false")"
-        "$GOLINT_PATH" {{.GOLINTFLAGS}} "{{ default .DEFAULT_TARGETS .TARGETS }}"
+        # `golint` must be run from the module folder
+        cd "$PROJECT_PATH"
+        "$GOLINT_PATH" \
+          {{.GOLINTFLAGS}} \
+          {{default .DEFAULT_TARGETS .TARGETS}}
 
   go:format:
     desc: Format Go code
