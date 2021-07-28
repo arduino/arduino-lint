@@ -28,7 +28,7 @@ tasks:
   go:test-unit:
     desc: Run unit tests
     cmds:
-      - go test -short -run '{{ default ".*" .TEST_REGEX }}' {{ default "-v" .GOFLAGS }} -coverprofile=coverage_unit.txt {{ default .DEFAULT_PACKAGES .PACKAGES }}
+      - go test -short -run '{{ default ".*" .TEST_REGEX }}' {{ default "-v" .GOFLAGS }} -coverprofile=coverage_unit.txt {{ default .DEFAULT_GO_PACKAGES .GO_PACKAGES }}
 
   test-integration:
     desc: Run integration tests
@@ -80,7 +80,7 @@ tasks:
   go:vet:
     desc: Check for errors in Go code
     cmds:
-      - go vet {{default .DEFAULT_PACKAGES .PACKAGES}}
+      - go vet {{default .DEFAULT_GO_PACKAGES .GO_PACKAGES}}
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-go-task/Taskfile.yml
   go:fix:
@@ -108,7 +108,7 @@ tasks:
   go:format:
     desc: Format Go code
     cmds:
-      - go fmt {{default .DEFAULT_PACKAGES .PACKAGES}}
+      - go fmt {{default .DEFAULT_GO_PACKAGES .GO_PACKAGES}}
 
   python:check:
     cmds:
@@ -277,7 +277,7 @@ tasks:
 vars:
   PROJECT_NAME: "arduino-lint"
   DIST_DIR: "dist"
-  DEFAULT_PACKAGES:
+  DEFAULT_GO_PACKAGES:
     sh: echo `go list ./... | tr '\n' ' '`
   # build vars
   COMMIT:
