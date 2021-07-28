@@ -102,7 +102,7 @@ tasks:
         cd "$PROJECT_PATH"
         "$GOLINT_PATH" \
           {{default "-min_confidence 0.8 -set_exit_status" .GO_LINT_FLAGS}} \
-          {{default .DEFAULT_TARGETS .TARGETS}}
+          {{default .DEFAULT_GO_PACKAGES .GO_PACKAGES}}
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-go-task/Taskfile.yml
   go:format:
