@@ -46,6 +46,7 @@ tasks:
       - task: config:check
       - task: general:check-formatting
       - task: check-spelling
+      - task: shell:check-mode
 
   lint:
     desc: Lint all files
@@ -310,6 +311,35 @@ tasks:
           exit 1
         fi
       - shfmt -w .
+
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-shell-task/Taskfile.yml
+  shell:check-mode:
+    desc: Check for non-executable shell scripts
+    cmds:
+      - |
+        EXIT_STATUS=0
+        while read -r nonExecutableScriptPath; do
+          # The while loop always runs once, even if no file was found
+          if [[ "$nonExecutableScriptPath" == "" ]]; then
+            continue
+          fi
+
+          echo "::error file=${nonExecutableScriptPath}::non-executable script file: $nonExecutableScriptPath";
+          EXIT_STATUS=1
+        done <<<"$(
+          # The odd approach to escaping `.` in the regex is required for windows compatibility because mvdan.cc/sh
+          # gives `\` characters special treatment on Windows in an attempt to support them as path separators.
+          find . \
+            -path ".git" -prune -or \
+            \( \
+              -regextype posix-extended \
+              -regex '.*[.](bash|sh)' -and \
+              -type f -and \
+              -not -executable \
+              -print \
+            \)
+        )"
+        exit $EXIT_STATUS
 
   config:check:
     desc: Lint and check formatting of configuration files

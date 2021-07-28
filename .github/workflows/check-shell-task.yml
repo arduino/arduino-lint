@@ -129,3 +129,19 @@ jobs:
 
       - name: Check formatting
         run: git diff --color --exit-code
+
+  executable:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Task
+        uses: arduino/setup-task@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
+
+      - name: Check for non-executable scripts
+        run: task --silent shell:check-mode
