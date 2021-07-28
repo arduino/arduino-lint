@@ -17,6 +17,21 @@ on:
       - "**/*.go"
 
 jobs:
+  check-errors:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout local repository
+        uses: actions/checkout@v2
+
+      - name: Install Taskfile
+        uses: arduino/setup-task@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
+
+      - name: Check for errors
+        run: task go:vet
+
   lint:
     runs-on: ubuntu-latest
     steps:
