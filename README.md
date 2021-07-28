@@ -1,6 +1,7 @@
 # Arduino Lint
 
 [![Tests Status](https://github.com/arduino/arduino-lint/workflows/Run%20tests/badge.svg)](https://github.com/arduino/arduino-lint/actions?workflow=Run+tests)
+[![Check Go status](https://github.com/arduino/arduino-lint/actions/workflows/check-go-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/check-go-task.yml)
 [![Nightly Status](https://github.com/arduino/arduino-lint/workflows/Nightly%20build/badge.svg)](https://github.com/arduino/arduino-lint/actions?workflow=Nightly+build)
 [![Docs Status](https://github.com/arduino/arduino-lint/workflows/Publish%20documentation/badge.svg)](https://github.com/arduino/arduino-lint/actions?workflow=Publish+documentation)
 [![Codecov](https://codecov.io/gh/arduino/arduino-lint/branch/main/graph/badge.svg?token=nprqPQMbdh)](https://codecov.io/gh/arduino/arduino-lint)

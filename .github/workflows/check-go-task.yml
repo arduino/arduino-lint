@@ -1,0 +1,51 @@
+# Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/check-go-task.md
+name: Check Go
+
+env:
+  # See: https://github.com/actions/setup-go/tree/v2#readme
+  GO_VERSION: "1.14"
+
+# See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows
+on:
+  push:
+    paths:
+      - ".github/workflows/check-go-task.ya?ml"
+      - "Taskfile.ya?ml"
+      - "go.mod"
+      - "go.sum"
+      - "**.go"
+  pull_request:
+    paths:
+      - ".github/workflows/check-go-task.ya?ml"
+      - "Taskfile.ya?ml"
+      - "go.mod"
+      - "go.sum"
+      - "**.go"
+  workflow_dispatch:
+  repository_dispatch:
+
+jobs:
+
+  check-formatting:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: Install Task
+        uses: arduino/setup-task@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
+
+      - name: Format code
+        run: task go:format
+
+      - name: Check formatting
+        run: git diff --color --exit-code
