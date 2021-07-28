@@ -64,7 +64,7 @@ func PropertyFormatMismatch(propertyName string, validationResult ValidationResu
 	return ValidationErrorMatch("^#/?"+propertyName+"$", "/format$", "", "", validationResult)
 }
 
-// ProhibitedAdditionalProperty returns whether the given property has prohibited additional subproperty(s).
+// ProhibitedAdditionalProperties returns whether the given property has prohibited additional subproperty(s).
 func ProhibitedAdditionalProperties(propertyName string, validationResult ValidationResult) bool {
 	return ValidationErrorMatch("^#/?"+propertyName+"$", "/additionalProperties$", "", "", validationResult)
 }

@@ -599,7 +599,7 @@ func TestPackageIndexPackagesPlatformsUrlMissing(t *testing.T) {
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
-	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsUrlMissing, testTables, t)
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsURLMissing, testTables, t)
 }
 
 func TestPackageIndexPackagesPlatformsUrlIncorrectType(t *testing.T) {
@@ -609,7 +609,7 @@ func TestPackageIndexPackagesPlatformsUrlIncorrectType(t *testing.T) {
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
-	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsUrlIncorrectType, testTables, t)
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsURLIncorrectType, testTables, t)
 }
 
 func TestPackageIndexPackagesPlatformsUrlInvalidFormat(t *testing.T) {
@@ -619,7 +619,7 @@ func TestPackageIndexPackagesPlatformsUrlInvalidFormat(t *testing.T) {
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
-	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsUrlInvalidFormat, testTables, t)
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsURLInvalidFormat, testTables, t)
 }
 
 func TestPackageIndexPackagesPlatformsURLDeadLink(t *testing.T) {
@@ -1179,7 +1179,7 @@ func TestPackageIndexPackagesToolsSystemsUrlMissing(t *testing.T) {
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
-	checkPackageIndexRuleFunction(PackageIndexPackagesToolsSystemsUrlMissing, testTables, t)
+	checkPackageIndexRuleFunction(PackageIndexPackagesToolsSystemsURLMissing, testTables, t)
 }
 
 func TestPackageIndexPackagesToolsSystemsUrlIncorrectType(t *testing.T) {
@@ -1189,7 +1189,7 @@ func TestPackageIndexPackagesToolsSystemsUrlIncorrectType(t *testing.T) {
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
-	checkPackageIndexRuleFunction(PackageIndexPackagesToolsSystemsUrlIncorrectType, testTables, t)
+	checkPackageIndexRuleFunction(PackageIndexPackagesToolsSystemsURLIncorrectType, testTables, t)
 }
 
 func TestPackageIndexPackagesToolsSystemsUrlInvalidFormat(t *testing.T) {
@@ -1199,7 +1199,7 @@ func TestPackageIndexPackagesToolsSystemsUrlInvalidFormat(t *testing.T) {
 		{"Valid", "valid-package-index", ruleresult.Pass, ""},
 	}
 
-	checkPackageIndexRuleFunction(PackageIndexPackagesToolsSystemsUrlInvalidFormat, testTables, t)
+	checkPackageIndexRuleFunction(PackageIndexPackagesToolsSystemsURLInvalidFormat, testTables, t)
 }
 
 func TestPackageIndexPackagesToolsSystemsURLDeadLink(t *testing.T) {

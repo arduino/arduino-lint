@@ -21,10 +21,12 @@ package ruleresult
 type Type int
 
 const (
+	// Pass indicates rule compliance.
 	Pass Type = iota // pass
-	Fail             // fail
-	// The rule is configured to be skipped in the current tool configuration mode
+	// Fail indicates a rule violation.
+	Fail // fail
+	// Skip indicates the rule is configured to be skipped in the current tool configuration mode.
 	Skip // skipped
-	// An unrelated error prevented the rule from running
+	// NotRun indicates an unrelated error prevented the rule from running.
 	NotRun // unable to run
 )

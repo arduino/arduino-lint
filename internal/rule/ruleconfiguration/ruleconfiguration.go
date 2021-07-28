@@ -903,7 +903,7 @@ var configurations = []Type{
 		InfoModes:        nil,
 		WarningModes:     nil,
 		ErrorModes:       []rulemode.Type{rulemode.Default},
-		RuleFunction:     rulefunction.LibraryPropertiesUrlFieldMissing,
+		RuleFunction:     rulefunction.LibraryPropertiesURLFieldMissing,
 	},
 	{
 		ProjectType:      projecttype.Library,
@@ -919,7 +919,7 @@ var configurations = []Type{
 		InfoModes:        nil,
 		WarningModes:     nil,
 		ErrorModes:       []rulemode.Type{rulemode.Default},
-		RuleFunction:     rulefunction.LibraryPropertiesUrlFieldLTMinLength,
+		RuleFunction:     rulefunction.LibraryPropertiesURLFieldLTMinLength,
 	},
 	{
 		ProjectType:      projecttype.Library,
@@ -935,7 +935,7 @@ var configurations = []Type{
 		InfoModes:        nil,
 		WarningModes:     []rulemode.Type{rulemode.Permissive},
 		ErrorModes:       []rulemode.Type{rulemode.Default},
-		RuleFunction:     rulefunction.LibraryPropertiesUrlFieldInvalid,
+		RuleFunction:     rulefunction.LibraryPropertiesURLFieldInvalid,
 	},
 	{
 		ProjectType:      projecttype.Library,
@@ -951,7 +951,7 @@ var configurations = []Type{
 		InfoModes:        nil,
 		WarningModes:     []rulemode.Type{rulemode.Default},
 		ErrorModes:       []rulemode.Type{rulemode.Strict},
-		RuleFunction:     rulefunction.LibraryPropertiesUrlFieldDeadLink,
+		RuleFunction:     rulefunction.LibraryPropertiesURLFieldDeadLink,
 	},
 	{
 		ProjectType:      projecttype.Library,
@@ -3703,7 +3703,7 @@ var configurations = []Type{
 		InfoModes:        nil,
 		WarningModes:     nil,
 		ErrorModes:       []rulemode.Type{rulemode.Default},
-		RuleFunction:     rulefunction.PackageIndexPackagesPlatformsUrlMissing,
+		RuleFunction:     rulefunction.PackageIndexPackagesPlatformsURLMissing,
 	},
 	{
 		ProjectType:      projecttype.PackageIndex,
@@ -3719,7 +3719,7 @@ var configurations = []Type{
 		InfoModes:        nil,
 		WarningModes:     nil,
 		ErrorModes:       []rulemode.Type{rulemode.Default},
-		RuleFunction:     rulefunction.PackageIndexPackagesPlatformsUrlIncorrectType,
+		RuleFunction:     rulefunction.PackageIndexPackagesPlatformsURLIncorrectType,
 	},
 	{
 		ProjectType:      projecttype.PackageIndex,
@@ -3735,7 +3735,7 @@ var configurations = []Type{
 		InfoModes:        nil,
 		WarningModes:     nil,
 		ErrorModes:       []rulemode.Type{rulemode.Default},
-		RuleFunction:     rulefunction.PackageIndexPackagesPlatformsUrlInvalidFormat,
+		RuleFunction:     rulefunction.PackageIndexPackagesPlatformsURLInvalidFormat,
 	},
 	{
 		ProjectType:      projecttype.PackageIndex,
@@ -4631,7 +4631,7 @@ var configurations = []Type{
 		InfoModes:        nil,
 		WarningModes:     nil,
 		ErrorModes:       []rulemode.Type{rulemode.Default},
-		RuleFunction:     rulefunction.PackageIndexPackagesToolsSystemsUrlMissing,
+		RuleFunction:     rulefunction.PackageIndexPackagesToolsSystemsURLMissing,
 	},
 	{
 		ProjectType:      projecttype.PackageIndex,
@@ -4647,7 +4647,7 @@ var configurations = []Type{
 		InfoModes:        nil,
 		WarningModes:     nil,
 		ErrorModes:       []rulemode.Type{rulemode.Default},
-		RuleFunction:     rulefunction.PackageIndexPackagesToolsSystemsUrlIncorrectType,
+		RuleFunction:     rulefunction.PackageIndexPackagesToolsSystemsURLIncorrectType,
 	},
 	{
 		ProjectType:      projecttype.PackageIndex,
@@ -4663,7 +4663,7 @@ var configurations = []Type{
 		InfoModes:        nil,
 		WarningModes:     nil,
 		ErrorModes:       []rulemode.Type{rulemode.Default},
-		RuleFunction:     rulefunction.PackageIndexPackagesToolsSystemsUrlInvalidFormat,
+		RuleFunction:     rulefunction.PackageIndexPackagesToolsSystemsURLInvalidFormat,
 	},
 	{
 		ProjectType:      projecttype.PackageIndex,

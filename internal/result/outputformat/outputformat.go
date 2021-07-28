@@ -26,8 +26,10 @@ import (
 type Type int
 
 const (
+	// Text is the text output format.
 	Text Type = iota // text
-	JSON             // json
+	// JSON is the JSON output format.
+	JSON // json
 )
 
 // FromString parses the --format flag value and returns the corresponding output format type.

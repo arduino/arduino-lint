@@ -1084,8 +1084,8 @@ func PackageIndexPackagesPlatformsHelpOnlineDeadLink() (result ruleresult.Type, 
 	return ruleresult.Pass, ""
 }
 
-// PackageIndexPackagesPlatformsUrlMissing checks for missing packages[].platforms[].url property.
-func PackageIndexPackagesPlatformsUrlMissing() (result ruleresult.Type, output string) {
+// PackageIndexPackagesPlatformsURLMissing checks for missing packages[].platforms[].url property.
+func PackageIndexPackagesPlatformsURLMissing() (result ruleresult.Type, output string) {
 	if projectdata.PackageIndexLoadError() != nil {
 		return ruleresult.NotRun, "Error loading package index"
 	}
@@ -1104,8 +1104,8 @@ func PackageIndexPackagesPlatformsUrlMissing() (result ruleresult.Type, output s
 	return ruleresult.Pass, ""
 }
 
-// PackageIndexPackagesPlatformsUrlIncorrectType checks for incorrect type of the packages[].platforms[].url property.
-func PackageIndexPackagesPlatformsUrlIncorrectType() (result ruleresult.Type, output string) {
+// PackageIndexPackagesPlatformsURLIncorrectType checks for incorrect type of the packages[].platforms[].url property.
+func PackageIndexPackagesPlatformsURLIncorrectType() (result ruleresult.Type, output string) {
 	if projectdata.PackageIndexLoadError() != nil {
 		return ruleresult.NotRun, "Error loading package index"
 	}
@@ -1124,8 +1124,8 @@ func PackageIndexPackagesPlatformsUrlIncorrectType() (result ruleresult.Type, ou
 	return ruleresult.Pass, ""
 }
 
-// PackageIndexPackagesPlatformsUrlInvalidFormat checks for incorrect format of the packages[].platforms[].url property.
-func PackageIndexPackagesPlatformsUrlInvalidFormat() (result ruleresult.Type, output string) {
+// PackageIndexPackagesPlatformsURLInvalidFormat checks for incorrect format of the packages[].platforms[].url property.
+func PackageIndexPackagesPlatformsURLInvalidFormat() (result ruleresult.Type, output string) {
 	if projectdata.PackageIndexLoadError() != nil {
 		return ruleresult.NotRun, "Error loading package index"
 	}
@@ -2255,8 +2255,8 @@ func PackageIndexPackagesToolsSystemsHostInvalid() (result ruleresult.Type, outp
 	return ruleresult.Pass, ""
 }
 
-// PackageIndexPackagesToolsSystemsUrlMissing checks for missing packages[].tools[].systems[].url property.
-func PackageIndexPackagesToolsSystemsUrlMissing() (result ruleresult.Type, output string) {
+// PackageIndexPackagesToolsSystemsURLMissing checks for missing packages[].tools[].systems[].url property.
+func PackageIndexPackagesToolsSystemsURLMissing() (result ruleresult.Type, output string) {
 	if projectdata.PackageIndexLoadError() != nil {
 		return ruleresult.NotRun, "Error loading package index"
 	}
@@ -2275,8 +2275,8 @@ func PackageIndexPackagesToolsSystemsUrlMissing() (result ruleresult.Type, outpu
 	return ruleresult.Pass, ""
 }
 
-// PackageIndexPackagesToolsSystemsUrlIncorrectType checks for incorrect type of the packages[].tools[].systems[].url property.
-func PackageIndexPackagesToolsSystemsUrlIncorrectType() (result ruleresult.Type, output string) {
+// PackageIndexPackagesToolsSystemsURLIncorrectType checks for incorrect type of the packages[].tools[].systems[].url property.
+func PackageIndexPackagesToolsSystemsURLIncorrectType() (result ruleresult.Type, output string) {
 	if projectdata.PackageIndexLoadError() != nil {
 		return ruleresult.NotRun, "Error loading package index"
 	}
@@ -2295,8 +2295,8 @@ func PackageIndexPackagesToolsSystemsUrlIncorrectType() (result ruleresult.Type,
 	return ruleresult.Pass, ""
 }
 
-// PackageIndexPackagesToolsSystemsUrlInvalidFormat checks for incorrect format of the packages[].tools[].systems[].url property.
-func PackageIndexPackagesToolsSystemsUrlInvalidFormat() (result ruleresult.Type, output string) {
+// PackageIndexPackagesToolsSystemsURLInvalidFormat checks for incorrect format of the packages[].tools[].systems[].url property.
+func PackageIndexPackagesToolsSystemsURLInvalidFormat() (result ruleresult.Type, output string) {
 	if projectdata.PackageIndexLoadError() != nil {
 		return ruleresult.NotRun, "Error loading package index"
 	}

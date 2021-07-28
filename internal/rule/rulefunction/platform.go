@@ -1048,7 +1048,7 @@ func PlatformTxtCompilerCElfExtraFlagsMissing() (result ruleresult.Type, output 
 	return ruleresult.Pass, ""
 }
 
-// PlatformTxtCompilerCExtraFlagsNotEmpty checks for non-empty compiler.c.extra_flags property in platform.txt.
+// PlatformTxtCompilerCElfExtraFlagsNotEmpty checks for non-empty compiler.c.elf.extra_flags property in platform.txt.
 func PlatformTxtCompilerCElfExtraFlagsNotEmpty() (result ruleresult.Type, output string) {
 	if !projectdata.PlatformTxtExists() {
 		return ruleresult.Skip, "Platform has no platform.txt"
