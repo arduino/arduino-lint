@@ -295,12 +295,6 @@ tasks:
               \)
           )
 
-  shell:check-formatting:
-    desc: Format shell scripts
-    cmds:
-      # https://github.com/mvdan/sh#shfmt
-      - shfmt -d .
-
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-shell-task/Taskfile.yml
   shell:format:
     desc: Format shell script files
