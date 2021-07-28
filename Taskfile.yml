@@ -269,7 +269,11 @@ tasks:
   shell:lint:
     desc: Lint shell scripts
     cmds:
-      # https://github.com/koalaman/shellcheck
+      - |
+        if ! which shellcheck &>/dev/null; then
+          echo "shellcheck not installed or not in PATH. Please install: https://github.com/koalaman/shellcheck#installing"
+          exit 1
+        fi
       - |
         shopt -s globstar # Needed to check all scripts recursively.
         shellcheck ./**/*.sh
@@ -283,6 +287,11 @@ tasks:
   shell:format:
     desc: Format shell scripts
     cmds:
+      - |
+        if ! which shfmt &>/dev/null; then
+          echo "shfmt not installed or not in PATH. Please install: https://github.com/mvdan/sh#shfmt"
+          exit 1
+        fi
       - shfmt -l -w .
 
   config:check:
