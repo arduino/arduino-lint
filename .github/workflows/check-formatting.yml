@@ -6,7 +6,6 @@ on:
       - ".github/workflows/check-formatting.yml"
       - "Taskfile.yml"
       - ".prettierrc"
-      - "**.go"
       - "**.json"
       - "**.md"
       - "**.yaml"
@@ -16,7 +15,6 @@ on:
       - ".github/workflows/check-formatting.yml"
       - "Taskfile.yml"
       - ".prettierrc"
-      - "**.go"
       - "**.json"
       - "**.md"
       - "**.yaml"
@@ -35,9 +33,6 @@ jobs:
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           version: 3.x
-
-      - name: Check Go code formatting
-        run: task go:check-formatting
 
       - name: Check shell script formatting
         # https://github.com/mvdan/sh

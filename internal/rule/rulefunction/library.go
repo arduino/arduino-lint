@@ -946,8 +946,8 @@ func LibraryPropertiesCategoryFieldUncategorized() (result ruleresult.Type, outp
 	return ruleresult.Pass, ""
 }
 
-// LibraryPropertiesUrlFieldMissing checks for missing library.properties "url" field.
-func LibraryPropertiesUrlFieldMissing() (result ruleresult.Type, output string) {
+// LibraryPropertiesURLFieldMissing checks for missing library.properties "url" field.
+func LibraryPropertiesURLFieldMissing() (result ruleresult.Type, output string) {
 	if projectdata.LibraryPropertiesLoadError() != nil {
 		return ruleresult.NotRun, "Couldn't load library.properties"
 	}
@@ -962,8 +962,8 @@ func LibraryPropertiesUrlFieldMissing() (result ruleresult.Type, output string) 
 	return ruleresult.Pass, ""
 }
 
-// LibraryPropertiesUrlFieldLTMinLength checks if the library.properties "url" value is less than the minimum length.
-func LibraryPropertiesUrlFieldLTMinLength() (result ruleresult.Type, output string) {
+// LibraryPropertiesURLFieldLTMinLength checks if the library.properties "url" value is less than the minimum length.
+func LibraryPropertiesURLFieldLTMinLength() (result ruleresult.Type, output string) {
 	if projectdata.LibraryPropertiesLoadError() != nil {
 		return ruleresult.NotRun, "Couldn't load library.properties"
 	}
@@ -979,8 +979,8 @@ func LibraryPropertiesUrlFieldLTMinLength() (result ruleresult.Type, output stri
 	return ruleresult.Pass, ""
 }
 
-// LibraryPropertiesUrlFieldInvalid checks whether the library.properties "url" value has a valid URL format.
-func LibraryPropertiesUrlFieldInvalid() (result ruleresult.Type, output string) {
+// LibraryPropertiesURLFieldInvalid checks whether the library.properties "url" value has a valid URL format.
+func LibraryPropertiesURLFieldInvalid() (result ruleresult.Type, output string) {
 	if projectdata.LibraryPropertiesLoadError() != nil {
 		return ruleresult.NotRun, "Couldn't load library.properties"
 	}
@@ -997,8 +997,8 @@ func LibraryPropertiesUrlFieldInvalid() (result ruleresult.Type, output string) 
 	return ruleresult.Pass, ""
 }
 
-// LibraryPropertiesUrlFieldDeadLink checks whether the URL in the library.properties `url` field can be loaded.
-func LibraryPropertiesUrlFieldDeadLink() (result ruleresult.Type, output string) {
+// LibraryPropertiesURLFieldDeadLink checks whether the URL in the library.properties `url` field can be loaded.
+func LibraryPropertiesURLFieldDeadLink() (result ruleresult.Type, output string) {
 	if projectdata.LibraryPropertiesLoadError() != nil {
 		return ruleresult.NotRun, "Couldn't load library.properties"
 	}

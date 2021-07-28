@@ -736,7 +736,7 @@ func TestLibraryPropertiesUrlFieldMissing(t *testing.T) {
 		{"Valid", "Recursive", ruleresult.Pass, ""},
 	}
 
-	checkLibraryRuleFunction(LibraryPropertiesUrlFieldMissing, testTables, t)
+	checkLibraryRuleFunction(LibraryPropertiesURLFieldMissing, testTables, t)
 }
 
 func TestLibraryPropertiesUrlFieldLTMinLength(t *testing.T) {
@@ -747,7 +747,7 @@ func TestLibraryPropertiesUrlFieldLTMinLength(t *testing.T) {
 		{"Valid", "Recursive", ruleresult.Pass, ""},
 	}
 
-	checkLibraryRuleFunction(LibraryPropertiesUrlFieldLTMinLength, testTables, t)
+	checkLibraryRuleFunction(LibraryPropertiesURLFieldLTMinLength, testTables, t)
 }
 
 func TestLibraryPropertiesUrlFieldInvalid(t *testing.T) {
@@ -758,7 +758,7 @@ func TestLibraryPropertiesUrlFieldInvalid(t *testing.T) {
 		{"Valid", "Recursive", ruleresult.Pass, ""},
 	}
 
-	checkLibraryRuleFunction(LibraryPropertiesUrlFieldInvalid, testTables, t)
+	checkLibraryRuleFunction(LibraryPropertiesURLFieldInvalid, testTables, t)
 }
 
 func TestLibraryPropertiesUrlFieldDeadLink(t *testing.T) {
@@ -770,7 +770,7 @@ func TestLibraryPropertiesUrlFieldDeadLink(t *testing.T) {
 		{"Good URL", "Recursive", ruleresult.Pass, ""},
 	}
 
-	checkLibraryRuleFunction(LibraryPropertiesUrlFieldDeadLink, testTables, t)
+	checkLibraryRuleFunction(LibraryPropertiesURLFieldDeadLink, testTables, t)
 }
 
 func TestLibraryPropertiesArchitecturesFieldMissing(t *testing.T) {

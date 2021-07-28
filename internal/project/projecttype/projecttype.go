@@ -26,12 +26,18 @@ import (
 type Type int
 
 const (
-	Sketch       Type = iota // sketch
-	Library                  // library
-	Platform                 // platform
-	PackageIndex             // package-index
-	All                      // all
-	Not                      // N/A
+	// Sketch is used for Arduino sketch projects.
+	Sketch Type = iota // sketch
+	// Library is used for Arduino library projects.
+	Library // library
+	// Platform is used for Arduino boards platform projects.
+	Platform // platform
+	// PackageIndex is used for Arduino package index projects.
+	PackageIndex // package-index
+	// All is the catch-all for all supported Arduino project types.
+	All // all
+	// Not is the project type used when an Arduino project was not detected.
+	Not // N/A
 )
 
 // FromString parses the --project-type flag value and returns the corresponding project type.

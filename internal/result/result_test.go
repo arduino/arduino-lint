@@ -208,7 +208,7 @@ func TestAddProjectSummary(t *testing.T) {
 			if (result == ruleresult.Fail) || configuration.Verbose() {
 				level := testTable.levels[testDataIndex].String()
 				results.Projects[0].Rules[ruleIndex].Level = level
-				ruleIndex += 1
+				ruleIndex++
 			}
 		}
 		results.AddProjectSummary(lintedProject)

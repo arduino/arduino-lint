@@ -200,9 +200,9 @@ func (results *Type) AddProjectSummary(lintedProject project.Type) {
 	for _, ruleReport := range results.Projects[projectReportIndex].Rules {
 		if ruleReport.Result == ruleresult.Fail.String() {
 			if ruleReport.Level == rulelevel.Warning.String() {
-				warningCount += 1
+				warningCount++
 			} else if ruleReport.Level == rulelevel.Error.String() {
-				errorCount += 1
+				errorCount++
 				pass = false
 			}
 		}
