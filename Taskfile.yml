@@ -284,15 +284,16 @@ tasks:
       # https://github.com/mvdan/sh#shfmt
       - shfmt -d .
 
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-shell-task/Taskfile.yml
   shell:format:
-    desc: Format shell scripts
+    desc: Format shell script files
     cmds:
       - |
         if ! which shfmt &>/dev/null; then
           echo "shfmt not installed or not in PATH. Please install: https://github.com/mvdan/sh#shfmt"
           exit 1
         fi
-      - shfmt -l -w .
+      - shfmt -w .
 
   config:check:
     desc: Lint and check formatting of configuration files
