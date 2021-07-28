@@ -1,5 +1,9 @@
 name: Lint code
 
+env:
+  # See: https://github.com/actions/setup-go/tree/v2#readme
+  GO_VERSION: "1.14"
+
 on:
   push:
     paths:
@@ -23,6 +27,11 @@ jobs:
       - name: Checkout local repository
         uses: actions/checkout@v2
 
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
       - name: Install Taskfile
         uses: arduino/setup-task@v1
         with:
@@ -37,6 +46,11 @@ jobs:
     steps:
       - name: Checkout local repository
         uses: actions/checkout@v2
+
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ env.GO_VERSION }}
 
       - name: Install Taskfile
         uses: arduino/setup-task@v1
