@@ -266,8 +266,9 @@ tasks:
     cmds:
       - npx {{ .PRETTIER }} --write "**/*.md"
 
-  shell:lint:
-    desc: Lint shell scripts
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-shell-task/Taskfile.yml
+  shell:check:
+    desc: Check for problems with shell scripts
     cmds:
       - |
         if ! which shellcheck &>/dev/null; then
@@ -275,8 +276,23 @@ tasks:
           exit 1
         fi
       - |
-        shopt -s globstar # Needed to check all scripts recursively.
-        shellcheck ./**/*.sh
+        # There is something odd about shellcheck that causes the task to always exit on the first fail, despite any
+        # measures that would prevent this with any other command. So it's necessary to call shellcheck only once with
+        # the list of script paths as an argument. This could lead to exceeding the maximum command length on Windows if
+        # the repository contained a large number of scripts, but it's unlikely to happen in reality.
+        shellcheck \
+          --format={{default "tty" .SHELLCHECK_FORMAT}} \
+          $(
+            # The odd method for escaping . in the regex is required for windows compatibility because mvdan.cc/sh gives
+            # \ characters special treatment on Windows in an attempt to support them as path separators.
+            find . \
+              -path ".git" -prune -or \
+              \( \
+                -regextype posix-extended \
+                -regex '.*[.](bash|sh)' -and \
+                -type f \
+              \)
+          )
 
   shell:check-formatting:
     desc: Format shell scripts

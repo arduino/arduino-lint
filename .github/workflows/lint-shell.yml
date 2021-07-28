@@ -25,4 +25,4 @@ jobs:
           version: 3.x
 
       - name: Lint shell scripts
-        run: task shell:lint
+        run: task shell:check
