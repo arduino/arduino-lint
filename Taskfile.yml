@@ -110,6 +110,61 @@ tasks:
     cmds:
       - go fmt {{default .DEFAULT_GO_PACKAGES .GO_PACKAGES}}
 
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-markdown-task/Taskfile.yml
+  markdown:lint:
+    desc: Check for problems in Markdown files
+    cmds:
+      - npx markdownlint-cli "**/*.md"
+
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-markdown-task/Taskfile.yml
+  markdown:fix:
+    desc: Automatically correct linting violations in Markdown files where possible
+    cmds:
+      - npx markdownlint-cli --fix "**/*.md"
+
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-markdown-task/Taskfile.yml
+  markdown:check-links:
+    desc: Check for broken links
+    deps:
+      - task: docs:generate
+    cmds:
+      - |
+        if [[ "{{.OS}}" == "Windows_NT" ]]; then
+          # npx --call uses the native shell, which makes it too difficult to use npx for this application on Windows,
+          # so the Windows user is required to have markdown-link-check installed and in PATH.
+          if ! which markdown-link-check &>/dev/null; then
+            echo "markdown-link-check not found or not in PATH. Please install: https://github.com/tcort/markdown-link-check#readme"
+            exit 1
+          fi
+          # Default behavior of the task on Windows is to exit the task when the first broken link causes a non-zero
+          # exit status, but it's better to check all links before exiting.
+          set +o errexit
+          STATUS=0
+          # Using -regex instead of -name to avoid Task's behavior of globbing even when quoted on Windows
+          # The odd method for escaping . in the regex is required for windows compatibility because mvdan.cc/sh gives
+          # \ characters special treatment on Windows in an attempt to support them as path separators.
+          for file in $(find . -regex ".*[.]md"); do
+            markdown-link-check \
+              --quiet \
+              --config "./.markdown-link-check.json" \
+              "$file"
+            STATUS=$(( $STATUS + $? ))
+          done
+          exit $STATUS
+        else
+          npx --package=markdown-link-check --call='
+            STATUS=0
+            for file in $(find . -regex ".*[.]md"); do
+              markdown-link-check \
+                --quiet \
+                --config "./.markdown-link-check.json" \
+                "$file"
+              STATUS=$(( $STATUS + $? ))
+            done
+            exit $STATUS
+          '
+        fi
+
   python:check:
     cmds:
       - task: python:lint
@@ -125,6 +180,11 @@ tasks:
     cmds:
       - poetry install --no-root
       - poetry run black .
+
+  docs:generate:
+    desc: Create all generated documentation content
+    deps:
+      - task: docs:gen
 
   docs:gen:
     desc: Generate command reference
@@ -161,7 +221,9 @@ tasks:
     desc: Lint and check formatting of documentation files
     cmds:
       - task: docs:check-formatting
-      - task: docs:check-links
+      - task: markdown:lint
+      - task: markdown:fix
+      - task: markdown:check-links
 
   docs:lint:
     desc: Lint documentation files
@@ -191,18 +253,6 @@ tasks:
           echo "ERROR: detected license type doesn't match expected $EXPECTED_LICENSE_TYPE"
           exit 1
         fi
-
-  docs:check-links:
-    desc: Check for dead links in documentation
-    cmds:
-      - |
-        npx --package markdown-link-check --call '
-        STATUS=0
-        for file in $(find -name "*.md"); do
-          markdown-link-check --quiet "$file"
-          STATUS=$(( $STATUS + $? ))
-        done
-        exit $STATUS'
 
   docs:check-formatting:
     desc: Check formatting of documentation files
