@@ -44,6 +44,7 @@ tasks:
       - task: python:check
       - task: docs:check
       - task: config:check
+      - task: general:check-formatting
       - task: check-spelling
 
   lint:
@@ -60,6 +61,7 @@ tasks:
     cmds:
       - task: docs:check-formatting
       - task: config:check-formatting
+      - task: general:check-formatting
 
   format:
     desc: Format all files
@@ -311,6 +313,17 @@ tasks:
     cmds:
       - npx {{ .PRETTIER }} --write "**/*.{yml,yaml}"
       - npx {{ .PRETTIER }} --write "**/*.json"
+
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-general-formatting-task/Taskfile.yml
+  general:check-formatting:
+    desc: Check basic formatting style of all files
+    cmds:
+      - |
+        if ! which ec &>/dev/null; then
+          echo "ec not found or not in PATH. Please install: https://github.com/editorconfig-checker/editorconfig-checker#installation"
+          exit 1
+        fi
+      - ec
 
   check-spelling:
     desc: Check for commonly misspelled words

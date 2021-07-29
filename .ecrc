@@ -1,0 +1,8 @@
+{
+  "Exclude": [
+    "LICENSE.txt",
+    "poetry.lock",
+    "^internal/rule/schema/schemadata/bindata.go$",
+    "^internal/rule/schema/testdata/bindata.go$"
+  ]
+}
