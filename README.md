@@ -7,6 +7,7 @@
 [![Docs Status](https://github.com/arduino/arduino-lint/workflows/Publish%20documentation/badge.svg)](https://github.com/arduino/arduino-lint/actions?workflow=Publish+documentation)
 [![Codecov](https://codecov.io/gh/arduino/arduino-lint/branch/main/graph/badge.svg?token=nprqPQMbdh)](https://codecov.io/gh/arduino/arduino-lint)
 [![Check General Formatting status](https://github.com/arduino/arduino-lint/actions/workflows/check-general-formatting-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/check-general-formatting-task.yml)
+[![Check Shell Scripts status](https://github.com/arduino/arduino-lint/actions/workflows/check-shell-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/check-shell-task.yml)
 [![Check Certificates status](https://github.com/arduino/arduino-lint/actions/workflows/check-certificates.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/check-certificates.yml)
 
 **Arduino Lint** is a command line tool that checks for common problems in [Arduino](https://www.arduino.cc/) projects:

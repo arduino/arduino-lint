@@ -34,12 +34,6 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           version: 3.x
 
-      - name: Check shell script formatting
-        # https://github.com/mvdan/sh
-        run: |
-          docker run --volume "$GITHUB_WORKSPACE/libraries/spell-check":/mnt --workdir /mnt mvdan/shfmt:latest -w .
-          git diff --color --exit-code
-
       - name: Check documentation formatting
         run: task docs:check-formatting
 

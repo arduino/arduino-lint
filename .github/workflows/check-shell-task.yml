@@ -1,0 +1,147 @@
+# Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/check-shell-task.md
+name: Check Shell Scripts
+
+# See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows
+on:
+  push:
+    paths:
+      - ".github/workflows/check-shell-task.ya?ml"
+      - "Taskfile.ya?ml"
+      - "**/.editorconfig"
+      - "**.bash"
+      - "**.sh"
+  pull_request:
+    paths:
+      - ".github/workflows/check-shell-task.ya?ml"
+      - "Taskfile.ya?ml"
+      - "**/.editorconfig"
+      - "**.bash"
+      - "**.sh"
+  schedule:
+    # Run every Tuesday at 8 AM UTC to catch breakage caused by tool changes.
+    - cron: "0 8 * * TUE"
+  workflow_dispatch:
+  repository_dispatch:
+
+jobs:
+  lint:
+    name: ${{ matrix.configuration.name }}
+    runs-on: ubuntu-latest
+
+    env:
+      # See: https://github.com/koalaman/shellcheck/releases/latest
+      SHELLCHECK_RELEASE_ASSET_SUFFIX: .linux.x86_64.tar.xz
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        configuration:
+          - name: Generate problem matcher output
+            # ShellCheck's "gcc" output format is required for annotated diffs, but inferior for humans reading the log.
+            format: gcc
+            # The other matrix job is used to set the result, so this job is configured to always pass.
+            continue-on-error: true
+          - name: ShellCheck
+            # ShellCheck's "tty" output format is most suitable for humans reading the log.
+            format: tty
+            continue-on-error: false
+
+    steps:
+      - name: Set environment variables
+        run: |
+          # See: https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
+          echo "INSTALL_PATH=${{ runner.temp }}/shellcheck" >> "$GITHUB_ENV"
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Task
+        uses: arduino/setup-task@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
+
+      - name: Download latest ShellCheck release binary package
+        id: download
+        uses: MrOctopus/download-asset-action@1.0
+        with:
+          repository: koalaman/shellcheck
+          excludes: prerelease, draft
+          asset: ${{ env.SHELLCHECK_RELEASE_ASSET_SUFFIX }}
+          target: ${{ env.INSTALL_PATH }}
+
+      - name: Install ShellCheck
+        run: |
+          cd "${{ env.INSTALL_PATH }}"
+          tar --extract --file="${{ steps.download.outputs.name }}"
+          EXTRACTION_FOLDER="$(basename "${{ steps.download.outputs.name }}" "${{ env.SHELLCHECK_RELEASE_ASSET_SUFFIX }}")"
+          # Add installation to PATH:
+          # See: https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#adding-a-system-path
+          echo "${{ env.INSTALL_PATH }}/$EXTRACTION_FOLDER" >> "$GITHUB_PATH"
+
+      - name: Run ShellCheck
+        uses: liskin/gh-problem-matcher-wrap@v1
+        continue-on-error: ${{ matrix.configuration.continue-on-error }}
+        with:
+          linters: gcc
+          run: task --silent shell:check SHELLCHECK_FORMAT=${{ matrix.configuration.format }}
+
+  formatting:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set environment variables
+        run: |
+          # See: https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
+          echo "SHFMT_INSTALL_PATH=${{ runner.temp }}/shfmt" >> "$GITHUB_ENV"
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Task
+        uses: arduino/setup-task@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
+
+      - name: Download shfmt
+        id: download
+        uses: MrOctopus/download-asset-action@1.0
+        with:
+          repository: mvdan/sh
+          excludes: prerelease, draft
+          asset: _linux_amd64
+          target: ${{ env.SHFMT_INSTALL_PATH }}
+
+      - name: Install shfmt
+        run: |
+          # Executable permissions of release assets are lost
+          chmod +x "${{ env.SHFMT_INSTALL_PATH }}/${{ steps.download.outputs.name }}"
+          # Standardize binary name
+          mv "${{ env.SHFMT_INSTALL_PATH }}/${{ steps.download.outputs.name }}" "${{ env.SHFMT_INSTALL_PATH }}/shfmt"
+          # Add installation to PATH:
+          # See: https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#adding-a-system-path
+          echo "${{ env.SHFMT_INSTALL_PATH }}" >> "$GITHUB_PATH"
+
+      - name: Format shell scripts
+        run: task --silent shell:format
+
+      - name: Check formatting
+        run: git diff --color --exit-code
+
+  executable:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Task
+        uses: arduino/setup-task@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
+
+      - name: Check for non-executable scripts
+        run: task --silent shell:check-mode
