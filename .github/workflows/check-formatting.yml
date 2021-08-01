@@ -193,6 +193,8 @@ on:
       - "**.rviz"
       - "**.sublime-syntax"
       - "**.syntax"
+  workflow_dispatch:
+  repository_dispatch:
 
 jobs:
   check-formatting:
