@@ -195,7 +195,7 @@ bye() {
 
 testVersion() {
   set +e
-  ARDUINO_LINT="$(which $PROJECT_NAME)"
+  ARDUINO_LINT="$(command -v $PROJECT_NAME)"
   if [ "$?" = "1" ]; then
     # $PATH is intentionally a literal in this message.
     # shellcheck disable=SC2016
