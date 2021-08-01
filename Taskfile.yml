@@ -342,6 +342,7 @@ tasks:
     cmds:
       - |
         wget \
+          --quiet \
           --output-document="{{.WORKFLOW_SCHEMA_PATH}}" \
           {{.WORKFLOW_SCHEMA_URL}}
       - |
