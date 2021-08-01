@@ -331,7 +331,7 @@ tasks:
     cmds:
       - task: workflow:validate
 
-  workflow:validate:
+  ci:validate:
     desc: Validate GitHub Actions workflows against JSON schema
     vars:
       # Source: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/github-workflow.json

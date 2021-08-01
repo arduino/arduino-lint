@@ -29,4 +29,5 @@ jobs:
           version: 3.x
 
       - name: Lint configuration files
-        run: task config:lint
+        run: task ci:validate
+
