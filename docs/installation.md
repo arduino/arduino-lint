@@ -83,5 +83,5 @@ Checksums for the nightly builds are available at
 
 ### Build from source
 
-If you’re familiar with Golang or if you want to contribute to the project, you will probably build Arduino Lint locally
+If you're familiar with Golang or if you want to contribute to the project, you will probably build Arduino Lint locally
 with your Go toolchain. See the ["How to contribute"](CONTRIBUTING.md#building-the-source-code) page for instructions.
