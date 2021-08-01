@@ -1,4 +1,5 @@
 #!/bin/sh
+# Source: https://github.com/arduino/tooling-project-assets/blob/main/other/installation-script/install.sh
 
 # The original version of this script (https://github.com/Masterminds/glide.sh/blob/master/get) is licensed under the
 # MIT license. See https://github.com/Masterminds/glide/blob/master/LICENSE for more details and copyright notice.

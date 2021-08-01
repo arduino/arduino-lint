@@ -1,3 +1,5 @@
+<!-- Source: https://github.com/arduino/tooling-project-assets/blob/main/other/installation-script/installation.md -->
+
 ## Use the install script
 
 The script requires `sh`, which is always available on Linux and macOS. `sh` is not available by default on Windows. The
