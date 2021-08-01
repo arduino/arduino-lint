@@ -5,8 +5,8 @@ on:
     paths:
       - ".github/workflows/check-formatting.yml"
       - "Taskfile.yml"
-      - ".prettierrc"
       - "**/.prettierignore"
+      - "**/.prettierrc*"
       # CSS
       - "**.css"
       - "**.wxss"
@@ -101,8 +101,8 @@ on:
     paths:
       - ".github/workflows/check-formatting.yml"
       - "Taskfile.yml"
-      - ".prettierrc"
       - "**/.prettierignore"
+      - "**/.prettierrc*"
       # CSS
       - "**.css"
       - "**.wxss"
