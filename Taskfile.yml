@@ -390,7 +390,6 @@ vars:
     -X {{ .CONFIGURATION_PACKAGE }}.buildTimestamp={{.TIMESTAMP}}
     '
   GOFLAGS: "-timeout 10m -v -coverpkg=./... -covermode=atomic"
-
   DOCS_VERSION: dev
   DOCS_ALIAS: ""
   DOCS_REMOTE: "origin"
