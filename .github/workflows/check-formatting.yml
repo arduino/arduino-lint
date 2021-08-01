@@ -5,7 +5,7 @@ on:
   push:
     paths:
       - ".github/workflows/check-formatting.yml"
-      - "Taskfile.yml"
+      - "Taskfile.ya?ml"
       - "**/.prettierignore"
       - "**/.prettierrc*"
       # CSS
@@ -101,7 +101,7 @@ on:
   pull_request:
     paths:
       - ".github/workflows/check-formatting.yml"
-      - "Taskfile.yml"
+      - "Taskfile.ya?ml"
       - "**/.prettierignore"
       - "**/.prettierrc*"
       # CSS
