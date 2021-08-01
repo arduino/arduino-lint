@@ -80,7 +80,7 @@ checkLatestVersion() {
   elif [ "$DOWNLOAD_TOOL" = "wget" ]; then
     CHECKLATESTVERSION_TAG=$(wget -q -O - $CHECKLATESTVERSION_LATEST_URL | grep -o "<title>Release $CHECKLATESTVERSION_REGEX · ${PROJECT_OWNER}/${PROJECT_NAME}" | grep -o "$CHECKLATESTVERSION_REGEX")
   fi
-  if [ "x$CHECKLATESTVERSION_TAG" = "x" ]; then
+  if [ "$CHECKLATESTVERSION_TAG" = "" ]; then
     echo "Cannot determine latest tag."
     exit 1
   fi
