@@ -333,6 +333,9 @@ tasks:
 
   workflow:validate:
     desc: Validate GitHub Actions workflows against JSON schema
+    vars:
+      WORKFLOW_SCHEMA_PATH:
+        sh: mktemp -t workflow-schema-XXXXXXXXXX.json
     cmds:
       - wget --output-document={{ .WORKFLOW_SCHEMA_PATH }} https://json.schemastore.org/github-workflow
       - npx ajv-cli validate --strict=false -s {{ .WORKFLOW_SCHEMA_PATH }} -d "./.github/workflows/*.{yml,yaml}"
@@ -395,8 +398,6 @@ vars:
   DOCS_REMOTE: "origin"
 
   PRETTIER: prettier@2.1.2
-
-  WORKFLOW_SCHEMA_PATH: "$(mktemp -t gha-workflow-schema-XXXXXXXXXX.json)"
 
   CODESPELL_SKIP_OPTION: '--skip "./.git,go.mod,go.sum,./arduino-lint,./arduino-lint.exe,./internal/rule/rulefunction/testdata/libraries/MisspelledSentenceParagraphValue/library.properties,./site"'
   CODESPELL_IGNORE_WORDS_OPTION: "--ignore-words ./etc/codespell-ignore-words-list.txt"
