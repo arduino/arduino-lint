@@ -4,16 +4,6 @@
 # The original version of this script (https://github.com/Masterminds/glide.sh/blob/master/get) is licensed under the
 # MIT license. See https://github.com/Masterminds/glide/blob/master/LICENSE for more details and copyright notice.
 
-#
-# Usage:
-#
-# To install the latest version of Arduino Lint:
-#    ./install.sh
-#
-# To pin a specific release of Arduino Lint:
-#    ./install.sh 0.9.0
-#
-
 PROJECT_OWNER="arduino"
 PROJECT_NAME="arduino-lint"
 
