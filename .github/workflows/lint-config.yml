@@ -1,5 +1,6 @@
 name: Check Workflows
 
+# See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows
 on:
   push:
     paths:
@@ -14,6 +15,8 @@ on:
   schedule:
     # Run every Tuesday at 03:00 UTC to catch breakage caused by changes to the GitHub Actions workflow schema
     - cron: "0 8 * * TUE"
+  workflow_dispatch:
+  repository_dispatch:
 
 jobs:
   lint:
