@@ -34,8 +34,14 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           version: 3.x
 
+      - name: Format documentation
+        run: task docs:format
+
       - name: Check documentation formatting
-        run: task docs:check-formatting
+        run: git diff --color --exit-code
+
+      - name: Format configuration files
+        run: task config:format
 
       - name: Check configuration file formatting
-        run: task config:check-formatting
+        run: git diff --color --exit-code

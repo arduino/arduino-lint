@@ -60,8 +60,6 @@ tasks:
   check-formatting:
     desc: Check formatting of all files
     cmds:
-      - task: docs:check-formatting
-      - task: config:check-formatting
       - task: general:check-formatting
 
   format:
@@ -223,7 +221,6 @@ tasks:
   docs:check:
     desc: Lint and check formatting of documentation files
     cmds:
-      - task: docs:check-formatting
       - task: markdown:lint
       - task: markdown:fix
       - task: markdown:check-links
@@ -256,11 +253,6 @@ tasks:
           echo "ERROR: detected license type doesn't match expected $EXPECTED_LICENSE_TYPE"
           exit 1
         fi
-
-  docs:check-formatting:
-    desc: Check formatting of documentation files
-    cmds:
-      - npx {{ .PRETTIER }} --check "**/*.md"
 
   docs:format:
     desc: Format documentation files
@@ -338,7 +330,6 @@ tasks:
   config:check:
     desc: Lint and check formatting of configuration files
     cmds:
-      - task: config:check-formatting
       - task: config:lint
 
   config:lint:
@@ -351,12 +342,6 @@ tasks:
     cmds:
       - wget --output-document={{ .WORKFLOW_SCHEMA_PATH }} https://json.schemastore.org/github-workflow
       - npx ajv-cli validate --strict=false -s {{ .WORKFLOW_SCHEMA_PATH }} -d "./.github/workflows/*.{yml,yaml}"
-
-  config:check-formatting:
-    desc: Check formatting of configuration files
-    cmds:
-      - npx {{ .PRETTIER }} --check "**/*.{yml,yaml}"
-      - npx {{ .PRETTIER }} --check "**/*.json"
 
   config:format:
     desc: Format configuration files
