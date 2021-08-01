@@ -331,6 +331,7 @@ tasks:
     cmds:
       - task: workflow:validate
 
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-workflows-task/Taskfile.yml
   ci:validate:
     desc: Validate GitHub Actions workflows against their JSON schema
     vars:
