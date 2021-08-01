@@ -13,7 +13,7 @@ on:
       - "Taskfile.ya?ml"
   schedule:
     # Run every Tuesday at 03:00 UTC to catch breakage caused by changes to the GitHub Actions workflow schema
-    - cron: "0 3 * * 2"
+    - cron: "0 8 * * TUE"
 
 jobs:
   lint:
