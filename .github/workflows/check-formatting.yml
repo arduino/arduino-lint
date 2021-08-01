@@ -197,14 +197,14 @@ on:
   repository_dispatch:
 
 jobs:
-  check-formatting:
+  check:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout local repository
+      - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install Taskfile
+      - name: Install Task
         uses: arduino/setup-task@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
