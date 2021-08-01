@@ -1,4 +1,4 @@
-name: Lint configuration files
+name: Check Workflows
 
 on:
   push:
