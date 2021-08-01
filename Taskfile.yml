@@ -337,8 +337,8 @@ tasks:
       WORKFLOW_SCHEMA_PATH:
         sh: mktemp -t workflow-schema-XXXXXXXXXX.json
     cmds:
-      - wget --output-document={{ .WORKFLOW_SCHEMA_PATH }} https://json.schemastore.org/github-workflow
-      - npx ajv-cli validate --strict=false -s {{ .WORKFLOW_SCHEMA_PATH }} -d "./.github/workflows/*.{yml,yaml}"
+      - wget --output-document={{.WORKFLOW_SCHEMA_PATH}} https://json.schemastore.org/github-workflow
+      - npx ajv-cli validate --strict=false -s {{.WORKFLOW_SCHEMA_PATH}} -d "./.github/workflows/*.{yml,yaml}"
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-general-formatting-task/Taskfile.yml
   general:check-formatting:
