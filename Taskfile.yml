@@ -350,6 +350,7 @@ tasks:
           --package=ajv-cli \
           --package=ajv-formats \
           ajv validate \
+            --all-errors \
             --strict=false \
             -c ajv-formats \
             -s "{{.WORKFLOW_SCHEMA_PATH}}" \
