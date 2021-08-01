@@ -1,4 +1,4 @@
-name: Check formatting
+name: Check Prettier Formatting
 
 on:
   push:
@@ -6,19 +6,191 @@ on:
       - ".github/workflows/check-formatting.yml"
       - "Taskfile.yml"
       - ".prettierrc"
+      # CSS
+      - "**.css"
+      - "**.wxss"
+      # PostCSS
+      - "**.pcss"
+      - "**.postcss"
+      # Less
+      - "**.less"
+      # SCSS
+      - "**.scss"
+      # GraphQL
+      - "**.graphqls?"
+      - "**.gql"
+      # handlebars
+      - "**.handlebars"
+      - "**.hbs"
+      # HTML
+      - "**.mjml"
+      - "**.html?"
+      - "**.html.hl"
+      - "**.st"
+      - "**.xht"
+      - "**.xhtml"
+      # Vue
+      - "**.vue"
+      # JavaScript
+      - "**.flow"
+      - "**._?jsb?"
+      - "**.bones"
+      - "**.cjs"
+      - "**.es6?"
+      - "**.frag"
+      - "**.gs"
+      - "**.jake"
+      - "**.jscad"
+      - "**.jsfl"
+      - "**.js[ms]"
+      - "**.[mn]js"
+      - "**.pac"
+      - "**.wxs"
+      - "**.[xs]s?js"
+      - "**.xsjslib"
+      # JSX
+      - "**.jsx"
+      # TypeScript
+      - "**.ts"
+      # TSX
+      - "**.tsx"
+      # JSON
+      - "**/.eslintrc"
       - "**.json"
-      - "**.md"
-      - "**.yaml"
-      - "**.yml"
+      - "**.avsc"
+      - "**.geojson"
+      - "**.gltf"
+      - "**.har"
+      - "**.ice"
+      - "**.JSON-tmLanguage"
+      - "**.mcmeta"
+      - "**.tfstate"
+      - "**.topojson"
+      - "**.webapp"
+      - "**.webmanifest"
+      - "**.yyp?"
+      # JSONC
+      - "**/.babelrc"
+      - "**/.jscsrc"
+      - "**/.js[hl]intrc"
+      - "**.jsonc"
+      - "**.sublime-*"
+      # JSON5
+      - "**.json5"
+      # Markdown
+      - "**.mdx?"
+      - "**.markdown"
+      - "**.mk?down"
+      - "**.mdwn"
+      - "**.mkdn?"
+      - "**.ronn"
+      - "**.workbook"
+      # YAML
+      - "**/.clang-format"
+      - "**/.clang-tidy"
+      - "**/.gemrc"
+      - "**/glide.lock"
+      - "**.ya?ml*"
+      - "**.mir"
+      - "**.reek"
+      - "**.rviz"
+      - "**.sublime-syntax"
+      - "**.syntax"
   pull_request:
     paths:
       - ".github/workflows/check-formatting.yml"
       - "Taskfile.yml"
       - ".prettierrc"
+      # CSS
+      - "**.css"
+      - "**.wxss"
+      # PostCSS
+      - "**.pcss"
+      - "**.postcss"
+      # Less
+      - "**.less"
+      # SCSS
+      - "**.scss"
+      # GraphQL
+      - "**.graphqls?"
+      - "**.gql"
+      # handlebars
+      - "**.handlebars"
+      - "**.hbs"
+      # HTML
+      - "**.mjml"
+      - "**.html?"
+      - "**.html.hl"
+      - "**.st"
+      - "**.xht"
+      - "**.xhtml"
+      # Vue
+      - "**.vue"
+      # JavaScript
+      - "**.flow"
+      - "**._?jsb?"
+      - "**.bones"
+      - "**.cjs"
+      - "**.es6?"
+      - "**.frag"
+      - "**.gs"
+      - "**.jake"
+      - "**.jscad"
+      - "**.jsfl"
+      - "**.js[ms]"
+      - "**.[mn]js"
+      - "**.pac"
+      - "**.wxs"
+      - "**.[xs]s?js"
+      - "**.xsjslib"
+      # JSX
+      - "**.jsx"
+      # TypeScript
+      - "**.ts"
+      # TSX
+      - "**.tsx"
+      # JSON
+      - "**/.eslintrc"
       - "**.json"
-      - "**.md"
-      - "**.yaml"
-      - "**.yml"
+      - "**.avsc"
+      - "**.geojson"
+      - "**.gltf"
+      - "**.har"
+      - "**.ice"
+      - "**.JSON-tmLanguage"
+      - "**.mcmeta"
+      - "**.tfstate"
+      - "**.topojson"
+      - "**.webapp"
+      - "**.webmanifest"
+      - "**.yyp?"
+      # JSONC
+      - "**/.babelrc"
+      - "**/.jscsrc"
+      - "**/.js[hl]intrc"
+      - "**.jsonc"
+      - "**.sublime-*"
+      # JSON5
+      - "**.json5"
+      # Markdown
+      - "**.mdx?"
+      - "**.markdown"
+      - "**.mk?down"
+      - "**.mdwn"
+      - "**.mkdn?"
+      - "**.ronn"
+      - "**.workbook"
+      # YAML
+      - "**/.clang-format"
+      - "**/.clang-tidy"
+      - "**/.gemrc"
+      - "**/glide.lock"
+      - "**.ya?ml*"
+      - "**.mir"
+      - "**.reek"
+      - "**.rviz"
+      - "**.sublime-syntax"
+      - "**.syntax"
 
 jobs:
   check-formatting:
@@ -34,14 +206,8 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           version: 3.x
 
-      - name: Format documentation
-        run: task docs:format
+      - name: Format with Prettier
+        run: task general:format-prettier
 
-      - name: Check documentation formatting
-        run: git diff --color --exit-code
-
-      - name: Format configuration files
-        run: task config:format
-
-      - name: Check configuration file formatting
+      - name: Check formatting
         run: git diff --color --exit-code

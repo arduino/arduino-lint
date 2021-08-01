@@ -67,8 +67,7 @@ tasks:
     cmds:
       - task: go:format
       - task: python:format
-      - task: docs:format
-      - task: config:format
+      - task: general:format-prettier
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-go-task/Taskfile.yml
   go:check:
@@ -197,7 +196,7 @@ tasks:
       # we invoke `arduino-lint` like this instead of `./arduino-lint` to remove
       # the `./` chars from the examples
       - PATH=. arduino-lint ../docs/commands
-      - task: docs:format
+      - task: general:format-prettier
 
   docs:build:
     desc: Build documentation website contents
@@ -253,11 +252,6 @@ tasks:
           echo "ERROR: detected license type doesn't match expected $EXPECTED_LICENSE_TYPE"
           exit 1
         fi
-
-  docs:format:
-    desc: Format documentation files
-    cmds:
-      - npx {{ .PRETTIER }} --write "**/*.md"
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-shell-task/Taskfile.yml
   shell:check:
@@ -343,12 +337,6 @@ tasks:
       - wget --output-document={{ .WORKFLOW_SCHEMA_PATH }} https://json.schemastore.org/github-workflow
       - npx ajv-cli validate --strict=false -s {{ .WORKFLOW_SCHEMA_PATH }} -d "./.github/workflows/*.{yml,yaml}"
 
-  config:format:
-    desc: Format configuration files
-    cmds:
-      - npx {{ .PRETTIER }} --write "**/*.{yml,yaml}"
-      - npx {{ .PRETTIER }} --write "**/*.json"
-
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-general-formatting-task/Taskfile.yml
   general:check-formatting:
     desc: Check basic formatting style of all files
@@ -359,6 +347,12 @@ tasks:
           exit 1
         fi
       - ec
+
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-prettier-formatting-task/Taskfile.yml
+  general:format-prettier:
+    desc: Format all supported files with Prettier
+    cmds:
+      - npx prettier --write .
 
   check-spelling:
     desc: Check for commonly misspelled words
