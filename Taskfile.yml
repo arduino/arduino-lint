@@ -334,11 +334,14 @@ tasks:
   workflow:validate:
     desc: Validate GitHub Actions workflows against JSON schema
     vars:
+      # Source: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/github-workflow.json
+      WORKFLOW_SCHEMA_URL: https://json.schemastore.org/github-workflow
       WORKFLOW_SCHEMA_PATH:
         sh: mktemp -t workflow-schema-XXXXXXXXXX.json
+      WORKFLOWS_DATA_PATH: "./.github/workflows/*.{yml,yaml}"
     cmds:
-      - wget --output-document={{.WORKFLOW_SCHEMA_PATH}} https://json.schemastore.org/github-workflow
-      - npx ajv-cli validate --strict=false -s {{.WORKFLOW_SCHEMA_PATH}} -d "./.github/workflows/*.{yml,yaml}"
+      - wget --output-document={{.WORKFLOW_SCHEMA_PATH}} {{.WORKFLOW_SCHEMA_URL}}
+      - npx ajv-cli validate --strict=false -s {{.WORKFLOW_SCHEMA_PATH}} -d "{{.WORKFLOWS_DATA_PATH}}"
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-general-formatting-task/Taskfile.yml
   general:check-formatting:
