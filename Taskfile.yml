@@ -347,8 +347,11 @@ tasks:
           {{.WORKFLOW_SCHEMA_URL}}
       - |
         npx \
-          ajv-cli validate \
+          --package=ajv-cli \
+          --package=ajv-formats \
+          ajv validate \
             --strict=false \
+            -c ajv-formats \
             -s "{{.WORKFLOW_SCHEMA_PATH}}" \
             -d "{{.WORKFLOWS_DATA_PATH}}"
 
