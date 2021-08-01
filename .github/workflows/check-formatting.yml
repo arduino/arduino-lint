@@ -6,6 +6,7 @@ on:
       - ".github/workflows/check-formatting.yml"
       - "Taskfile.yml"
       - ".prettierrc"
+      - "**/.prettierignore"
       # CSS
       - "**.css"
       - "**.wxss"
@@ -101,6 +102,7 @@ on:
       - ".github/workflows/check-formatting.yml"
       - "Taskfile.yml"
       - ".prettierrc"
+      - "**/.prettierignore"
       # CSS
       - "**.css"
       - "**.wxss"
