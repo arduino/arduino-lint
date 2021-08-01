@@ -4,13 +4,13 @@ on:
   push:
     paths:
       - ".github/workflows/lint-config.yml"
-      - "Taskfile.yml"
-      - ".github/workflows/*.yml"
+      - ".github/workflows/*.ya?ml"
+      - "Taskfile.ya?ml"
   pull_request:
     paths:
       - ".github/workflows/lint-config.yml"
-      - "Taskfile.yml"
-      - ".github/workflows/*.yml"
+      - ".github/workflows/*.ya?ml"
+      - "Taskfile.ya?ml"
   schedule:
     # Run every Tuesday at 03:00 UTC to catch breakage caused by changes to the GitHub Actions workflow schema
     - cron: "0 3 * * 2"
