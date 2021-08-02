@@ -1,4 +1,4 @@
-name: Lint Python code
+name: Check Python
 
 on:
   push:
@@ -15,14 +15,14 @@ on:
       - "Taskfile.yml"
 
 jobs:
-  lint-python:
+  lint:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install Taskfile
+      - name: Install Task
         uses: arduino/setup-task@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
