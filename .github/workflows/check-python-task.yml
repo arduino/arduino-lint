@@ -8,17 +8,23 @@ on:
   push:
     paths:
       - ".github/workflows/check-python-task.ya?ml"
+      - "**/.flake8"
+      - "**/poetry.lock"
+      - "**/pyproject.toml"
+      - "**/setup.cfg"
+      - "Taskfile.ya?ml"
+      - "**/tox.ini"
       - "**.py"
-      - ".flake8"
-      - "pyproject.toml"
-      - "Taskfile.yml"
   pull_request:
     paths:
       - ".github/workflows/check-python-task.ya?ml"
+      - "**/.flake8"
+      - "**/poetry.lock"
+      - "**/pyproject.toml"
+      - "**/setup.cfg"
+      - "Taskfile.ya?ml"
+      - "**/tox.ini"
       - "**.py"
-      - ".flake8"
-      - "pyproject.toml"
-      - "Taskfile.yml"
 
 jobs:
   lint:
