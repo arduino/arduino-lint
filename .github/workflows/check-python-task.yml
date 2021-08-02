@@ -37,12 +37,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install Task
-        uses: arduino/setup-task@v1
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
-
       - name: Install Python
         uses: actions/setup-python@v2
         with:
@@ -50,6 +44,12 @@ jobs:
 
       - name: Install Poetry
         run: pip install poetry
+
+      - name: Install Task
+        uses: arduino/setup-task@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
 
       - name: Run flake8
         run: task python:lint
