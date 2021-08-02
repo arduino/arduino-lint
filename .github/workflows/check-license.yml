@@ -43,7 +43,6 @@ jobs:
       - name: Install licensee
         run: gem install licensee
 
-      # See: https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/licensing-a-repository
       - name: Check license file
         run: |
           EXIT_STATUS=0
