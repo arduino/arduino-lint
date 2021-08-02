@@ -8,9 +8,6 @@ on:
 
 jobs:
   create-nightly-artifacts:
-    # This workflow is only of value to the arduino/arduino-arduino-lint repository and
-    # would always fail in forks
-    if: github.repository == 'arduino/arduino-lint'
     runs-on: ubuntu-latest
 
     steps:
