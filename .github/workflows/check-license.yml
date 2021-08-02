@@ -32,10 +32,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout local repository
+      - name: Checkout repository
         uses: actions/checkout@v2
 
-      - uses: ruby/setup-ruby@v1
+      - name: Install Ruby
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: ruby # Install latest version
 
