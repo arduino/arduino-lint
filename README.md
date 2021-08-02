@@ -8,6 +8,7 @@
 [![Codecov](https://codecov.io/gh/arduino/arduino-lint/branch/main/graph/badge.svg?token=nprqPQMbdh)](https://codecov.io/gh/arduino/arduino-lint)
 [![Check Prettier Formatting status](https://github.com/arduino/arduino-lint/actions/workflows/check-prettier-formatting-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/check-prettier-formatting-task.yml)
 [![Check General Formatting status](https://github.com/arduino/arduino-lint/actions/workflows/check-general-formatting-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/check-general-formatting-task.yml)
+[![Check Workflows status](https://github.com/arduino/arduino-lint/actions/workflows/check-workflows-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/check-workflows-task.yml)
 [![Check Shell Scripts status](https://github.com/arduino/arduino-lint/actions/workflows/check-shell-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/check-shell-task.yml)
 [![Check Certificates status](https://github.com/arduino/arduino-lint/actions/workflows/check-certificates.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/check-certificates.yml)
 
