@@ -56,3 +56,30 @@ jobs:
         with:
           linters: flake8
           run: task python:lint
+
+  formatting:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Install Task
+        uses: arduino/setup-task@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
+
+      - name: Format Python code
+        run: task python:format
+
+      - name: Check formatting
+        run: git diff --color --exit-code
