@@ -91,8 +91,8 @@ jobs:
           tar -czvf dist/arduino-lint_${TAG}_macOS_64bit.tar.gz \
           -C dist/arduino-lint_osx_darwin_amd64/  arduino-lint   \
           -C ../../ LICENSE.txt
-          LINT_CHECKSUM=$(shasum -a 256 dist/arduino-lint_${TAG}_macOS_64bit.tar.gz | cut -d " " -f 1)
-          perl -pi -w -e "s/.*arduino-lint_${TAG}_macOS_64bit.tar.gz/${LINT_CHECKSUM}  arduino-lint_${TAG}_macOS_64bit.tar.gz/g;" dist/*-checksums.txt
+          CHECKSUM=$(shasum -a 256 dist/arduino-lint_${TAG}_macOS_64bit.tar.gz | cut -d " " -f 1)
+          perl -pi -w -e "s/.*arduino-lint_${TAG}_macOS_64bit.tar.gz/${CHECKSUM}  arduino-lint_${TAG}_macOS_64bit.tar.gz/g;" dist/*-checksums.txt
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2

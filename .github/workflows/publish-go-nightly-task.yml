@@ -83,8 +83,8 @@ jobs:
           tar -czvf dist/$PACKAGE_FILENAME \
           -C "dist/arduino-lint_osx_darwin_amd64/" "arduino-lint" \
           -C ../../ LICENSE.txt
-          CLI_CHECKSUM=$(shasum -a 256 dist/$PACKAGE_FILENAME | cut -d " " -f 1)
-          perl -pi -w -e "s/.*${PACKAGE_FILENAME}/${CLI_CHECKSUM} ${PACKAGE_FILENAME}/g;" dist/*-checksums.txt
+          CHECKSUM=$(shasum -a 256 dist/$PACKAGE_FILENAME | cut -d " " -f 1)
+          perl -pi -w -e "s/.*${PACKAGE_FILENAME}/${CHECKSUM} ${PACKAGE_FILENAME}/g;" dist/*-checksums.txt
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
