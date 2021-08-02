@@ -165,16 +165,32 @@ tasks:
           '
         fi
 
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/poetry-task/Taskfile.yml
+  poetry:install-deps:
+    desc: Install dependencies managed by Poetry
+    cmds:
+      - poetry install --no-root
+
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/poetry-task/Taskfile.yml
+  poetry:update-deps:
+    desc: Update all dependencies managed by Poetry to their newest versions
+    cmds:
+      - poetry update
+
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-python-task/Taskfile.yml
   python:lint:
     desc: Lint Python code
+    deps:
+      - task: poetry:install-deps
     cmds:
-      - poetry install --no-root
       - poetry run flake8 --show-source
 
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-python-task/Taskfile.yml
   python:format:
-    desc: Automatically formats Python files
+    desc: Format Python files
+    deps:
+      - task: poetry:install-deps
     cmds:
-      - poetry install --no-root
       - poetry run black .
 
   docs:generate:
