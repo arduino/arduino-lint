@@ -60,8 +60,6 @@ tasks:
   check-formatting:
     desc: Check formatting of all files
     cmds:
-      - task: docs:check-formatting
-      - task: config:check-formatting
       - task: general:check-formatting
 
   format:
@@ -69,8 +67,7 @@ tasks:
     cmds:
       - task: go:format
       - task: python:format
-      - task: docs:format
-      - task: config:format
+      - task: general:format-prettier
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-go-task/Taskfile.yml
   go:check:
@@ -199,7 +196,7 @@ tasks:
       # we invoke `arduino-lint` like this instead of `./arduino-lint` to remove
       # the `./` chars from the examples
       - PATH=. arduino-lint ../docs/commands
-      - task: docs:format
+      - task: general:format-prettier
 
   docs:build:
     desc: Build documentation website contents
@@ -223,7 +220,6 @@ tasks:
   docs:check:
     desc: Lint and check formatting of documentation files
     cmds:
-      - task: docs:check-formatting
       - task: markdown:lint
       - task: markdown:fix
       - task: markdown:check-links
@@ -256,16 +252,6 @@ tasks:
           echo "ERROR: detected license type doesn't match expected $EXPECTED_LICENSE_TYPE"
           exit 1
         fi
-
-  docs:check-formatting:
-    desc: Check formatting of documentation files
-    cmds:
-      - npx {{ .PRETTIER }} --check "**/*.md"
-
-  docs:format:
-    desc: Format documentation files
-    cmds:
-      - npx {{ .PRETTIER }} --write "**/*.md"
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-shell-task/Taskfile.yml
   shell:check:
@@ -338,7 +324,6 @@ tasks:
   config:check:
     desc: Lint and check formatting of configuration files
     cmds:
-      - task: config:check-formatting
       - task: config:lint
 
   config:lint:
@@ -352,18 +337,6 @@ tasks:
       - wget --output-document={{ .WORKFLOW_SCHEMA_PATH }} https://json.schemastore.org/github-workflow
       - npx ajv-cli validate --strict=false -s {{ .WORKFLOW_SCHEMA_PATH }} -d "./.github/workflows/*.{yml,yaml}"
 
-  config:check-formatting:
-    desc: Check formatting of configuration files
-    cmds:
-      - npx {{ .PRETTIER }} --check "**/*.{yml,yaml}"
-      - npx {{ .PRETTIER }} --check "**/*.json"
-
-  config:format:
-    desc: Format configuration files
-    cmds:
-      - npx {{ .PRETTIER }} --write "**/*.{yml,yaml}"
-      - npx {{ .PRETTIER }} --write "**/*.json"
-
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-general-formatting-task/Taskfile.yml
   general:check-formatting:
     desc: Check basic formatting style of all files
@@ -374,6 +347,12 @@ tasks:
           exit 1
         fi
       - ec
+
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-prettier-formatting-task/Taskfile.yml
+  general:format-prettier:
+    desc: Format all supported files with Prettier
+    cmds:
+      - npx prettier --write .
 
   check-spelling:
     desc: Check for commonly misspelled words
@@ -411,7 +390,6 @@ vars:
     -X {{ .CONFIGURATION_PACKAGE }}.buildTimestamp={{.TIMESTAMP}}
     '
   GOFLAGS: "-timeout 10m -v -coverpkg=./... -covermode=atomic"
-
   DOCS_VERSION: dev
   DOCS_ALIAS: ""
   DOCS_REMOTE: "origin"
