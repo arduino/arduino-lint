@@ -1,3 +1,5 @@
+<!-- Source: https://github.com/arduino/tooling-project-assets/blob/main/other/installation-script/installation.md -->
+
 ## Use the install script
 
 The script requires `sh`, which is always available on Linux and macOS. `sh` is not available by default on Windows. The
@@ -81,5 +83,5 @@ Checksums for the nightly builds are available at
 
 ### Build from source
 
-If you’re familiar with Golang or if you want to contribute to the project, you will probably build Arduino Lint locally
+If you're familiar with Golang or if you want to contribute to the project, you will probably build Arduino Lint locally
 with your Go toolchain. See the ["How to contribute"](CONTRIBUTING.md#building-the-source-code) page for instructions.

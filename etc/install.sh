@@ -1,17 +1,8 @@
 #!/bin/sh
+# Source: https://github.com/arduino/tooling-project-assets/blob/main/other/installation-script/install.sh
 
 # The original version of this script (https://github.com/Masterminds/glide.sh/blob/master/get) is licensed under the
 # MIT license. See https://github.com/Masterminds/glide/blob/master/LICENSE for more details and copyright notice.
-
-#
-# Usage:
-#
-# To install the latest version of Arduino Lint:
-#    ./install.sh
-#
-# To pin a specific release of Arduino Lint:
-#    ./install.sh 0.9.0
-#
 
 PROJECT_OWNER="arduino"
 PROJECT_NAME="arduino-lint"
@@ -89,7 +80,7 @@ checkLatestVersion() {
   elif [ "$DOWNLOAD_TOOL" = "wget" ]; then
     CHECKLATESTVERSION_TAG=$(wget -q -O - $CHECKLATESTVERSION_LATEST_URL | grep -o "<title>Release $CHECKLATESTVERSION_REGEX · ${PROJECT_OWNER}/${PROJECT_NAME}" | grep -o "$CHECKLATESTVERSION_REGEX")
   fi
-  if [ "x$CHECKLATESTVERSION_TAG" = "x" ]; then
+  if [ "$CHECKLATESTVERSION_TAG" = "" ]; then
     echo "Cannot determine latest tag."
     exit 1
   fi
@@ -135,24 +126,24 @@ downloadFile() {
   fi
   #  arduino-lint_0.4.0-rc1_Linux_64bit.[tar.gz, zip]
   if [ "$OS" = "Windows" ]; then
-    ARDUINO_LINT_DIST="${PROJECT_NAME}_${TAG}_${OS}_${ARCH}.zip"
+    APPLICATION_DIST="${PROJECT_NAME}_${TAG}_${OS}_${ARCH}.zip"
   else
-    ARDUINO_LINT_DIST="${PROJECT_NAME}_${TAG}_${OS}_${ARCH}.tar.gz"
+    APPLICATION_DIST="${PROJECT_NAME}_${TAG}_${OS}_${ARCH}.tar.gz"
   fi
 
   # Support specifying nightly build versions (e.g., "nightly-latest") via the script argument.
   case "$TAG" in
   nightly*)
-    DOWNLOAD_URL="https://downloads.arduino.cc/${PROJECT_NAME}/nightly/${ARDUINO_LINT_DIST}"
+    DOWNLOAD_URL="https://downloads.arduino.cc/${PROJECT_NAME}/nightly/${APPLICATION_DIST}"
     ;;
   *)
-    DOWNLOAD_URL="https://downloads.arduino.cc/${PROJECT_NAME}/${ARDUINO_LINT_DIST}"
+    DOWNLOAD_URL="https://downloads.arduino.cc/${PROJECT_NAME}/${APPLICATION_DIST}"
     ;;
   esac
 
-  ARDUINO_LINT_TMP_FILE="/tmp/$ARDUINO_LINT_DIST"
+  INSTALLATION_TMP_FILE="/tmp/$APPLICATION_DIST"
   echo "Downloading $DOWNLOAD_URL"
-  httpStatusCode=$(getFile "$DOWNLOAD_URL" "$ARDUINO_LINT_TMP_FILE")
+  httpStatusCode=$(getFile "$DOWNLOAD_URL" "$INSTALLATION_TMP_FILE")
   if [ "$httpStatusCode" -ne 200 ]; then
     echo "Did not find a release for your system: $OS $ARCH"
     echo "Trying to find a release using the GitHub API."
@@ -160,29 +151,29 @@ downloadFile() {
     echo "LATEST_RELEASE_URL=$LATEST_RELEASE_URL"
     get LATEST_RELEASE_JSON "$LATEST_RELEASE_URL"
     # || true forces this command to not catch error if grep does not find anything
-    DOWNLOAD_URL=$(echo "$LATEST_RELEASE_JSON" | grep 'browser_' | cut -d\" -f4 | grep "$ARDUINO_LINT_DIST") || true
+    DOWNLOAD_URL=$(echo "$LATEST_RELEASE_JSON" | grep 'browser_' | cut -d\" -f4 | grep "$APPLICATION_DIST") || true
     if [ -z "$DOWNLOAD_URL" ]; then
       echo "Sorry, we dont have a dist for your system: $OS $ARCH"
       fail "You can request one here: https://github.com/${PROJECT_OWNER}/$PROJECT_NAME/issues"
     else
       echo "Downloading $DOWNLOAD_URL"
-      getFile "$DOWNLOAD_URL" "$ARDUINO_LINT_TMP_FILE"
+      getFile "$DOWNLOAD_URL" "$INSTALLATION_TMP_FILE"
     fi
   fi
 }
 
 installFile() {
-  ARDUINO_LINT_TMP="/tmp/$PROJECT_NAME"
-  mkdir -p "$ARDUINO_LINT_TMP"
+  INSTALLATION_TMP_DIR="/tmp/$PROJECT_NAME"
+  mkdir -p "$INSTALLATION_TMP_DIR"
   if [ "$OS" = "Windows" ]; then
-    unzip -d "$ARDUINO_LINT_TMP" "$ARDUINO_LINT_TMP_FILE"
+    unzip -d "$INSTALLATION_TMP_DIR" "$INSTALLATION_TMP_FILE"
   else
-    tar xf "$ARDUINO_LINT_TMP_FILE" -C "$ARDUINO_LINT_TMP"
+    tar xf "$INSTALLATION_TMP_FILE" -C "$INSTALLATION_TMP_DIR"
   fi
-  ARDUINO_LINT_TMP_BIN="$ARDUINO_LINT_TMP/$PROJECT_NAME"
-  cp "$ARDUINO_LINT_TMP_BIN" "$EFFECTIVE_BINDIR"
-  rm -rf "$ARDUINO_LINT_TMP"
-  rm -f "$ARDUINO_LINT_TMP_FILE"
+  INSTALLATION_TMP_BIN="$INSTALLATION_TMP_DIR/$PROJECT_NAME"
+  cp "$INSTALLATION_TMP_BIN" "$EFFECTIVE_BINDIR"
+  rm -rf "$INSTALLATION_TMP_DIR"
+  rm -f "$INSTALLATION_TMP_FILE"
 }
 
 bye() {
@@ -195,24 +186,24 @@ bye() {
 
 testVersion() {
   set +e
-  ARDUINO_LINT="$(which $PROJECT_NAME)"
+  EXECUTABLE_PATH="$(command -v $PROJECT_NAME)"
   if [ "$?" = "1" ]; then
     # $PATH is intentionally a literal in this message.
     # shellcheck disable=SC2016
     echo "$PROJECT_NAME not found. You might want to add \"$EFFECTIVE_BINDIR\" to your "'$PATH'
   else
     # Convert to resolved, absolute paths before comparison
-    ARDUINO_LINT_REALPATH="$(cd -- "$(dirname -- "$ARDUINO_LINT")" && pwd -P)"
+    EXECUTABLE_REALPATH="$(cd -- "$(dirname -- "$EXECUTABLE_PATH")" && pwd -P)"
     EFFECTIVE_BINDIR_REALPATH="$(cd -- "$EFFECTIVE_BINDIR" && pwd -P)"
-    if [ "$ARDUINO_LINT_REALPATH" != "$EFFECTIVE_BINDIR_REALPATH" ]; then
+    if [ "$EXECUTABLE_REALPATH" != "$EFFECTIVE_BINDIR_REALPATH" ]; then
       # shellcheck disable=SC2016
-      echo "An existing $PROJECT_NAME was found at $ARDUINO_LINT. Please prepend \"$EFFECTIVE_BINDIR\" to your "'$PATH'" or remove the existing one."
+      echo "An existing $PROJECT_NAME was found at $EXECUTABLE_PATH. Please prepend \"$EFFECTIVE_BINDIR\" to your "'$PATH'" or remove the existing one."
     fi
   fi
 
   set -e
-  ARDUINO_LINT_VERSION="$("$EFFECTIVE_BINDIR/$PROJECT_NAME" --version)"
-  echo "$ARDUINO_LINT_VERSION installed successfully in $EFFECTIVE_BINDIR"
+  APPLICATION_VERSION="$("$EFFECTIVE_BINDIR/$PROJECT_NAME" --version)"
+  echo "$APPLICATION_VERSION installed successfully in $EFFECTIVE_BINDIR"
 }
 
 # Execution
