@@ -3,7 +3,7 @@ name: Check License
 on:
   push:
     paths:
-      - ".github/workflows/lint-documentation.yml"
+      - ".github/workflows/check-license.ya?ml"
       - "Taskfile.yml"
       # Recognized license files. See: https://github.com/licensee/licensee/blob/master/docs/what-we-look-at.md#detecting-the-license-file
       - "COPYING*"
@@ -11,7 +11,7 @@ on:
       - "LICENSE*"
   pull_request:
     paths:
-      - ".github/workflows/lint-documentation.yml"
+      - ".github/workflows/check-license.ya?ml"
       - "Taskfile.yml"
       - "COPYING*"
       - "LICENCE*"
