@@ -7,12 +7,14 @@ env:
 on:
   push:
     paths:
+      - ".github/workflows/check-python-task.ya?ml"
       - "**.py"
       - ".flake8"
       - "pyproject.toml"
       - "Taskfile.yml"
   pull_request:
     paths:
+      - ".github/workflows/check-python-task.ya?ml"
       - "**.py"
       - ".flake8"
       - "pyproject.toml"
