@@ -169,7 +169,7 @@ tasks:
     desc: Lint Python code
     cmds:
       - poetry install --no-root
-      - poetry run flake8
+      - poetry run flake8 --show-source
 
   python:format:
     desc: Automatically formats Python files
