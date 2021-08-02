@@ -1,5 +1,5 @@
 # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/publish-go-nightly-task.md
-name: Nightly build
+name: Publish Nightly Build
 
 on:
   schedule:
@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Install Taskfile
@@ -39,7 +39,7 @@ jobs:
     needs: create-nightly-artifacts
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Download artifacts
@@ -100,7 +100,7 @@ jobs:
     needs: notarize-macos
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Download artifact
