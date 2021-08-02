@@ -165,10 +165,6 @@ tasks:
           '
         fi
 
-  python:check:
-    cmds:
-      - task: python:lint
-
   python:lint:
     desc: Lint Python code
     cmds:
