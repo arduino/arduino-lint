@@ -1,3 +1,4 @@
+# Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/publish-go-nightly-task.md
 name: Nightly build
 
 on:

@@ -1,3 +1,4 @@
+# Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/general/gon.config.hcl
 source = ["dist/arduino-lint_osx_darwin_amd64/arduino-lint"]
 bundle_id = "cc.arduino.arduino-lint"
 

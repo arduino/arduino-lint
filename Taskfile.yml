@@ -370,6 +370,7 @@ tasks:
       - poetry run codespell --write-changes {{ .CODESPELL_SKIP_OPTION }} {{ .CODESPELL_IGNORE_WORDS_OPTION }}
 
 vars:
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/release-go-task/Taskfile.yml
   PROJECT_NAME: "arduino-lint"
   DIST_DIR: "dist"
   DEFAULT_GO_PACKAGES:
