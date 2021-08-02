@@ -4,6 +4,7 @@ env:
   # See: https://github.com/actions/setup-python/tree/v2#available-versions-of-python
   PYTHON_VERSION: "3.8"
 
+# See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows
 on:
   push:
     paths:
@@ -25,6 +26,8 @@ on:
       - "Taskfile.ya?ml"
       - "**/tox.ini"
       - "**.py"
+  workflow_dispatch:
+  repository_dispatch:
 
 jobs:
   lint:
