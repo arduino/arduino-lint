@@ -9,16 +9,16 @@ on:
   push:
     paths:
       - ".github/workflows/check-license.ya?ml"
-      # Recognized license files. See: https://github.com/licensee/licensee/blob/master/docs/what-we-look-at.md#detecting-the-license-file
-      - "COPYING*"
-      - "LICENCE*"
-      - "LICENSE*"
+      # See: https://github.com/licensee/licensee/blob/master/docs/what-we-look-at.md#detecting-the-license-file
+      - "[cC][oO][pP][yY][iI][nN][gG]*"
+      - "[cC][oO][pP][yY][rR][iI][gG][hH][tH]*"
+      - "[lL][iI][cC][eE][nN][cCsS][eE]*"
   pull_request:
     paths:
       - ".github/workflows/check-license.ya?ml"
-      - "COPYING*"
-      - "LICENCE*"
-      - "LICENSE*"
+      - "[cC][oO][pP][yY][iI][nN][gG]*"
+      - "[cC][oO][pP][yY][rR][iI][gG][hH][tH]*"
+      - "[lL][iI][cC][eE][nN][cCsS][eE]*"
 
 jobs:
   check-license:
