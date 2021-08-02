@@ -13,12 +13,16 @@ on:
       - "[cC][oO][pP][yY][iI][nN][gG]*"
       - "[cC][oO][pP][yY][rR][iI][gG][hH][tH]*"
       - "[lL][iI][cC][eE][nN][cCsS][eE]*"
+      - "[oO][fF][lL]*"
+      - "[pP][aA][tT][eE][nN][tT][sS]*"
   pull_request:
     paths:
       - ".github/workflows/check-license.ya?ml"
       - "[cC][oO][pP][yY][iI][nN][gG]*"
       - "[cC][oO][pP][yY][rR][iI][gG][hH][tH]*"
       - "[lL][iI][cC][eE][nN][cCsS][eE]*"
+      - "[oO][fF][lL]*"
+      - "[pP][aA][tT][eE][nN][tT][sS]*"
 
 jobs:
   check-license:
