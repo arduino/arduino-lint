@@ -84,7 +84,7 @@ jobs:
         # 1. Repackage the signed binary replaced in place by Gon (ignoring the output zip file)
         # 2. Recalculate package checksum and replace it in the goreleaser nnnnnn-checksums.txt file
         run: |
-          # GitHub's upload/download-artifact@v2 action doesn't preserve file permissions,
+          # GitHub's upload/download-artifact@v2 actions don't preserve file permissions,
           # so we need to add execution permission back until the action is made to do this.
           chmod +x dist/arduino-lint_osx_darwin_amd64/arduino-lint
           TAG=${GITHUB_REF/refs\/tags\//}
