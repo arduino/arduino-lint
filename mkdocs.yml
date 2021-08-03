@@ -5,7 +5,7 @@ site_url: https://arduino.github.io/arduino-lint/
 
 repo_name: arduino/arduino-lint
 repo_url: https://github.com/arduino/arduino-lint
-edit_uri: ""
+edit_uri: blob/main/docs/
 
 copyright: Copyright 2020 ARDUINO SA (http://www.arduino.cc/)
 
