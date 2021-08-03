@@ -1,6 +1,15 @@
 # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/release-go-task.md
 name: Release
 
+env:
+  # As defined by the Taskfile's PROJECT_NAME variable
+  PROJECT_NAME: arduino-lint
+  # As defined by the Taskfile's DIST_DIR variable
+  DIST_DIR: dist
+  # The project's folder on Arduino's download server for uploading builds
+  AWS_PLUGIN_TARGET: /arduino-lint/
+  ARTIFACT_NAME: dist
+
 on:
   push:
     tags:
@@ -22,7 +31,7 @@ jobs:
           tag-regex: '^[0-9]+\.[0-9]+\.[0-9]+$'
           filter-regex: '^\[(skip|changelog)[ ,-](skip|changelog)\].*'
           case-insensitive-regex: true
-          changelog-file-path: "dist/CHANGELOG.md"
+          changelog-file-path: "${{ env.DIST_DIR }}/CHANGELOG.md"
 
       - name: Install Taskfile
         uses: arduino/setup-task@v1
@@ -36,8 +45,8 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ${{ env.DIST_DIR }}
 
   notarize-macos:
     runs-on: macos-latest
@@ -50,9 +59,8 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          # to ensure compatibility with v1
-          path: dist
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ${{ env.DIST_DIR }}
 
       - name: Import Code-Signing Certificates
         env:
@@ -86,19 +94,19 @@ jobs:
         run: |
           # GitHub's upload/download-artifact@v2 actions don't preserve file permissions,
           # so we need to add execution permission back until the action is made to do this.
-          chmod +x dist/arduino-lint_osx_darwin_amd64/arduino-lint
-          TAG=${GITHUB_REF/refs\/tags\//}
-          tar -czvf dist/arduino-lint_${TAG}_macOS_64bit.tar.gz \
-          -C dist/arduino-lint_osx_darwin_amd64/  arduino-lint   \
+          chmod +x ${{ env.DIST_DIR }}/${{ env.PROJECT_NAME }}_osx_darwin_amd64/${{ env.PROJECT_NAME }}
+          TAG="${GITHUB_REF/refs\/tags\//}"
+          tar -czvf "${{ env.DIST_DIR }}/${{ env.PROJECT_NAME }}_${TAG}_macOS_64bit.tar.gz" \
+          -C ${{ env.DIST_DIR }}/${{ env.PROJECT_NAME }}_osx_darwin_amd64/  ${{ env.PROJECT_NAME }}   \
           -C ../../ LICENSE.txt
-          CHECKSUM=$(shasum -a 256 dist/arduino-lint_${TAG}_macOS_64bit.tar.gz | cut -d " " -f 1)
-          perl -pi -w -e "s/.*arduino-lint_${TAG}_macOS_64bit.tar.gz/${CHECKSUM}  arduino-lint_${TAG}_macOS_64bit.tar.gz/g;" dist/*-checksums.txt
+          CHECKSUM="$(shasum -a 256 ${{ env.DIST_DIR }}/${{ env.PROJECT_NAME }}_${TAG}_macOS_64bit.tar.gz | cut -d " " -f 1)"
+          perl -pi -w -e "s/.*${{ env.PROJECT_NAME }}_${TAG}_macOS_64bit.tar.gz/${CHECKSUM}  ${{ env.PROJECT_NAME }}_${TAG}_macOS_64bit.tar.gz/g;" ${{ env.DIST_DIR }}/*-checksums.txt
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ${{ env.DIST_DIR }}
 
   create-release:
     runs-on: ubuntu-latest
@@ -111,9 +119,8 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          # to ensure compatibility with v1
-          path: dist
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ${{ env.DIST_DIR }}
 
       - name: Read CHANGELOG
         id: changelog
@@ -150,16 +157,16 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: dist/*
+          file: ${{ env.DIST_DIR }}/*
           tag: ${{ github.ref }}
           file_glob: true
 
       - name: Upload release files on Arduino downloads servers
         uses: docker://plugins/s3
         env:
-          PLUGIN_SOURCE: "dist/*"
-          PLUGIN_TARGET: "/arduino-lint/"
-          PLUGIN_STRIP_PREFIX: "dist/"
+          PLUGIN_SOURCE: "${{ env.DIST_DIR }}/*"
+          PLUGIN_TARGET: ${{ env.AWS_PLUGIN_TARGET }}
+          PLUGIN_STRIP_PREFIX: "${{ env.DIST_DIR }}/"
           PLUGIN_BUCKET: ${{ secrets.DOWNLOADS_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

@@ -1,6 +1,15 @@
 # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/publish-go-nightly-task.md
 name: Publish Nightly Build
 
+env:
+  # As defined by the Taskfile's PROJECT_NAME variable
+  PROJECT_NAME: arduino-lint
+  # As defined by the Taskfile's DIST_DIR variable
+  DIST_DIR: dist
+  # The project's folder on Arduino's download server for uploading builds
+  AWS_PLUGIN_TARGET: /arduino-lint/
+  ARTIFACT_NAME: dist
+
 on:
   schedule:
     # run every day at 1AM
@@ -28,8 +37,8 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ${{ env.DIST_DIR }}
 
   notarize-macos:
     runs-on: macos-latest
@@ -42,9 +51,8 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          # to ensure compatibility with v1
-          path: dist
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ${{ env.DIST_DIR }}
 
       - name: Import Code-Signing Certificates
         env:
@@ -78,19 +86,19 @@ jobs:
         run: |
           # GitHub's upload/download-artifact@v2 actions don't preserve file permissions,
           # so we need to add execution permission back until the action is made to do this.
-          chmod +x "dist/arduino-lint_osx_darwin_amd64/arduino-lint"
-          PACKAGE_FILENAME="$(basename dist/arduino-lint_nightly-*_macOS_64bit.tar.gz)"
-          tar -czvf dist/$PACKAGE_FILENAME \
-          -C "dist/arduino-lint_osx_darwin_amd64/" "arduino-lint" \
+          chmod +x "${{ env.DIST_DIR }}/${{ env.PROJECT_NAME }}_osx_darwin_amd64/${{ env.PROJECT_NAME }}"
+          PACKAGE_FILENAME="$(basename ${{ env.DIST_DIR }}/${{ env.PROJECT_NAME }}_nightly-*_macOS_64bit.tar.gz)"
+          tar -czvf "${{ env.DIST_DIR }}/$PACKAGE_FILENAME" \
+          -C "${{ env.DIST_DIR }}/${{ env.PROJECT_NAME }}_osx_darwin_amd64/" "${{ env.PROJECT_NAME }}" \
           -C ../../ LICENSE.txt
-          CHECKSUM=$(shasum -a 256 dist/$PACKAGE_FILENAME | cut -d " " -f 1)
-          perl -pi -w -e "s/.*${PACKAGE_FILENAME}/${CHECKSUM} ${PACKAGE_FILENAME}/g;" dist/*-checksums.txt
+          CHECKSUM="$(shasum -a 256 ${{ env.DIST_DIR }}/$PACKAGE_FILENAME | cut -d " " -f 1)"
+          perl -pi -w -e "s/.*${PACKAGE_FILENAME}/${CHECKSUM} ${PACKAGE_FILENAME}/g;" ${{ env.DIST_DIR }}/*-checksums.txt
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ${{ env.DIST_DIR }}
 
   publish-nightly:
     runs-on: ubuntu-latest
@@ -103,16 +111,15 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          # to ensure compatibility with v1
-          path: dist
+          name: ${{ env.ARTIFACT_NAME }}
+          path: ${{ env.DIST_DIR }}
 
       - name: Upload release files on Arduino downloads servers
         uses: docker://plugins/s3
         env:
-          PLUGIN_SOURCE: "dist/*"
-          PLUGIN_TARGET: "/arduino-lint/nightly"
-          PLUGIN_STRIP_PREFIX: "dist/"
+          PLUGIN_SOURCE: "${{ env.DIST_DIR }}/*"
+          PLUGIN_TARGET: "${{ env.AWS_PLUGIN_TARGET }}nightly"
+          PLUGIN_STRIP_PREFIX: "${{ env.DIST_DIR }}/"
           PLUGIN_BUCKET: ${{ secrets.DOWNLOADS_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -123,10 +130,10 @@ jobs:
         with:
           api-key: ${{ secrets.DD_API_KEY }}
           events: |
-            - title: "arduino-lint nightly build failed"
+            - title: "${{ env.PROJECT_NAME }} nightly build failed"
               text: "Nightly build workflow has failed"
               alert_type: "error"
               host: ${{ github.repository }}
               tags:
-                - "project:arduino-lint"
+                - "project:${{ env.PROJECT_NAME }}"
                 - "workflow:${{ github.workflow }}"
