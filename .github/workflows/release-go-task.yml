@@ -45,6 +45,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
+          if-no-files-found: error
           name: ${{ env.ARTIFACT_NAME }}
           path: ${{ env.DIST_DIR }}
 
@@ -105,6 +106,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
+          if-no-files-found: error
           name: ${{ env.ARTIFACT_NAME }}
           path: ${{ env.DIST_DIR }}
 
