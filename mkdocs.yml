@@ -40,7 +40,7 @@ markdown_extensions:
   - pymdownx.tilde
 
 nav:
-  - Documentation Home: index.md
+  - Home: index.md
   - installation.md
   - Command reference: commands/arduino-lint.md
   - CONTRIBUTING.md
