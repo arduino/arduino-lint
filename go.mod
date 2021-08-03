@@ -15,16 +15,13 @@ require (
 	github.com/dgryski/go-farm v0.0.0-20200201041132-a6ae2369ad13 // indirect
 	github.com/gliderlabs/ssh v0.3.1 // indirect
 	github.com/go-git/go-git/v5 v5.2.0
-	github.com/gobuffalo/httptest v1.5.0 // indirect
 	github.com/golang/gddo v0.0.0-20201207183808-b853219a4332 // indirect
 	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/google/go-cmp v0.5.4 // indirect
 	github.com/gopherjs/gopherjs v0.0.0-20200217142428-fce0ec30dd00 // indirect
-	github.com/gorilla/sessions v1.2.1 // indirect
 	github.com/h2non/filetype v1.1.0 // indirect
 	github.com/imdario/mergo v0.3.11 // indirect
 	github.com/juju/testing v0.0.0-20201030020617-7189b3728523 // indirect
-	github.com/julienschmidt/httprouter v1.3.0 // indirect
 	github.com/kevinburke/ssh_config v0.0.0-20201106050909-4977a11b4351 // indirect
 	github.com/magiconair/properties v1.8.4 // indirect
 	github.com/mitchellh/mapstructure v1.4.0 // indirect
