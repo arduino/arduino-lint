@@ -209,25 +209,28 @@ func VersionMode() bool {
 	return versionMode
 }
 
-var version string
+// Version is the build version.
+var Version string
 
-// Version returns the build version.
-func Version() string {
-	return version
+// BuildVersion returns the build version.
+func BuildVersion() string {
+	return Version
 }
 
-var commit string
+// Commit is the HEAD commit of the Arduino Lint repository when the application was built.
+var Commit string
 
-// Commit returns the HEAD commit of the Arduino Lint repository when the application was built.
-func Commit() string {
-	return commit
+// BuildCommit returns the HEAD commit of the Arduino Lint repository when the application was built.
+func BuildCommit() string {
+	return Commit
 }
 
-var buildTimestamp string
+// Timestamp is the timestamp of the build.
+var Timestamp string
 
 // BuildTimestamp returns the timestamp of the build.
 func BuildTimestamp() string {
-	return buildTimestamp
+	return Timestamp
 }
 
 var targetPaths paths.PathList

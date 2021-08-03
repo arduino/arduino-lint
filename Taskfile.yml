@@ -24,9 +24,9 @@ vars:
   LDFLAGS: >-
     -ldflags
     '
-    -X {{.CONFIGURATION_PACKAGE}}.version={{.VERSION}}
-    -X {{.CONFIGURATION_PACKAGE}}.commit={{.COMMIT}}
-    -X {{.CONFIGURATION_PACKAGE}}.buildTimestamp={{.TIMESTAMP}}
+    -X {{.CONFIGURATION_PACKAGE}}.Version={{.VERSION}}
+    -X {{.CONFIGURATION_PACKAGE}}.Commit={{.COMMIT}}
+    -X {{.CONFIGURATION_PACKAGE}}.Timestamp={{.TIMESTAMP}}
     '
   GOFLAGS: "-timeout 10m -v -coverpkg=./... -covermode=atomic"
   DOCS_VERSION: dev

@@ -39,10 +39,10 @@ func ArduinoLint(rootCommand *cobra.Command, cliArguments []string) {
 
 	if configuration.VersionMode() {
 		if configuration.OutputFormat() == outputformat.Text {
-			if configuration.Version() == "" {
-				fmt.Print("0.0.0+" + configuration.Commit())
+			if configuration.BuildVersion() == "" {
+				fmt.Print("0.0.0+" + configuration.BuildCommit())
 			} else {
-				fmt.Print(configuration.Version())
+				fmt.Print(configuration.BuildVersion())
 			}
 			fmt.Println(" " + configuration.BuildTimestamp())
 		} else {
@@ -51,8 +51,8 @@ func ArduinoLint(rootCommand *cobra.Command, cliArguments []string) {
 				Commit         string `json:"commit"`
 				BuildTimestamp string `json:"buildTimestamp"`
 			}{
-				Version:        configuration.Version(),
-				Commit:         configuration.Commit(),
+				Version:        configuration.BuildVersion(),
+				Commit:         configuration.BuildCommit(),
 				BuildTimestamp: configuration.BuildTimestamp(),
 			}
 			versionJSON, err := json.MarshalIndent(versionObject, "", "  ")
