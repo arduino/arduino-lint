@@ -1,17 +1,13 @@
-# Project information
 site_name: Arduino Lint
 site_description: Tool to check for problems with Arduino projects
 site_url: https://arduino.github.io/arduino-lint/
 
-# Repository
 repo_name: arduino/arduino-lint
 repo_url: https://github.com/arduino/arduino-lint
 edit_uri: ""
 
-# Copyright
 copyright: Copyright 2020 ARDUINO SA (http://www.arduino.cc/)
 
-# Theme
 theme:
   name: material
   logo: img/icon_mac_light.png
@@ -19,7 +15,6 @@ theme:
     primary: teal
     accent: orange
 
-# Extensions
 markdown_extensions:
   - markdown.extensions.codehilite:
       guess_lang: false
@@ -43,7 +38,6 @@ markdown_extensions:
       nested_indent: 2
       truly_sane: true
 
-# Navigation
 nav:
   - Documentation Home: index.md
   - installation.md
