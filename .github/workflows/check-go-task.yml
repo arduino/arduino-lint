@@ -88,6 +88,9 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           version: 3.x
 
+      - name: Install golint
+        run: go install golang.org/x/lint/golint@latest
+
       - name: Check style
         run: task --silent go:lint
 
