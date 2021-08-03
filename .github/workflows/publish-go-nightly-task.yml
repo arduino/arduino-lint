@@ -10,10 +10,13 @@ env:
   AWS_PLUGIN_TARGET: /arduino-lint/
   ARTIFACT_NAME: dist
 
+# See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows
 on:
   schedule:
     # run every day at 1AM
     - cron: "0 1 * * *"
+  workflow_dispatch:
+  repository_dispatch:
 
 jobs:
   create-nightly-artifacts:
