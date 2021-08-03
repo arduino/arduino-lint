@@ -64,12 +64,22 @@ jobs:
           INSTALLER_CERT_MAC_PATH: "/tmp/ArduinoCerts2020.p12"
           KEYCHAIN_PASSWORD: keychainpassword # Arbitrary password for a keychain that exists only for the duration of the job, so not secret
         run: |
-          echo "${{ secrets.INSTALLER_CERT_MAC_P12 }}" | base64 --decode > ${{ env.INSTALLER_CERT_MAC_PATH }}
-          security create-keychain -p ${{ env.KEYCHAIN_PASSWORD }} ${{ env.KEYCHAIN }}
-          security default-keychain -s ${{ env.KEYCHAIN }}
-          security unlock-keychain -p ${{ env.KEYCHAIN_PASSWORD }} ${{ env.KEYCHAIN }}
-          security import ${{ env.INSTALLER_CERT_MAC_PATH }} -k ${{ env.KEYCHAIN }} -f pkcs12 -A -T /usr/bin/codesign -P "${{ secrets.INSTALLER_CERT_MAC_PASSWORD }}"
-          security set-key-partition-list -S apple-tool:,apple: -s -k ${{ env.KEYCHAIN_PASSWORD }} ${{ env.KEYCHAIN }}
+          echo "${{ secrets.INSTALLER_CERT_MAC_P12 }}" | base64 --decode > "${{ env.INSTALLER_CERT_MAC_PATH }}"
+          security create-keychain -p "${{ env.KEYCHAIN_PASSWORD }}" "${{ env.KEYCHAIN }}"
+          security default-keychain -s "${{ env.KEYCHAIN }}"
+          security unlock-keychain -p "${{ env.KEYCHAIN_PASSWORD }}" "${{ env.KEYCHAIN }}"
+          security import \
+            "${{ env.INSTALLER_CERT_MAC_PATH }}" \
+            -k "${{ env.KEYCHAIN }}" \
+            -f pkcs12 \
+            -A \
+            -T /usr/bin/codesign \
+            -P "${{ secrets.INSTALLER_CERT_MAC_PASSWORD }}"
+          security set-key-partition-list \
+            -S apple-tool:,apple: \
+            -s \
+            -k "${{ env.KEYCHAIN_PASSWORD }}" \
+            "${{ env.KEYCHAIN }}"
 
       - name: Install gon for code signing and app notarization
         run: |
