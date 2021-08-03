@@ -19,14 +19,14 @@ vars:
     sh: echo "{{now | date "20060102"}}"
   TAG:
     sh: echo "$(git tag --points-at=HEAD 2> /dev/null | head -n1)"
-  VERSION: "{{ if .NIGHTLY }}nightly-{{ .TIMESTAMP_SHORT }}{{ else if .TAG }}{{ .TAG }}{{ else }}snapshot{{ end }}"
-  CONFIGURATION_PACKAGE: "github.com/arduino/{{ .PROJECT_NAME }}/internal/configuration"
+  VERSION: "{{if .NIGHTLY}}nightly-{{.TIMESTAMP_SHORT}}{{else if .TAG}}{{.TAG}}{{else}}snapshot{{end}}"
+  CONFIGURATION_PACKAGE: "github.com/arduino/{{.PROJECT_NAME}}/internal/configuration"
   LDFLAGS: >-
     -ldflags
     '
-    -X {{ .CONFIGURATION_PACKAGE }}.version={{.VERSION}}
-    -X {{ .CONFIGURATION_PACKAGE }}.commit={{.COMMIT}}
-    -X {{ .CONFIGURATION_PACKAGE }}.buildTimestamp={{.TIMESTAMP}}
+    -X {{.CONFIGURATION_PACKAGE}}.version={{.VERSION}}
+    -X {{.CONFIGURATION_PACKAGE}}.commit={{.COMMIT}}
+    -X {{.CONFIGURATION_PACKAGE}}.buildTimestamp={{.TIMESTAMP}}
     '
   GOFLAGS: "-timeout 10m -v -coverpkg=./... -covermode=atomic"
   DOCS_VERSION: dev
@@ -63,7 +63,7 @@ tasks:
   go:test-unit:
     desc: Run unit tests
     cmds:
-      - go test -short -run '{{ default ".*" .TEST_REGEX }}' {{ default "-v" .GOFLAGS }} -coverprofile=coverage_unit.txt {{ default .DEFAULT_GO_PACKAGES .GO_PACKAGES }}
+      - go test -short -run '{{default ".*" .TEST_REGEX}}' {{default "-v" .GOFLAGS}} -coverprofile=coverage_unit.txt {{default .DEFAULT_GO_PACKAGES .GO_PACKAGES}}
 
   test-integration:
     desc: Run integration tests
@@ -396,10 +396,10 @@ tasks:
     desc: Check for commonly misspelled words
     cmds:
       - poetry install --no-root
-      - poetry run codespell {{ .CODESPELL_SKIP_OPTION }} {{ .CODESPELL_IGNORE_WORDS_OPTION }}
+      - poetry run codespell {{.CODESPELL_SKIP_OPTION}} {{.CODESPELL_IGNORE_WORDS_OPTION}}
 
   correct-spelling:
     desc: Correct commonly misspelled words where possible
     cmds:
       - poetry install --no-root
-      - poetry run codespell --write-changes {{ .CODESPELL_SKIP_OPTION }} {{ .CODESPELL_IGNORE_WORDS_OPTION }}
+      - poetry run codespell --write-changes {{.CODESPELL_SKIP_OPTION}} {{.CODESPELL_IGNORE_WORDS_OPTION}}
