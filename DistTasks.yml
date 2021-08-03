@@ -17,6 +17,11 @@ version: "3"
 #
 # The project MUST contain a LICENSE.txt file in the root folder or packaging will fail.
 
+vars:
+  CONTAINER: "docker.elastic.co/beats-dev/golang-crossbuild"
+  GO_VERSION: "1.14.7"
+  CHECKSUM_FILE: "{{ .VERSION }}-checksums.txt"
+
 tasks:
   all:
     desc: Build for distribution for all platforms
@@ -205,8 +210,3 @@ tasks:
       CONTAINER_TAG: "{{ .GO_VERSION }}-darwin"
       PACKAGE_PLATFORM: "macOS_64bit"
       PACKAGE_NAME: "{{ .PROJECT_NAME }}_{{ .VERSION }}_{{ .PACKAGE_PLATFORM }}.tar.gz"
-
-vars:
-  CONTAINER: "docker.elastic.co/beats-dev/golang-crossbuild"
-  GO_VERSION: "1.14.7"
-  CHECKSUM_FILE: "{{ .VERSION }}-checksums.txt"
