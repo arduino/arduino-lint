@@ -384,7 +384,7 @@ vars:
   TIMESTAMP_SHORT:
     sh: echo "{{now | date "20060102"}}"
   TAG:
-    sh: echo "$(git tag --points-at=HEAD 2> /dev/null)"
+    sh: echo "$(git tag --points-at=HEAD 2> /dev/null | head -n1)"
   VERSION: "{{ if .NIGHTLY }}nightly-{{ .TIMESTAMP_SHORT }}{{ else if .TAG }}{{ .TAG }}{{ else }}snapshot{{ end }}"
   CONFIGURATION_PACKAGE: "github.com/arduino/{{ .PROJECT_NAME }}/internal/configuration"
   LDFLAGS: >-
