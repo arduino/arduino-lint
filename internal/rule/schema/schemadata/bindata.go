@@ -3905,6 +3905,9 @@ var _arduinoPackageIndexDefinitionsSchemaJson = []byte(`{
                 "$comment": "https://github.com/arduino/arduino-cli/blob/cdbebe98f895c18146ea2607cfb706d002b01191/arduino/cores/tools.go#L144-L155",
                 "anyOf": [
                   {
+                    "pattern": "^all$"
+                  },
+                  {
                     "pattern": "^arm.*-linux-gnueabihf$"
                   },
                   {
