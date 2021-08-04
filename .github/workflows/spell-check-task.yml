@@ -4,8 +4,8 @@ on:
   pull_request:
   push:
   schedule:
-    # Run every Tuesday at 03:00 UTC to catch breakage caused by updates to the dictionary
-    - cron: "0 3 * * 2"
+    # Run every Tuesday at 8 AM UTC to catch new misspelling detections resulting from dictionary updates.
+    - cron: "0 8 * * TUE"
 
 jobs:
   spellcheck:
