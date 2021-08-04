@@ -244,9 +244,10 @@ tasks:
 
   website:check:
     desc: Check whether the MkDocs-based website will build
-    cmds:
+    deps:
       - task: docs:generate
       - task: poetry:install-deps
+    cmds:
       - poetry run mkdocs build --strict
 
   website:serve:
