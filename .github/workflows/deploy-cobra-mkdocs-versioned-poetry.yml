@@ -8,9 +8,9 @@ on:
       - "[0-9]+.[0-9]+.x"
     paths:
       - "docs/**"
+      - ".github/workflows/deploy-cobra-mkdocs-versioned-poetry.ya?ml"
       - "docsgen/**"
       - "cli/**"
-      - ".github/workflows/publish-docs.yml"
   # Run on branch or tag creation (will be filtered by the publish-determination job).
   create:
 
