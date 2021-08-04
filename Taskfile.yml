@@ -1,7 +1,42 @@
+# See: https://taskfile.dev/#/usage
 version: "3"
 
 includes:
   dist: ./DistTasks.yml
+
+vars:
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/release-go-task/Taskfile.yml
+  PROJECT_NAME: "arduino-lint"
+  DIST_DIR: "dist"
+  DEFAULT_GO_PACKAGES:
+    sh: echo `go list ./... | grep --invert-match 'github.com/arduino/arduino-lint/internal/rule/schema/schemadata' | tr '\n' ' '`
+  # build vars
+  COMMIT:
+    sh: echo "$(git log --no-show-signature -n 1 --format=%h)"
+  TIMESTAMP:
+    sh: echo "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+  TIMESTAMP_SHORT:
+    sh: echo "{{now | date "20060102"}}"
+  TAG:
+    sh: echo "$(git tag --points-at=HEAD 2> /dev/null | head -n1)"
+  VERSION: "{{if .NIGHTLY}}nightly-{{.TIMESTAMP_SHORT}}{{else if .TAG}}{{.TAG}}{{else}}snapshot{{end}}"
+  CONFIGURATION_PACKAGE: "github.com/arduino/{{.PROJECT_NAME}}/internal/configuration"
+  LDFLAGS: >-
+    -ldflags
+    '
+    -X {{.CONFIGURATION_PACKAGE}}.Version={{.VERSION}}
+    -X {{.CONFIGURATION_PACKAGE}}.Commit={{.COMMIT}}
+    -X {{.CONFIGURATION_PACKAGE}}.Timestamp={{.TIMESTAMP}}
+    '
+  GOFLAGS: "-timeout 10m -v -coverpkg=./... -covermode=atomic"
+  DOCS_VERSION: dev
+  DOCS_ALIAS: ""
+  DOCS_REMOTE: "origin"
+
+  PRETTIER: prettier@2.1.2
+
+  CODESPELL_SKIP_OPTION: '--skip "./.git,go.mod,go.sum,./arduino-lint,./arduino-lint.exe,./internal/rule/rulefunction/testdata/libraries/MisspelledSentenceParagraphValue/library.properties,./site"'
+  CODESPELL_IGNORE_WORDS_OPTION: "--ignore-words ./etc/codespell-ignore-words-list.txt"
 
 tasks:
   build:
@@ -18,17 +53,17 @@ tasks:
   go:generate:
     desc: Generate Go code
     cmds:
-      - go get -u "github.com/go-bindata/go-bindata/...@v3.1.1"
+      - go install "github.com/go-bindata/go-bindata/...@v3.1.1"
       - go-bindata -nocompress -nometadata -o "./internal/rule/schema/schemadata/bindata.go" --pkg schemadata --prefix "./etc/schemas/" "./etc/schemas/"
       - go-bindata -nocompress -nometadata -o "./internal/rule/schema/testdata/bindata.go" --pkg testdata --prefix "./internal/rule/schema/testdata/input/" "./internal/rule/schema/testdata/input/"
-      - go get -u golang.org/x/tools/cmd/stringer@v0.0.0-20201211192254-72fbef54948b
+      - go install golang.org/x/tools/cmd/stringer@v0.0.0-20201211192254-72fbef54948b
       - go generate ./...
       - task: go:format
 
   go:test-unit:
     desc: Run unit tests
     cmds:
-      - go test -short -run '{{ default ".*" .TEST_REGEX }}' {{ default "-v" .GOFLAGS }} -coverprofile=coverage_unit.txt {{ default .DEFAULT_GO_PACKAGES .GO_PACKAGES }}
+      - go test -short -run '{{default ".*" .TEST_REGEX}}' {{default "-v" .GOFLAGS}} -coverprofile=coverage_unit.txt {{default .DEFAULT_GO_PACKAGES .GO_PACKAGES}}
 
   test-integration:
     desc: Run integration tests
@@ -93,14 +128,12 @@ tasks:
     desc: Lint Go code
     cmds:
       - |
-        PROJECT_PATH="$PWD"
-        # `go get` and `go list` commands must be run from a temporary folder to avoid polluting go.mod
-        cd "$(mktemp -d "${TMPDIR-${TMP-/tmp}}/task-temporary-XXXXX")"
-        go get golang.org/x/lint/golint
-        GOLINT_PATH="$(go list -f '{{"{{"}}.Target{{"}}"}}' golang.org/x/lint/golint || echo "false")"
-        # `golint` must be run from the module folder
-        cd "$PROJECT_PATH"
-        "$GOLINT_PATH" \
+        if ! which golint &>/dev/null; then
+          echo "golint not installed or not in PATH. Please install: https://github.com/golang/lint#installation"
+          exit 1
+        fi
+      - |
+        golint \
           {{default "-min_confidence 0.8 -set_exit_status" .GO_LINT_FLAGS}} \
           {{default .DEFAULT_GO_PACKAGES .GO_PACKAGES}}
 
@@ -361,43 +394,10 @@ tasks:
     desc: Check for commonly misspelled words
     cmds:
       - poetry install --no-root
-      - poetry run codespell {{ .CODESPELL_SKIP_OPTION }} {{ .CODESPELL_IGNORE_WORDS_OPTION }}
+      - poetry run codespell {{.CODESPELL_SKIP_OPTION}} {{.CODESPELL_IGNORE_WORDS_OPTION}}
 
   correct-spelling:
     desc: Correct commonly misspelled words where possible
     cmds:
       - poetry install --no-root
-      - poetry run codespell --write-changes {{ .CODESPELL_SKIP_OPTION }} {{ .CODESPELL_IGNORE_WORDS_OPTION }}
-
-vars:
-  PROJECT_NAME: "arduino-lint"
-  DIST_DIR: "dist"
-  DEFAULT_GO_PACKAGES:
-    sh: echo `go list ./... | grep --invert-match 'github.com/arduino/arduino-lint/internal/rule/schema/schemadata' | tr '\n' ' '`
-  # build vars
-  COMMIT:
-    sh: echo "$(git log -n 1 --format=%h)"
-  TIMESTAMP:
-    sh: echo "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
-  TIMESTAMP_SHORT:
-    sh: echo "{{now | date "20060102"}}"
-  TAG:
-    sh: echo "`git tag --points-at=HEAD 2> /dev/null`"
-  VERSION: "{{ if .NIGHTLY }}nightly-{{ .TIMESTAMP_SHORT }}{{ else if .TAG }}{{ .TAG }}{{ else }}snapshot{{ end }}"
-  CONFIGURATION_PACKAGE: "github.com/arduino/{{ .PROJECT_NAME }}/internal/configuration"
-  LDFLAGS: >-
-    -ldflags
-    '
-    -X {{ .CONFIGURATION_PACKAGE }}.version={{.VERSION}}
-    -X {{ .CONFIGURATION_PACKAGE }}.commit={{.COMMIT}}
-    -X {{ .CONFIGURATION_PACKAGE }}.buildTimestamp={{.TIMESTAMP}}
-    '
-  GOFLAGS: "-timeout 10m -v -coverpkg=./... -covermode=atomic"
-  DOCS_VERSION: dev
-  DOCS_ALIAS: ""
-  DOCS_REMOTE: "origin"
-
-  PRETTIER: prettier@2.1.2
-
-  CODESPELL_SKIP_OPTION: '--skip "./.git,go.mod,go.sum,./arduino-lint,./arduino-lint.exe,./internal/rule/rulefunction/testdata/libraries/MisspelledSentenceParagraphValue/library.properties,./site"'
-  CODESPELL_IGNORE_WORDS_OPTION: "--ignore-words ./etc/codespell-ignore-words-list.txt"
+      - poetry run codespell --write-changes {{.CODESPELL_SKIP_OPTION}} {{.CODESPELL_IGNORE_WORDS_OPTION}}

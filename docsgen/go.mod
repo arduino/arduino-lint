@@ -1,6 +1,6 @@
 module github.com/arduino/arduino-lint/docsgen
 
-go 1.14
+go 1.16
 
 replace github.com/arduino/arduino-lint => ../
 
