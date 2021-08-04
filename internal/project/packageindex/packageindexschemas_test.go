@@ -487,6 +487,10 @@ func TestPattern(t *testing.T) {
 		{"/packages/0/tools/0/systems/0/size", "foo", compliancelevel.Specification, assert.True},
 		{"/packages/0/tools/0/systems/0/size", "foo", compliancelevel.Strict, assert.True},
 
+		{"/packages/0/tools/0/systems/0/host", "all", compliancelevel.Permissive, assert.False},
+		{"/packages/0/tools/0/systems/0/host", "all", compliancelevel.Specification, assert.False},
+		{"/packages/0/tools/0/systems/0/host", "all", compliancelevel.Strict, assert.False},
+
 		{"/packages/0/tools/0/systems/0/host", "arm-linux-gnueabihf", compliancelevel.Permissive, assert.False},
 		{"/packages/0/tools/0/systems/0/host", "arm-linux-gnueabihf", compliancelevel.Specification, assert.False},
 		{"/packages/0/tools/0/systems/0/host", "arm-linux-gnueabihf", compliancelevel.Strict, assert.False},
