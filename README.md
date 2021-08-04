@@ -5,6 +5,7 @@
 [![Publish Nightly Build status](https://github.com/arduino/arduino-lint/actions/workflows/publish-go-nightly-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/publish-go-nightly-task.yml)
 [![Check Python status](https://github.com/arduino/arduino-lint/actions/workflows/check-python-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/check-python-task.yml)
 [![Check Markdown status](https://github.com/arduino/arduino-lint/actions/workflows/check-markdown-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/check-markdown-task.yml)
+[![Check Website status](https://github.com/arduino/arduino-lint/actions/workflows/check-mkdocs-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/check-mkdocs-task.yml)
 [![Deploy Website status](https://github.com/arduino/arduino-lint/actions/workflows/deploy-cobra-mkdocs-versioned-poetry.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/deploy-cobra-mkdocs-versioned-poetry.yml)
 [![Codecov](https://codecov.io/gh/arduino/arduino-lint/branch/main/graph/badge.svg?token=nprqPQMbdh)](https://codecov.io/gh/arduino/arduino-lint)
 [![Check Prettier Formatting status](https://github.com/arduino/arduino-lint/actions/workflows/check-prettier-formatting-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/check-prettier-formatting-task.yml)
