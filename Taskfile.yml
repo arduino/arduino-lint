@@ -230,6 +230,8 @@ tasks:
     desc: Create all generated documentation content
     deps:
       - task: go:cli-docs
+      # Make the formatting consistent with the non-generated Markdown
+      - task: general:format-prettier
 
   go:cli-docs:
     desc: Generate command reference
@@ -241,19 +243,18 @@ tasks:
       # we invoke `arduino-lint` like this instead of `./arduino-lint` to remove
       # the `./` chars from the examples
       - PATH=. arduino-lint ../docs/commands
-      - task: general:format-prettier
 
   docs:build:
     desc: Build documentation website contents
     cmds:
-      - task: go:cli-docs
+      - task: docs:generate
       - poetry install --no-root
       - poetry run mkdocs build --strict
 
   docs:publish:
     desc: Use Mike to build and push versioned docs
     cmds:
-      - task: go:cli-docs
+      - task: docs:generate
       - poetry run mike deploy --update-aliases --push --remote {{.DOCS_REMOTE}} {{.DOCS_VERSION}} {{.DOCS_ALIAS}}
 
   docs:serve:
