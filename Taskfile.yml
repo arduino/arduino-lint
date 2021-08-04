@@ -92,7 +92,7 @@ tasks:
       - task: docs:check
       - task: config:check
       - task: general:check-formatting
-      - task: check-spelling
+      - task: general:check-spelling
       - task: shell:check-mode
 
   lint:
@@ -402,13 +402,13 @@ tasks:
     cmds:
       - npx prettier --write .
 
-  check-spelling:
+  general:check-spelling:
     desc: Check for commonly misspelled words
     cmds:
       - poetry install --no-root
       - poetry run codespell
 
-  correct-spelling:
+  general:correct-spelling:
     desc: Correct commonly misspelled words where possible
     cmds:
       - poetry install --no-root

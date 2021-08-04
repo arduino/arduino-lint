@@ -30,4 +30,4 @@ jobs:
           version: 3.x
 
       - name: Spell check
-        run: task check-spelling
+        run: task general:check-spelling
