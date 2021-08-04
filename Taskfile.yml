@@ -402,6 +402,7 @@ tasks:
     cmds:
       - npx prettier --write .
 
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/spell-check-task/Taskfile.yml
   general:check-spelling:
     desc: Check for commonly misspelled words
     deps:
@@ -409,6 +410,7 @@ tasks:
     cmds:
       - poetry run codespell
 
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/spell-check-task/Taskfile.yml
   general:correct-spelling:
     desc: Correct commonly misspelled words where possible
     deps:
