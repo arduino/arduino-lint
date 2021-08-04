@@ -5,7 +5,7 @@ description = "arduino-lint"
 authors = ["Arduino <info@arduino.cc>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.9"
 
 # Integration tests dependencies.
 invoke = "1.4.1"
