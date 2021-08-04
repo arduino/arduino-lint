@@ -6,4 +6,4 @@ ignore-words-list = ot,propert
 builtin = clear,informal,en-GB_to_en-US
 check-filenames =
 check-hidden =
-skip = ./.git,./go.mod,./go.sum,./package-lock.json,./poetry.lock,./yarn.lock,./arduino-lint,./arduino-lint.exe,./internal/rule/rulefunction/testdata/libraries/MisspelledSentenceParagraphValue/library.properties,./site
+skip = ./.git,**/go.mod,**/go.sum,./package-lock.json,./poetry.lock,./yarn.lock,./arduino-lint,./arduino-lint.exe,./internal/rule/rulefunction/testdata/libraries/MisspelledSentenceParagraphValue/library.properties,./site
