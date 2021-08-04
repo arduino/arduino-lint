@@ -226,6 +226,7 @@ tasks:
     cmds:
       - poetry run black .
 
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/deploy-cobra-mkdocs-versioned-poetry/Taskfile.yml
   docs:generate:
     desc: Create all generated documentation content
     deps:
@@ -233,6 +234,7 @@ tasks:
       # Make the formatting consistent with the non-generated Markdown
       - task: general:format-prettier
 
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/deploy-cobra-mkdocs-versioned-poetry/Taskfile.yml
   go:cli-docs:
     desc: Generate command line interface reference documentation
     dir: ./docsgen
@@ -242,6 +244,7 @@ tasks:
       # The binary is invoked like this instead of `./{{.PROJECT_NAME}}` to remove the `./` chars from the examples
       - PATH=. {{.PROJECT_NAME}} ../docs/commands
 
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-mkdocs-task/Taskfile.yml
   website:check:
     desc: Check whether the MkDocs-based website will build
     deps:
@@ -250,6 +253,7 @@ tasks:
     cmds:
       - poetry run mkdocs build --strict
 
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-mkdocs-task/Taskfile.yml
   website:serve:
     desc: Run website locally
     deps:

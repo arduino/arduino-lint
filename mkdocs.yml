@@ -1,3 +1,4 @@
+# Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/mkdocs/mkdocs.yml
 # See: https://www.mkdocs.org/user-guide/configuration/
 site_name: Arduino Lint
 site_description: Tool to check for problems with Arduino projects

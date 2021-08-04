@@ -1,3 +1,4 @@
+# Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/check-mkdocs-task.md
 name: Check Website
 
 # See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows

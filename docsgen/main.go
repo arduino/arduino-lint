@@ -1,3 +1,4 @@
+// Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/cobra/docsgen/main.go
 //
 // Copyright 2020 ARDUINO SA (http://www.arduino.cc/)
 //
