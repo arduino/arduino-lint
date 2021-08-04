@@ -249,12 +249,6 @@ tasks:
       - poetry install --no-root
       - poetry run mkdocs build --strict
 
-  docs:publish:
-    desc: Use Mike to build and push versioned docs
-    cmds:
-      - task: docs:generate
-      - poetry run mike deploy --update-aliases --push --remote {{.DOCS_REMOTE}} {{.DOCS_VERSION}} {{.DOCS_ALIAS}}
-
   docs:serve:
     desc: Run documentation website locally
     cmds:
