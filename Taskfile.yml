@@ -237,12 +237,10 @@ tasks:
     desc: Generate command line interface reference documentation
     dir: ./docsgen
     cmds:
-      # docs will generate examples using os.Args[0] so we need to call
-      # the generator `arduino-lint`
-      - go build -o arduino-lint{{exeExt}}
-      # we invoke `arduino-lint` like this instead of `./arduino-lint` to remove
-      # the `./` chars from the examples
-      - PATH=. arduino-lint ../docs/commands
+      # Command examples use os.Args[0] so the docs generation binary must have the same filename as the project
+      - go build -o {{.PROJECT_NAME}}{{exeExt}}
+      # The binary is invoked like this instead of `./{{.PROJECT_NAME}}` to remove the `./` chars from the examples
+      - PATH=. {{.PROJECT_NAME}} ../docs/commands
 
   docs:build:
     desc: Build documentation website contents
