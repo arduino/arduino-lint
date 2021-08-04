@@ -10,9 +10,6 @@ on:
       - "**/*.go"
       - "**/testdata/**"
       - "etc/schemas/**/*.json"
-      - "pyproject.toml"
-      - "test/**"
-      - "Taskfile.yml"
   pull_request:
     paths:
       - ".github/workflows/test.yml"
@@ -22,9 +19,6 @@ on:
       - "**/*.go"
       - "**/testdata/**"
       - "etc/schemas/**/*.json"
-      - "pyproject.toml"
-      - "test/**"
-      - "Taskfile.yml"
 
 env:
   BUILDS_ARTIFACT: build-artifacts
@@ -71,17 +65,6 @@ jobs:
           file: ./coverage_unit.txt
           flags: unit
           fail_ci_if_error: true
-
-      - name: Install Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.9"
-
-      - name: Install Poetry
-        run: pip install poetry
-
-      - name: Run integration tests
-        run: task test-integration
 
   build:
     runs-on: ubuntu-latest
