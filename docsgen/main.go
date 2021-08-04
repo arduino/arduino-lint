@@ -1,9 +1,7 @@
-// This file is part of arduino-cli.
 //
 // Copyright 2020 ARDUINO SA (http://www.arduino.cc/)
 //
-// This software is released under the GNU General Public License version 3,
-// which covers the main part of arduino-cli.
+// This software is released under the GNU General Public License version 3.
 // The terms of this license can be found at:
 // https://www.gnu.org/licenses/gpl-3.0.en.html
 //
@@ -13,7 +11,7 @@
 // Arduino software without disclosing the source code of your own applications.
 // To purchase a commercial license, send an email to license@arduino.cc.
 
-// Package main generates Markdown documentation for the Arduino Lint CLI.
+// Package main generates Markdown documentation for the project's CLI.
 package main
 
 import (
