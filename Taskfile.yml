@@ -243,14 +243,14 @@ tasks:
       - PATH=. {{.PROJECT_NAME}} ../docs/commands
 
   website:check:
-    desc: Build documentation website contents
+    desc: Check whether the MkDocs-based website will build
     cmds:
       - task: docs:generate
       - poetry install --no-root
       - poetry run mkdocs build --strict
 
   website:serve:
-    desc: Run documentation website locally
+    desc: Run website locally
     cmds:
       - task: docs:build
       - poetry run mkdocs serve
