@@ -404,12 +404,14 @@ tasks:
 
   general:check-spelling:
     desc: Check for commonly misspelled words
+    deps:
+      - task: poetry:install-deps
     cmds:
-      - poetry install --no-root
       - poetry run codespell
 
   general:correct-spelling:
     desc: Correct commonly misspelled words where possible
+    deps:
+      - task: poetry:install-deps
     cmds:
-      - poetry install --no-root
       - poetry run codespell --write-changes
