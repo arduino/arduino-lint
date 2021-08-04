@@ -1,6 +1,6 @@
 # Arduino Lint
 
-[![Tests Status](https://github.com/arduino/arduino-lint/workflows/Run%20tests/badge.svg)](https://github.com/arduino/arduino-lint/actions?workflow=Run+tests)
+[![Test Go status](https://github.com/arduino/arduino-lint/actions/workflows/test-go-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/test-go-task.yml)
 [![Test Integration status](https://github.com/arduino/arduino-lint/actions/workflows/test-go-integration-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/test-go-integration-task.yml)
 [![Check Go status](https://github.com/arduino/arduino-lint/actions/workflows/check-go-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/check-go-task.yml)
 [![Check Code Generation status](https://github.com/arduino/arduino-lint/actions/workflows/check-code-generation-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/check-code-generation-task.yml)
