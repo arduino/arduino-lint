@@ -242,14 +242,14 @@ tasks:
       # The binary is invoked like this instead of `./{{.PROJECT_NAME}}` to remove the `./` chars from the examples
       - PATH=. {{.PROJECT_NAME}} ../docs/commands
 
-  docs:build:
+  website:check:
     desc: Build documentation website contents
     cmds:
       - task: docs:generate
       - poetry install --no-root
       - poetry run mkdocs build --strict
 
-  docs:serve:
+  website:serve:
     desc: Run documentation website locally
     cmds:
       - task: docs:build

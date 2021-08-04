@@ -232,7 +232,7 @@ documentation website. You can build the documentation website and serve it from
 command:
 
 ```
-task docs:serve
+task website:serve
 ```
 
 The documentation will build. If you don't see any error, open `http://127.0.0.1:8000` in your browser to local the
@@ -254,7 +254,7 @@ Otherwise you can use the following tasks. To do so you'll need to install `npm`
 To check if the files are correctly formatted run:
 
 ```shell
-task docs:check
+task website:check
 ```
 
 If the output tells you that some files are not formatted correctly run:
