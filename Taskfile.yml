@@ -246,7 +246,7 @@ tasks:
     desc: Check whether the MkDocs-based website will build
     cmds:
       - task: docs:generate
-      - poetry install --no-root
+      - task: poetry:install-deps
       - poetry run mkdocs build --strict
 
   website:serve:
