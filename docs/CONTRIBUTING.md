@@ -81,7 +81,7 @@ To build Arduino Lint from sources you need the following tools to be available 
 
 If you want to run integration tests or work on documentation, you will also need:
 
-- A working [Python](https://www.python.org/downloads/) environment, version 3.8 or later.
+- A working [Python](https://www.python.org/downloads/) environment, version 3.9 or later.
 - [Poetry](https://python-poetry.org/docs/).
 
 ### Building the source code
@@ -232,7 +232,7 @@ documentation website. You can build the documentation website and serve it from
 command:
 
 ```
-task docs:serve
+task website:serve
 ```
 
 The documentation will build. If you don't see any error, open `http://127.0.0.1:8000` in your browser to local the
@@ -254,7 +254,7 @@ Otherwise you can use the following tasks. To do so you'll need to install `npm`
 To check if the files are correctly formatted run:
 
 ```shell
-task docs:check
+task website:check
 ```
 
 If the output tells you that some files are not formatted correctly run:

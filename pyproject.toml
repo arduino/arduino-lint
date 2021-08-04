@@ -5,7 +5,7 @@ description = "arduino-lint"
 authors = ["Arduino <info@arduino.cc>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.9"
 
 # Integration tests dependencies.
 invoke = "1.4.1"
@@ -18,8 +18,8 @@ click = "<7.2"
 gitpython = "^3.1.1"
 mdx_truly_sane_lists = "^1.2"
 mike = "^0.5.1"
-mkdocs = "<1.2"
-mkdocs-material = "<5"
+mkdocs = "^1.2.1"
+mkdocs-material = "^7.1.8"
 
 [tool.poetry.dev-dependencies]
 black = "^21.7b0"

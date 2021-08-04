@@ -226,40 +226,40 @@ tasks:
     cmds:
       - poetry run black .
 
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/deploy-cobra-mkdocs-versioned-poetry/Taskfile.yml
   docs:generate:
     desc: Create all generated documentation content
     deps:
-      - task: docs:gen
-
-  docs:gen:
-    desc: Generate command reference
-    dir: ./docsgen
-    cmds:
-      # docs will generate examples using os.Args[0] so we need to call
-      # the generator `arduino-lint`
-      - go build -o arduino-lint{{exeExt}}
-      # we invoke `arduino-lint` like this instead of `./arduino-lint` to remove
-      # the `./` chars from the examples
-      - PATH=. arduino-lint ../docs/commands
+      - task: go:cli-docs
+      # Make the formatting consistent with the non-generated Markdown
       - task: general:format-prettier
 
-  docs:build:
-    desc: Build documentation website contents
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/deploy-cobra-mkdocs-versioned-poetry/Taskfile.yml
+  go:cli-docs:
+    desc: Generate command line interface reference documentation
+    dir: ./docsgen
     cmds:
-      - task: docs:gen
-      - poetry install --no-root
+      # Command examples use os.Args[0] so the docs generation binary must have the same filename as the project
+      - go build -o {{.PROJECT_NAME}}{{exeExt}}
+      # The binary is invoked like this instead of `./{{.PROJECT_NAME}}` to remove the `./` chars from the examples
+      - PATH=. {{.PROJECT_NAME}} ../docs/commands
+
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-mkdocs-task/Taskfile.yml
+  website:check:
+    desc: Check whether the MkDocs-based website will build
+    deps:
+      - task: docs:generate
+      - task: poetry:install-deps
+    cmds:
       - poetry run mkdocs build --strict
 
-  docs:publish:
-    desc: Use Mike to build and push versioned docs
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-mkdocs-task/Taskfile.yml
+  website:serve:
+    desc: Run website locally
+    deps:
+      - task: docs:generate
+      - task: poetry:install-deps
     cmds:
-      - task: docs:gen
-      - poetry run mike deploy --update-aliases --push --remote {{.DOCS_REMOTE}} {{.DOCS_VERSION}} {{.DOCS_ALIAS}}
-
-  docs:serve:
-    desc: Run documentation website locally
-    cmds:
-      - task: docs:build
       - poetry run mkdocs serve
 
   docs:check:

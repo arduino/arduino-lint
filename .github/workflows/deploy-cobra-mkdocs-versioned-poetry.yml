@@ -1,16 +1,24 @@
-name: Publish documentation
+# Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/deploy-cobra-mkdocs-versioned-poetry.md
+name: Deploy Website
 
 on:
   push:
     branches:
+      # Branch to base "dev" website on. Set in siteversion.py also.
       - main
       # Release branches have names like 0.8.x, 0.9.x, ...
       - "[0-9]+.[0-9]+.x"
     paths:
       - "docs/**"
+      - ".github/workflows/deploy-cobra-mkdocs-versioned-poetry.ya?ml"
+      - "go.mod"
+      - "go.sum"
+      - "Taskfile.ya?ml"
+      - "**.go"
       - "docsgen/**"
-      - "cli/**"
-      - ".github/workflows/publish-docs.yml"
+      - "mkdocs.ya?ml"
+      - "poetry.lock"
+      - "pyproject.toml"
   # Run on branch or tag creation (will be filtered by the publish-determination job).
   create:
 
@@ -38,46 +46,45 @@ jobs:
     if: needs.publish-determination.outputs.result == 'true'
 
     steps:
-      - name: Checkout local repository
+      - name: Checkout repository
         uses: actions/checkout@v2
-
-      - name: Install Taskfile
-        uses: arduino/setup-task@v1
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
-
-      - name: Install Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: "1.14"
 
       - name: Install Python
         uses: actions/setup-python@v2
         with:
-          python-version: "3.8"
-
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('./pyproject.toml') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
+          python-version: "3.9"
 
       - name: Install Poetry
         run: |
           python -m pip install --upgrade pip
           python -m pip install poetry
 
+      - name: Install Task
+        uses: arduino/setup-task@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
+
+      - name: Create all generated documentation content
+        run: task docs:generate
+
       - name: Install Python dependencies
         run: poetry install --no-root
 
+      - name: Determine versioning parameters
+        id: determine-versioning
+        run: echo "::set-output name=data::$(poetry run python docs/siteversion/siteversion.py)"
+
       - name: Publish documentation
-        # Determine docs version for the commit pushed and publish accordingly using Mike.
-        # Publishing implies creating a git commit on the gh-pages branch, we let @ArduinoBot own these commits.
+        if: fromJson(steps.determine-versioning.outputs.data).version != null
         run: |
+          # Publishing implies creating a git commit on the gh-pages branch, we let @ArduinoBot own these commits.
           git config --global user.email "bot@arduino.cc"
           git config --global user.name "ArduinoBot"
           git fetch --no-tags --prune --depth=1 origin +refs/heads/gh-pages:refs/remotes/origin/gh-pages
-          poetry run python docs/build.py
+          poetry run mike deploy \
+            --update-aliases \
+            --push \
+            --remote origin \
+            ${{ fromJson(steps.determine-versioning.outputs.data).version }} \
+            ${{ fromJson(steps.determine-versioning.outputs.data).alias }}
