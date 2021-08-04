@@ -3,21 +3,24 @@ name: Check Website
 on:
   pull_request:
     paths:
-      # existing docs
-      - "docs/**"
-      # changes to the cli reference generator
-      - "docsgen/**"
-      # potential changes to commands documentation
-      - "cli/**"
-      # changes to the workflow itself
       - ".github/workflows/check-mkdocs-task.ya?ml"
+      - "Taskfile.ya?ml"
+      - "mkdocs.ya?ml"
+      - "poetry.lock"
+      - "pyproject.toml"
+      - "docs/**"
+      - "docsgen/**"
+      - "**.go"
   push:
     paths:
+      - ".github/workflows/check-mkdocs-task.ya?ml"
+      - "Taskfile.ya?ml"
+      - "mkdocs.ya?ml"
+      - "poetry.lock"
+      - "pyproject.toml"
       - "docs/**"
       - "docsgen/**"
-      - "cli/**"
-      - "rpc/**"
-      - ".github/workflows/check-mkdocs-task.ya?ml"
+      - "**.go"
 
 jobs:
   check:
