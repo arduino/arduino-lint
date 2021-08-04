@@ -11,15 +11,15 @@ on:
     paths:
       - ".github/workflows/check-go-task.ya?ml"
       - "Taskfile.ya?ml"
-      - "go.mod"
-      - "go.sum"
+      - "**/go.mod"
+      - "**/go.sum"
       - "**.go"
   pull_request:
     paths:
       - ".github/workflows/check-go-task.ya?ml"
       - "Taskfile.ya?ml"
-      - "go.mod"
-      - "go.sum"
+      - "**/go.mod"
+      - "**/go.sum"
       - "**.go"
   workflow_dispatch:
   repository_dispatch:
@@ -119,7 +119,16 @@ jobs:
         run: git diff --color --exit-code
 
   check-config:
+    name: check-config (${{ matrix.module.path }})
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        module:
+          - path: ./
+          - path: docsgen
 
     steps:
       - name: Checkout repository
@@ -131,6 +140,7 @@ jobs:
           go-version: ${{ env.GO_VERSION }}
 
       - name: Run go mod tidy
+        working-directory: ${{ matrix.module.path }}
         run: go mod tidy
 
       - name: Check whether any tidying was needed
