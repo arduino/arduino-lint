@@ -3,6 +3,7 @@
 [![Tests Status](https://github.com/arduino/arduino-lint/workflows/Run%20tests/badge.svg)](https://github.com/arduino/arduino-lint/actions?workflow=Run+tests)
 [![Test Integration status](https://github.com/arduino/arduino-lint/actions/workflows/test-go-integration-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/test-go-integration-task.yml)
 [![Check Go status](https://github.com/arduino/arduino-lint/actions/workflows/check-go-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/check-go-task.yml)
+[![Check Code Generation status](https://github.com/arduino/arduino-lint/actions/workflows/check-code-generation-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/check-code-generation-task.yml)
 [![Publish Nightly Build status](https://github.com/arduino/arduino-lint/actions/workflows/publish-go-nightly-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/publish-go-nightly-task.yml)
 [![Check Python status](https://github.com/arduino/arduino-lint/actions/workflows/check-python-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/check-python-task.yml)
 [![Check Markdown status](https://github.com/arduino/arduino-lint/actions/workflows/check-markdown-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/check-markdown-task.yml)
