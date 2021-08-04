@@ -229,9 +229,9 @@ tasks:
   docs:generate:
     desc: Create all generated documentation content
     deps:
-      - task: docs:gen
+      - task: go:cli-docs
 
-  docs:gen:
+  go:cli-docs:
     desc: Generate command reference
     dir: ./docsgen
     cmds:
@@ -246,14 +246,14 @@ tasks:
   docs:build:
     desc: Build documentation website contents
     cmds:
-      - task: docs:gen
+      - task: go:cli-docs
       - poetry install --no-root
       - poetry run mkdocs build --strict
 
   docs:publish:
     desc: Use Mike to build and push versioned docs
     cmds:
-      - task: docs:gen
+      - task: go:cli-docs
       - poetry run mike deploy --update-aliases --push --remote {{.DOCS_REMOTE}} {{.DOCS_VERSION}} {{.DOCS_ALIAS}}
 
   docs:serve:
