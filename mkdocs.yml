@@ -45,8 +45,6 @@ nav:
   - Command reference: commands/arduino-lint.md
   - CONTRIBUTING.md
 
-extra_css:
-  - css/version-select.css
-
-extra_javascript:
-  - js/version-select.js
+extra:
+  version:
+    provider: mike
