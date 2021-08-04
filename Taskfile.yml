@@ -252,8 +252,10 @@ tasks:
 
   website:serve:
     desc: Run website locally
+    deps:
+      - task: docs:generate
+      - task: poetry:install-deps
     cmds:
-      - task: docs:build
       - poetry run mkdocs serve
 
   docs:check:
