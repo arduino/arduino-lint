@@ -10,8 +10,14 @@ on:
     paths:
       - "docs/**"
       - ".github/workflows/deploy-cobra-mkdocs-versioned-poetry.ya?ml"
+      - "go.mod"
+      - "go.sum"
+      - "Taskfile.ya?ml"
+      - "**.go"
       - "docsgen/**"
-      - "cli/**"
+      - "mkdocs.ya?ml"
+      - "poetry.lock"
+      - "pyproject.toml"
   # Run on branch or tag creation (will be filtered by the publish-determination job).
   create:
 
