@@ -234,7 +234,7 @@ tasks:
       - task: general:format-prettier
 
   go:cli-docs:
-    desc: Generate command reference
+    desc: Generate command line interface reference documentation
     dir: ./docsgen
     cmds:
       # docs will generate examples using os.Args[0] so we need to call
