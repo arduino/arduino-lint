@@ -1,8 +1,8 @@
 name: Spell Check
 
 on:
-  pull_request:
   push:
+  pull_request:
   schedule:
     # Run every Tuesday at 8 AM UTC to catch new misspelling detections resulting from dictionary updates.
     - cron: "0 8 * * TUE"
