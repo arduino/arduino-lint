@@ -53,5 +53,4 @@ jobs:
           version: 3.x
 
       - name: Build website
-        # Ensure the documentation can build. These docs won't be published.
         run: task website:check
