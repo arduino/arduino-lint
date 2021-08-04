@@ -1,7 +1,7 @@
 name: Check Website
 
 on:
-  pull_request:
+  push:
     paths:
       - ".github/workflows/check-mkdocs-task.ya?ml"
       - "Taskfile.ya?ml"
@@ -11,7 +11,7 @@ on:
       - "docs/**"
       - "docsgen/**"
       - "**.go"
-  push:
+  pull_request:
     paths:
       - ".github/workflows/check-mkdocs-task.ya?ml"
       - "Taskfile.ya?ml"
