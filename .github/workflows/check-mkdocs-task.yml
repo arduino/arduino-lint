@@ -1,4 +1,4 @@
-name: Validate documentation
+name: Check Website
 
 on:
   pull_request:
@@ -20,14 +20,14 @@ on:
       - ".github/workflows/check-mkdocs-task.ya?ml"
 
 jobs:
-  validate:
+  check:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout local repository
+      - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install Taskfile
+      - name: Install Task
         uses: arduino/setup-task@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
@@ -48,6 +48,6 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install poetry
 
-      - name: Build documentation website
+      - name: Build website
         # Ensure the documentation can build. These docs won't be published.
         run: task website:check
