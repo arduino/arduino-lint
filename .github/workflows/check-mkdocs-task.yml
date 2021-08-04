@@ -1,5 +1,6 @@
 name: Check Website
 
+# See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows
 on:
   push:
     paths:
@@ -21,6 +22,8 @@ on:
       - "docs/**"
       - "docsgen/**"
       - "**.go"
+  workflow_dispatch:
+  repository_dispatch:
 
 jobs:
   check:
