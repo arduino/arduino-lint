@@ -1,6 +1,12 @@
 # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/check-mkdocs-task.md
 name: Check Website
 
+env:
+  # See: https://github.com/actions/setup-go/tree/v2#readme
+  GO_VERSION: "1.14"
+  # See: https://github.com/actions/setup-python/tree/v2#available-versions-of-python
+  PYTHON_VERSION: "3.9"
+
 # See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows
 on:
   push:
@@ -37,12 +43,12 @@ jobs:
       - name: Install Go
         uses: actions/setup-go@v2
         with:
-          go-version: "1.14"
+          go-version: ${{ env.GO_VERSION }}
 
       - name: Install Python
         uses: actions/setup-python@v2
         with:
-          python-version: "3.9"
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install Poetry
         run: pip install poetry
