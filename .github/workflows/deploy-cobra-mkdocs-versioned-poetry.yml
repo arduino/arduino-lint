@@ -1,4 +1,4 @@
-name: Publish documentation
+name: Deploy Website
 
 on:
   push:
@@ -38,7 +38,7 @@ jobs:
     if: needs.publish-determination.outputs.result == 'true'
 
     steps:
-      - name: Checkout local repository
+      - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Install Taskfile
