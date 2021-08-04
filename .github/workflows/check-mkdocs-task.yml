@@ -10,14 +10,14 @@ on:
       # potential changes to commands documentation
       - "cli/**"
       # changes to the workflow itself
-      - ".github/workflows/validate-docs.yml"
+      - ".github/workflows/check-mkdocs-task.ya?ml"
   push:
     paths:
       - "docs/**"
       - "docsgen/**"
       - "cli/**"
       - "rpc/**"
-      - ".github/workflows/validate-docs.yml"
+      - ".github/workflows/check-mkdocs-task.ya?ml"
 
 jobs:
   validate:
