@@ -28,7 +28,6 @@ vars:
     -X {{.CONFIGURATION_PACKAGE}}.Commit={{.COMMIT}}
     -X {{.CONFIGURATION_PACKAGE}}.Timestamp={{.TIMESTAMP}}
     '
-  GOFLAGS: "-timeout 10m -v -coverpkg=./... -covermode=atomic"
   DOCS_VERSION: dev
   DOCS_ALIAS: ""
   DOCS_REMOTE: "origin"
@@ -71,9 +70,10 @@ tasks:
     cmds:
       - |
         go test \
+          -v \
           -short \
-          {{default "-v" .GOFLAGS}} \
           -run '{{default ".*" .GO_TEST_REGEX}}' \
+          {{default "-timeout 10m -coverpkg=./... -covermode=atomic" .GO_TEST_FLAGS}} \
           -coverprofile=coverage_unit.txt \
           {{default .DEFAULT_GO_PACKAGES .GO_PACKAGES}}
 
