@@ -34,9 +34,6 @@ vars:
 
   PRETTIER: prettier@2.1.2
 
-  CODESPELL_SKIP_OPTION: '--skip "./.git,go.mod,go.sum,./arduino-lint,./arduino-lint.exe,./internal/rule/rulefunction/testdata/libraries/MisspelledSentenceParagraphValue/library.properties,./site"'
-  CODESPELL_IGNORE_WORDS_OPTION: "--ignore-words ./etc/codespell-ignore-words-list.txt"
-
 tasks:
   build:
     desc: Build the project
@@ -95,7 +92,7 @@ tasks:
       - task: docs:check
       - task: config:check
       - task: general:check-formatting
-      - task: check-spelling
+      - task: general:check-spelling
       - task: shell:check-mode
 
   lint:
@@ -405,14 +402,18 @@ tasks:
     cmds:
       - npx prettier --write .
 
-  check-spelling:
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/spell-check-task/Taskfile.yml
+  general:check-spelling:
     desc: Check for commonly misspelled words
+    deps:
+      - task: poetry:install-deps
     cmds:
-      - poetry install --no-root
-      - poetry run codespell {{.CODESPELL_SKIP_OPTION}} {{.CODESPELL_IGNORE_WORDS_OPTION}}
+      - poetry run codespell
 
-  correct-spelling:
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/spell-check-task/Taskfile.yml
+  general:correct-spelling:
     desc: Correct commonly misspelled words where possible
+    deps:
+      - task: poetry:install-deps
     cmds:
-      - poetry install --no-root
-      - poetry run codespell --write-changes {{.CODESPELL_SKIP_OPTION}} {{.CODESPELL_IGNORE_WORDS_OPTION}}
+      - poetry run codespell --write-changes
