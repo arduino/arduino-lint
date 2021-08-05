@@ -35,7 +35,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install Taskfile
+      - name: Install Task
         uses: arduino/setup-task@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}

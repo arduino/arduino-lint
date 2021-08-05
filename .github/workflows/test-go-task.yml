@@ -1,5 +1,5 @@
 # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/test-go-task.md
-name: Run tests
+name: Test Go
 
 env:
   # See: https://github.com/actions/setup-go/tree/v2#readme
@@ -24,7 +24,7 @@ on:
       - "**/testdata/**"
 
 jobs:
-  test-go:
+  test:
     strategy:
       matrix:
         operating-system:
@@ -35,7 +35,7 @@ jobs:
     runs-on: ${{ matrix.operating-system }}
 
     steps:
-      - name: Checkout local repository
+      - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Install Go
@@ -43,13 +43,13 @@ jobs:
         with:
           go-version: ${{ env.GO_VERSION }}
 
-      - name: Install Taskfile
+      - name: Install Task
         uses: arduino/setup-task@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           version: 3.x
 
-      - name: Run unit tests
+      - name: Run tests
         run: task go:test
 
       - name: Send unit tests coverage to Codecov

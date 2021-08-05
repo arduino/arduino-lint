@@ -33,7 +33,7 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - name: Checkout local repository
+      - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Run script with defaults
@@ -65,7 +65,7 @@ jobs:
           # See: https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
           echo "BINDIR=${{ runner.temp }}/custom-installation-folder" >> "$GITHUB_ENV"
 
-      - name: Checkout local repository
+      - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Run script with custom install location
@@ -95,7 +95,7 @@ jobs:
       VERSION: "1.0.0"
 
     steps:
-      - name: Checkout local repository
+      - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Run script with version argument
@@ -121,7 +121,7 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - name: Checkout local repository
+      - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Run script with nightly build version argument
