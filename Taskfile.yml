@@ -72,8 +72,8 @@ tasks:
       - |
         go test \
           -short \
-          -run '{{default ".*" .TEST_REGEX}}' \
           {{default "-v" .GOFLAGS}} \
+          -run '{{default ".*" .GO_TEST_REGEX}}' \
           -coverprofile=coverage_unit.txt \
           {{default .DEFAULT_GO_PACKAGES .GO_PACKAGES}}
 
