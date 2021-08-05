@@ -233,7 +233,7 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "mike"
-version = "0.5.5"
+version = "1.0.1"
 description = "Manage multiple versions of your MkDocs-powered documentation"
 category = "main"
 optional = false
@@ -242,11 +242,11 @@ python-versions = "*"
 [package.dependencies]
 jinja2 = "*"
 mkdocs = ">=1.0"
-packaging = "*"
-"ruamel.yaml" = "*"
+pyyaml = "*"
+verspec = "*"
 
 [package.extras]
-dev = ["coverage", "flake8 (>=3.0)", "pypandoc (>=1.4)"]
+dev = ["coverage", "flake8 (>=3.0)"]
 test = ["coverage", "flake8 (>=3.0)"]
 
 [[package]]
@@ -459,18 +459,6 @@ optional = false
 python-versions = "*"
 
 [[package]]
-name = "ruamel.yaml"
-version = "0.16.12"
-description = "ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order"
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.extras]
-docs = ["ryd"]
-jinja2 = ["ruamel.yaml.jinja2 (>=0.2)"]
-
-[[package]]
 name = "semver"
 version = "2.13.0"
 description = "Python helper for Semantic Versioning (http://semver.org/)"
@@ -519,6 +507,17 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "verspec"
+version = "0.1.0"
+description = "Flexible version handling"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.extras]
+test = ["coverage", "flake8 (>=3.7)", "mypy", "pretend", "pytest"]
+
+[[package]]
 name = "watchdog"
 version = "2.1.3"
 description = "Filesystem events monitoring"
@@ -544,7 +543,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "40346ba0a3682a2681d0d991a4d89ecd0c663155e3683ec1901735e40a4bd78c"
+content-hash = "f011582fdbbbaafa11b9d857b48114ea8690a76f64da62f054210674b07f87bc"
 
 [metadata.files]
 appdirs = [
@@ -663,8 +662,8 @@ mergedeep = [
     {file = "mergedeep-1.3.4.tar.gz", hash = "sha256:0096d52e9dad9939c3d975a774666af186eda617e6ca84df4c94dec30004f2a8"},
 ]
 mike = [
-    {file = "mike-0.5.5-py3-none-any.whl", hash = "sha256:9e15a240f9aca36645789897fe53a8726e4d2b40ab8849f184dae87fe5a3f0cd"},
-    {file = "mike-0.5.5.tar.gz", hash = "sha256:0aab7a4f9e2394057ae6ce4e0732b2216a2d247e5b6c8aa2059720e9ea184648"},
+    {file = "mike-1.0.1-py3-none-any.whl", hash = "sha256:29b39a725510a67590db261ca8292f583dcfe06c6ea6842793c96ae631d6e2e1"},
+    {file = "mike-1.0.1.tar.gz", hash = "sha256:7888f01d05d752bd43e03f6d971608a0b876f23787cf49a1f2b43be304b1789e"},
 ]
 mkdocs = [
     {file = "mkdocs-1.2.2-py3-none-any.whl", hash = "sha256:d019ff8e17ec746afeb54eb9eb4112b5e959597aebc971da46a5c9486137f0ff"},
@@ -792,10 +791,6 @@ regex = [
     {file = "regex-2020.11.13-cp39-cp39-win_amd64.whl", hash = "sha256:a15f64ae3a027b64496a71ab1f722355e570c3fac5ba2801cafce846bf5af01d"},
     {file = "regex-2020.11.13.tar.gz", hash = "sha256:83d6b356e116ca119db8e7c6fc2983289d87b27b3fac238cfe5dca529d884562"},
 ]
-"ruamel.yaml" = [
-    {file = "ruamel.yaml-0.16.12-py2.py3-none-any.whl", hash = "sha256:012b9470a0ea06e4e44e99e7920277edf6b46eee0232a04487ea73a7386340a5"},
-    {file = "ruamel.yaml-0.16.12.tar.gz", hash = "sha256:076cc0bc34f1966d920a49f18b52b6ad559fbe656a0748e3535cf7b3f29ebf9e"},
-]
 semver = [
     {file = "semver-2.13.0-py2.py3-none-any.whl", hash = "sha256:ced8b23dceb22134307c1b8abfa523da14198793d9787ac838e70e29e77458d4"},
     {file = "semver-2.13.0.tar.gz", hash = "sha256:fa0fe2722ee1c3f57eac478820c3a5ae2f624af8264cbdf9000c980ff7f75e3f"},
@@ -820,6 +815,10 @@ typing-extensions = [
     {file = "typing_extensions-3.10.0.0-py2-none-any.whl", hash = "sha256:0ac0f89795dd19de6b97debb0c6af1c70987fd80a2d62d1958f7e56fcc31b497"},
     {file = "typing_extensions-3.10.0.0-py3-none-any.whl", hash = "sha256:779383f6086d90c99ae41cf0ff39aac8a7937a9283ce0a414e5dd782f4c94a84"},
     {file = "typing_extensions-3.10.0.0.tar.gz", hash = "sha256:50b6f157849174217d0656f99dc82fe932884fb250826c18350e159ec6cdf342"},
+]
+verspec = [
+    {file = "verspec-0.1.0-py3-none-any.whl", hash = "sha256:741877d5633cc9464c45a469ae2a31e801e6dbbaa85b9675d481cda100f11c31"},
+    {file = "verspec-0.1.0.tar.gz", hash = "sha256:c4504ca697b2056cdb4bfa7121461f5a0e81809255b41c03dda4ba823637c01e"},
 ]
 watchdog = [
     {file = "watchdog-2.1.3-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:9628f3f85375a17614a2ab5eac7665f7f7be8b6b0a2a228e6f6a2e91dd4bfe26"},
