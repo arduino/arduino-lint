@@ -73,9 +73,10 @@ tasks:
 
   go:test-integration:
     desc: Run integration tests
+    deps:
+      - task: poetry:install-deps
     cmds:
       - task: build
-      - poetry install --no-root
       - poetry run pytest test
 
   check:
