@@ -48,7 +48,7 @@ jobs:
           version: 3.x
 
       - name: Run unit tests
-        run: task go:test-unit
+        run: task go:test
 
       - name: Send unit tests coverage to Codecov
         if: matrix.operating-system == 'ubuntu-latest'

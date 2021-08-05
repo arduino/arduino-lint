@@ -118,26 +118,26 @@ task test
 To run only the Go unit tests, run:
 
 ```
-task go:test-unit
+task go:test
 ```
 
 By default, all tests for all Arduino Lint's Go packages are run. To run unit tests for only one or more specific
 packages, you can set the `TARGETS` environment variable, e.g.:
 
 ```
-TARGETS=./internal/rule task go:test-unit
+TARGETS=./internal/rule task go:test
 ```
 
 Alternatively, to run only some specific test(s), you can specify a regex to match against the test function name, e.g.:
 
 ```
-TEST_REGEX='^TestLibraryProperties.*' task go:test-unit
+TEST_REGEX='^TestLibraryProperties.*' task go:test
 ```
 
 Both can be combined as well, typically to run only a specific test:
 
 ```
-TEST_REGEX='^TestFindProjects$' TARGETS=./internal/project task go:test-unit
+TEST_REGEX='^TestFindProjects$' TARGETS=./internal/project task go:test
 ```
 
 #### Integration tests
@@ -153,7 +153,7 @@ For these reasons, in addition to regular unit tests the project has a suite of 
 After the software requirements have been installed, you should be able to run the tests with:
 
 ```
-task test-integration
+task go:test-integration
 ```
 
 This will automatically install the necessary dependencies, if not already installed, and run the integration tests

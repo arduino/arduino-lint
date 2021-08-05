@@ -41,14 +41,20 @@ vars:
 tasks:
   build:
     desc: Build the project
-    cmds:
-      - go build -v {{.LDFLAGS}}
+    deps:
+      - task: go:build
 
   test:
     desc: Run tests
     cmds:
-      - task: go:test-unit
-      - task: test-integration
+      - task: go:test
+      - task: go:test-integration
+
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/go-task/Taskfile.yml
+  go:build:
+    desc: Build the Go code
+    cmds:
+      - go build -v {{.LDFLAGS}}
 
   go:generate:
     desc: Generate Go code
@@ -60,12 +66,12 @@ tasks:
       - go generate ./...
       - task: go:format
 
-  go:test-unit:
+  go:test:
     desc: Run unit tests
     cmds:
       - go test -short -run '{{default ".*" .TEST_REGEX}}' {{default "-v" .GOFLAGS}} -coverprofile=coverage_unit.txt {{default .DEFAULT_GO_PACKAGES .GO_PACKAGES}}
 
-  test-integration:
+  go:test-integration:
     desc: Run integration tests
     cmds:
       - task: build

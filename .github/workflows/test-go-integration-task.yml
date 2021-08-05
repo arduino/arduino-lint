@@ -57,4 +57,4 @@ jobs:
         run: pip install poetry
 
       - name: Run integration tests
-        run: task test-integration
+        run: task go:test-integration
