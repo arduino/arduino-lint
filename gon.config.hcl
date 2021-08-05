@@ -10,5 +10,5 @@ sign {
 # Ask Gon for zip output to force notarization process to take place.
 # The CI will ignore the zip output, using the signed binary only.
 zip {
-  output_path = "arduino-lint.zip"
+  output_path = "unused.zip"
 }
