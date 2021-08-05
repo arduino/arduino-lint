@@ -52,7 +52,7 @@ jobs:
 
       - name: Send unit tests coverage to Codecov
         if: matrix.operating-system == 'ubuntu-latest'
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v2.0.2
         with:
           file: ./coverage_unit.txt
           flags: unit
