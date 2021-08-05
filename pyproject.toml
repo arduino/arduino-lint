@@ -15,7 +15,7 @@ semver = "^2.13.0"
 
 # Documentation generation dependencies.
 click = "<7.2"
-gitpython = "^3.1.1"
+gitpython = "^3.1.18"
 mdx_truly_sane_lists = "^1.2"
 mike = "^0.5.1"
 mkdocs = "^1.2.1"
