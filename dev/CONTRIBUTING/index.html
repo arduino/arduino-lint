@@ -741,17 +741,17 @@ of the tests locally.</p>
 </code></pre></div>
 <h4 id="go-unit-tests">Go unit tests<a class="headerlink" href="#go-unit-tests" title="Permanent link">&para;</a></h4>
 <p>To run only the Go unit tests, run:</p>
-<div class="highlight"><pre><span></span><code>task go:test-unit
+<div class="highlight"><pre><span></span><code>task go:test
 </code></pre></div>
 <p>By default, all tests for all Arduino Lint's Go packages are run. To run unit tests for only one or more specific
 packages, you can set the <code>TARGETS</code> environment variable, e.g.:</p>
-<div class="highlight"><pre><span></span><code>TARGETS=./internal/rule task go:test-unit
+<div class="highlight"><pre><span></span><code>TARGETS=./internal/rule task go:test
 </code></pre></div>
 <p>Alternatively, to run only some specific test(s), you can specify a regex to match against the test function name, e.g.:</p>
-<div class="highlight"><pre><span></span><code>TEST_REGEX=&#39;^TestLibraryProperties.*&#39; task go:test-unit
+<div class="highlight"><pre><span></span><code>TEST_REGEX=&#39;^TestLibraryProperties.*&#39; task go:test
 </code></pre></div>
 <p>Both can be combined as well, typically to run only a specific test:</p>
-<div class="highlight"><pre><span></span><code>TEST_REGEX=&#39;^TestFindProjects$&#39; TARGETS=./internal/project task go:test-unit
+<div class="highlight"><pre><span></span><code>TEST_REGEX=&#39;^TestFindProjects$&#39; TARGETS=./internal/project task go:test
 </code></pre></div>
 <h4 id="integration-tests">Integration tests<a class="headerlink" href="#integration-tests" title="Permanent link">&para;</a></h4>
 <p>Being a command line interface, Arduino Lint is heavily interactive and it has to stay consistent in accepting the user
@@ -760,12 +760,12 @@ input and providing the expected output and proper exit codes.</p>
 <code>arduino-lint</code> in a different process and assess the options are correctly understood and the output is what we expect.</p>
 <h5 id="running-tests">Running tests<a class="headerlink" href="#running-tests" title="Permanent link">&para;</a></h5>
 <p>After the software requirements have been installed, you should be able to run the tests with:</p>
-<div class="highlight"><pre><span></span><code>task test-integration
+<div class="highlight"><pre><span></span><code>task go:test-integration
 </code></pre></div>
 <p>This will automatically install the necessary dependencies, if not already installed, and run the integration tests
 automatically.</p>
 <p>To run specific tests, you must run <code>pytest</code> from the virtual environment created by Poetry.</p>
-<div class="highlight"><pre><span></span><code>poetry run pytest test/test_all.py::test_report_file
+<div class="highlight"><pre><span></span><code>poetry run pytest tests/test_all.py::test_report_file
 </code></pre></div>
 <p>You can avoid writing the <code>poetry run</code> prefix each time by creating a new shell inside the virtual environment:</p>
 <div class="highlight"><pre><span></span><code>poetry shell
