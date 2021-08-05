@@ -272,4 +272,5 @@ documentation website. Every time a change is pushed to this special branch, Git
 to pull the change and publish a new version of the website. Do not open Pull Requests to push changes to the `gh-pages`
 branch; that will be done exclusively from the CI.
 
-For details on the documentation publishing system, see: https://github.com/arduino/arduino-lint/blob/main/docs/build.py
+For details on the documentation publishing system, see:
+https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/deploy-cobra-mkdocs-versioned-poetry.md
