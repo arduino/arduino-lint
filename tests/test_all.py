@@ -1,3 +1,5 @@
+# Source:
+# https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/test-integration/test_all.py
 # Copyright 2020 ARDUINO SA(http: // www.arduino.cc/)
 #
 # This software is released under the GNU General Public License version 3,

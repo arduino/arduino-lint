@@ -65,6 +65,7 @@ tasks:
       - go generate ./...
       - task: go:format
 
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/test-go-task/Taskfile.yml
   go:test:
     desc: Run unit tests
     cmds:
@@ -77,6 +78,7 @@ tasks:
           -coverprofile=coverage_unit.txt \
           {{default .DEFAULT_GO_PACKAGES .GO_PACKAGES}}
 
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/test-go-integration-task/Taskfile.yml
   go:test-integration:
     desc: Run integration tests
     deps:
