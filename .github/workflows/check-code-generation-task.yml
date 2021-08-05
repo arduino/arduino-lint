@@ -11,7 +11,7 @@ on:
       - "Taskfile.yml"
       - "go.mod"
       - "go.sum"
-      - "**/*.go"
+      - "**.go"
       - "etc/schemas/**/*.json"
   pull_request:
     paths:
@@ -19,7 +19,7 @@ on:
       - "Taskfile.yml"
       - "go.mod"
       - "go.sum"
-      - "**/*.go"
+      - "**.go"
       - "etc/schemas/**/*.json"
 
 jobs:
