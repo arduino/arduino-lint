@@ -1,5 +1,9 @@
 name: Check Code Generation
 
+env:
+  # See: https://github.com/actions/setup-go/tree/v2#readme
+  GO_VERSION: "1.16"
+
 on:
   push:
     paths:
@@ -29,7 +33,7 @@ jobs:
       - name: Install Go
         uses: actions/setup-go@v2
         with:
-          go-version: "1.16"
+          go-version: ${{ env.GO_VERSION }}
 
       - name: Install Taskfile
         uses: arduino/setup-task@v1
