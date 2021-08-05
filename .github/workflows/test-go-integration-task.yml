@@ -39,7 +39,7 @@ jobs:
         operating-system:
           - ubuntu-latest
           - windows-latest
-          - macOS-latest
+          - macos-latest
 
     runs-on: ${{ matrix.operating-system }}
 
