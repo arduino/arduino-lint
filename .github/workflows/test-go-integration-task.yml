@@ -10,7 +10,7 @@ on:
       - "go.sum"
       - "poetry.lock"
       - "pyproject.toml"
-      - "test/**"
+      - "tests/**"
   pull_request:
     paths:
       - ".github/workflows/test-go-integration-task.ya?ml"
@@ -20,7 +20,7 @@ on:
       - "go.sum"
       - "poetry.lock"
       - "pyproject.toml"
-      - "test/**"
+      - "tests/**"
 
 jobs:
   test-go:

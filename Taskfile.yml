@@ -77,7 +77,7 @@ tasks:
       - task: go:build
       - task: poetry:install-deps
     cmds:
-      - poetry run pytest test
+      - poetry run pytest tests
 
   check:
     desc: Lint and check formatting of all files

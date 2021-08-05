@@ -162,7 +162,7 @@ automatically.
 To run specific tests, you must run `pytest` from the virtual environment created by Poetry.
 
 ```
-poetry run pytest test/test_all.py::test_report_file
+poetry run pytest tests/test_all.py::test_report_file
 ```
 
 You can avoid writing the `poetry run` prefix each time by creating a new shell inside the virtual environment:
