@@ -43,7 +43,7 @@ jobs:
 
       - name: Build
         run: |
-          PACKAGE_NAME_PREFIX="${{ github.workflow }}"
+          PACKAGE_NAME_PREFIX="test"
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             PACKAGE_NAME_PREFIX="$PACKAGE_NAME_PREFIX-${{ github.event.number }}"
           fi
