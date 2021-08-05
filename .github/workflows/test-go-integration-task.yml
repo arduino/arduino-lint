@@ -7,6 +7,7 @@ env:
   # See: https://github.com/actions/setup-python/tree/v2#available-versions-of-python
   PYTHON_VERSION: "3.9"
 
+# See: https://docs.github.com/en/free-pro-team@latest/actions/reference/events-that-trigger-workflows
 on:
   push:
     paths:
@@ -28,6 +29,8 @@ on:
       - "poetry.lock"
       - "pyproject.toml"
       - "tests/**"
+  workflow_dispatch:
+  repository_dispatch:
 
 jobs:
   test:
