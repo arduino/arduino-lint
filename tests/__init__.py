@@ -1,9 +1,8 @@
-# This file is part of Arduino Lint.
-#
+# Source:
+# https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/test-python/__init__.py
 # Copyright 2020 ARDUINO SA(http: // www.arduino.cc/)
 #
 # This software is released under the GNU General Public License version 3,
-# which covers the main part of Arduino Lint.
 # The terms of this license can be found at:
 # https: // www.gnu.org/licenses/gpl-3.0.en.html
 #

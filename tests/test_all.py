@@ -1,9 +1,8 @@
-# This file is part of Arduino Lint.
-#
+# Source:
+# https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/test-integration/test_all.py
 # Copyright 2020 ARDUINO SA(http: // www.arduino.cc/)
 #
 # This software is released under the GNU General Public License version 3,
-# which covers the main part of Arduino Lint.
 # The terms of this license can be found at:
 # https: // www.gnu.org/licenses/gpl-3.0.en.html
 #
@@ -13,8 +12,10 @@
 # Arduino software without disclosing the source code of your own applications.
 # To purchase a commercial license, send an email to license@arduino.cc.
 import json
+import os
 import pathlib
 import platform
+import shutil
 import typing
 
 import dateutil.parser
@@ -265,10 +266,12 @@ def run_command(pytestconfig, working_dir) -> typing.Callable[..., invoke.runner
         http://docs.pyinvoke.org/en/1.4/api/runners.html#invoke.runners.Result
     """
 
-    arduino_lint_path = pathlib.Path(pytestconfig.rootdir).parent / "arduino-lint"
+    executable_path = pathlib.Path(pytestconfig.rootdir).parent / "arduino-lint"
 
     def _run(
-        cmd: list, custom_working_dir: typing.Optional[str] = None, custom_env: typing.Optional[dict] = None
+        cmd: list,
+        custom_working_dir: typing.Optional[str] = None,
+        custom_env: typing.Optional[dict] = None,
     ) -> invoke.runners.Result:
         if cmd is None:
             cmd = []
@@ -277,7 +280,7 @@ def run_command(pytestconfig, working_dir) -> typing.Callable[..., invoke.runner
         quoted_cmd = []
         for token in cmd:
             quoted_cmd.append(f'"{token}"')
-        cli_full_line = '"{}" {}'.format(arduino_lint_path, " ".join(quoted_cmd))
+        cli_full_line = '"{}" {}'.format(executable_path, " ".join(quoted_cmd))
         run_context = invoke.context.Context()
         # It might happen that we need to change directories between drives on Windows,
         # in that case the "/d" flag must be used otherwise directory wouldn't change
@@ -289,7 +292,12 @@ def run_command(pytestconfig, working_dir) -> typing.Callable[..., invoke.runner
         # wrapping the path in quotation marks is the safest approach
         with run_context.prefix(f'{cd_command} "{custom_working_dir}"'):
             return run_context.run(
-                command=cli_full_line, echo=False, hide=True, warn=True, env=custom_env, encoding="utf-8"
+                command=cli_full_line,
+                echo=False,
+                hide=True,
+                warn=True,
+                env=custom_env,
+                encoding="utf-8",
             )
 
     return _run
@@ -300,5 +308,6 @@ def working_dir(tmpdir_factory) -> str:
     """Create a temporary folder for the test to run in. It will be created before running each test and deleted at the
     end. This way all the tests work in isolation.
     """
-    work_dir = tmpdir_factory.mktemp(basename="ArduinoLintTestWork")
-    yield str(work_dir)
+    work_dir = tmpdir_factory.mktemp(basename="IntegrationTestWorkingDir")
+    yield os.path.realpath(work_dir)
+    shutil.rmtree(work_dir, ignore_errors=True)

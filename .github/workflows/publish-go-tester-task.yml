@@ -1,94 +1,37 @@
-name: Run tests
+# Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/publish-go-tester-task.md
+name: Publish Tester Build
 
+# See: https://docs.github.com/en/free-pro-team@latest/actions/reference/events-that-trigger-workflows
 on:
   push:
     paths:
-      - ".github/workflows/test.yml"
-      - "Taskfile.yml"
+      - ".github/workflows/publish-go-tester-task.ya?ml"
       - "go.mod"
       - "go.sum"
-      - "**/*.go"
-      - "**/testdata/**"
-      - "etc/schemas/**/*.json"
-      - "pyproject.toml"
-      - "test/**"
-      - "Taskfile.yml"
+      - "Taskfile.ya?ml"
+      - "**.go"
   pull_request:
     paths:
-      - ".github/workflows/test.yml"
-      - "Taskfile.yml"
+      - ".github/workflows/publish-go-tester-task.ya?ml"
       - "go.mod"
       - "go.sum"
-      - "**/*.go"
-      - "**/testdata/**"
-      - "etc/schemas/**/*.json"
-      - "pyproject.toml"
-      - "test/**"
-      - "Taskfile.yml"
+      - "Taskfile.ya?ml"
+      - "**.go"
+  workflow_dispatch:
+  repository_dispatch:
 
 env:
+  # As defined by the Taskfile's DIST_DIR variable
+  DIST_DIR: dist
   BUILDS_ARTIFACT: build-artifacts
 
 jobs:
-  test-go:
-    strategy:
-      matrix:
-        operating-system:
-          - ubuntu-latest
-          - windows-latest
-          - macOS-latest
-
-    runs-on: ${{ matrix.operating-system }}
-
-    steps:
-      - name: Checkout local repository
-        uses: actions/checkout@v2
-
-      - name: Install Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: "1.16"
-
-      - name: Install Taskfile
-        uses: arduino/setup-task@v1
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
-
-      - name: Generate code
-        run: task go:generate
-
-      - name: Check for forgotten code generation
-        run: git diff --color --exit-code
-
-      - name: Run unit tests
-        run: task go:test-unit
-
-      - name: Send unit tests coverage to Codecov
-        if: matrix.operating-system == 'ubuntu-latest'
-        uses: codecov/codecov-action@v1
-        with:
-          file: ./coverage_unit.txt
-          flags: unit
-          fail_ci_if_error: true
-
-      - name: Install Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.9"
-
-      - name: Install Poetry
-        run: pip install poetry
-
-      - name: Run integration tests
-        run: task test-integration
-
   build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0
 
@@ -112,7 +55,7 @@ jobs:
       - name: Upload combined builds artifact
         uses: actions/upload-artifact@v2
         with:
-          path: dist/
+          path: ${{ env.DIST_DIR }}
           name: ${{ env.BUILDS_ARTIFACT }}
 
   artifacts:

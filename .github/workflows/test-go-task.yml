@@ -1,0 +1,59 @@
+name: Run tests
+
+on:
+  push:
+    paths:
+      - ".github/workflows/test-go-task.ya?ml"
+      - "Taskfile.yml"
+      - "go.mod"
+      - "go.sum"
+      - "**/*.go"
+      - "**/testdata/**"
+  pull_request:
+    paths:
+      - ".github/workflows/test-go-task.ya?ml"
+      - "Taskfile.yml"
+      - "go.mod"
+      - "go.sum"
+      - "**/*.go"
+      - "**/testdata/**"
+
+env:
+  BUILDS_ARTIFACT: build-artifacts
+
+jobs:
+  test-go:
+    strategy:
+      matrix:
+        operating-system:
+          - ubuntu-latest
+          - windows-latest
+          - macOS-latest
+
+    runs-on: ${{ matrix.operating-system }}
+
+    steps:
+      - name: Checkout local repository
+        uses: actions/checkout@v2
+
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: "1.16"
+
+      - name: Install Taskfile
+        uses: arduino/setup-task@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
+
+      - name: Run unit tests
+        run: task go:test
+
+      - name: Send unit tests coverage to Codecov
+        if: matrix.operating-system == 'ubuntu-latest'
+        uses: codecov/codecov-action@v1
+        with:
+          file: ./coverage_unit.txt
+          flags: unit
+          fail_ci_if_error: true

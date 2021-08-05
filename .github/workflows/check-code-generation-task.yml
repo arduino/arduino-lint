@@ -1,0 +1,47 @@
+name: Check Code Generation
+
+on:
+  push:
+    paths:
+      - ".github/workflows/check-code-generation-task.ya?ml"
+      - "Taskfile.yml"
+      - "go.mod"
+      - "go.sum"
+      - "**/*.go"
+      - "etc/schemas/**/*.json"
+  pull_request:
+    paths:
+      - ".github/workflows/check-code-generation-task.ya?ml"
+      - "Taskfile.yml"
+      - "go.mod"
+      - "go.sum"
+      - "**/*.go"
+      - "etc/schemas/**/*.json"
+
+env:
+  BUILDS_ARTIFACT: build-artifacts
+
+jobs:
+  test-go:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout local repository
+        uses: actions/checkout@v2
+
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: "1.16"
+
+      - name: Install Taskfile
+        uses: arduino/setup-task@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
+
+      - name: Generate code
+        run: task go:generate
+
+      - name: Check for forgotten code generation
+        run: git diff --color --exit-code
