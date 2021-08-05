@@ -12,6 +12,19 @@ updates:
     labels:
       - "topic: infrastructure"
 
+  - package-ecosystem: gomod
+    directory: /
+    schedule:
+      interval: daily
+    labels:
+      - "topic: infrastructure"
+  - package-ecosystem: gomod
+    directory: /docsgen/
+    schedule:
+      interval: daily
+    labels:
+      - "topic: infrastructure"
+
   - package-ecosystem: pip
     directory: /
     schedule:
