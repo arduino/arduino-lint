@@ -69,7 +69,13 @@ tasks:
   go:test:
     desc: Run unit tests
     cmds:
-      - go test -short -run '{{default ".*" .TEST_REGEX}}' {{default "-v" .GOFLAGS}} -coverprofile=coverage_unit.txt {{default .DEFAULT_GO_PACKAGES .GO_PACKAGES}}
+      - |
+        go test \
+          -short \
+          -run '{{default ".*" .TEST_REGEX}}' \
+          {{default "-v" .GOFLAGS}} \
+          -coverprofile=coverage_unit.txt \
+          {{default .DEFAULT_GO_PACKAGES .GO_PACKAGES}}
 
   go:test-integration:
     desc: Run integration tests
