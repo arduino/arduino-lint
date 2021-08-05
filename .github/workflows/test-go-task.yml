@@ -18,9 +18,6 @@ on:
       - "**/*.go"
       - "**/testdata/**"
 
-env:
-  BUILDS_ARTIFACT: build-artifacts
-
 jobs:
   test-go:
     strategy:
