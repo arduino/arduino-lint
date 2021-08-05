@@ -1,9 +1,6 @@
-# This file is part of Arduino Lint.
-#
 # Copyright 2020 ARDUINO SA(http: // www.arduino.cc/)
 #
 # This software is released under the GNU General Public License version 3,
-# which covers the main part of Arduino Lint.
 # The terms of this license can be found at:
 # https: // www.gnu.org/licenses/gpl-3.0.en.html
 #
@@ -265,7 +262,7 @@ def run_command(pytestconfig, working_dir) -> typing.Callable[..., invoke.runner
         http://docs.pyinvoke.org/en/1.4/api/runners.html#invoke.runners.Result
     """
 
-    arduino_lint_path = pathlib.Path(pytestconfig.rootdir).parent / "arduino-lint"
+    executable_path = pathlib.Path(pytestconfig.rootdir).parent / "arduino-lint"
 
     def _run(
         cmd: list, custom_working_dir: typing.Optional[str] = None, custom_env: typing.Optional[dict] = None
@@ -277,7 +274,7 @@ def run_command(pytestconfig, working_dir) -> typing.Callable[..., invoke.runner
         quoted_cmd = []
         for token in cmd:
             quoted_cmd.append(f'"{token}"')
-        cli_full_line = '"{}" {}'.format(arduino_lint_path, " ".join(quoted_cmd))
+        cli_full_line = '"{}" {}'.format(executable_path, " ".join(quoted_cmd))
         run_context = invoke.context.Context()
         # It might happen that we need to change directories between drives on Windows,
         # in that case the "/d" flag must be used otherwise directory wouldn't change
@@ -300,5 +297,5 @@ def working_dir(tmpdir_factory) -> str:
     """Create a temporary folder for the test to run in. It will be created before running each test and deleted at the
     end. This way all the tests work in isolation.
     """
-    work_dir = tmpdir_factory.mktemp(basename="ArduinoLintTestWork")
     yield str(work_dir)
+    work_dir = tmpdir_factory.mktemp(basename="IntegrationTestWorkingDir")
