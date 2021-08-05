@@ -3,11 +3,11 @@ name: Test install script
 on:
   push:
     paths:
-      - ".github/workflows/test-install.yml"
+      - ".github/workflows/test-install.ya?ml"
       - "etc/install.sh"
   pull_request:
     paths:
-      - ".github/workflows/test-install.yml"
+      - ".github/workflows/test-install.ya?ml"
       - "etc/install.sh"
   schedule:
     # Run every day at 03:00 UTC to catch breakage caused by external events

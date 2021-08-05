@@ -10,17 +10,17 @@ on:
   push:
     paths:
       - ".github/workflows/test-go-task.ya?ml"
-      - "Taskfile.yml"
       - "go.mod"
       - "go.sum"
+      - "Taskfile.ya?ml"
       - "**.go"
       - "**/testdata/**"
   pull_request:
     paths:
       - ".github/workflows/test-go-task.ya?ml"
-      - "Taskfile.yml"
       - "go.mod"
       - "go.sum"
+      - "Taskfile.ya?ml"
       - "**.go"
       - "**/testdata/**"
   workflow_dispatch:
