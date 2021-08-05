@@ -13,6 +13,7 @@ import json
 import os
 import pathlib
 import platform
+import shutil
 import typing
 
 import dateutil.parser
@@ -307,3 +308,4 @@ def working_dir(tmpdir_factory) -> str:
     """
     work_dir = tmpdir_factory.mktemp(basename="IntegrationTestWorkingDir")
     yield os.path.realpath(work_dir)
+    shutil.rmtree(work_dir, ignore_errors=True)
