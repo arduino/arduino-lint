@@ -265,7 +265,9 @@ def run_command(pytestconfig, working_dir) -> typing.Callable[..., invoke.runner
     executable_path = pathlib.Path(pytestconfig.rootdir).parent / "arduino-lint"
 
     def _run(
-        cmd: list, custom_working_dir: typing.Optional[str] = None, custom_env: typing.Optional[dict] = None
+        cmd: list,
+        custom_working_dir: typing.Optional[str] = None,
+        custom_env: typing.Optional[dict] = None,
     ) -> invoke.runners.Result:
         if cmd is None:
             cmd = []
@@ -286,7 +288,12 @@ def run_command(pytestconfig, working_dir) -> typing.Callable[..., invoke.runner
         # wrapping the path in quotation marks is the safest approach
         with run_context.prefix(f'{cd_command} "{custom_working_dir}"'):
             return run_context.run(
-                command=cli_full_line, echo=False, hide=True, warn=True, env=custom_env, encoding="utf-8"
+                command=cli_full_line,
+                echo=False,
+                hide=True,
+                warn=True,
+                env=custom_env,
+                encoding="utf-8",
             )
 
     return _run
