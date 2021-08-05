@@ -9,7 +9,7 @@ vars:
   PROJECT_NAME: "arduino-lint"
   DIST_DIR: "dist"
   DEFAULT_GO_PACKAGES:
-    sh: echo `go list ./... | grep --invert-match 'github.com/arduino/arduino-lint/internal/rule/schema/schemadata' | tr '\n' ' '`
+    sh: echo $(go list ./... | grep --invert-match 'github.com/arduino/arduino-lint/internal/rule/schema/schemadata' | tr '\n' ' ')
   # build vars
   COMMIT:
     sh: echo "$(git log --no-show-signature -n 1 --format=%h)"
