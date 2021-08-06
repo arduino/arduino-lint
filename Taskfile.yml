@@ -28,11 +28,6 @@ vars:
     -X {{.CONFIGURATION_PACKAGE}}.Commit={{.COMMIT}}
     -X {{.CONFIGURATION_PACKAGE}}.Timestamp={{.TIMESTAMP}}
     '
-  DOCS_VERSION: dev
-  DOCS_ALIAS: ""
-  DOCS_REMOTE: "origin"
-
-  PRETTIER: prettier@2.1.2
 
 tasks:
   build:
