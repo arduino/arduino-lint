@@ -8,18 +8,18 @@ on:
   push:
     paths:
       - ".github/workflows/check-code-generation-task.ya?ml"
-      - "Taskfile.yml"
+      - "Taskfile.ya?ml"
       - "go.mod"
       - "go.sum"
-      - "**/*.go"
+      - "**.go"
       - "etc/schemas/**/*.json"
   pull_request:
     paths:
       - ".github/workflows/check-code-generation-task.ya?ml"
-      - "Taskfile.yml"
+      - "Taskfile.ya?ml"
       - "go.mod"
       - "go.sum"
-      - "**/*.go"
+      - "**.go"
       - "etc/schemas/**/*.json"
 
 jobs:

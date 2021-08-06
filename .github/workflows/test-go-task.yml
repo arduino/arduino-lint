@@ -5,23 +5,26 @@ env:
   # See: https://github.com/actions/setup-go/tree/v2#readme
   GO_VERSION: "1.16"
 
+# See: https://docs.github.com/en/free-pro-team@latest/actions/reference/events-that-trigger-workflows
 on:
   push:
     paths:
       - ".github/workflows/test-go-task.ya?ml"
-      - "Taskfile.yml"
       - "go.mod"
       - "go.sum"
-      - "**/*.go"
+      - "Taskfile.ya?ml"
+      - "**.go"
       - "**/testdata/**"
   pull_request:
     paths:
       - ".github/workflows/test-go-task.ya?ml"
-      - "Taskfile.yml"
       - "go.mod"
       - "go.sum"
-      - "**/*.go"
+      - "Taskfile.ya?ml"
+      - "**.go"
       - "**/testdata/**"
+  workflow_dispatch:
+  repository_dispatch:
 
 jobs:
   test:
@@ -30,7 +33,7 @@ jobs:
         operating-system:
           - ubuntu-latest
           - windows-latest
-          - macOS-latest
+          - macos-latest
 
     runs-on: ${{ matrix.operating-system }}
 

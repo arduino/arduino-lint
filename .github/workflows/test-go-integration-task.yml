@@ -7,6 +7,7 @@ env:
   # See: https://github.com/actions/setup-python/tree/v2#available-versions-of-python
   PYTHON_VERSION: "3.9"
 
+# See: https://docs.github.com/en/free-pro-team@latest/actions/reference/events-that-trigger-workflows
 on:
   push:
     paths:
@@ -28,6 +29,8 @@ on:
       - "poetry.lock"
       - "pyproject.toml"
       - "tests/**"
+  workflow_dispatch:
+  repository_dispatch:
 
 jobs:
   test:
@@ -36,7 +39,7 @@ jobs:
         operating-system:
           - ubuntu-latest
           - windows-latest
-          - macOS-latest
+          - macos-latest
 
     runs-on: ${{ matrix.operating-system }}
 
@@ -49,12 +52,6 @@ jobs:
         with:
           go-version: ${{ env.GO_VERSION }}
 
-      - name: Install Task
-        uses: arduino/setup-task@v1
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
-
       - name: Install Python
         uses: actions/setup-python@v2
         with:
@@ -62,6 +59,12 @@ jobs:
 
       - name: Install Poetry
         run: pip install poetry
+
+      - name: Install Task
+        uses: arduino/setup-task@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
 
       - name: Run integration tests
         run: task go:test-integration
