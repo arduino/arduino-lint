@@ -35,11 +35,17 @@ tasks:
     deps:
       - task: go:build
 
-  test:
-    desc: Run tests
-    cmds:
-      - task: go:test
-      - task: go:test-integration
+  fix:
+    desc: Make automated corrections to the project's files
+    deps:
+      - task: general:format-prettier
+      - task: general:correct-spelling
+      - task: go:generate
+      - task: go:fix
+      - task: go:format
+      - task: markdown:fix
+      - task: python:format
+      - task: shell:format
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/go-task/Taskfile.yml
   go:build:
@@ -80,43 +86,21 @@ tasks:
       - poetry run pytest tests
 
   check:
-    desc: Lint and check formatting of all files
+    desc: Check for problems with the project
     cmds:
-      - task: go:check
-      - task: python:check
-      - task: docs:check
-      - task: config:check
+      - task: ci:validate
       - task: general:check-formatting
       - task: general:check-spelling
-      - task: shell:check-mode
-
-  lint:
-    desc: Lint all files
-    cmds:
+      - task: go:test
+      - task: go:test-integration
       - task: go:vet
       - task: go:lint
+      - task: markdown:lint
+      - task: markdown:check-links
       - task: python:lint
-      - task: docs:lint
-      - task: config:lint
-
-  check-formatting:
-    desc: Check formatting of all files
-    cmds:
-      - task: general:check-formatting
-
-  format:
-    desc: Format all files
-    cmds:
-      - task: go:format
-      - task: python:format
-      - task: general:format-prettier
-
-  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-go-task/Taskfile.yml
-  go:check:
-    desc: Check for problems with Go code
-    deps:
-      - task: go:vet
-      - task: go:lint
+      - task: shell:check
+      - task: shell:check-mode
+      - task: website:check
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-go-task/Taskfile.yml
   go:vet:
@@ -269,13 +253,6 @@ tasks:
     cmds:
       - poetry run mkdocs serve
 
-  docs:check:
-    desc: Lint and check formatting of documentation files
-    cmds:
-      - task: markdown:lint
-      - task: markdown:fix
-      - task: markdown:check-links
-
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-shell-task/Taskfile.yml
   shell:check:
     desc: Check for problems with shell scripts
@@ -343,16 +320,6 @@ tasks:
             \)
         )"
         exit $EXIT_STATUS
-
-  config:check:
-    desc: Lint and check formatting of configuration files
-    cmds:
-      - task: config:lint
-
-  config:lint:
-    desc: Lint configuration files
-    cmds:
-      - task: workflow:validate
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-workflows-task/Taskfile.yml
   ci:validate:

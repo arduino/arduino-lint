@@ -95,22 +95,16 @@ task build
 The project uses Go modules, so dependencies will be downloaded automatically. At the end of the build, you should find
 the `arduino-lint` executable in the same folder.
 
-### Running the tests
+<a id="running-the-tests"></a>
+
+### Running the checks
 
 There are several checks and test suites in place to ensure the code works as expected and is written in a way that's
-consistent across the whole codebase. To avoid pushing changes that will cause the CI system to fail, you can run most
-of the tests locally.
-
-To ensure code style is consistent, run:
+consistent across the whole codebase. To avoid pushing changes that will cause the CI system to fail, you can run the
+checks locally by running this command:
 
 ```
 task check
-```
-
-To run all tests:
-
-```
-task test
 ```
 
 #### Go unit tests
@@ -173,48 +167,16 @@ pytest test_lib.py
 pytest test_lib.py::test_list
 ```
 
-#### Linting and formatting
+<a id="linting-and-formatting"></a> <a id="configuration-files-formatting"></a> <a id="documentation-formatting"></a>
 
-When editing any Python file in the project, remember to run linting checks with:
+### Automated corrections
+
+Tools are provided to automatically bring the project into compliance with some required checks. Run them all with this
+command:
 
 ```
-task python:check
+task fix
 ```
-
-This will run [`flake8`](https://flake8.pycqa.org/) automatically and return any error in the code formatting.
-
-In case of linting errors you should be able to solve most of them by automatically formatting with:
-
-```shell
-task python:format
-```
-
-#### Configuration files formatting
-
-We use [Prettier](https://prettier.io/) to automatically format all YAML files in the project. Keeping and enforcing a
-formatting standard helps everyone make small PRs and avoids the introduction of formatting changes made by unconfigured
-editors.
-
-There are several ways to run Prettier. If you're using Visual Studio Code you can easily use the
-[`prettier-vscode` extension](https://github.com/prettier/prettier-vscode) to automatically format as you write.
-
-Otherwise you can use the following tasks. To do so you'll need to install `npm` if not already installed. Check the
-[official documentation](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) to learn how to install
-`npm` for your platform.
-
-To check if the files are correctly formatted run:
-
-```shell
-task config:check
-```
-
-If the output tells you that some files are not formatted correctly run:
-
-```shell
-task config:format
-```
-
-Checks are automatically run on every pull request to verify that configuration files are correctly formatted.
 
 ### Working on documentation
 
@@ -237,33 +199,6 @@ task website:serve
 
 The documentation will build. If you don't see any error, open `http://127.0.0.1:8000` in your browser to local the
 local copy of the documentation.
-
-#### Documentation formatting
-
-We use [Prettier](https://prettier.io/) to automatically format all Markdown files in the project. Keeping and enforcing
-a formatting standard helps everyone make small PRs and avoids the introduction of formatting changes made by
-misconfigured editors.
-
-There are several ways to run Prettier. If you're using Visual Studio Code you can easily use the
-[`prettier-vscode` extension](https://github.com/prettier/prettier-vscode) to automatically format as you write.
-
-Otherwise you can use the following tasks. To do so you'll need to install `npm` if not already installed. Check the
-[official documentation](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) to learn how to install
-`npm` for your platform.
-
-To check if the files are correctly formatted run:
-
-```shell
-task website:check
-```
-
-If the output tells you that some files are not formatted correctly run:
-
-```shell
-task docs:format
-```
-
-Checks are automatically run on every pull request to verify that documentation is correctly formatted.
 
 #### Documentation publishing
 
