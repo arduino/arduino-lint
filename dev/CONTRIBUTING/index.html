@@ -341,11 +341,11 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#running-the-tests" class="md-nav__link">
-    Running the tests
+  <a href="#running-the-checks" class="md-nav__link">
+    Running the checks
   </a>
   
-    <nav class="md-nav" aria-label="Running the tests">
+    <nav class="md-nav" aria-label="Running the checks">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -375,22 +375,15 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#linting-and-formatting" class="md-nav__link">
-    Linting and formatting
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#configuration-files-formatting" class="md-nav__link">
-    Configuration files formatting
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#automated-corrections" class="md-nav__link">
+    Automated corrections
+  </a>
   
 </li>
         
@@ -405,13 +398,6 @@
           <li class="md-nav__item">
   <a href="#local-development" class="md-nav__link">
     Local development
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#documentation-formatting" class="md-nav__link">
-    Documentation formatting
   </a>
   
 </li>
@@ -523,11 +509,11 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#running-the-tests" class="md-nav__link">
-    Running the tests
+  <a href="#running-the-checks" class="md-nav__link">
+    Running the checks
   </a>
   
-    <nav class="md-nav" aria-label="Running the tests">
+    <nav class="md-nav" aria-label="Running the checks">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -557,22 +543,15 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#linting-and-formatting" class="md-nav__link">
-    Linting and formatting
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#configuration-files-formatting" class="md-nav__link">
-    Configuration files formatting
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#automated-corrections" class="md-nav__link">
+    Automated corrections
+  </a>
   
 </li>
         
@@ -587,13 +566,6 @@
           <li class="md-nav__item">
   <a href="#local-development" class="md-nav__link">
     Local development
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#documentation-formatting" class="md-nav__link">
-    Documentation formatting
   </a>
   
 </li>
@@ -729,15 +701,12 @@ submitting a PR:</p>
 </code></pre></div>
 <p>The project uses Go modules, so dependencies will be downloaded automatically. At the end of the build, you should find
 the <code>arduino-lint</code> executable in the same folder.</p>
-<h3 id="running-the-tests">Running the tests<a class="headerlink" href="#running-the-tests" title="Permanent link">&para;</a></h3>
+<p><a id="running-the-tests"></a></p>
+<h3 id="running-the-checks">Running the checks<a class="headerlink" href="#running-the-checks" title="Permanent link">&para;</a></h3>
 <p>There are several checks and test suites in place to ensure the code works as expected and is written in a way that's
-consistent across the whole codebase. To avoid pushing changes that will cause the CI system to fail, you can run most
-of the tests locally.</p>
-<p>To ensure code style is consistent, run:</p>
+consistent across the whole codebase. To avoid pushing changes that will cause the CI system to fail, you can run the
+checks locally by running this command:</p>
 <div class="highlight"><pre><span></span><code>task check
-</code></pre></div>
-<p>To run all tests:</p>
-<div class="highlight"><pre><span></span><code>task test
 </code></pre></div>
 <h4 id="go-unit-tests">Go unit tests<a class="headerlink" href="#go-unit-tests" title="Permanent link">&para;</a></h4>
 <p>To run only the Go unit tests, run:</p>
@@ -772,30 +741,12 @@ automatically.</p>
 pytest test_lib.py
 pytest test_lib.py::test_list
 </code></pre></div>
-<h4 id="linting-and-formatting">Linting and formatting<a class="headerlink" href="#linting-and-formatting" title="Permanent link">&para;</a></h4>
-<p>When editing any Python file in the project, remember to run linting checks with:</p>
-<div class="highlight"><pre><span></span><code>task python:check
+<p><a id="linting-and-formatting"></a> <a id="configuration-files-formatting"></a> <a id="documentation-formatting"></a></p>
+<h3 id="automated-corrections">Automated corrections<a class="headerlink" href="#automated-corrections" title="Permanent link">&para;</a></h3>
+<p>Tools are provided to automatically bring the project into compliance with some required checks. Run them all with this
+command:</p>
+<div class="highlight"><pre><span></span><code>task fix
 </code></pre></div>
-<p>This will run <a href="https://flake8.pycqa.org/"><code>flake8</code></a> automatically and return any error in the code formatting.</p>
-<p>In case of linting errors you should be able to solve most of them by automatically formatting with:</p>
-<div class="highlight"><pre><span></span><code>task python:format
-</code></pre></div>
-<h4 id="configuration-files-formatting">Configuration files formatting<a class="headerlink" href="#configuration-files-formatting" title="Permanent link">&para;</a></h4>
-<p>We use <a href="https://prettier.io/">Prettier</a> to automatically format all YAML files in the project. Keeping and enforcing a
-formatting standard helps everyone make small PRs and avoids the introduction of formatting changes made by unconfigured
-editors.</p>
-<p>There are several ways to run Prettier. If you're using Visual Studio Code you can easily use the
-<a href="https://github.com/prettier/prettier-vscode"><code>prettier-vscode</code> extension</a> to automatically format as you write.</p>
-<p>Otherwise you can use the following tasks. To do so you'll need to install <code>npm</code> if not already installed. Check the
-<a href="https://docs.npmjs.com/downloading-and-installing-node-js-and-npm">official documentation</a> to learn how to install
-<code>npm</code> for your platform.</p>
-<p>To check if the files are correctly formatted run:</p>
-<div class="highlight"><pre><span></span><code>task config:check
-</code></pre></div>
-<p>If the output tells you that some files are not formatted correctly run:</p>
-<div class="highlight"><pre><span></span><code>task config:format
-</code></pre></div>
-<p>Checks are automatically run on every pull request to verify that configuration files are correctly formatted.</p>
 <h3 id="working-on-documentation">Working on documentation<a class="headerlink" href="#working-on-documentation" title="Permanent link">&para;</a></h3>
 <p>Documentation is provided to final users in form of static HTML content generated from a tool called
 <a href="https://www.mkdocs.org/">MkDocs</a> and hosted on <a href="https://pages.github.com/">GitHub Pages</a>:
@@ -810,22 +761,6 @@ command:</p>
 </code></pre></div>
 <p>The documentation will build. If you don't see any error, open <code>http://127.0.0.1:8000</code> in your browser to local the
 local copy of the documentation.</p>
-<h4 id="documentation-formatting">Documentation formatting<a class="headerlink" href="#documentation-formatting" title="Permanent link">&para;</a></h4>
-<p>We use <a href="https://prettier.io/">Prettier</a> to automatically format all Markdown files in the project. Keeping and enforcing
-a formatting standard helps everyone make small PRs and avoids the introduction of formatting changes made by
-misconfigured editors.</p>
-<p>There are several ways to run Prettier. If you're using Visual Studio Code you can easily use the
-<a href="https://github.com/prettier/prettier-vscode"><code>prettier-vscode</code> extension</a> to automatically format as you write.</p>
-<p>Otherwise you can use the following tasks. To do so you'll need to install <code>npm</code> if not already installed. Check the
-<a href="https://docs.npmjs.com/downloading-and-installing-node-js-and-npm">official documentation</a> to learn how to install
-<code>npm</code> for your platform.</p>
-<p>To check if the files are correctly formatted run:</p>
-<div class="highlight"><pre><span></span><code>task website:check
-</code></pre></div>
-<p>If the output tells you that some files are not formatted correctly run:</p>
-<div class="highlight"><pre><span></span><code>task docs:format
-</code></pre></div>
-<p>Checks are automatically run on every pull request to verify that documentation is correctly formatted.</p>
 <h4 id="documentation-publishing">Documentation publishing<a class="headerlink" href="#documentation-publishing" title="Permanent link">&para;</a></h4>
 <p>The Arduino Lint git repository has a special branch called <code>gh-pages</code> that contains the generated HTML code for the
 documentation website. Every time a change is pushed to this special branch, GitHub automatically triggers a deployment
