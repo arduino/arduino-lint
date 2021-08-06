@@ -2,6 +2,8 @@ module github.com/arduino/arduino-lint
 
 go 1.16
 
+replace github.com/oleiade/reflections => github.com/oleiade/reflections v1.0.1 // https://github.com/oleiade/reflections/issues/14
+
 require (
 	github.com/Microsoft/go-winio v0.4.16 // indirect
 	github.com/OneOfOne/xxhash v1.2.8 // indirect
