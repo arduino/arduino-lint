@@ -9,6 +9,7 @@ on:
       - "go.mod"
       - "go.sum"
       - "Taskfile.ya?ml"
+      - "DistTasks.ya?ml"
       - "**.go"
   pull_request:
     paths:
@@ -16,6 +17,7 @@ on:
       - "go.mod"
       - "go.sum"
       - "Taskfile.ya?ml"
+      - "DistTasks.ya?ml"
       - "**.go"
   workflow_dispatch:
   repository_dispatch:
