@@ -8,7 +8,7 @@ require (
 	github.com/OneOfOne/xxhash v1.2.8 // indirect
 	github.com/anmitsu/go-shlex v0.0.0-20200514113438-38f4b401e2be // indirect
 	github.com/arduino/arduino-cli v0.0.0-20201210103408-bf7a3194bb63
-	github.com/arduino/go-paths-helper v1.4.0
+	github.com/arduino/go-paths-helper v1.6.1
 	github.com/arduino/go-properties-orderedmap v1.6.0
 	github.com/client9/misspell v0.3.4
 	github.com/daaku/go.zipexe v1.0.1 // indirect
