@@ -952,6 +952,7 @@ func TestLibraryHasStraySketches(t *testing.T) {
 
 func TestMissingExamples(t *testing.T) {
 	testTables := []libraryRuleFunctionTestTable{
+		{"File name collision", "ExamplesFile", ruleresult.Fail, ""},
 		{"Has examples", "ExamplesFolder", ruleresult.Pass, ""},
 		{`Has examples (in "example" folder)`, "ExampleFolder", ruleresult.Pass, ""},
 		{"No examples", "NoExamples", ruleresult.Fail, ""},

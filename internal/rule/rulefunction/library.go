@@ -1456,17 +1456,28 @@ func LibraryHasStraySketches() (result ruleresult.Type, output string) {
 func MissingExamples() (result ruleresult.Type, output string) {
 	for _, examplesFolderName := range library.ExamplesFolderSupportedNames() {
 		examplesPath := projectdata.ProjectPath().Join(examplesFolderName)
-		exists, err := examplesPath.IsDirCheck()
+
+		exists, err := examplesPath.ExistCheck()
 		if err != nil {
 			panic(err)
 		}
-		if exists {
-			directoryListing, _ := examplesPath.ReadDirRecursive()
-			directoryListing.FilterDirs()
-			for _, potentialExamplePath := range directoryListing {
-				if sketch.ContainsMainSketchFile(potentialExamplePath) {
-					return ruleresult.Pass, ""
-				}
+		if !exists {
+			continue
+		}
+
+		isDir, err := examplesPath.IsDirCheck()
+		if err != nil {
+			panic(err)
+		}
+		if !isDir {
+			continue
+		}
+
+		directoryListing, _ := examplesPath.ReadDirRecursive()
+		directoryListing.FilterDirs()
+		for _, potentialExamplePath := range directoryListing {
+			if sketch.ContainsMainSketchFile(potentialExamplePath) {
+				return ruleresult.Pass, ""
 			}
 		}
 	}
