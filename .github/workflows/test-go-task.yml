@@ -61,4 +61,4 @@ jobs:
         with:
           file: ./coverage_unit.txt
           flags: unit
-          fail_ci_if_error: true
+          fail_ci_if_error: ${{ github.repository == 'arduino/arduino-lint' }}
