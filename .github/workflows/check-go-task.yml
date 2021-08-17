@@ -7,6 +7,7 @@ env:
 
 # See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows
 on:
+  create:
   push:
     paths:
       - ".github/workflows/check-go-task.ya?ml"
@@ -25,7 +26,32 @@ on:
   repository_dispatch:
 
 jobs:
+  run-determination:
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.determination.outputs.result }}
+    steps:
+      - name: Determine if the rest of the workflow should run
+        id: determination
+        run: |
+          RELEASE_BRANCH_REGEX="refs/heads/[0-9]+.[0-9]+.x"
+          # The `create` event trigger doesn't support `branches` filters, so it's necessary to use Bash instead.
+          if [[ \
+            "${{ github.event_name }}" != "create" || \
+            "${{ github.ref }}" =~ $RELEASE_BRANCH_REGEX \
+          ]]; then
+            # Run the other jobs.
+            RESULT="true"
+          else
+            # There is no need to run the other jobs.
+            RESULT="false"
+          fi
+
+          echo "::set-output name=result::$RESULT"
+
   check-errors:
+    needs: run-determination
+    if: needs.run-determination.outputs.result == 'true'
     runs-on: ubuntu-latest
 
     steps:
@@ -47,6 +73,8 @@ jobs:
         run: task go:vet
 
   check-outdated:
+    needs: run-determination
+    if: needs.run-determination.outputs.result == 'true'
     runs-on: ubuntu-latest
 
     steps:
@@ -71,6 +99,8 @@ jobs:
         run: git diff --color --exit-code
 
   check-style:
+    needs: run-determination
+    if: needs.run-determination.outputs.result == 'true'
     runs-on: ubuntu-latest
 
     steps:
@@ -95,6 +125,8 @@ jobs:
         run: task --silent go:lint
 
   check-formatting:
+    needs: run-determination
+    if: needs.run-determination.outputs.result == 'true'
     runs-on: ubuntu-latest
 
     steps:
@@ -120,6 +152,8 @@ jobs:
 
   check-config:
     name: check-config (${{ matrix.module.path }})
+    needs: run-determination
+    if: needs.run-determination.outputs.result == 'true'
     runs-on: ubuntu-latest
 
     strategy:
