@@ -95,3 +95,13 @@ func TestDuplicateRuleID(t *testing.T) {
 		require.Equalf(t, ruleIndex+1, len(ruleIDMap), "ID %s of rule #%v is a duplicate", ruleConfiguration.ID, ruleIndex)
 	}
 }
+
+func TestRequiredConfigField(t *testing.T) {
+	for _, ruleConfiguration := range ruleconfiguration.Configurations() {
+		assert.NotEmptyf(t, ruleConfiguration.Category, "No category defined for rule %s", ruleConfiguration.ID)
+		assert.NotEmptyf(t, ruleConfiguration.Subcategory, "No subcategory defined for rule %s", ruleConfiguration.ID)
+		assert.NotEmptyf(t, ruleConfiguration.Brief, "No brief defined for rule %s", ruleConfiguration.ID)
+		assert.NotEmptyf(t, ruleConfiguration.Description, "No description defined for rule %s", ruleConfiguration.ID)
+		assert.NotEmptyf(t, ruleConfiguration.MessageTemplate, "No message template defined for rule %s", ruleConfiguration.ID)
+	}
+}
