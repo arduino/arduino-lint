@@ -69,6 +69,8 @@ jobs:
         module:
           - path: ./
             codecov-flags: unit
+          - path: ruledocsgen/
+            codecov-flags: unit
 
     runs-on: ${{ matrix.operating-system }}
 

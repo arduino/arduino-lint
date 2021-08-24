@@ -9,3 +9,4 @@
 /internal/project/projectdata/testdata/packageindexes/invalid-JSON/package_foo_index.json
 /internal/rule/rulefunction/testdata/packageindexes/invalid-JSON/package_foo_index.json
 /internal/rule/rulefunction/testdata/sketches/InvalidJSONMetadataFile/sketch.json
+/ruledocsgen/testdata/golden

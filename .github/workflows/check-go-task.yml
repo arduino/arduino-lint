@@ -62,6 +62,7 @@ jobs:
         module:
           - path: ./
           - path: docsgen
+          - path: ruledocsgen
 
     steps:
       - name: Checkout repository
@@ -96,6 +97,7 @@ jobs:
         module:
           - path: ./
           - path: docsgen
+          - path: ruledocsgen
 
     steps:
       - name: Checkout repository
@@ -133,6 +135,7 @@ jobs:
         module:
           - path: ./
           - path: docsgen
+          - path: ruledocsgen
 
     steps:
       - name: Checkout repository
@@ -170,6 +173,7 @@ jobs:
         module:
           - path: ./
           - path: docsgen
+          - path: ruledocsgen
 
     steps:
       - name: Checkout repository
@@ -207,6 +211,7 @@ jobs:
         module:
           - path: ./
           - path: docsgen
+          - path: ruledocsgen
 
     steps:
       - name: Checkout repository

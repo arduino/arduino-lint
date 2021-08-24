@@ -18,6 +18,7 @@ on:
       - "pyproject.toml"
       - "docs/**"
       - "docsgen/**"
+      - "ruledocsgen/**"
       - "**.go"
   pull_request:
     paths:
@@ -28,6 +29,7 @@ on:
       - "pyproject.toml"
       - "docs/**"
       - "docsgen/**"
+      - "ruledocsgen/**"
       - "**.go"
   workflow_dispatch:
   repository_dispatch:
