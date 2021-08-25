@@ -12,8 +12,8 @@ on:
     paths:
       - ".github/workflows/test-go-task.ya?ml"
       - "codecov.ya?ml"
-      - "go.mod"
-      - "go.sum"
+      - "**/go.mod"
+      - "**/go.sum"
       - "Taskfile.ya?ml"
       - "**.go"
       - "**/testdata/**"
@@ -21,8 +21,8 @@ on:
     paths:
       - ".github/workflows/test-go-task.ya?ml"
       - "codecov.ya?ml"
-      - "go.mod"
-      - "go.sum"
+      - "**/go.mod"
+      - "**/go.sum"
       - "Taskfile.ya?ml"
       - "**.go"
       - "**/testdata/**"
@@ -54,15 +54,21 @@ jobs:
           echo "::set-output name=result::$RESULT"
 
   test:
+    name: test (${{ matrix.module.path }} - ${{ matrix.operating-system }})
     needs: run-determination
     if: needs.run-determination.outputs.result == 'true'
 
     strategy:
+      fail-fast: false
+
       matrix:
         operating-system:
           - ubuntu-latest
           - windows-latest
           - macos-latest
+        module:
+          - path: ./
+            codecov-flags: unit
 
     runs-on: ${{ matrix.operating-system }}
 
@@ -82,12 +88,14 @@ jobs:
           version: 3.x
 
       - name: Run tests
+        env:
+          GO_MODULE_PATH: ${{ matrix.module.path }}
         run: task go:test
 
       - name: Send unit tests coverage to Codecov
         if: runner.os == 'Linux'
         uses: codecov/codecov-action@v2
         with:
-          file: ./coverage_unit.txt
-          flags: unit
+          file: ${{ matrix.module.path }}coverage_unit.txt
+          flags: ${{ matrix.module.codecov-flags }}
           fail_ci_if_error: ${{ github.repository == 'arduino/arduino-lint' }}
