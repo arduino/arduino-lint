@@ -8,8 +8,19 @@ vars:
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/release-go-task/Taskfile.yml
   PROJECT_NAME: "arduino-lint"
   DIST_DIR: "dist"
+  # Path of the project's primary Go module:
+  DEFAULT_GO_MODULE_PATH: ./
   DEFAULT_GO_PACKAGES:
-    sh: echo $(go list ./... | grep --invert-match 'github.com/arduino/arduino-lint/internal/rule/schema/schemadata' | tr '\n' ' ')
+    sh: |
+      echo $( \
+        cd {{default .DEFAULT_GO_MODULE_PATH .GO_MODULE_PATH}} \
+        && \
+        go list ./... | \
+          grep --invert-match 'github.com/arduino/arduino-lint/internal/rule/schema/schemadata' | \
+            tr '\n' ' ' \
+        || \
+        echo '"ERROR: Unable to discover Go packages"' \
+      )
   # build vars
   COMMIT:
     sh: echo "$(git log --no-show-signature -n 1 --format=%h)"
@@ -95,6 +106,7 @@ tasks:
     desc: Create all generated documentation content
     deps:
       - task: go:cli-docs
+      - task: go:rule-docs
       # Make the formatting consistent with the non-generated Markdown
       - task: general:format-prettier
 
@@ -134,6 +146,7 @@ tasks:
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/go-task/Taskfile.yml
   go:build:
     desc: Build the Go code
+    dir: "{{.DEFAULT_GO_MODULE_PATH}}"
     cmds:
       - go build -v {{.LDFLAGS}}
 
@@ -150,12 +163,14 @@ tasks:
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-go-task/Taskfile.yml
   go:fix:
     desc: Modernize usages of outdated APIs
+    dir: "{{default .DEFAULT_GO_MODULE_PATH .GO_MODULE_PATH}}"
     cmds:
       - go fix {{default .DEFAULT_GO_PACKAGES .GO_PACKAGES}}
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-go-task/Taskfile.yml
   go:format:
     desc: Format Go code
+    dir: "{{default .DEFAULT_GO_MODULE_PATH .GO_MODULE_PATH}}"
     cmds:
       - go fmt {{default .DEFAULT_GO_PACKAGES .GO_PACKAGES}}
 
@@ -172,6 +187,7 @@ tasks:
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-go-task/Taskfile.yml
   go:lint:
     desc: Lint Go code
+    dir: "{{default .DEFAULT_GO_MODULE_PATH .GO_MODULE_PATH}}"
     cmds:
       - |
         if ! which golint &>/dev/null; then
@@ -183,9 +199,24 @@ tasks:
           {{default "-min_confidence 0.8 -set_exit_status" .GO_LINT_FLAGS}} \
           {{default .DEFAULT_GO_PACKAGES .GO_PACKAGES}}
 
+  go:rule-docs:
+    desc: Generate rules documentation
+    dir: ./ruledocsgen
+    deps:
+      - task: go:rule-docs:build
+    cmds:
+      - ./ruledocsgen ../docs/rules
+
+  go:rule-docs:build:
+    desc: Generate rules documentation
+    dir: ./ruledocsgen
+    cmds:
+      - go build
+
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/test-go-task/Taskfile.yml
   go:test:
     desc: Run unit tests
+    dir: "{{default .DEFAULT_GO_MODULE_PATH .GO_MODULE_PATH}}"
     cmds:
       - |
         go test \
@@ -201,13 +232,16 @@ tasks:
     desc: Run integration tests
     deps:
       - task: go:build
+      - task: go:rule-docs:build
       - task: poetry:install-deps
     cmds:
       - poetry run pytest tests
+      - poetry run pytest ruledocsgen/tests
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-go-task/Taskfile.yml
   go:vet:
     desc: Check for errors in Go code
+    dir: "{{default .DEFAULT_GO_MODULE_PATH .GO_MODULE_PATH}}"
     cmds:
       - go vet {{default .DEFAULT_GO_PACKAGES .GO_PACKAGES}}
 

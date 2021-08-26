@@ -109,6 +109,9 @@ func (results *Type) Record(lintedProject project.Type, ruleConfiguration ruleco
 	ruleMessage := ""
 	if ruleResult == ruleresult.Fail {
 		ruleMessage = message(ruleConfiguration.MessageTemplate, ruleOutput)
+		if ruleConfiguration.Reference != "" {
+			ruleMessage = fmt.Sprintf("%s\nSee: %s", ruleMessage, ruleConfiguration.Reference)
+		}
 	} else {
 		// Rules may provide an explanation for their non-fail result.
 		// The message template should not be used in this case, since it is written for a failure result.

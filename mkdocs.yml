@@ -22,6 +22,7 @@ markdown_extensions:
       guess_lang: false
   - markdown.extensions.toc:
       permalink: true
+      toc_depth: 4
   - mdx_truly_sane_lists:
       nested_indent: 2
       truly_sane: true
@@ -44,6 +45,12 @@ nav:
   - Home: index.md
   - installation.md
   - Command reference: commands/arduino-lint.md
+  - Rules:
+      - Introduction: rules.md
+      - Sketch: rules/sketch.md
+      - Library: rules/library.md
+      - Platform: rules/platform.md
+      - Package index: rules/package-index.md
   - CONTRIBUTING.md
 
 extra:

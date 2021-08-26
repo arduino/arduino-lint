@@ -169,7 +169,7 @@ func BoardsTxtBoardIDBuildCoreLTMinLength() (result ruleresult.Type, output stri
 	return ruleresult.Pass, ""
 }
 
-// BoardsTxtUserExtraFlagsUsage checks if the user's compiler.x.extra_flags properties are used in boards.txt.
+// BoardsTxtUserExtraFlagsUsage checks if the user's compiler.<pattern type>.extra_flags properties are used in boards.txt.
 func BoardsTxtUserExtraFlagsUsage() (result ruleresult.Type, output string) {
 	if projectdata.BoardsTxtLoadError() != nil {
 		return ruleresult.NotRun, "Couldn't load boards.txt"

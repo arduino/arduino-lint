@@ -76,9 +76,14 @@ func TestRecord(t *testing.T) {
 	ruleOutput := "foo"
 	flags.Set("verbose", "true")
 	require.Nil(t, configuration.Initialize(flags, projectPaths))
+	ruleConfiguration.Reference = ""
 	summaryText := results.Record(lintedProject, ruleConfiguration, ruleresult.Fail, ruleOutput)
-	outputAssertion := "Rule LS001 result: fail\nERROR: Path does not contain a valid Arduino library. See:                                                              \n       https://arduino.github.io/arduino-cli/latest/library-specification                                               \n"
-	assert.Equal(t, outputAssertion, summaryText)
+	outputAssertion := "Rule LS001 result: fail\nERROR: Path does not contain a valid Arduino library.\n"
+	assert.Equal(t, outputAssertion, summaryText, "No reference URL")
+	ruleConfiguration.Reference = "https://arduino.github.io/arduino-cli/latest/library-specification"
+	summaryText = results.Record(lintedProject, ruleConfiguration, ruleresult.Fail, ruleOutput)
+	outputAssertion = "Rule LS001 result: fail\nERROR: Path does not contain a valid Arduino library.                         \n       See: https://arduino.github.io/arduino-cli/latest/library-specification\n"
+	assert.Equal(t, outputAssertion, summaryText, "Reference URL is appended if one is defined")
 	summaryText = results.Record(lintedProject, ruleConfiguration, ruleresult.NotRun, ruleOutput)
 	assert.Equal(t, fmt.Sprintf("Rule %s result: %s\n%s: %s\n", ruleConfiguration.ID, ruleresult.NotRun, rulelevel.Notice, ruleOutput), summaryText, "Non-fail result should not use message")
 	summaryText = results.Record(lintedProject, ruleConfiguration, ruleresult.Pass, "")
@@ -87,6 +92,7 @@ func TestRecord(t *testing.T) {
 	require.Nil(t, configuration.Initialize(flags, projectPaths))
 	ruleConfigurationCopy := ruleConfiguration
 	ruleConfigurationCopy.MessageTemplate = "bar"
+	ruleConfigurationCopy.Reference = ""
 	summaryText = results.Record(lintedProject, ruleConfigurationCopy, ruleresult.Fail, ruleOutput)
 	outputAssertion = "ERROR: bar (Rule LS001)\n"
 	assert.Equal(t, outputAssertion, summaryText, "Rule ID is appended to non-verbose fail message on same line when rule message is single line")

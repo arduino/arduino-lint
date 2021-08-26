@@ -20,6 +20,7 @@ on:
       - "Taskfile.ya?ml"
       - "**.go"
       - "docsgen/**"
+      - "ruledocsgen/**"
       - "mkdocs.ya?ml"
       - "poetry.lock"
       - "pyproject.toml"
