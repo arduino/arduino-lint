@@ -6,6 +6,7 @@ import (
 	"os"
 	"text/template"
 
+	"github.com/JohannesKaufmann/html-to-markdown/escape"
 	"github.com/arduino/arduino-lint/internal/cli"
 	"github.com/arduino/arduino-lint/internal/configuration"
 	"github.com/arduino/arduino-lint/internal/configuration/rulemode"
@@ -37,15 +38,21 @@ func generateRulesDocumentation(ruleConfigurations []ruleconfiguration.Type, out
 		projecttype.PackageIndex: "https://arduino.github.io/arduino-cli/latest/package_index_json-specification/",
 	}
 
+	templateFunctions := template.FuncMap{
+		// Some the rule config text is intended for use in both tool output and in the reference, so can't be formatted at
+		// the source as Markdown. Incidental markup characters in that text must be escaped.
+		"escape": escape.MarkdownCharacters,
+	}
+
 	projectRulesIntroTemplate := template.Must(template.New("messageTemplate").Parse(
 		"Arduino Lint provides {{.RuleCount}} rules for the [`{{.ProjectType}}`]({{.ProjectTypeReference}}) project type:\n",
 	))
-	ruleDocumentationTemplate := template.Must(template.New("messageTemplate").Parse(`
+	ruleDocumentationTemplate := template.Must(template.New("messageTemplate").Funcs(templateFunctions).Parse(`
 ---
 
 <a id="{{.ID}}"></a>
 
-## {{.Brief}} (` + "`" + `{{.ID}}` + "`" + `)
+## {{escape .Brief}} (` + "`" + `{{.ID}}` + "`" + `)
 
 {{.Description}}
 

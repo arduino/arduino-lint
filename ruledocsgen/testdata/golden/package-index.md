@@ -2,16 +2,16 @@ Arduino Lint provides 1 rules for the [`package-index`](https://arduino.github.i
 
 ---
 
-<a id="IS001"></a>
+<a id="IA004"></a>
 
-## missing (`IS001`)
+## packages[\*].name missing (`IA004`)
 
-No package index file was found in the specified project path.
+The package index has a package without a `name` property.
 
-More information: [**here**](https://arduino.github.io/arduino-cli/latest/package_index_json-specification/)<br />
+More information: [**here**](https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#json-index-file-contents)<br />
 Enabled for superproject type: all<br />
 Category: data<br />
-Subcategory: general
+Subcategory: package
 
 ##### Rule levels
 
