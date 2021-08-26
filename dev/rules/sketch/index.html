@@ -1,0 +1,955 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Tool to check for problems with Arduino projects">
+      
+      
+      
+      
+        <link rel="canonical" href="https://arduino.github.io/arduino-lint/dev/rules/sketch/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.4">
+    
+    
+      
+        <title>Sketch - Arduino Lint</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.f7f47774.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#009485">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="teal" data-md-color-accent="orange">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#name-mismatch-ss001" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Arduino Lint" class="md-header__button md-logo" aria-label="Arduino Lint" data-md-component="logo">
+      
+  <img src="../../img/icon_mac_light.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Arduino Lint
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Sketch
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/arduino/arduino-lint/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    arduino/arduino-lint
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Arduino Lint" class="md-nav__button md-logo" aria-label="Arduino Lint" data-md-component="logo">
+      
+  <img src="../../img/icon_mac_light.png" alt="logo">
+
+    </a>
+    Arduino Lint
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/arduino/arduino-lint/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    arduino/arduino-lint
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/arduino-lint/" class="md-nav__link">
+        Command reference
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      <label class="md-nav__link" for="__nav_4">
+        Rules
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Rules" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Rules
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Sketch
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Sketch
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#name-mismatch-ss001" class="md-nav__link">
+    name mismatch (SS001)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prohibited-character-in-filename-ss002" class="md-nav__link">
+    prohibited character in filename (SS002)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-name-too-long-ss003" class="md-nav__link">
+    file name too long (SS003)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pde-extension-ss004" class="md-nav__link">
+    .pde extension (SS004)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src-folder-case-ss005" class="md-nav__link">
+    src folder case (SS005)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arduinoh-case-sc001" class="md-nav__link">
+    Arduino.h case (SC001)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#no-readme-sd001" class="md-nav__link">
+    no readme (SD001)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#no-license-file-sd002" class="md-nav__link">
+    no license file (SD002)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sketchjson-json-format-sm001" class="md-nav__link">
+    sketch.json JSON format (SM001)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sketchjson-data-format-sm002" class="md-nav__link">
+    sketch.json data format (SM002)
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../library/" class="md-nav__link">
+        Library
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../platform/" class="md-nav__link">
+        Platform
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../package-index/" class="md-nav__link">
+        Package index
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CONTRIBUTING/" class="md-nav__link">
+        How to contribute
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#name-mismatch-ss001" class="md-nav__link">
+    name mismatch (SS001)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prohibited-character-in-filename-ss002" class="md-nav__link">
+    prohibited character in filename (SS002)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-name-too-long-ss003" class="md-nav__link">
+    file name too long (SS003)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pde-extension-ss004" class="md-nav__link">
+    .pde extension (SS004)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src-folder-case-ss005" class="md-nav__link">
+    src folder case (SS005)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arduinoh-case-sc001" class="md-nav__link">
+    Arduino.h case (SC001)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#no-readme-sd001" class="md-nav__link">
+    no readme (SD001)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#no-license-file-sd002" class="md-nav__link">
+    no license file (SD002)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sketchjson-json-format-sm001" class="md-nav__link">
+    sketch.json JSON format (SM001)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sketchjson-data-format-sm002" class="md-nav__link">
+    sketch.json data format (SM002)
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/arduino/arduino-lint/blob/main/docs/rules/sketch.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                  <h1>Sketch</h1>
+                
+                <p>Arduino Lint provides 10 rules for the <a href="https://arduino.github.io/arduino-cli/latest/sketch-specification/"><code>sketch</code></a> project type:</p>
+<hr />
+<p><a id="SS001"></a></p>
+<h2 id="name-mismatch-ss001">name mismatch (<code>SS001</code>)<a class="headerlink" href="#name-mismatch-ss001" title="Permanent link">&para;</a></h2>
+<p>There is no <code>.ino</code> sketch file with name matching the sketch folder. The primary sketch file name must match the folder for the sketch to be valid.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/sketch-specification/#primary-sketch-file"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: structure<br />
+Subcategory: root folder</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="SS002"></a></p>
+<h2 id="prohibited-character-in-filename-ss002">prohibited character in filename (<code>SS002</code>)<a class="headerlink" href="#prohibited-character-in-filename-ss002" title="Permanent link">&para;</a></h2>
+<p>A sketch file's name contains a prohibited character.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/sketch-specification/#sketch-root-folder"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: structure<br />
+Subcategory: file name</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="SS003"></a></p>
+<h2 id="file-name-too-long-ss003">file name too long (<code>SS003</code>)<a class="headerlink" href="#file-name-too-long-ss003" title="Permanent link">&para;</a></h2>
+<p>The sketch file's name exceeds the maximum length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/sketch-specification/#sketch-root-folder"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: structure<br />
+Subcategory: file name</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="SS004"></a></p>
+<h2 id="pde-extension-ss004">.pde extension (<code>SS004</code>)<a class="headerlink" href="#pde-extension-ss004" title="Permanent link">&para;</a></h2>
+<p>A sketch file uses the deprecated <code>.pde</code> file extension. The .pde extension is used by both <a href="https://processing.org/">Processing</a> sketches and Arduino sketches. If the project has supplemental Processing sketches, they should either be in the <a href="https://arduino.github.io/arduino-cli/latest/sketch-specification/#data-subfolder"><code>data</code> subfolder of the sketch</a> or in the <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#extra-documentation"><code>extras</code> folder of the library</a>. Arduino sketches should use the modern <code>.ino</code> extension.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/sketch-specification"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: structure<br />
+Subcategory: file name</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="SS005"></a></p>
+<h2 id="src-folder-case-ss005">src folder case (<code>SS005</code>)<a class="headerlink" href="#src-folder-case-ss005" title="Permanent link">&para;</a></h2>
+<p>The sketch's source subfolder name has incorrect case. This folder must be named exactly <code>src</code> in order for the contents to be compiled on case sensitive file systems (e.g., Linux).</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/sketch-specification/#src-subfolder"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: structure<br />
+Subcategory: miscellaneous</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="SC001"></a></p>
+<h2 id="arduinoh-case-sc001">Arduino.h case (<code>SC001</code>)<a class="headerlink" href="#arduinoh-case-sc001" title="Permanent link">&para;</a></h2>
+<p>An <code>#include</code> directive for a file matching the standardized Arduino core library's <code>Arduino.h</code> header in all except case (e.g., <code>#include &lt;arduino.h&gt;</code>) was found in the sketch's code. This causes compilation failure on case-sensitive file systems.</p>
+<p>Enabled for superproject type: all<br />
+Category: code<br />
+Subcategory: miscellaneous</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="SD001"></a></p>
+<h2 id="no-readme-sd001">no readme (<code>SD001</code>)<a class="headerlink" href="#no-readme-sd001" title="Permanent link">&para;</a></h2>
+<p>None of the standard README file names (e.g., <code>README.md</code>) were found in the sketch folder. This file provides interested parties with a convenient and standardized location to get information about the project.</p>
+<p>More information: <a href="https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-on-github/about-readmes"><strong>here</strong></a><br />
+Enabled for superproject type: sketch<br />
+Category: documentation<br />
+Subcategory: miscellaneous</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="SD002"></a></p>
+<h2 id="no-license-file-sd002">no license file (<code>SD002</code>)<a class="headerlink" href="#no-license-file-sd002" title="Permanent link">&para;</a></h2>
+<p>None of the standard license file names (e.g., <code>LICENSE.txt</code>) were found in the sketch's root folder. This file provides interested parties with a convenient and standardized location to get information about the project's licensing and is also used by GitHub for automatic license type classification.</p>
+<p>More information: <a href="https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-on-github/licensing-a-repository"><strong>here</strong></a><br />
+Enabled for superproject type: sketch<br />
+Category: documentation<br />
+Subcategory: miscellaneous</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="SM001"></a></p>
+<h2 id="sketchjson-json-format-sm001">sketch.json JSON format (<code>SM001</code>)<a class="headerlink" href="#sketchjson-json-format-sm001" title="Permanent link">&para;</a></h2>
+<p>The sketch's <code>sketch.json</code> metadata file is not a valid JSON document.</p>
+<p>Enabled for superproject type: all<br />
+Category: sketch.json<br />
+Subcategory: general</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="SM002"></a></p>
+<h2 id="sketchjson-data-format-sm002">sketch.json data format (<code>SM002</code>)<a class="headerlink" href="#sketchjson-data-format-sm002" title="Permanent link">&para;</a></h2>
+<p>The sketch's <code>sketch.json</code> metadata file does not have a valid data format.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/sketch-specification/#metadata"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: sketch.json<br />
+Subcategory: general</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Introduction" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Introduction
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../library/" class="md-footer__link md-footer__link--next" aria-label="Next: Library" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Library
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright 2020 ARDUINO SA (http://www.arduino.cc/)
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.709b4209.min.js", "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.febc23d1.min.js"></script>
+      
+    
+  </body>
+</html>

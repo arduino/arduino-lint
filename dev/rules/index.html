@@ -11,21 +11,21 @@
       
       
       
-        <link rel="canonical" href="https://arduino.github.io/arduino-lint/dev/commands/arduino-lint/">
+        <link rel="canonical" href="https://arduino.github.io/arduino-lint/dev/rules/">
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.4">
     
     
       
-        <title>Command reference - Arduino Lint</title>
+        <title>Introduction - Arduino Lint</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.f7f47774.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.f7f47774.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.3f5d1f46.min.css">
         
           
           
@@ -61,7 +61,7 @@
     <body dir="ltr" data-md-color-scheme="" data-md-color-primary="teal" data-md-color-accent="orange">
   
     
-    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    <script>function __prefix(e){return new URL("..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -69,7 +69,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#arduino-lint" class="md-skip">
+        <a href="#rule-documentation" class="md-skip">
           Skip to content
         </a>
       
@@ -80,9 +80,9 @@
     
       <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="Arduino Lint" class="md-header__button md-logo" aria-label="Arduino Lint" data-md-component="logo">
+    <a href=".." title="Arduino Lint" class="md-header__button md-logo" aria-label="Arduino Lint" data-md-component="logo">
       
-  <img src="../../img/icon_mac_light.png" alt="logo">
+  <img src="../img/icon_mac_light.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -98,7 +98,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Command reference
+              Introduction
             
           </span>
         </div>
@@ -176,9 +176,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="Arduino Lint" class="md-nav__button md-logo" aria-label="Arduino Lint" data-md-component="logo">
+    <a href=".." title="Arduino Lint" class="md-nav__button md-logo" aria-label="Arduino Lint" data-md-component="logo">
       
-  <img src="../../img/icon_mac_light.png" alt="logo">
+  <img src="../img/icon_mac_light.png" alt="logo">
 
     </a>
     Arduino Lint
@@ -207,7 +207,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../.." class="md-nav__link">
+      <a href=".." class="md-nav__link">
         Home
       </a>
     </li>
@@ -222,7 +222,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../installation/" class="md-nav__link">
+      <a href="../installation/" class="md-nav__link">
         Installation
       </a>
     </li>
@@ -235,67 +235,11 @@
 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          Command reference
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../commands/arduino-lint/" class="md-nav__link">
         Command reference
       </a>
-      
-        
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#arduino-lint" class="md-nav__link">
-    arduino-lint
-  </a>
-  
-    <nav class="md-nav" aria-label="arduino-lint">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#synopsis" class="md-nav__link">
-    Synopsis
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#options" class="md-nav__link">
-    Options
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -306,12 +250,14 @@
 
   
   
+    
+  
   
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
       
-        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
       
       <label class="md-nav__link" for="__nav_4">
         Rules
@@ -327,11 +273,68 @@
             
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../../rules/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Introduction
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         Introduction
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rule-documentation" class="md-nav__link">
+    Rule documentation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rule-id" class="md-nav__link">
+    Rule ID
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rule-level" class="md-nav__link">
+    Rule level
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#projects-and-superprojects" class="md-nav__link">
+    Projects and "superprojects"
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -341,7 +344,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rules/sketch/" class="md-nav__link">
+      <a href="sketch/" class="md-nav__link">
         Sketch
       </a>
     </li>
@@ -353,7 +356,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rules/library/" class="md-nav__link">
+      <a href="library/" class="md-nav__link">
         Library
       </a>
     </li>
@@ -365,7 +368,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rules/platform/" class="md-nav__link">
+      <a href="platform/" class="md-nav__link">
         Platform
       </a>
     </li>
@@ -377,7 +380,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../rules/package-index/" class="md-nav__link">
+      <a href="package-index/" class="md-nav__link">
         Package index
       </a>
     </li>
@@ -398,7 +401,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../CONTRIBUTING/" class="md-nav__link">
+      <a href="../CONTRIBUTING/" class="md-nav__link">
         How to contribute
       </a>
     </li>
@@ -429,29 +432,30 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#arduino-lint" class="md-nav__link">
-    arduino-lint
-  </a>
-  
-    <nav class="md-nav" aria-label="arduino-lint">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#synopsis" class="md-nav__link">
-    Synopsis
+  <a href="#rule-documentation" class="md-nav__link">
+    Rule documentation
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#options" class="md-nav__link">
-    Options
+      
+        <li class="md-nav__item">
+  <a href="#rule-id" class="md-nav__link">
+    Rule ID
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#rule-level" class="md-nav__link">
+    Rule level
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#projects-and-superprojects" class="md-nav__link">
+    Projects and "superprojects"
+  </a>
   
 </li>
       
@@ -467,35 +471,49 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/arduino/arduino-lint/blob/main/docs/commands/arduino-lint.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/arduino/arduino-lint/blob/main/docs/rules.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
                 
-                  <h1>Command reference</h1>
+                  <h1>Introduction</h1>
                 
-                <h2 id="arduino-lint">arduino-lint<a class="headerlink" href="#arduino-lint" title="Permanent link">&para;</a></h2>
-<p>Linter for Arduino projects.</p>
-<h3 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">&para;</a></h3>
-<p>Arduino Lint checks for specification compliance and other common problems with Arduino projects</p>
-<div class="highlight"><pre><span></span><code>arduino-lint [FLAG]... [PROJECT_PATH]...
-
-Lint project in PROJECT_PATH or current path if no PROJECT_PATH argument provided.
-</code></pre></div>
-<h3 id="options">Options<a class="headerlink" href="#options" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>      --compliance string        Configure how strict the tool is. Can be {strict|specification|permissive} (default &quot;specification&quot;)
-      --format string            The output format can be {text|json}. (default &quot;text&quot;)
-  -h, --help                     help for arduino-lint
-      --library-manager string   Configure the rules for libraries in the Arduino Library Manager index. Can be {submit|update|false}.
-                                 submit: Also run additional rules required to pass before a library is accepted for inclusion in the index.
-                                 update: Also run additional rules required to pass before new releases of a library already in the index are accepted.
-                                 false: Don&#39;t run any Library Manager-specific rules.
-      --project-type string      Only lint projects of the specified type and their subprojects. Can be {sketch|library|platform|all}. (default &quot;all&quot;)
-      --recursive                Search path recursively for Arduino projects to lint. Can be {true|false}.
-      --report-file string       Save a report on the rules to this file.
-  -v, --verbose                  Show more information while running rules.
-      --version                  Print version and timestamp of the build.
-</code></pre></div>
+                <p><strong>Arduino Lint</strong> inspects Arduino projects for common problems. This is done by checking the project against a series of
+"rules", each of which is targeted to detecting a specific potential issue. Only the rules of relevance to the project
+being linted are applied.</p>
+<h2 id="rule-documentation">Rule documentation<a class="headerlink" href="#rule-documentation" title="Permanent link">&para;</a></h2>
+<p>Additional information is available for each of the <strong>Arduino Lint</strong> rules, organized by project type:</p>
+<ul>
+<li><a href="sketch/">Sketch</a></li>
+<li><a href="library/">Library</a></li>
+<li><a href="platform/">Boards platform</a></li>
+<li><a href="package-index/">Package index</a></li>
+</ul>
+<h2 id="rule-id">Rule ID<a class="headerlink" href="#rule-id" title="Permanent link">&para;</a></h2>
+<p>In order to allow particular rules to be referenced unequivocally, each has been assigned a permanent unique
+identification code (e.g., <code>SS001</code>).</p>
+<h2 id="rule-level">Rule level<a class="headerlink" href="#rule-level" title="Permanent link">&para;</a></h2>
+<p>In addition to checking for critical flaws, <strong>Arduino Lint</strong> also advocates for best practices in Arduino projects. For
+this reason, not all rule violations are treated as fatal linting errors.</p>
+<p>A violation of a rule is assigned a level according to its severity. In cases where a rule violation indicates a serious
+problem with the project, the violation is treated as an error, and will result in a non-zero exit status from the
+<code>arduino-lint</code> command. In cases where the violation indicates a possible problem, or where the rule is a recommendation
+for an optional improvement to enhance the project user's experience, the violation is treated as a warning. It is hoped
+that these warning-level violations will be given consideration by the user, but they do not affect the <code>arduino-lint</code>
+exit status.</p>
+<p>Of the hundreds of rules provided by <strong>Arduino Lint</strong>, only the ones relevant to the current target project are applied,
+with the rest disabled.</p>
+<p>The rule levels and enabled subset of rules is dependent on the target project type and how the user has configured
+Arduino Lint via the <a href="../commands/arduino-lint/">command line flags</a> and
+<a href="..#environment-variables">environment variables</a>.</p>
+<h2 id="projects-and-superprojects">Projects and "superprojects"<a class="headerlink" href="#projects-and-superprojects" title="Permanent link">&para;</a></h2>
+<p>Arduino projects may contain other Arduino projects as subprojects. For example, the libraries
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#platform-bundled-libraries">bundled</a> with an
+Arduino boards platform. These subprojects may, in turn, contain their own subprojects, such as the example sketches
+included with a platform bundled library.</p>
+<p><strong>Arduino Lint</strong> also lints any subprojects the target project might contain. The type of the top level "superproject"
+is a factor in the configuration of some rules. For example, there is no need to take Library Manager requirements into
+consideration in the case of a platform bundled library, since it will never be distributed via that system.</p>
                 
               
               
@@ -515,7 +533,7 @@ Lint project in PROJECT_PATH or current path if no PROJECT_PATH argument provide
     <nav class="md-footer__inner md-grid" aria-label="Footer">
       
         
-        <a href="../../installation/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Installation" rel="prev">
+        <a href="../commands/arduino-lint/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Command reference" rel="prev">
           <div class="md-footer__button md-icon">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
           </div>
@@ -524,20 +542,20 @@ Lint project in PROJECT_PATH or current path if no PROJECT_PATH argument provide
               <span class="md-footer__direction">
                 Previous
               </span>
-              Installation
+              Command reference
             </div>
           </div>
         </a>
       
       
         
-        <a href="../../rules/" class="md-footer__link md-footer__link--next" aria-label="Next: Introduction" rel="next">
+        <a href="sketch/" class="md-footer__link md-footer__link--next" aria-label="Next: Sketch" rel="next">
           <div class="md-footer__title">
             <div class="md-ellipsis">
               <span class="md-footer__direction">
                 Next
               </span>
-              Introduction
+              Sketch
             </div>
           </div>
           <div class="md-footer__button md-icon">
@@ -570,10 +588,10 @@ Lint project in PROJECT_PATH or current path if no PROJECT_PATH argument provide
     <div class="md-dialog" data-md-component="dialog">
       <div class="md-dialog__inner md-typeset"></div>
     </div>
-    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.709b4209.min.js", "version": {"provider": "mike"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../assets/javascripts/workers/search.709b4209.min.js", "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.febc23d1.min.js"></script>
+      <script src="../assets/javascripts/bundle.febc23d1.min.js"></script>
       
     
   </body>

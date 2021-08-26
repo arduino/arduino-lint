@@ -1,0 +1,6178 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Tool to check for problems with Arduino projects">
+      
+      
+      
+      
+        <link rel="canonical" href="https://arduino.github.io/arduino-lint/dev/rules/package-index/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.2.2, mkdocs-material-7.2.4">
+    
+    
+      
+        <title>Package index - Arduino Lint</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.f7f47774.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#009485">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="teal" data-md-color-accent="orange">
+  
+    
+    <script>function __prefix(e){return new URL("../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#missing-is001" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Arduino Lint" class="md-header__button md-logo" aria-label="Arduino Lint" data-md-component="logo">
+      
+  <img src="../../img/icon_mac_light.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Arduino Lint
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Package index
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/arduino/arduino-lint/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    arduino/arduino-lint
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Arduino Lint" class="md-nav__button md-logo" aria-label="Arduino Lint" data-md-component="logo">
+      
+  <img src="../../img/icon_mac_light.png" alt="logo">
+
+    </a>
+    Arduino Lint
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/arduino/arduino-lint/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    arduino/arduino-lint
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/arduino-lint/" class="md-nav__link">
+        Command reference
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      <label class="md-nav__link" for="__nav_4">
+        Rules
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Rules" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Rules
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sketch/" class="md-nav__link">
+        Sketch
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../library/" class="md-nav__link">
+        Library
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../platform/" class="md-nav__link">
+        Platform
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Package index
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Package index
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#missing-is001" class="md-nav__link">
+    missing (IS001)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-filename-is002" class="md-nav__link">
+    invalid filename (IS002)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-official-filename-is003" class="md-nav__link">
+    invalid official filename (IS003)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#json-format-id001" class="md-nav__link">
+    JSON format (ID001)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-format-id002" class="md-nav__link">
+    data format (ID002)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unrecognized-properties-in-root-id003" class="md-nav__link">
+    unrecognized properties in root (ID003)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packages-property-missing-ia001" class="md-nav__link">
+    packages property missing (IA001)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packages-type-ia002" class="md-nav__link">
+    Incorrect packages type (IA002)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unrecognized-properties-in-packages-ia003" class="md-nav__link">
+    unrecognized properties in packages (IA003)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesname-missing-ia004" class="md-nav__link">
+    packages[*].name missing (IA004)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesname-type-ia005" class="md-nav__link">
+    Incorrect packages[*].name type (IA005)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesname-min-length-ia006" class="md-nav__link">
+    packages[*].name &lt; min length (IA006)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesname-is-arduino-ia007" class="md-nav__link">
+    packages[*].name is arduino (IA007)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesmaintainer-missing-ia008" class="md-nav__link">
+    packages[*].maintainer missing (IA008)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesmaintainer-type-ia009" class="md-nav__link">
+    Incorrect packages[*].maintainer type (IA009)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesmaintainer-min-length-ia010" class="md-nav__link">
+    packages[*].maintainer &lt; min length (IA010)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesmaintainer-starts-with-arduino-ia011" class="md-nav__link">
+    packages[*].maintainer starts with "arduino" (IA011)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packageswebsiteurl-missing-ia012" class="md-nav__link">
+    packages[*].websiteURL missing (IA012)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packageswebsiteurl-type-ia013" class="md-nav__link">
+    Incorrect packages[*].websiteURL type (IA013)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packageswebsiteurl-format-ia014" class="md-nav__link">
+    Invalid packages[*].websiteURL format (IA014)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dead-packageswebsiteurl-ia015" class="md-nav__link">
+    dead packages[*].websiteURL (IA015)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesemail-missing-ia016" class="md-nav__link">
+    packages[*].email missing (IA016)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesemail-type-ia017" class="md-nav__link">
+    Incorrect packages[*].email type (IA017)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packageshelp-type-ia018" class="md-nav__link">
+    Incorrect packages[*].help type (IA018)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unrecognized-properties-in-packageshelp-ia019" class="md-nav__link">
+    unrecognized properties in packages[*].help (IA019)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packageshelponline-missing-ia020" class="md-nav__link">
+    packages[*].help.online missing (IA020)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packageshelponline-type-ia021" class="md-nav__link">
+    Incorrect packages[*].help.online type (IA021)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packageshelponline-format-ia022" class="md-nav__link">
+    Invalid packages[*].help.online format (IA022)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dead-packageshelponline-ia023" class="md-nav__link">
+    dead packages[*].help.online (IA023)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatforms-missing-il001" class="md-nav__link">
+    packages[*].platforms missing (IL001)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatforms-type-il002" class="md-nav__link">
+    incorrect packages[*].platforms type (IL002)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unrecognized-properties-in-packagesplatforms-il003" class="md-nav__link">
+    unrecognized properties in packages[*].platforms[*] (IL003)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsname-missing-il004" class="md-nav__link">
+    packages[*].platforms[*].name missing (IL004)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformsname-type-il005" class="md-nav__link">
+    incorrect packages[*].platforms[*].name type (IL005)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsname-min-length-il006" class="md-nav__link">
+    packages[*].platforms[*].name &lt; min length (IL006)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsarchitecture-missing-il007" class="md-nav__link">
+    packages[*].platforms[*].architecture missing (IL007)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformsarchitecture-type-il008" class="md-nav__link">
+    incorrect packages[*].platforms[*].architecture type (IL008)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsarchitecture-min-length-il009" class="md-nav__link">
+    packages[*].platforms[*].architecture &lt; min length (IL009)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsversion-missing-il010" class="md-nav__link">
+    packages[*].platforms[*].version missing (IL010)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformsversion-type-il011" class="md-nav__link">
+    incorrect packages[*].platforms[*].version type (IL011)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagesplatformsversion-il012" class="md-nav__link">
+    invalid packages[*].platforms[*].version (IL012)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-semver-packagesplatformsversion-il013" class="md-nav__link">
+    non-semver packages[*].platforms[*].version (IL013)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformsdeprecated-type-il058" class="md-nav__link">
+    incorrect packages[*].platforms[*].deprecated type (IL058)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformscategory-missing-il014" class="md-nav__link">
+    packages[*].platforms[*].category missing (IL014)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformscategory-type-il015" class="md-nav__link">
+    incorrect packages[*].platforms[*].category type (IL015)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagesplatformscategory-il016" class="md-nav__link">
+    invalid packages[*].platforms[*].category (IL016)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformshelp-missing-il017" class="md-nav__link">
+    packages[*].platforms[*].help missing (IL017)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformshelp-type-il018" class="md-nav__link">
+    incorrect packages[*].platforms[*].help type (IL018)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unrecognized-properties-in-packagesplatformshelp-il019" class="md-nav__link">
+    unrecognized properties in packages[*].platforms[*].help (IL019)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformshelponline-missing-il020" class="md-nav__link">
+    packages[*].platforms[*].help.online missing (IL020)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformshelponline-type-il021" class="md-nav__link">
+    incorrect packages[*].platforms[*].help.online type (IL021)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagesplatformshelponline-format-il022" class="md-nav__link">
+    invalid packages[*].platforms[*].help.online format (IL022)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dead-packagesplatformshelponline-il023" class="md-nav__link">
+    dead packages[*].platforms[*].help.online (IL023)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsurl-missing-il024" class="md-nav__link">
+    packages[*].platforms[*].url missing (IL024)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformsurl-type-il025" class="md-nav__link">
+    incorrect packages[*].platforms[*].url type (IL025)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagesplatformsurl-format-il026" class="md-nav__link">
+    invalid packages[*].platforms[*].url format (IL026)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dead-packagesplatformsurl-il027" class="md-nav__link">
+    dead packages[*].platforms[*].url (IL027)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsarchivefilename-missing-il028" class="md-nav__link">
+    packages[*].platforms[*].archiveFileName missing (IL028)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformsarchivefilename-type-il029" class="md-nav__link">
+    incorrect packages[*].platforms[*].archiveFileName type (IL029)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsarchivefilename-min-length-il030" class="md-nav__link">
+    packages[*].platforms[*].archiveFileName &lt; min length (IL030)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagesplatformsarchivefilename-il031" class="md-nav__link">
+    invalid packages[*].platforms[*].archiveFileName (IL031)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformschecksum-missing-il032" class="md-nav__link">
+    packages[*].platforms[*].checksum missing (IL032)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformschecksum-type-il033" class="md-nav__link">
+    incorrect packages[*].platforms[*].checksum type (IL033)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagesplatformschecksum-il034" class="md-nav__link">
+    invalid packages[*].platforms[*].checksum (IL034)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#discouraged-packagesplatformschecksum-algorithm-il035" class="md-nav__link">
+    discouraged packages[*].platforms[*].checksum algorithm (IL035)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformssize-missing-il036" class="md-nav__link">
+    packages[*].platforms[*].size missing (IL036)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformssize-type-il037" class="md-nav__link">
+    incorrect packages[*].platforms[*].size type (IL037)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagesplatformssize-il038" class="md-nav__link">
+    invalid packages[*].platforms[*].size (IL038)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsboards-missing-il039" class="md-nav__link">
+    packages[*].platforms[*].boards missing (IL039)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformsboards-type-il040" class="md-nav__link">
+    incorrect packages[*].platforms[*].boards type (IL040)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unrecognized-properties-in-packagesplatformsboards-il041" class="md-nav__link">
+    unrecognized properties in packages[*].platforms[*].boards[*] (IL041)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsboardsname-missing-il042" class="md-nav__link">
+    packages[*].platforms[*].boards[*].name missing (IL042)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformsboardsname-type-il043" class="md-nav__link">
+    incorrect packages[*].platforms[*].boards[*].name type (IL043)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsboardsname-min-length-il044" class="md-nav__link">
+    packages[*].platforms[*].boards[*].name &lt; min length (IL044)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformstoolsdependencies-missing-il045" class="md-nav__link">
+    packages[*].platforms[*].toolsDependencies missing (IL045)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformstoolsdependencies-type-il046" class="md-nav__link">
+    incorrect packages[*].platforms[*].toolsDependencies type (IL046)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unrecognized-properties-in-packagesplatformstoolsdependencies-il047" class="md-nav__link">
+    unrecognized properties in packages[*].platforms[*].toolsDependencies[*] (IL047)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformstoolsdependenciespackager-missing-il048" class="md-nav__link">
+    packages[*].platforms[*].toolsDependencies[*].packager missing (IL048)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformstoolsdependenciespackager-type-il049" class="md-nav__link">
+    incorrect packages[*].platforms[*].toolsDependencies[*].packager type (IL049)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformstoolsdependenciespackager-min-length-il050" class="md-nav__link">
+    packages[*].platforms[*].toolsDependencies[*].packager &lt; min length (IL050)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformstoolsdependenciesname-missing-il051" class="md-nav__link">
+    packages[*].platforms[*].toolsDependencies[*].name missing (IL051)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformstoolsdependenciesname-type-il052" class="md-nav__link">
+    incorrect packages[*].platforms[*].toolsDependencies[*].name type (IL052)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformstoolsdependenciesname-min-length-il053" class="md-nav__link">
+    packages[*].platforms[*].toolsDependencies[*].name &lt; min length (IL053)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformstoolsdependenciesversion-missing-il054" class="md-nav__link">
+    packages[*].platforms[*].toolsDependencies[*].version missing (IL054)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformstoolsdependenciesversion-type-il055" class="md-nav__link">
+    incorrect packages[*].platforms[*].toolsDependencies[*].version type (IL055)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagesplatformstoolsdependenciesversion-il056" class="md-nav__link">
+    invalid packages[*].platforms[*].toolsDependencies[*].version (IL056)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-semver-packagesplatformstoolsdependenciesversion-il057" class="md-nav__link">
+    non-semver packages[*].platforms[*].toolsDependencies[*].version (IL057)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformsdiscoverydependencies-type-il059" class="md-nav__link">
+    incorrect packages[*].platforms[*].discoveryDependencies type (IL059)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unrecognized-properties-in-packagesplatformsdiscoverydependencies-il060" class="md-nav__link">
+    unrecognized properties in packages[*].platforms[*].discoveryDependencies[*] (IL060)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsdiscoverydependenciespackager-missing-il061" class="md-nav__link">
+    packages[*].platforms[*].discoveryDependencies[*].packager missing (IL061)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformsdiscoverydependenciespackager-type-il062" class="md-nav__link">
+    incorrect packages[*].platforms[*].discoveryDependencies[*].packager type (IL062)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsdiscoverydependenciespackager-min-length-il063" class="md-nav__link">
+    packages[*].platforms[*].discoveryDependencies[*].packager &lt; min length (IL063)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsdiscoverydependenciesname-missing-il064" class="md-nav__link">
+    packages[*].platforms[*].discoveryDependencies[*].name missing (IL064)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformsdiscoverydependenciesname-type-il065" class="md-nav__link">
+    incorrect packages[*].platforms[*].discoveryDependencies[*].name type (IL065)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsdiscoverydependenciesname-min-length-il066" class="md-nav__link">
+    packages[*].platforms[*].discoveryDependencies[*].name &lt; min length (IL066)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagestools-missing-it001" class="md-nav__link">
+    packages[*].tools missing (IT001)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagestools-type-it002" class="md-nav__link">
+    incorrect packages[*].tools type (IT002)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unrecognized-properties-in-packagestools-it003" class="md-nav__link">
+    unrecognized properties in packages[*].tools[*] (IT003)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagestoolsname-missing-it004" class="md-nav__link">
+    packages[*].tools[*].name missing (IT004)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagestoolsname-type-it005" class="md-nav__link">
+    incorrect packages[*].tools[*].name type (IT005)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagestoolsname-min-length-it006" class="md-nav__link">
+    packages[*].tools[*].name &lt; min length (IT006)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagestoolsversion-missing-it007" class="md-nav__link">
+    packages[*].tools[*].version missing (IT007)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagestoolsversion-type-it008" class="md-nav__link">
+    incorrect packages[*].tools[*].version type (IT008)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagestoolsversion-it009" class="md-nav__link">
+    invalid packages[*].tools[*].version (IT009)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-semver-packagestoolsversion-it010" class="md-nav__link">
+    non-semver packages[*].tools[*].version (IT010)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagestoolssystems-missing-it011" class="md-nav__link">
+    packages[*].tools[*].systems missing (IT011)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagestoolssystems-type-it012" class="md-nav__link">
+    incorrect packages[*].tools[*].systems type (IT012)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unrecognized-properties-in-packagestoolssystems-it013" class="md-nav__link">
+    unrecognized properties in packages[*].tools[*].systems[*] (IT013)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagestoolssystemshost-missing-it014" class="md-nav__link">
+    packages[*].tools[*].systems[*].host missing (IT014)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagestoolssystemshost-type-it015" class="md-nav__link">
+    incorrect packages[*].tools[*].systems[*].host type (IT015)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagestoolssystemshost-it0016" class="md-nav__link">
+    invalid packages[*].tools[*].systems[*].host (IT0016)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagestoolssystemsurl-missing-it017" class="md-nav__link">
+    packages[*].tools[*].systems[*].url missing (IT017)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagestoolssystemsurl-type-it018" class="md-nav__link">
+    incorrect packages[*].tools[*].systems[*].url type (IT018)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagestoolssystemsurl-format-it019" class="md-nav__link">
+    invalid packages[*].tools[*].systems[*].url format (IT019)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dead-packagestoolssystemsurl-it020" class="md-nav__link">
+    dead packages[*].tools[*].systems[*].url (IT020)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagestoolssystemsarchivefilename-missing-it021" class="md-nav__link">
+    packages[*].tools[*].systems[*].archiveFileName missing (IT021)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagestoolssystemsarchivefilename-type-it022" class="md-nav__link">
+    incorrect packages[*].tools[*].systems[*].archiveFileName type (IT022)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagestoolssystemsarchivefilename-min-length-it023" class="md-nav__link">
+    packages[*].tools[*].systems[*].archiveFileName &lt; min length (IT023)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagestoolssystemsarchivefilename-it0024" class="md-nav__link">
+    invalid packages[*].tools[*].systems[*].archiveFileName (IT0024)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagestoolssystemschecksum-missing-it025" class="md-nav__link">
+    packages[*].tools[*].systems[*].checksum missing (IT025)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagestoolssystemschecksum-type-it026" class="md-nav__link">
+    incorrect packages[*].tools[*].systems[*].checksum type (IT026)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagestoolssystemschecksum-it027" class="md-nav__link">
+    invalid packages[*].tools[*].systems[*].checksum (IT027)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#discouraged-packagestoolssystemschecksum-algorithm-it028" class="md-nav__link">
+    discouraged packages[*].tools[*].systems[*].checksum algorithm (IT028)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagestoolssystemssize-missing-it029" class="md-nav__link">
+    packages[*].tools[*].systems[*].size missing (IT029)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagestoolssystemssize-type-it030" class="md-nav__link">
+    incorrect packages[*].tools[*].systems[*].size type (IT030)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagestoolssystemssize-it031" class="md-nav__link">
+    invalid packages[*].tools[*].systems[*].size (IT031)
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CONTRIBUTING/" class="md-nav__link">
+        How to contribute
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#missing-is001" class="md-nav__link">
+    missing (IS001)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-filename-is002" class="md-nav__link">
+    invalid filename (IS002)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-official-filename-is003" class="md-nav__link">
+    invalid official filename (IS003)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#json-format-id001" class="md-nav__link">
+    JSON format (ID001)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-format-id002" class="md-nav__link">
+    data format (ID002)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unrecognized-properties-in-root-id003" class="md-nav__link">
+    unrecognized properties in root (ID003)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packages-property-missing-ia001" class="md-nav__link">
+    packages property missing (IA001)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packages-type-ia002" class="md-nav__link">
+    Incorrect packages type (IA002)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unrecognized-properties-in-packages-ia003" class="md-nav__link">
+    unrecognized properties in packages (IA003)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesname-missing-ia004" class="md-nav__link">
+    packages[*].name missing (IA004)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesname-type-ia005" class="md-nav__link">
+    Incorrect packages[*].name type (IA005)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesname-min-length-ia006" class="md-nav__link">
+    packages[*].name &lt; min length (IA006)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesname-is-arduino-ia007" class="md-nav__link">
+    packages[*].name is arduino (IA007)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesmaintainer-missing-ia008" class="md-nav__link">
+    packages[*].maintainer missing (IA008)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesmaintainer-type-ia009" class="md-nav__link">
+    Incorrect packages[*].maintainer type (IA009)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesmaintainer-min-length-ia010" class="md-nav__link">
+    packages[*].maintainer &lt; min length (IA010)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesmaintainer-starts-with-arduino-ia011" class="md-nav__link">
+    packages[*].maintainer starts with "arduino" (IA011)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packageswebsiteurl-missing-ia012" class="md-nav__link">
+    packages[*].websiteURL missing (IA012)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packageswebsiteurl-type-ia013" class="md-nav__link">
+    Incorrect packages[*].websiteURL type (IA013)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packageswebsiteurl-format-ia014" class="md-nav__link">
+    Invalid packages[*].websiteURL format (IA014)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dead-packageswebsiteurl-ia015" class="md-nav__link">
+    dead packages[*].websiteURL (IA015)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesemail-missing-ia016" class="md-nav__link">
+    packages[*].email missing (IA016)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesemail-type-ia017" class="md-nav__link">
+    Incorrect packages[*].email type (IA017)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packageshelp-type-ia018" class="md-nav__link">
+    Incorrect packages[*].help type (IA018)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unrecognized-properties-in-packageshelp-ia019" class="md-nav__link">
+    unrecognized properties in packages[*].help (IA019)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packageshelponline-missing-ia020" class="md-nav__link">
+    packages[*].help.online missing (IA020)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packageshelponline-type-ia021" class="md-nav__link">
+    Incorrect packages[*].help.online type (IA021)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packageshelponline-format-ia022" class="md-nav__link">
+    Invalid packages[*].help.online format (IA022)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dead-packageshelponline-ia023" class="md-nav__link">
+    dead packages[*].help.online (IA023)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatforms-missing-il001" class="md-nav__link">
+    packages[*].platforms missing (IL001)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatforms-type-il002" class="md-nav__link">
+    incorrect packages[*].platforms type (IL002)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unrecognized-properties-in-packagesplatforms-il003" class="md-nav__link">
+    unrecognized properties in packages[*].platforms[*] (IL003)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsname-missing-il004" class="md-nav__link">
+    packages[*].platforms[*].name missing (IL004)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformsname-type-il005" class="md-nav__link">
+    incorrect packages[*].platforms[*].name type (IL005)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsname-min-length-il006" class="md-nav__link">
+    packages[*].platforms[*].name &lt; min length (IL006)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsarchitecture-missing-il007" class="md-nav__link">
+    packages[*].platforms[*].architecture missing (IL007)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformsarchitecture-type-il008" class="md-nav__link">
+    incorrect packages[*].platforms[*].architecture type (IL008)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsarchitecture-min-length-il009" class="md-nav__link">
+    packages[*].platforms[*].architecture &lt; min length (IL009)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsversion-missing-il010" class="md-nav__link">
+    packages[*].platforms[*].version missing (IL010)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformsversion-type-il011" class="md-nav__link">
+    incorrect packages[*].platforms[*].version type (IL011)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagesplatformsversion-il012" class="md-nav__link">
+    invalid packages[*].platforms[*].version (IL012)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-semver-packagesplatformsversion-il013" class="md-nav__link">
+    non-semver packages[*].platforms[*].version (IL013)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformsdeprecated-type-il058" class="md-nav__link">
+    incorrect packages[*].platforms[*].deprecated type (IL058)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformscategory-missing-il014" class="md-nav__link">
+    packages[*].platforms[*].category missing (IL014)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformscategory-type-il015" class="md-nav__link">
+    incorrect packages[*].platforms[*].category type (IL015)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagesplatformscategory-il016" class="md-nav__link">
+    invalid packages[*].platforms[*].category (IL016)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformshelp-missing-il017" class="md-nav__link">
+    packages[*].platforms[*].help missing (IL017)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformshelp-type-il018" class="md-nav__link">
+    incorrect packages[*].platforms[*].help type (IL018)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unrecognized-properties-in-packagesplatformshelp-il019" class="md-nav__link">
+    unrecognized properties in packages[*].platforms[*].help (IL019)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformshelponline-missing-il020" class="md-nav__link">
+    packages[*].platforms[*].help.online missing (IL020)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformshelponline-type-il021" class="md-nav__link">
+    incorrect packages[*].platforms[*].help.online type (IL021)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagesplatformshelponline-format-il022" class="md-nav__link">
+    invalid packages[*].platforms[*].help.online format (IL022)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dead-packagesplatformshelponline-il023" class="md-nav__link">
+    dead packages[*].platforms[*].help.online (IL023)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsurl-missing-il024" class="md-nav__link">
+    packages[*].platforms[*].url missing (IL024)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformsurl-type-il025" class="md-nav__link">
+    incorrect packages[*].platforms[*].url type (IL025)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagesplatformsurl-format-il026" class="md-nav__link">
+    invalid packages[*].platforms[*].url format (IL026)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dead-packagesplatformsurl-il027" class="md-nav__link">
+    dead packages[*].platforms[*].url (IL027)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsarchivefilename-missing-il028" class="md-nav__link">
+    packages[*].platforms[*].archiveFileName missing (IL028)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformsarchivefilename-type-il029" class="md-nav__link">
+    incorrect packages[*].platforms[*].archiveFileName type (IL029)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsarchivefilename-min-length-il030" class="md-nav__link">
+    packages[*].platforms[*].archiveFileName &lt; min length (IL030)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagesplatformsarchivefilename-il031" class="md-nav__link">
+    invalid packages[*].platforms[*].archiveFileName (IL031)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformschecksum-missing-il032" class="md-nav__link">
+    packages[*].platforms[*].checksum missing (IL032)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformschecksum-type-il033" class="md-nav__link">
+    incorrect packages[*].platforms[*].checksum type (IL033)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagesplatformschecksum-il034" class="md-nav__link">
+    invalid packages[*].platforms[*].checksum (IL034)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#discouraged-packagesplatformschecksum-algorithm-il035" class="md-nav__link">
+    discouraged packages[*].platforms[*].checksum algorithm (IL035)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformssize-missing-il036" class="md-nav__link">
+    packages[*].platforms[*].size missing (IL036)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformssize-type-il037" class="md-nav__link">
+    incorrect packages[*].platforms[*].size type (IL037)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagesplatformssize-il038" class="md-nav__link">
+    invalid packages[*].platforms[*].size (IL038)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsboards-missing-il039" class="md-nav__link">
+    packages[*].platforms[*].boards missing (IL039)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformsboards-type-il040" class="md-nav__link">
+    incorrect packages[*].platforms[*].boards type (IL040)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unrecognized-properties-in-packagesplatformsboards-il041" class="md-nav__link">
+    unrecognized properties in packages[*].platforms[*].boards[*] (IL041)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsboardsname-missing-il042" class="md-nav__link">
+    packages[*].platforms[*].boards[*].name missing (IL042)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformsboardsname-type-il043" class="md-nav__link">
+    incorrect packages[*].platforms[*].boards[*].name type (IL043)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsboardsname-min-length-il044" class="md-nav__link">
+    packages[*].platforms[*].boards[*].name &lt; min length (IL044)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformstoolsdependencies-missing-il045" class="md-nav__link">
+    packages[*].platforms[*].toolsDependencies missing (IL045)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformstoolsdependencies-type-il046" class="md-nav__link">
+    incorrect packages[*].platforms[*].toolsDependencies type (IL046)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unrecognized-properties-in-packagesplatformstoolsdependencies-il047" class="md-nav__link">
+    unrecognized properties in packages[*].platforms[*].toolsDependencies[*] (IL047)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformstoolsdependenciespackager-missing-il048" class="md-nav__link">
+    packages[*].platforms[*].toolsDependencies[*].packager missing (IL048)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformstoolsdependenciespackager-type-il049" class="md-nav__link">
+    incorrect packages[*].platforms[*].toolsDependencies[*].packager type (IL049)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformstoolsdependenciespackager-min-length-il050" class="md-nav__link">
+    packages[*].platforms[*].toolsDependencies[*].packager &lt; min length (IL050)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformstoolsdependenciesname-missing-il051" class="md-nav__link">
+    packages[*].platforms[*].toolsDependencies[*].name missing (IL051)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformstoolsdependenciesname-type-il052" class="md-nav__link">
+    incorrect packages[*].platforms[*].toolsDependencies[*].name type (IL052)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformstoolsdependenciesname-min-length-il053" class="md-nav__link">
+    packages[*].platforms[*].toolsDependencies[*].name &lt; min length (IL053)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformstoolsdependenciesversion-missing-il054" class="md-nav__link">
+    packages[*].platforms[*].toolsDependencies[*].version missing (IL054)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformstoolsdependenciesversion-type-il055" class="md-nav__link">
+    incorrect packages[*].platforms[*].toolsDependencies[*].version type (IL055)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagesplatformstoolsdependenciesversion-il056" class="md-nav__link">
+    invalid packages[*].platforms[*].toolsDependencies[*].version (IL056)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-semver-packagesplatformstoolsdependenciesversion-il057" class="md-nav__link">
+    non-semver packages[*].platforms[*].toolsDependencies[*].version (IL057)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformsdiscoverydependencies-type-il059" class="md-nav__link">
+    incorrect packages[*].platforms[*].discoveryDependencies type (IL059)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unrecognized-properties-in-packagesplatformsdiscoverydependencies-il060" class="md-nav__link">
+    unrecognized properties in packages[*].platforms[*].discoveryDependencies[*] (IL060)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsdiscoverydependenciespackager-missing-il061" class="md-nav__link">
+    packages[*].platforms[*].discoveryDependencies[*].packager missing (IL061)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformsdiscoverydependenciespackager-type-il062" class="md-nav__link">
+    incorrect packages[*].platforms[*].discoveryDependencies[*].packager type (IL062)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsdiscoverydependenciespackager-min-length-il063" class="md-nav__link">
+    packages[*].platforms[*].discoveryDependencies[*].packager &lt; min length (IL063)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsdiscoverydependenciesname-missing-il064" class="md-nav__link">
+    packages[*].platforms[*].discoveryDependencies[*].name missing (IL064)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagesplatformsdiscoverydependenciesname-type-il065" class="md-nav__link">
+    incorrect packages[*].platforms[*].discoveryDependencies[*].name type (IL065)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagesplatformsdiscoverydependenciesname-min-length-il066" class="md-nav__link">
+    packages[*].platforms[*].discoveryDependencies[*].name &lt; min length (IL066)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagestools-missing-it001" class="md-nav__link">
+    packages[*].tools missing (IT001)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagestools-type-it002" class="md-nav__link">
+    incorrect packages[*].tools type (IT002)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unrecognized-properties-in-packagestools-it003" class="md-nav__link">
+    unrecognized properties in packages[*].tools[*] (IT003)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagestoolsname-missing-it004" class="md-nav__link">
+    packages[*].tools[*].name missing (IT004)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagestoolsname-type-it005" class="md-nav__link">
+    incorrect packages[*].tools[*].name type (IT005)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagestoolsname-min-length-it006" class="md-nav__link">
+    packages[*].tools[*].name &lt; min length (IT006)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagestoolsversion-missing-it007" class="md-nav__link">
+    packages[*].tools[*].version missing (IT007)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagestoolsversion-type-it008" class="md-nav__link">
+    incorrect packages[*].tools[*].version type (IT008)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagestoolsversion-it009" class="md-nav__link">
+    invalid packages[*].tools[*].version (IT009)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-semver-packagestoolsversion-it010" class="md-nav__link">
+    non-semver packages[*].tools[*].version (IT010)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagestoolssystems-missing-it011" class="md-nav__link">
+    packages[*].tools[*].systems missing (IT011)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagestoolssystems-type-it012" class="md-nav__link">
+    incorrect packages[*].tools[*].systems type (IT012)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unrecognized-properties-in-packagestoolssystems-it013" class="md-nav__link">
+    unrecognized properties in packages[*].tools[*].systems[*] (IT013)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagestoolssystemshost-missing-it014" class="md-nav__link">
+    packages[*].tools[*].systems[*].host missing (IT014)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagestoolssystemshost-type-it015" class="md-nav__link">
+    incorrect packages[*].tools[*].systems[*].host type (IT015)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagestoolssystemshost-it0016" class="md-nav__link">
+    invalid packages[*].tools[*].systems[*].host (IT0016)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagestoolssystemsurl-missing-it017" class="md-nav__link">
+    packages[*].tools[*].systems[*].url missing (IT017)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagestoolssystemsurl-type-it018" class="md-nav__link">
+    incorrect packages[*].tools[*].systems[*].url type (IT018)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagestoolssystemsurl-format-it019" class="md-nav__link">
+    invalid packages[*].tools[*].systems[*].url format (IT019)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dead-packagestoolssystemsurl-it020" class="md-nav__link">
+    dead packages[*].tools[*].systems[*].url (IT020)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagestoolssystemsarchivefilename-missing-it021" class="md-nav__link">
+    packages[*].tools[*].systems[*].archiveFileName missing (IT021)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagestoolssystemsarchivefilename-type-it022" class="md-nav__link">
+    incorrect packages[*].tools[*].systems[*].archiveFileName type (IT022)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagestoolssystemsarchivefilename-min-length-it023" class="md-nav__link">
+    packages[*].tools[*].systems[*].archiveFileName &lt; min length (IT023)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagestoolssystemsarchivefilename-it0024" class="md-nav__link">
+    invalid packages[*].tools[*].systems[*].archiveFileName (IT0024)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagestoolssystemschecksum-missing-it025" class="md-nav__link">
+    packages[*].tools[*].systems[*].checksum missing (IT025)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagestoolssystemschecksum-type-it026" class="md-nav__link">
+    incorrect packages[*].tools[*].systems[*].checksum type (IT026)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagestoolssystemschecksum-it027" class="md-nav__link">
+    invalid packages[*].tools[*].systems[*].checksum (IT027)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#discouraged-packagestoolssystemschecksum-algorithm-it028" class="md-nav__link">
+    discouraged packages[*].tools[*].systems[*].checksum algorithm (IT028)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packagestoolssystemssize-missing-it029" class="md-nav__link">
+    packages[*].tools[*].systems[*].size missing (IT029)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-packagestoolssystemssize-type-it030" class="md-nav__link">
+    incorrect packages[*].tools[*].systems[*].size type (IT030)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-packagestoolssystemssize-it031" class="md-nav__link">
+    invalid packages[*].tools[*].systems[*].size (IT031)
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/arduino/arduino-lint/blob/main/docs/rules/package-index.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                  <h1>Package index</h1>
+                
+                <p>Arduino Lint provides 126 rules for the <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/"><code>package-index</code></a> project type:</p>
+<hr />
+<p><a id="IS001"></a></p>
+<h2 id="missing-is001">missing (<code>IS001</code>)<a class="headerlink" href="#missing-is001" title="Permanent link">&para;</a></h2>
+<p>No package index file was found in the specified project path.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: general</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IS002"></a></p>
+<h2 id="invalid-filename-is002">invalid filename (<code>IS002</code>)<a class="headerlink" href="#invalid-filename-is002" title="Permanent link">&para;</a></h2>
+<p>The package index's filename is not compliant with the required format.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: general</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IS003"></a></p>
+<h2 id="invalid-official-filename-is003">invalid official filename (<code>IS003</code>)<a class="headerlink" href="#invalid-official-filename-is003" title="Permanent link">&para;</a></h2>
+<p>The package index's filename is not compliant with the required format (<code>package_YOURNAME_PACKAGENAME_index.json</code> or <code>package_index.json</code>).</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: general</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>disabled</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="ID001"></a></p>
+<h2 id="json-format-id001">JSON format (<code>ID001</code>)<a class="headerlink" href="#json-format-id001" title="Permanent link">&para;</a></h2>
+<p>The package index is not a valid JSON document.</p>
+<p>Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: general</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="ID002"></a></p>
+<h2 id="data-format-id002">data format (<code>ID002</code>)<a class="headerlink" href="#data-format-id002" title="Permanent link">&para;</a></h2>
+<p>The package index does not have a valid data format.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: general</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="ID003"></a></p>
+<h2 id="unrecognized-properties-in-root-id003">unrecognized properties in root (<code>ID003</code>)<a class="headerlink" href="#unrecognized-properties-in-root-id003" title="Permanent link">&para;</a></h2>
+<p>Unknown data properties were found in the package index root.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: root</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IA001"></a></p>
+<h2 id="packages-property-missing-ia001">packages property missing (<code>IA001</code>)<a class="headerlink" href="#packages-property-missing-ia001" title="Permanent link">&para;</a></h2>
+<p>The package index is missing the <code>packages</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#json-index-file-contents"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IA002"></a></p>
+<h2 id="incorrect-packages-type-ia002">Incorrect packages type (<code>IA002</code>)<a class="headerlink" href="#incorrect-packages-type-ia002" title="Permanent link">&para;</a></h2>
+<p>The package index's <code>packages</code> property has an incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#json-index-file-contents"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IA003"></a></p>
+<h2 id="unrecognized-properties-in-packages-ia003">unrecognized properties in packages (<code>IA003</code>)<a class="headerlink" href="#unrecognized-properties-in-packages-ia003" title="Permanent link">&para;</a></h2>
+<p>The package index has a package containing unknown data properties.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#json-index-file-contents"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: root</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IA004"></a></p>
+<h2 id="packagesname-missing-ia004">packages[*].name missing (<code>IA004</code>)<a class="headerlink" href="#packagesname-missing-ia004" title="Permanent link">&para;</a></h2>
+<p>The package index has a package without a <code>name</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#json-index-file-contents"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IA005"></a></p>
+<h2 id="incorrect-packagesname-type-ia005">Incorrect packages[*].name type (<code>IA005</code>)<a class="headerlink" href="#incorrect-packagesname-type-ia005" title="Permanent link">&para;</a></h2>
+<p>The package index has a package with a <code>name</code> property of incorrect type. The <code>name</code> value must be a string.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#json-index-file-contents"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IA006"></a></p>
+<h2 id="packagesname-min-length-ia006">packages[*].name &lt; min length (<code>IA006</code>)<a class="headerlink" href="#packagesname-min-length-ia006" title="Permanent link">&para;</a></h2>
+<p>The package index has a package with a <code>name</code> property shorter than the minimum length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#json-index-file-contents"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IA007"></a></p>
+<h2 id="packagesname-is-arduino-ia007">packages[*].name is arduino (<code>IA007</code>)<a class="headerlink" href="#packagesname-is-arduino-ia007" title="Permanent link">&para;</a></h2>
+<p>The package index has a package with a <code>name</code> property of <code>arduino</code> (case insensitive). This name is reserved for official packages.</p>
+<p>If the package index is maintained by Arduino, configure Arduino Lint in <a href="https://arduino.github.io/arduino-lint/latest/#environment-variables">"official" mode</a>.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#json-index-file-contents"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IA008"></a></p>
+<h2 id="packagesmaintainer-missing-ia008">packages[*].maintainer missing (<code>IA008</code>)<a class="headerlink" href="#packagesmaintainer-missing-ia008" title="Permanent link">&para;</a></h2>
+<p>The package index has a package without a <code>maintainer</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#json-index-file-contents"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IA009"></a></p>
+<h2 id="incorrect-packagesmaintainer-type-ia009">Incorrect packages[*].maintainer type (<code>IA009</code>)<a class="headerlink" href="#incorrect-packagesmaintainer-type-ia009" title="Permanent link">&para;</a></h2>
+<p>The package index has a package with a <code>maintainer</code> property of incorrect type. The <code>maintainer</code> value must be a string.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#json-index-file-contents"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IA010"></a></p>
+<h2 id="packagesmaintainer-min-length-ia010">packages[*].maintainer &lt; min length (<code>IA010</code>)<a class="headerlink" href="#packagesmaintainer-min-length-ia010" title="Permanent link">&para;</a></h2>
+<p>The package index has a package with a <code>maintainer</code> property shorter than the minimum length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#json-index-file-contents"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IA011"></a></p>
+<h2 id="packagesmaintainer-starts-with-arduino-ia011">packages[*].maintainer starts with "arduino" (<code>IA011</code>)<a class="headerlink" href="#packagesmaintainer-starts-with-arduino-ia011" title="Permanent link">&para;</a></h2>
+<p>The package index has a package with a <code>maintainer</code> value starting with "Arduino" (case insensitive). 3rd party packages are not maintained by Arduino.</p>
+<p>If the package index is maintained by Arduino, configure Arduino Lint in <a href="https://arduino.github.io/arduino-lint/latest/#environment-variables">"official" mode</a>.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#json-index-file-contents"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IA012"></a></p>
+<h2 id="packageswebsiteurl-missing-ia012">packages[*].websiteURL missing (<code>IA012</code>)<a class="headerlink" href="#packageswebsiteurl-missing-ia012" title="Permanent link">&para;</a></h2>
+<p>The package index has a package without a <code>websiteURL</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#json-index-file-contents"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IA013"></a></p>
+<h2 id="incorrect-packageswebsiteurl-type-ia013">Incorrect packages[*].websiteURL type (<code>IA013</code>)<a class="headerlink" href="#incorrect-packageswebsiteurl-type-ia013" title="Permanent link">&para;</a></h2>
+<p>The package index has a package with a <code>websiteURL</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#json-index-file-contents"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IA014"></a></p>
+<h2 id="invalid-packageswebsiteurl-format-ia014">Invalid packages[*].websiteURL format (<code>IA014</code>)<a class="headerlink" href="#invalid-packageswebsiteurl-format-ia014" title="Permanent link">&para;</a></h2>
+<p>The package index has a package with a <code>websiteURL</code> property that is not a valid format for a URL.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#json-index-file-contents"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IA015"></a></p>
+<h2 id="dead-packageswebsiteurl-ia015">dead packages[*].websiteURL (<code>IA015</code>)<a class="headerlink" href="#dead-packageswebsiteurl-ia015" title="Permanent link">&para;</a></h2>
+<p>The package index has a package with a <code>websiteURL</code> property that did not load from the Internet.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#json-index-file-contents"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IA016"></a></p>
+<h2 id="packagesemail-missing-ia016">packages[*].email missing (<code>IA016</code>)<a class="headerlink" href="#packagesemail-missing-ia016" title="Permanent link">&para;</a></h2>
+<p>The package index has a package without an <code>email</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#json-index-file-contents"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IA017"></a></p>
+<h2 id="incorrect-packagesemail-type-ia017">Incorrect packages[*].email type (<code>IA017</code>)<a class="headerlink" href="#incorrect-packagesemail-type-ia017" title="Permanent link">&para;</a></h2>
+<p>The package index has a package with an <code>email</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#json-index-file-contents"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IA018"></a></p>
+<h2 id="incorrect-packageshelp-type-ia018">Incorrect packages[*].help type (<code>IA018</code>)<a class="headerlink" href="#incorrect-packageshelp-type-ia018" title="Permanent link">&para;</a></h2>
+<p>The package index has a package with a <code>help</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#json-index-file-contents"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IA019"></a></p>
+<h2 id="unrecognized-properties-in-packageshelp-ia019">unrecognized properties in packages[*].help (<code>IA019</code>)<a class="headerlink" href="#unrecognized-properties-in-packageshelp-ia019" title="Permanent link">&para;</a></h2>
+<p>The package index has a package with <code>help</code> property containing unknown data properties.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#json-index-file-contents"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: root</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IA020"></a></p>
+<h2 id="packageshelponline-missing-ia020">packages[*].help.online missing (<code>IA020</code>)<a class="headerlink" href="#packageshelponline-missing-ia020" title="Permanent link">&para;</a></h2>
+<p>The package index has a package without a <code>help.online</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#json-index-file-contents"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IA021"></a></p>
+<h2 id="incorrect-packageshelponline-type-ia021">Incorrect packages[*].help.online type (<code>IA021</code>)<a class="headerlink" href="#incorrect-packageshelponline-type-ia021" title="Permanent link">&para;</a></h2>
+<p>The package index has a package with a <code>help.online</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#json-index-file-contents"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IA022"></a></p>
+<h2 id="invalid-packageshelponline-format-ia022">Invalid packages[*].help.online format (<code>IA022</code>)<a class="headerlink" href="#invalid-packageshelponline-format-ia022" title="Permanent link">&para;</a></h2>
+<p>The package index has a package with a <code>websiteURL</code> property that is not a valid format for a URL.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#json-index-file-contents"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IA023"></a></p>
+<h2 id="dead-packageshelponline-ia023">dead packages[*].help.online (<code>IA023</code>)<a class="headerlink" href="#dead-packageshelponline-ia023" title="Permanent link">&para;</a></h2>
+<p>The package index has a package with a <code>help.online</code> property that did not load from the Internet.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#json-index-file-contents"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL001"></a></p>
+<h2 id="packagesplatforms-missing-il001">packages[*].platforms missing (<code>IL001</code>)<a class="headerlink" href="#packagesplatforms-missing-il001" title="Permanent link">&para;</a></h2>
+<p>The package index has a package without a <code>platforms</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#json-index-file-contents"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL002"></a></p>
+<h2 id="incorrect-packagesplatforms-type-il002">incorrect packages[*].platforms type (<code>IL002</code>)<a class="headerlink" href="#incorrect-packagesplatforms-type-il002" title="Permanent link">&para;</a></h2>
+<p>The package index has a package with a <code>platforms</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#json-index-file-contents"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL003"></a></p>
+<h2 id="unrecognized-properties-in-packagesplatforms-il003">unrecognized properties in packages[*].platforms[*] (<code>IL003</code>)<a class="headerlink" href="#unrecognized-properties-in-packagesplatforms-il003" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform containing unknown data properties.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL004"></a></p>
+<h2 id="packagesplatformsname-missing-il004">packages[*].platforms[*].name missing (<code>IL004</code>)<a class="headerlink" href="#packagesplatformsname-missing-il004" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform without a <code>name</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL005"></a></p>
+<h2 id="incorrect-packagesplatformsname-type-il005">incorrect packages[*].platforms[*].name type (<code>IL005</code>)<a class="headerlink" href="#incorrect-packagesplatformsname-type-il005" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform with a <code>name</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL006"></a></p>
+<h2 id="packagesplatformsname-min-length-il006">packages[*].platforms[*].name &lt; min length (<code>IL006</code>)<a class="headerlink" href="#packagesplatformsname-min-length-il006" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform with a <code>name</code> property shorter than the minimum length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL007"></a></p>
+<h2 id="packagesplatformsarchitecture-missing-il007">packages[*].platforms[*].architecture missing (<code>IL007</code>)<a class="headerlink" href="#packagesplatformsarchitecture-missing-il007" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform without an <code>architecture</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL008"></a></p>
+<h2 id="incorrect-packagesplatformsarchitecture-type-il008">incorrect packages[*].platforms[*].architecture type (<code>IL008</code>)<a class="headerlink" href="#incorrect-packagesplatformsarchitecture-type-il008" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform with an <code>architecture</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL009"></a></p>
+<h2 id="packagesplatformsarchitecture-min-length-il009">packages[*].platforms[*].architecture &lt; min length (<code>IL009</code>)<a class="headerlink" href="#packagesplatformsarchitecture-min-length-il009" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform with an <code>architecture</code> property shorter than the minimum length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL010"></a></p>
+<h2 id="packagesplatformsversion-missing-il010">packages[*].platforms[*].version missing (<code>IL010</code>)<a class="headerlink" href="#packagesplatformsversion-missing-il010" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform without a <code>version</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL011"></a></p>
+<h2 id="incorrect-packagesplatformsversion-type-il011">incorrect packages[*].platforms[*].version type (<code>IL011</code>)<a class="headerlink" href="#incorrect-packagesplatformsversion-type-il011" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform with a <code>version</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL012"></a></p>
+<h2 id="invalid-packagesplatformsversion-il012">invalid packages[*].platforms[*].version (<code>IL012</code>)<a class="headerlink" href="#invalid-packagesplatformsversion-il012" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform with an invalid <code>version</code> property. It must be compliant with "relaxed semver".</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL013"></a></p>
+<h2 id="non-semver-packagesplatformsversion-il013">non-semver packages[*].platforms[*].version (<code>IL013</code>)<a class="headerlink" href="#non-semver-packagesplatformsversion-il013" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform with a <code>version</code> property that is not compliant with the "semver" specification. Although not required, use of the standard semver version format is recommended.</p>
+<p>More information: <a href="https://semver.org/"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL058"></a></p>
+<h2 id="incorrect-packagesplatformsdeprecated-type-il058">incorrect packages[*].platforms[*].deprecated type (<code>IL058</code>)<a class="headerlink" href="#incorrect-packagesplatformsdeprecated-type-il058" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform with a <code>deprecated</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL014"></a></p>
+<h2 id="packagesplatformscategory-missing-il014">packages[*].platforms[*].category missing (<code>IL014</code>)<a class="headerlink" href="#packagesplatformscategory-missing-il014" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform without a <code>category</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL015"></a></p>
+<h2 id="incorrect-packagesplatformscategory-type-il015">incorrect packages[*].platforms[*].category type (<code>IL015</code>)<a class="headerlink" href="#incorrect-packagesplatformscategory-type-il015" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform with a <code>category</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL016"></a></p>
+<h2 id="invalid-packagesplatformscategory-il016">invalid packages[*].platforms[*].category (<code>IL016</code>)<a class="headerlink" href="#invalid-packagesplatformscategory-il016" title="Permanent link">&para;</a></h2>
+<p>The <code>category</code> property of a platform in the package index has an invalid value.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL017"></a></p>
+<h2 id="packagesplatformshelp-missing-il017">packages[*].platforms[*].help missing (<code>IL017</code>)<a class="headerlink" href="#packagesplatformshelp-missing-il017" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform without a <code>help</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL018"></a></p>
+<h2 id="incorrect-packagesplatformshelp-type-il018">incorrect packages[*].platforms[*].help type (<code>IL018</code>)<a class="headerlink" href="#incorrect-packagesplatformshelp-type-il018" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform with a <code>help</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL019"></a></p>
+<h2 id="unrecognized-properties-in-packagesplatformshelp-il019">unrecognized properties in packages[*].platforms[*].help (<code>IL019</code>)<a class="headerlink" href="#unrecognized-properties-in-packagesplatformshelp-il019" title="Permanent link">&para;</a></h2>
+<p>The <code>help</code> property of a platform in the package index contains unknown data properties.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL020"></a></p>
+<h2 id="packagesplatformshelponline-missing-il020">packages[*].platforms[*].help.online missing (<code>IL020</code>)<a class="headerlink" href="#packagesplatformshelponline-missing-il020" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform without a <code>help.online</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL021"></a></p>
+<h2 id="incorrect-packagesplatformshelponline-type-il021">incorrect packages[*].platforms[*].help.online type (<code>IL021</code>)<a class="headerlink" href="#incorrect-packagesplatformshelponline-type-il021" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform with a <code>help.online</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL022"></a></p>
+<h2 id="invalid-packagesplatformshelponline-format-il022">invalid packages[*].platforms[*].help.online format (<code>IL022</code>)<a class="headerlink" href="#invalid-packagesplatformshelponline-format-il022" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform with a <code>help.online</code> property that is not a valid format for a URL.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL023"></a></p>
+<h2 id="dead-packagesplatformshelponline-il023">dead packages[*].platforms[*].help.online (<code>IL023</code>)<a class="headerlink" href="#dead-packagesplatformshelponline-il023" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform with a <code>help.online</code> property that did not load from the Internet.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL024"></a></p>
+<h2 id="packagesplatformsurl-missing-il024">packages[*].platforms[*].url missing (<code>IL024</code>)<a class="headerlink" href="#packagesplatformsurl-missing-il024" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform without a <code>url</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL025"></a></p>
+<h2 id="incorrect-packagesplatformsurl-type-il025">incorrect packages[*].platforms[*].url type (<code>IL025</code>)<a class="headerlink" href="#incorrect-packagesplatformsurl-type-il025" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform with a <code>url</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL026"></a></p>
+<h2 id="invalid-packagesplatformsurl-format-il026">invalid packages[*].platforms[*].url format (<code>IL026</code>)<a class="headerlink" href="#invalid-packagesplatformsurl-format-il026" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform with a <code>url</code> property that is not a valid format for a URL.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL027"></a></p>
+<h2 id="dead-packagesplatformsurl-il027">dead packages[*].platforms[*].url (<code>IL027</code>)<a class="headerlink" href="#dead-packagesplatformsurl-il027" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform with a <code>url</code> property that did not load from the Internet.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL028"></a></p>
+<h2 id="packagesplatformsarchivefilename-missing-il028">packages[*].platforms[*].archiveFileName missing (<code>IL028</code>)<a class="headerlink" href="#packagesplatformsarchivefilename-missing-il028" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform without an <code>archiveFileName</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL029"></a></p>
+<h2 id="incorrect-packagesplatformsarchivefilename-type-il029">incorrect packages[*].platforms[*].archiveFileName type (<code>IL029</code>)<a class="headerlink" href="#incorrect-packagesplatformsarchivefilename-type-il029" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform with an <code>archiveFileName</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL030"></a></p>
+<h2 id="packagesplatformsarchivefilename-min-length-il030">packages[*].platforms[*].archiveFileName &lt; min length (<code>IL030</code>)<a class="headerlink" href="#packagesplatformsarchivefilename-min-length-il030" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform with an <code>archiveFileName</code> property shorter than the minimum length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL031"></a></p>
+<h2 id="invalid-packagesplatformsarchivefilename-il031">invalid packages[*].platforms[*].archiveFileName (<code>IL031</code>)<a class="headerlink" href="#invalid-packagesplatformsarchivefilename-il031" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform with an <code>archiveFileName</code> property that uses an unsupported file extension.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL032"></a></p>
+<h2 id="packagesplatformschecksum-missing-il032">packages[*].platforms[*].checksum missing (<code>IL032</code>)<a class="headerlink" href="#packagesplatformschecksum-missing-il032" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform without a <code>checksum</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL033"></a></p>
+<h2 id="incorrect-packagesplatformschecksum-type-il033">incorrect packages[*].platforms[*].checksum type (<code>IL033</code>)<a class="headerlink" href="#incorrect-packagesplatformschecksum-type-il033" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform with a <code>checksum</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL034"></a></p>
+<h2 id="invalid-packagesplatformschecksum-il034">invalid packages[*].platforms[*].checksum (<code>IL034</code>)<a class="headerlink" href="#invalid-packagesplatformschecksum-il034" title="Permanent link">&para;</a></h2>
+<p>The <code>checksum</code> property of a platform in the package index has an invalid format.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL035"></a></p>
+<h2 id="discouraged-packagesplatformschecksum-algorithm-il035">discouraged packages[*].platforms[*].checksum algorithm (<code>IL035</code>)<a class="headerlink" href="#discouraged-packagesplatformschecksum-algorithm-il035" title="Permanent link">&para;</a></h2>
+<p>The <code>checksum</code> property of a platform in the package index uses a discouraged hash algorithm.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL036"></a></p>
+<h2 id="packagesplatformssize-missing-il036">packages[*].platforms[*].size missing (<code>IL036</code>)<a class="headerlink" href="#packagesplatformssize-missing-il036" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform without a <code>size</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL037"></a></p>
+<h2 id="incorrect-packagesplatformssize-type-il037">incorrect packages[*].platforms[*].size type (<code>IL037</code>)<a class="headerlink" href="#incorrect-packagesplatformssize-type-il037" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform with a <code>size</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL038"></a></p>
+<h2 id="invalid-packagesplatformssize-il038">invalid packages[*].platforms[*].size (<code>IL038</code>)<a class="headerlink" href="#invalid-packagesplatformssize-il038" title="Permanent link">&para;</a></h2>
+<p>The <code>size</code> property of a platform in the package index has an invalid value.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL039"></a></p>
+<h2 id="packagesplatformsboards-missing-il039">packages[*].platforms[*].boards missing (<code>IL039</code>)<a class="headerlink" href="#packagesplatformsboards-missing-il039" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform without a <code>boards</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL040"></a></p>
+<h2 id="incorrect-packagesplatformsboards-type-il040">incorrect packages[*].platforms[*].boards type (<code>IL040</code>)<a class="headerlink" href="#incorrect-packagesplatformsboards-type-il040" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform with a <code>boards</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL041"></a></p>
+<h2 id="unrecognized-properties-in-packagesplatformsboards-il041">unrecognized properties in packages[*].platforms[*].boards[*] (<code>IL041</code>)<a class="headerlink" href="#unrecognized-properties-in-packagesplatformsboards-il041" title="Permanent link">&para;</a></h2>
+<p>A <code>boards</code> object for one of the package index's platforms contains unknown data properties.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL042"></a></p>
+<h2 id="packagesplatformsboardsname-missing-il042">packages[*].platforms[*].boards[*].name missing (<code>IL042</code>)<a class="headerlink" href="#packagesplatformsboardsname-missing-il042" title="Permanent link">&para;</a></h2>
+<p>A <code>boards</code> object for one of the package index's platforms is missing a <code>name</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL043"></a></p>
+<h2 id="incorrect-packagesplatformsboardsname-type-il043">incorrect packages[*].platforms[*].boards[*].name type (<code>IL043</code>)<a class="headerlink" href="#incorrect-packagesplatformsboardsname-type-il043" title="Permanent link">&para;</a></h2>
+<p>A <code>boards</code> object for one of the package index's platforms has a <code>name</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL044"></a></p>
+<h2 id="packagesplatformsboardsname-min-length-il044">packages[*].platforms[*].boards[*].name &lt; min length (<code>IL044</code>)<a class="headerlink" href="#packagesplatformsboardsname-min-length-il044" title="Permanent link">&para;</a></h2>
+<p>A <code>boards</code> object for one of the package index's platforms has a <code>name</code> property shorter than the minimum length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL045"></a></p>
+<h2 id="packagesplatformstoolsdependencies-missing-il045">packages[*].platforms[*].toolsDependencies missing (<code>IL045</code>)<a class="headerlink" href="#packagesplatformstoolsdependencies-missing-il045" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform without a <code>toolsDependencies</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL046"></a></p>
+<h2 id="incorrect-packagesplatformstoolsdependencies-type-il046">incorrect packages[*].platforms[*].toolsDependencies type (<code>IL046</code>)<a class="headerlink" href="#incorrect-packagesplatformstoolsdependencies-type-il046" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform with a <code>toolsDependencies</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL047"></a></p>
+<h2 id="unrecognized-properties-in-packagesplatformstoolsdependencies-il047">unrecognized properties in packages[*].platforms[*].toolsDependencies[*] (<code>IL047</code>)<a class="headerlink" href="#unrecognized-properties-in-packagesplatformstoolsdependencies-il047" title="Permanent link">&para;</a></h2>
+<p>The <code>toolsDependencies</code> property of a platform in the package index contains unknown data properties.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL048"></a></p>
+<h2 id="packagesplatformstoolsdependenciespackager-missing-il048">packages[*].platforms[*].toolsDependencies[*].packager missing (<code>IL048</code>)<a class="headerlink" href="#packagesplatformstoolsdependenciespackager-missing-il048" title="Permanent link">&para;</a></h2>
+<p>A <code>toolsDependencies</code> object for one of the package index's platforms is missing a <code>packager</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL049"></a></p>
+<h2 id="incorrect-packagesplatformstoolsdependenciespackager-type-il049">incorrect packages[*].platforms[*].toolsDependencies[*].packager type (<code>IL049</code>)<a class="headerlink" href="#incorrect-packagesplatformstoolsdependenciespackager-type-il049" title="Permanent link">&para;</a></h2>
+<p>A <code>toolsDependencies</code> object for one of the package index's platforms has a <code>packager</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL050"></a></p>
+<h2 id="packagesplatformstoolsdependenciespackager-min-length-il050">packages[*].platforms[*].toolsDependencies[*].packager &lt; min length (<code>IL050</code>)<a class="headerlink" href="#packagesplatformstoolsdependenciespackager-min-length-il050" title="Permanent link">&para;</a></h2>
+<p>A <code>toolsDependencies</code> object for one of the package index's platforms has a <code>packager</code> property shorter than the minimum length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL051"></a></p>
+<h2 id="packagesplatformstoolsdependenciesname-missing-il051">packages[*].platforms[*].toolsDependencies[*].name missing (<code>IL051</code>)<a class="headerlink" href="#packagesplatformstoolsdependenciesname-missing-il051" title="Permanent link">&para;</a></h2>
+<p>A <code>toolsDependencies</code> object for one of the package index's platforms is missing a <code>name</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL052"></a></p>
+<h2 id="incorrect-packagesplatformstoolsdependenciesname-type-il052">incorrect packages[*].platforms[*].toolsDependencies[*].name type (<code>IL052</code>)<a class="headerlink" href="#incorrect-packagesplatformstoolsdependenciesname-type-il052" title="Permanent link">&para;</a></h2>
+<p>A <code>toolsDependencies</code> object for one of the package index's platforms has a <code>name</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL053"></a></p>
+<h2 id="packagesplatformstoolsdependenciesname-min-length-il053">packages[*].platforms[*].toolsDependencies[*].name &lt; min length (<code>IL053</code>)<a class="headerlink" href="#packagesplatformstoolsdependenciesname-min-length-il053" title="Permanent link">&para;</a></h2>
+<p>A <code>toolsDependencies</code> object for one of the package index's platforms has a <code>name</code> property shorter than the minimum length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL054"></a></p>
+<h2 id="packagesplatformstoolsdependenciesversion-missing-il054">packages[*].platforms[*].toolsDependencies[*].version missing (<code>IL054</code>)<a class="headerlink" href="#packagesplatformstoolsdependenciesversion-missing-il054" title="Permanent link">&para;</a></h2>
+<p>A <code>toolsDependencies</code> object for one of the package index's platforms is missing a <code>version</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL055"></a></p>
+<h2 id="incorrect-packagesplatformstoolsdependenciesversion-type-il055">incorrect packages[*].platforms[*].toolsDependencies[*].version type (<code>IL055</code>)<a class="headerlink" href="#incorrect-packagesplatformstoolsdependenciesversion-type-il055" title="Permanent link">&para;</a></h2>
+<p>A <code>toolsDependencies</code> object for one of the package index's platforms has a <code>version</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL056"></a></p>
+<h2 id="invalid-packagesplatformstoolsdependenciesversion-il056">invalid packages[*].platforms[*].toolsDependencies[*].version (<code>IL056</code>)<a class="headerlink" href="#invalid-packagesplatformstoolsdependenciesversion-il056" title="Permanent link">&para;</a></h2>
+<p>A <code>toolsDependencies</code> object for one of the package index's platforms has an invalid <code>version</code> property. It must be compliant with "relaxed semver".</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL057"></a></p>
+<h2 id="non-semver-packagesplatformstoolsdependenciesversion-il057">non-semver packages[*].platforms[*].toolsDependencies[*].version (<code>IL057</code>)<a class="headerlink" href="#non-semver-packagesplatformstoolsdependenciesversion-il057" title="Permanent link">&para;</a></h2>
+<p>A <code>toolsDependencies</code> object for one of the package index's platforms has a <code>version</code> property that is not compliant with the "semver" specification. Although not required, use of the standard semver version format is recommended.</p>
+<p>More information: <a href="https://semver.org/"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL059"></a></p>
+<h2 id="incorrect-packagesplatformsdiscoverydependencies-type-il059">incorrect packages[*].platforms[*].discoveryDependencies type (<code>IL059</code>)<a class="headerlink" href="#incorrect-packagesplatformsdiscoverydependencies-type-il059" title="Permanent link">&para;</a></h2>
+<p>The package index has a platform with a <code>discoveryDependencies</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL060"></a></p>
+<h2 id="unrecognized-properties-in-packagesplatformsdiscoverydependencies-il060">unrecognized properties in packages[*].platforms[*].discoveryDependencies[*] (<code>IL060</code>)<a class="headerlink" href="#unrecognized-properties-in-packagesplatformsdiscoverydependencies-il060" title="Permanent link">&para;</a></h2>
+<p>A <code>discoveryDependencies</code> object for one of the package index's platforms contains unknown data properties.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL061"></a></p>
+<h2 id="packagesplatformsdiscoverydependenciespackager-missing-il061">packages[*].platforms[*].discoveryDependencies[*].packager missing (<code>IL061</code>)<a class="headerlink" href="#packagesplatformsdiscoverydependenciespackager-missing-il061" title="Permanent link">&para;</a></h2>
+<p>A <code>discoveryDependencies</code> object for one of the package index's platforms is missing a <code>packager</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL062"></a></p>
+<h2 id="incorrect-packagesplatformsdiscoverydependenciespackager-type-il062">incorrect packages[*].platforms[*].discoveryDependencies[*].packager type (<code>IL062</code>)<a class="headerlink" href="#incorrect-packagesplatformsdiscoverydependenciespackager-type-il062" title="Permanent link">&para;</a></h2>
+<p>A <code>discoveryDependencies</code> object for one of the package index's platforms has a <code>packager</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL063"></a></p>
+<h2 id="packagesplatformsdiscoverydependenciespackager-min-length-il063">packages[*].platforms[*].discoveryDependencies[*].packager &lt; min length (<code>IL063</code>)<a class="headerlink" href="#packagesplatformsdiscoverydependenciespackager-min-length-il063" title="Permanent link">&para;</a></h2>
+<p>A <code>discoveryDependencies</code> object for one of the package index's platforms has a <code>packager</code> property shorter than the minimum length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL064"></a></p>
+<h2 id="packagesplatformsdiscoverydependenciesname-missing-il064">packages[*].platforms[*].discoveryDependencies[*].name missing (<code>IL064</code>)<a class="headerlink" href="#packagesplatformsdiscoverydependenciesname-missing-il064" title="Permanent link">&para;</a></h2>
+<p>A <code>discoveryDependencies</code> object for one of the package index's platforms is missing a <code>name</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL065"></a></p>
+<h2 id="incorrect-packagesplatformsdiscoverydependenciesname-type-il065">incorrect packages[*].platforms[*].discoveryDependencies[*].name type (<code>IL065</code>)<a class="headerlink" href="#incorrect-packagesplatformsdiscoverydependenciesname-type-il065" title="Permanent link">&para;</a></h2>
+<p>A <code>discoveryDependencies</code> object for one of the package index's platforms has a <code>name</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IL066"></a></p>
+<h2 id="packagesplatformsdiscoverydependenciesname-min-length-il066">packages[*].platforms[*].discoveryDependencies[*].name &lt; min length (<code>IL066</code>)<a class="headerlink" href="#packagesplatformsdiscoverydependenciesname-min-length-il066" title="Permanent link">&para;</a></h2>
+<p>A <code>discoveryDependencies</code> object for one of the package index's platforms has a <code>name</code> property shorter than the minimum length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#platforms-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: platform</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT001"></a></p>
+<h2 id="packagestools-missing-it001">packages[*].tools missing (<code>IT001</code>)<a class="headerlink" href="#packagestools-missing-it001" title="Permanent link">&para;</a></h2>
+<p>The package index has a package without a <code>tools</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: package</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT002"></a></p>
+<h2 id="incorrect-packagestools-type-it002">incorrect packages[*].tools type (<code>IT002</code>)<a class="headerlink" href="#incorrect-packagestools-type-it002" title="Permanent link">&para;</a></h2>
+<p>The package index has a package with a <code>tools</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT003"></a></p>
+<h2 id="unrecognized-properties-in-packagestools-it003">unrecognized properties in packages[*].tools[*] (<code>IT003</code>)<a class="headerlink" href="#unrecognized-properties-in-packagestools-it003" title="Permanent link">&para;</a></h2>
+<p>The package index has a tool containing unknown data properties.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT004"></a></p>
+<h2 id="packagestoolsname-missing-it004">packages[*].tools[*].name missing (<code>IT004</code>)<a class="headerlink" href="#packagestoolsname-missing-it004" title="Permanent link">&para;</a></h2>
+<p>The package index has a tool without a <code>name</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT005"></a></p>
+<h2 id="incorrect-packagestoolsname-type-it005">incorrect packages[*].tools[*].name type (<code>IT005</code>)<a class="headerlink" href="#incorrect-packagestoolsname-type-it005" title="Permanent link">&para;</a></h2>
+<p>The package index has a tool with a <code>name</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT006"></a></p>
+<h2 id="packagestoolsname-min-length-it006">packages[*].tools[*].name &lt; min length (<code>IT006</code>)<a class="headerlink" href="#packagestoolsname-min-length-it006" title="Permanent link">&para;</a></h2>
+<p>The package index has a tool with a <code>name</code> property shorter than the minimum length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT007"></a></p>
+<h2 id="packagestoolsversion-missing-it007">packages[*].tools[*].version missing (<code>IT007</code>)<a class="headerlink" href="#packagestoolsversion-missing-it007" title="Permanent link">&para;</a></h2>
+<p>The package index has a tool without a <code>version</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT008"></a></p>
+<h2 id="incorrect-packagestoolsversion-type-it008">incorrect packages[*].tools[*].version type (<code>IT008</code>)<a class="headerlink" href="#incorrect-packagestoolsversion-type-it008" title="Permanent link">&para;</a></h2>
+<p>The package index has a tool with a <code>version</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT009"></a></p>
+<h2 id="invalid-packagestoolsversion-it009">invalid packages[*].tools[*].version (<code>IT009</code>)<a class="headerlink" href="#invalid-packagestoolsversion-it009" title="Permanent link">&para;</a></h2>
+<p>The package index has a tool with an invalid <code>version</code> property. It must be compliant with "relaxed semver".</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT010"></a></p>
+<h2 id="non-semver-packagestoolsversion-it010">non-semver packages[*].tools[*].version (<code>IT010</code>)<a class="headerlink" href="#non-semver-packagestoolsversion-it010" title="Permanent link">&para;</a></h2>
+<p>The package index has a tool with a <code>version</code> property that is not compliant with the "semver" specification. Although not required, use of the standard semver version format is recommended.</p>
+<p>More information: <a href="https://semver.org/"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT011"></a></p>
+<h2 id="packagestoolssystems-missing-it011">packages[*].tools[*].systems missing (<code>IT011</code>)<a class="headerlink" href="#packagestoolssystems-missing-it011" title="Permanent link">&para;</a></h2>
+<p>The package index has a tool without a <code>systems</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT012"></a></p>
+<h2 id="incorrect-packagestoolssystems-type-it012">incorrect packages[*].tools[*].systems type (<code>IT012</code>)<a class="headerlink" href="#incorrect-packagestoolssystems-type-it012" title="Permanent link">&para;</a></h2>
+<p>The package index has a tool with a <code>systems</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT013"></a></p>
+<h2 id="unrecognized-properties-in-packagestoolssystems-it013">unrecognized properties in packages[*].tools[*].systems[*] (<code>IT013</code>)<a class="headerlink" href="#unrecognized-properties-in-packagestoolssystems-it013" title="Permanent link">&para;</a></h2>
+<p>A <code>systems</code> object for one of the package index's tools contains unknown data properties.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT014"></a></p>
+<h2 id="packagestoolssystemshost-missing-it014">packages[*].tools[*].systems[*].host missing (<code>IT014</code>)<a class="headerlink" href="#packagestoolssystemshost-missing-it014" title="Permanent link">&para;</a></h2>
+<p>A <code>systems</code> object for one of the package index's tools is missing a <code>host</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT015"></a></p>
+<h2 id="incorrect-packagestoolssystemshost-type-it015">incorrect packages[*].tools[*].systems[*].host type (<code>IT015</code>)<a class="headerlink" href="#incorrect-packagestoolssystemshost-type-it015" title="Permanent link">&para;</a></h2>
+<p>A <code>systems</code> object for one of the package index's tools has a <code>host</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT0016"></a></p>
+<h2 id="invalid-packagestoolssystemshost-it0016">invalid packages[*].tools[*].systems[*].host (<code>IT0016</code>)<a class="headerlink" href="#invalid-packagestoolssystemshost-it0016" title="Permanent link">&para;</a></h2>
+<p>A <code>systems</code> object for one of the package index's tools has an invalid <code>host</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT017"></a></p>
+<h2 id="packagestoolssystemsurl-missing-it017">packages[*].tools[*].systems[*].url missing (<code>IT017</code>)<a class="headerlink" href="#packagestoolssystemsurl-missing-it017" title="Permanent link">&para;</a></h2>
+<p>A <code>systems</code> object for one of the package index's tools is missing a <code>url</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT018"></a></p>
+<h2 id="incorrect-packagestoolssystemsurl-type-it018">incorrect packages[*].tools[*].systems[*].url type (<code>IT018</code>)<a class="headerlink" href="#incorrect-packagestoolssystemsurl-type-it018" title="Permanent link">&para;</a></h2>
+<p>A <code>systems</code> object for one of the package index's tools has a <code>url</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT019"></a></p>
+<h2 id="invalid-packagestoolssystemsurl-format-it019">invalid packages[*].tools[*].systems[*].url format (<code>IT019</code>)<a class="headerlink" href="#invalid-packagestoolssystemsurl-format-it019" title="Permanent link">&para;</a></h2>
+<p>A <code>systems</code> object for one of the package index's tools has a <code>url</code> property that is not a valid format for a URL.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT020"></a></p>
+<h2 id="dead-packagestoolssystemsurl-it020">dead packages[*].tools[*].systems[*].url (<code>IT020</code>)<a class="headerlink" href="#dead-packagestoolssystemsurl-it020" title="Permanent link">&para;</a></h2>
+<p>A <code>systems</code> object for one of the package index's tools has a <code>url</code> property that did not load from the Internet.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT021"></a></p>
+<h2 id="packagestoolssystemsarchivefilename-missing-it021">packages[*].tools[*].systems[*].archiveFileName missing (<code>IT021</code>)<a class="headerlink" href="#packagestoolssystemsarchivefilename-missing-it021" title="Permanent link">&para;</a></h2>
+<p>A <code>systems</code> object for one of the package index's tools is missing an <code>archiveFileName</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT022"></a></p>
+<h2 id="incorrect-packagestoolssystemsarchivefilename-type-it022">incorrect packages[*].tools[*].systems[*].archiveFileName type (<code>IT022</code>)<a class="headerlink" href="#incorrect-packagestoolssystemsarchivefilename-type-it022" title="Permanent link">&para;</a></h2>
+<p>A <code>systems</code> object for one of the package index's tools has an <code>archiveFileName</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT023"></a></p>
+<h2 id="packagestoolssystemsarchivefilename-min-length-it023">packages[*].tools[*].systems[*].archiveFileName &lt; min length (<code>IT023</code>)<a class="headerlink" href="#packagestoolssystemsarchivefilename-min-length-it023" title="Permanent link">&para;</a></h2>
+<p>A <code>systems</code> object for one of the package index's tools has an <code>archiveFileName</code> property shorter than the minimum length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT0024"></a></p>
+<h2 id="invalid-packagestoolssystemsarchivefilename-it0024">invalid packages[*].tools[*].systems[*].archiveFileName (<code>IT0024</code>)<a class="headerlink" href="#invalid-packagestoolssystemsarchivefilename-it0024" title="Permanent link">&para;</a></h2>
+<p>A <code>systems</code> object for one of the package index's tools has an invalid <code>archiveFileName</code> value.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT025 "></a></p>
+<h2 id="packagestoolssystemschecksum-missing-it025">packages[*].tools[*].systems[*].checksum missing (<code>IT025</code>)<a class="headerlink" href="#packagestoolssystemschecksum-missing-it025" title="Permanent link">&para;</a></h2>
+<p>A <code>systems</code> object for one of the package index's tools is missing a <code>checksum</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT026"></a></p>
+<h2 id="incorrect-packagestoolssystemschecksum-type-it026">incorrect packages[*].tools[*].systems[*].checksum type (<code>IT026</code>)<a class="headerlink" href="#incorrect-packagestoolssystemschecksum-type-it026" title="Permanent link">&para;</a></h2>
+<p>A <code>systems</code> object for one of the package index's tools has a <code>checksum</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT027"></a></p>
+<h2 id="invalid-packagestoolssystemschecksum-it027">invalid packages[*].tools[*].systems[*].checksum (<code>IT027</code>)<a class="headerlink" href="#invalid-packagestoolssystemschecksum-it027" title="Permanent link">&para;</a></h2>
+<p>A <code>systems</code> object for one of the package index's tools has a <code>checksum</code> property with an invalid format.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT028"></a></p>
+<h2 id="discouraged-packagestoolssystemschecksum-algorithm-it028">discouraged packages[*].tools[*].systems[*].checksum algorithm (<code>IT028</code>)<a class="headerlink" href="#discouraged-packagestoolssystemschecksum-algorithm-it028" title="Permanent link">&para;</a></h2>
+<p>A <code>systems</code> object for one of the package index's tools has a <code>checksum</code> property using a discouraged hash algorithm.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT029"></a></p>
+<h2 id="packagestoolssystemssize-missing-it029">packages[*].tools[*].systems[*].size missing (<code>IT029</code>)<a class="headerlink" href="#packagestoolssystemssize-missing-it029" title="Permanent link">&para;</a></h2>
+<p>A <code>systems</code> object for one of the package index's tools is missing a <code>size</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT030"></a></p>
+<h2 id="incorrect-packagestoolssystemssize-type-it030">incorrect packages[*].tools[*].systems[*].size type (<code>IT030</code>)<a class="headerlink" href="#incorrect-packagestoolssystemssize-type-it030" title="Permanent link">&para;</a></h2>
+<p>A <code>systems</code> object for one of the package index's tools has a <code>size</code> property of incorrect type.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="IT031"></a></p>
+<h2 id="invalid-packagestoolssystemssize-it031">invalid packages[*].tools[*].systems[*].size (<code>IT031</code>)<a class="headerlink" href="#invalid-packagestoolssystemssize-it031" title="Permanent link">&para;</a></h2>
+<p>A <code>systems</code> object for one of the package index's tools has an invalid <code>size</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/package_index_json-specification/#tools-definitions"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: data<br />
+Subcategory: tool</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../platform/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Platform" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Platform
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../CONTRIBUTING/" class="md-footer__link md-footer__link--next" aria-label="Next: How to contribute" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              How to contribute
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright 2020 ARDUINO SA (http://www.arduino.cc/)
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../assets/javascripts/workers/search.709b4209.min.js", "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.febc23d1.min.js"></script>
+      
+    
+  </body>
+</html>
