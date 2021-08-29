@@ -1657,7 +1657,7 @@ func PlatformTxtUploadParamsVerboseMissing() (result ruleresult.Type, output str
 	return ruleresult.Pass, ""
 }
 
-// PlatformTxtUploadParamsQuietMissing checks if any of the programmers are missing upload.params.quiet properties.
+// PlatformTxtUploadParamsQuietMissing checks if any of the tools are missing upload.params.quiet properties.
 func PlatformTxtUploadParamsQuietMissing() (result ruleresult.Type, output string) {
 	if !projectdata.PlatformTxtExists() {
 		return ruleresult.Skip, "Platform has no platform.txt"
@@ -1680,7 +1680,7 @@ func PlatformTxtUploadParamsQuietMissing() (result ruleresult.Type, output strin
 	return ruleresult.Pass, ""
 }
 
-// PlatformTxtUploadPatternMissing checks if any of the programmers are missing upload.pattern properties.
+// PlatformTxtUploadPatternMissing checks if any of the tools are missing upload.pattern properties.
 func PlatformTxtUploadPatternMissing() (result ruleresult.Type, output string) {
 	if !projectdata.PlatformTxtExists() {
 		return ruleresult.Skip, "Platform has no platform.txt"
@@ -1726,7 +1726,7 @@ func PlatformTxtProgramParamsVerboseMissing() (result ruleresult.Type, output st
 	return ruleresult.Pass, ""
 }
 
-// PlatformTxtProgramParamsQuietMissing checks if any of the programmers are missing program.params.quiet properties.
+// PlatformTxtProgramParamsQuietMissing checks if any of the tools are missing program.params.quiet properties.
 func PlatformTxtProgramParamsQuietMissing() (result ruleresult.Type, output string) {
 	if !projectdata.PlatformTxtExists() {
 		return ruleresult.Skip, "Platform has no platform.txt"
@@ -1749,7 +1749,7 @@ func PlatformTxtProgramParamsQuietMissing() (result ruleresult.Type, output stri
 	return ruleresult.Pass, ""
 }
 
-// PlatformTxtProgramPatternMissing checks if any of the programmers are missing program.pattern properties.
+// PlatformTxtProgramPatternMissing checks if any of the tools are missing program.pattern properties.
 func PlatformTxtProgramPatternMissing() (result ruleresult.Type, output string) {
 	if !projectdata.PlatformTxtExists() {
 		return ruleresult.Skip, "Platform has no platform.txt"
@@ -1795,7 +1795,7 @@ func PlatformTxtEraseParamsVerboseMissing() (result ruleresult.Type, output stri
 	return ruleresult.Pass, ""
 }
 
-// PlatformTxtEraseParamsQuietMissing checks if any of the programmers are missing erase.params.quiet properties.
+// PlatformTxtEraseParamsQuietMissing checks if any of the tools are missing erase.params.quiet properties.
 func PlatformTxtEraseParamsQuietMissing() (result ruleresult.Type, output string) {
 	if !projectdata.PlatformTxtExists() {
 		return ruleresult.Skip, "Platform has no platform.txt"
@@ -1818,7 +1818,7 @@ func PlatformTxtEraseParamsQuietMissing() (result ruleresult.Type, output string
 	return ruleresult.Pass, ""
 }
 
-// PlatformTxtErasePatternMissing checks if any of the programmers are missing erase.pattern properties.
+// PlatformTxtErasePatternMissing checks if any of the tools are missing erase.pattern properties.
 func PlatformTxtErasePatternMissing() (result ruleresult.Type, output string) {
 	if !projectdata.PlatformTxtExists() {
 		return ruleresult.Skip, "Platform has no platform.txt"
@@ -1864,7 +1864,7 @@ func PlatformTxtBootloaderParamsVerboseMissing() (result ruleresult.Type, output
 	return ruleresult.Pass, ""
 }
 
-// PlatformTxtBootloaderParamsQuietMissing checks if any of the programmers are missing bootloader.params.quiet properties.
+// PlatformTxtBootloaderParamsQuietMissing checks if any of the tools are missing bootloader.params.quiet properties.
 func PlatformTxtBootloaderParamsQuietMissing() (result ruleresult.Type, output string) {
 	if !projectdata.PlatformTxtExists() {
 		return ruleresult.Skip, "Platform has no platform.txt"
@@ -1887,7 +1887,7 @@ func PlatformTxtBootloaderParamsQuietMissing() (result ruleresult.Type, output s
 	return ruleresult.Pass, ""
 }
 
-// PlatformTxtBootloaderPatternMissing checks if any of the programmers are missing bootloader.pattern properties.
+// PlatformTxtBootloaderPatternMissing checks if any of the tools are missing bootloader.pattern properties.
 func PlatformTxtBootloaderPatternMissing() (result ruleresult.Type, output string) {
 	if !projectdata.PlatformTxtExists() {
 		return ruleresult.Skip, "Platform has no platform.txt"

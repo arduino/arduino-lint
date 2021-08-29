@@ -145,7 +145,7 @@ func ProgrammersTxtProgrammerIds() []string {
 
 var platformTxtExists bool
 
-// PlatformTxtExists returns whether the platform contains a programmer.txt file.
+// PlatformTxtExists returns whether the platform contains a platform.txt file.
 func PlatformTxtExists() bool {
 	return platformTxtExists
 }

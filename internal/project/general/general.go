@@ -25,7 +25,7 @@ PropertiesToMap converts properties.Map data structures to map[string]interface 
 The Arduino project configuration fields have an odd usage of the properties.Map format. Dots may sometimes indicate
 nested keys, but in other cases they are merely a character in the key string. There are cases where a completely
 programmatic recursion of the properties into a fully nested structure would result in the impossibility of some keys
-having bot a string and a map type, which is not supported. For this reason, it's necessary to manually configure the
+having both a string and a map type, which is not supported. For this reason, it's necessary to manually configure the
 recursion of key levels on a case-by-case basis.
 In the event a full recursion of key levels is desired, set the levels argument to a value <1.
 */
