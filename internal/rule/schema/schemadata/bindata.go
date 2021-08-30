@@ -4780,6 +4780,215 @@ var _arduinoPlatformTxtDefinitionsSchemaJson = []byte(`{
           }
         }
       },
+      "pluggableDiscovery": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableDiscovery/base/object"
+              },
+              {
+                "properties": {
+                  "required": {
+                    "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryRequired/permissive/object"
+                  }
+                },
+                "additionalProperties": {
+                  "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryDiscoveryName/permissive/object"
+                }
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableDiscovery/base/object"
+              },
+              {
+                "properties": {
+                  "required": {
+                    "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryRequired/specification/object"
+                  }
+                },
+                "additionalProperties": {
+                  "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryDiscoveryName/specification/object"
+                }
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableDiscovery/base/object"
+              },
+              {
+                "properties": {
+                  "required": {
+                    "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryRequired/strict/object"
+                  }
+                },
+                "additionalProperties": {
+                  "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryDiscoveryName/strict/object"
+                }
+              }
+            ]
+          }
+        }
+      },
+      "pluggableDiscoveryDiscoveryName": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryDiscoveryName/base/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/pluggableDiscoveryDiscoveryName/permissive/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryDiscoveryName/base/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/pluggableDiscoveryDiscoveryName/specification/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryDiscoveryName/base/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/pluggableDiscoveryDiscoveryName/strict/object"
+              }
+            ]
+          }
+        }
+      },
+      "pluggableDiscoveryRequired": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "array"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryRequired/base/object"
+              },
+              {
+                "items": {
+                  "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryRequiredN/permissive/object"
+                }
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryRequired/base/object"
+              },
+              {
+                "items": {
+                  "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryRequiredN/specification/object"
+                }
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryRequired/base/object"
+              },
+              {
+                "items": {
+                  "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryRequiredN/strict/object"
+                }
+              }
+            ]
+          }
+        }
+      },
+      "pluggableDiscoveryRequiredN": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "pattern": "^.+:.+$"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryRequiredN/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryRequiredN/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryRequiredN/base/object"
+              }
+            ]
+          }
+        }
+      },
       "tools": {
         "base": {
           "object": {
@@ -5225,6 +5434,44 @@ var _arduinoPlatformTxtDefinitionsSchemaJson = []byte(`{
           }
         }
       },
+      "pluggableDiscoveryDiscoveryName": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "required": ["pattern"]
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/pluggableDiscoveryDiscoveryName/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/pluggableDiscoveryDiscoveryName/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/pluggableDiscoveryDiscoveryName/base/object"
+              }
+            ]
+          }
+        }
+      },
       "toolsToolNameActionName": {
         "base": {
           "object": {
@@ -5377,6 +5624,9 @@ var _arduinoPlatformTxtPermissiveSchemaJson = []byte(`{
     "recipe.size.pattern": {
       "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeSizePattern/permissive/object"
     },
+    "pluggable_discovery": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/pluggableDiscovery/permissive/object"
+    },
     "tools": {
       "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/tools/permissive/object"
     }
@@ -5463,6 +5713,9 @@ var _arduinoPlatformTxtSchemaJson = []byte(`{
     "recipe.size.pattern": {
       "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeSizePattern/specification/object"
     },
+    "pluggable_discovery": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/pluggableDiscovery/specification/object"
+    },
     "tools": {
       "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/tools/specification/object"
     }
@@ -5548,6 +5801,9 @@ var _arduinoPlatformTxtStrictSchemaJson = []byte(`{
     },
     "recipe.size.pattern": {
       "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/recipeSizePattern/strict/object"
+    },
+    "pluggable_discovery": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/pluggableDiscovery/strict/object"
     },
     "tools": {
       "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/tools/strict/object"

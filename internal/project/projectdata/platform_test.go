@@ -36,22 +36,23 @@ func init() {
 
 func TestInitializeForPlatform(t *testing.T) {
 	testTables := []struct {
-		testName                                   string
-		platformFolderName                         string
-		boardsTxtAssertion                         assert.ValueAssertionFunc
-		boardsTxtLoadErrorAssertion                assert.ValueAssertionFunc
-		platformTxtExistsAssertion                 assert.BoolAssertionFunc
-		platformTxtAssertion                       assert.ValueAssertionFunc
-		platformTxtLoadErrorAssertion              assert.ValueAssertionFunc
-		platformTxtSchemaValidationResultAssertion assert.ValueAssertionFunc
-		platformTxtToolNamesAssertion              []string
+		testName                                    string
+		platformFolderName                          string
+		boardsTxtAssertion                          assert.ValueAssertionFunc
+		boardsTxtLoadErrorAssertion                 assert.ValueAssertionFunc
+		platformTxtExistsAssertion                  assert.BoolAssertionFunc
+		platformTxtAssertion                        assert.ValueAssertionFunc
+		platformTxtLoadErrorAssertion               assert.ValueAssertionFunc
+		platformTxtSchemaValidationResultAssertion  assert.ValueAssertionFunc
+		platformTxtPluggableDiscoveryNamesAssertion []string
+		platformTxtToolNamesAssertion               []string
 	}{
-		{"Valid boards.txt", "valid-boards.txt", assert.NotNil, assert.Nil, assert.False, assert.Nil, assert.NotNil, assert.Nil, nil},
-		{"Invalid boards.txt", "invalid-boards.txt", assert.Nil, assert.NotNil, assert.False, assert.Nil, assert.NotNil, assert.Nil, nil},
-		{"Missing boards.txt", "missing-boards.txt", assert.Nil, assert.NotNil, assert.False, assert.Nil, assert.NotNil, assert.Nil, nil},
-		{"Valid platform.txt", "valid-platform.txt", assert.NotNil, assert.Nil, assert.True, assert.NotNil, assert.Nil, assert.NotNil, []string{"avrdude", "bossac"}},
-		{"Invalid platform.txt", "invalid-platform.txt", assert.NotNil, assert.Nil, assert.True, assert.Nil, assert.NotNil, assert.Nil, nil},
-		{"Missing platform.txt", "missing-platform.txt", assert.NotNil, assert.Nil, assert.False, assert.Nil, assert.NotNil, assert.Nil, nil},
+		{"Valid boards.txt", "valid-boards.txt", assert.NotNil, assert.Nil, assert.False, assert.Nil, assert.NotNil, assert.Nil, nil, nil},
+		{"Invalid boards.txt", "invalid-boards.txt", assert.Nil, assert.NotNil, assert.False, assert.Nil, assert.NotNil, assert.Nil, nil, nil},
+		{"Missing boards.txt", "missing-boards.txt", assert.Nil, assert.NotNil, assert.False, assert.Nil, assert.NotNil, assert.Nil, nil, nil},
+		{"Valid platform.txt", "valid-platform.txt", assert.NotNil, assert.Nil, assert.True, assert.NotNil, assert.Nil, assert.NotNil, []string{"foo_discovery", "bar_discovery"}, []string{"avrdude", "bossac"}},
+		{"Invalid platform.txt", "invalid-platform.txt", assert.NotNil, assert.Nil, assert.True, assert.Nil, assert.NotNil, assert.Nil, nil, nil},
+		{"Missing platform.txt", "missing-platform.txt", assert.NotNil, assert.Nil, assert.False, assert.Nil, assert.NotNil, assert.Nil, nil, nil},
 	}
 
 	for _, testTable := range testTables {
@@ -72,6 +73,7 @@ func TestInitializeForPlatform(t *testing.T) {
 		testTable.platformTxtAssertion(t, PlatformTxt(), testTable.testName)
 		testTable.platformTxtLoadErrorAssertion(t, PlatformTxtLoadError(), testTable.testName)
 		testTable.platformTxtSchemaValidationResultAssertion(t, PlatformTxtSchemaValidationResult(), testTable.testName)
+		assert.Equal(t, testTable.platformTxtPluggableDiscoveryNamesAssertion, PlatformTxtPluggableDiscoveryNames(), testTable.testName)
 		assert.Equal(t, testTable.platformTxtToolNamesAssertion, PlatformTxtToolNames(), testTable.testName)
 	}
 }

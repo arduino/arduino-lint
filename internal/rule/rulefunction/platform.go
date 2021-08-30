@@ -16,6 +16,7 @@
 package rulefunction
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/arduino/arduino-lint/internal/project/projectdata"
@@ -1675,6 +1676,59 @@ func PlatformTxtUploadParamsQuietMissing() (result ruleresult.Type, output strin
 
 	if len(nonCompliantTools) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtPluggableDiscoveryRequiredInvalid checks if any of the pluggable discovery tool references have invalid format.
+func PlatformTxtPluggableDiscoveryRequiredInvalid() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if !projectdata.PlatformTxt().ContainsKey("pluggable_discovery.required") && projectdata.PlatformTxt().SubTree("pluggable_discovery.required").Size() == 0 {
+		return ruleresult.Skip, "Property not present"
+	}
+
+	if schema.PropertyPatternMismatch("pluggable_discovery/required", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtPluggableDiscoveryDiscoveryIDPatternMissing checks if any of the manual installation pluggable discoveries
+// are missing pattern properties.
+func PlatformTxtPluggableDiscoveryDiscoveryIDPatternMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if len(projectdata.PlatformTxtPluggableDiscoveryNames()) == 0 {
+		return ruleresult.Skip, "platform.txt has no manual installation pluggable discoveries"
+	}
+
+	nonCompliant := []string{}
+	for _, discovery := range projectdata.PlatformTxtPluggableDiscoveryNames() {
+		if schema.RequiredPropertyMissing(
+			fmt.Sprintf("pluggable_discovery/%s/pattern", discovery),
+			projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification],
+		) {
+			nonCompliant = append(nonCompliant, discovery)
+		}
+	}
+
+	if len(nonCompliant) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliant, ", ")
 	}
 
 	return ruleresult.Pass, ""

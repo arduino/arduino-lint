@@ -240,6 +240,14 @@ func TestRequired(t *testing.T) {
 		{"compiler.ar.extra_flags", "", "compiler.ar.extra_flags", compliancelevel.Specification, assert.False},
 		{"compiler.ar.extra_flags", "", "compiler.ar.extra_flags", compliancelevel.Strict, assert.True},
 
+		{"pluggable_discovery.foo.pattern", "pluggable_discovery.foo.bar", "pluggable_discovery/foo/pattern", compliancelevel.Permissive, assert.True},
+		{"pluggable_discovery.foo.pattern", "pluggable_discovery.foo.bar", "pluggable_discovery/foo/pattern", compliancelevel.Specification, assert.True},
+		{"pluggable_discovery.foo.pattern", "pluggable_discovery.foo.bar", "pluggable_discovery/foo/pattern", compliancelevel.Strict, assert.True},
+		// Property is only required when there is a pluggable_discovery.foo object
+		{"pluggable_discovery.foo.pattern", "", "pluggable_discovery/foo/pattern", compliancelevel.Permissive, assert.False},
+		{"pluggable_discovery.foo.pattern", "", "pluggable_discovery/foo/pattern", compliancelevel.Specification, assert.False},
+		{"pluggable_discovery.foo.pattern", "", "pluggable_discovery/foo/pattern", compliancelevel.Strict, assert.False},
+
 		{"recipe.size.pattern", "", "recipe.size.pattern", compliancelevel.Permissive, assert.False},
 		{"recipe.size.pattern", "", "recipe.size.pattern", compliancelevel.Specification, assert.False},
 		{"recipe.size.pattern", "", "recipe.size.pattern", compliancelevel.Strict, assert.True},
@@ -387,6 +395,19 @@ func TestPattern(t *testing.T) {
 		{"recipe.preproc.macros", "recipe\\.preproc\\.macros", "foo", compliancelevel.Permissive, assert.False},
 		{"recipe.preproc.macros", "recipe\\.preproc\\.macros", "foo", compliancelevel.Specification, assert.False},
 		{"recipe.preproc.macros", "recipe\\.preproc\\.macros", "foo", compliancelevel.Strict, assert.True},
+
+		{"pluggable_discovery.required", "pluggable_discovery/required", "foo:bar", compliancelevel.Permissive, assert.False},
+		{"pluggable_discovery.required", "pluggable_discovery/required", "foo:bar", compliancelevel.Specification, assert.False},
+		{"pluggable_discovery.required", "pluggable_discovery/required", "foo:bar", compliancelevel.Strict, assert.False},
+		{"pluggable_discovery.required", "pluggable_discovery/required", "foo", compliancelevel.Permissive, assert.True},
+		{"pluggable_discovery.required", "pluggable_discovery/required", "foo", compliancelevel.Specification, assert.True},
+		{"pluggable_discovery.required", "pluggable_discovery/required", "foo", compliancelevel.Strict, assert.True},
+		{"pluggable_discovery.required.1", "pluggable_discovery/required", "foo:bar", compliancelevel.Permissive, assert.False},
+		{"pluggable_discovery.required.1", "pluggable_discovery/required", "foo:bar", compliancelevel.Specification, assert.False},
+		{"pluggable_discovery.required.1", "pluggable_discovery/required", "foo:bar", compliancelevel.Strict, assert.False},
+		{"pluggable_discovery.required.1", "pluggable_discovery/required", "foo", compliancelevel.Permissive, assert.True},
+		{"pluggable_discovery.required.1", "pluggable_discovery/required", "foo", compliancelevel.Specification, assert.True},
+		{"pluggable_discovery.required.1", "pluggable_discovery/required", "foo", compliancelevel.Strict, assert.True},
 	}
 
 	for _, testTable := range testTables {

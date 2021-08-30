@@ -57,13 +57,20 @@ func Validate(platformTxt *properties.Map) map[compliancelevel.Type]schema.Valid
 		validation package.
 		Even though platform.txt has a multi-level nested data structure, the format has the odd characteristic of allowing
 		a key to be both an object and a string simultaneously, which is not compatible with Golang maps or JSON. So the
-		data structure used is a selective map, using a flat map except for the tools key, which can contain any number of
-		arbitrary tool name subproperties which must be linted.
+		data structure used is a selective map, using a flat map except for the tools and pluggable_discovery keys, which
+		can contain any number of arbitrary subproperties which must be linted.
 	*/
 	platformTxtInterface := make(map[string]interface{})
 	keys := platformTxt.Keys()
 	for _, key := range keys {
-		if strings.HasPrefix(key, "tools.") {
+		if strings.HasPrefix(key, "pluggable_discovery.") {
+			if key == "pluggable_discovery.required" || strings.HasPrefix(key, "pluggable_discovery.required.") {
+				platformTxtInterface["pluggable_discovery"] = general.PropertiesToList(platformTxt.SubTree("pluggable_discovery"), "required")
+			} else {
+				// It is a pluggable_discovery.DISCOVERY_ID property.
+				platformTxtInterface["pluggable_discovery"] = general.PropertiesToMap(platformTxt.SubTree("pluggable_discovery"), 2)
+			}
+		} else if strings.HasPrefix(key, "tools.") {
 			platformTxtInterface["tools"] = general.PropertiesToMap(platformTxt.SubTree("tools"), 3)
 		} else {
 			platformTxtInterface[key] = platformTxt.Get(key)
@@ -75,6 +82,18 @@ func Validate(platformTxt *properties.Map) map[compliancelevel.Type]schema.Valid
 	validationResults[compliancelevel.Strict] = schema.Validate(platformTxtInterface, schemaObject[compliancelevel.Strict])
 
 	return validationResults
+}
+
+// PluggableDiscoveryNames returns the list of pluggable discovery names from the given platform.txt properties.
+func PluggableDiscoveryNames(platformTxt *properties.Map) []string {
+	names := platformTxt.SubTree("pluggable_discovery").FirstLevelKeys()
+	for i := range names {
+		for i < len(names) && names[i] == "required" {
+			names = append(names[:i], names[i+1:]...)
+		}
+	}
+
+	return names
 }
 
 // ToolNames returns the list of tool names from the given platform.txt properties.

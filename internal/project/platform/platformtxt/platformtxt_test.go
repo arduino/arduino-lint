@@ -62,6 +62,8 @@ func init() {
 		"recipe.size.pattern":                 "asdf",
 		"recipe.size.regex":                   "asdf",
 		"recipe.size.regex.data":              "asdf",
+		"pluggable_discovery.required.0":      "builtin:serial-discovery",
+		"pluggable_discovery.required.1":      "builtin:mdns-discovery",
 		"tools.avrdude.upload.params.verbose": "-v",
 		"tools.avrdude.upload.params.quiet":   "-q -q",
 		"tools.avrdude.upload.pattern":        "asdf",
@@ -88,6 +90,16 @@ func TestValidate(t *testing.T) {
 	assert.NotNil(t, validationResult[compliancelevel.Permissive].Result, "Invalid (permissive)")
 	assert.NotNil(t, validationResult[compliancelevel.Specification].Result, "Invalid (specification)")
 	assert.NotNil(t, validationResult[compliancelevel.Strict].Result, "Invalid (strict)")
+}
+
+func TestPluggableDiscoveryNames(t *testing.T) {
+	platformTxt := properties.NewFromHashmap(validPlatformTxtMap)
+
+	assert.ElementsMatch(t, []string{}, PluggableDiscoveryNames(platformTxt), "No elements for pluggable_discovery.required properties.")
+
+	platformTxt.Set("pluggable_discovery.foo_discovery.pattern", "asdf")
+	platformTxt.Set("pluggable_discovery.bar_discovery.pattern", "zxcv")
+	assert.ElementsMatch(t, []string{"foo_discovery", "bar_discovery"}, PluggableDiscoveryNames(platformTxt), "pluggable_discovery.DISCOVERY_ID properties add elements for each DISCOVERY_ID.")
 }
 
 func TestToolNames(t *testing.T) {

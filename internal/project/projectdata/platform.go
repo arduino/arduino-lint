@@ -58,10 +58,12 @@ func InitializeForPlatform(project project.Type) {
 	if platformTxtLoadError != nil {
 		logrus.Tracef("Error loading platform.txt from %s: %s", project.Path, platformTxtLoadError)
 		platformTxtSchemaValidationResult = nil
+		platformTxtPluggableDiscoveryNames = nil
 		platformTxtToolNames = nil
 	} else {
 		platformTxtSchemaValidationResult = platformtxt.Validate(platformTxt)
 
+		platformTxtPluggableDiscoveryNames = platformtxt.PluggableDiscoveryNames(platformTxt)
 		platformTxtToolNames = platformtxt.ToolNames(platformTxt)
 	}
 }
@@ -169,6 +171,13 @@ var platformTxtSchemaValidationResult map[compliancelevel.Type]schema.Validation
 // PlatformTxtSchemaValidationResult returns the result of validating platform.txt against the JSON schema.
 func PlatformTxtSchemaValidationResult() map[compliancelevel.Type]schema.ValidationResult {
 	return platformTxtSchemaValidationResult
+}
+
+var platformTxtPluggableDiscoveryNames []string
+
+// PlatformTxtPluggableDiscoveryNames returns the list of pluggable discoveries present in the platform's platform.txt.
+func PlatformTxtPluggableDiscoveryNames() []string {
+	return platformTxtPluggableDiscoveryNames
 }
 
 var platformTxtToolNames []string

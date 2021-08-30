@@ -967,6 +967,31 @@ func TestPlatformTxtRecipeSizeRegexDataMissing(t *testing.T) {
 	checkPlatformRuleFunction(PlatformTxtRecipeSizeRegexDataMissing, testTables, t)
 }
 
+func TestPlatformTxtPluggableDiscoveryRequiredInvalid(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
+		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"Property absent", "no-pluggable-discoveries-platform.txt", ruleresult.Skip, ""},
+		{"Property invalid (root prop)", "invalid-pluggable-discovery-required-platform.txt", ruleresult.Fail, "^$"},
+		{"Property invalid (list prop)", "invalid-pluggable-discovery-required-n-platform.txt", ruleresult.Fail, "^$"},
+		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(PlatformTxtPluggableDiscoveryRequiredInvalid, testTables, t)
+}
+
+func TestPlatformTxtPluggableDiscoveryDiscoveryIDPatternMissing(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
+		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"No pluggable discoveries", "no-pluggable-discoveries-platform.txt", ruleresult.Skip, ""},
+		{"Property missing", "pluggable-discovery-discovery-id-pattern-missing-platform.txt", ruleresult.Fail, "^foo_discovery, baz_discovery$"},
+		{"Valid", "valid-with-manual-installation-pluggable-discoveries-platform.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(PlatformTxtPluggableDiscoveryDiscoveryIDPatternMissing, testTables, t)
+}
+
 func TestPlatformTxtUploadPatternMissing(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
