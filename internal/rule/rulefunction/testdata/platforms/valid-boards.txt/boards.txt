@@ -2,9 +2,9 @@ buno.name=Buno
 buno.build.board=BUNO
 buno.build.core=arduino
 buno.build.variant=standard
-buno.upload.tool=avrdude
 buno.upload.maximum_size=32256
 buno.upload.maximum_data_size=2048
+buno.upload.tool.serial=avrdude
 
 uno.name=Arduino Uno
 uno.build.board=UNO

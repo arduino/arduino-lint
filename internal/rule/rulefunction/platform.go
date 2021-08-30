@@ -286,7 +286,7 @@ func BoardsTxtBoardIDUploadToolMissing() (result ruleresult.Type, output string)
 		return ruleresult.Skip, "boards.txt has no visible boards"
 	}
 
-	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtVisibleBoardIds(), "upload.tool", false)
+	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtVisibleBoardIds(), "upload.tool", true)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -305,7 +305,7 @@ func BoardsTxtBoardIDUploadToolLTMinLength() (result ruleresult.Type, output str
 		return ruleresult.Skip, "boards.txt has no boards"
 	}
 
-	nonCompliantBoardIDs := boardIDValueLTMinLength(projectdata.BoardsTxtBoardIds(), "upload\\.tool", compliancelevel.Specification)
+	nonCompliantBoardIDs := boardIDValueLTMinLength(projectdata.BoardsTxtBoardIds(), "upload\\.tool(\\..+)?", compliancelevel.Specification)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")

@@ -230,9 +230,6 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                   "upload.protocol": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/permissive/object"
                   },
-                  "upload.tool": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/permissive/object"
-                  },
                   "upload.use_1200bps_touch": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/permissive/object"
                   },
@@ -243,6 +240,9 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
               },
               {
                 "patternProperties": {
+                  "^upload.tool(\\..+)?$": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/permissive/object"
+                  },
                   "^[vp]id\\.[0-9]+$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDXidN/permissive/object"
                   }
@@ -295,9 +295,6 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                   "upload.protocol": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/specification/object"
                   },
-                  "upload.tool": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/specification/object"
-                  },
                   "upload.use_1200bps_touch": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/specification/object"
                   },
@@ -308,6 +305,9 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
               },
               {
                 "patternProperties": {
+                  "^upload.tool(\\..+)?$": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/specification/object"
+                  },
                   "^[vp]id\\.[0-9]+$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDXidN/specification/object"
                   }
@@ -360,9 +360,6 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                   "upload.protocol": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/strict/object"
                   },
-                  "upload.tool": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/strict/object"
-                  },
                   "upload.use_1200bps_touch": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/strict/object"
                   },
@@ -373,6 +370,9 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
               },
               {
                 "patternProperties": {
+                  "^upload.tool(\\..+)?$": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/strict/object"
+                  },
                   "^[vp]id\\.[0-9]+$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDXidN/strict/object"
                   }
@@ -709,9 +709,6 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                   "upload.protocol": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/permissive/object"
                   },
-                  "upload.tool": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/permissive/object"
-                  },
                   "upload.use_1200bps_touch": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/permissive/object"
                   },
@@ -722,6 +719,9 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
               },
               {
                 "patternProperties": {
+                  "^upload.tool(\\..+)?$": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/permissive/object"
+                  },
                   "^[vp]id\\.[0-9]+$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDXidN/permissive/object"
                   }
@@ -762,9 +762,6 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                   "upload.protocol": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/specification/object"
                   },
-                  "upload.tool": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/specification/object"
-                  },
                   "upload.use_1200bps_touch": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/specification/object"
                   },
@@ -775,6 +772,9 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
               },
               {
                 "patternProperties": {
+                  "^upload.tool(\\..+)?$": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/specification/object"
+                  },
                   "^[vp]id\\.[0-9]+$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDXidN/specification/object"
                   }
@@ -815,9 +815,6 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                   "upload.protocol": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/strict/object"
                   },
-                  "upload.tool": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/strict/object"
-                  },
                   "upload.use_1200bps_touch": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/strict/object"
                   },
@@ -828,6 +825,9 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
               },
               {
                 "patternProperties": {
+                  "^upload.tool(\\..+)?$": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/strict/object"
+                  },
                   "^[vp]id\\.[0-9]+$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDXidN/strict/object"
                   }

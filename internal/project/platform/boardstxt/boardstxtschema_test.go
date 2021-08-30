@@ -88,9 +88,17 @@ func TestMinLength(t *testing.T) {
 		{"foo.upload.tool", "foo/upload\\.tool", 1, compliancelevel.Specification},
 		{"foo.upload.tool", "foo/upload\\.tool", 1, compliancelevel.Strict},
 
+		{"foo.upload.tool.serial", "foo/upload\\.tool.serial", 1, compliancelevel.Permissive},
+		{"foo.upload.tool.serial", "foo/upload\\.tool.serial", 1, compliancelevel.Specification},
+		{"foo.upload.tool.serial", "foo/upload\\.tool.serial", 1, compliancelevel.Strict},
+
 		{"foo.menu.bar.baz.upload.tool", "foo/menu/bar/baz/upload\\.tool", 1, compliancelevel.Permissive},
 		{"foo.menu.bar.baz.upload.tool", "foo/menu/bar/baz/upload\\.tool", 1, compliancelevel.Specification},
 		{"foo.menu.bar.baz.upload.tool", "foo/menu/bar/baz/upload\\.tool", 1, compliancelevel.Strict},
+
+		{"foo.menu.bar.baz.upload.tool.serial", "foo/menu/bar/baz/upload\\.tool.serial", 1, compliancelevel.Permissive},
+		{"foo.menu.bar.baz.upload.tool.serial", "foo/menu/bar/baz/upload\\.tool.serial", 1, compliancelevel.Specification},
+		{"foo.menu.bar.baz.upload.tool.serial", "foo/menu/bar/baz/upload\\.tool.serial", 1, compliancelevel.Strict},
 	}
 
 	// Test schema validation results with value length < minimum.
