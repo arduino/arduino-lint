@@ -102,3 +102,23 @@ func TestPropertiesToMap(t *testing.T) {
 	assert.True(t, reflect.DeepEqual(expectedMapOutput, PropertiesToMap(propertiesInput, 3)))
 	assert.True(t, reflect.DeepEqual(expectedMapOutput, PropertiesToMap(propertiesInput, 0)))
 }
+
+func TestPropertiesToList(t *testing.T) {
+	rawProperties := []byte(`
+		hello=world
+		foo.1=asdf
+		foo.2=zxcv
+	`)
+	propertiesInput, err := properties.LoadFromBytes(rawProperties)
+	require.Nil(t, err)
+
+	expectedMapOutput := map[string]interface{}{
+		"hello": []interface{}{"world"},
+	}
+	assert.True(t, reflect.DeepEqual(expectedMapOutput, PropertiesToList(propertiesInput, "hello")))
+
+	expectedMapOutput = map[string]interface{}{
+		"foo": []interface{}{"asdf", "zxcv"},
+	}
+	assert.True(t, reflect.DeepEqual(expectedMapOutput, PropertiesToList(propertiesInput, "foo")))
+}

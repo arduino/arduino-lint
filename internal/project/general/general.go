@@ -51,3 +51,17 @@ func PropertiesToMap(flatProperties *properties.Map, levels int) map[string]inte
 
 	return propertiesInterface
 }
+
+// PropertiesToList parses a property that has a list data type and returns it in the map[string]interface{} type
+// consumed by the JSON schema parser.
+func PropertiesToList(flatProperties *properties.Map, key string) map[string]interface{} {
+	list := flatProperties.ExtractSubIndexLists(key)
+	// Convert the slice to the required interface type
+	listInterface := make([]interface{}, len(list))
+	for i, v := range list {
+		listInterface[i] = v
+	}
+	mapInterface := make(map[string]interface{})
+	mapInterface[key] = listInterface
+	return mapInterface
+}
