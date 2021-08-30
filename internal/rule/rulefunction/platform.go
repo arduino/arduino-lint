@@ -23,6 +23,7 @@ import (
 	"github.com/arduino/arduino-lint/internal/rule/ruleresult"
 	"github.com/arduino/arduino-lint/internal/rule/schema"
 	"github.com/arduino/arduino-lint/internal/rule/schema/compliancelevel"
+	"github.com/arduino/go-properties-orderedmap"
 	"github.com/sirupsen/logrus"
 )
 
@@ -104,7 +105,7 @@ func BoardsTxtBoardIDBuildBoardMissing() (result ruleresult.Type, output string)
 		return ruleresult.Skip, "boards.txt has no boards"
 	}
 
-	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtBoardIds(), "build.board")
+	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtBoardIds(), "build.board", false)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -142,7 +143,7 @@ func BoardsTxtBoardIDBuildCoreMissing() (result ruleresult.Type, output string) 
 		return ruleresult.Skip, "boards.txt has no visible boards"
 	}
 
-	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtVisibleBoardIds(), "build.core")
+	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtVisibleBoardIds(), "build.core", false)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -285,7 +286,7 @@ func BoardsTxtBoardIDUploadToolMissing() (result ruleresult.Type, output string)
 		return ruleresult.Skip, "boards.txt has no visible boards"
 	}
 
-	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtVisibleBoardIds(), "upload.tool")
+	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtVisibleBoardIds(), "upload.tool", false)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -323,7 +324,7 @@ func BoardsTxtBoardIDUploadMaximumSizeMissing() (result ruleresult.Type, output 
 		return ruleresult.Skip, "boards.txt has no visible boards"
 	}
 
-	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtVisibleBoardIds(), "upload.maximum_size")
+	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtVisibleBoardIds(), "upload.maximum_size", false)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -361,7 +362,7 @@ func BoardsTxtBoardIDUploadMaximumDataSizeMissing() (result ruleresult.Type, out
 		return ruleresult.Skip, "boards.txt has no visible boards"
 	}
 
-	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtVisibleBoardIds(), "upload.maximum_data_size")
+	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtVisibleBoardIds(), "upload.maximum_data_size", false)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -1691,7 +1692,7 @@ func PlatformTxtPluggableDiscoveryRequiredInvalid() (result ruleresult.Type, out
 		return ruleresult.NotRun, "Couldn't load platform.txt"
 	}
 
-	if !projectdata.PlatformTxt().ContainsKey("pluggable_discovery.required") && projectdata.PlatformTxt().SubTree("pluggable_discovery.required").Size() == 0 {
+	if !containsKeyOrParent(projectdata.PlatformTxt(), "pluggable_discovery.required") {
 		return ruleresult.Skip, "Property not present"
 	}
 
@@ -1970,12 +1971,20 @@ Unlike iDMissingRequiredProperty(), this function does a direct check on the pro
 This is necessary because JSON schema does not have the capability to account for the custom board options system.
 This function should not be used in cases where the JSON schema does cover a required property.
 */
-func boardIDMissingRequiredProperty(boardIDs []string, propertyName string) []string {
+func boardIDMissingRequiredProperty(boardIDs []string, propertyName string, parentOK bool) []string {
+	containsKey := func(key string) bool {
+		if parentOK {
+			return containsKeyOrParent(projectdata.BoardsTxt(), key)
+		}
+
+		return projectdata.BoardsTxt().ContainsKey(key)
+	}
+
 	nonCompliantBoardIDs := []string{}
 	for _, boardID := range boardIDs {
 		logrus.Tracef("Board ID: %s", boardID)
 		boardIDHasProperty := func(boardID string, propertyName string) bool {
-			if projectdata.BoardsTxt().ContainsKey(boardID + "." + propertyName) {
+			if containsKey(boardID + "." + propertyName) {
 				logrus.Trace("Property defined at top level\n")
 				return true // The board has a first level definition of the property. No need to check custom board options.
 
@@ -1992,7 +2001,7 @@ func boardIDMissingRequiredProperty(boardIDs []string, propertyName string) []st
 				boardOptionProperties := boardMenuProperties.SubTree(boardMenuID)
 				boardOptionIDs := boardOptionProperties.FirstLevelKeys()
 				for _, boardOptionID := range boardOptionIDs {
-					if !boardOptionProperties.ContainsKey(boardOptionID + "." + propertyName) {
+					if !containsKey(boardOptionID + "." + propertyName) {
 						logrus.Tracef("Option ID %s doesn't provide property\n", boardOptionID)
 						menuProvidesProperty = false // Every option associated with the menuID must define the property.
 						break
@@ -2065,6 +2074,12 @@ func toolNameMissingRequiredProperty(propertyNameQuery string, complianceLevel c
 	}
 
 	return nonCompliantTools
+}
+
+// containsKeyOrParent returns whether the given properties contain a key of the given name, or whether the given key is
+// a first level of a key in the properties.
+func containsKeyOrParent(propertiesMap *properties.Map, key string) bool {
+	return propertiesMap.ContainsKey(key) || propertiesMap.SubTree(key).Size() > 0
 }
 
 // iDMissingRequiredProperty returns the list of first level keys missing the given required property.
