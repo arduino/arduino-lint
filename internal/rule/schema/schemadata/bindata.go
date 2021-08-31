@@ -848,7 +848,7 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                 "type": "string"
               },
               {
-                "$ref": "#/definitions/enumObjects/booleanString"
+                "$ref": "general-definitions-schema.json#/definitions/enumObjects/booleanString"
               }
             ]
           }
@@ -889,7 +889,7 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                 "type": "string"
               },
               {
-                "$ref": "#/definitions/enumObjects/booleanString"
+                "$ref": "general-definitions-schema.json#/definitions/enumObjects/booleanString"
               }
             ]
           }
@@ -1091,7 +1091,7 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                 "type": "string"
               },
               {
-                "$ref": "#/definitions/enumObjects/booleanString"
+                "$ref": "general-definitions-schema.json#/definitions/enumObjects/booleanString"
               }
             ]
           }
@@ -1132,7 +1132,7 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                 "type": "string"
               },
               {
-                "$ref": "#/definitions/enumObjects/booleanString"
+                "$ref": "general-definitions-schema.json#/definitions/enumObjects/booleanString"
               }
             ]
           }
@@ -1289,11 +1289,6 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
             ]
           }
         }
-      }
-    },
-    "enumObjects": {
-      "booleanString": {
-        "enum": ["true", "false"]
       }
     }
   }
@@ -6174,6 +6169,11 @@ var _generalDefinitionsSchemaJson = []byte(`{
         "not": {
           "pattern": "^[aA][rR][dD][uU][iI][nN][oO].*$"
         }
+      }
+    },
+    "enumObjects": {
+      "booleanString": {
+        "enum": ["true", "false"]
       }
     }
   }

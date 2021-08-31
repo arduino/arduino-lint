@@ -773,7 +773,7 @@
                 "type": "string"
               },
               {
-                "$ref": "#/definitions/enumObjects/booleanString"
+                "$ref": "general-definitions-schema.json#/definitions/enumObjects/booleanString"
               }
             ]
           }
@@ -814,7 +814,7 @@
                 "type": "string"
               },
               {
-                "$ref": "#/definitions/enumObjects/booleanString"
+                "$ref": "general-definitions-schema.json#/definitions/enumObjects/booleanString"
               }
             ]
           }
@@ -1016,7 +1016,7 @@
                 "type": "string"
               },
               {
-                "$ref": "#/definitions/enumObjects/booleanString"
+                "$ref": "general-definitions-schema.json#/definitions/enumObjects/booleanString"
               }
             ]
           }
@@ -1057,7 +1057,7 @@
                 "type": "string"
               },
               {
-                "$ref": "#/definitions/enumObjects/booleanString"
+                "$ref": "general-definitions-schema.json#/definitions/enumObjects/booleanString"
               }
             ]
           }
@@ -1214,11 +1214,6 @@
             ]
           }
         }
-      }
-    },
-    "enumObjects": {
-      "booleanString": {
-        "enum": ["true", "false"]
       }
     }
   }

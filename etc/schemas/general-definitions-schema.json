@@ -23,6 +23,11 @@
           "pattern": "^[aA][rR][dD][uU][iI][nN][oO].*$"
         }
       }
+    },
+    "enumObjects": {
+      "booleanString": {
+        "enum": ["true", "false"]
+      }
     }
   }
 }
