@@ -71,7 +71,7 @@ func Validate(platformTxt *properties.Map) map[compliancelevel.Type]schema.Valid
 				platformTxtInterface["pluggable_discovery"] = general.PropertiesToMap(platformTxt.SubTree("pluggable_discovery"), 2)
 			}
 		} else if strings.HasPrefix(key, "tools.") {
-			platformTxtInterface["tools"] = general.PropertiesToMap(platformTxt.SubTree("tools"), 3)
+			platformTxtInterface["tools"] = general.PropertiesToMap(platformTxt.SubTree("tools"), 4)
 		} else {
 			platformTxtInterface[key] = platformTxt.Get(key)
 		}

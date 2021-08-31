@@ -5196,6 +5196,13 @@ var _arduinoPlatformTxtDefinitionsSchemaJson = []byte(`{
                 "$ref": "#/definitions/propertiesObjects/toolsToolNameProgram/base/object"
               },
               {
+                "properties": {
+                  "params": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameActionNameParams/permissive/object"
+                  }
+                }
+              },
+              {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/permissive/object"
               }
             ]
@@ -5208,6 +5215,13 @@ var _arduinoPlatformTxtDefinitionsSchemaJson = []byte(`{
                 "$ref": "#/definitions/propertiesObjects/toolsToolNameProgram/base/object"
               },
               {
+                "properties": {
+                  "params": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameActionNameParams/specification/object"
+                  }
+                }
+              },
+              {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/specification/object"
               }
             ]
@@ -5218,6 +5232,13 @@ var _arduinoPlatformTxtDefinitionsSchemaJson = []byte(`{
             "allOf": [
               {
                 "$ref": "#/definitions/propertiesObjects/toolsToolNameProgram/base/object"
+              },
+              {
+                "properties": {
+                  "params": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameActionNameParams/strict/object"
+                  }
+                }
               },
               {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/strict/object"
@@ -5243,6 +5264,13 @@ var _arduinoPlatformTxtDefinitionsSchemaJson = []byte(`{
                 "$ref": "#/definitions/propertiesObjects/toolsToolNameErase/base/object"
               },
               {
+                "properties": {
+                  "params": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameActionNameParams/permissive/object"
+                  }
+                }
+              },
+              {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/permissive/object"
               }
             ]
@@ -5255,6 +5283,13 @@ var _arduinoPlatformTxtDefinitionsSchemaJson = []byte(`{
                 "$ref": "#/definitions/propertiesObjects/toolsToolNameErase/base/object"
               },
               {
+                "properties": {
+                  "params": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameActionNameParams/specification/object"
+                  }
+                }
+              },
+              {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/specification/object"
               }
             ]
@@ -5265,6 +5300,13 @@ var _arduinoPlatformTxtDefinitionsSchemaJson = []byte(`{
             "allOf": [
               {
                 "$ref": "#/definitions/propertiesObjects/toolsToolNameErase/base/object"
+              },
+              {
+                "properties": {
+                  "params": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameActionNameParams/strict/object"
+                  }
+                }
               },
               {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/strict/object"
@@ -5290,6 +5332,13 @@ var _arduinoPlatformTxtDefinitionsSchemaJson = []byte(`{
                 "$ref": "#/definitions/propertiesObjects/toolsToolNameBootloader/base/object"
               },
               {
+                "properties": {
+                  "params": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameActionNameParams/permissive/object"
+                  }
+                }
+              },
+              {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/permissive/object"
               }
             ]
@@ -5300,6 +5349,13 @@ var _arduinoPlatformTxtDefinitionsSchemaJson = []byte(`{
             "allOf": [
               {
                 "$ref": "#/definitions/propertiesObjects/toolsToolNameBootloader/base/object"
+              },
+              {
+                "properties": {
+                  "params": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameActionNameParams/specification/object"
+                  }
+                }
               },
               {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/specification/object"
@@ -5314,7 +5370,61 @@ var _arduinoPlatformTxtDefinitionsSchemaJson = []byte(`{
                 "$ref": "#/definitions/propertiesObjects/toolsToolNameBootloader/base/object"
               },
               {
+                "properties": {
+                  "params": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameActionNameParams/strict/object"
+                  }
+                }
+              },
+              {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/strict/object"
+              }
+            ]
+          }
+        }
+      },
+      "toolsToolNameActionNameParams": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameActionNameParams/base/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionNameParams/permissive/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameActionNameParams/base/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionNameParams/specification/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameActionNameParams/base/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionNameParams/strict/object"
               }
             ]
           }
@@ -5472,7 +5582,7 @@ var _arduinoPlatformTxtDefinitionsSchemaJson = []byte(`{
           "object": {
             "allOf": [
               {
-                "required": ["params.verbose", "params.quiet", "pattern"]
+                "required": ["params", "pattern"]
               }
             ]
           }
@@ -5500,6 +5610,44 @@ var _arduinoPlatformTxtDefinitionsSchemaJson = []byte(`{
             "allOf": [
               {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/base/object"
+              }
+            ]
+          }
+        }
+      },
+      "toolsToolNameActionNameParams": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "required": ["verbose", "quiet"]
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionNameParams/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionNameParams/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionNameParams/base/object"
               }
             ]
           }

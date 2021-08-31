@@ -1650,7 +1650,7 @@ func PlatformTxtUploadParamsVerboseMissing() (result ruleresult.Type, output str
 		return ruleresult.Skip, "platform.txt has no tools"
 	}
 
-	nonCompliantTools := toolNameMissingRequiredProperty("upload/params\\.verbose", compliancelevel.Specification)
+	nonCompliantTools := toolNameMissingRequiredProperty("upload/params/verbose", compliancelevel.Specification)
 
 	if len(nonCompliantTools) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
@@ -1673,7 +1673,7 @@ func PlatformTxtUploadParamsQuietMissing() (result ruleresult.Type, output strin
 		return ruleresult.Skip, "platform.txt has no tools"
 	}
 
-	nonCompliantTools := toolNameMissingRequiredProperty("upload/params\\.quiet", compliancelevel.Specification)
+	nonCompliantTools := toolNameMissingRequiredProperty("upload/params/quiet", compliancelevel.Specification)
 
 	if len(nonCompliantTools) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
@@ -1772,7 +1772,7 @@ func PlatformTxtProgramParamsVerboseMissing() (result ruleresult.Type, output st
 		return ruleresult.Skip, "platform.txt has no tools"
 	}
 
-	nonCompliantTools := toolNameMissingRequiredProperty("program/params\\.verbose", compliancelevel.Specification)
+	nonCompliantTools := toolNameMissingRequiredProperty("program/params/verbose", compliancelevel.Specification)
 
 	if len(nonCompliantTools) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
@@ -1795,7 +1795,7 @@ func PlatformTxtProgramParamsQuietMissing() (result ruleresult.Type, output stri
 		return ruleresult.Skip, "platform.txt has no tools"
 	}
 
-	nonCompliantTools := toolNameMissingRequiredProperty("program/params\\.quiet", compliancelevel.Specification)
+	nonCompliantTools := toolNameMissingRequiredProperty("program/params/quiet", compliancelevel.Specification)
 
 	if len(nonCompliantTools) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
@@ -1841,7 +1841,7 @@ func PlatformTxtEraseParamsVerboseMissing() (result ruleresult.Type, output stri
 		return ruleresult.Skip, "platform.txt has no tools"
 	}
 
-	nonCompliantTools := toolNameMissingRequiredProperty("erase/params\\.verbose", compliancelevel.Specification)
+	nonCompliantTools := toolNameMissingRequiredProperty("erase/params/verbose", compliancelevel.Specification)
 
 	if len(nonCompliantTools) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
@@ -1864,7 +1864,7 @@ func PlatformTxtEraseParamsQuietMissing() (result ruleresult.Type, output string
 		return ruleresult.Skip, "platform.txt has no tools"
 	}
 
-	nonCompliantTools := toolNameMissingRequiredProperty("erase/params\\.quiet", compliancelevel.Specification)
+	nonCompliantTools := toolNameMissingRequiredProperty("erase/params/quiet", compliancelevel.Specification)
 
 	if len(nonCompliantTools) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
@@ -1910,7 +1910,7 @@ func PlatformTxtBootloaderParamsVerboseMissing() (result ruleresult.Type, output
 		return ruleresult.Skip, "platform.txt has no tools"
 	}
 
-	nonCompliantTools := toolNameMissingRequiredProperty("bootloader/params\\.verbose", compliancelevel.Specification)
+	nonCompliantTools := toolNameMissingRequiredProperty("bootloader/params/verbose", compliancelevel.Specification)
 
 	if len(nonCompliantTools) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
@@ -1933,7 +1933,7 @@ func PlatformTxtBootloaderParamsQuietMissing() (result ruleresult.Type, output s
 		return ruleresult.Skip, "platform.txt has no tools"
 	}
 
-	nonCompliantTools := toolNameMissingRequiredProperty("bootloader/params\\.quiet", compliancelevel.Specification)
+	nonCompliantTools := toolNameMissingRequiredProperty("bootloader/params/quiet", compliancelevel.Specification)
 
 	if len(nonCompliantTools) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")

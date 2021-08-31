@@ -204,13 +204,13 @@ func TestRequired(t *testing.T) {
 		{"tools.avrdude.upload.pattern", "", "tools/avrdude/upload/pattern", compliancelevel.Specification, assert.True},
 		{"tools.avrdude.upload.pattern", "", "tools/avrdude/upload/pattern", compliancelevel.Strict, assert.True},
 
-		{"tools.avrdude.program.params.verbose", "", "tools/avrdude/program/params\\.verbose", compliancelevel.Permissive, assert.True},
-		{"tools.avrdude.program.params.verbose", "", "tools/avrdude/program/params\\.verbose", compliancelevel.Specification, assert.True},
-		{"tools.avrdude.program.params.verbose", "", "tools/avrdude/program/params\\.verbose", compliancelevel.Strict, assert.True},
+		{"tools.avrdude.program.params.verbose", "", "tools/avrdude/program/params/verbose", compliancelevel.Permissive, assert.True},
+		{"tools.avrdude.program.params.verbose", "", "tools/avrdude/program/params/verbose", compliancelevel.Specification, assert.True},
+		{"tools.avrdude.program.params.verbose", "", "tools/avrdude/program/params/verbose", compliancelevel.Strict, assert.True},
 
-		{"tools.avrdude.program.params.quiet", "", "tools/avrdude/program/params\\.quiet", compliancelevel.Permissive, assert.True},
-		{"tools.avrdude.program.params.quiet", "", "tools/avrdude/program/params\\.quiet", compliancelevel.Specification, assert.True},
-		{"tools.avrdude.program.params.quiet", "", "tools/avrdude/program/params\\.quiet", compliancelevel.Strict, assert.True},
+		{"tools.avrdude.program.params.quiet", "", "tools/avrdude/program/params/quiet", compliancelevel.Permissive, assert.True},
+		{"tools.avrdude.program.params.quiet", "", "tools/avrdude/program/params/quiet", compliancelevel.Specification, assert.True},
+		{"tools.avrdude.program.params.quiet", "", "tools/avrdude/program/params/quiet", compliancelevel.Strict, assert.True},
 
 		{"tools.avrdude.program.pattern", "", "tools/avrdude/program/pattern", compliancelevel.Permissive, assert.True},
 		{"tools.avrdude.program.pattern", "", "tools/avrdude/program/pattern", compliancelevel.Specification, assert.True},
