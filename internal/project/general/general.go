@@ -32,20 +32,19 @@ In the event a full recursion of key levels is desired, set the levels argument 
 func PropertiesToMap(flatProperties *properties.Map, levels int) map[string]interface{} {
 	propertiesInterface := make(map[string]interface{})
 
-	var keys []string
 	if levels != 1 {
-		keys = flatProperties.FirstLevelKeys()
+		for _, key := range flatProperties.FirstLevelKeys() {
+			subTree := flatProperties.SubTree(key)
+			if subTree.Size() > 0 {
+				// This key contains a map.
+				propertiesInterface[key] = PropertiesToMap(subTree, levels-1)
+			} else {
+				// This key contains a string, no more recursion is possible.
+				propertiesInterface[key] = flatProperties.Get(key)
+			}
+		}
 	} else {
-		keys = flatProperties.Keys()
-	}
-
-	for _, key := range keys {
-		subTree := flatProperties.SubTree(key)
-		if subTree.Size() > 0 {
-			// This key contains a map.
-			propertiesInterface[key] = PropertiesToMap(subTree, levels-1)
-		} else {
-			// This key contains a string, no more recursion is possible.
+		for _, key := range flatProperties.Keys() {
 			propertiesInterface[key] = flatProperties.Get(key)
 		}
 	}

@@ -31,6 +31,10 @@ func TestPropertiesToMap(t *testing.T) {
 		foo.bar=asdf
 		foo.baz=zxcv
 		bar.bat.bam=123
+		qux.a=x
+		qux.a.b=y
+		fuz.a.b=y
+		fuz.a=x
 	`)
 	propertiesInput, err := properties.LoadFromBytes(rawProperties)
 	require.Nil(t, err)
@@ -41,6 +45,10 @@ func TestPropertiesToMap(t *testing.T) {
 		"foo.bar":     "asdf",
 		"foo.baz":     "zxcv",
 		"bar.bat.bam": "123",
+		"qux.a":       "x",
+		"qux.a.b":     "y",
+		"fuz.a.b":     "y",
+		"fuz.a":       "x",
 	}
 
 	assert.True(t, reflect.DeepEqual(expectedMapOutput, PropertiesToMap(propertiesInput, 1)))
@@ -54,6 +62,14 @@ func TestPropertiesToMap(t *testing.T) {
 		},
 		"bar": map[string]interface{}{
 			"bat.bam": "123",
+		},
+		"qux": map[string]interface{}{
+			"a":   "x",
+			"a.b": "y",
+		},
+		"fuz": map[string]interface{}{
+			"a.b": "y",
+			"a":   "x",
 		},
 	}
 
@@ -69,6 +85,16 @@ func TestPropertiesToMap(t *testing.T) {
 		"bar": map[string]interface{}{
 			"bat": map[string]interface{}{
 				"bam": "123",
+			},
+		},
+		"qux": map[string]interface{}{
+			"a": map[string]interface{}{
+				"b": "y", // It is impossible to represent the complete "properties" data structure recursed to this depth.
+			},
+		},
+		"fuz": map[string]interface{}{
+			"a": map[string]interface{}{
+				"b": "y",
 			},
 		},
 	}
