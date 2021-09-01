@@ -59,11 +59,13 @@ func InitializeForPlatform(project project.Type) {
 		logrus.Tracef("Error loading platform.txt from %s: %s", project.Path, platformTxtLoadError)
 		platformTxtSchemaValidationResult = nil
 		platformTxtPluggableDiscoveryNames = nil
+		platformTxtUserProvidedFieldNames = nil
 		platformTxtToolNames = nil
 	} else {
 		platformTxtSchemaValidationResult = platformtxt.Validate(platformTxt)
 
 		platformTxtPluggableDiscoveryNames = platformtxt.PluggableDiscoveryNames(platformTxt)
+		platformTxtUserProvidedFieldNames = platformtxt.UserProvidedFieldNames(platformTxt)
 		platformTxtToolNames = platformtxt.ToolNames(platformTxt)
 	}
 }
@@ -178,6 +180,13 @@ var platformTxtPluggableDiscoveryNames []string
 // PlatformTxtPluggableDiscoveryNames returns the list of pluggable discoveries present in the platform's platform.txt.
 func PlatformTxtPluggableDiscoveryNames() []string {
 	return platformTxtPluggableDiscoveryNames
+}
+
+var platformTxtUserProvidedFieldNames map[string][]string
+
+// PlatformTxtUserProvidedFieldNames returns the list of user provided field names present in the platform's platform.txt, mapped by board name.
+func PlatformTxtUserProvidedFieldNames() map[string][]string {
+	return platformTxtUserProvidedFieldNames
 }
 
 var platformTxtToolNames []string

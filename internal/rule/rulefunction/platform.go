@@ -1735,6 +1735,74 @@ func PlatformTxtPluggableDiscoveryDiscoveryIDPatternMissing() (result ruleresult
 	return ruleresult.Pass, ""
 }
 
+// PlatformTxtUploadFieldFieldNameGTMaxLength checks if any platform.txt tools.UPLOAD_RECIPE_ID.upload.field.FIELD_NAME property value is greater than the maximum length.
+func PlatformTxtUploadFieldFieldNameGTMaxLength() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if len(projectdata.PlatformTxtUserProvidedFieldNames()) == 0 {
+		return ruleresult.Skip, "Property not present"
+	}
+
+	nonCompliant := []string{}
+	for _, toolName := range projectdata.PlatformTxtToolNames() {
+		for _, fieldName := range projectdata.PlatformTxtUserProvidedFieldNames()[toolName] {
+			if schema.PropertyGreaterThanMaxLength(fmt.Sprintf("tools/%s/upload/field/%s", toolName, fieldName), projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
+				nonCompliant = append(nonCompliant, fmt.Sprintf("%s >> %s", toolName, fieldName))
+			}
+		}
+	}
+
+	if len(nonCompliant) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliant, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtUploadFieldFieldNameSecretInvalid checks if any of the platform.txt tools.UPLOAD_RECIPE_ID.upload.field.FIELD_NAME.secret property values have invalid format.
+func PlatformTxtUploadFieldFieldNameSecretInvalid() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if len(projectdata.PlatformTxtUserProvidedFieldNames()) == 0 {
+		return ruleresult.Skip, "Property not present"
+	}
+
+	found := false
+	nonCompliant := []string{}
+	for _, toolName := range projectdata.PlatformTxtToolNames() {
+		for _, fieldName := range projectdata.PlatformTxtUserProvidedFieldNames()[toolName] {
+			if projectdata.PlatformTxt().ContainsKey(fmt.Sprintf("tools.%s.upload.field.%s.secret", toolName, fieldName)) {
+				found = true
+				if schema.PropertyEnumMismatch(fmt.Sprintf("tools/%s/upload/field/%s\\.secret", toolName, fieldName), projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
+					nonCompliant = append(nonCompliant, fmt.Sprintf("%s >> %s", toolName, fieldName))
+				}
+			}
+		}
+	}
+
+	if !found {
+		return ruleresult.Skip, "Property not present"
+	}
+
+	if len(nonCompliant) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliant, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
 // PlatformTxtUploadPatternMissing checks if any of the tools are missing upload.pattern properties.
 func PlatformTxtUploadPatternMissing() (result ruleresult.Type, output string) {
 	if !projectdata.PlatformTxtExists() {

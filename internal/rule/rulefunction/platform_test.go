@@ -992,6 +992,31 @@ func TestPlatformTxtPluggableDiscoveryDiscoveryIDPatternMissing(t *testing.T) {
 	checkPlatformRuleFunction(PlatformTxtPluggableDiscoveryDiscoveryIDPatternMissing, testTables, t)
 }
 
+func TestPlatformTxtUploadFieldFieldNameGTMaxLength(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
+		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"No field", "no-user-defined-field-platform.txt", ruleresult.Skip, ""},
+		{"Property GT max", "user-defined-field-GT-platform.txt", ruleresult.Fail, "^avrdude >> foo_field_name, bossac >> bar_field_name$"},
+		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(PlatformTxtUploadFieldFieldNameGTMaxLength, testTables, t)
+}
+
+func TestPlatformTxtUploadFieldFieldNameSecretInvalid(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
+		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"No field", "no-user-defined-field-platform.txt", ruleresult.Skip, ""},
+		{"No field secret", "no-user-defined-field-secret-platform.txt", ruleresult.Skip, ""},
+		{"Property invalid", "user-defined-field-secret-invalid-platform.txt", ruleresult.Fail, "^avrdude >> foo_field_name, footool >> qux_field_name$"},
+		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(PlatformTxtUploadFieldFieldNameSecretInvalid, testTables, t)
+}
+
 func TestPlatformTxtUploadPatternMissing(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},

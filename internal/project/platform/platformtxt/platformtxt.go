@@ -20,6 +20,7 @@ See: https://arduino.github.io/arduino-cli/latest/platform-specification/#platfo
 package platformtxt
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/arduino/arduino-lint/internal/project/general"
@@ -94,6 +95,20 @@ func PluggableDiscoveryNames(platformTxt *properties.Map) []string {
 	}
 
 	return names
+}
+
+// UserProvidedFieldNames returns the list of user provided field names platform.txt properties, mapped by tool name.
+func UserProvidedFieldNames(platformTxt *properties.Map) map[string][]string {
+	fieldNames := make(map[string][]string)
+	toolsProps := platformTxt.SubTree("tools")
+	for _, tool := range toolsProps.FirstLevelKeys() {
+		fieldProps := toolsProps.SubTree(fmt.Sprintf("%s.upload.field", tool))
+		for _, fieldName := range fieldProps.FirstLevelKeys() {
+			fieldNames[tool] = append(fieldNames[tool], fieldName)
+		}
+	}
+
+	return fieldNames
 }
 
 // ToolNames returns the list of tool names from the given platform.txt properties.

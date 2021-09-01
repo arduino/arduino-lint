@@ -1075,6 +1075,13 @@
               },
               {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameUpload/permissive/object"
+              },
+              {
+                "properties": {
+                  "field": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadField/permissive/object"
+                  }
+                }
               }
             ]
           }
@@ -1087,6 +1094,13 @@
               },
               {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameUpload/specification/object"
+              },
+              {
+                "properties": {
+                  "field": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadField/specification/object"
+                  }
+                }
               }
             ]
           }
@@ -1099,6 +1113,163 @@
               },
               {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameUpload/strict/object"
+              },
+              {
+                "properties": {
+                  "field": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadField/strict/object"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "toolsToolNameUploadField": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadField/base/object"
+              },
+              {
+                "patternProperties": {
+                  "^.+([^.].*|\\.([^s].*)?|\\.se([^c].*)?|\\.sec([^r].*)?|\\.secr([^e].*)?|\\.secre([^t].*)?|\\.secret.+)$": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadFieldFieldName/permissive/object"
+                  },
+                  "^.+\\.secret$": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadFieldFieldNameSecret/permissive/object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadField/base/object"
+              },
+              {
+                "patternProperties": {
+                  "^.+([^.].*|\\.([^s].*)?|\\.se([^c].*)?|\\.sec([^r].*)?|\\.secr([^e].*)?|\\.secre([^t].*)?|\\.secret.+)$": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadFieldFieldName/specification/object"
+                  },
+                  "^.+\\.secret$": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadFieldFieldNameSecret/specification/object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadField/base/object"
+              },
+              {
+                "patternProperties": {
+                  "^.+([^.].*|\\.([^s].*)?|\\.se([^c].*)?|\\.sec([^r].*)?|\\.secr([^e].*)?|\\.secre([^t].*)?|\\.secret.+)$": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadFieldFieldName/strict/object"
+                  },
+                  "^.+\\.secret$": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadFieldFieldNameSecret/strict/object"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "toolsToolNameUploadFieldFieldName": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadFieldFieldName/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadFieldFieldName/base/object"
+              },
+              {
+                "maxLength": 50
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadFieldFieldName/specification/object"
+              }
+            ]
+          }
+        }
+      },
+      "toolsToolNameUploadFieldFieldNameSecret": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "general-definitions-schema.json#/definitions/enumObjects/booleanString"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadFieldFieldNameSecret/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadFieldFieldNameSecret/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadFieldFieldNameSecret/base/object"
               }
             ]
           }

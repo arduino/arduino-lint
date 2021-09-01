@@ -16,6 +16,7 @@
 package platformtxt
 
 import (
+	"reflect"
 	"testing"
 
 	"github.com/arduino/arduino-lint/internal/rule/schema/compliancelevel"
@@ -100,6 +101,27 @@ func TestPluggableDiscoveryNames(t *testing.T) {
 	platformTxt.Set("pluggable_discovery.foo_discovery.pattern", "asdf")
 	platformTxt.Set("pluggable_discovery.bar_discovery.pattern", "zxcv")
 	assert.ElementsMatch(t, []string{"foo_discovery", "bar_discovery"}, PluggableDiscoveryNames(platformTxt), "pluggable_discovery.DISCOVERY_ID properties add elements for each DISCOVERY_ID.")
+}
+
+func TestUserProvidedFieldNames(t *testing.T) {
+	platformTxt := properties.NewFromHashmap(validPlatformTxtMap)
+
+	assertion := make(map[string][]string)
+	assert.True(t, reflect.DeepEqual(assertion, UserProvidedFieldNames(platformTxt)))
+
+	platformTxt.Set("tools.avrdude.upload.field.foo_field_name", "Some field label")
+	assertion = map[string][]string{
+		"avrdude": {"foo_field_name"},
+	}
+	assert.True(t, reflect.DeepEqual(assertion, UserProvidedFieldNames(platformTxt)))
+
+	platformTxt.Set("tools.avrdude.upload.field.bar_field_name", "Some field label")
+	platformTxt.Set("tools.bossac.upload.field.baz_field_name", "Some field label")
+	assertion = map[string][]string{
+		"avrdude": {"foo_field_name", "bar_field_name"},
+		"bossac":  {"baz_field_name"},
+	}
+	assert.True(t, reflect.DeepEqual(assertion, UserProvidedFieldNames(platformTxt)))
 }
 
 func TestToolNames(t *testing.T) {

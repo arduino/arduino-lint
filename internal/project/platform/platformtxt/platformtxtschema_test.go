@@ -57,6 +57,8 @@ var validPlatformTxtRaw = []byte(`
 	recipe.size.regex.data=asdf
 	tools.avrdude.upload.params.verbose=-v
 	tools.avrdude.upload.params.quiet=-q -q
+	tools.avrdude.upload.field.foo_field_name=Some field label
+	tools.avrdude.upload.field.foo_field_name.secret=true
 	tools.avrdude.upload.pattern=asdf
 	tools.avrdude.program.params.verbose=-v
 	tools.avrdude.program.params.quiet=-q -q
@@ -140,6 +142,38 @@ func TestMinLength(t *testing.T) {
 
 		t.Run(fmt.Sprintf("%s at minimum length of %d (%s)", testTable.propertyName, testTable.minLength, testTable.complianceLevel), func(t *testing.T) {
 			assert.False(t, schema.PropertyLessThanMinLength(testTable.validationErrorPropertyName, platformtxt.Validate(platformTxt)[testTable.complianceLevel]))
+		})
+	}
+}
+
+func TestMaxLength(t *testing.T) {
+	testTables := []struct {
+		propertyName                string
+		validationErrorPropertyName string
+		maxLength                   int
+		complianceLevel             compliancelevel.Type
+	}{
+		{"tools.avrdude.upload.field.foo_field_name", "tools/avrdude/upload/field/foo_field_name", 50, compliancelevel.Specification},
+		{"tools.avrdude.upload.field.foo_field_name", "tools/avrdude/upload/field/foo_field_name", 50, compliancelevel.Strict},
+	}
+
+	// Test schema validation results with value length > maximum.
+	for _, testTable := range testTables {
+		platformTxt, err := properties.LoadFromBytes(validPlatformTxtRaw)
+		require.Nil(t, err)
+		platformTxt.Set(testTable.propertyName, strings.Repeat("a", testTable.maxLength+1))
+
+		t.Run(fmt.Sprintf("%s greater than maximum length of %d (%s)", testTable.propertyName, testTable.maxLength, testTable.complianceLevel), func(t *testing.T) {
+			assert.True(t, schema.PropertyGreaterThanMaxLength(testTable.validationErrorPropertyName, platformtxt.Validate(platformTxt)[testTable.complianceLevel]))
+		})
+
+		// Test schema validation results with maximum value length.
+		platformTxt, err = properties.LoadFromBytes(validPlatformTxtRaw)
+		require.Nil(t, err)
+		platformTxt.Set(testTable.propertyName, strings.Repeat("a", testTable.maxLength))
+
+		t.Run(fmt.Sprintf("%s at maximum length of %d (%s)", testTable.propertyName, testTable.maxLength, testTable.complianceLevel), func(t *testing.T) {
+			assert.False(t, schema.PropertyGreaterThanMaxLength(testTable.validationErrorPropertyName, platformtxt.Validate(platformTxt)[testTable.complianceLevel]))
 		})
 	}
 }
@@ -318,6 +352,16 @@ func TestEnum(t *testing.T) {
 		{"compiler.ar.extra_flags", "compiler\\.ar\\.extra_flags", "foo", compliancelevel.Permissive, assert.False},
 		{"compiler.ar.extra_flags", "compiler\\.ar\\.extra_flags", "foo", compliancelevel.Specification, assert.False},
 		{"compiler.ar.extra_flags", "compiler\\.ar\\.extra_flags", "foo", compliancelevel.Strict, assert.True},
+
+		{"tools.avrdude.upload.field.foo_field_name.secret", "tools/avrdude/upload/field/foo_field_name\\.secret", "true", compliancelevel.Permissive, assert.False},
+		{"tools.avrdude.upload.field.foo_field_name.secret", "tools/avrdude/upload/field/foo_field_name\\.secret", "true", compliancelevel.Specification, assert.False},
+		{"tools.avrdude.upload.field.foo_field_name.secret", "tools/avrdude/upload/field/foo_field_name\\.secret", "true", compliancelevel.Strict, assert.False},
+		{"tools.avrdude.upload.field.foo_field_name.secret", "tools/avrdude/upload/field/foo_field_name\\.secret", "false", compliancelevel.Permissive, assert.False},
+		{"tools.avrdude.upload.field.foo_field_name.secret", "tools/avrdude/upload/field/foo_field_name\\.secret", "false", compliancelevel.Specification, assert.False},
+		{"tools.avrdude.upload.field.foo_field_name.secret", "tools/avrdude/upload/field/foo_field_name\\.secret", "false", compliancelevel.Strict, assert.False},
+		{"tools.avrdude.upload.field.foo_field_name.secret", "tools/avrdude/upload/field/foo_field_name\\.secret", "foo", compliancelevel.Permissive, assert.True},
+		{"tools.avrdude.upload.field.foo_field_name.secret", "tools/avrdude/upload/field/foo_field_name\\.secret", "foo", compliancelevel.Specification, assert.True},
+		{"tools.avrdude.upload.field.foo_field_name.secret", "tools/avrdude/upload/field/foo_field_name\\.secret", "foo", compliancelevel.Strict, assert.True},
 	}
 
 	for _, testTable := range testTables {
