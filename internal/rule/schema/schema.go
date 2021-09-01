@@ -81,11 +81,19 @@ func Compile(schemaFilename string, referencedSchemaFilenames []string, dataLoad
 // jsonschema.ValidationError object otherwise.
 func Validate(instanceInterface map[string]interface{}, schemaObject Schema) ValidationResult {
 	validationError := schemaObject.Compiled.ValidateInterface(instanceInterface)
-	result, _ := validationError.(*jsonschema.ValidationError)
 	validationResult := ValidationResult{
-		Result:     result,
+		Result:     nil,
 		dataLoader: schemaObject.dataLoader,
 	}
+
+	if validationError != nil {
+		result, ok := validationError.(*jsonschema.ValidationError)
+		if !ok {
+			panic(validationError)
+		}
+		validationResult.Result = result
+	}
+
 	if validationResult.Result == nil {
 		logrus.Debug("Schema validation of instance document passed")
 	} else {
