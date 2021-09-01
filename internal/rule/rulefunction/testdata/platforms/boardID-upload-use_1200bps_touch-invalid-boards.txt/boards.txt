@@ -20,10 +20,10 @@ funo.name=Funo
 funo.build.board=FUNO
 funo.build.core=arduino
 funo.build.variant=standard
-funo.upload.tool=avrdude
+funo.upload.tool.serial=avrdude
 funo.upload.maximum_size=32256
 funo.upload.maximum_data_size=2048
-funo.upload.use_1200bps_touch=foo
+funo.upload.serial.use_1200bps_touch=foo
 
 zuno.name=Zuno
 zuno.build.board=ZUNO

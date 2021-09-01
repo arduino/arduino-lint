@@ -234,6 +234,16 @@ func TestEnum(t *testing.T) {
 		{"nano.upload.use_1200bps_touch", "nano/upload\\.use_1200bps_touch", "foo", compliancelevel.Specification, assert.True},
 		{"nano.upload.use_1200bps_touch", "nano/upload\\.use_1200bps_touch", "foo", compliancelevel.Strict, assert.True},
 
+		{"nano.upload.serial.use_1200bps_touch", "nano/upload\\.serial\\.use_1200bps_touch", "true", compliancelevel.Permissive, assert.False},
+		{"nano.upload.serial.use_1200bps_touch", "nano/upload\\.serial\\.use_1200bps_touch", "true", compliancelevel.Specification, assert.False},
+		{"nano.upload.serial.use_1200bps_touch", "nano/upload\\.serial\\.use_1200bps_touch", "true", compliancelevel.Strict, assert.False},
+		{"nano.upload.serial.use_1200bps_touch", "nano/upload\\.serial\\.use_1200bps_touch", "false", compliancelevel.Permissive, assert.False},
+		{"nano.upload.serial.use_1200bps_touch", "nano/upload\\.serial\\.use_1200bps_touch", "false", compliancelevel.Specification, assert.False},
+		{"nano.upload.serial.use_1200bps_touch", "nano/upload\\.serial\\.use_1200bps_touch", "false", compliancelevel.Strict, assert.False},
+		{"nano.upload.serial.use_1200bps_touch", "nano/upload\\.serial\\.use_1200bps_touch", "foo", compliancelevel.Permissive, assert.True},
+		{"nano.upload.serial.use_1200bps_touch", "nano/upload\\.serial\\.use_1200bps_touch", "foo", compliancelevel.Specification, assert.True},
+		{"nano.upload.serial.use_1200bps_touch", "nano/upload\\.serial\\.use_1200bps_touch", "foo", compliancelevel.Strict, assert.True},
+
 		{"nano.menu.bar.baz.upload.use_1200bps_touch", "nano/menu/bar/baz/upload\\.use_1200bps_touch", "true", compliancelevel.Permissive, assert.False},
 		{"nano.menu.bar.baz.upload.use_1200bps_touch", "nano/menu/bar/baz/upload\\.use_1200bps_touch", "true", compliancelevel.Specification, assert.False},
 		{"nano.menu.bar.baz.upload.use_1200bps_touch", "nano/menu/bar/baz/upload\\.use_1200bps_touch", "true", compliancelevel.Strict, assert.False},
@@ -243,6 +253,16 @@ func TestEnum(t *testing.T) {
 		{"nano.menu.bar.baz.upload.use_1200bps_touch", "nano/menu/bar/baz/upload\\.use_1200bps_touch", "foo", compliancelevel.Permissive, assert.True},
 		{"nano.menu.bar.baz.upload.use_1200bps_touch", "nano/menu/bar/baz/upload\\.use_1200bps_touch", "foo", compliancelevel.Specification, assert.True},
 		{"nano.menu.bar.baz.upload.use_1200bps_touch", "nano/menu/bar/baz/upload\\.use_1200bps_touch", "foo", compliancelevel.Strict, assert.True},
+
+		{"nano.menu.bar.baz.upload.serial.use_1200bps_touch", "nano/menu/bar/baz/upload\\.serial\\.use_1200bps_touch", "true", compliancelevel.Permissive, assert.False},
+		{"nano.menu.bar.baz.upload.serial.use_1200bps_touch", "nano/menu/bar/baz/upload\\.serial\\.use_1200bps_touch", "true", compliancelevel.Specification, assert.False},
+		{"nano.menu.bar.baz.upload.serial.use_1200bps_touch", "nano/menu/bar/baz/upload\\.serial\\.use_1200bps_touch", "true", compliancelevel.Strict, assert.False},
+		{"nano.menu.bar.baz.upload.serial.use_1200bps_touch", "nano/menu/bar/baz/upload\\.serial\\.use_1200bps_touch", "false", compliancelevel.Permissive, assert.False},
+		{"nano.menu.bar.baz.upload.serial.use_1200bps_touch", "nano/menu/bar/baz/upload\\.serial\\.use_1200bps_touch", "false", compliancelevel.Specification, assert.False},
+		{"nano.menu.bar.baz.upload.serial.use_1200bps_touch", "nano/menu/bar/baz/upload\\.serial\\.use_1200bps_touch", "false", compliancelevel.Strict, assert.False},
+		{"nano.menu.bar.baz.upload.serial.use_1200bps_touch", "nano/menu/bar/baz/upload\\.serial\\.use_1200bps_touch", "foo", compliancelevel.Permissive, assert.True},
+		{"nano.menu.bar.baz.upload.serial.use_1200bps_touch", "nano/menu/bar/baz/upload\\.serial\\.use_1200bps_touch", "foo", compliancelevel.Specification, assert.True},
+		{"nano.menu.bar.baz.upload.serial.use_1200bps_touch", "nano/menu/bar/baz/upload\\.serial\\.use_1200bps_touch", "foo", compliancelevel.Strict, assert.True},
 
 		{"nano.upload.wait_for_upload_port", "nano/upload\\.wait_for_upload_port", "true", compliancelevel.Permissive, assert.False},
 		{"nano.upload.wait_for_upload_port", "nano/upload\\.wait_for_upload_port", "true", compliancelevel.Specification, assert.False},
@@ -254,6 +274,16 @@ func TestEnum(t *testing.T) {
 		{"nano.upload.wait_for_upload_port", "nano/upload\\.wait_for_upload_port", "foo", compliancelevel.Specification, assert.True},
 		{"nano.upload.wait_for_upload_port", "nano/upload\\.wait_for_upload_port", "foo", compliancelevel.Strict, assert.True},
 
+		{"nano.upload.serial.wait_for_upload_port", "nano/upload\\.serial\\.wait_for_upload_port", "true", compliancelevel.Permissive, assert.False},
+		{"nano.upload.serial.wait_for_upload_port", "nano/upload\\.serial\\.wait_for_upload_port", "true", compliancelevel.Specification, assert.False},
+		{"nano.upload.serial.wait_for_upload_port", "nano/upload\\.serial\\.wait_for_upload_port", "true", compliancelevel.Strict, assert.False},
+		{"nano.upload.serial.wait_for_upload_port", "nano/upload\\.serial\\.wait_for_upload_port", "false", compliancelevel.Permissive, assert.False},
+		{"nano.upload.serial.wait_for_upload_port", "nano/upload\\.serial\\.wait_for_upload_port", "false", compliancelevel.Specification, assert.False},
+		{"nano.upload.serial.wait_for_upload_port", "nano/upload\\.serial\\.wait_for_upload_port", "false", compliancelevel.Strict, assert.False},
+		{"nano.upload.serial.wait_for_upload_port", "nano/upload\\.serial\\.wait_for_upload_port", "foo", compliancelevel.Permissive, assert.True},
+		{"nano.upload.serial.wait_for_upload_port", "nano/upload\\.serial\\.wait_for_upload_port", "foo", compliancelevel.Specification, assert.True},
+		{"nano.upload.serial.wait_for_upload_port", "nano/upload\\.serial\\.wait_for_upload_port", "foo", compliancelevel.Strict, assert.True},
+
 		{"nano.menu.bar.baz.upload.wait_for_upload_port", "nano/menu/bar/baz/upload\\.wait_for_upload_port", "true", compliancelevel.Permissive, assert.False},
 		{"nano.menu.bar.baz.upload.wait_for_upload_port", "nano/menu/bar/baz/upload\\.wait_for_upload_port", "true", compliancelevel.Specification, assert.False},
 		{"nano.menu.bar.baz.upload.wait_for_upload_port", "nano/menu/bar/baz/upload\\.wait_for_upload_port", "true", compliancelevel.Strict, assert.False},
@@ -263,6 +293,16 @@ func TestEnum(t *testing.T) {
 		{"nano.menu.bar.baz.upload.wait_for_upload_port", "nano/menu/bar/baz/upload\\.wait_for_upload_port", "foo", compliancelevel.Permissive, assert.True},
 		{"nano.menu.bar.baz.upload.wait_for_upload_port", "nano/menu/bar/baz/upload\\.wait_for_upload_port", "foo", compliancelevel.Specification, assert.True},
 		{"nano.menu.bar.baz.upload.wait_for_upload_port", "nano/menu/bar/baz/upload\\.wait_for_upload_port", "foo", compliancelevel.Strict, assert.True},
+
+		{"nano.menu.bar.baz.upload.serial.wait_for_upload_port", "nano/menu/bar/baz/upload\\.serial\\.wait_for_upload_port", "true", compliancelevel.Permissive, assert.False},
+		{"nano.menu.bar.baz.upload.serial.wait_for_upload_port", "nano/menu/bar/baz/upload\\.serial\\.wait_for_upload_port", "true", compliancelevel.Specification, assert.False},
+		{"nano.menu.bar.baz.upload.serial.wait_for_upload_port", "nano/menu/bar/baz/upload\\.serial\\.wait_for_upload_port", "true", compliancelevel.Strict, assert.False},
+		{"nano.menu.bar.baz.upload.serial.wait_for_upload_port", "nano/menu/bar/baz/upload\\.serial\\.wait_for_upload_port", "false", compliancelevel.Permissive, assert.False},
+		{"nano.menu.bar.baz.upload.serial.wait_for_upload_port", "nano/menu/bar/baz/upload\\.serial\\.wait_for_upload_port", "false", compliancelevel.Specification, assert.False},
+		{"nano.menu.bar.baz.upload.serial.wait_for_upload_port", "nano/menu/bar/baz/upload\\.serial\\.wait_for_upload_port", "false", compliancelevel.Strict, assert.False},
+		{"nano.menu.bar.baz.upload.serial.wait_for_upload_port", "nano/menu/bar/baz/upload\\.serial\\.wait_for_upload_port", "foo", compliancelevel.Permissive, assert.True},
+		{"nano.menu.bar.baz.upload.serial.wait_for_upload_port", "nano/menu/bar/baz/upload\\.serial\\.wait_for_upload_port", "foo", compliancelevel.Specification, assert.True},
+		{"nano.menu.bar.baz.upload.serial.wait_for_upload_port", "nano/menu/bar/baz/upload\\.serial\\.wait_for_upload_port", "foo", compliancelevel.Strict, assert.True},
 	}
 
 	for _, testTable := range testTables {

@@ -343,7 +343,7 @@ func BoardsTxtBoardIDUploadMaximumSizeInvalid() (result ruleresult.Type, output 
 		return ruleresult.Skip, "boards.txt has no boards"
 	}
 
-	nonCompliantBoardIDs := boardIDValuePatternMismatch(projectdata.BoardsTxtBoardIds(), "upload\\.maximum_size", compliancelevel.Specification)
+	nonCompliantBoardIDs := boardIDValuePatternMismatch(projectdata.BoardsTxtBoardIds(), "upload(\\..+)?\\.maximum_size", compliancelevel.Specification)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -381,7 +381,7 @@ func BoardsTxtBoardIDUploadMaximumDataSizeInvalid() (result ruleresult.Type, out
 		return ruleresult.Skip, "boards.txt has no boards"
 	}
 
-	nonCompliantBoardIDs := boardIDValuePatternMismatch(projectdata.BoardsTxtBoardIds(), "upload\\.maximum_data_size", compliancelevel.Specification)
+	nonCompliantBoardIDs := boardIDValuePatternMismatch(projectdata.BoardsTxtBoardIds(), "upload(\\..+)?\\.maximum_data_size", compliancelevel.Specification)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -400,7 +400,7 @@ func BoardsTxtBoardIDUploadUse1200bpsTouchInvalid() (result ruleresult.Type, out
 		return ruleresult.Skip, "boards.txt has no boards"
 	}
 
-	nonCompliantBoardIDs := boardIDValueEnumMismatch(projectdata.BoardsTxtBoardIds(), "upload\\.use_1200bps_touch", compliancelevel.Specification)
+	nonCompliantBoardIDs := boardIDValueEnumMismatch(projectdata.BoardsTxtBoardIds(), "upload(\\..+)?\\.use_1200bps_touch", compliancelevel.Specification)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -419,7 +419,7 @@ func BoardsTxtBoardIDUploadWaitForUploadPortInvalid() (result ruleresult.Type, o
 		return ruleresult.Skip, "boards.txt has no boards"
 	}
 
-	nonCompliantBoardIDs := boardIDValueEnumMismatch(projectdata.BoardsTxtBoardIds(), "upload\\.wait_for_upload_port", compliancelevel.Specification)
+	nonCompliantBoardIDs := boardIDValueEnumMismatch(projectdata.BoardsTxtBoardIds(), "upload(\\..+)?\\.wait_for_upload_port", compliancelevel.Specification)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")

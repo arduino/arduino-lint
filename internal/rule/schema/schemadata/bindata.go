@@ -220,21 +220,6 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                   },
                   "serial.disableRTS": {
                     "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableRTS/permissive/object"
-                  },
-                  "upload.maximum_size": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/permissive/object"
-                  },
-                  "upload.maximum_data_size": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/permissive/object"
-                  },
-                  "upload.protocol": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/permissive/object"
-                  },
-                  "upload.use_1200bps_touch": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/permissive/object"
-                  },
-                  "upload.wait_for_upload_port": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/permissive/object"
                   }
                 }
               },
@@ -242,6 +227,21 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                 "patternProperties": {
                   "^upload.tool(\\..+)?$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/permissive/object"
+                  },
+                  "upload.maximum_size": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/permissive/object"
+                  },
+                  "upload.maximum_data_size": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/permissive/object"
+                  },
+                  "upload(\\..+)?\\.protocol": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/permissive/object"
+                  },
+                  "upload(\\..+)?\\.use_1200bps_touch": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/permissive/object"
+                  },
+                  "upload(\\..+)?\\.wait_for_upload_port": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/permissive/object"
                   },
                   "^[vp]id\\.[0-9]+$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDXidN/permissive/object"
@@ -285,21 +285,6 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                   },
                   "serial.disableRTS": {
                     "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableRTS/specification/object"
-                  },
-                  "upload.maximum_size": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/specification/object"
-                  },
-                  "upload.maximum_data_size": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/specification/object"
-                  },
-                  "upload.protocol": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/specification/object"
-                  },
-                  "upload.use_1200bps_touch": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/specification/object"
-                  },
-                  "upload.wait_for_upload_port": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/specification/object"
                   }
                 }
               },
@@ -307,6 +292,21 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                 "patternProperties": {
                   "^upload.tool(\\..+)?$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/specification/object"
+                  },
+                  "upload.maximum_size": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/specification/object"
+                  },
+                  "upload.maximum_data_size": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/specification/object"
+                  },
+                  "upload(\\..+)?\\.protocol": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/specification/object"
+                  },
+                  "upload(\\..+)?\\.use_1200bps_touch": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/specification/object"
+                  },
+                  "upload(\\..+)?\\.wait_for_upload_port": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/specification/object"
                   },
                   "^[vp]id\\.[0-9]+$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDXidN/specification/object"
@@ -350,21 +350,6 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                   },
                   "serial.disableRTS": {
                     "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableRTS/strict/object"
-                  },
-                  "upload.maximum_size": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/strict/object"
-                  },
-                  "upload.maximum_data_size": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/strict/object"
-                  },
-                  "upload.protocol": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/strict/object"
-                  },
-                  "upload.use_1200bps_touch": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/strict/object"
-                  },
-                  "upload.wait_for_upload_port": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/strict/object"
                   }
                 }
               },
@@ -372,6 +357,21 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                 "patternProperties": {
                   "^upload.tool(\\..+)?$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/strict/object"
+                  },
+                  "upload.maximum_size": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/strict/object"
+                  },
+                  "upload.maximum_data_size": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/strict/object"
+                  },
+                  "upload(\\..+)?\\.protocol": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/strict/object"
+                  },
+                  "upload(\\..+)?\\.use_1200bps_touch": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/strict/object"
+                  },
+                  "upload(\\..+)?\\.wait_for_upload_port": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/strict/object"
                   },
                   "^[vp]id\\.[0-9]+$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDXidN/strict/object"
@@ -699,21 +699,6 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                   },
                   "serial.disableRTS": {
                     "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableRTS/permissive/object"
-                  },
-                  "upload.maximum_size": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/permissive/object"
-                  },
-                  "upload.maximum_data_size": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/permissive/object"
-                  },
-                  "upload.protocol": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/permissive/object"
-                  },
-                  "upload.use_1200bps_touch": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/permissive/object"
-                  },
-                  "upload.wait_for_upload_port": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/permissive/object"
                   }
                 }
               },
@@ -721,6 +706,21 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                 "patternProperties": {
                   "^upload.tool(\\..+)?$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/permissive/object"
+                  },
+                  "upload.maximum_size": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/permissive/object"
+                  },
+                  "upload.maximum_data_size": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/permissive/object"
+                  },
+                  "upload(\\..+)?\\.protocol": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/permissive/object"
+                  },
+                  "upload(\\..+)?\\.use_1200bps_touch": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/permissive/object"
+                  },
+                  "upload(\\..+)?\\.wait_for_upload_port": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/permissive/object"
                   },
                   "^[vp]id\\.[0-9]+$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDXidN/permissive/object"
@@ -752,21 +752,6 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                   },
                   "serial.disableRTS": {
                     "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableRTS/specification/object"
-                  },
-                  "upload.maximum_size": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/specification/object"
-                  },
-                  "upload.maximum_data_size": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/specification/object"
-                  },
-                  "upload.protocol": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/specification/object"
-                  },
-                  "upload.use_1200bps_touch": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/specification/object"
-                  },
-                  "upload.wait_for_upload_port": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/specification/object"
                   }
                 }
               },
@@ -774,6 +759,21 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                 "patternProperties": {
                   "^upload.tool(\\..+)?$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/specification/object"
+                  },
+                  "upload.maximum_size": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/specification/object"
+                  },
+                  "upload.maximum_data_size": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/specification/object"
+                  },
+                  "upload(\\..+)?\\.protocol": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/specification/object"
+                  },
+                  "upload(\\..+)?\\.use_1200bps_touch": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/specification/object"
+                  },
+                  "upload(\\..+)?\\.wait_for_upload_port": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/specification/object"
                   },
                   "^[vp]id\\.[0-9]+$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDXidN/specification/object"
@@ -805,21 +805,6 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                   },
                   "serial.disableRTS": {
                     "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableRTS/strict/object"
-                  },
-                  "upload.maximum_size": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/strict/object"
-                  },
-                  "upload.maximum_data_size": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/strict/object"
-                  },
-                  "upload.protocol": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/strict/object"
-                  },
-                  "upload.use_1200bps_touch": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/strict/object"
-                  },
-                  "upload.wait_for_upload_port": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/strict/object"
                   }
                 }
               },
@@ -827,6 +812,21 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
                 "patternProperties": {
                   "^upload.tool(\\..+)?$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/strict/object"
+                  },
+                  "upload.maximum_size": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/strict/object"
+                  },
+                  "upload.maximum_data_size": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/strict/object"
+                  },
+                  "upload(\\..+)?\\.protocol": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/strict/object"
+                  },
+                  "upload(\\..+)?\\.use_1200bps_touch": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/strict/object"
+                  },
+                  "upload(\\..+)?\\.wait_for_upload_port": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/strict/object"
                   },
                   "^[vp]id\\.[0-9]+$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDXidN/strict/object"
