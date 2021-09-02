@@ -108,10 +108,14 @@ jobs:
           chmod +x ${{ env.DIST_DIR }}/${{ env.PROJECT_NAME }}_osx_darwin_amd64/${{ env.PROJECT_NAME }}
           TAG="${GITHUB_REF/refs\/tags\//}"
           tar -czvf "${{ env.DIST_DIR }}/${{ env.PROJECT_NAME }}_${TAG}_macOS_64bit.tar.gz" \
-          -C ${{ env.DIST_DIR }}/${{ env.PROJECT_NAME }}_osx_darwin_amd64/  ${{ env.PROJECT_NAME }}   \
-          -C ../../ LICENSE.txt
+            -C ${{ env.DIST_DIR }}/${{ env.PROJECT_NAME }}_osx_darwin_amd64/ ${{ env.PROJECT_NAME }} \
+            -C ../../ LICENSE.txt
           CHECKSUM="$(shasum -a 256 ${{ env.DIST_DIR }}/${{ env.PROJECT_NAME }}_${TAG}_macOS_64bit.tar.gz | cut -d " " -f 1)"
-          perl -pi -w -e "s/.*${{ env.PROJECT_NAME }}_${TAG}_macOS_64bit.tar.gz/${CHECKSUM}  ${{ env.PROJECT_NAME }}_${TAG}_macOS_64bit.tar.gz/g;" ${{ env.DIST_DIR }}/*-checksums.txt
+          perl \
+            -pi \
+            -w \
+            -e "s/.*${{ env.PROJECT_NAME }}_${TAG}_macOS_64bit.tar.gz/${CHECKSUM}  ${{ env.PROJECT_NAME }}_${TAG}_macOS_64bit.tar.gz/g;" \
+            ${{ env.DIST_DIR }}/*-checksums.txt
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
