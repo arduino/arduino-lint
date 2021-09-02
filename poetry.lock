@@ -233,7 +233,7 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "mike"
-version = "1.0.1"
+version = "1.1.0"
 description = "Manage multiple versions of your MkDocs-powered documentation"
 category = "main"
 optional = false
@@ -242,12 +242,12 @@ python-versions = "*"
 [package.dependencies]
 jinja2 = "*"
 mkdocs = ">=1.0"
-pyyaml = "*"
+pyyaml = ">=5.1"
 verspec = "*"
 
 [package.extras]
-dev = ["coverage", "flake8 (>=3.0)"]
-test = ["coverage", "flake8 (>=3.0)"]
+dev = ["coverage", "flake8 (>=3.0)", "shtab"]
+test = ["coverage", "flake8 (>=3.0)", "shtab"]
 
 [[package]]
 name = "mkdocs"
@@ -512,14 +512,6 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "typing-extensions"
-version = "3.10.0.0"
-description = "Backported and Experimental Type Hints for Python 3.5+"
-category = "main"
-optional = false
-python-versions = "*"
-
-[[package]]
-name = "typing-extensions"
 version = "3.10.0.2"
 description = "Backported and Experimental Type Hints for Python 3.5+"
 category = "main"
@@ -563,7 +555,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "126bbff304b8360db5f30624f00e2964770508460d2ef058de040948510364b4"
+content-hash = "726358a9f5169ea63f324a92bcc6b5ff2bfccb063c3337d2023853775228deda"
 
 [metadata.files]
 atomicwrites = [
@@ -697,8 +689,8 @@ mergedeep = [
     {file = "mergedeep-1.3.4.tar.gz", hash = "sha256:0096d52e9dad9939c3d975a774666af186eda617e6ca84df4c94dec30004f2a8"},
 ]
 mike = [
-    {file = "mike-1.0.1-py3-none-any.whl", hash = "sha256:29b39a725510a67590db261ca8292f583dcfe06c6ea6842793c96ae631d6e2e1"},
-    {file = "mike-1.0.1.tar.gz", hash = "sha256:7888f01d05d752bd43e03f6d971608a0b876f23787cf49a1f2b43be304b1789e"},
+    {file = "mike-1.1.0-py3-none-any.whl", hash = "sha256:cabb89fd8d01f3546ae2d155b23bdaa4c454b7821afdd017704396de1425d563"},
+    {file = "mike-1.1.0.tar.gz", hash = "sha256:018eba2770bba5ce91f4575fcdf3f4e9d2c69937e1b023a8c47e7a3c28c6d647"},
 ]
 mkdocs = [
     {file = "mkdocs-1.2.2-py3-none-any.whl", hash = "sha256:d019ff8e17ec746afeb54eb9eb4112b5e959597aebc971da46a5c9486137f0ff"},
@@ -851,9 +843,6 @@ tomli = [
     {file = "tomli-1.2.0.tar.gz", hash = "sha256:d60e681734099207a6add7a10326bc2ddd1fdc36c1b0f547d00ef73ac63739c2"},
 ]
 typing-extensions = [
-    {file = "typing_extensions-3.10.0.0-py2-none-any.whl", hash = "sha256:0ac0f89795dd19de6b97debb0c6af1c70987fd80a2d62d1958f7e56fcc31b497"},
-    {file = "typing_extensions-3.10.0.0-py3-none-any.whl", hash = "sha256:779383f6086d90c99ae41cf0ff39aac8a7937a9283ce0a414e5dd782f4c94a84"},
-    {file = "typing_extensions-3.10.0.0.tar.gz", hash = "sha256:50b6f157849174217d0656f99dc82fe932884fb250826c18350e159ec6cdf342"},
     {file = "typing_extensions-3.10.0.2-py2-none-any.whl", hash = "sha256:d8226d10bc02a29bcc81df19a26e56a9647f8b0a6d4a83924139f4a8b01f17b7"},
     {file = "typing_extensions-3.10.0.2-py3-none-any.whl", hash = "sha256:f1d25edafde516b146ecd0613dabcc61409817af4766fbbcfb8d1ad4ec441a34"},
     {file = "typing_extensions-3.10.0.2.tar.gz", hash = "sha256:49f75d16ff11f1cd258e1b988ccff82a3ca5570217d7ad8c5f48205dd99a677e"},
