@@ -108,10 +108,14 @@ jobs:
           chmod +x ${{ env.DIST_DIR }}/${{ env.PROJECT_NAME }}_osx_darwin_amd64/${{ env.PROJECT_NAME }}
           TAG="${GITHUB_REF/refs\/tags\//}"
           tar -czvf "${{ env.DIST_DIR }}/${{ env.PROJECT_NAME }}_${TAG}_macOS_64bit.tar.gz" \
-          -C ${{ env.DIST_DIR }}/${{ env.PROJECT_NAME }}_osx_darwin_amd64/  ${{ env.PROJECT_NAME }}   \
-          -C ../../ LICENSE.txt
+            -C ${{ env.DIST_DIR }}/${{ env.PROJECT_NAME }}_osx_darwin_amd64/ ${{ env.PROJECT_NAME }} \
+            -C ../../ LICENSE.txt
           CHECKSUM="$(shasum -a 256 ${{ env.DIST_DIR }}/${{ env.PROJECT_NAME }}_${TAG}_macOS_64bit.tar.gz | cut -d " " -f 1)"
-          perl -pi -w -e "s/.*${{ env.PROJECT_NAME }}_${TAG}_macOS_64bit.tar.gz/${CHECKSUM}  ${{ env.PROJECT_NAME }}_${TAG}_macOS_64bit.tar.gz/g;" ${{ env.DIST_DIR }}/*-checksums.txt
+          perl \
+            -pi \
+            -w \
+            -e "s/.*${{ env.PROJECT_NAME }}_${TAG}_macOS_64bit.tar.gz/${CHECKSUM}  ${{ env.PROJECT_NAME }}_${TAG}_macOS_64bit.tar.gz/g;" \
+            ${{ env.DIST_DIR }}/*-checksums.txt
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
@@ -125,9 +129,6 @@ jobs:
     needs: notarize-macos
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
@@ -150,6 +151,8 @@ jobs:
           bodyFile: ${{ env.DIST_DIR }}/CHANGELOG.md
           draft: false
           prerelease: ${{ steps.prerelease.outputs.IS_PRE }}
+          # NOTE: "Artifact is a directory" warnings are expected and don't indicate a problem
+          # (all the files we need are in the DIST_DIR root)
           artifacts: ${{ env.DIST_DIR }}/*
 
       - name: Upload release files on Arduino downloads servers

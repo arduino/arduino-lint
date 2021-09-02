@@ -103,10 +103,14 @@ jobs:
           chmod +x "${{ env.DIST_DIR }}/${{ env.PROJECT_NAME }}_osx_darwin_amd64/${{ env.PROJECT_NAME }}"
           PACKAGE_FILENAME="$(basename ${{ env.DIST_DIR }}/${{ env.PROJECT_NAME }}_nightly-*_macOS_64bit.tar.gz)"
           tar -czvf "${{ env.DIST_DIR }}/$PACKAGE_FILENAME" \
-          -C "${{ env.DIST_DIR }}/${{ env.PROJECT_NAME }}_osx_darwin_amd64/" "${{ env.PROJECT_NAME }}" \
-          -C ../../ LICENSE.txt
+            -C "${{ env.DIST_DIR }}/${{ env.PROJECT_NAME }}_osx_darwin_amd64/" "${{ env.PROJECT_NAME }}" \
+            -C ../../ LICENSE.txt
           CHECKSUM="$(shasum -a 256 ${{ env.DIST_DIR }}/$PACKAGE_FILENAME | cut -d " " -f 1)"
-          perl -pi -w -e "s/.*${PACKAGE_FILENAME}/${CHECKSUM} ${PACKAGE_FILENAME}/g;" ${{ env.DIST_DIR }}/*-checksums.txt
+          perl \
+            -pi \
+            -w \
+            -e "s/.*${PACKAGE_FILENAME}/${CHECKSUM} ${PACKAGE_FILENAME}/g;" \
+            ${{ env.DIST_DIR }}/*-checksums.txt
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
