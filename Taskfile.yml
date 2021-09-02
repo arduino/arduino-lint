@@ -39,6 +39,8 @@ vars:
     -X {{.CONFIGURATION_PACKAGE}}.Commit={{.COMMIT}}
     -X {{.CONFIGURATION_PACKAGE}}.Timestamp={{.TIMESTAMP}}
     '
+  # `-ldflags` flag to use for `go test` command
+  TEST_LDFLAGS:
 
 tasks:
   build:
@@ -225,6 +227,7 @@ tasks:
           -run '{{default ".*" .GO_TEST_REGEX}}' \
           {{default "-timeout 10m -coverpkg=./... -covermode=atomic" .GO_TEST_FLAGS}} \
           -coverprofile=coverage_unit.txt \
+          {{.TEST_LDFLAGS}} \
           {{default .DEFAULT_GO_PACKAGES .GO_PACKAGES}}
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/test-go-integration-task/Taskfile.yml
