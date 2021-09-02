@@ -109,6 +109,7 @@ tasks:
     deps:
       - task: go:cli-docs
       - task: go:rule-docs
+    cmds:
       # Make the formatting consistent with the non-generated Markdown
       - task: general:format-prettier
 
