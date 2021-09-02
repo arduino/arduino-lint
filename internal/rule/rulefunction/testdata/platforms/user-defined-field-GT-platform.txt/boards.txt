@@ -2,7 +2,7 @@ buno.name=Buno
 buno.build.board=BUNO
 buno.build.core=arduino
 buno.build.variant=standard
-buno.upload.tool.serial=
+buno.upload.tool=avrdude
 buno.upload.maximum_size=32256
 buno.upload.maximum_data_size=2048
 
@@ -18,14 +18,6 @@ funo.name=Funo
 funo.build.board=FUNO
 funo.build.core=arduino
 funo.build.variant=standard
-funo.menu.foo.bar.upload.tool.serial=
+funo.upload.tool=avrdude
 funo.upload.maximum_size=32256
 funo.upload.maximum_data_size=2048
-
-zuno.name=Zuno
-zuno.build.board=ZUNO
-zuno.build.core=arduino
-zuno.build.variant=standard
-zuno.upload.maximum_size=32256
-zuno.upload.maximum_data_size=2048
-zuno.menu.foo.bar.upload.tool=

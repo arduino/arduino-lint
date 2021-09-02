@@ -145,6 +145,13 @@
                   },
                   "serial.disableRTS": {
                     "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableRTS/permissive/object"
+                  }
+                }
+              },
+              {
+                "patternProperties": {
+                  "^upload.tool(\\..+)?$": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/permissive/object"
                   },
                   "upload.maximum_size": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/permissive/object"
@@ -152,22 +159,15 @@
                   "upload.maximum_data_size": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/permissive/object"
                   },
-                  "upload.protocol": {
+                  "upload(\\..+)?\\.protocol": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/permissive/object"
                   },
-                  "upload.tool": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/permissive/object"
-                  },
-                  "upload.use_1200bps_touch": {
+                  "upload(\\..+)?\\.use_1200bps_touch": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/permissive/object"
                   },
-                  "upload.wait_for_upload_port": {
+                  "upload(\\..+)?\\.wait_for_upload_port": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/permissive/object"
-                  }
-                }
-              },
-              {
-                "patternProperties": {
+                  },
                   "^[vp]id\\.[0-9]+$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDXidN/permissive/object"
                   }
@@ -210,6 +210,13 @@
                   },
                   "serial.disableRTS": {
                     "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableRTS/specification/object"
+                  }
+                }
+              },
+              {
+                "patternProperties": {
+                  "^upload.tool(\\..+)?$": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/specification/object"
                   },
                   "upload.maximum_size": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/specification/object"
@@ -217,22 +224,15 @@
                   "upload.maximum_data_size": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/specification/object"
                   },
-                  "upload.protocol": {
+                  "upload(\\..+)?\\.protocol": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/specification/object"
                   },
-                  "upload.tool": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/specification/object"
-                  },
-                  "upload.use_1200bps_touch": {
+                  "upload(\\..+)?\\.use_1200bps_touch": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/specification/object"
                   },
-                  "upload.wait_for_upload_port": {
+                  "upload(\\..+)?\\.wait_for_upload_port": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/specification/object"
-                  }
-                }
-              },
-              {
-                "patternProperties": {
+                  },
                   "^[vp]id\\.[0-9]+$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDXidN/specification/object"
                   }
@@ -275,6 +275,13 @@
                   },
                   "serial.disableRTS": {
                     "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableRTS/strict/object"
+                  }
+                }
+              },
+              {
+                "patternProperties": {
+                  "^upload.tool(\\..+)?$": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/strict/object"
                   },
                   "upload.maximum_size": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/strict/object"
@@ -282,22 +289,15 @@
                   "upload.maximum_data_size": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/strict/object"
                   },
-                  "upload.protocol": {
+                  "upload(\\..+)?\\.protocol": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/strict/object"
                   },
-                  "upload.tool": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/strict/object"
-                  },
-                  "upload.use_1200bps_touch": {
+                  "upload(\\..+)?\\.use_1200bps_touch": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/strict/object"
                   },
-                  "upload.wait_for_upload_port": {
+                  "upload(\\..+)?\\.wait_for_upload_port": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/strict/object"
-                  }
-                }
-              },
-              {
-                "patternProperties": {
+                  },
                   "^[vp]id\\.[0-9]+$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDXidN/strict/object"
                   }
@@ -624,6 +624,13 @@
                   },
                   "serial.disableRTS": {
                     "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableRTS/permissive/object"
+                  }
+                }
+              },
+              {
+                "patternProperties": {
+                  "^upload.tool(\\..+)?$": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/permissive/object"
                   },
                   "upload.maximum_size": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/permissive/object"
@@ -631,22 +638,15 @@
                   "upload.maximum_data_size": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/permissive/object"
                   },
-                  "upload.protocol": {
+                  "upload(\\..+)?\\.protocol": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/permissive/object"
                   },
-                  "upload.tool": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/permissive/object"
-                  },
-                  "upload.use_1200bps_touch": {
+                  "upload(\\..+)?\\.use_1200bps_touch": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/permissive/object"
                   },
-                  "upload.wait_for_upload_port": {
+                  "upload(\\..+)?\\.wait_for_upload_port": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/permissive/object"
-                  }
-                }
-              },
-              {
-                "patternProperties": {
+                  },
                   "^[vp]id\\.[0-9]+$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDXidN/permissive/object"
                   }
@@ -677,6 +677,13 @@
                   },
                   "serial.disableRTS": {
                     "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableRTS/specification/object"
+                  }
+                }
+              },
+              {
+                "patternProperties": {
+                  "^upload.tool(\\..+)?$": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/specification/object"
                   },
                   "upload.maximum_size": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/specification/object"
@@ -684,22 +691,15 @@
                   "upload.maximum_data_size": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/specification/object"
                   },
-                  "upload.protocol": {
+                  "upload(\\..+)?\\.protocol": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/specification/object"
                   },
-                  "upload.tool": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/specification/object"
-                  },
-                  "upload.use_1200bps_touch": {
+                  "upload(\\..+)?\\.use_1200bps_touch": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/specification/object"
                   },
-                  "upload.wait_for_upload_port": {
+                  "upload(\\..+)?\\.wait_for_upload_port": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/specification/object"
-                  }
-                }
-              },
-              {
-                "patternProperties": {
+                  },
                   "^[vp]id\\.[0-9]+$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDXidN/specification/object"
                   }
@@ -730,6 +730,13 @@
                   },
                   "serial.disableRTS": {
                     "$ref": "#/definitions/propertiesObjects/boardIDSerialDisableRTS/strict/object"
+                  }
+                }
+              },
+              {
+                "patternProperties": {
+                  "^upload.tool(\\..+)?$": {
+                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/strict/object"
                   },
                   "upload.maximum_size": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumSize/strict/object"
@@ -737,22 +744,15 @@
                   "upload.maximum_data_size": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadMaximumDataSize/strict/object"
                   },
-                  "upload.protocol": {
+                  "upload(\\..+)?\\.protocol": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadProtocol/strict/object"
                   },
-                  "upload.tool": {
-                    "$ref": "#/definitions/propertiesObjects/boardIDUploadTool/strict/object"
-                  },
-                  "upload.use_1200bps_touch": {
+                  "upload(\\..+)?\\.use_1200bps_touch": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadUse1200bpsTouch/strict/object"
                   },
-                  "upload.wait_for_upload_port": {
+                  "upload(\\..+)?\\.wait_for_upload_port": {
                     "$ref": "#/definitions/propertiesObjects/boardIDUploadWaitForUploadPort/strict/object"
-                  }
-                }
-              },
-              {
-                "patternProperties": {
+                  },
                   "^[vp]id\\.[0-9]+$": {
                     "$ref": "#/definitions/propertiesObjects/boardIDXidN/strict/object"
                   }
@@ -773,7 +773,7 @@
                 "type": "string"
               },
               {
-                "$ref": "#/definitions/enumObjects/booleanString"
+                "$ref": "general-definitions-schema.json#/definitions/enumObjects/booleanString"
               }
             ]
           }
@@ -814,7 +814,7 @@
                 "type": "string"
               },
               {
-                "$ref": "#/definitions/enumObjects/booleanString"
+                "$ref": "general-definitions-schema.json#/definitions/enumObjects/booleanString"
               }
             ]
           }
@@ -1016,7 +1016,7 @@
                 "type": "string"
               },
               {
-                "$ref": "#/definitions/enumObjects/booleanString"
+                "$ref": "general-definitions-schema.json#/definitions/enumObjects/booleanString"
               }
             ]
           }
@@ -1057,7 +1057,7 @@
                 "type": "string"
               },
               {
-                "$ref": "#/definitions/enumObjects/booleanString"
+                "$ref": "general-definitions-schema.json#/definitions/enumObjects/booleanString"
               }
             ]
           }
@@ -1214,11 +1214,6 @@
             ]
           }
         }
-      }
-    },
-    "enumObjects": {
-      "booleanString": {
-        "enum": ["true", "false"]
       }
     }
   }

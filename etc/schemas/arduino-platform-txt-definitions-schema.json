@@ -700,6 +700,215 @@
           }
         }
       },
+      "pluggableDiscovery": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableDiscovery/base/object"
+              },
+              {
+                "properties": {
+                  "required": {
+                    "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryRequired/permissive/object"
+                  }
+                },
+                "additionalProperties": {
+                  "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryDiscoveryName/permissive/object"
+                }
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableDiscovery/base/object"
+              },
+              {
+                "properties": {
+                  "required": {
+                    "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryRequired/specification/object"
+                  }
+                },
+                "additionalProperties": {
+                  "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryDiscoveryName/specification/object"
+                }
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableDiscovery/base/object"
+              },
+              {
+                "properties": {
+                  "required": {
+                    "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryRequired/strict/object"
+                  }
+                },
+                "additionalProperties": {
+                  "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryDiscoveryName/strict/object"
+                }
+              }
+            ]
+          }
+        }
+      },
+      "pluggableDiscoveryDiscoveryName": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryDiscoveryName/base/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/pluggableDiscoveryDiscoveryName/permissive/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryDiscoveryName/base/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/pluggableDiscoveryDiscoveryName/specification/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryDiscoveryName/base/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/pluggableDiscoveryDiscoveryName/strict/object"
+              }
+            ]
+          }
+        }
+      },
+      "pluggableDiscoveryRequired": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "array"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryRequired/base/object"
+              },
+              {
+                "items": {
+                  "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryRequiredN/permissive/object"
+                }
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryRequired/base/object"
+              },
+              {
+                "items": {
+                  "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryRequiredN/specification/object"
+                }
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryRequired/base/object"
+              },
+              {
+                "items": {
+                  "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryRequiredN/strict/object"
+                }
+              }
+            ]
+          }
+        }
+      },
+      "pluggableDiscoveryRequiredN": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "pattern": "^.+:.+$"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryRequiredN/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryRequiredN/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryRequiredN/base/object"
+              }
+            ]
+          }
+        }
+      },
       "tools": {
         "base": {
           "object": {
@@ -866,6 +1075,13 @@
               },
               {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameUpload/permissive/object"
+              },
+              {
+                "properties": {
+                  "field": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadField/permissive/object"
+                  }
+                }
               }
             ]
           }
@@ -878,6 +1094,13 @@
               },
               {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameUpload/specification/object"
+              },
+              {
+                "properties": {
+                  "field": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadField/specification/object"
+                  }
+                }
               }
             ]
           }
@@ -890,6 +1113,163 @@
               },
               {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameUpload/strict/object"
+              },
+              {
+                "properties": {
+                  "field": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadField/strict/object"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "toolsToolNameUploadField": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadField/base/object"
+              },
+              {
+                "patternProperties": {
+                  "^.+([^.].*|\\.([^s].*)?|\\.se([^c].*)?|\\.sec([^r].*)?|\\.secr([^e].*)?|\\.secre([^t].*)?|\\.secret.+)$": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadFieldFieldName/permissive/object"
+                  },
+                  "^.+\\.secret$": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadFieldFieldNameSecret/permissive/object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadField/base/object"
+              },
+              {
+                "patternProperties": {
+                  "^.+([^.].*|\\.([^s].*)?|\\.se([^c].*)?|\\.sec([^r].*)?|\\.secr([^e].*)?|\\.secre([^t].*)?|\\.secret.+)$": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadFieldFieldName/specification/object"
+                  },
+                  "^.+\\.secret$": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadFieldFieldNameSecret/specification/object"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadField/base/object"
+              },
+              {
+                "patternProperties": {
+                  "^.+([^.].*|\\.([^s].*)?|\\.se([^c].*)?|\\.sec([^r].*)?|\\.secr([^e].*)?|\\.secre([^t].*)?|\\.secret.+)$": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadFieldFieldName/strict/object"
+                  },
+                  "^.+\\.secret$": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadFieldFieldNameSecret/strict/object"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "toolsToolNameUploadFieldFieldName": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadFieldFieldName/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadFieldFieldName/base/object"
+              },
+              {
+                "maxLength": 50
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadFieldFieldName/specification/object"
+              }
+            ]
+          }
+        }
+      },
+      "toolsToolNameUploadFieldFieldNameSecret": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "general-definitions-schema.json#/definitions/enumObjects/booleanString"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadFieldFieldNameSecret/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadFieldFieldNameSecret/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameUploadFieldFieldNameSecret/base/object"
               }
             ]
           }
@@ -912,6 +1292,13 @@
                 "$ref": "#/definitions/propertiesObjects/toolsToolNameProgram/base/object"
               },
               {
+                "properties": {
+                  "params": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameActionNameParams/permissive/object"
+                  }
+                }
+              },
+              {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/permissive/object"
               }
             ]
@@ -924,6 +1311,13 @@
                 "$ref": "#/definitions/propertiesObjects/toolsToolNameProgram/base/object"
               },
               {
+                "properties": {
+                  "params": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameActionNameParams/specification/object"
+                  }
+                }
+              },
+              {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/specification/object"
               }
             ]
@@ -934,6 +1328,13 @@
             "allOf": [
               {
                 "$ref": "#/definitions/propertiesObjects/toolsToolNameProgram/base/object"
+              },
+              {
+                "properties": {
+                  "params": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameActionNameParams/strict/object"
+                  }
+                }
               },
               {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/strict/object"
@@ -959,6 +1360,13 @@
                 "$ref": "#/definitions/propertiesObjects/toolsToolNameErase/base/object"
               },
               {
+                "properties": {
+                  "params": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameActionNameParams/permissive/object"
+                  }
+                }
+              },
+              {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/permissive/object"
               }
             ]
@@ -971,6 +1379,13 @@
                 "$ref": "#/definitions/propertiesObjects/toolsToolNameErase/base/object"
               },
               {
+                "properties": {
+                  "params": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameActionNameParams/specification/object"
+                  }
+                }
+              },
+              {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/specification/object"
               }
             ]
@@ -981,6 +1396,13 @@
             "allOf": [
               {
                 "$ref": "#/definitions/propertiesObjects/toolsToolNameErase/base/object"
+              },
+              {
+                "properties": {
+                  "params": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameActionNameParams/strict/object"
+                  }
+                }
               },
               {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/strict/object"
@@ -1006,6 +1428,13 @@
                 "$ref": "#/definitions/propertiesObjects/toolsToolNameBootloader/base/object"
               },
               {
+                "properties": {
+                  "params": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameActionNameParams/permissive/object"
+                  }
+                }
+              },
+              {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/permissive/object"
               }
             ]
@@ -1016,6 +1445,13 @@
             "allOf": [
               {
                 "$ref": "#/definitions/propertiesObjects/toolsToolNameBootloader/base/object"
+              },
+              {
+                "properties": {
+                  "params": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameActionNameParams/specification/object"
+                  }
+                }
               },
               {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/specification/object"
@@ -1030,7 +1466,61 @@
                 "$ref": "#/definitions/propertiesObjects/toolsToolNameBootloader/base/object"
               },
               {
+                "properties": {
+                  "params": {
+                    "$ref": "#/definitions/propertiesObjects/toolsToolNameActionNameParams/strict/object"
+                  }
+                }
+              },
+              {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/strict/object"
+              }
+            ]
+          }
+        }
+      },
+      "toolsToolNameActionNameParams": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameActionNameParams/base/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionNameParams/permissive/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameActionNameParams/base/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionNameParams/specification/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/toolsToolNameActionNameParams/base/object"
+              },
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionNameParams/strict/object"
               }
             ]
           }
@@ -1145,12 +1635,50 @@
           }
         }
       },
+      "pluggableDiscoveryDiscoveryName": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "required": ["pattern"]
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/pluggableDiscoveryDiscoveryName/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/pluggableDiscoveryDiscoveryName/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/pluggableDiscoveryDiscoveryName/base/object"
+              }
+            ]
+          }
+        }
+      },
       "toolsToolNameActionName": {
         "base": {
           "object": {
             "allOf": [
               {
-                "required": ["params.verbose", "params.quiet", "pattern"]
+                "required": ["params", "pattern"]
               }
             ]
           }
@@ -1178,6 +1706,44 @@
             "allOf": [
               {
                 "$ref": "#/definitions/requiredObjects/toolsToolNameActionName/base/object"
+              }
+            ]
+          }
+        }
+      },
+      "toolsToolNameActionNameParams": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "required": ["verbose", "quiet"]
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionNameParams/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionNameParams/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/requiredObjects/toolsToolNameActionNameParams/base/object"
               }
             ]
           }

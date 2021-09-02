@@ -16,12 +16,14 @@
 package rulefunction
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/arduino/arduino-lint/internal/project/projectdata"
 	"github.com/arduino/arduino-lint/internal/rule/ruleresult"
 	"github.com/arduino/arduino-lint/internal/rule/schema"
 	"github.com/arduino/arduino-lint/internal/rule/schema/compliancelevel"
+	"github.com/arduino/go-properties-orderedmap"
 	"github.com/sirupsen/logrus"
 )
 
@@ -103,7 +105,7 @@ func BoardsTxtBoardIDBuildBoardMissing() (result ruleresult.Type, output string)
 		return ruleresult.Skip, "boards.txt has no boards"
 	}
 
-	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtBoardIds(), "build.board")
+	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtBoardIds(), "build.board", false)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -141,7 +143,7 @@ func BoardsTxtBoardIDBuildCoreMissing() (result ruleresult.Type, output string) 
 		return ruleresult.Skip, "boards.txt has no visible boards"
 	}
 
-	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtVisibleBoardIds(), "build.core")
+	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtVisibleBoardIds(), "build.core", false)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -284,7 +286,7 @@ func BoardsTxtBoardIDUploadToolMissing() (result ruleresult.Type, output string)
 		return ruleresult.Skip, "boards.txt has no visible boards"
 	}
 
-	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtVisibleBoardIds(), "upload.tool")
+	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtVisibleBoardIds(), "upload.tool", true)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -303,7 +305,7 @@ func BoardsTxtBoardIDUploadToolLTMinLength() (result ruleresult.Type, output str
 		return ruleresult.Skip, "boards.txt has no boards"
 	}
 
-	nonCompliantBoardIDs := boardIDValueLTMinLength(projectdata.BoardsTxtBoardIds(), "upload\\.tool", compliancelevel.Specification)
+	nonCompliantBoardIDs := boardIDValueLTMinLength(projectdata.BoardsTxtBoardIds(), "upload\\.tool(\\..+)?", compliancelevel.Specification)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -322,7 +324,7 @@ func BoardsTxtBoardIDUploadMaximumSizeMissing() (result ruleresult.Type, output 
 		return ruleresult.Skip, "boards.txt has no visible boards"
 	}
 
-	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtVisibleBoardIds(), "upload.maximum_size")
+	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtVisibleBoardIds(), "upload.maximum_size", false)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -341,7 +343,7 @@ func BoardsTxtBoardIDUploadMaximumSizeInvalid() (result ruleresult.Type, output 
 		return ruleresult.Skip, "boards.txt has no boards"
 	}
 
-	nonCompliantBoardIDs := boardIDValuePatternMismatch(projectdata.BoardsTxtBoardIds(), "upload\\.maximum_size", compliancelevel.Specification)
+	nonCompliantBoardIDs := boardIDValuePatternMismatch(projectdata.BoardsTxtBoardIds(), "upload(\\..+)?\\.maximum_size", compliancelevel.Specification)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -360,7 +362,7 @@ func BoardsTxtBoardIDUploadMaximumDataSizeMissing() (result ruleresult.Type, out
 		return ruleresult.Skip, "boards.txt has no visible boards"
 	}
 
-	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtVisibleBoardIds(), "upload.maximum_data_size")
+	nonCompliantBoardIDs := boardIDMissingRequiredProperty(projectdata.BoardsTxtVisibleBoardIds(), "upload.maximum_data_size", false)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -379,7 +381,7 @@ func BoardsTxtBoardIDUploadMaximumDataSizeInvalid() (result ruleresult.Type, out
 		return ruleresult.Skip, "boards.txt has no boards"
 	}
 
-	nonCompliantBoardIDs := boardIDValuePatternMismatch(projectdata.BoardsTxtBoardIds(), "upload\\.maximum_data_size", compliancelevel.Specification)
+	nonCompliantBoardIDs := boardIDValuePatternMismatch(projectdata.BoardsTxtBoardIds(), "upload(\\..+)?\\.maximum_data_size", compliancelevel.Specification)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -398,7 +400,7 @@ func BoardsTxtBoardIDUploadUse1200bpsTouchInvalid() (result ruleresult.Type, out
 		return ruleresult.Skip, "boards.txt has no boards"
 	}
 
-	nonCompliantBoardIDs := boardIDValueEnumMismatch(projectdata.BoardsTxtBoardIds(), "upload\\.use_1200bps_touch", compliancelevel.Specification)
+	nonCompliantBoardIDs := boardIDValueEnumMismatch(projectdata.BoardsTxtBoardIds(), "upload(\\..+)?\\.use_1200bps_touch", compliancelevel.Specification)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -417,7 +419,7 @@ func BoardsTxtBoardIDUploadWaitForUploadPortInvalid() (result ruleresult.Type, o
 		return ruleresult.Skip, "boards.txt has no boards"
 	}
 
-	nonCompliantBoardIDs := boardIDValueEnumMismatch(projectdata.BoardsTxtBoardIds(), "upload\\.wait_for_upload_port", compliancelevel.Specification)
+	nonCompliantBoardIDs := boardIDValueEnumMismatch(projectdata.BoardsTxtBoardIds(), "upload(\\..+)?\\.wait_for_upload_port", compliancelevel.Specification)
 
 	if len(nonCompliantBoardIDs) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantBoardIDs, ", ")
@@ -1648,7 +1650,7 @@ func PlatformTxtUploadParamsVerboseMissing() (result ruleresult.Type, output str
 		return ruleresult.Skip, "platform.txt has no tools"
 	}
 
-	nonCompliantTools := toolNameMissingRequiredProperty("upload/params\\.verbose", compliancelevel.Specification)
+	nonCompliantTools := toolNameMissingRequiredProperty("upload/params/verbose", compliancelevel.Specification)
 
 	if len(nonCompliantTools) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
@@ -1657,7 +1659,7 @@ func PlatformTxtUploadParamsVerboseMissing() (result ruleresult.Type, output str
 	return ruleresult.Pass, ""
 }
 
-// PlatformTxtUploadParamsQuietMissing checks if any of the programmers are missing upload.params.quiet properties.
+// PlatformTxtUploadParamsQuietMissing checks if any of the tools are missing upload.params.quiet properties.
 func PlatformTxtUploadParamsQuietMissing() (result ruleresult.Type, output string) {
 	if !projectdata.PlatformTxtExists() {
 		return ruleresult.Skip, "Platform has no platform.txt"
@@ -1671,7 +1673,7 @@ func PlatformTxtUploadParamsQuietMissing() (result ruleresult.Type, output strin
 		return ruleresult.Skip, "platform.txt has no tools"
 	}
 
-	nonCompliantTools := toolNameMissingRequiredProperty("upload/params\\.quiet", compliancelevel.Specification)
+	nonCompliantTools := toolNameMissingRequiredProperty("upload/params/quiet", compliancelevel.Specification)
 
 	if len(nonCompliantTools) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
@@ -1680,7 +1682,128 @@ func PlatformTxtUploadParamsQuietMissing() (result ruleresult.Type, output strin
 	return ruleresult.Pass, ""
 }
 
-// PlatformTxtUploadPatternMissing checks if any of the programmers are missing upload.pattern properties.
+// PlatformTxtPluggableDiscoveryRequiredInvalid checks if any of the pluggable discovery tool references have invalid format.
+func PlatformTxtPluggableDiscoveryRequiredInvalid() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if !containsKeyOrParent(projectdata.PlatformTxt(), "pluggable_discovery.required") {
+		return ruleresult.Skip, "Property not present"
+	}
+
+	if schema.PropertyPatternMismatch("pluggable_discovery/required", projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+		return ruleresult.Fail, ""
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtPluggableDiscoveryDiscoveryIDPatternMissing checks if any of the manual installation pluggable discoveries
+// are missing pattern properties.
+func PlatformTxtPluggableDiscoveryDiscoveryIDPatternMissing() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if len(projectdata.PlatformTxtPluggableDiscoveryNames()) == 0 {
+		return ruleresult.Skip, "platform.txt has no manual installation pluggable discoveries"
+	}
+
+	nonCompliant := []string{}
+	for _, discovery := range projectdata.PlatformTxtPluggableDiscoveryNames() {
+		if schema.RequiredPropertyMissing(
+			fmt.Sprintf("pluggable_discovery/%s/pattern", discovery),
+			projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification],
+		) {
+			nonCompliant = append(nonCompliant, discovery)
+		}
+	}
+
+	if len(nonCompliant) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliant, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtUploadFieldFieldNameGTMaxLength checks if any platform.txt tools.UPLOAD_RECIPE_ID.upload.field.FIELD_NAME property value is greater than the maximum length.
+func PlatformTxtUploadFieldFieldNameGTMaxLength() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if len(projectdata.PlatformTxtUserProvidedFieldNames()) == 0 {
+		return ruleresult.Skip, "Property not present"
+	}
+
+	nonCompliant := []string{}
+	for _, toolName := range projectdata.PlatformTxtToolNames() {
+		for _, fieldName := range projectdata.PlatformTxtUserProvidedFieldNames()[toolName] {
+			if schema.PropertyGreaterThanMaxLength(fmt.Sprintf("tools/%s/upload/field/%s", toolName, fieldName), projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
+				nonCompliant = append(nonCompliant, fmt.Sprintf("%s >> %s", toolName, fieldName))
+			}
+		}
+	}
+
+	if len(nonCompliant) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliant, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtUploadFieldFieldNameSecretInvalid checks if any of the platform.txt tools.UPLOAD_RECIPE_ID.upload.field.FIELD_NAME.secret property values have invalid format.
+func PlatformTxtUploadFieldFieldNameSecretInvalid() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if len(projectdata.PlatformTxtUserProvidedFieldNames()) == 0 {
+		return ruleresult.Skip, "Property not present"
+	}
+
+	found := false
+	nonCompliant := []string{}
+	for _, toolName := range projectdata.PlatformTxtToolNames() {
+		for _, fieldName := range projectdata.PlatformTxtUserProvidedFieldNames()[toolName] {
+			if projectdata.PlatformTxt().ContainsKey(fmt.Sprintf("tools.%s.upload.field.%s.secret", toolName, fieldName)) {
+				found = true
+				if schema.PropertyEnumMismatch(fmt.Sprintf("tools/%s/upload/field/%s\\.secret", toolName, fieldName), projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Strict]) {
+					nonCompliant = append(nonCompliant, fmt.Sprintf("%s >> %s", toolName, fieldName))
+				}
+			}
+		}
+	}
+
+	if !found {
+		return ruleresult.Skip, "Property not present"
+	}
+
+	if len(nonCompliant) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliant, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtUploadPatternMissing checks if any of the tools are missing upload.pattern properties.
 func PlatformTxtUploadPatternMissing() (result ruleresult.Type, output string) {
 	if !projectdata.PlatformTxtExists() {
 		return ruleresult.Skip, "Platform has no platform.txt"
@@ -1717,7 +1840,7 @@ func PlatformTxtProgramParamsVerboseMissing() (result ruleresult.Type, output st
 		return ruleresult.Skip, "platform.txt has no tools"
 	}
 
-	nonCompliantTools := toolNameMissingRequiredProperty("program/params\\.verbose", compliancelevel.Specification)
+	nonCompliantTools := toolNameMissingRequiredProperty("program/params/verbose", compliancelevel.Specification)
 
 	if len(nonCompliantTools) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
@@ -1726,7 +1849,7 @@ func PlatformTxtProgramParamsVerboseMissing() (result ruleresult.Type, output st
 	return ruleresult.Pass, ""
 }
 
-// PlatformTxtProgramParamsQuietMissing checks if any of the programmers are missing program.params.quiet properties.
+// PlatformTxtProgramParamsQuietMissing checks if any of the tools are missing program.params.quiet properties.
 func PlatformTxtProgramParamsQuietMissing() (result ruleresult.Type, output string) {
 	if !projectdata.PlatformTxtExists() {
 		return ruleresult.Skip, "Platform has no platform.txt"
@@ -1740,7 +1863,7 @@ func PlatformTxtProgramParamsQuietMissing() (result ruleresult.Type, output stri
 		return ruleresult.Skip, "platform.txt has no tools"
 	}
 
-	nonCompliantTools := toolNameMissingRequiredProperty("program/params\\.quiet", compliancelevel.Specification)
+	nonCompliantTools := toolNameMissingRequiredProperty("program/params/quiet", compliancelevel.Specification)
 
 	if len(nonCompliantTools) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
@@ -1749,7 +1872,7 @@ func PlatformTxtProgramParamsQuietMissing() (result ruleresult.Type, output stri
 	return ruleresult.Pass, ""
 }
 
-// PlatformTxtProgramPatternMissing checks if any of the programmers are missing program.pattern properties.
+// PlatformTxtProgramPatternMissing checks if any of the tools are missing program.pattern properties.
 func PlatformTxtProgramPatternMissing() (result ruleresult.Type, output string) {
 	if !projectdata.PlatformTxtExists() {
 		return ruleresult.Skip, "Platform has no platform.txt"
@@ -1786,7 +1909,7 @@ func PlatformTxtEraseParamsVerboseMissing() (result ruleresult.Type, output stri
 		return ruleresult.Skip, "platform.txt has no tools"
 	}
 
-	nonCompliantTools := toolNameMissingRequiredProperty("erase/params\\.verbose", compliancelevel.Specification)
+	nonCompliantTools := toolNameMissingRequiredProperty("erase/params/verbose", compliancelevel.Specification)
 
 	if len(nonCompliantTools) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
@@ -1795,7 +1918,7 @@ func PlatformTxtEraseParamsVerboseMissing() (result ruleresult.Type, output stri
 	return ruleresult.Pass, ""
 }
 
-// PlatformTxtEraseParamsQuietMissing checks if any of the programmers are missing erase.params.quiet properties.
+// PlatformTxtEraseParamsQuietMissing checks if any of the tools are missing erase.params.quiet properties.
 func PlatformTxtEraseParamsQuietMissing() (result ruleresult.Type, output string) {
 	if !projectdata.PlatformTxtExists() {
 		return ruleresult.Skip, "Platform has no platform.txt"
@@ -1809,7 +1932,7 @@ func PlatformTxtEraseParamsQuietMissing() (result ruleresult.Type, output string
 		return ruleresult.Skip, "platform.txt has no tools"
 	}
 
-	nonCompliantTools := toolNameMissingRequiredProperty("erase/params\\.quiet", compliancelevel.Specification)
+	nonCompliantTools := toolNameMissingRequiredProperty("erase/params/quiet", compliancelevel.Specification)
 
 	if len(nonCompliantTools) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
@@ -1818,7 +1941,7 @@ func PlatformTxtEraseParamsQuietMissing() (result ruleresult.Type, output string
 	return ruleresult.Pass, ""
 }
 
-// PlatformTxtErasePatternMissing checks if any of the programmers are missing erase.pattern properties.
+// PlatformTxtErasePatternMissing checks if any of the tools are missing erase.pattern properties.
 func PlatformTxtErasePatternMissing() (result ruleresult.Type, output string) {
 	if !projectdata.PlatformTxtExists() {
 		return ruleresult.Skip, "Platform has no platform.txt"
@@ -1855,7 +1978,7 @@ func PlatformTxtBootloaderParamsVerboseMissing() (result ruleresult.Type, output
 		return ruleresult.Skip, "platform.txt has no tools"
 	}
 
-	nonCompliantTools := toolNameMissingRequiredProperty("bootloader/params\\.verbose", compliancelevel.Specification)
+	nonCompliantTools := toolNameMissingRequiredProperty("bootloader/params/verbose", compliancelevel.Specification)
 
 	if len(nonCompliantTools) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
@@ -1864,7 +1987,7 @@ func PlatformTxtBootloaderParamsVerboseMissing() (result ruleresult.Type, output
 	return ruleresult.Pass, ""
 }
 
-// PlatformTxtBootloaderParamsQuietMissing checks if any of the programmers are missing bootloader.params.quiet properties.
+// PlatformTxtBootloaderParamsQuietMissing checks if any of the tools are missing bootloader.params.quiet properties.
 func PlatformTxtBootloaderParamsQuietMissing() (result ruleresult.Type, output string) {
 	if !projectdata.PlatformTxtExists() {
 		return ruleresult.Skip, "Platform has no platform.txt"
@@ -1878,7 +2001,7 @@ func PlatformTxtBootloaderParamsQuietMissing() (result ruleresult.Type, output s
 		return ruleresult.Skip, "platform.txt has no tools"
 	}
 
-	nonCompliantTools := toolNameMissingRequiredProperty("bootloader/params\\.quiet", compliancelevel.Specification)
+	nonCompliantTools := toolNameMissingRequiredProperty("bootloader/params/quiet", compliancelevel.Specification)
 
 	if len(nonCompliantTools) > 0 {
 		return ruleresult.Fail, strings.Join(nonCompliantTools, ", ")
@@ -1887,7 +2010,7 @@ func PlatformTxtBootloaderParamsQuietMissing() (result ruleresult.Type, output s
 	return ruleresult.Pass, ""
 }
 
-// PlatformTxtBootloaderPatternMissing checks if any of the programmers are missing bootloader.pattern properties.
+// PlatformTxtBootloaderPatternMissing checks if any of the tools are missing bootloader.pattern properties.
 func PlatformTxtBootloaderPatternMissing() (result ruleresult.Type, output string) {
 	if !projectdata.PlatformTxtExists() {
 		return ruleresult.Skip, "Platform has no platform.txt"
@@ -1916,12 +2039,20 @@ Unlike iDMissingRequiredProperty(), this function does a direct check on the pro
 This is necessary because JSON schema does not have the capability to account for the custom board options system.
 This function should not be used in cases where the JSON schema does cover a required property.
 */
-func boardIDMissingRequiredProperty(boardIDs []string, propertyName string) []string {
+func boardIDMissingRequiredProperty(boardIDs []string, propertyName string, parentOK bool) []string {
+	containsKey := func(key string) bool {
+		if parentOK {
+			return containsKeyOrParent(projectdata.BoardsTxt(), key)
+		}
+
+		return projectdata.BoardsTxt().ContainsKey(key)
+	}
+
 	nonCompliantBoardIDs := []string{}
 	for _, boardID := range boardIDs {
 		logrus.Tracef("Board ID: %s", boardID)
 		boardIDHasProperty := func(boardID string, propertyName string) bool {
-			if projectdata.BoardsTxt().ContainsKey(boardID + "." + propertyName) {
+			if containsKey(boardID + "." + propertyName) {
 				logrus.Trace("Property defined at top level\n")
 				return true // The board has a first level definition of the property. No need to check custom board options.
 
@@ -1938,7 +2069,7 @@ func boardIDMissingRequiredProperty(boardIDs []string, propertyName string) []st
 				boardOptionProperties := boardMenuProperties.SubTree(boardMenuID)
 				boardOptionIDs := boardOptionProperties.FirstLevelKeys()
 				for _, boardOptionID := range boardOptionIDs {
-					if !boardOptionProperties.ContainsKey(boardOptionID + "." + propertyName) {
+					if !containsKey(boardOptionID + "." + propertyName) {
 						logrus.Tracef("Option ID %s doesn't provide property\n", boardOptionID)
 						menuProvidesProperty = false // Every option associated with the menuID must define the property.
 						break
@@ -2011,6 +2142,12 @@ func toolNameMissingRequiredProperty(propertyNameQuery string, complianceLevel c
 	}
 
 	return nonCompliantTools
+}
+
+// containsKeyOrParent returns whether the given properties contain a key of the given name, or whether the given key is
+// a first level of a key in the properties.
+func containsKeyOrParent(propertiesMap *properties.Map, key string) bool {
+	return propertiesMap.ContainsKey(key) || propertiesMap.SubTree(key).Size() > 0
 }
 
 // iDMissingRequiredProperty returns the list of first level keys missing the given required property.

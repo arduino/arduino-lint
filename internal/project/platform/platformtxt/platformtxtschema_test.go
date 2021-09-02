@@ -57,6 +57,8 @@ var validPlatformTxtRaw = []byte(`
 	recipe.size.regex.data=asdf
 	tools.avrdude.upload.params.verbose=-v
 	tools.avrdude.upload.params.quiet=-q -q
+	tools.avrdude.upload.field.foo_field_name=Some field label
+	tools.avrdude.upload.field.foo_field_name.secret=true
 	tools.avrdude.upload.pattern=asdf
 	tools.avrdude.program.params.verbose=-v
 	tools.avrdude.program.params.quiet=-q -q
@@ -144,118 +146,162 @@ func TestMinLength(t *testing.T) {
 	}
 }
 
+func TestMaxLength(t *testing.T) {
+	testTables := []struct {
+		propertyName                string
+		validationErrorPropertyName string
+		maxLength                   int
+		complianceLevel             compliancelevel.Type
+	}{
+		{"tools.avrdude.upload.field.foo_field_name", "tools/avrdude/upload/field/foo_field_name", 50, compliancelevel.Specification},
+		{"tools.avrdude.upload.field.foo_field_name", "tools/avrdude/upload/field/foo_field_name", 50, compliancelevel.Strict},
+	}
+
+	// Test schema validation results with value length > maximum.
+	for _, testTable := range testTables {
+		platformTxt, err := properties.LoadFromBytes(validPlatformTxtRaw)
+		require.Nil(t, err)
+		platformTxt.Set(testTable.propertyName, strings.Repeat("a", testTable.maxLength+1))
+
+		t.Run(fmt.Sprintf("%s greater than maximum length of %d (%s)", testTable.propertyName, testTable.maxLength, testTable.complianceLevel), func(t *testing.T) {
+			assert.True(t, schema.PropertyGreaterThanMaxLength(testTable.validationErrorPropertyName, platformtxt.Validate(platformTxt)[testTable.complianceLevel]))
+		})
+
+		// Test schema validation results with maximum value length.
+		platformTxt, err = properties.LoadFromBytes(validPlatformTxtRaw)
+		require.Nil(t, err)
+		platformTxt.Set(testTable.propertyName, strings.Repeat("a", testTable.maxLength))
+
+		t.Run(fmt.Sprintf("%s at maximum length of %d (%s)", testTable.propertyName, testTable.maxLength, testTable.complianceLevel), func(t *testing.T) {
+			assert.False(t, schema.PropertyGreaterThanMaxLength(testTable.validationErrorPropertyName, platformtxt.Validate(platformTxt)[testTable.complianceLevel]))
+		})
+	}
+}
+
 func TestRequired(t *testing.T) {
 	testTables := []struct {
 		propertyName                string
+		replacementPropertyName     string // Used for testing subkeys that are required only when the higher level key is present.
 		validationErrorPropertyName string
 		complianceLevel             compliancelevel.Type
 		assertion                   assert.BoolAssertionFunc
 	}{
-		{"name", "name", compliancelevel.Permissive, assert.True},
-		{"name", "name", compliancelevel.Specification, assert.True},
-		{"name", "name", compliancelevel.Strict, assert.True},
+		{"name", "", "name", compliancelevel.Permissive, assert.True},
+		{"name", "", "name", compliancelevel.Specification, assert.True},
+		{"name", "", "name", compliancelevel.Strict, assert.True},
 
-		{"version", "version", compliancelevel.Permissive, assert.True},
-		{"version", "version", compliancelevel.Specification, assert.True},
-		{"version", "version", compliancelevel.Strict, assert.True},
+		{"version", "", "version", compliancelevel.Permissive, assert.True},
+		{"version", "", "version", compliancelevel.Specification, assert.True},
+		{"version", "", "version", compliancelevel.Strict, assert.True},
 
-		{"compiler.warning_flags.none", "compiler\\.warning_flags\\.none", compliancelevel.Permissive, assert.False},
-		{"compiler.warning_flags.none", "compiler\\.warning_flags\\.none", compliancelevel.Specification, assert.False},
-		{"compiler.warning_flags.none", "compiler\\.warning_flags\\.none", compliancelevel.Strict, assert.True},
+		{"compiler.warning_flags.none", "", "compiler\\.warning_flags\\.none", compliancelevel.Permissive, assert.False},
+		{"compiler.warning_flags.none", "", "compiler\\.warning_flags\\.none", compliancelevel.Specification, assert.False},
+		{"compiler.warning_flags.none", "", "compiler\\.warning_flags\\.none", compliancelevel.Strict, assert.True},
 
-		{"compiler.warning_flags.default", "compiler\\.warning_flags\\.default", compliancelevel.Permissive, assert.False},
-		{"compiler.warning_flags.default", "compiler\\.warning_flags\\.default", compliancelevel.Specification, assert.False},
-		{"compiler.warning_flags.default", "compiler\\.warning_flags\\.default", compliancelevel.Strict, assert.True},
+		{"compiler.warning_flags.default", "", "compiler\\.warning_flags\\.default", compliancelevel.Permissive, assert.False},
+		{"compiler.warning_flags.default", "", "compiler\\.warning_flags\\.default", compliancelevel.Specification, assert.False},
+		{"compiler.warning_flags.default", "", "compiler\\.warning_flags\\.default", compliancelevel.Strict, assert.True},
 
-		{"compiler.warning_flags.more", "compiler\\.warning_flags\\.more", compliancelevel.Permissive, assert.False},
-		{"compiler.warning_flags.more", "compiler\\.warning_flags\\.more", compliancelevel.Specification, assert.False},
-		{"compiler.warning_flags.more", "compiler\\.warning_flags\\.more", compliancelevel.Strict, assert.True},
+		{"compiler.warning_flags.more", "", "compiler\\.warning_flags\\.more", compliancelevel.Permissive, assert.False},
+		{"compiler.warning_flags.more", "", "compiler\\.warning_flags\\.more", compliancelevel.Specification, assert.False},
+		{"compiler.warning_flags.more", "", "compiler\\.warning_flags\\.more", compliancelevel.Strict, assert.True},
 
-		{"compiler.warning_flags.all", "compiler\\.warning_flags\\.all", compliancelevel.Permissive, assert.False},
-		{"compiler.warning_flags.all", "compiler\\.warning_flags\\.all", compliancelevel.Specification, assert.False},
-		{"compiler.warning_flags.all", "compiler\\.warning_flags\\.all", compliancelevel.Strict, assert.True},
+		{"compiler.warning_flags.all", "", "compiler\\.warning_flags\\.all", compliancelevel.Permissive, assert.False},
+		{"compiler.warning_flags.all", "", "compiler\\.warning_flags\\.all", compliancelevel.Specification, assert.False},
+		{"compiler.warning_flags.all", "", "compiler\\.warning_flags\\.all", compliancelevel.Strict, assert.True},
 
-		{"recipe.c.o.pattern", "recipe\\.c\\.o\\.pattern", compliancelevel.Permissive, assert.True},
-		{"recipe.c.o.pattern", "recipe\\.c\\.o\\.pattern", compliancelevel.Specification, assert.True},
-		{"recipe.c.o.pattern", "recipe\\.c\\.o\\.pattern", compliancelevel.Strict, assert.True},
+		{"recipe.c.o.pattern", "", "recipe\\.c\\.o\\.pattern", compliancelevel.Permissive, assert.True},
+		{"recipe.c.o.pattern", "", "recipe\\.c\\.o\\.pattern", compliancelevel.Specification, assert.True},
+		{"recipe.c.o.pattern", "", "recipe\\.c\\.o\\.pattern", compliancelevel.Strict, assert.True},
 
-		{"recipe.cpp.o.pattern", "recipe\\.cpp\\.o\\.pattern", compliancelevel.Permissive, assert.True},
-		{"recipe.cpp.o.pattern", "recipe\\.cpp\\.o\\.pattern", compliancelevel.Specification, assert.True},
-		{"recipe.cpp.o.pattern", "recipe\\.cpp\\.o\\.pattern", compliancelevel.Strict, assert.True},
+		{"recipe.cpp.o.pattern", "", "recipe\\.cpp\\.o\\.pattern", compliancelevel.Permissive, assert.True},
+		{"recipe.cpp.o.pattern", "", "recipe\\.cpp\\.o\\.pattern", compliancelevel.Specification, assert.True},
+		{"recipe.cpp.o.pattern", "", "recipe\\.cpp\\.o\\.pattern", compliancelevel.Strict, assert.True},
 
-		{"recipe.S.o.pattern", "recipe\\.S\\.o\\.pattern", compliancelevel.Permissive, assert.True},
-		{"recipe.S.o.pattern", "recipe\\.S\\.o\\.pattern", compliancelevel.Specification, assert.True},
-		{"recipe.S.o.pattern", "recipe\\.S\\.o\\.pattern", compliancelevel.Strict, assert.True},
+		{"recipe.S.o.pattern", "", "recipe\\.S\\.o\\.pattern", compliancelevel.Permissive, assert.True},
+		{"recipe.S.o.pattern", "", "recipe\\.S\\.o\\.pattern", compliancelevel.Specification, assert.True},
+		{"recipe.S.o.pattern", "", "recipe\\.S\\.o\\.pattern", compliancelevel.Strict, assert.True},
 
-		{"recipe.ar.pattern", "recipe\\.ar\\.pattern", compliancelevel.Permissive, assert.True},
-		{"recipe.ar.pattern", "recipe\\.ar\\.pattern", compliancelevel.Specification, assert.True},
-		{"recipe.ar.pattern", "recipe\\.ar\\.pattern", compliancelevel.Strict, assert.True},
+		{"recipe.ar.pattern", "", "recipe\\.ar\\.pattern", compliancelevel.Permissive, assert.True},
+		{"recipe.ar.pattern", "", "recipe\\.ar\\.pattern", compliancelevel.Specification, assert.True},
+		{"recipe.ar.pattern", "", "recipe\\.ar\\.pattern", compliancelevel.Strict, assert.True},
 
-		{"recipe.c.combine.pattern", "recipe\\.c\\.combine\\.pattern", compliancelevel.Permissive, assert.True},
-		{"recipe.c.combine.pattern", "recipe\\.c\\.combine\\.pattern", compliancelevel.Specification, assert.True},
-		{"recipe.c.combine.pattern", "recipe\\.c\\.combine\\.pattern", compliancelevel.Strict, assert.True},
+		{"recipe.c.combine.pattern", "", "recipe\\.c\\.combine\\.pattern", compliancelevel.Permissive, assert.True},
+		{"recipe.c.combine.pattern", "", "recipe\\.c\\.combine\\.pattern", compliancelevel.Specification, assert.True},
+		{"recipe.c.combine.pattern", "", "recipe\\.c\\.combine\\.pattern", compliancelevel.Strict, assert.True},
 
-		{"recipe.output.tmp_file", "recipe\\.output\\.tmp_file", compliancelevel.Permissive, assert.True},
-		{"recipe.output.tmp_file", "recipe\\.output\\.tmp_file", compliancelevel.Specification, assert.True},
-		{"recipe.output.tmp_file", "recipe\\.output\\.tmp_file", compliancelevel.Strict, assert.True},
+		{"recipe.output.tmp_file", "", "recipe\\.output\\.tmp_file", compliancelevel.Permissive, assert.True},
+		{"recipe.output.tmp_file", "", "recipe\\.output\\.tmp_file", compliancelevel.Specification, assert.True},
+		{"recipe.output.tmp_file", "", "recipe\\.output\\.tmp_file", compliancelevel.Strict, assert.True},
 
-		{"tools.avrdude.upload.pattern", "tools/avrdude/upload/pattern", compliancelevel.Permissive, assert.True},
-		{"tools.avrdude.upload.pattern", "tools/avrdude/upload/pattern", compliancelevel.Specification, assert.True},
-		{"tools.avrdude.upload.pattern", "tools/avrdude/upload/pattern", compliancelevel.Strict, assert.True},
+		{"tools.avrdude.upload.pattern", "", "tools/avrdude/upload/pattern", compliancelevel.Permissive, assert.True},
+		{"tools.avrdude.upload.pattern", "", "tools/avrdude/upload/pattern", compliancelevel.Specification, assert.True},
+		{"tools.avrdude.upload.pattern", "", "tools/avrdude/upload/pattern", compliancelevel.Strict, assert.True},
 
-		{"tools.avrdude.program.params.verbose", "tools/avrdude/program/params\\.verbose", compliancelevel.Permissive, assert.True},
-		{"tools.avrdude.program.params.verbose", "tools/avrdude/program/params\\.verbose", compliancelevel.Specification, assert.True},
-		{"tools.avrdude.program.params.verbose", "tools/avrdude/program/params\\.verbose", compliancelevel.Strict, assert.True},
+		{"tools.avrdude.program.params.verbose", "", "tools/avrdude/program/params/verbose", compliancelevel.Permissive, assert.True},
+		{"tools.avrdude.program.params.verbose", "", "tools/avrdude/program/params/verbose", compliancelevel.Specification, assert.True},
+		{"tools.avrdude.program.params.verbose", "", "tools/avrdude/program/params/verbose", compliancelevel.Strict, assert.True},
 
-		{"tools.avrdude.program.params.quiet", "tools/avrdude/program/params\\.quiet", compliancelevel.Permissive, assert.True},
-		{"tools.avrdude.program.params.quiet", "tools/avrdude/program/params\\.quiet", compliancelevel.Specification, assert.True},
-		{"tools.avrdude.program.params.quiet", "tools/avrdude/program/params\\.quiet", compliancelevel.Strict, assert.True},
+		{"tools.avrdude.program.params.quiet", "", "tools/avrdude/program/params/quiet", compliancelevel.Permissive, assert.True},
+		{"tools.avrdude.program.params.quiet", "", "tools/avrdude/program/params/quiet", compliancelevel.Specification, assert.True},
+		{"tools.avrdude.program.params.quiet", "", "tools/avrdude/program/params/quiet", compliancelevel.Strict, assert.True},
 
-		{"tools.avrdude.program.pattern", "tools/avrdude/program/pattern", compliancelevel.Permissive, assert.True},
-		{"tools.avrdude.program.pattern", "tools/avrdude/program/pattern", compliancelevel.Specification, assert.True},
-		{"tools.avrdude.program.pattern", "tools/avrdude/program/pattern", compliancelevel.Strict, assert.True},
+		{"tools.avrdude.program.pattern", "", "tools/avrdude/program/pattern", compliancelevel.Permissive, assert.True},
+		{"tools.avrdude.program.pattern", "", "tools/avrdude/program/pattern", compliancelevel.Specification, assert.True},
+		{"tools.avrdude.program.pattern", "", "tools/avrdude/program/pattern", compliancelevel.Strict, assert.True},
 
-		{"tools.bossac.upload.pattern", "tools/bossac/upload/pattern", compliancelevel.Permissive, assert.True},
-		{"tools.bossac.upload.pattern", "tools/bossac/upload/pattern", compliancelevel.Specification, assert.True},
-		{"tools.bossac.upload.pattern", "tools/bossac/upload/pattern", compliancelevel.Strict, assert.True},
+		{"tools.bossac.upload.pattern", "", "tools/bossac/upload/pattern", compliancelevel.Permissive, assert.True},
+		{"tools.bossac.upload.pattern", "", "tools/bossac/upload/pattern", compliancelevel.Specification, assert.True},
+		{"tools.bossac.upload.pattern", "", "tools/bossac/upload/pattern", compliancelevel.Strict, assert.True},
 
-		{"compiler.c.extra_flags", "compiler.c.extra_flags", compliancelevel.Permissive, assert.False},
-		{"compiler.c.extra_flags", "compiler.c.extra_flags", compliancelevel.Specification, assert.False},
-		{"compiler.c.extra_flags", "compiler.c.extra_flags", compliancelevel.Strict, assert.True},
+		{"compiler.c.extra_flags", "", "compiler.c.extra_flags", compliancelevel.Permissive, assert.False},
+		{"compiler.c.extra_flags", "", "compiler.c.extra_flags", compliancelevel.Specification, assert.False},
+		{"compiler.c.extra_flags", "", "compiler.c.extra_flags", compliancelevel.Strict, assert.True},
 
-		{"compiler.c.elf.extra_flags", "compiler.c.elf.extra_flags", compliancelevel.Permissive, assert.False},
-		{"compiler.c.elf.extra_flags", "compiler.c.elf.extra_flags", compliancelevel.Specification, assert.False},
-		{"compiler.c.elf.extra_flags", "compiler.c.elf.extra_flags", compliancelevel.Strict, assert.True},
+		{"compiler.c.elf.extra_flags", "", "compiler.c.elf.extra_flags", compliancelevel.Permissive, assert.False},
+		{"compiler.c.elf.extra_flags", "", "compiler.c.elf.extra_flags", compliancelevel.Specification, assert.False},
+		{"compiler.c.elf.extra_flags", "", "compiler.c.elf.extra_flags", compliancelevel.Strict, assert.True},
 
-		{"compiler.S.extra_flags", "compiler.S.extra_flags", compliancelevel.Permissive, assert.False},
-		{"compiler.S.extra_flags", "compiler.S.extra_flags", compliancelevel.Specification, assert.False},
-		{"compiler.S.extra_flags", "compiler.S.extra_flags", compliancelevel.Strict, assert.True},
+		{"compiler.S.extra_flags", "", "compiler.S.extra_flags", compliancelevel.Permissive, assert.False},
+		{"compiler.S.extra_flags", "", "compiler.S.extra_flags", compliancelevel.Specification, assert.False},
+		{"compiler.S.extra_flags", "", "compiler.S.extra_flags", compliancelevel.Strict, assert.True},
 
-		{"compiler.cpp.extra_flags", "compiler.cpp.extra_flags", compliancelevel.Permissive, assert.False},
-		{"compiler.cpp.extra_flags", "compiler.cpp.extra_flags", compliancelevel.Specification, assert.False},
-		{"compiler.cpp.extra_flags", "compiler.cpp.extra_flags", compliancelevel.Strict, assert.True},
+		{"compiler.cpp.extra_flags", "", "compiler.cpp.extra_flags", compliancelevel.Permissive, assert.False},
+		{"compiler.cpp.extra_flags", "", "compiler.cpp.extra_flags", compliancelevel.Specification, assert.False},
+		{"compiler.cpp.extra_flags", "", "compiler.cpp.extra_flags", compliancelevel.Strict, assert.True},
 
-		{"compiler.ar.extra_flags", "compiler.ar.extra_flags", compliancelevel.Permissive, assert.False},
-		{"compiler.ar.extra_flags", "compiler.ar.extra_flags", compliancelevel.Specification, assert.False},
-		{"compiler.ar.extra_flags", "compiler.ar.extra_flags", compliancelevel.Strict, assert.True},
+		{"compiler.ar.extra_flags", "", "compiler.ar.extra_flags", compliancelevel.Permissive, assert.False},
+		{"compiler.ar.extra_flags", "", "compiler.ar.extra_flags", compliancelevel.Specification, assert.False},
+		{"compiler.ar.extra_flags", "", "compiler.ar.extra_flags", compliancelevel.Strict, assert.True},
 
-		{"recipe.size.pattern", "recipe.size.pattern", compliancelevel.Permissive, assert.False},
-		{"recipe.size.pattern", "recipe.size.pattern", compliancelevel.Specification, assert.False},
-		{"recipe.size.pattern", "recipe.size.pattern", compliancelevel.Strict, assert.True},
+		{"pluggable_discovery.foo.pattern", "pluggable_discovery.foo.bar", "pluggable_discovery/foo/pattern", compliancelevel.Permissive, assert.True},
+		{"pluggable_discovery.foo.pattern", "pluggable_discovery.foo.bar", "pluggable_discovery/foo/pattern", compliancelevel.Specification, assert.True},
+		{"pluggable_discovery.foo.pattern", "pluggable_discovery.foo.bar", "pluggable_discovery/foo/pattern", compliancelevel.Strict, assert.True},
+		// Property is only required when there is a pluggable_discovery.foo object
+		{"pluggable_discovery.foo.pattern", "", "pluggable_discovery/foo/pattern", compliancelevel.Permissive, assert.False},
+		{"pluggable_discovery.foo.pattern", "", "pluggable_discovery/foo/pattern", compliancelevel.Specification, assert.False},
+		{"pluggable_discovery.foo.pattern", "", "pluggable_discovery/foo/pattern", compliancelevel.Strict, assert.False},
 
-		{"recipe.size.regex", "recipe.size.regex", compliancelevel.Permissive, assert.False},
-		{"recipe.size.regex", "recipe.size.regex", compliancelevel.Specification, assert.False},
-		{"recipe.size.regex", "recipe.size.regex", compliancelevel.Strict, assert.True},
+		{"recipe.size.pattern", "", "recipe.size.pattern", compliancelevel.Permissive, assert.False},
+		{"recipe.size.pattern", "", "recipe.size.pattern", compliancelevel.Specification, assert.False},
+		{"recipe.size.pattern", "", "recipe.size.pattern", compliancelevel.Strict, assert.True},
 
-		{"recipe.size.regex.data", "recipe.size.regex.data", compliancelevel.Permissive, assert.False},
-		{"recipe.size.regex.data", "recipe.size.regex.data", compliancelevel.Specification, assert.False},
-		{"recipe.size.regex.data", "recipe.size.regex.data", compliancelevel.Strict, assert.True},
+		{"recipe.size.regex", "", "recipe.size.regex", compliancelevel.Permissive, assert.False},
+		{"recipe.size.regex", "", "recipe.size.regex", compliancelevel.Specification, assert.False},
+		{"recipe.size.regex", "", "recipe.size.regex", compliancelevel.Strict, assert.True},
+
+		{"recipe.size.regex.data", "", "recipe.size.regex.data", compliancelevel.Permissive, assert.False},
+		{"recipe.size.regex.data", "", "recipe.size.regex.data", compliancelevel.Specification, assert.False},
+		{"recipe.size.regex.data", "", "recipe.size.regex.data", compliancelevel.Strict, assert.True},
 	}
 
 	for _, testTable := range testTables {
 		platformTxt, err := properties.LoadFromBytes(validPlatformTxtRaw)
 		require.Nil(t, err)
 		platformTxt.Remove(testTable.propertyName)
+		if testTable.replacementPropertyName != "" {
+			platformTxt.Set(testTable.replacementPropertyName, "foo")
+		}
 
 		validationResult := platformtxt.Validate(platformTxt)
 		t.Run(fmt.Sprintf("%s (%s)", testTable.propertyName, testTable.complianceLevel), func(t *testing.T) {
@@ -306,6 +352,16 @@ func TestEnum(t *testing.T) {
 		{"compiler.ar.extra_flags", "compiler\\.ar\\.extra_flags", "foo", compliancelevel.Permissive, assert.False},
 		{"compiler.ar.extra_flags", "compiler\\.ar\\.extra_flags", "foo", compliancelevel.Specification, assert.False},
 		{"compiler.ar.extra_flags", "compiler\\.ar\\.extra_flags", "foo", compliancelevel.Strict, assert.True},
+
+		{"tools.avrdude.upload.field.foo_field_name.secret", "tools/avrdude/upload/field/foo_field_name\\.secret", "true", compliancelevel.Permissive, assert.False},
+		{"tools.avrdude.upload.field.foo_field_name.secret", "tools/avrdude/upload/field/foo_field_name\\.secret", "true", compliancelevel.Specification, assert.False},
+		{"tools.avrdude.upload.field.foo_field_name.secret", "tools/avrdude/upload/field/foo_field_name\\.secret", "true", compliancelevel.Strict, assert.False},
+		{"tools.avrdude.upload.field.foo_field_name.secret", "tools/avrdude/upload/field/foo_field_name\\.secret", "false", compliancelevel.Permissive, assert.False},
+		{"tools.avrdude.upload.field.foo_field_name.secret", "tools/avrdude/upload/field/foo_field_name\\.secret", "false", compliancelevel.Specification, assert.False},
+		{"tools.avrdude.upload.field.foo_field_name.secret", "tools/avrdude/upload/field/foo_field_name\\.secret", "false", compliancelevel.Strict, assert.False},
+		{"tools.avrdude.upload.field.foo_field_name.secret", "tools/avrdude/upload/field/foo_field_name\\.secret", "foo", compliancelevel.Permissive, assert.True},
+		{"tools.avrdude.upload.field.foo_field_name.secret", "tools/avrdude/upload/field/foo_field_name\\.secret", "foo", compliancelevel.Specification, assert.True},
+		{"tools.avrdude.upload.field.foo_field_name.secret", "tools/avrdude/upload/field/foo_field_name\\.secret", "foo", compliancelevel.Strict, assert.True},
 	}
 
 	for _, testTable := range testTables {
@@ -383,6 +439,19 @@ func TestPattern(t *testing.T) {
 		{"recipe.preproc.macros", "recipe\\.preproc\\.macros", "foo", compliancelevel.Permissive, assert.False},
 		{"recipe.preproc.macros", "recipe\\.preproc\\.macros", "foo", compliancelevel.Specification, assert.False},
 		{"recipe.preproc.macros", "recipe\\.preproc\\.macros", "foo", compliancelevel.Strict, assert.True},
+
+		{"pluggable_discovery.required", "pluggable_discovery/required", "foo:bar", compliancelevel.Permissive, assert.False},
+		{"pluggable_discovery.required", "pluggable_discovery/required", "foo:bar", compliancelevel.Specification, assert.False},
+		{"pluggable_discovery.required", "pluggable_discovery/required", "foo:bar", compliancelevel.Strict, assert.False},
+		{"pluggable_discovery.required", "pluggable_discovery/required", "foo", compliancelevel.Permissive, assert.True},
+		{"pluggable_discovery.required", "pluggable_discovery/required", "foo", compliancelevel.Specification, assert.True},
+		{"pluggable_discovery.required", "pluggable_discovery/required", "foo", compliancelevel.Strict, assert.True},
+		{"pluggable_discovery.required.1", "pluggable_discovery/required", "foo:bar", compliancelevel.Permissive, assert.False},
+		{"pluggable_discovery.required.1", "pluggable_discovery/required", "foo:bar", compliancelevel.Specification, assert.False},
+		{"pluggable_discovery.required.1", "pluggable_discovery/required", "foo:bar", compliancelevel.Strict, assert.False},
+		{"pluggable_discovery.required.1", "pluggable_discovery/required", "foo", compliancelevel.Permissive, assert.True},
+		{"pluggable_discovery.required.1", "pluggable_discovery/required", "foo", compliancelevel.Specification, assert.True},
+		{"pluggable_discovery.required.1", "pluggable_discovery/required", "foo", compliancelevel.Strict, assert.True},
 	}
 
 	for _, testTable := range testTables {
