@@ -151,6 +151,8 @@ jobs:
           bodyFile: ${{ env.DIST_DIR }}/CHANGELOG.md
           draft: false
           prerelease: ${{ steps.prerelease.outputs.IS_PRE }}
+          # NOTE: "Artifact is a directory" warnings are expected and don't indicate a problem
+          # (all the files we need are in the DIST_DIR root)
           artifacts: ${{ env.DIST_DIR }}/*
 
       - name: Upload release files on Arduino downloads servers
