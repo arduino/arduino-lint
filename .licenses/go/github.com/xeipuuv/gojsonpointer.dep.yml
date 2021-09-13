@@ -1,0 +1,9 @@
+---
+name: github.com/xeipuuv/gojsonpointer
+version: v0.0.0-20190905194746-02993c407bfb
+type: go
+summary: 
+homepage: https://pkg.go.dev/github.com/xeipuuv/gojsonpointer
+license: none
+licenses: []
+notices: []
