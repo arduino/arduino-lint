@@ -3,6 +3,7 @@
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-package-index-schema.json",
   "title": "Arduino Package Index JSON schema",
   "description": "Package indexes define Arduino hardware packages. See: https://arduino.github.io/arduino-cli/latest/package_index_json-specification/. This schema defines the data format per the specification.",
+  "$comment": "This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
   "allOf": [
     {
       "$ref": "arduino-package-index-definitions-schema.json#/definitions/root/specification/object"

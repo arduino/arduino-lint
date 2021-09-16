@@ -2,6 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-library-properties-definitions-schema.json",
   "title": "Shared definitions for the Arduino library.properties schemas",
+  "$comment": "This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
   "type": "object",
   "definitions": {
     "general": {

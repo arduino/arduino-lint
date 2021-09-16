@@ -3,6 +3,7 @@
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/general-definitions-schema.json",
   "title": "Shared definitions",
   "description": "Definitions for use in schemas.",
+  "$comment": "This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
   "type": "object",
   "definitions": {
     "patternObjects": {

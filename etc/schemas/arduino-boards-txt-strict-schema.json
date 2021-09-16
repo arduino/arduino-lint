@@ -3,7 +3,7 @@
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-boards-txt-strict-schema.json",
   "title": "Arduino boards.txt JSON strict schema",
   "description": "boards.txt contains the boards definitions of Arduino platforms. See: https://arduino.github.io/arduino-cli/latest/platform-specification/#boardstxt",
-  "$comment": "For information on the boards.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
+  "$comment": "For information on the boards.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap. This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
   "type": "object",
   "properties": {
     "menu": {
