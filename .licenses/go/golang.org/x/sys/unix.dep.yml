@@ -4,7 +4,7 @@ version: v0.0.0-20210510120138-977fb7262007
 type: go
 summary: Package unix contains an interface to the low-level operating system primitives.
 homepage: https://pkg.go.dev/golang.org/x/sys/unix
-license: other
+license: bsd-3-clause
 licenses:
 - sources: sys@v0.0.0-20210510120138-977fb7262007/LICENSE
   text: |

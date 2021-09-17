@@ -2,9 +2,9 @@
 name: github.com/arduino/arduino-cli/arduino/utils
 version: v0.0.0-20201210103408-bf7a3194bb63
 type: go
-summary: 
+summary:
 homepage: https://pkg.go.dev/github.com/arduino/arduino-cli/arduino/utils
-license: other
+license: gpl-3.0-only
 licenses:
 - sources: arduino-cli@v0.0.0-20201210103408-bf7a3194bb63/LICENSE.txt
   text: |
