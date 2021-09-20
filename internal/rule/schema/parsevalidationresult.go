@@ -2,8 +2,9 @@
 //
 // Copyright 2020 ARDUINO SA (http://www.arduino.cc/)
 //
-// This software is released under the GNU General Public License version 3,
-// which covers the main part of Arduino Lint.
+// This software is released under the GNU General Public License, either
+// version 3 of the License, or (at your option) any later version.
+// This license covers the main part of Arduino Lint.
 // The terms of this license can be found at:
 // https://www.gnu.org/licenses/gpl-3.0.en.html
 //

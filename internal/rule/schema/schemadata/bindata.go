@@ -77,6 +77,7 @@ var _arduinoBoardsTxtDefinitionsSchemaJson = []byte(`{
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-boards-txt-definitions-schema.json",
   "title": "Shared definitions for the Arduino boards.txt schemas",
+  "$comment": "This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
   "definitions": {
     "propertiesObjects": {
       "menu": {
@@ -1315,7 +1316,7 @@ var _arduinoBoardsTxtPermissiveSchemaJson = []byte(`{
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-boards-txt-permissive-schema.json",
   "title": "Arduino boards.txt JSON permissive schema",
   "description": "boards.txt contains the boards definitions of Arduino platforms. See: https://arduino.github.io/arduino-cli/latest/platform-specification/#boardstxt",
-  "$comment": "For information on the boards.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
+  "$comment": "For information on the boards.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap. This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
   "type": "object",
   "properties": {
     "menu": {
@@ -1350,7 +1351,7 @@ var _arduinoBoardsTxtSchemaJson = []byte(`{
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-boards-txt-schema.json",
   "title": "Arduino boards.txt JSON schema",
   "description": "boards.txt contains the boards definitions of Arduino platforms. See: https://arduino.github.io/arduino-cli/latest/platform-specification/#boardstxt",
-  "$comment": "For information on the boards.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
+  "$comment": "For information on the boards.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap. This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
   "type": "object",
   "properties": {
     "menu": {
@@ -1385,7 +1386,7 @@ var _arduinoBoardsTxtStrictSchemaJson = []byte(`{
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-boards-txt-strict-schema.json",
   "title": "Arduino boards.txt JSON strict schema",
   "description": "boards.txt contains the boards definitions of Arduino platforms. See: https://arduino.github.io/arduino-cli/latest/platform-specification/#boardstxt",
-  "$comment": "For information on the boards.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
+  "$comment": "For information on the boards.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap. This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
   "type": "object",
   "properties": {
     "menu": {
@@ -1419,6 +1420,7 @@ var _arduinoLibraryPropertiesDefinitionsSchemaJson = []byte(`{
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-library-properties-definitions-schema.json",
   "title": "Shared definitions for the Arduino library.properties schemas",
+  "$comment": "This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
   "type": "object",
   "definitions": {
     "general": {
@@ -2293,7 +2295,7 @@ var _arduinoLibraryPropertiesPermissiveSchemaJson = []byte(`{
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-library-properties-permissive-schema.json",
   "title": "Arduino library.properties JSON permissive schema",
   "description": "library.properties is the metadata file for Arduino libraries. This schema defines the minimum requirements for this file. See: https://arduino.github.io/arduino-cli/latest/library-specification/#library-metadata",
-  "$comment": "For information on the Arduino library.properties format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
+  "$comment": "For information on the Arduino library.properties format, see https://godoc.org/github.com/arduino/go-properties-orderedmap. This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
   "type": "object",
   "properties": {
     "name": {
@@ -2373,7 +2375,7 @@ var _arduinoLibraryPropertiesSchemaJson = []byte(`{
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-library-properties-schema.json",
   "title": "Arduino library.properties JSON schema",
   "description": "library.properties is the metadata file for Arduino libraries. See: https://arduino.github.io/arduino-cli/latest/library-specification/#library-metadata",
-  "$comment": "For information on the Arduino library.properties format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
+  "$comment": "For information on the Arduino library.properties format, see https://godoc.org/github.com/arduino/go-properties-orderedmap. This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
   "type": "object",
   "properties": {
     "name": {
@@ -2453,7 +2455,7 @@ var _arduinoLibraryPropertiesStrictSchemaJson = []byte(`{
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-library-properties-strict-schema.json",
   "title": "Arduino library.properties strict JSON schema",
   "description": "library.properties is the metadata file for Arduino libraries. This schema defines the recommended format. See: https://arduino.github.io/arduino-cli/latest/library-specification/#library-metadata",
-  "$comment": "For information on the Arduino library.properties format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
+  "$comment": "For information on the Arduino library.properties format, see https://godoc.org/github.com/arduino/go-properties-orderedmap. This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
   "type": "object",
   "properties": {
     "name": {
@@ -2532,6 +2534,7 @@ var _arduinoPackageIndexDefinitionsSchemaJson = []byte(`{
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-package-index-definitions-schema.json",
   "title": "Shared definitions for the Arduino Package Index schemas",
+  "$comment": "This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
   "definitions": {
     "root": {
       "base": {
@@ -3994,6 +3997,7 @@ var _arduinoPackageIndexPermissiveSchemaJson = []byte(`{
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-package-index-permissive-schema.json",
   "title": "Arduino Package Index JSON permissive schema",
   "description": "Package indexes define Arduino hardware packages. See: https://arduino.github.io/arduino-cli/latest/package_index_json-specification/. This schema defines the minimum accepted data format.",
+  "$comment": "This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
   "allOf": [
     {
       "$ref": "arduino-package-index-definitions-schema.json#/definitions/root/permissive/object"
@@ -4022,6 +4026,7 @@ var _arduinoPackageIndexSchemaJson = []byte(`{
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-package-index-schema.json",
   "title": "Arduino Package Index JSON schema",
   "description": "Package indexes define Arduino hardware packages. See: https://arduino.github.io/arduino-cli/latest/package_index_json-specification/. This schema defines the data format per the specification.",
+  "$comment": "This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
   "allOf": [
     {
       "$ref": "arduino-package-index-definitions-schema.json#/definitions/root/specification/object"
@@ -4050,6 +4055,7 @@ var _arduinoPackageIndexStrictSchemaJson = []byte(`{
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-package-index-strict-schema.json",
   "title": "Arduino Package Index JSON strict schema",
   "description": "Package indexes define Arduino hardware packages. See: https://arduino.github.io/arduino-cli/latest/package_index_json-specification/. This schema defines the best practices for the data format, above and beyond the specification.",
+  "$comment": "This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
   "allOf": [
     {
       "$ref": "arduino-package-index-definitions-schema.json#/definitions/root/strict/object"
@@ -4077,6 +4083,7 @@ var _arduinoPlatformTxtDefinitionsSchemaJson = []byte(`{
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-platform-txt-definitions-schema.json",
   "title": "Shared definitions for the Arduino platform.txt schemas",
+  "$comment": "This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
   "definitions": {
     "propertiesObjects": {
       "name": {
@@ -5887,7 +5894,7 @@ var _arduinoPlatformTxtPermissiveSchemaJson = []byte(`{
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-platform-txt-permissive-schema.json",
   "title": "Arduino platform.txt JSON permissive schema",
   "description": "platform.txt contains the platform definitions of Arduino platforms. See: https://arduino.github.io/arduino-cli/latest/platform-specification/#platformtxt",
-  "$comment": "For information on the platform.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
+  "$comment": "For information on the platform.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap. This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
   "type": "object",
   "properties": {
     "name": {
@@ -5976,7 +5983,7 @@ var _arduinoPlatformTxtSchemaJson = []byte(`{
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-platform-txt-schema.json",
   "title": "Arduino platform.txt JSON schema",
   "description": "platform.txt contains the platform definitions of Arduino platforms. See: https://arduino.github.io/arduino-cli/latest/platform-specification/#platformtxt",
-  "$comment": "For information on the platform.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
+  "$comment": "For information on the platform.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap. This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
   "type": "object",
   "properties": {
     "name": {
@@ -6065,7 +6072,7 @@ var _arduinoPlatformTxtStrictSchemaJson = []byte(`{
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-platform-txt-strict-schema.json",
   "title": "Arduino platform.txt JSON strict schema",
   "description": "platform.txt contains the platform definitions of Arduino platforms. See: https://arduino.github.io/arduino-cli/latest/platform-specification/#platformtxt",
-  "$comment": "For information on the platform.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
+  "$comment": "For information on the platform.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap. This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
   "type": "object",
   "properties": {
     "name": {
@@ -6153,6 +6160,7 @@ var _arduinoProgrammersTxtDefinitionsSchemaJson = []byte(`{
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-programmers-txt-definitions-schema.json",
   "title": "Shared definitions for the Arduino programmers.txt schemas",
+  "$comment": "This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
   "definitions": {
     "propertiesObjects": {
       "programmerID": {
@@ -6379,7 +6387,7 @@ var _arduinoProgrammersTxtPermissiveSchemaJson = []byte(`{
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-programmers-txt-permissive-schema.json",
   "title": "Arduino programmers.txt JSON permissive schema",
   "description": "programmers.txt contains the definitions of Arduino hardware programmers. See: https://arduino.github.io/arduino-cli/latest/platform-specification/#programmerstxt",
-  "$comment": "For information on the programmers.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
+  "$comment": "For information on the programmers.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap. This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
   "type": "object",
   "patternProperties": {
     ".+": {
@@ -6409,7 +6417,7 @@ var _arduinoProgrammersTxtSchemaJson = []byte(`{
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-programmers-txt-schema.json",
   "title": "Arduino programmers.txt JSON schema",
   "description": "programmers.txt contains the definitions of Arduino hardware programmers. See: https://arduino.github.io/arduino-cli/latest/platform-specification/#programmerstxt",
-  "$comment": "For information on the programmers.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
+  "$comment": "For information on the programmers.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap. This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
   "type": "object",
   "patternProperties": {
     ".+": {
@@ -6439,7 +6447,7 @@ var _arduinoProgrammersTxtStrictSchemaJson = []byte(`{
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/arduino-programmers-txt-strict-schema.json",
   "title": "Arduino programmers.txt JSON strict schema",
   "description": "programmers.txt contains the definitions of Arduino hardware programmers. See: https://arduino.github.io/arduino-cli/latest/platform-specification/#programmerstxt",
-  "$comment": "For information on the programmers.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap",
+  "$comment": "For information on the programmers.txt format, see https://godoc.org/github.com/arduino/go-properties-orderedmap. This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
   "type": "object",
   "patternProperties": {
     ".+": {
@@ -6469,6 +6477,7 @@ var _generalDefinitionsSchemaJson = []byte(`{
   "$id": "https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/schemas/general-definitions-schema.json",
   "title": "Shared definitions",
   "description": "Definitions for use in schemas.",
+  "$comment": "This is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
   "type": "object",
   "definitions": {
     "patternObjects": {
