@@ -17,6 +17,7 @@
 [![Check Workflows status](https://github.com/arduino/arduino-lint/actions/workflows/check-workflows-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/check-workflows-task.yml)
 [![Check Shell Scripts status](https://github.com/arduino/arduino-lint/actions/workflows/check-shell-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/check-shell-task.yml)
 [![Check Certificates status](https://github.com/arduino/arduino-lint/actions/workflows/check-certificates.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/check-certificates.yml)
+[![Sync Labels status](https://github.com/arduino/arduino-lint/actions/workflows/sync-labels.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/sync-labels.yml)
 
 **Arduino Lint** is a command line tool that checks for common problems in [Arduino](https://www.arduino.cc/) projects:
 
