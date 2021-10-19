@@ -458,6 +458,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#dependency-license-metadata" class="md-nav__link">
+    Dependency license metadata
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#automated-corrections" class="md-nav__link">
     Automated corrections
   </a>
@@ -609,6 +616,13 @@
         
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependency-license-metadata" class="md-nav__link">
+    Dependency license metadata
+  </a>
   
 </li>
         
@@ -805,6 +819,17 @@ automatically.</p>
 pytest test_lib.py
 pytest test_lib.py::test_list
 </code></pre></div>
+<h3 id="dependency-license-metadata">Dependency license metadata<a class="headerlink" href="#dependency-license-metadata" title="Permanent link">&para;</a></h3>
+<p>Metadata about the license types of all dependencies is cached in the repository. To update this cache, run the
+following command from the repository root folder:</p>
+<div class="highlight"><pre><span></span><code>task general:cache-dep-licenses
+</code></pre></div>
+<p>The necessary <strong>Licensed</strong> tool can be installed by following
+<a href="https://github.com/github/licensed#as-an-executable">these instructions</a>.</p>
+<p>Unfortunately, <strong>Licensed</strong> does not have Windows support.</p>
+<p>An updated cache is also generated whenever the cache is found to be outdated by the by the "Check Go Dependencies" CI
+workflow and made available for download via the <code>dep-licenses-cache</code>
+<a href="https://docs.github.com/en/actions/managing-workflow-runs/downloading-workflow-artifacts">workflow artifact</a>.</p>
 <p><a id="linting-and-formatting"></a> <a id="configuration-files-formatting"></a> <a id="documentation-formatting"></a></p>
 <h3 id="automated-corrections">Automated corrections<a class="headerlink" href="#automated-corrections" title="Permanent link">&para;</a></h3>
 <p>Tools are provided to automatically bring the project into compliance with some required checks. Run them all with this
