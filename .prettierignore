@@ -4,6 +4,9 @@
 .vs/
 .ionide/
 
+# Generated files
+/.licenses/
+
 # Test files
 /internal/rule/schema/testdata/input/invalid-schema.json
 /internal/project/projectdata/testdata/packageindexes/invalid-JSON/package_foo_index.json
