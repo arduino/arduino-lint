@@ -1,5 +1,7 @@
 <!-- Source: https://github.com/arduino/tooling-project-assets/blob/main/other/installation-script/installation.md -->
 
+Several options are available for installation of Arduino Lint. Instructions for each are provided below:
+
 ## Use the install script
 
 The script requires `sh`, which is always available on Linux and macOS. `sh` is not available by default on Windows. The
