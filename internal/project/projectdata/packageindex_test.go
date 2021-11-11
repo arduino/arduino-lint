@@ -397,7 +397,7 @@ func TestInitializeForPackageIndex(t *testing.T) {
 				},
 				{
 					ID:          "foopackager2:megaavr@1.0.0 >> quxpackager:sneakernet-discovery",
-					JSONPointer: "/packages/1/platforms/2/discoveryDependencies/3",
+					JSONPointer: "/packages/1/platforms/2/discoveryDependencies/2",
 				},
 			},
 			packageIndexToolsAssertion: assert.NotNil,
@@ -618,7 +618,7 @@ func TestInitializeForPackageIndex(t *testing.T) {
 				},
 				{
 					ID:          "foopackager2:megaavr@1.0.0 >> quxpackager:sneakernet-discovery",
-					JSONPointer: "/packages/1/platforms/2/discoveryDependencies/3",
+					JSONPointer: "/packages/1/platforms/2/discoveryDependencies/2",
 				},
 			},
 			packageIndexToolsAssertion: assert.NotNil,
@@ -737,6 +737,14 @@ func TestInitializeForPackageIndex(t *testing.T) {
 			for index, packageIndexToolsDependency := range PackageIndexToolsDependencies() {
 				assert.Equal(t, testTable.packageIndexToolsDependenciesDataAssertion[index].ID, packageIndexToolsDependency.ID, testTable.testName)
 				assert.Equal(t, testTable.packageIndexToolsDependenciesDataAssertion[index].JSONPointer, packageIndexToolsDependency.JSONPointer, testTable.testName)
+			}
+		}
+
+		testTable.packageIndexDiscoveryDependenciesAssertion(t, PackageIndexDiscoveryDependencies(), testTable.testName)
+		if PackageIndexDiscoveryDependencies() != nil {
+			for index, packageIndexDiscoveryDependency := range PackageIndexDiscoveryDependencies() {
+				assert.Equal(t, testTable.packageIndexDiscoveryDependenciesDataAssertion[index].ID, packageIndexDiscoveryDependency.ID, testTable.testName)
+				assert.Equal(t, testTable.packageIndexDiscoveryDependenciesDataAssertion[index].JSONPointer, packageIndexDiscoveryDependency.JSONPointer, testTable.testName)
 			}
 		}
 
