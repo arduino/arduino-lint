@@ -2987,6 +2987,9 @@ var _arduinoPackageIndexDefinitionsSchemaJson = []byte(`{
                     },
                     "discoveryDependencies": {
                       "$ref": "#/definitions/propertiesObjects/discoveryDependencies/permissive/object"
+                    },
+                    "monitorDependencies": {
+                      "$ref": "#/definitions/propertiesObjects/monitorDependencies/permissive/object"
                     }
                   },
                   "additionalProperties": false
@@ -3042,6 +3045,9 @@ var _arduinoPackageIndexDefinitionsSchemaJson = []byte(`{
                     },
                     "discoveryDependencies": {
                       "$ref": "#/definitions/propertiesObjects/discoveryDependencies/specification/object"
+                    },
+                    "monitorDependencies": {
+                      "$ref": "#/definitions/propertiesObjects/monitorDependencies/specification/object"
                     }
                   },
                   "additionalProperties": false
@@ -3097,6 +3103,9 @@ var _arduinoPackageIndexDefinitionsSchemaJson = []byte(`{
                     },
                     "discoveryDependencies": {
                       "$ref": "#/definitions/propertiesObjects/discoveryDependencies/strict/object"
+                    },
+                    "monitorDependencies": {
+                      "$ref": "#/definitions/propertiesObjects/monitorDependencies/strict/object"
                     }
                   },
                   "additionalProperties": false
@@ -3598,6 +3607,83 @@ var _arduinoPackageIndexDefinitionsSchemaJson = []byte(`{
             "allOf": [
               {
                 "$ref": "#/definitions/propertiesObjects/discoveryDependencies/base/object"
+              },
+              {
+                "items": {
+                  "properties": {
+                    "packager": {
+                      "$ref": "#/definitions/propertiesObjects/packager/strict/object"
+                    },
+                    "name": {
+                      "$ref": "#/definitions/propertiesObjects/toolName/strict/object"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        }
+      },
+      "monitorDependencies": {
+        "base": {
+          "object": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["packager", "name"]
+            }
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/monitorDependencies/base/object"
+              },
+              {
+                "items": {
+                  "properties": {
+                    "packager": {
+                      "$ref": "#/definitions/propertiesObjects/packager/permissive/object"
+                    },
+                    "name": {
+                      "$ref": "#/definitions/propertiesObjects/toolName/permissive/object"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/monitorDependencies/base/object"
+              },
+              {
+                "items": {
+                  "properties": {
+                    "packager": {
+                      "$ref": "#/definitions/propertiesObjects/packager/specification/object"
+                    },
+                    "name": {
+                      "$ref": "#/definitions/propertiesObjects/toolName/specification/object"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/monitorDependencies/base/object"
               },
               {
                 "items": {
