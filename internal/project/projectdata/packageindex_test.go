@@ -740,6 +740,14 @@ func TestInitializeForPackageIndex(t *testing.T) {
 			}
 		}
 
+		testTable.packageIndexDiscoveryDependenciesAssertion(t, PackageIndexDiscoveryDependencies(), testTable.testName)
+		if PackageIndexDiscoveryDependencies() != nil {
+			for index, packageIndexDiscoveryDependency := range PackageIndexDiscoveryDependencies() {
+				assert.Equal(t, testTable.packageIndexDiscoveryDependenciesDataAssertion[index].ID, packageIndexDiscoveryDependency.ID, testTable.testName)
+				assert.Equal(t, testTable.packageIndexDiscoveryDependenciesDataAssertion[index].JSONPointer, packageIndexDiscoveryDependency.JSONPointer, testTable.testName)
+			}
+		}
+
 		testTable.packageIndexToolsAssertion(t, PackageIndexTools(), testTable.testName)
 		if PackageIndexTools() != nil {
 			for index, packageIndexTool := range PackageIndexTools() {
