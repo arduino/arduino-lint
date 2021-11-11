@@ -397,7 +397,7 @@ func TestInitializeForPackageIndex(t *testing.T) {
 				},
 				{
 					ID:          "foopackager2:megaavr@1.0.0 >> quxpackager:sneakernet-discovery",
-					JSONPointer: "/packages/1/platforms/2/discoveryDependencies/3",
+					JSONPointer: "/packages/1/platforms/2/discoveryDependencies/2",
 				},
 			},
 			packageIndexToolsAssertion: assert.NotNil,
@@ -618,7 +618,7 @@ func TestInitializeForPackageIndex(t *testing.T) {
 				},
 				{
 					ID:          "foopackager2:megaavr@1.0.0 >> quxpackager:sneakernet-discovery",
-					JSONPointer: "/packages/1/platforms/2/discoveryDependencies/3",
+					JSONPointer: "/packages/1/platforms/2/discoveryDependencies/2",
 				},
 			},
 			packageIndexToolsAssertion: assert.NotNil,
