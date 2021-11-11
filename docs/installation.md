@@ -1,9 +1,12 @@
 <!-- Source: https://github.com/arduino/tooling-project-assets/blob/main/other/installation-script/installation.md -->
 
+Several options are available for installation of Arduino Lint. Instructions for each are provided below:
+
 ## Use the install script
 
-The script requires `sh`, which is always available on Linux and macOS. `sh` is not available by default on Windows. The
-script can be run on Windows by installing [Git for Windows](https://gitforwindows.org/), then running it from Git Bash.
+The script requires `sh`, which is always available on Linux and macOS. `sh` is not available by default on Windows,
+though it is available as part of [Git for Windows](https://gitforwindows.org/) (Git Bash). If you don't have `sh`
+available, use the ["Download" installation option](#download).
 
 This script will install the latest version of Arduino Lint to `$PWD/bin`:
 
@@ -18,7 +21,8 @@ curl -fsSL https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/insta
 ```
 
 If you would like to use the `arduino-lint` command from any location, install Arduino Lint to a directory already in
-your `PATH` or add the Arduino Lint installation path to your `PATH` environment variable.
+your [`PATH`](https://en.wikipedia.org/wiki/PATH%5F%28variable%29) or add the Arduino Lint installation path to your
+`PATH` environment variable.
 
 If you want to download a specific Arduino Lint version, for example `0.9.0` or `nightly-latest`, pass the version
 number as a parameter like this:
@@ -27,14 +31,15 @@ number as a parameter like this:
 curl -fsSL https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/install.sh | sh -s 0.9.0
 ```
 
-### Download
+## Download
 
 Pre-built binaries for all the supported platforms are available for download from the links below.
 
 If you would like to use the `arduino-lint` command from any location, extract the downloaded file to a directory
-already in your `PATH` or add the Arduino Lint installation path to your `PATH` environment variable.
+already in your [`PATH`](https://en.wikipedia.org/wiki/PATH%5F%28variable%29) or add the Arduino Lint installation path
+to your `PATH` environment variable.
 
-#### Latest release
+### Latest release
 
 | Platform  |                      |                      |
 | --------- | -------------------- | -------------------- |
@@ -51,11 +56,11 @@ already in your `PATH` or add the Arduino Lint installation path to your `PATH` 
 [windows32]: https://downloads.arduino.cc/arduino-lint/arduino-lint_latest_Windows_32bit.zip
 [macos]: https://downloads.arduino.cc/arduino-lint/arduino-lint_latest_macOS_64bit.tar.gz
 
-#### Previous versions
+### Previous versions
 
 These are available from the "Assets" sections on the [releases page](https://github.com/arduino/arduino-lint/releases).
 
-#### Nightly builds
+### Nightly builds
 
 These builds are generated every day at 01:00 GMT from the `main` branch and should be considered unstable. In order to
 get the latest nightly build available for the supported platform, use the following links:
@@ -81,7 +86,7 @@ get the latest nightly build available for the supported platform, use the follo
 Checksums for the nightly builds are available at
 `https://downloads.arduino.cc/arduino-lint/nightly/nightly-<DATE>-checksums.txt`
 
-### Build from source
+## Build from source
 
 If you're familiar with Golang or if you want to contribute to the project, you will probably build Arduino Lint locally
 with your Go toolchain. See the ["How to contribute"](CONTRIBUTING.md#building-the-source-code) page for instructions.
