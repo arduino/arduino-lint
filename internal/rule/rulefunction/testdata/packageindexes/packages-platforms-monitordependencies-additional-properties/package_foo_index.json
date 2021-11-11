@@ -1,0 +1,38 @@
+{
+  "packages": [
+    {
+      "name": "foopackager",
+      "maintainer": "Jane Developer",
+      "websiteURL": "http://example.com",
+      "email": "jane@example.com",
+      "help": {
+        "online": "http://example.com"
+      },
+      "platforms": [
+        {
+          "name": "My Board",
+          "architecture": "avr",
+          "version": "1.0.0",
+          "category": "Contributed",
+          "help": {
+            "online": "http://example.com"
+          },
+          "url": "http://example.com",
+          "archiveFileName": "myboard-1.0.0.zip",
+          "checksum": "MD5:6c0f556759894aa1a45e8af423a08ce8",
+          "size": "15005",
+          "boards": [],
+          "toolsDependencies": [],
+          "monitorDependencies": [
+            {
+              "foo": "bar",
+              "packager": "arduino",
+              "name": "network-monitor"
+            }
+          ]
+        }
+      ],
+      "tools": []
+    }
+  ]
+}

@@ -43,6 +43,16 @@
               "packager": "barpackager",
               "name": "carrier-pigeon-discovery"
             }
+          ],
+          "monitorDependencies": [
+            {
+              "packager": "arduino",
+              "name": "network-monitor"
+            },
+            {
+              "packager": "barpackager",
+              "name": "coop-monitor"
+            }
           ]
         },
         {
@@ -78,6 +88,16 @@
             {
               "packager": "barpackager",
               "name": "carrier-pigeon-discovery"
+            }
+          ],
+          "monitorDependencies": [
+            {
+              "packager": "arduino",
+              "name": "network-monitor"
+            },
+            {
+              "packager": "barpackager",
+              "name": "coop-monitor"
             }
           ]
         }
@@ -127,6 +147,16 @@
               "packager": "bazpackager",
               "name": "signal-flag-discovery"
             }
+          ],
+          "monitorDependencies": [
+            {
+              "packager": "arduino",
+              "name": "network-monitor"
+            },
+            {
+              "packager": "bazpackager",
+              "name": "flag-monitor"
+            }
           ]
         },
         {
@@ -162,6 +192,16 @@
             {
               "packager": "bazpackager",
               "name": "signal-flag-discovery"
+            }
+          ],
+          "monitorDependencies": [
+            {
+              "packager": "arduino",
+              "name": "network-monitor"
+            },
+            {
+              "packager": "bazpackager",
+              "name": "flag-monitor"
             }
           ]
         },
@@ -210,6 +250,18 @@
             {
               "packager": "quxpackager",
               "name": "sneakernet-discovery"
+            }
+          ],
+          "monitorDependencies": [
+            {
+              "name": "network-monitor"
+            },
+            {
+              "packager": "bazpackager"
+            },
+            {
+              "packager": "quxpackager",
+              "name": "shoe-monitor"
             }
           ]
         }
