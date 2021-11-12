@@ -5044,7 +5044,7 @@ var _arduinoPlatformTxtDefinitionsSchemaJson = []byte(`{
                 "type": "string"
               },
               {
-                "pattern": "^.+:.+$"
+                "$ref": "#/definitions/patternObjects/resourceReference"
               }
             ]
           }
@@ -5072,6 +5072,194 @@ var _arduinoPlatformTxtDefinitionsSchemaJson = []byte(`{
             "allOf": [
               {
                 "$ref": "#/definitions/propertiesObjects/pluggableDiscoveryRequiredN/base/object"
+              }
+            ]
+          }
+        }
+      },
+      "pluggableMonitorPattern": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableMonitorPattern/base/object"
+              },
+              {
+                "additionalProperties": {
+                  "$ref": "#/definitions/propertiesObjects/pluggableMonitorPatternProtocol/permissive/object"
+                }
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableMonitorPattern/base/object"
+              },
+              {
+                "additionalProperties": {
+                  "$ref": "#/definitions/propertiesObjects/pluggableMonitorPatternProtocol/specification/object"
+                }
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableMonitorPattern/base/object"
+              },
+              {
+                "additionalProperties": {
+                  "$ref": "#/definitions/propertiesObjects/pluggableMonitorPatternProtocol/strict/object"
+                }
+              }
+            ]
+          }
+        }
+      },
+      "pluggableMonitorPatternProtocol": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "minLength": 1
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableMonitorPatternProtocol/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableMonitorPatternProtocol/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableMonitorPatternProtocol/base/object"
+              }
+            ]
+          }
+        }
+      },
+      "pluggableMonitorRequired": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "object"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableMonitorRequired/base/object"
+              },
+              {
+                "additionalProperties": {
+                  "$ref": "#/definitions/propertiesObjects/pluggableMonitorRequiredProtocol/permissive/object"
+                }
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableMonitorRequired/base/object"
+              },
+              {
+                "additionalProperties": {
+                  "$ref": "#/definitions/propertiesObjects/pluggableMonitorRequiredProtocol/specification/object"
+                }
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableMonitorRequired/base/object"
+              },
+              {
+                "additionalProperties": {
+                  "$ref": "#/definitions/propertiesObjects/pluggableMonitorRequiredProtocol/strict/object"
+                }
+              }
+            ]
+          }
+        }
+      },
+      "pluggableMonitorRequiredProtocol": {
+        "base": {
+          "object": {
+            "allOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/definitions/patternObjects/resourceReference"
+              }
+            ]
+          }
+        },
+        "permissive": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableMonitorRequiredProtocol/base/object"
+              }
+            ]
+          }
+        },
+        "specification": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableMonitorRequiredProtocol/base/object"
+              }
+            ]
+          }
+        },
+        "strict": {
+          "object": {
+            "allOf": [
+              {
+                "$ref": "#/definitions/propertiesObjects/pluggableMonitorRequiredProtocol/base/object"
               }
             ]
           }
@@ -5738,6 +5926,11 @@ var _arduinoPlatformTxtDefinitionsSchemaJson = []byte(`{
         }
       }
     },
+    "patternObjects": {
+      "resourceReference": {
+        "pattern": "^.+:.+$"
+      }
+    },
     "requiredObjects": {
       "root": {
         "base": {
@@ -6034,6 +6227,12 @@ var _arduinoPlatformTxtPermissiveSchemaJson = []byte(`{
     "pluggable_discovery": {
       "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/pluggableDiscovery/permissive/object"
     },
+    "pluggable_monitor.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/pluggableMonitorPattern/permissive/object"
+    },
+    "pluggable_monitor.required": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/pluggableMonitorRequired/permissive/object"
+    },
     "tools": {
       "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/tools/permissive/object"
     }
@@ -6123,6 +6322,12 @@ var _arduinoPlatformTxtSchemaJson = []byte(`{
     "pluggable_discovery": {
       "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/pluggableDiscovery/specification/object"
     },
+    "pluggable_monitor.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/pluggableMonitorPattern/specification/object"
+    },
+    "pluggable_monitor.required": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/pluggableMonitorRequired/specification/object"
+    },
     "tools": {
       "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/tools/specification/object"
     }
@@ -6211,6 +6416,12 @@ var _arduinoPlatformTxtStrictSchemaJson = []byte(`{
     },
     "pluggable_discovery": {
       "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/pluggableDiscovery/strict/object"
+    },
+    "pluggable_monitor.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/pluggableMonitorPattern/strict/object"
+    },
+    "pluggable_monitor.required": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/pluggableMonitorRequired/strict/object"
     },
     "tools": {
       "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/tools/strict/object"

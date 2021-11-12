@@ -124,6 +124,10 @@ func TestMinLength(t *testing.T) {
 		{"recipe.preproc.macros", "recipe\\.preproc\\.macros", 1, compliancelevel.Permissive},
 		{"recipe.preproc.macros", "recipe\\.preproc\\.macros", 1, compliancelevel.Specification},
 		{"recipe.preproc.macros", "recipe\\.preproc\\.macros", 1, compliancelevel.Strict},
+
+		{"pluggable_monitor.pattern.foo", "pluggable_monitor\\.pattern/foo", 1, compliancelevel.Permissive},
+		{"pluggable_monitor.pattern.foo", "pluggable_monitor\\.pattern/foo", 1, compliancelevel.Specification},
+		{"pluggable_monitor.pattern.foo", "pluggable_monitor\\.pattern/foo", 1, compliancelevel.Strict},
 	}
 
 	// Test schema validation results with value length < minimum.
@@ -453,6 +457,13 @@ func TestPattern(t *testing.T) {
 		{"pluggable_discovery.required.1", "pluggable_discovery/required", "foo", compliancelevel.Permissive, assert.True},
 		{"pluggable_discovery.required.1", "pluggable_discovery/required", "foo", compliancelevel.Specification, assert.True},
 		{"pluggable_discovery.required.1", "pluggable_discovery/required", "foo", compliancelevel.Strict, assert.True},
+
+		{"pluggable_monitor.required.foo", "pluggable_monitor\\.required/foo", "bar:baz", compliancelevel.Permissive, assert.False},
+		{"pluggable_monitor.required.foo", "pluggable_monitor\\.required/foo", "bar:baz", compliancelevel.Specification, assert.False},
+		{"pluggable_monitor.required.foo", "pluggable_monitor\\.required/foo", "bar:baz", compliancelevel.Strict, assert.False},
+		{"pluggable_monitor.required.foo", "pluggable_monitor\\.required/foo", "bar", compliancelevel.Permissive, assert.True},
+		{"pluggable_monitor.required.foo", "pluggable_monitor\\.required/foo", "bar", compliancelevel.Specification, assert.True},
+		{"pluggable_monitor.required.foo", "pluggable_monitor\\.required/foo", "bar", compliancelevel.Strict, assert.True},
 	}
 
 	for _, testTable := range testTables {
