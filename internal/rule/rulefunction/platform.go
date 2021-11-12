@@ -1736,6 +1736,62 @@ func PlatformTxtPluggableDiscoveryDiscoveryIDPatternMissing() (result ruleresult
 	return ruleresult.Pass, ""
 }
 
+// PlatformTxtPluggableMonitorPatternProtocolIDLTMinLength checks if the platform.txt pluggable_monitor.pattern.PROTOCOL_ID property value is less than the minimum length.
+func PlatformTxtPluggableMonitorPatternProtocolIDLTMinLength() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if projectdata.PlatformTxt().SubTree("pluggable_monitor.pattern").Size() == 0 {
+		return ruleresult.Skip, "Property not present"
+	}
+
+	nonCompliant := []string{}
+	for _, protocol := range projectdata.PlatformTxt().SubTree("pluggable_monitor.pattern").Keys() {
+		if schema.PropertyLessThanMinLength("pluggable_monitor\\.pattern/"+protocol, projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliant = append(nonCompliant, protocol)
+		}
+	}
+
+	if len(nonCompliant) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliant, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PlatformTxtPluggableMonitorRequiredProtocolIDInvalid checks if any of the pluggable monitor tool references have invalid format.
+func PlatformTxtPluggableMonitorRequiredProtocolIDInvalid() (result ruleresult.Type, output string) {
+	if !projectdata.PlatformTxtExists() {
+		return ruleresult.Skip, "Platform has no platform.txt"
+	}
+
+	if projectdata.PlatformTxtLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load platform.txt"
+	}
+
+	if projectdata.PlatformTxt().SubTree("pluggable_monitor.required").Size() == 0 {
+		return ruleresult.Skip, "Property not present"
+	}
+
+	nonCompliant := []string{}
+	for _, protocol := range projectdata.PlatformTxt().SubTree("pluggable_monitor.required").Keys() {
+		if schema.PropertyPatternMismatch("pluggable_monitor\\.required/"+protocol, projectdata.PlatformTxtSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliant = append(nonCompliant, protocol)
+		}
+	}
+
+	if len(nonCompliant) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliant, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
 // PlatformTxtUploadFieldFieldNameGTMaxLength checks if any platform.txt tools.UPLOAD_RECIPE_ID.upload.field.FIELD_NAME property value is greater than the maximum length.
 func PlatformTxtUploadFieldFieldNameGTMaxLength() (result ruleresult.Type, output string) {
 	if !projectdata.PlatformTxtExists() {

@@ -993,6 +993,30 @@ func TestPlatformTxtPluggableDiscoveryDiscoveryIDPatternMissing(t *testing.T) {
 	checkPlatformRuleFunction(PlatformTxtPluggableDiscoveryDiscoveryIDPatternMissing, testTables, t)
 }
 
+func TestPlatformTxtPluggableMonitorPatternProtocolIDLTMinLength(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
+		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"Property absent", "no-pluggable-monitors-platform.txt", ruleresult.Skip, ""},
+		{"Property LT min", "pluggable-monitor-pattern-protocol-id-LT-platform.txt", ruleresult.Fail, "^network, ble$"},
+		{"Valid", "valid-with-manual-installation-pluggable-monitors-platform.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(PlatformTxtPluggableMonitorPatternProtocolIDLTMinLength, testTables, t)
+}
+
+func TestPlatformTxtPluggableMonitorRequiredProtocolIDInvalid(t *testing.T) {
+	testTables := []platformRuleFunctionTestTable{
+		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
+		{"Invalid", "invalid-platform.txt", ruleresult.NotRun, ""},
+		{"Property absent", "no-pluggable-monitors-platform.txt", ruleresult.Skip, ""},
+		{"Property invalid", "invalid-pluggable-monitor-required-platform.txt", ruleresult.Fail, "^network, ble$"},
+		{"Valid", "valid-platform.txt", ruleresult.Pass, ""},
+	}
+
+	checkPlatformRuleFunction(PlatformTxtPluggableMonitorRequiredProtocolIDInvalid, testTables, t)
+}
+
 func TestPlatformTxtUploadFieldFieldNameGTMaxLength(t *testing.T) {
 	testTables := []platformRuleFunctionTestTable{
 		{"Missing", "missing-platform.txt", ruleresult.Skip, ""},
