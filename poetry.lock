@@ -274,18 +274,19 @@ i18n = ["babel (>=2.9.0)"]
 
 [[package]]
 name = "mkdocs-material"
-version = "7.2.8"
+version = "7.3.6"
 description = "A Material Design theme for MkDocs"
 category = "main"
 optional = false
 python-versions = "*"
 
 [package.dependencies]
+jinja2 = ">=2.11.1"
 markdown = ">=3.2"
-mkdocs = ">=1.2.2"
+mkdocs = ">=1.2.3"
 mkdocs-material-extensions = ">=1.0"
-Pygments = ">=2.4"
-pymdown-extensions = ">=7.0"
+pygments = ">=2.10"
+pymdown-extensions = ">=9.0"
 
 [[package]]
 name = "mkdocs-material-extensions"
@@ -386,7 +387,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [[package]]
 name = "pygments"
-version = "2.7.3"
+version = "2.10.0"
 description = "Pygments is a syntax highlighting package written in Python."
 category = "main"
 optional = false
@@ -394,11 +395,11 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "pymdown-extensions"
-version = "8.0.1"
+version = "9.1"
 description = "Extension pack for Python Markdown."
 category = "main"
 optional = false
-python-versions = ">=3.5"
+python-versions = ">=3.6"
 
 [package.dependencies]
 Markdown = ">=3.2"
@@ -555,7 +556,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "6ac55761d7a40fecca04d899ca04e135c6650ea58f4991a1b9e58a290aaaa2a6"
+content-hash = "fd64a4ae0d1da6d8057d3f85be7abd3b554bda244b095981c085bac2cc9f1c27"
 
 [metadata.files]
 atomicwrites = [
@@ -698,8 +699,8 @@ mkdocs = [
     {file = "mkdocs-1.2.3.tar.gz", hash = "sha256:89f5a094764381cda656af4298727c9f53dc3e602983087e1fe96ea1df24f4c1"},
 ]
 mkdocs-material = [
-    {file = "mkdocs-material-7.2.8.tar.gz", hash = "sha256:b9a3d1cda28310acf74842a227fedc90d26e407742d3d7ffc0cdcf0560d22ed3"},
-    {file = "mkdocs_material-7.2.8-py2.py3-none-any.whl", hash = "sha256:ffa1ccde3f58b955d65a3420a18c7739178722150790bbd1b08393b0b81ada55"},
+    {file = "mkdocs-material-7.3.6.tar.gz", hash = "sha256:1b1dbd8ef2508b358d93af55a5c5db3f141c95667fad802301ec621c40c7c217"},
+    {file = "mkdocs_material-7.3.6-py2.py3-none-any.whl", hash = "sha256:1b6b3e9e09f922c2d7f1160fe15c8f43d4adc0d6fb81aa6ff0cbc7ef5b78ec75"},
 ]
 mkdocs-material-extensions = [
     {file = "mkdocs-material-extensions-1.0.1.tar.gz", hash = "sha256:6947fb7f5e4291e3c61405bad3539d81e0b3cd62ae0d66ced018128af509c68f"},
@@ -742,12 +743,12 @@ pyflakes = [
     {file = "pyflakes-2.4.0.tar.gz", hash = "sha256:05a85c2872edf37a4ed30b0cce2f6093e1d0581f8c19d7393122da7e25b2b24c"},
 ]
 pygments = [
-    {file = "Pygments-2.7.3-py3-none-any.whl", hash = "sha256:f275b6c0909e5dafd2d6269a656aa90fa58ebf4a74f8fcf9053195d226b24a08"},
-    {file = "Pygments-2.7.3.tar.gz", hash = "sha256:ccf3acacf3782cbed4a989426012f1c535c9a90d3a7fc3f16d231b9372d2b716"},
+    {file = "Pygments-2.10.0-py3-none-any.whl", hash = "sha256:b8e67fe6af78f492b3c4b3e2970c0624cbf08beb1e493b2c99b9fa1b67a20380"},
+    {file = "Pygments-2.10.0.tar.gz", hash = "sha256:f398865f7eb6874156579fdf36bc840a03cab64d1cde9e93d68f46a425ec52c6"},
 ]
 pymdown-extensions = [
-    {file = "pymdown-extensions-8.0.1.tar.gz", hash = "sha256:9ba704052d4bdc04a7cd63f7db4ef6add73bafcef22c0cf6b2e3386cf4ece51e"},
-    {file = "pymdown_extensions-8.0.1-py2.py3-none-any.whl", hash = "sha256:a3689c04f4cbddacd9d569425c571ae07e2673cc4df63a26cdbf1abc15229137"},
+    {file = "pymdown-extensions-9.1.tar.gz", hash = "sha256:74247f2c80f1d9e3c7242abe1c16317da36c6f26c7ad4b8a7f457f0ec20f0365"},
+    {file = "pymdown_extensions-9.1-py3-none-any.whl", hash = "sha256:b03e66f91f33af4a6e7a0e20c740313522995f69a03d86316b1449766c473d0e"},
 ]
 pyparsing = [
     {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},
