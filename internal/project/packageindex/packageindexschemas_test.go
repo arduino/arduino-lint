@@ -71,6 +71,12 @@ var validIndexRaw = []byte(`
 							"packager": "arduino",
 							"name": "ble-discovery"
 						}
+					],
+					"monitorDependencies": [
+						{
+							"packager": "arduino",
+							"name": "network-monitor"
+						}
 					]
 				}
 			],
@@ -151,6 +157,14 @@ func TestMinLength(t *testing.T) {
 		{"/packages/0/platforms/0/discoveryDependencies/0/name", 1, compliancelevel.Permissive},
 		{"/packages/0/platforms/0/discoveryDependencies/0/name", 1, compliancelevel.Specification},
 		{"/packages/0/platforms/0/discoveryDependencies/0/name", 1, compliancelevel.Strict},
+
+		{"/packages/0/platforms/0/monitorDependencies/0/packager", 1, compliancelevel.Permissive},
+		{"/packages/0/platforms/0/monitorDependencies/0/packager", 1, compliancelevel.Specification},
+		{"/packages/0/platforms/0/monitorDependencies/0/packager", 1, compliancelevel.Strict},
+
+		{"/packages/0/platforms/0/monitorDependencies/0/name", 1, compliancelevel.Permissive},
+		{"/packages/0/platforms/0/monitorDependencies/0/name", 1, compliancelevel.Specification},
+		{"/packages/0/platforms/0/monitorDependencies/0/name", 1, compliancelevel.Strict},
 
 		{"/packages/0/tools/0/systems/0/archiveFileName", 1, compliancelevel.Permissive},
 		{"/packages/0/tools/0/systems/0/archiveFileName", 1, compliancelevel.Specification},
@@ -302,6 +316,18 @@ func TestRequired(t *testing.T) {
 		{"/packages/0/platforms/0/discoveryDependencies/0/name", compliancelevel.Permissive, assert.True},
 		{"/packages/0/platforms/0/discoveryDependencies/0/name", compliancelevel.Specification, assert.True},
 		{"/packages/0/platforms/0/discoveryDependencies/0/name", compliancelevel.Strict, assert.True},
+
+		{"/packages/0/platforms/0/monitorDependencies", compliancelevel.Permissive, assert.False},
+		{"/packages/0/platforms/0/monitorDependencies", compliancelevel.Specification, assert.False},
+		{"/packages/0/platforms/0/monitorDependencies", compliancelevel.Strict, assert.False},
+
+		{"/packages/0/platforms/0/monitorDependencies/0/packager", compliancelevel.Permissive, assert.True},
+		{"/packages/0/platforms/0/monitorDependencies/0/packager", compliancelevel.Specification, assert.True},
+		{"/packages/0/platforms/0/monitorDependencies/0/packager", compliancelevel.Strict, assert.True},
+
+		{"/packages/0/platforms/0/monitorDependencies/0/name", compliancelevel.Permissive, assert.True},
+		{"/packages/0/platforms/0/monitorDependencies/0/name", compliancelevel.Specification, assert.True},
+		{"/packages/0/platforms/0/monitorDependencies/0/name", compliancelevel.Strict, assert.True},
 
 		{"/packages/0/tools/0/name", compliancelevel.Permissive, assert.True},
 		{"/packages/0/tools/0/name", compliancelevel.Specification, assert.True},
@@ -586,6 +612,9 @@ func TestType(t *testing.T) {
 		{"/packages/0/platforms/0/discoveryDependencies", 42, assert.True},
 		{"/packages/0/platforms/0/discoveryDependencies/0/packager", 42, assert.True},
 		{"/packages/0/platforms/0/discoveryDependencies/0/name", 42, assert.True},
+		{"/packages/0/platforms/0/monitorDependencies", 42, assert.True},
+		{"/packages/0/platforms/0/monitorDependencies/0/packager", 42, assert.True},
+		{"/packages/0/platforms/0/monitorDependencies/0/name", 42, assert.True},
 		{"/packages/0/tools", 42, assert.True},
 		{"/packages/0/tools/0/name", 42, assert.True},
 		{"/packages/0/tools/0/version", 42, assert.True},
@@ -716,6 +745,10 @@ func TestAdditionalProperties(t *testing.T) {
 		{"/packages/0/platforms/0/discoveryDependencies/0", compliancelevel.Permissive, assert.True},
 		{"/packages/0/platforms/0/discoveryDependencies/0", compliancelevel.Specification, assert.True},
 		{"/packages/0/platforms/0/discoveryDependencies/0", compliancelevel.Strict, assert.True},
+
+		{"/packages/0/platforms/0/monitorDependencies/0", compliancelevel.Permissive, assert.True},
+		{"/packages/0/platforms/0/monitorDependencies/0", compliancelevel.Specification, assert.True},
+		{"/packages/0/platforms/0/monitorDependencies/0", compliancelevel.Strict, assert.True},
 
 		{"/packages/0/tools/0", compliancelevel.Permissive, assert.True},
 		{"/packages/0/tools/0", compliancelevel.Specification, assert.True},

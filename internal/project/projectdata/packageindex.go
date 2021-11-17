@@ -46,6 +46,7 @@ func InitializeForPackageIndex() {
 	packageIndexBoards = nil
 	packageIndexToolsDependencies = nil
 	packageIndexDiscoveryDependencies = nil
+	packageIndexMonitorDependencies = nil
 	packageIndexTools = nil
 	packageIndexSystems = nil
 	packageIndexSchemaValidationResult = nil
@@ -54,22 +55,14 @@ func InitializeForPackageIndex() {
 
 		for _, packageData := range PackageIndexPackages() {
 			packageIndexPlatforms = append(packageIndexPlatforms, getPackageIndexData(packageData.Object, packageData.JSONPointer, "platforms", packageData.ID, ":{{index . 0}}@{{index . 1}}", []string{"architecture", "version"})...)
+			packageIndexTools = append(packageIndexTools, getPackageIndexData(packageData.Object, packageData.JSONPointer, "tools", packageData.ID, ":{{index . 0}}@{{index . 1}}", []string{"name", "version"})...)
 		}
 
 		for _, platformData := range PackageIndexPlatforms() {
 			packageIndexBoards = append(packageIndexBoards, getPackageIndexData(platformData.Object, platformData.JSONPointer, "boards", platformData.ID, " >> {{index . 0}}", []string{"name"})...)
-		}
-
-		for _, platformData := range PackageIndexPlatforms() {
 			packageIndexToolsDependencies = append(packageIndexToolsDependencies, getPackageIndexData(platformData.Object, platformData.JSONPointer, "toolsDependencies", platformData.ID, " >> {{index . 0}}:{{index . 1}}@{{index . 2}}", []string{"packager", "name", "version"})...)
-		}
-
-		for _, platformData := range PackageIndexPlatforms() {
 			packageIndexDiscoveryDependencies = append(packageIndexDiscoveryDependencies, getPackageIndexData(platformData.Object, platformData.JSONPointer, "discoveryDependencies", platformData.ID, " >> {{index . 0}}:{{index . 1}}", []string{"packager", "name"})...)
-		}
-
-		for _, packageData := range PackageIndexPackages() {
-			packageIndexTools = append(packageIndexTools, getPackageIndexData(packageData.Object, packageData.JSONPointer, "tools", packageData.ID, ":{{index . 0}}@{{index . 1}}", []string{"name", "version"})...)
+			packageIndexMonitorDependencies = append(packageIndexMonitorDependencies, getPackageIndexData(platformData.Object, platformData.JSONPointer, "monitorDependencies", platformData.ID, " >> {{index . 0}}:{{index . 1}}", []string{"packager", "name"})...)
 		}
 
 		for _, toolData := range PackageIndexTools() {
@@ -134,6 +127,13 @@ var packageIndexDiscoveryDependencies []PackageIndexData
 // PackageIndexDiscoveryDependencies returns the slice of pluggable discovery tool dependency data for the package index.
 func PackageIndexDiscoveryDependencies() []PackageIndexData {
 	return packageIndexDiscoveryDependencies
+}
+
+var packageIndexMonitorDependencies []PackageIndexData
+
+// PackageIndexMonitorDependencies returns the slice of pluggable monitor tool dependency data for the package index.
+func PackageIndexMonitorDependencies() []PackageIndexData {
+	return packageIndexMonitorDependencies
 }
 
 var packageIndexTools []PackageIndexData

@@ -1936,6 +1936,166 @@ func PackageIndexPackagesPlatformsDiscoveryDependenciesNameLTMinLength() (result
 	return ruleresult.Pass, ""
 }
 
+// PackageIndexPackagesPlatformsMonitorDependenciesIncorrectType checks for incorrect type of the packages[].platforms[].monitorDependencies property.
+func PackageIndexPackagesPlatformsMonitorDependenciesIncorrectType() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, platformData := range projectdata.PackageIndexPlatforms() {
+		if schema.PropertyTypeMismatch(platformData.JSONPointer+"/monitorDependencies", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliantIDs = append(nonCompliantIDs, platformData.ID)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesPlatformsMonitorDependenciesAdditionalProperties checks for additional properties in packages[].platforms[].monitorDependencies[].
+func PackageIndexPackagesPlatformsMonitorDependenciesAdditionalProperties() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, dependencyData := range projectdata.PackageIndexMonitorDependencies() {
+		if schema.ProhibitedAdditionalProperties(dependencyData.JSONPointer, projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliantIDs = append(nonCompliantIDs, dependencyData.ID)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesPlatformsMonitorDependenciesPackagerMissing checks for missing packages[].platforms[].monitorDependencies[].packager property.
+func PackageIndexPackagesPlatformsMonitorDependenciesPackagerMissing() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, dependencyData := range projectdata.PackageIndexMonitorDependencies() {
+		if schema.RequiredPropertyMissing(dependencyData.JSONPointer+"/packager", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliantIDs = append(nonCompliantIDs, dependencyData.ID)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesPlatformsMonitorDependenciesPackagerIncorrectType checks for incorrect type of the packages[].platforms[].monitorDependencies[].packager property.
+func PackageIndexPackagesPlatformsMonitorDependenciesPackagerIncorrectType() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, dependencyData := range projectdata.PackageIndexMonitorDependencies() {
+		if schema.PropertyTypeMismatch(dependencyData.JSONPointer+"/packager", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliantIDs = append(nonCompliantIDs, dependencyData.ID)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesPlatformsMonitorDependenciesPackagerLTMinLength checks for packages[].platforms[].monitorDependencies[].packager property less than the minimum length.
+func PackageIndexPackagesPlatformsMonitorDependenciesPackagerLTMinLength() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, dependencyData := range projectdata.PackageIndexMonitorDependencies() {
+		if schema.PropertyLessThanMinLength(dependencyData.JSONPointer+"/packager", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliantIDs = append(nonCompliantIDs, dependencyData.ID)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesPlatformsMonitorDependenciesNameMissing checks for missing packages[].platforms[].monitorDependencies[].name property.
+func PackageIndexPackagesPlatformsMonitorDependenciesNameMissing() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, dependencyData := range projectdata.PackageIndexMonitorDependencies() {
+		if schema.RequiredPropertyMissing(dependencyData.JSONPointer+"/name", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliantIDs = append(nonCompliantIDs, dependencyData.ID)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesPlatformsMonitorDependenciesNameIncorrectType checks for incorrect type of the packages[].platforms[].monitorDependencies[].name property.
+func PackageIndexPackagesPlatformsMonitorDependenciesNameIncorrectType() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, dependencyData := range projectdata.PackageIndexMonitorDependencies() {
+		if schema.PropertyTypeMismatch(dependencyData.JSONPointer+"/name", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliantIDs = append(nonCompliantIDs, dependencyData.ID)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// PackageIndexPackagesPlatformsMonitorDependenciesNameLTMinLength checks for packages[].platforms[].monitorDependencies[].name property less than the minimum length.
+func PackageIndexPackagesPlatformsMonitorDependenciesNameLTMinLength() (result ruleresult.Type, output string) {
+	if projectdata.PackageIndexLoadError() != nil {
+		return ruleresult.NotRun, "Error loading package index"
+	}
+
+	nonCompliantIDs := []string{}
+	for _, dependencyData := range projectdata.PackageIndexMonitorDependencies() {
+		if schema.PropertyLessThanMinLength(dependencyData.JSONPointer+"/name", projectdata.PackageIndexSchemaValidationResult()[compliancelevel.Specification]) {
+			nonCompliantIDs = append(nonCompliantIDs, dependencyData.ID)
+		}
+	}
+
+	if len(nonCompliantIDs) > 0 {
+		return ruleresult.Fail, brokenOutputList(nonCompliantIDs)
+	}
+
+	return ruleresult.Pass, ""
+}
+
 // PackageIndexPackagesToolsMissing checks for missing packages[].tools property.
 func PackageIndexPackagesToolsMissing() (result ruleresult.Type, output string) {
 	if projectdata.PackageIndexLoadError() != nil {

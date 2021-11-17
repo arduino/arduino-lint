@@ -1013,6 +1013,86 @@ func TestPackageIndexPackagesPlatformsDiscoveryDependenciesNameLTMinLength(t *te
 	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsDiscoveryDependenciesNameLTMinLength, testTables, t)
 }
 
+func TestPackageIndexPackagesPlatformsMonitorDependenciesIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].platforms[].monitorDependencies type", "packages-platforms-monitordependencies-incorrect-type", ruleresult.Fail, "^" + brokenOutputListIndent + "foopackager:avr@1\\.0\\.0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsMonitorDependenciesIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsMonitorDependenciesAdditionalProperties(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Additional packages[].platforms[].monitorDependencies[] properties", "packages-platforms-monitordependencies-additional-properties", ruleresult.Fail, "^" + brokenOutputListIndent + "foopackager:avr@1\\.0\\.0 >> arduino:network-monitor$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsMonitorDependenciesAdditionalProperties, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsMonitorDependenciesPackagerMissing(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].monitorDependencies[].packager missing", "packages-platforms-monitordependencies-packager-missing", ruleresult.Fail, "^" + brokenOutputListIndent + "/packages/0/platforms/0/monitorDependencies/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsMonitorDependenciesPackagerMissing, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsMonitorDependenciesPackagerIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].platforms[].monitorDependencies[].packager type", "packages-platforms-monitordependencies-packager-incorrect-type", ruleresult.Fail, "^" + brokenOutputListIndent + "/packages/0/platforms/0/monitorDependencies/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsMonitorDependenciesPackagerIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsMonitorDependenciesPackagerLTMinLength(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].monitorDependencies[].packager < min length", "packages-platforms-monitordependencies-packager-length-lt", ruleresult.Fail, "^" + brokenOutputListIndent + "/packages/0/platforms/0/monitorDependencies/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsMonitorDependenciesPackagerLTMinLength, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsMonitorDependenciesNameMissing(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].monitorDependencies[].name missing", "packages-platforms-monitordependencies-name-missing", ruleresult.Fail, "^" + brokenOutputListIndent + "/packages/0/platforms/0/monitorDependencies/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsMonitorDependenciesNameMissing, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsMonitorDependenciesNameIncorrectType(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"Incorrect packages[].platforms[].monitorDependencies[].name type", "packages-platforms-monitordependencies-name-incorrect-type", ruleresult.Fail, "^" + brokenOutputListIndent + "/packages/0/platforms/0/monitorDependencies/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsMonitorDependenciesNameIncorrectType, testTables, t)
+}
+
+func TestPackageIndexPackagesPlatformsMonitorDependenciesNameLTMinLength(t *testing.T) {
+	testTables := []packageIndexRuleFunctionTestTable{
+		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
+		{"packages[].platforms[].monitorDependencies[].name < min length", "packages-platforms-monitordependencies-name-length-lt", ruleresult.Fail, "^" + brokenOutputListIndent + "/packages/0/platforms/0/monitorDependencies/0$"},
+		{"Valid", "valid-package-index", ruleresult.Pass, ""},
+	}
+
+	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsMonitorDependenciesNameLTMinLength, testTables, t)
+}
+
 func TestPackageIndexPackagesToolsMissing(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},

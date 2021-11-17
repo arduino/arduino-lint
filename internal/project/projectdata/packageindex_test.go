@@ -52,6 +52,8 @@ func TestInitializeForPackageIndex(t *testing.T) {
 		packageIndexToolsDependenciesDataAssertion     []PackageIndexData
 		packageIndexDiscoveryDependenciesAssertion     assert.ValueAssertionFunc
 		packageIndexDiscoveryDependenciesDataAssertion []PackageIndexData
+		packageIndexMonitorDependenciesAssertion       assert.ValueAssertionFunc
+		packageIndexMonitorDependenciesDataAssertion   []PackageIndexData
 		packageIndexToolsAssertion                     assert.ValueAssertionFunc
 		packageIndexToolsDataAssertion                 []PackageIndexData
 		packageIndexSystemsAssertion                   assert.ValueAssertionFunc
@@ -185,6 +187,29 @@ func TestInitializeForPackageIndex(t *testing.T) {
 				{
 					ID:          "foopackager2:mbed@1.1.1 >> quxpackager:sneakernet-discovery",
 					JSONPointer: "/packages/1/platforms/1/discoveryDependencies/0",
+				},
+			},
+			packageIndexMonitorDependenciesAssertion: assert.NotNil,
+			packageIndexMonitorDependenciesDataAssertion: []PackageIndexData{
+				{
+					ID:          "foopackager1:avr@1.0.1 >> arduino:network-monitor",
+					JSONPointer: "/packages/0/platforms/1/monitorDependencies/0",
+				},
+				{
+					ID:          "foopackager1:avr@1.0.1 >> barpackager:coop-monitor",
+					JSONPointer: "/packages/0/platforms/1/monitorDependencies/1",
+				},
+				{
+					ID:          "foopackager2:samd@2.0.0 >> arduino:network-monitor",
+					JSONPointer: "/packages/1/platforms/0/monitorDependencies/0",
+				},
+				{
+					ID:          "foopackager2:samd@2.0.0 >> bazpackager:flag-monitor",
+					JSONPointer: "/packages/1/platforms/0/monitorDependencies/1",
+				},
+				{
+					ID:          "foopackager2:mbed@1.1.1 >> quxpackager:shoe-monitor",
+					JSONPointer: "/packages/1/platforms/1/monitorDependencies/0",
 				},
 			},
 			packageIndexToolsAssertion: assert.NotNil,
@@ -398,6 +423,53 @@ func TestInitializeForPackageIndex(t *testing.T) {
 				{
 					ID:          "foopackager2:megaavr@1.0.0 >> quxpackager:sneakernet-discovery",
 					JSONPointer: "/packages/1/platforms/2/discoveryDependencies/2",
+				},
+			},
+			packageIndexMonitorDependenciesAssertion: assert.NotNil,
+			packageIndexMonitorDependenciesDataAssertion: []PackageIndexData{
+				{
+					ID:          "/packages/0/platforms/0/monitorDependencies/0",
+					JSONPointer: "/packages/0/platforms/0/monitorDependencies/0",
+				},
+				{
+					ID:          "/packages/0/platforms/0/monitorDependencies/1",
+					JSONPointer: "/packages/0/platforms/0/monitorDependencies/1",
+				},
+				{
+					ID:          "/packages/0/platforms/1/monitorDependencies/0",
+					JSONPointer: "/packages/0/platforms/1/monitorDependencies/0",
+				},
+				{
+					ID:          "/packages/0/platforms/1/monitorDependencies/1",
+					JSONPointer: "/packages/0/platforms/1/monitorDependencies/1",
+				},
+				{
+					ID:          "/packages/1/platforms/0/monitorDependencies/0",
+					JSONPointer: "/packages/1/platforms/0/monitorDependencies/0",
+				},
+				{
+					ID:          "/packages/1/platforms/0/monitorDependencies/1",
+					JSONPointer: "/packages/1/platforms/0/monitorDependencies/1",
+				},
+				{
+					ID:          "/packages/1/platforms/1/monitorDependencies/0",
+					JSONPointer: "/packages/1/platforms/1/monitorDependencies/0",
+				},
+				{
+					ID:          "/packages/1/platforms/1/monitorDependencies/1",
+					JSONPointer: "/packages/1/platforms/1/monitorDependencies/1",
+				},
+				{
+					ID:          "/packages/1/platforms/2/monitorDependencies/0",
+					JSONPointer: "/packages/1/platforms/2/monitorDependencies/0",
+				},
+				{
+					ID:          "/packages/1/platforms/2/monitorDependencies/1",
+					JSONPointer: "/packages/1/platforms/2/monitorDependencies/1",
+				},
+				{
+					ID:          "foopackager2:megaavr@1.0.0 >> quxpackager:shoe-monitor",
+					JSONPointer: "/packages/1/platforms/2/monitorDependencies/2",
 				},
 			},
 			packageIndexToolsAssertion: assert.NotNil,
@@ -621,6 +693,53 @@ func TestInitializeForPackageIndex(t *testing.T) {
 					JSONPointer: "/packages/1/platforms/2/discoveryDependencies/2",
 				},
 			},
+			packageIndexMonitorDependenciesAssertion: assert.NotNil,
+			packageIndexMonitorDependenciesDataAssertion: []PackageIndexData{
+				{
+					ID:          "/packages/0/platforms/0/monitorDependencies/0",
+					JSONPointer: "/packages/0/platforms/0/monitorDependencies/0",
+				},
+				{
+					ID:          "/packages/0/platforms/0/monitorDependencies/1",
+					JSONPointer: "/packages/0/platforms/0/monitorDependencies/1",
+				},
+				{
+					ID:          "/packages/0/platforms/1/monitorDependencies/0",
+					JSONPointer: "/packages/0/platforms/1/monitorDependencies/0",
+				},
+				{
+					ID:          "/packages/0/platforms/1/monitorDependencies/1",
+					JSONPointer: "/packages/0/platforms/1/monitorDependencies/1",
+				},
+				{
+					ID:          "/packages/1/platforms/0/monitorDependencies/0",
+					JSONPointer: "/packages/1/platforms/0/monitorDependencies/0",
+				},
+				{
+					ID:          "/packages/1/platforms/0/monitorDependencies/1",
+					JSONPointer: "/packages/1/platforms/0/monitorDependencies/1",
+				},
+				{
+					ID:          "/packages/1/platforms/1/monitorDependencies/0",
+					JSONPointer: "/packages/1/platforms/1/monitorDependencies/0",
+				},
+				{
+					ID:          "/packages/1/platforms/1/monitorDependencies/1",
+					JSONPointer: "/packages/1/platforms/1/monitorDependencies/1",
+				},
+				{
+					ID:          "/packages/1/platforms/2/monitorDependencies/0",
+					JSONPointer: "/packages/1/platforms/2/monitorDependencies/0",
+				},
+				{
+					ID:          "/packages/1/platforms/2/monitorDependencies/1",
+					JSONPointer: "/packages/1/platforms/2/monitorDependencies/1",
+				},
+				{
+					ID:          "foopackager2:megaavr@1.0.0 >> quxpackager:shoe-monitor",
+					JSONPointer: "/packages/1/platforms/2/monitorDependencies/2",
+				},
+			},
 			packageIndexToolsAssertion: assert.NotNil,
 			packageIndexToolsDataAssertion: []PackageIndexData{
 				{
@@ -672,6 +791,7 @@ func TestInitializeForPackageIndex(t *testing.T) {
 			packageIndexBoardsAssertion:                 assert.Nil,
 			packageIndexToolsDependenciesAssertion:      assert.Nil,
 			packageIndexDiscoveryDependenciesAssertion:  assert.Nil,
+			packageIndexMonitorDependenciesAssertion:    assert.Nil,
 			packageIndexToolsAssertion:                  assert.Nil,
 			packageIndexSystemsAssertion:                assert.Nil,
 			packageIndexSchemaValidationResultAssertion: assert.Nil,
@@ -687,6 +807,7 @@ func TestInitializeForPackageIndex(t *testing.T) {
 			packageIndexBoardsAssertion:                 assert.Nil,
 			packageIndexToolsDependenciesAssertion:      assert.Nil,
 			packageIndexDiscoveryDependenciesAssertion:  assert.Nil,
+			packageIndexMonitorDependenciesAssertion:    assert.Nil,
 			packageIndexToolsAssertion:                  assert.Nil,
 			packageIndexSystemsAssertion:                assert.Nil,
 			packageIndexSchemaValidationResultAssertion: assert.Nil,
@@ -745,6 +866,14 @@ func TestInitializeForPackageIndex(t *testing.T) {
 			for index, packageIndexDiscoveryDependency := range PackageIndexDiscoveryDependencies() {
 				assert.Equal(t, testTable.packageIndexDiscoveryDependenciesDataAssertion[index].ID, packageIndexDiscoveryDependency.ID, testTable.testName)
 				assert.Equal(t, testTable.packageIndexDiscoveryDependenciesDataAssertion[index].JSONPointer, packageIndexDiscoveryDependency.JSONPointer, testTable.testName)
+			}
+		}
+
+		testTable.packageIndexMonitorDependenciesAssertion(t, PackageIndexMonitorDependencies(), testTable.testName)
+		if PackageIndexMonitorDependencies() != nil {
+			for index, packageIndexMonitorDependency := range PackageIndexMonitorDependencies() {
+				assert.Equal(t, testTable.packageIndexMonitorDependenciesDataAssertion[index].ID, packageIndexMonitorDependency.ID, testTable.testName)
+				assert.Equal(t, testTable.packageIndexMonitorDependenciesDataAssertion[index].JSONPointer, packageIndexMonitorDependency.JSONPointer, testTable.testName)
 			}
 		}
 
