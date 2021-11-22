@@ -2,6 +2,8 @@ module github.com/arduino/arduino-lint
 
 go 1.16
 
+replace github.com/jandelgado/gcov2lcov => github.com/jandelgado/gcov2lcov v1.0.5 // v1.0.4 causes Dependabot updates to fail due to checksum mismatch (likely a moved tag). This is an unused transitive dependency, so version is irrelevant.
+
 replace github.com/oleiade/reflections => github.com/oleiade/reflections v1.0.1 // https://github.com/oleiade/reflections/issues/14
 
 require (
@@ -15,12 +17,11 @@ require (
 	github.com/dgryski/go-farm v0.0.0-20200201041132-a6ae2369ad13 // indirect
 	github.com/gliderlabs/ssh v0.3.1 // indirect
 	github.com/go-git/go-git/v5 v5.4.2
-	github.com/golang/gddo v0.0.0-20201207183808-b853219a4332 // indirect
 	github.com/gopherjs/gopherjs v0.0.0-20200217142428-fce0ec30dd00 // indirect
 	github.com/h2non/filetype v1.1.0 // indirect
 	github.com/juju/testing v0.0.0-20201030020617-7189b3728523 // indirect
 	github.com/olekukonko/tablewriter v0.0.5
-	github.com/ory/jsonschema/v3 v3.0.3
+	github.com/ory/jsonschema/v3 v3.0.4
 	github.com/sirupsen/logrus v1.8.1
 	github.com/smartystreets/assertions v1.2.0 // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
