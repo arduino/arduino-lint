@@ -57,6 +57,12 @@
     "pluggable_discovery": {
       "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/pluggableDiscovery/strict/object"
     },
+    "pluggable_monitor.pattern": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/pluggableMonitorPattern/strict/object"
+    },
+    "pluggable_monitor.required": {
+      "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/pluggableMonitorRequired/strict/object"
+    },
     "tools": {
       "$ref": "arduino-platform-txt-definitions-schema.json#/definitions/propertiesObjects/tools/strict/object"
     }

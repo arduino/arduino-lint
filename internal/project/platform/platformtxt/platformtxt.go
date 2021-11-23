@@ -59,8 +59,8 @@ func Validate(platformTxt *properties.Map) map[compliancelevel.Type]schema.Valid
 		validation package.
 		Even though platform.txt has a multi-level nested data structure, the format has the odd characteristic of allowing
 		a key to be both an object and a string simultaneously, which is not compatible with Golang maps or JSON. So the
-		data structure used is a selective map, using a flat map except for the tools and pluggable_discovery keys, which
-		can contain any number of arbitrary subproperties which must be linted.
+		data structure used is a selective map, using a flat map except for the tools, pluggable_discovery, and
+		pluggable_monitor keys, which can contain any number of arbitrary subproperties which must be linted.
 	*/
 	platformTxtInterface := make(map[string]interface{})
 	keys := platformTxt.Keys()
@@ -72,6 +72,10 @@ func Validate(platformTxt *properties.Map) map[compliancelevel.Type]schema.Valid
 				// It is a pluggable_discovery.DISCOVERY_ID property.
 				platformTxtInterface["pluggable_discovery"] = general.PropertiesToMap(platformTxt.SubTree("pluggable_discovery"), 2)
 			}
+		} else if strings.HasPrefix(key, "pluggable_monitor.pattern.") {
+			platformTxtInterface["pluggable_monitor.pattern"] = general.PropertiesToMap(platformTxt.SubTree("pluggable_monitor.pattern"), 1)
+		} else if strings.HasPrefix(key, "pluggable_monitor.required.") {
+			platformTxtInterface["pluggable_monitor.required"] = general.PropertiesToMap(platformTxt.SubTree("pluggable_monitor.required"), 1)
 		} else if strings.HasPrefix(key, "tools.") {
 			platformTxtInterface["tools"] = general.PropertiesToMap(platformTxt.SubTree("tools"), 4)
 		} else {
