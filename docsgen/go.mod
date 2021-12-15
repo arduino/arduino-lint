@@ -11,5 +11,5 @@ replace github.com/oleiade/reflections => github.com/oleiade/reflections v1.0.1 
 
 require (
 	github.com/arduino/arduino-lint v0.0.0
-	github.com/spf13/cobra v1.2.1
+	github.com/spf13/cobra v1.3.0
 )
