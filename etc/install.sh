@@ -186,8 +186,7 @@ bye() {
 
 testVersion() {
   set +e
-  EXECUTABLE_PATH="$(command -v $PROJECT_NAME)"
-  if [ "$?" = "0" ]; then
+  if EXECUTABLE_PATH="$(command -v $PROJECT_NAME)"; then
     # Convert to resolved, absolute paths before comparison
     EXECUTABLE_REALPATH="$(cd -- "$(dirname -- "$EXECUTABLE_PATH")" && pwd -P)"
     EFFECTIVE_BINDIR_REALPATH="$(cd -- "$EFFECTIVE_BINDIR" && pwd -P)"
