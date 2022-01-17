@@ -4,7 +4,7 @@ Arduino Lint provides 1 rules for the [`package-index`](https://arduino.github.i
 
 <a id="IA004"></a>
 
-## packages[\*].name missing (`IA004`)
+## packages\[\*\].name missing (`IA004`)
 
 The package index has a package without a `name` property.
 
