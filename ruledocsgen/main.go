@@ -55,9 +55,11 @@ func generateRulesDocumentation(ruleConfigurations []ruleconfiguration.Type, out
 	}
 
 	templateFunctions := template.FuncMap{
-		// Some the rule config text is intended for use in both tool output and in the reference, so can't be formatted at
-		// the source as Markdown. Incidental markup characters in that text must be escaped.
-		"escape": escape.MarkdownCharacters,
+		// Some of the rule config text is intended for use in both tool output and in the reference, so can't be formatted
+		// at the source as Markdown. Incidental markup characters in that text must be escaped.
+		"escape": func(rawText string) string {
+			return escape.MarkdownCharacters(template.HTMLEscapeString(rawText))
+		},
 	}
 
 	projectRulesIntroTemplate := template.Must(template.New("messageTemplate").Parse(
