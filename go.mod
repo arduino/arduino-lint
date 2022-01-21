@@ -20,7 +20,7 @@ require (
 	github.com/h2non/filetype v1.1.0 // indirect
 	github.com/juju/testing v0.0.0-20201030020617-7189b3728523 // indirect
 	github.com/olekukonko/tablewriter v0.0.5
-	github.com/ory/jsonschema/v3 v3.0.4
+	github.com/ory/jsonschema/v3 v3.0.5
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/spf13/cobra v1.3.0
