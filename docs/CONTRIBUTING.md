@@ -12,17 +12,17 @@ There are several ways you can get involved:
 | - Bug fix<br/>- Enhancement                       | Pull Request (read the [pull request guidelines][prs])  |
 | Monetary                                          | - [Donate][donate]<br/>- [Buy official products][store] |
 
-[forum]: https://forum.arduino.cc/index.php?board=3.0
+[forum]: https://forum.arduino.cc/c/using-arduino/project-guidance/19
 [issues]: #issue-reports
 [nightly]: installation.md#nightly-builds
 [prs]: #pull-requests
-[donate]: https://www.arduino.cc/en/Main/Contribute
+[donate]: https://www.arduino.cc/en/donate/
 [store]: https://store.arduino.cc
 
 ## Issue Reports
 
 Do you need help or have a question about using Arduino Lint? Support requests should be made to the
-[Arduino forum](https://forum.arduino.cc/index.php?board=3.0).
+[Arduino forum](https://forum.arduino.cc/c/using-arduino/project-guidance/19).
 
 High quality bug reports and feature requests are valuable contributions to the Arduino Lint project.
 
@@ -31,8 +31,8 @@ High quality bug reports and feature requests are valuable contributions to the 
 - Give the [nightly build](installation.md#nightly-builds) a test drive to see if your issue was already resolved.
 - Search [existing pull requests and issues](https://github.com/arduino/arduino-lint/issues?q=) to see if it was already
   reported. If you have additional information to provide about an existing issue, please comment there. You can use
-  [GitHub's "Reactions" feature](https://github.com/blog/2119-add-reactions-to-pull-requests-issues-and-comments) if you
-  only want to express support.
+  [GitHub's "Reactions" feature](https://github.blog/2016-03-10-add-reactions-to-pull-requests-issues-and-comments/) if
+  you only want to express support.
 
 ### Qualities of an excellent report
 
@@ -55,16 +55,16 @@ submitting a PR:
 
 - Create small PRs that are narrowly focused on addressing a single concern.
 - Write tests for the code you wrote.
-- Maintain [**clean commit history**](http://www.freshconsulting.com/atomic-commits) and use
-  [**meaningful commit messages**](http://chris.beams.io/posts/git-commit). PRs with messy commit history are difficult
-  to review and require a lot of work to be merged.
+- Maintain [**clean commit history**](https://www.freshconsulting.com/insights/blog/atomic-commits/) and use
+  [**meaningful commit messages**](https://cbea.ms/git-commit/). PRs with messy commit history are difficult to review
+  and require a lot of work to be merged.
 - <a id="breaking"></a> If the PR contains a breaking change, please start the commit message and PR title with the
   string **[breaking]**. Don't forget to describe in the PR description what changes users might need to make in their
   workflow or application due to this PR. A breaking change is a change that forces users to change their command-line
   invocations or parsing of the JSON formatted output when upgrading from an older version of Arduino Lint.
 - PR titles indirectly become part of the CHANGELOG so it's crucial to provide a good record of **what** change is being
   made in the title; **why** it was made will go in the PR description, along with
-  [a link to a GitHub issue](https://docs.github.com/en/free-pro-team@latest/github/managing-your-work-on-github/linking-a-pull-request-to-an-issue)
+  [a link to a GitHub issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue)
   if one exists.
 - Open your PR against the `main` branch.
 - Your PR must pass all [CI](https://en.wikipedia.org/wiki/Continuous_integration) tests before we will merge it. You
