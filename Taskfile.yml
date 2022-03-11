@@ -73,6 +73,7 @@ tasks:
       - task: go:generate
       - task: go:fix
       - task: go:format
+      - task: go:tidy
       - task: markdown:fix
       - task: python:format
       - task: shell:format
@@ -265,6 +266,15 @@ tasks:
     cmds:
       - poetry run pytest tests
       - poetry run pytest ruledocsgen/tests
+
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-go-task/Taskfile.yml
+  go:tidy:
+    desc: Refresh dependency metadata
+    dir: "{{default .DEFAULT_GO_MODULE_PATH .GO_MODULE_PATH}}"
+    vars:
+      GO_VERSION: 1.17
+    cmds:
+      - go mod tidy -compat={{.GO_VERSION}}
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-go-task/Taskfile.yml
   go:vet:
