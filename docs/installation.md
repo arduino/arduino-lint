@@ -21,8 +21,8 @@ curl -fsSL https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/insta
 ```
 
 If you would like to use the `arduino-lint` command from any location, install Arduino Lint to a directory already in
-your [`PATH`](https://en.wikipedia.org/wiki/PATH%5F%28variable%29) or add the Arduino Lint installation path to your
-`PATH` environment variable.
+your [`PATH`](https://wikipedia.org/wiki/PATH%5F%28variable%29) or add the Arduino Lint installation path to your `PATH`
+environment variable.
 
 If you want to download a specific Arduino Lint version, for example `0.9.0` or `nightly-latest`, pass the version
 number as a parameter like this:
@@ -36,8 +36,8 @@ curl -fsSL https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/insta
 Pre-built binaries for all the supported platforms are available for download from the links below.
 
 If you would like to use the `arduino-lint` command from any location, extract the downloaded file to a directory
-already in your [`PATH`](https://en.wikipedia.org/wiki/PATH%5F%28variable%29) or add the Arduino Lint installation path
-to your `PATH` environment variable.
+already in your [`PATH`](https://wikipedia.org/wiki/PATH%5F%28variable%29) or add the Arduino Lint installation path to
+your `PATH` environment variable.
 
 ### Latest release
 

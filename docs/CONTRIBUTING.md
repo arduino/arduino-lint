@@ -64,13 +64,13 @@ submitting a PR:
   invocations or parsing of the JSON formatted output when upgrading from an older version of Arduino Lint.
 - PR titles indirectly become part of the CHANGELOG so it's crucial to provide a good record of **what** change is being
   made in the title; **why** it was made will go in the PR description, along with
-  [a link to a GitHub issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue)
+  [a link to a GitHub issue](https://docs.github.com/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue)
   if one exists.
 - Open your PR against the `main` branch.
-- Your PR must pass all [CI](https://en.wikipedia.org/wiki/Continuous_integration) tests before we will merge it. You
-  can run the CI in your fork by clicking the "Actions" tab and then the "I understand my workflows..." button. If
-  you're seeing an error and don't think it's your fault, it may not be! The reviewer will help you if there are test
-  failures that seem not related to the change you are making.
+- Your PR must pass all [CI](https://wikipedia.org/wiki/Continuous_integration) tests before we will merge it. You can
+  run the CI in your fork by clicking the "Actions" tab and then the "I understand my workflows..." button. If you're
+  seeing an error and don't think it's your fault, it may not be! The reviewer will help you if there are test failures
+  that seem not related to the change you are making.
 
 ### Development prerequisites
 
@@ -183,7 +183,7 @@ Unfortunately, **Licensed** does not have Windows support.
 
 An updated cache is also generated whenever the cache is found to be outdated by the by the "Check Go Dependencies" CI
 workflow and made available for download via the `dep-licenses-cache`
-[workflow artifact](https://docs.github.com/en/actions/managing-workflow-runs/downloading-workflow-artifacts).
+[workflow artifact](https://docs.github.com/actions/managing-workflow-runs/downloading-workflow-artifacts).
 
 <a id="linting-and-formatting"></a> <a id="configuration-files-formatting"></a> <a id="documentation-formatting"></a>
 

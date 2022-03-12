@@ -76,8 +76,8 @@ Additional configuration options intended for internal use or development can be
 ## Continuous integration
 
 **Arduino Lint** would be a great addition to your
-[continuous integration](https://en.wikipedia.org/wiki/Continuous_integration) system. Running the tool after each
-change to the project can allow you to identify any problems that were introduced.
+[continuous integration](https://wikipedia.org/wiki/Continuous_integration) system. Running the tool after each change
+to the project can allow you to identify any problems that were introduced.
 
 This is easily done by using the `arduino/arduino-lint-action` [GitHub Actions](https://docs.github.com/actions) action:
 https://github.com/arduino/arduino-lint-action
