@@ -38,8 +38,9 @@ accepted by this flag are:
 
 ### Library Manager setting
 
-[Arduino Library Manager](https://www.arduino.cc/en/guide/libraries#toc3) is the best way to provide installation and
-updates of Arduino libraries. In order to be accepted for inclusion in Library Manager, a library is required to meet
+[Arduino Library Manager](https://docs.arduino.cc/software/ide-v1/tutorials/installing-libraries#using-the-library-manager)
+is the best way to provide installation and updates of Arduino libraries. In order to be accepted for inclusion in
+Library Manager, a library is required to meet
 [some requirements](https://github.com/arduino/Arduino/wiki/Library-Manager-FAQ).
 
 **Arduino Lint** provides checks for these requirements as well, controlled by the `--library-manager` flag.
