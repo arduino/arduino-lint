@@ -76,7 +76,7 @@ submitting a PR:
 
 To build Arduino Lint from sources you need the following tools to be available in your local environment:
 
-- [Go](https://golang.org/doc/install) version 1.16 or later
+- [Go](https://golang.org/doc/install) version 1.17 or later
 - [Taskfile](https://taskfile.dev/#/installation) to help you run the most common tasks from the command line
 
 If you want to run integration tests or work on documentation, you will also need:
