@@ -55,9 +55,24 @@ tasks:
       - task: general:check-formatting
       - task: general:check-spelling
       - task: go:test
+      - task: go:test
+        vars:
+          GO_MODULE_PATH: ./ruledocsgen
       - task: go:test-integration
       - task: go:vet
+      - task: go:vet
+        vars:
+          GO_MODULE_PATH: ./docsgen
+      - task: go:vet
+        vars:
+          GO_MODULE_PATH: ./ruledocsgen
       - task: go:lint
+      - task: go:lint
+        vars:
+          GO_MODULE_PATH: ./docsgen
+      - task: go:lint
+        vars:
+          GO_MODULE_PATH: ./ruledocsgen
       - task: markdown:lint
       - task: markdown:check-links
       - task: python:lint
@@ -72,7 +87,26 @@ tasks:
       - task: general:correct-spelling
       - task: go:generate
       - task: go:fix
+      - task: go:fix
+        vars:
+          GO_MODULE_PATH: ./docsgen
+      - task: go:fix
+        vars:
+          GO_MODULE_PATH: ./ruledocsgen
       - task: go:format
+      - task: go:format
+        vars:
+          GO_MODULE_PATH: ./docsgen
+      - task: go:format
+        vars:
+          GO_MODULE_PATH: ./ruledocsgen
+      - task: go:tidy
+      - task: go:tidy
+        vars:
+          GO_MODULE_PATH: ./docsgen
+      - task: go:tidy
+        vars:
+          GO_MODULE_PATH: ./ruledocsgen
       - task: markdown:fix
       - task: python:format
       - task: shell:format
@@ -265,6 +299,15 @@ tasks:
     cmds:
       - poetry run pytest tests
       - poetry run pytest ruledocsgen/tests
+
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-go-task/Taskfile.yml
+  go:tidy:
+    desc: Refresh dependency metadata
+    dir: "{{default .DEFAULT_GO_MODULE_PATH .GO_MODULE_PATH}}"
+    vars:
+      GO_VERSION: 1.17
+    cmds:
+      - go mod tidy -compat={{.GO_VERSION}}
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-go-task/Taskfile.yml
   go:vet:
