@@ -38,9 +38,10 @@ accepted by this flag are:
 
 ### Library Manager setting
 
-[Arduino Library Manager](https://www.arduino.cc/en/guide/libraries#toc3) is the best way to provide installation and
-updates of Arduino libraries. In order to be accepted for inclusion in Library Manager, a library is required to meet
-[some requirements](https://github.com/arduino/Arduino/wiki/Library-Manager-FAQ).
+[Arduino Library Manager](https://docs.arduino.cc/software/ide-v1/tutorials/installing-libraries#using-the-library-manager)
+is the best way to provide installation and updates of Arduino libraries. In order to be accepted for inclusion in
+Library Manager, a library is required to meet
+[some requirements](https://github.com/arduino/library-registry/blob/main/FAQ.md#readme).
 
 **Arduino Lint** provides checks for these requirements as well, controlled by the `--library-manager` flag.
 
@@ -75,11 +76,10 @@ Additional configuration options intended for internal use or development can be
 ## Continuous integration
 
 **Arduino Lint** would be a great addition to your
-[continuous integration](https://en.wikipedia.org/wiki/Continuous_integration) system. Running the tool after each
-change to the project can allow you to identify any problems that were introduced.
+[continuous integration](https://wikipedia.org/wiki/Continuous_integration) system. Running the tool after each change
+to the project can allow you to identify any problems that were introduced.
 
-This is easily done by using the `arduino/arduino-lint-action`
-[GitHub Actions](https://docs.github.com/en/free-pro-team@latest/actions) action:
+This is easily done by using the `arduino/arduino-lint-action` [GitHub Actions](https://docs.github.com/actions) action:
 https://github.com/arduino/arduino-lint-action
 
 Add [a simple workflow file](https://github.com/arduino/arduino-lint-action#usage) to the repository of your Arduino
@@ -88,7 +88,7 @@ project and GitHub will automatically run Arduino Lint on every pull request and
 ## Support and feedback
 
 You can discuss or get assistance with using **Arduino Lint** on the
-[Arduino Forum](https://forum.arduino.cc/index.php?board=3.0).
+[Arduino Forum](https://forum.arduino.cc/c/using-arduino/project-guidance/19).
 
 Feedback is welcome! Please submit feature requests or bug reports to the
 [issue tracker](CONTRIBUTING.md#issue-reports).
