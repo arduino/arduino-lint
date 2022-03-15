@@ -596,9 +596,10 @@ accepted by this flag are:</p>
   setting to ensure the best experience for the users of the project.</li>
 </ul>
 <h3 id="library-manager-setting">Library Manager setting<a class="headerlink" href="#library-manager-setting" title="Permanent link">&para;</a></h3>
-<p><a href="https://www.arduino.cc/en/guide/libraries#toc3">Arduino Library Manager</a> is the best way to provide installation and
-updates of Arduino libraries. In order to be accepted for inclusion in Library Manager, a library is required to meet
-<a href="https://github.com/arduino/Arduino/wiki/Library-Manager-FAQ">some requirements</a>.</p>
+<p><a href="https://docs.arduino.cc/software/ide-v1/tutorials/installing-libraries#using-the-library-manager">Arduino Library Manager</a>
+is the best way to provide installation and updates of Arduino libraries. In order to be accepted for inclusion in
+Library Manager, a library is required to meet
+<a href="https://github.com/arduino/library-registry/blob/main/FAQ.md#readme">some requirements</a>.</p>
 <p><strong>Arduino Lint</strong> provides checks for these requirements as well, controlled by the <code>--library-manager</code> flag.</p>
 <p>The Library Manager submission-specific rules are enabled via <code>--library-manager submit</code>. Even if your library isn't yet
 ready to be added to Library Manager, it's a good idea to use this setting to ensure no incompatibilities are
@@ -628,16 +629,15 @@ may be more convenient. This setting exposes every detail of the rules that were
 </ul>
 <h2 id="continuous-integration">Continuous integration<a class="headerlink" href="#continuous-integration" title="Permanent link">&para;</a></h2>
 <p><strong>Arduino Lint</strong> would be a great addition to your
-<a href="https://en.wikipedia.org/wiki/Continuous_integration">continuous integration</a> system. Running the tool after each
-change to the project can allow you to identify any problems that were introduced.</p>
-<p>This is easily done by using the <code>arduino/arduino-lint-action</code>
-<a href="https://docs.github.com/en/free-pro-team@latest/actions">GitHub Actions</a> action:
+<a href="https://wikipedia.org/wiki/Continuous_integration">continuous integration</a> system. Running the tool after each change
+to the project can allow you to identify any problems that were introduced.</p>
+<p>This is easily done by using the <code>arduino/arduino-lint-action</code> <a href="https://docs.github.com/actions">GitHub Actions</a> action:
 <a href="https://github.com/arduino/arduino-lint-action">https://github.com/arduino/arduino-lint-action</a></p>
 <p>Add <a href="https://github.com/arduino/arduino-lint-action#usage">a simple workflow file</a> to the repository of your Arduino
 project and GitHub will automatically run Arduino Lint on every pull request and push.</p>
 <h2 id="support-and-feedback">Support and feedback<a class="headerlink" href="#support-and-feedback" title="Permanent link">&para;</a></h2>
 <p>You can discuss or get assistance with using <strong>Arduino Lint</strong> on the
-<a href="https://forum.arduino.cc/index.php?board=3.0">Arduino Forum</a>.</p>
+<a href="https://forum.arduino.cc/c/using-arduino/project-guidance/19">Arduino Forum</a>.</p>
 <p>Feedback is welcome! Please submit feature requests or bug reports to the
 <a href="CONTRIBUTING/#issue-reports">issue tracker</a>.</p>
 
