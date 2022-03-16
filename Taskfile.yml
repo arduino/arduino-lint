@@ -10,17 +10,14 @@ vars:
   DIST_DIR: "dist"
   # Path of the project's primary Go module:
   DEFAULT_GO_MODULE_PATH: ./
-  DEFAULT_GO_PACKAGES:
-    sh: |
-      echo $( \
-        cd {{default .DEFAULT_GO_MODULE_PATH .GO_MODULE_PATH}} \
-        && \
-        go list ./... | \
-          grep --invert-match 'github.com/arduino/arduino-lint/internal/rule/schema/schemadata' | \
-            tr '\n' ' ' \
-        || \
-        echo '"ERROR: Unable to discover Go packages"' \
-      )
+  DEFAULT_GO_PACKAGES: |
+    $( \
+      go list ./... | \
+        grep --invert-match 'github.com/arduino/arduino-lint/internal/rule/schema/schemadata' | \
+          tr '\n' ' ' \
+      || \
+      echo '"ERROR: Unable to discover Go packages"' \
+    )
   # build vars
   COMMIT:
     sh: echo "$(git log --no-show-signature -n 1 --format=%h)"
