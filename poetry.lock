@@ -268,30 +268,27 @@ i18n = ["babel (>=2.9.0)"]
 
 [[package]]
 name = "mkdocs-material"
-version = "8.2.7"
+version = "8.2.8"
 description = "A Material Design theme for MkDocs"
 category = "main"
 optional = false
 python-versions = ">=3.6"
 
 [package.dependencies]
-jinja2 = ">=2.11.1,<3.1"
+jinja2 = ">=2.11.1"
 markdown = ">=3.2"
-mkdocs = ">=1.2.3"
-mkdocs-material-extensions = ">=1.0"
+mkdocs = ">=1.3.0"
+mkdocs-material-extensions = ">=1.0.3"
 pygments = ">=2.10"
 pymdown-extensions = ">=9.0"
 
 [[package]]
 name = "mkdocs-material-extensions"
-version = "1.0.1"
+version = "1.0.3"
 description = "Extension pack for Python Markdown."
 category = "main"
 optional = false
-python-versions = ">=3.5"
-
-[package.dependencies]
-mkdocs-material = ">=5.0.0"
+python-versions = ">=3.6"
 
 [[package]]
 name = "mypy-extensions"
@@ -534,7 +531,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "dd474a8865f7f3a08a0575a8e3f97ec2b8d7ec39684f4e454b05c6a8385e917a"
+content-hash = "2018af03867616aa4a52123aed80d27804f9c83daac65bb4638416974a03ba8d"
 
 [metadata.files]
 atomicwrites = [
@@ -697,12 +694,12 @@ mkdocs = [
     {file = "mkdocs-1.3.0.tar.gz", hash = "sha256:b504405b04da38795fec9b2e5e28f6aa3a73bb0960cb6d5d27ead28952bd35ea"},
 ]
 mkdocs-material = [
-    {file = "mkdocs-material-8.2.7.tar.gz", hash = "sha256:3314d94ccc11481b1a3aa4f7babb4fb2bc47daa2fa8ace2463665952116f409b"},
-    {file = "mkdocs_material-8.2.7-py2.py3-none-any.whl", hash = "sha256:20c13aa0a54841e1f1c080edb0e3573407884e4abea51ee25573061189bec83e"},
+    {file = "mkdocs-material-8.2.8.tar.gz", hash = "sha256:f0696538929b3778b064f650589eb2027e4a2c0b3ab37afa8900de7924100901"},
+    {file = "mkdocs_material-8.2.8-py2.py3-none-any.whl", hash = "sha256:16ccd382431d5148a4bdbc37c949d0ea5f80e3e9bcce3bd0d774716e5aad9dff"},
 ]
 mkdocs-material-extensions = [
-    {file = "mkdocs-material-extensions-1.0.1.tar.gz", hash = "sha256:6947fb7f5e4291e3c61405bad3539d81e0b3cd62ae0d66ced018128af509c68f"},
-    {file = "mkdocs_material_extensions-1.0.1-py3-none-any.whl", hash = "sha256:d90c807a88348aa6d1805657ec5c0b2d8d609c110e62b9dce4daf7fa981fa338"},
+    {file = "mkdocs-material-extensions-1.0.3.tar.gz", hash = "sha256:bfd24dfdef7b41c312ede42648f9eb83476ea168ec163b613f9abd12bbfddba2"},
+    {file = "mkdocs_material_extensions-1.0.3-py3-none-any.whl", hash = "sha256:a82b70e533ce060b2a5d9eb2bc2e1be201cf61f901f93704b4acf6e3d5983a44"},
 ]
 mypy-extensions = [
     {file = "mypy_extensions-0.4.3-py2.py3-none-any.whl", hash = "sha256:090fedd75945a69ae91ce1303b5824f428daf5a028d2f6ab8a299250a846f15d"},
