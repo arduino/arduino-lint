@@ -80,6 +80,7 @@ initDownloadTool() {
   echo "Using $DOWNLOAD_TOOL as download tool"
 }
 
+# checkLatestVersion() sets the CHECKLATESTVERSION_TAG variable to the latest version
 checkLatestVersion() {
   # Use the GitHub releases webpage to find the latest version for this project
   # so we don't get rate-limited.
@@ -94,7 +95,6 @@ checkLatestVersion() {
     echo "Cannot determine latest tag."
     exit 1
   fi
-  eval "$1='$CHECKLATESTVERSION_TAG'"
 }
 
 getFile() {
@@ -111,7 +111,8 @@ getFile() {
 
 downloadFile() {
   if [ -z "$1" ]; then
-    checkLatestVersion TAG
+    checkLatestVersion
+    TAG="$CHECKLATESTVERSION_TAG"
   else
     TAG=$1
   fi
