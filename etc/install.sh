@@ -87,25 +87,6 @@ checkLatestVersion() {
   eval "$1='$CHECKLATESTVERSION_TAG'"
 }
 
-get() {
-  GET_URL="$2"
-  echo "Getting $GET_URL"
-  if [ "$DOWNLOAD_TOOL" = "curl" ]; then
-    GET_HTTP_RESPONSE=$(curl -sL --write-out 'HTTPSTATUS:%{http_code}' "$GET_URL")
-    GET_HTTP_STATUS_CODE=$(echo "$GET_HTTP_RESPONSE" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
-    GET_BODY=$(echo "$GET_HTTP_RESPONSE" | sed -e 's/HTTPSTATUS\:.*//g')
-  elif [ "$DOWNLOAD_TOOL" = "wget" ]; then
-    TMP_FILE=$(mktemp)
-    GET_BODY=$(wget --server-response --content-on-error -q -O - "$GET_URL" 2>"$TMP_FILE" || true)
-    GET_HTTP_STATUS_CODE=$(awk '/^  HTTP/{print $2}' "$TMP_FILE")
-  fi
-  if [ "$GET_HTTP_STATUS_CODE" != 200 ]; then
-    echo "Request failed with HTTP status code $GET_HTTP_STATUS_CODE"
-    fail "Body: $GET_BODY"
-  fi
-  eval "$1='$GET_BODY'"
-}
-
 getFile() {
   GETFILE_URL="$1"
   GETFILE_FILE_PATH="$2"
@@ -147,11 +128,24 @@ downloadFile() {
   if [ "$httpStatusCode" -ne 200 ]; then
     echo "Did not find a release for your system: $OS $ARCH"
     echo "Trying to find a release using the GitHub API."
+
     LATEST_RELEASE_URL="https://api.github.com/repos/${PROJECT_OWNER}/$PROJECT_NAME/releases/tags/$TAG"
-    echo "LATEST_RELEASE_URL=$LATEST_RELEASE_URL"
-    get LATEST_RELEASE_JSON "$LATEST_RELEASE_URL"
+    if [ "$DOWNLOAD_TOOL" = "curl" ]; then
+      HTTP_RESPONSE=$(curl -sL --write-out 'HTTPSTATUS:%{http_code}' "$LATEST_RELEASE_URL")
+      HTTP_STATUS_CODE=$(echo "$HTTP_RESPONSE" | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
+      BODY=$(echo "$HTTP_RESPONSE" | sed -e 's/HTTPSTATUS\:.*//g')
+    elif [ "$DOWNLOAD_TOOL" = "wget" ]; then
+      TMP_FILE=$(mktemp)
+      BODY=$(wget --server-response --content-on-error -q -O - "$LATEST_RELEASE_URL" 2>"$TMP_FILE" || true)
+      HTTP_STATUS_CODE=$(awk '/^  HTTP/{print $2}' "$TMP_FILE")
+    fi
+    if [ "$HTTP_STATUS_CODE" != 200 ]; then
+      echo "Request failed with HTTP status code $HTTP_STATUS_CODE"
+      fail "Body: $BODY"
+    fi
+
     # || true forces this command to not catch error if grep does not find anything
-    DOWNLOAD_URL=$(echo "$LATEST_RELEASE_JSON" | grep 'browser_' | cut -d\" -f4 | grep "$APPLICATION_DIST") || true
+    DOWNLOAD_URL=$(echo "$BODY" | grep 'browser_' | cut -d\" -f4 | grep "$APPLICATION_DIST") || true
     if [ -z "$DOWNLOAD_URL" ]; then
       echo "Sorry, we dont have a dist for your system: $OS $ARCH"
       fail "You can request one here: https://github.com/${PROJECT_OWNER}/$PROJECT_NAME/issues"
