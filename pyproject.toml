@@ -8,7 +8,7 @@ authors = ["Arduino <info@arduino.cc>"]
 python = "^3.9"
 
 # Integration tests dependencies.
-invoke = "^1.7.0"
+invoke = "^1.7.1"
 pytest = "^7.1.2"
 python-dateutil = "^2.8.2"
 semver = "^2.13.0"
