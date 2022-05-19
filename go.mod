@@ -20,7 +20,7 @@ require (
 	github.com/stretchr/testify v1.7.1
 	github.com/xeipuuv/gojsonpointer v0.0.0-20190905194746-02993c407bfb
 	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415
-	go.bug.st/relaxed-semver v0.0.0-20190922224835-391e10178d18
+	go.bug.st/relaxed-semver v0.9.0
 )
 
 require (
