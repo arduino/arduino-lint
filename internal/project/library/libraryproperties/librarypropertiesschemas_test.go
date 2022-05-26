@@ -390,10 +390,6 @@ func TestPropertiesDependsPattern(t *testing.T) {
 		{"Pre-release version", "foo (=1.2.3-rc1)", compliancelevel.Specification, assert.False},
 		{"Pre-release version", "foo (=1.2.3-rc1)", compliancelevel.Strict, assert.False},
 
-		{"Invalid version", "foo (bar)", compliancelevel.Permissive, assert.True},
-		{"Invalid version", "foo (bar)", compliancelevel.Specification, assert.True},
-		{"Invalid version", "foo (bar)", compliancelevel.Strict, assert.True},
-
 		{"Version w/o space", "foo(>1.2.3)", compliancelevel.Permissive, assert.True},
 		{"Version w/o space", "foo(>1.2.3)", compliancelevel.Specification, assert.True},
 		{"Version w/o space", "foo(>1.2.3)", compliancelevel.Strict, assert.True},
@@ -401,6 +397,14 @@ func TestPropertiesDependsPattern(t *testing.T) {
 		{"Names w/ version", "foo (<=1.2.3),bar", compliancelevel.Permissive, assert.False},
 		{"Names w/ version", "foo (<=1.2.3),bar", compliancelevel.Specification, assert.False},
 		{"Names w/ version", "foo (<=1.2.3),bar", compliancelevel.Strict, assert.False},
+
+		{"Names w/ parenthesized version constraints", "foo ((>0.1.0 && <2.0.0) || >2.1.0),bar", compliancelevel.Permissive, assert.False},
+		{"Names w/ parenthesized version constraints", "foo ((>0.1.0 && <2.0.0) || >2.1.0),bar", compliancelevel.Specification, assert.False},
+		{"Names w/ parenthesized version constraints", "foo ((>0.1.0 && <2.0.0) || >2.1.0),bar", compliancelevel.Strict, assert.False},
+
+		{"Names w/ empty version constraint", "foo (),bar", compliancelevel.Permissive, assert.False},
+		{"Names w/ empty version constraint", "foo (),bar", compliancelevel.Specification, assert.False},
+		{"Names w/ empty version constraint", "foo (),bar", compliancelevel.Strict, assert.False},
 	}
 
 	checkPropertyPatternMismatch("depends", testTables, t)
