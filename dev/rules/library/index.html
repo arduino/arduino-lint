@@ -779,6 +779,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#invalid-depends-constraint-syntax-lp058" class="md-nav__link">
+    invalid depends constraint syntax (LP058)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#invalid-dot_a_linkage-value-lp049" class="md-nav__link">
     invalid dot_a_linkage value (LP049)
   </a>
@@ -1393,6 +1400,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#invalid-depends-constraint-syntax-lp058" class="md-nav__link">
+    invalid depends constraint syntax (LP058)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#invalid-dot_a_linkage-value-lp049" class="md-nav__link">
     invalid dot_a_linkage value (LP049)
   </a>
@@ -1510,7 +1524,7 @@
 
   <h1>Library</h1>
 
-<p>Arduino Lint provides 76 rules for the <a href="https://arduino.github.io/arduino-cli/latest/library-specification/"><code>library</code></a>
+<p>Arduino Lint provides 77 rules for the <a href="https://arduino.github.io/arduino-cli/latest/library-specification/"><code>library</code></a>
 project type:</p>
 <hr />
 <p><a id="LS001"></a></p>
@@ -3695,6 +3709,36 @@ Enabled for superproject type: all<br /> Category: library.properties<br /> Subc
 <tr>
 <td>strict</td>
 <td>WARNING</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP058"></a></p>
+<h2 id="invalid-depends-constraint-syntax-lp058">invalid depends constraint syntax (<code>LP058</code>)<a class="headerlink" href="#invalid-depends-constraint-syntax-lp058" title="Permanent link">&para;</a></h2>
+<p>The <code>depends</code> field in the library's <code>library.properties</code> metadata file uses invalid version constraint syntax.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: library.properties<br /> Subcategory: depends field</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
 </tr>
 </tbody>
 </table>
