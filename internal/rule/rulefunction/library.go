@@ -1201,37 +1201,21 @@ func LibraryPropertiesDependsFieldNotInIndex() (result ruleresult.Type, output s
 		return ruleresult.Skip, "Field not present"
 	}
 
-	dependsList := commaSeparatedToList(depends)
+	dependencies := libDependencies(depends)
 
-	var dependencyRegexp = regexp.MustCompile("^([^()]+?) *(?:\\((.+)\\))?$")
 	dependsNotInIndex := []string{}
-	for _, depend := range dependsList {
-		// Process raw depend string into a dependency object
-		if depend == "" {
+	for _, dependency := range dependencies {
+		if dependency.parseConstraintErr != nil {
 			// This is the responsibility of LibraryPropertiesDependsFieldInvalidFormat()
 			continue
-		}
-		dependencyData := dependencyRegexp.FindAllStringSubmatch(depend, -1)
-		if dependencyData == nil {
-			// This is the responsibility of LibraryPropertiesDependsFieldInvalidFormat()
-			continue
-		}
-		dependencyConstraint, err := semver.ParseConstraint(dependencyData[0][2])
-		if err != nil {
-			// This is the responsibility of LibraryPropertiesDependsFieldInvalidFormat()
-			continue
-		}
-		var dependency semver.Dependency = &librariesindex.Dependency{
-			Name:              dependencyData[0][1],
-			VersionConstraint: dependencyConstraint,
 		}
 
-		logrus.Tracef("Checking if dependency %s is in index.", depend)
+		logrus.Tracef("Checking if dependency %s is in index.", dependency.depend)
 		// Get all releases of the dependency
-		library := projectdata.LibraryManagerIndex().Index.FindIndexedLibrary(&libraries.Library{Name: dependency.GetName()})
+		library := projectdata.LibraryManagerIndex().Index.FindIndexedLibrary(&libraries.Library{Name: dependency.data.GetName()})
 		if library == nil {
 			logrus.Tracef("Dependency is not in the index.")
-			dependsNotInIndex = append(dependsNotInIndex, depend)
+			dependsNotInIndex = append(dependsNotInIndex, dependency.depend)
 			continue
 		}
 		// Convert the dependency's libraries.Library object to a semver.Releases object
@@ -1240,16 +1224,44 @@ func LibraryPropertiesDependsFieldNotInIndex() (result ruleresult.Type, output s
 			releases = append(releases, release)
 		}
 		// Filter the dependency's releases according to the dependency's constraint
-		dependencyReleases := releases.FilterBy(dependency)
+		dependencyReleases := releases.FilterBy(&dependency.data)
 		if len(dependencyReleases) == 0 {
 			logrus.Tracef("No releases match dependency's constraint.")
-			dependsNotInIndex = append(dependsNotInIndex, depend)
+			dependsNotInIndex = append(dependsNotInIndex, dependency.depend)
 			continue
 		}
 	}
 
 	if len(dependsNotInIndex) > 0 {
 		return ruleresult.Fail, strings.Join(dependsNotInIndex, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
+// LibraryPropertiesDependsFieldConstraintInvalid checks whether the syntax of the version constraints in the
+// library.properties `depends` field is valid.
+func LibraryPropertiesDependsFieldConstraintInvalid() (result ruleresult.Type, output string) {
+	if projectdata.LibraryPropertiesLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load library.properties"
+	}
+
+	depends, hasDepends := projectdata.LibraryProperties().GetOk("depends")
+	if !hasDepends {
+		return ruleresult.Skip, "Field not present"
+	}
+
+	dependencies := libDependencies(depends)
+
+	nonCompliant := []string{}
+	for _, dependency := range dependencies {
+		if dependency.parseConstraintErr != nil {
+			nonCompliant = append(nonCompliant, dependency.depend)
+		}
+	}
+
+	if len(nonCompliant) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliant, ", ")
 	}
 
 	return ruleresult.Pass, ""
@@ -1551,4 +1563,46 @@ func commaSeparatedToList(commaSeparated string) []string {
 	}
 
 	return list
+}
+
+// libDependency is a library dependency
+type libDependency struct {
+	depend             string                    // Raw element from depends field.
+	data               librariesindex.Dependency // Dependency object.
+	parseConstraintErr error                     // Error produced by parsing the version constraint.
+}
+
+var dependRegexp = regexp.MustCompile("^([^()]+?) *(?:\\((.*)\\))?$")
+
+// libDependencies parses the library.properties `depends` field contents and returns an array of libDependency objects
+func libDependencies(depends string) []libDependency {
+	dependList := commaSeparatedToList(depends)
+
+	dependencies := []libDependency{}
+	for _, depend := range dependList {
+		// Process raw depend string into a dependency object
+		if depend == "" {
+			// This function is only concerned with the parseable depend elements.
+			// `depends` field data format is checked separately.
+			continue
+		}
+		dependencyData := dependRegexp.FindAllStringSubmatch(depend, -1)
+		if dependencyData == nil {
+			// This function is only concerned with the parseable depend elements.
+			// `depends` field data format is checked separately.
+			continue
+		}
+		dependencyConstraint, err := semver.ParseConstraint(dependencyData[0][2])
+		dependencies = append(dependencies, libDependency{
+			depend: depend,
+			data: librariesindex.Dependency{
+				Name:              dependencyData[0][1],
+				VersionConstraint: dependencyConstraint,
+			},
+			parseConstraintErr: err,
+		},
+		)
+	}
+
+	return dependencies
 }

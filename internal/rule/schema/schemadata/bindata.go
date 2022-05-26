@@ -1911,8 +1911,8 @@ var _arduinoLibraryPropertiesDefinitionsSchemaJson = []byte(`{
                 "type": "string"
               },
               {
-                "$comment": "Based on #/definitions/propertiesObjects/name/base/definitions/patternObjects/allowedCharacters and general-definitions-schema.json#/definitions/patternObjects/relaxedSemver",
-                "pattern": "^((((([a-zA-Z][a-zA-Z0-9 _.\\-]*)|([0-9][a-zA-Z0-9 _.\\-]*[a-zA-Z][a-zA-Z0-9 _.\\-]*))+( \\( *(<|<=|=|>=|>)(0|[1-9]\\d*)(\\.(0|[1-9]\\d*))?(\\.(0|[1-9]\\d*))?(-((0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(\\.(0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(\\+([0-9a-zA-Z-]+(\\.[0-9a-zA-Z-]+)*))? *\\) *)?), *)*((([a-zA-Z][a-zA-Z0-9 _.\\-]*)|([0-9][a-zA-Z0-9 _.\\-]*[a-zA-Z][a-zA-Z0-9 _.\\-]*))+( \\( *(<|<=|=|>=|>)(0|[1-9]\\d*)(\\.(0|[1-9]\\d*))?(\\.(0|[1-9]\\d*))?(-((0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(\\.(0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(\\+([0-9a-zA-Z-]+(\\.[0-9a-zA-Z-]+)*))? *\\) *)?))?$"
+                "$comment": "Based on #/definitions/propertiesObjects/name/base/definitions/patternObjects/allowedCharacters",
+                "pattern": "^((((([a-zA-Z][a-zA-Z0-9 _.\\-]*)|([0-9][a-zA-Z0-9 _.\\-]*[a-zA-Z][a-zA-Z0-9 _.\\-]*))+( \\(.*\\) *)?), *)*((([a-zA-Z][a-zA-Z0-9 _.\\-]*)|([0-9][a-zA-Z0-9 _.\\-]*[a-zA-Z][a-zA-Z0-9 _.\\-]*))+( \\(.*\\) *)?))?$"
               }
             ]
           }
