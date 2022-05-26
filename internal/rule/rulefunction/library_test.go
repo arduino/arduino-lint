@@ -846,6 +846,20 @@ func TestLibraryPropertiesDependsFieldNotInIndex(t *testing.T) {
 	checkLibraryRuleFunction(LibraryPropertiesDependsFieldNotInIndex, testTables, t)
 }
 
+func TestLibraryPropertiesDependsFieldConstraintInvalid(t *testing.T) {
+	testTables := []libraryRuleFunctionTestTable{
+		{"Unable to load", "InvalidLibraryProperties", ruleresult.NotRun, ""},
+		{"Legacy", "Legacy", ruleresult.Skip, ""},
+		{"No depends field", "NoDepends", ruleresult.Skip, ""},
+		{"Depends field empty", "DependsEmpty", ruleresult.Pass, ""},
+		{"Invalid depends field format", "DependsHasBadChars", ruleresult.Pass, ""},
+		{"Invalid constraint syntax", "DependsConstraintInvalid", ruleresult.Fail, "^BarLib \\(nope\\), QuxLib \\(huh\\)$"},
+		{"Valid constraint syntax", "DependsConstraintValid", ruleresult.Pass, ""},
+	}
+
+	checkLibraryRuleFunction(LibraryPropertiesDependsFieldConstraintInvalid, testTables, t)
+}
+
 func TestLibraryPropertiesDotALinkageFieldInvalid(t *testing.T) {
 	testTables := []libraryRuleFunctionTestTable{
 		{"Invalid", "InvalidLibraryProperties", ruleresult.NotRun, ""},

@@ -1239,6 +1239,34 @@ func LibraryPropertiesDependsFieldNotInIndex() (result ruleresult.Type, output s
 	return ruleresult.Pass, ""
 }
 
+// LibraryPropertiesDependsFieldConstraintInvalid checks whether the syntax of the version constraints in the
+// library.properties `depends` field is valid.
+func LibraryPropertiesDependsFieldConstraintInvalid() (result ruleresult.Type, output string) {
+	if projectdata.LibraryPropertiesLoadError() != nil {
+		return ruleresult.NotRun, "Couldn't load library.properties"
+	}
+
+	depends, hasDepends := projectdata.LibraryProperties().GetOk("depends")
+	if !hasDepends {
+		return ruleresult.Skip, "Field not present"
+	}
+
+	dependencies := libDependencies(depends)
+
+	nonCompliant := []string{}
+	for _, dependency := range dependencies {
+		if dependency.parseConstraintErr != nil {
+			nonCompliant = append(nonCompliant, dependency.depend)
+		}
+	}
+
+	if len(nonCompliant) > 0 {
+		return ruleresult.Fail, strings.Join(nonCompliant, ", ")
+	}
+
+	return ruleresult.Pass, ""
+}
+
 // LibraryPropertiesDotALinkageFieldInvalid checks for invalid value in the library.properties "dot_a_linkage" field.
 func LibraryPropertiesDotALinkageFieldInvalid() (result ruleresult.Type, output string) {
 	if projectdata.LibraryPropertiesLoadError() != nil {
