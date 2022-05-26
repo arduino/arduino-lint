@@ -1544,7 +1544,7 @@ type libDependency struct {
 	parseConstraintErr error                     // Error produced by parsing the version constraint.
 }
 
-var dependRegexp = regexp.MustCompile("^([^()]+?) *(?:\\((.+)\\))?$")
+var dependRegexp = regexp.MustCompile("^([^()]+?) *(?:\\((.*)\\))?$")
 
 // libDependencies parses the library.properties `depends` field contents and returns an array of libDependency objects
 func libDependencies(depends string) []libDependency {
