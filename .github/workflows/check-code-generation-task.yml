@@ -1,7 +1,7 @@
 name: Check Code Generation
 
 env:
-  # See: https://github.com/actions/setup-go/tree/v2#readme
+  # See: https://github.com/actions/setup-go/tree/main#supported-version-syntax
   GO_VERSION: "1.17"
 
 on:
