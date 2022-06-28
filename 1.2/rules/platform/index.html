@@ -1,0 +1,4666 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Tool to check for problems with Arduino projects">
+      
+      
+      
+        <link rel="canonical" href="https://arduino.github.io/arduino-lint/1.2/rules/platform/">
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.3.8">
+    
+    
+      
+        <title>Platform - Arduino Lint</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.1d29e8d0.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.cbb835fc.min.css">
+        
+          
+          
+          <meta name="theme-color" content="#009485">
+        
+      
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="teal" data-md-color-accent="orange">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#no-readme-pd001" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-component="outdated" hidden>
+        <aside class="md-banner md-banner--warning">
+          
+        </aside>
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Arduino Lint" class="md-header__button md-logo" aria-label="Arduino Lint" data-md-component="logo">
+      
+  <img src="../../img/icon_mac_light.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Arduino Lint
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Platform
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/arduino/arduino-lint" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    arduino/arduino-lint
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Arduino Lint" class="md-nav__button md-logo" aria-label="Arduino Lint" data-md-component="logo">
+      
+  <img src="../../img/icon_mac_light.png" alt="logo">
+
+    </a>
+    Arduino Lint
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/arduino/arduino-lint" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    arduino/arduino-lint
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/" class="md-nav__link">
+        Installation
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/arduino-lint/" class="md-nav__link">
+        Command reference
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          Rules
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Rules" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Rules
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sketch/" class="md-nav__link">
+        Sketch
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../library/" class="md-nav__link">
+        Library
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Platform
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        Platform
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#no-readme-pd001" class="md-nav__link">
+    no readme (PD001)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#no-license-file-pd002" class="md-nav__link">
+    no license file (PD002)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#boardstxt-missing-pf001" class="md-nav__link">
+    boards.txt missing (PF001)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-boardstxt-pf002" class="md-nav__link">
+    invalid boards.txt (PF002)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-boardidname-pf003" class="md-nav__link">
+    missing boardID.name (PF003)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#boardidname-min-length-pf004" class="md-nav__link">
+    boardID.name &lt; min length (PF004)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-buildboard-pf005" class="md-nav__link">
+    missing build.board (PF005)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#buildboard-min-length-pf006" class="md-nav__link">
+    build.board &lt; min length (PF006)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-buildcore-pf007" class="md-nav__link">
+    missing build.core (PF007)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#buildcore-min-length-pf008" class="md-nav__link">
+    build.core &lt; min length (PF008)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-of-compilerpattern-typeextra_flags-pf009" class="md-nav__link">
+    use of compiler.&lt;pattern type&gt;.extra_flags (PF009)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-empty-hide-value-pf011" class="md-nav__link">
+    non-empty hide value (PF011)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#menu-title-min-length-pf012" class="md-nav__link">
+    menu title &lt; min length (PF012)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#serialdisabledtr-value-invalid-pf014" class="md-nav__link">
+    serial.disableDTR value invalid (PF014)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#serialdisablerts-value-invalid-pf015" class="md-nav__link">
+    serial.disableRTS value invalid (PF015)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-uploadtoolprotocol_name-pf016" class="md-nav__link">
+    missing upload.tool.&lt;protocol_name&gt; (PF016)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uploadtoolprotocol_name-min-length-pf017" class="md-nav__link">
+    upload.tool.&lt;protocol_name&gt; &lt; min length (PF017)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-uploadmaximum_size-pf018" class="md-nav__link">
+    missing upload.maximum_size (PF018)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uploadmaximum_size-not-a-number-pf019" class="md-nav__link">
+    upload.maximum_size not a number (PF019)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-uploadmaximum_data_size-pf020" class="md-nav__link">
+    missing upload.maximum_data_size (PF020)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uploadmaximum_data_size-not-a-number-pf021" class="md-nav__link">
+    upload.maximum_data_size not a number (PF021)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uploaduse_1200bps_touch-value-invalid-pf022" class="md-nav__link">
+    upload.use_1200bps_touch value invalid (PF022)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uploadwait_for_upload_port-value-invalid-pf023" class="md-nav__link">
+    upload.wait_for_upload_port value invalid (PF023)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vidn-value-invalid-format-pf024" class="md-nav__link">
+    vid.n value invalid format (PF024)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pidn-value-invalid-format-pf025" class="md-nav__link">
+    pid.n value invalid format (PF025)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-programmerstxt-pf026" class="md-nav__link">
+    invalid programmers.txt (PF026)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-programmeridname-pf027" class="md-nav__link">
+    missing programmerID.name (PF027)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#programmeridname-min-length-pf028" class="md-nav__link">
+    programmerID.name &lt; min length (PF028)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-programmeridprogramtool-pf029" class="md-nav__link">
+    missing programmerID.program.tool (PF029)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#programmeridprogramtool-min-length-pf030" class="md-nav__link">
+    programmerID.program.tool &lt; min length (PF030)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-platformtxt-pf031" class="md-nav__link">
+    invalid platform.txt (PF031)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-name-pf032" class="md-nav__link">
+    missing name (PF032)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-min-length-pf033" class="md-nav__link">
+    name &lt; min length (PF033)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-version-pf034" class="md-nav__link">
+    missing version (PF034)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-version-pf035" class="md-nav__link">
+    invalid version (PF035)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-semver-version-pf036" class="md-nav__link">
+    non-semver version (PF036)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-compilerwarning_flagsnone-pf037" class="md-nav__link">
+    missing compiler.warning_flags.none (PF037)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-compilerwarning_flagsdefault-pf038" class="md-nav__link">
+    missing compiler.warning_flags.default (PF038)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-compilerwarning_flagsmore-pf039" class="md-nav__link">
+    missing compiler.warning_flags.more (PF039)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-compilerwarning_flagsall-pf040" class="md-nav__link">
+    missing compiler.warning_flags.all (PF040)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-compileroptimization_flagsdebug-pf041" class="md-nav__link">
+    missing compiler.optimization_flags.debug (PF041)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-compileroptimization_flagsrelease-pf042" class="md-nav__link">
+    missing compiler.optimization_flags.release (PF042)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-compilercextra_flags-pf043" class="md-nav__link">
+    missing compiler.c.extra_flags (PF043)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compilercextra_flags-not-empty-pf044" class="md-nav__link">
+    compiler.c.extra_flags not empty (PF044)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-compilercppextra_flags-pf045" class="md-nav__link">
+    missing compiler.cpp.extra_flags (PF045)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compilercppextra_flags-not-empty-pf046" class="md-nav__link">
+    compiler.cpp.extra_flags not empty (PF046)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-compilersextra_flags-pf047" class="md-nav__link">
+    missing compiler.S.extra_flags (PF047)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compilersextra_flags-not-empty-pf048" class="md-nav__link">
+    compiler.S.extra_flags not empty (PF048)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-compilerarextra_flags-pf049" class="md-nav__link">
+    missing compiler.ar.extra_flags (PF049)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compilerarextra_flags-not-empty-pf050" class="md-nav__link">
+    compiler.ar.extra_flags not empty (PF050)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-compilercelfextra_flags-pf051" class="md-nav__link">
+    missing compiler.c.elf.extra_flags (PF051)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compilercelfextra_flags-not-empty-pf052" class="md-nav__link">
+    compiler.c.elf.extra_flags not empty (PF052)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipepreprocmacros-min-length-pf053" class="md-nav__link">
+    recipe.preproc.macros &lt; min length (PF053)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipepreprocmacros-lacks-extra-flags-support-pf054" class="md-nav__link">
+    recipe.preproc.macros lacks extra flags support (PF054)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-recipecopattern-pf055" class="md-nav__link">
+    missing recipe.c.o.pattern (PF055)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipecopattern-min-length-pf056" class="md-nav__link">
+    recipe.c.o.pattern &lt; min length (PF056)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipecopattern-lacks-extra-flags-support-pf057" class="md-nav__link">
+    recipe.c.o.pattern lacks extra flags support (PF057)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-recipecppopattern-pf058" class="md-nav__link">
+    missing recipe.cpp.o.pattern (PF058)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipecppopattern-min-length-pf059" class="md-nav__link">
+    recipe.cpp.o.pattern &lt; min length (PF059)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipecppopattern-lacks-extra-flags-support-pf060" class="md-nav__link">
+    recipe.cpp.o.pattern lacks extra flags support (PF060)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-recipesopattern-pf061" class="md-nav__link">
+    missing recipe.S.o.pattern (PF061)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipesopattern-min-length-pf062" class="md-nav__link">
+    recipe.S.o.pattern &lt; min length (PF062)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipesopattern-lacks-extra-flags-support-pf063" class="md-nav__link">
+    recipe.S.o.pattern lacks extra flags support (PF063)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-recipearpattern-pf064" class="md-nav__link">
+    missing recipe.ar.pattern (PF064)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipearpattern-min-length-pf065" class="md-nav__link">
+    recipe.ar.pattern &lt; min length (PF065)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipearpattern-lacks-extra-flags-support-pf066" class="md-nav__link">
+    recipe.ar.pattern lacks extra flags support (PF066)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-recipeccombinepattern-pf067" class="md-nav__link">
+    missing recipe.c.combine.pattern (PF067)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipeccombinepattern-min-length-pf068" class="md-nav__link">
+    recipe.c.combine.pattern &lt; min length (PF068)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipeccombinepattern-lacks-extra-flags-support-pf069" class="md-nav__link">
+    recipe.c.combine.pattern lacks extra flags support (PF069)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-recipeoutputtmp_file-pf070" class="md-nav__link">
+    missing recipe.output.tmp_file (PF070)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipeoutputtmp_file-min-length-pf071" class="md-nav__link">
+    recipe.output.tmp_file &lt; min length (PF071)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-recipeoutputsave_file-pf072" class="md-nav__link">
+    missing recipe.output.save_file (PF072)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipeoutputsave_file-min-length-pf073" class="md-nav__link">
+    recipe.output.save_file &lt; min length (PF073)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-recipesizepattern-pf074" class="md-nav__link">
+    missing recipe.size.pattern (PF074)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipesizepattern-min-length-pf075" class="md-nav__link">
+    recipe.size.pattern &lt; min length (PF075)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-recipesizeregex-pf076" class="md-nav__link">
+    missing recipe.size.regex (PF076)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-recipesizeregexdata-pf077" class="md-nav__link">
+    missing recipe.size.regex.data (PF077)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-pluggable_discoveryrequired-format-pf090" class="md-nav__link">
+    invalid pluggable_discovery.required format (PF090)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-pluggable_discoverydiscovery_idpattern-pf091" class="md-nav__link">
+    missing pluggable_discovery.DISCOVERY_ID.pattern (PF091)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pluggable_monitorpatternprotocol_id-min-length-pf094" class="md-nav__link">
+    pluggable_monitor.pattern.PROTOCOL_ID &lt; min length (PF094)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-pluggable_monitorrequiredprotocol_id-format-pf095" class="md-nav__link">
+    invalid pluggable_monitor.required.PROTOCOL_ID format (PF095)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uploadfieldfield_name-max-length-pf092" class="md-nav__link">
+    upload.field.FIELD_NAME &gt; max length (PF092)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uploadfieldfield_namesecret-invalid-pf093" class="md-nav__link">
+    upload.field.FIELD_NAME.secret invalid (PF093)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-uploadpattern-pf080" class="md-nav__link">
+    missing upload.pattern (PF080)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-programparamsverbose-pf081" class="md-nav__link">
+    missing program.params.verbose (PF081)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-programparamsquiet-pf082" class="md-nav__link">
+    missing program.params.quiet (PF082)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-programpattern-pf083" class="md-nav__link">
+    missing program.pattern (PF083)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-eraseparamsverbose-pf084" class="md-nav__link">
+    missing erase.params.verbose (PF084)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-eraseparamsquiet-pf085" class="md-nav__link">
+    missing erase.params.quiet (PF085)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-erasepattern-pf086" class="md-nav__link">
+    missing erase.pattern (PF086)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-bootloaderparamsverbose-pf087" class="md-nav__link">
+    missing bootloader.params.verbose (PF087)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-bootloaderparamsquiet-pf088" class="md-nav__link">
+    missing bootloader.params.quiet (PF088)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-bootloaderpattern-pf089" class="md-nav__link">
+    missing bootloader.pattern (PF089)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arduinoh-case-pc001" class="md-nav__link">
+    Arduino.h case (PC001)
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../package-index/" class="md-nav__link">
+        Package index
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CONTRIBUTING/" class="md-nav__link">
+        How to contribute
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#no-readme-pd001" class="md-nav__link">
+    no readme (PD001)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#no-license-file-pd002" class="md-nav__link">
+    no license file (PD002)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#boardstxt-missing-pf001" class="md-nav__link">
+    boards.txt missing (PF001)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-boardstxt-pf002" class="md-nav__link">
+    invalid boards.txt (PF002)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-boardidname-pf003" class="md-nav__link">
+    missing boardID.name (PF003)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#boardidname-min-length-pf004" class="md-nav__link">
+    boardID.name &lt; min length (PF004)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-buildboard-pf005" class="md-nav__link">
+    missing build.board (PF005)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#buildboard-min-length-pf006" class="md-nav__link">
+    build.board &lt; min length (PF006)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-buildcore-pf007" class="md-nav__link">
+    missing build.core (PF007)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#buildcore-min-length-pf008" class="md-nav__link">
+    build.core &lt; min length (PF008)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-of-compilerpattern-typeextra_flags-pf009" class="md-nav__link">
+    use of compiler.&lt;pattern type&gt;.extra_flags (PF009)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-empty-hide-value-pf011" class="md-nav__link">
+    non-empty hide value (PF011)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#menu-title-min-length-pf012" class="md-nav__link">
+    menu title &lt; min length (PF012)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#serialdisabledtr-value-invalid-pf014" class="md-nav__link">
+    serial.disableDTR value invalid (PF014)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#serialdisablerts-value-invalid-pf015" class="md-nav__link">
+    serial.disableRTS value invalid (PF015)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-uploadtoolprotocol_name-pf016" class="md-nav__link">
+    missing upload.tool.&lt;protocol_name&gt; (PF016)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uploadtoolprotocol_name-min-length-pf017" class="md-nav__link">
+    upload.tool.&lt;protocol_name&gt; &lt; min length (PF017)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-uploadmaximum_size-pf018" class="md-nav__link">
+    missing upload.maximum_size (PF018)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uploadmaximum_size-not-a-number-pf019" class="md-nav__link">
+    upload.maximum_size not a number (PF019)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-uploadmaximum_data_size-pf020" class="md-nav__link">
+    missing upload.maximum_data_size (PF020)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uploadmaximum_data_size-not-a-number-pf021" class="md-nav__link">
+    upload.maximum_data_size not a number (PF021)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uploaduse_1200bps_touch-value-invalid-pf022" class="md-nav__link">
+    upload.use_1200bps_touch value invalid (PF022)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uploadwait_for_upload_port-value-invalid-pf023" class="md-nav__link">
+    upload.wait_for_upload_port value invalid (PF023)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vidn-value-invalid-format-pf024" class="md-nav__link">
+    vid.n value invalid format (PF024)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pidn-value-invalid-format-pf025" class="md-nav__link">
+    pid.n value invalid format (PF025)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-programmerstxt-pf026" class="md-nav__link">
+    invalid programmers.txt (PF026)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-programmeridname-pf027" class="md-nav__link">
+    missing programmerID.name (PF027)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#programmeridname-min-length-pf028" class="md-nav__link">
+    programmerID.name &lt; min length (PF028)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-programmeridprogramtool-pf029" class="md-nav__link">
+    missing programmerID.program.tool (PF029)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#programmeridprogramtool-min-length-pf030" class="md-nav__link">
+    programmerID.program.tool &lt; min length (PF030)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-platformtxt-pf031" class="md-nav__link">
+    invalid platform.txt (PF031)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-name-pf032" class="md-nav__link">
+    missing name (PF032)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-min-length-pf033" class="md-nav__link">
+    name &lt; min length (PF033)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-version-pf034" class="md-nav__link">
+    missing version (PF034)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-version-pf035" class="md-nav__link">
+    invalid version (PF035)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-semver-version-pf036" class="md-nav__link">
+    non-semver version (PF036)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-compilerwarning_flagsnone-pf037" class="md-nav__link">
+    missing compiler.warning_flags.none (PF037)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-compilerwarning_flagsdefault-pf038" class="md-nav__link">
+    missing compiler.warning_flags.default (PF038)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-compilerwarning_flagsmore-pf039" class="md-nav__link">
+    missing compiler.warning_flags.more (PF039)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-compilerwarning_flagsall-pf040" class="md-nav__link">
+    missing compiler.warning_flags.all (PF040)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-compileroptimization_flagsdebug-pf041" class="md-nav__link">
+    missing compiler.optimization_flags.debug (PF041)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-compileroptimization_flagsrelease-pf042" class="md-nav__link">
+    missing compiler.optimization_flags.release (PF042)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-compilercextra_flags-pf043" class="md-nav__link">
+    missing compiler.c.extra_flags (PF043)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compilercextra_flags-not-empty-pf044" class="md-nav__link">
+    compiler.c.extra_flags not empty (PF044)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-compilercppextra_flags-pf045" class="md-nav__link">
+    missing compiler.cpp.extra_flags (PF045)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compilercppextra_flags-not-empty-pf046" class="md-nav__link">
+    compiler.cpp.extra_flags not empty (PF046)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-compilersextra_flags-pf047" class="md-nav__link">
+    missing compiler.S.extra_flags (PF047)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compilersextra_flags-not-empty-pf048" class="md-nav__link">
+    compiler.S.extra_flags not empty (PF048)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-compilerarextra_flags-pf049" class="md-nav__link">
+    missing compiler.ar.extra_flags (PF049)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compilerarextra_flags-not-empty-pf050" class="md-nav__link">
+    compiler.ar.extra_flags not empty (PF050)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-compilercelfextra_flags-pf051" class="md-nav__link">
+    missing compiler.c.elf.extra_flags (PF051)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compilercelfextra_flags-not-empty-pf052" class="md-nav__link">
+    compiler.c.elf.extra_flags not empty (PF052)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipepreprocmacros-min-length-pf053" class="md-nav__link">
+    recipe.preproc.macros &lt; min length (PF053)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipepreprocmacros-lacks-extra-flags-support-pf054" class="md-nav__link">
+    recipe.preproc.macros lacks extra flags support (PF054)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-recipecopattern-pf055" class="md-nav__link">
+    missing recipe.c.o.pattern (PF055)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipecopattern-min-length-pf056" class="md-nav__link">
+    recipe.c.o.pattern &lt; min length (PF056)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipecopattern-lacks-extra-flags-support-pf057" class="md-nav__link">
+    recipe.c.o.pattern lacks extra flags support (PF057)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-recipecppopattern-pf058" class="md-nav__link">
+    missing recipe.cpp.o.pattern (PF058)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipecppopattern-min-length-pf059" class="md-nav__link">
+    recipe.cpp.o.pattern &lt; min length (PF059)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipecppopattern-lacks-extra-flags-support-pf060" class="md-nav__link">
+    recipe.cpp.o.pattern lacks extra flags support (PF060)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-recipesopattern-pf061" class="md-nav__link">
+    missing recipe.S.o.pattern (PF061)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipesopattern-min-length-pf062" class="md-nav__link">
+    recipe.S.o.pattern &lt; min length (PF062)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipesopattern-lacks-extra-flags-support-pf063" class="md-nav__link">
+    recipe.S.o.pattern lacks extra flags support (PF063)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-recipearpattern-pf064" class="md-nav__link">
+    missing recipe.ar.pattern (PF064)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipearpattern-min-length-pf065" class="md-nav__link">
+    recipe.ar.pattern &lt; min length (PF065)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipearpattern-lacks-extra-flags-support-pf066" class="md-nav__link">
+    recipe.ar.pattern lacks extra flags support (PF066)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-recipeccombinepattern-pf067" class="md-nav__link">
+    missing recipe.c.combine.pattern (PF067)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipeccombinepattern-min-length-pf068" class="md-nav__link">
+    recipe.c.combine.pattern &lt; min length (PF068)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipeccombinepattern-lacks-extra-flags-support-pf069" class="md-nav__link">
+    recipe.c.combine.pattern lacks extra flags support (PF069)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-recipeoutputtmp_file-pf070" class="md-nav__link">
+    missing recipe.output.tmp_file (PF070)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipeoutputtmp_file-min-length-pf071" class="md-nav__link">
+    recipe.output.tmp_file &lt; min length (PF071)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-recipeoutputsave_file-pf072" class="md-nav__link">
+    missing recipe.output.save_file (PF072)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipeoutputsave_file-min-length-pf073" class="md-nav__link">
+    recipe.output.save_file &lt; min length (PF073)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-recipesizepattern-pf074" class="md-nav__link">
+    missing recipe.size.pattern (PF074)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recipesizepattern-min-length-pf075" class="md-nav__link">
+    recipe.size.pattern &lt; min length (PF075)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-recipesizeregex-pf076" class="md-nav__link">
+    missing recipe.size.regex (PF076)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-recipesizeregexdata-pf077" class="md-nav__link">
+    missing recipe.size.regex.data (PF077)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-pluggable_discoveryrequired-format-pf090" class="md-nav__link">
+    invalid pluggable_discovery.required format (PF090)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-pluggable_discoverydiscovery_idpattern-pf091" class="md-nav__link">
+    missing pluggable_discovery.DISCOVERY_ID.pattern (PF091)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pluggable_monitorpatternprotocol_id-min-length-pf094" class="md-nav__link">
+    pluggable_monitor.pattern.PROTOCOL_ID &lt; min length (PF094)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-pluggable_monitorrequiredprotocol_id-format-pf095" class="md-nav__link">
+    invalid pluggable_monitor.required.PROTOCOL_ID format (PF095)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uploadfieldfield_name-max-length-pf092" class="md-nav__link">
+    upload.field.FIELD_NAME &gt; max length (PF092)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uploadfieldfield_namesecret-invalid-pf093" class="md-nav__link">
+    upload.field.FIELD_NAME.secret invalid (PF093)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-uploadpattern-pf080" class="md-nav__link">
+    missing upload.pattern (PF080)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-programparamsverbose-pf081" class="md-nav__link">
+    missing program.params.verbose (PF081)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-programparamsquiet-pf082" class="md-nav__link">
+    missing program.params.quiet (PF082)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-programpattern-pf083" class="md-nav__link">
+    missing program.pattern (PF083)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-eraseparamsverbose-pf084" class="md-nav__link">
+    missing erase.params.verbose (PF084)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-eraseparamsquiet-pf085" class="md-nav__link">
+    missing erase.params.quiet (PF085)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-erasepattern-pf086" class="md-nav__link">
+    missing erase.pattern (PF086)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-bootloaderparamsverbose-pf087" class="md-nav__link">
+    missing bootloader.params.verbose (PF087)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-bootloaderparamsquiet-pf088" class="md-nav__link">
+    missing bootloader.params.quiet (PF088)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-bootloaderpattern-pf089" class="md-nav__link">
+    missing bootloader.pattern (PF089)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arduinoh-case-pc001" class="md-nav__link">
+    Arduino.h case (PC001)
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+  <a href="https://github.com/arduino/arduino-lint/blob/main/docs/rules/platform.md" title="Edit this page" class="md-content__button md-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
+  </a>
+
+
+
+  <h1>Platform</h1>
+
+<p>Arduino Lint provides 94 rules for the
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/"><code>platform</code></a> project type:</p>
+<hr />
+<p><a id="PD001"></a></p>
+<h2 id="no-readme-pd001">no readme (<code>PD001</code>)<a class="headerlink" href="#no-readme-pd001" title="Permanent link">&para;</a></h2>
+<p>None of the standard README file names (e.g., <code>README.md</code>) were found in the platform folder. This file provides
+interested parties with a convenient and standardized location to get information about the project.</p>
+<p>More information:
+<a href="https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes"><strong>here</strong></a><br />
+Enabled for superproject type: platform<br /> Category: documentation<br /> Subcategory: miscellaneous</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>disabled</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PD002"></a></p>
+<h2 id="no-license-file-pd002">no license file (<code>PD002</code>)<a class="headerlink" href="#no-license-file-pd002" title="Permanent link">&para;</a></h2>
+<p>None of the standard license file names (e.g., <code>LICENSE.txt</code>) were found in the platform folder. This file provides
+interested parties with a convenient and standardized location to get information about the project's licensing and is
+also used by GitHub for automatic license type classification.</p>
+<p>More information:
+<a href="https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository"><strong>here</strong></a><br />
+Enabled for superproject type: platform<br /> Category: documentation<br /> Subcategory: miscellaneous</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>disabled</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF001"></a></p>
+<h2 id="boardstxt-missing-pf001">boards.txt missing (<code>PF001</code>)<a class="headerlink" href="#boardstxt-missing-pf001" title="Permanent link">&para;</a></h2>
+<p>The <code>boards.txt</code> configuration file was not found in the platform folder</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#boardstxt"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: boards.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF002"></a></p>
+<h2 id="invalid-boardstxt-pf002">invalid boards.txt (<code>PF002</code>)<a class="headerlink" href="#invalid-boardstxt-pf002" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>boards.txt</code> configuration file has an invalid data format.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#boardstxt"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: boards.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF003"></a></p>
+<h2 id="missing-boardidname-pf003">missing boardID.name (<code>PF003</code>)<a class="headerlink" href="#missing-boardidname-pf003" title="Permanent link">&para;</a></h2>
+<p>A board definition in the platform's <code>boards.txt</code> configuration file is missing a <code>name</code> property (e.g.,
+<code>uno.name=Arduino Uno</code>).</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#boardstxt"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: boards.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF004"></a></p>
+<h2 id="boardidname-min-length-pf004">boardID.name &lt; min length (<code>PF004</code>)<a class="headerlink" href="#boardidname-min-length-pf004" title="Permanent link">&para;</a></h2>
+<p>The <code>name</code> property for a board definition in the platform's <code>boards.txt</code> configuration file is shorter than the minimum
+length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#boardstxt"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: boards.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF005"></a></p>
+<h2 id="missing-buildboard-pf005">missing build.board (<code>PF005</code>)<a class="headerlink" href="#missing-buildboard-pf005" title="Permanent link">&para;</a></h2>
+<p>A board definition in the platform's <code>boards.txt</code> configuration file is missing the <code>build.board</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#boardstxt"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: boards.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF006"></a></p>
+<h2 id="buildboard-min-length-pf006">build.board &lt; min length (<code>PF006</code>)<a class="headerlink" href="#buildboard-min-length-pf006" title="Permanent link">&para;</a></h2>
+<p>The <code>build.board</code> property for a board definition in the platform's <code>boards.txt</code> configuration file is shorter than the
+minimum length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#boardstxt"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: boards.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF007"></a></p>
+<h2 id="missing-buildcore-pf007">missing build.core (<code>PF007</code>)<a class="headerlink" href="#missing-buildcore-pf007" title="Permanent link">&para;</a></h2>
+<p>A board definition in the platform's <code>boards.txt</code> configuration file is missing the <code>build.core</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#cores"><strong>here</strong></a><br /> Enabled
+for superproject type: all<br /> Category: configuration files<br /> Subcategory: boards.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF008"></a></p>
+<h2 id="buildcore-min-length-pf008">build.core &lt; min length (<code>PF008</code>)<a class="headerlink" href="#buildcore-min-length-pf008" title="Permanent link">&para;</a></h2>
+<p>The <code>build.core</code> property for a board definition in the platform's <code>boards.txt</code> configuration file is shorter than the
+minimum length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#cores"><strong>here</strong></a><br /> Enabled
+for superproject type: all<br /> Category: configuration files<br /> Subcategory: boards.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF009"></a></p>
+<h2 id="use-of-compilerpattern-typeextra_flags-pf009">use of compiler.&lt;pattern type&gt;.extra_flags (<code>PF009</code>)<a class="headerlink" href="#use-of-compilerpattern-typeextra_flags-pf009" title="Permanent link">&para;</a></h2>
+<p>A board definition in the platform's <code>boards.txt</code> configuration file is using one of the
+<code>compiler.&lt;pattern type&gt;.extra_flags</code> properties (e.g., <code>compiler.cpp.extra_flags</code>). These are intended to be left for
+use by the user as a standardized interface for customizing the compilation commands. The platform author can define as
+many arbitrary properties as they like, so there is no need for them to take the user's properties.</p>
+<p>Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: boards.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF011"></a></p>
+<h2 id="non-empty-hide-value-pf011">non-empty hide value (<code>PF011</code>)<a class="headerlink" href="#non-empty-hide-value-pf011" title="Permanent link">&para;</a></h2>
+<p>The <code>hide</code> property for a board definition in the platform's <code>boards.txt</code> configuration file is not empty. The hiding is
+based purely on whether or not the property was defined. The value is ignored. For this reason, setting a value for the
+property might cause confusion later (e.g., if someone changes <code>foo.hide=true</code> to <code>foo.hide=false</code>, the <code>foo</code> board will
+still be hidden).</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#hiding-boards"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: boards.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF012"></a></p>
+<h2 id="menu-title-min-length-pf012">menu title &lt; min length (<code>PF012</code>)<a class="headerlink" href="#menu-title-min-length-pf012" title="Permanent link">&para;</a></h2>
+<p>The title text length of a custom board options menu in the platform's <code>boards.txt</code> configuration file is shorter than
+the minimum length.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#custom-board-options"><strong>here</strong></a><br /> Enabled for
+superproject type: all<br /> Category: configuration files<br /> Subcategory: boards.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF014"></a></p>
+<h2 id="serialdisabledtr-value-invalid-pf014">serial.disableDTR value invalid (<code>PF014</code>)<a class="headerlink" href="#serialdisabledtr-value-invalid-pf014" title="Permanent link">&para;</a></h2>
+<p>The <code>serial.disableDTR</code> property for a board definition in the platform's <code>boards.txt</code> configuration file has an invalid
+value.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#serial-monitor-control-signal-configuration"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: boards.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF015"></a></p>
+<h2 id="serialdisablerts-value-invalid-pf015">serial.disableRTS value invalid (<code>PF015</code>)<a class="headerlink" href="#serialdisablerts-value-invalid-pf015" title="Permanent link">&para;</a></h2>
+<p>The <code>serial.disableRTS</code> property for a board definition in the platform's <code>boards.txt</code> configuration file has an invalid
+value.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#serial-monitor-control-signal-configuration"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: boards.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF016"></a></p>
+<h2 id="missing-uploadtoolprotocol_name-pf016">missing upload.tool.&lt;protocol_name&gt; (<code>PF016</code>)<a class="headerlink" href="#missing-uploadtoolprotocol_name-pf016" title="Permanent link">&para;</a></h2>
+<p>A board definition in the platform's <code>boards.txt</code> configuration file is missing the <code>upload.tool.&lt;protocol_name&gt;</code>
+property.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#sketch-upload-configuration"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: boards.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF017"></a></p>
+<h2 id="uploadtoolprotocol_name-min-length-pf017">upload.tool.&lt;protocol_name&gt; &lt; min length (<code>PF017</code>)<a class="headerlink" href="#uploadtoolprotocol_name-min-length-pf017" title="Permanent link">&para;</a></h2>
+<p>The <code>upload.tool.&lt;protocol_name&gt;</code> property for a board definition in the platform's <code>boards.txt</code> configuration file is
+shorter than the minimum length.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#sketch-upload-configuration"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: boards.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF018"></a></p>
+<h2 id="missing-uploadmaximum_size-pf018">missing upload.maximum_size (<code>PF018</code>)<a class="headerlink" href="#missing-uploadmaximum_size-pf018" title="Permanent link">&para;</a></h2>
+<p>A board definition in the platform's <code>boards.txt</code> configuration file is missing the <code>upload.maximum_size</code> property.
+Although not required, this provides the build system and the user with very useful information, so it should be
+provided.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#recipes-to-compute-binary-sketch-size"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: boards.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF019"></a></p>
+<h2 id="uploadmaximum_size-not-a-number-pf019">upload.maximum_size not a number (<code>PF019</code>)<a class="headerlink" href="#uploadmaximum_size-not-a-number-pf019" title="Permanent link">&para;</a></h2>
+<p>The <code>upload.maximum_size</code> property for a board definition in the platform's <code>boards.txt</code> configuration file is not
+number.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#recipes-to-compute-binary-sketch-size"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: boards.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF020"></a></p>
+<h2 id="missing-uploadmaximum_data_size-pf020">missing upload.maximum_data_size (<code>PF020</code>)<a class="headerlink" href="#missing-uploadmaximum_data_size-pf020" title="Permanent link">&para;</a></h2>
+<p>A board definition in the platform's <code>boards.txt</code> configuration file is missing the <code>upload.maximum_data_size</code> property.
+Although not required, this provides the build system and the user with very useful information, so it should be
+provided.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#recipes-to-compute-binary-sketch-size"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: boards.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF021"></a></p>
+<h2 id="uploadmaximum_data_size-not-a-number-pf021">upload.maximum_data_size not a number (<code>PF021</code>)<a class="headerlink" href="#uploadmaximum_data_size-not-a-number-pf021" title="Permanent link">&para;</a></h2>
+<p>The <code>upload.maximum_size</code> property for a board definition in the platform's <code>boards.txt</code> configuration file is not
+number.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#recipes-to-compute-binary-sketch-size"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: boards.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF022"></a></p>
+<h2 id="uploaduse_1200bps_touch-value-invalid-pf022">upload.use_1200bps_touch value invalid (<code>PF022</code>)<a class="headerlink" href="#uploaduse_1200bps_touch-value-invalid-pf022" title="Permanent link">&para;</a></h2>
+<p>The <code>upload.use_1200bps_touch</code> property for a board definition in the platform's <code>boards.txt</code> configuration file has an
+invalid value.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#1200-bps-bootloader-reset"><strong>here</strong></a><br /> Enabled
+for superproject type: all<br /> Category: configuration files<br /> Subcategory: boards.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF023"></a></p>
+<h2 id="uploadwait_for_upload_port-value-invalid-pf023">upload.wait_for_upload_port value invalid (<code>PF023</code>)<a class="headerlink" href="#uploadwait_for_upload_port-value-invalid-pf023" title="Permanent link">&para;</a></h2>
+<p>The <code>upload.wait_for_upload_port</code> property for a board definition in the platform's <code>boards.txt</code> configuration file has
+an invalid value.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#1200-bps-bootloader-reset"><strong>here</strong></a><br /> Enabled
+for superproject type: all<br /> Category: configuration files<br /> Subcategory: boards.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF024"></a></p>
+<h2 id="vidn-value-invalid-format-pf024">vid.n value invalid format (<code>PF024</code>)<a class="headerlink" href="#vidn-value-invalid-format-pf024" title="Permanent link">&para;</a></h2>
+<p>The <code>vid.n</code> property for a board definition in the platform's <code>boards.txt</code> configuration file has an invalid value.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#board-vidpid"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: boards.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF025"></a></p>
+<h2 id="pidn-value-invalid-format-pf025">pid.n value invalid format (<code>PF025</code>)<a class="headerlink" href="#pidn-value-invalid-format-pf025" title="Permanent link">&para;</a></h2>
+<p>The <code>pid.n</code> property for a board definition in the platform's <code>boards.txt</code> configuration file has an invalid value.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#board-vidpid"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: boards.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF026"></a></p>
+<h2 id="invalid-programmerstxt-pf026">invalid programmers.txt (<code>PF026</code>)<a class="headerlink" href="#invalid-programmerstxt-pf026" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>programmers.txt</code> configuration file has an invalid data format.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#programmerstxt"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: programmers.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF027"></a></p>
+<h2 id="missing-programmeridname-pf027">missing programmerID.name (<code>PF027</code>)<a class="headerlink" href="#missing-programmeridname-pf027" title="Permanent link">&para;</a></h2>
+<p>A programmer definition in the platform's <code>boards.txt</code> configuration file is missing the <code>name</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#programmerstxt"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: programmers.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF028"></a></p>
+<h2 id="programmeridname-min-length-pf028">programmerID.name &lt; min length (<code>PF028</code>)<a class="headerlink" href="#programmeridname-min-length-pf028" title="Permanent link">&para;</a></h2>
+<p>The <code>name</code> property for a programmer definition in the platform's <code>programmers.txt</code> configuration file is shorter than
+the minimum length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#programmerstxt"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: programmers.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF029"></a></p>
+<h2 id="missing-programmeridprogramtool-pf029">missing programmerID.program.tool (<code>PF029</code>)<a class="headerlink" href="#missing-programmeridprogramtool-pf029" title="Permanent link">&para;</a></h2>
+<p>A programmer definition in the platform's <code>programmers.txt</code> configuration file is missing the <code>program.tool</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#programmerstxt"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: programmers.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF030"></a></p>
+<h2 id="programmeridprogramtool-min-length-pf030">programmerID.program.tool &lt; min length (<code>PF030</code>)<a class="headerlink" href="#programmeridprogramtool-min-length-pf030" title="Permanent link">&para;</a></h2>
+<p>The <code>program.tool</code> property for a programmer definition in the platform's <code>programmers.txt</code> configuration file is
+shorter than the minimum length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#programmerstxt"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: programmers.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF031"></a></p>
+<h2 id="invalid-platformtxt-pf031">invalid platform.txt (<code>PF031</code>)<a class="headerlink" href="#invalid-platformtxt-pf031" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file has an invalid data format.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#platformtxt"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF032"></a></p>
+<h2 id="missing-name-pf032">missing name (<code>PF032</code>)<a class="headerlink" href="#missing-name-pf032" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>name</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#platformtxt"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF033"></a></p>
+<h2 id="name-min-length-pf033">name &lt; min length (<code>PF033</code>)<a class="headerlink" href="#name-min-length-pf033" title="Permanent link">&para;</a></h2>
+<p>The <code>name</code> property in the platform's <code>platform.txt</code> configuration file is shorter than the minimum length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#platformtxt"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF034"></a></p>
+<h2 id="missing-version-pf034">missing version (<code>PF034</code>)<a class="headerlink" href="#missing-version-pf034" title="Permanent link">&para;</a></h2>
+<p>The <code>version</code> property in the platform's <code>platform.txt</code> configuration file is shorter than the minimum length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#platformtxt"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF035"></a></p>
+<h2 id="invalid-version-pf035">invalid version (<code>PF035</code>)<a class="headerlink" href="#invalid-version-pf035" title="Permanent link">&para;</a></h2>
+<p>The <code>version</code> property in the platform's <code>platform.txt</code> configuration file has an invalid format. It must be compliant
+with "relaxed semver".</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#platformtxt"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF036"></a></p>
+<h2 id="non-semver-version-pf036">non-semver version (<code>PF036</code>)<a class="headerlink" href="#non-semver-version-pf036" title="Permanent link">&para;</a></h2>
+<p>The <code>version</code> property in the platform's <code>platform.txt</code> configuration file is not compliant with the "semver"
+specification. Although not required, use of the standard semver version format is recommended.</p>
+<p>More information: <a href="https://semver.org/"><strong>here</strong></a><br /> Enabled for superproject type: all<br /> Category: configuration
+files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF037"></a></p>
+<h2 id="missing-compilerwarning_flagsnone-pf037">missing compiler.warning_flags.none (<code>PF037</code>)<a class="headerlink" href="#missing-compilerwarning_flagsnone-pf037" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>compiler.warning_flags.none</code> property.</p>
+<p>Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF038"></a></p>
+<h2 id="missing-compilerwarning_flagsdefault-pf038">missing compiler.warning_flags.default (<code>PF038</code>)<a class="headerlink" href="#missing-compilerwarning_flagsdefault-pf038" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>compiler.warning_flags.default</code> property.</p>
+<p>Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF039"></a></p>
+<h2 id="missing-compilerwarning_flagsmore-pf039">missing compiler.warning_flags.more (<code>PF039</code>)<a class="headerlink" href="#missing-compilerwarning_flagsmore-pf039" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>compiler.warning_flags.more</code> property.</p>
+<p>Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF040"></a></p>
+<h2 id="missing-compilerwarning_flagsall-pf040">missing compiler.warning_flags.all (<code>PF040</code>)<a class="headerlink" href="#missing-compilerwarning_flagsall-pf040" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>compiler.warning_flags.all</code> property.</p>
+<p>Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF041"></a></p>
+<h2 id="missing-compileroptimization_flagsdebug-pf041">missing compiler.optimization_flags.debug (<code>PF041</code>)<a class="headerlink" href="#missing-compileroptimization_flagsdebug-pf041" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>compiler.optimization_flags.debug</code> property. In order
+to support the optimization level feature, both <code>compiler.optimization_flags.release</code> and
+<code>compiler.optimization_flags.debug</code> must be defined.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#sketch-debugging-configuration"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF042"></a></p>
+<h2 id="missing-compileroptimization_flagsrelease-pf042">missing compiler.optimization_flags.release (<code>PF042</code>)<a class="headerlink" href="#missing-compileroptimization_flagsrelease-pf042" title="Permanent link">&para;</a></h2>
+<p>In order to support the optimization level feature, both compiler.optimization_flags.release and
+compiler.optimization_flags.debug must be defined.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#sketch-debugging-configuration"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF043"></a></p>
+<h2 id="missing-compilercextra_flags-pf043">missing compiler.c.extra_flags (<code>PF043</code>)<a class="headerlink" href="#missing-compilercextra_flags-pf043" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>compiler.c.extra_flags</code> property. An empty default
+definition should be provided to provide a fallback, which the user can override.</p>
+<p>Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF044"></a></p>
+<h2 id="compilercextra_flags-not-empty-pf044">compiler.c.extra_flags not empty (<code>PF044</code>)<a class="headerlink" href="#compilercextra_flags-not-empty-pf044" title="Permanent link">&para;</a></h2>
+<p>The <code>compiler.c.extra_flags</code> property in the platform's <code>platform.txt</code> configuration file is not empty. This property is
+exclusively for use by the user. An empty default definition should be provided to provide a fallback, which the user
+can override.</p>
+<p>Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF045"></a></p>
+<h2 id="missing-compilercppextra_flags-pf045">missing compiler.cpp.extra_flags (<code>PF045</code>)<a class="headerlink" href="#missing-compilercppextra_flags-pf045" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>compiler.cpp.extra_flags</code> property. An empty default
+definition should be provided to provide a fallback, which the user can override.</p>
+<p>Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF046"></a></p>
+<h2 id="compilercppextra_flags-not-empty-pf046">compiler.cpp.extra_flags not empty (<code>PF046</code>)<a class="headerlink" href="#compilercppextra_flags-not-empty-pf046" title="Permanent link">&para;</a></h2>
+<p>The <code>compiler.cpp.extra_flags</code> property in the platform's <code>platform.txt</code> configuration file is not empty. This property
+is exclusively for use by the user. An empty default definition should be provided to provide a fallback, which the user
+can override.</p>
+<p>Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF047"></a></p>
+<h2 id="missing-compilersextra_flags-pf047">missing compiler.S.extra_flags (<code>PF047</code>)<a class="headerlink" href="#missing-compilersextra_flags-pf047" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>compiler.S.extra_flags</code> property. An empty default
+definition should be provided to provide a fallback, which the user can override.</p>
+<p>Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF048"></a></p>
+<h2 id="compilersextra_flags-not-empty-pf048">compiler.S.extra_flags not empty (<code>PF048</code>)<a class="headerlink" href="#compilersextra_flags-not-empty-pf048" title="Permanent link">&para;</a></h2>
+<p>The <code>compiler.S.extra_flags</code> property in the platform's <code>platform.txt</code> configuration file is not empty. This property is
+exclusively for use by the user. An empty default definition should be provided to provide a fallback, which the user
+can override.</p>
+<p>Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF049"></a></p>
+<h2 id="missing-compilerarextra_flags-pf049">missing compiler.ar.extra_flags (<code>PF049</code>)<a class="headerlink" href="#missing-compilerarextra_flags-pf049" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>compiler.ar.extra_flags</code> property. An empty default
+definition should be provided to provide a fallback, which the user can override.</p>
+<p>Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF050"></a></p>
+<h2 id="compilerarextra_flags-not-empty-pf050">compiler.ar.extra_flags not empty (<code>PF050</code>)<a class="headerlink" href="#compilerarextra_flags-not-empty-pf050" title="Permanent link">&para;</a></h2>
+<p>The <code>compiler.ar.extra_flags</code> property in the platform's <code>platform.txt</code> configuration file is not empty. This property
+is exclusively for use by the user. An empty default definition should be provided to provide a fallback, which the user
+can override.</p>
+<p>Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF051"></a></p>
+<h2 id="missing-compilercelfextra_flags-pf051">missing compiler.c.elf.extra_flags (<code>PF051</code>)<a class="headerlink" href="#missing-compilercelfextra_flags-pf051" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>compiler.c.elf.extra_flags</code> property. An empty default
+definition should be provided to provide a fallback, which the user can override.</p>
+<p>Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF052"></a></p>
+<h2 id="compilercelfextra_flags-not-empty-pf052">compiler.c.elf.extra_flags not empty (<code>PF052</code>)<a class="headerlink" href="#compilercelfextra_flags-not-empty-pf052" title="Permanent link">&para;</a></h2>
+<p>The <code>compiler.c.elf.extra_flags</code> property in the platform's <code>platform.txt</code> configuration file is not empty. This
+property is exclusively for use by the user. An empty default definition should be provided to provide a fallback, which
+the user can override.</p>
+<p>Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF053"></a></p>
+<h2 id="recipepreprocmacros-min-length-pf053">recipe.preproc.macros &lt; min length (<code>PF053</code>)<a class="headerlink" href="#recipepreprocmacros-min-length-pf053" title="Permanent link">&para;</a></h2>
+<p>The <code>recipe.preproc.macros</code> property in the platform's <code>platform.txt</code> configuration file is shorter than the minimum
+length.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#recipe-to-run-the-preprocessor"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF054"></a></p>
+<h2 id="recipepreprocmacros-lacks-extra-flags-support-pf054">recipe.preproc.macros lacks extra flags support (<code>PF054</code>)<a class="headerlink" href="#recipepreprocmacros-lacks-extra-flags-support-pf054" title="Permanent link">&para;</a></h2>
+<p>The <code>recipe.preproc.macros</code> property in the platform's <code>platform.txt</code> configuration file does not contain a
+<code>{compiler.cpp.extra_flags}</code> reference. This is necessary to allow the user to customize the compiler command.</p>
+<p>Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF055"></a></p>
+<h2 id="missing-recipecopattern-pf055">missing recipe.c.o.pattern (<code>PF055</code>)<a class="headerlink" href="#missing-recipecopattern-pf055" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>recipe.c.o.pattern</code> property.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#recipes-to-compile-source-code"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF056"></a></p>
+<h2 id="recipecopattern-min-length-pf056">recipe.c.o.pattern &lt; min length (<code>PF056</code>)<a class="headerlink" href="#recipecopattern-min-length-pf056" title="Permanent link">&para;</a></h2>
+<p>The <code>recipe.c.o.pattern</code> property in the platform's <code>platform.txt</code> configuration file is shorter than the minimum
+length.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#recipes-to-compile-source-code"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF057"></a></p>
+<h2 id="recipecopattern-lacks-extra-flags-support-pf057">recipe.c.o.pattern lacks extra flags support (<code>PF057</code>)<a class="headerlink" href="#recipecopattern-lacks-extra-flags-support-pf057" title="Permanent link">&para;</a></h2>
+<p>The <code>recipe.c.o.pattern</code> property in the platform's <code>platform.txt</code> configuration file does not contain a
+<code>{compiler.c.extra_flags}</code> reference. This is necessary to allow the user to customize the compiler command.</p>
+<p>Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF058"></a></p>
+<h2 id="missing-recipecppopattern-pf058">missing recipe.cpp.o.pattern (<code>PF058</code>)<a class="headerlink" href="#missing-recipecppopattern-pf058" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>recipe.cpp.o.pattern</code> property.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#recipes-to-compile-source-code"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF059"></a></p>
+<h2 id="recipecppopattern-min-length-pf059">recipe.cpp.o.pattern &lt; min length (<code>PF059</code>)<a class="headerlink" href="#recipecppopattern-min-length-pf059" title="Permanent link">&para;</a></h2>
+<p>The <code>recipe.cpp.o.pattern</code> property in the platform's <code>platform.txt</code> configuration file is shorter than the minimum
+length.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#recipes-to-compile-source-code"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF060"></a></p>
+<h2 id="recipecppopattern-lacks-extra-flags-support-pf060">recipe.cpp.o.pattern lacks extra flags support (<code>PF060</code>)<a class="headerlink" href="#recipecppopattern-lacks-extra-flags-support-pf060" title="Permanent link">&para;</a></h2>
+<p>The <code>recipe.cpp.o.pattern</code> property in the platform's <code>platform.txt</code> configuration file does not contain a
+<code>{compiler.cpp.extra_flags}</code> reference. This is necessary to allow the user to customize the compiler command.</p>
+<p>Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF061"></a></p>
+<h2 id="missing-recipesopattern-pf061">missing recipe.S.o.pattern (<code>PF061</code>)<a class="headerlink" href="#missing-recipesopattern-pf061" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>recipe.S.o.pattern</code> property.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#recipes-to-compile-source-code"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF062"></a></p>
+<h2 id="recipesopattern-min-length-pf062">recipe.S.o.pattern &lt; min length (<code>PF062</code>)<a class="headerlink" href="#recipesopattern-min-length-pf062" title="Permanent link">&para;</a></h2>
+<p>The <code>recipe.S.o.pattern</code> property in the platform's <code>platform.txt</code> configuration file is shorter than the minimum
+length.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#recipes-to-compile-source-code"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF063"></a></p>
+<h2 id="recipesopattern-lacks-extra-flags-support-pf063">recipe.S.o.pattern lacks extra flags support (<code>PF063</code>)<a class="headerlink" href="#recipesopattern-lacks-extra-flags-support-pf063" title="Permanent link">&para;</a></h2>
+<p>The <code>recipe.S.o.pattern</code> property in the platform's <code>platform.txt</code> configuration file does not contain a
+<code>{compiler.S.extra_flags}</code> reference. This is necessary to allow the user to customize the compiler command.</p>
+<p>Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF064"></a></p>
+<h2 id="missing-recipearpattern-pf064">missing recipe.ar.pattern (<code>PF064</code>)<a class="headerlink" href="#missing-recipearpattern-pf064" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>recipe.ar.pattern</code> property.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#recipes-to-build-the-corea-archive-file"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF065"></a></p>
+<h2 id="recipearpattern-min-length-pf065">recipe.ar.pattern &lt; min length (<code>PF065</code>)<a class="headerlink" href="#recipearpattern-min-length-pf065" title="Permanent link">&para;</a></h2>
+<p>The <code>recipe.ar.pattern</code> property in the platform's <code>platform.txt</code> configuration file is shorter than the minimum length.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#recipes-to-build-the-corea-archive-file"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF066"></a></p>
+<h2 id="recipearpattern-lacks-extra-flags-support-pf066">recipe.ar.pattern lacks extra flags support (<code>PF066</code>)<a class="headerlink" href="#recipearpattern-lacks-extra-flags-support-pf066" title="Permanent link">&para;</a></h2>
+<p>The <code>recipe.ar.pattern</code> property in the platform's <code>platform.txt</code> configuration file does not contain a
+<code>{compiler.ar.extra_flags}</code> reference. This is necessary to allow the user to customize the compiler command.</p>
+<p>Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF067"></a></p>
+<h2 id="missing-recipeccombinepattern-pf067">missing recipe.c.combine.pattern (<code>PF067</code>)<a class="headerlink" href="#missing-recipeccombinepattern-pf067" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>recipe.c.combine.pattern</code> property.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#recipes-for-linking"><strong>here</strong></a><br /> Enabled for
+superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF068"></a></p>
+<h2 id="recipeccombinepattern-min-length-pf068">recipe.c.combine.pattern &lt; min length (<code>PF068</code>)<a class="headerlink" href="#recipeccombinepattern-min-length-pf068" title="Permanent link">&para;</a></h2>
+<p>The <code>recipe.c.combine.pattern</code> property in the platform's <code>platform.txt</code> configuration file is shorter than the minimum
+length.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#recipes-for-linking"><strong>here</strong></a><br /> Enabled for
+superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF069"></a></p>
+<h2 id="recipeccombinepattern-lacks-extra-flags-support-pf069">recipe.c.combine.pattern lacks extra flags support (<code>PF069</code>)<a class="headerlink" href="#recipeccombinepattern-lacks-extra-flags-support-pf069" title="Permanent link">&para;</a></h2>
+<p>The <code>recipe.c.combine.pattern</code> property in the platform's <code>platform.txt</code> configuration file does not contain a
+<code>{compiler.c.elf.extra_flags}</code> reference. This is necessary to allow the user to customize the compiler command.</p>
+<p>Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF070"></a></p>
+<h2 id="missing-recipeoutputtmp_file-pf070">missing recipe.output.tmp_file (<code>PF070</code>)<a class="headerlink" href="#missing-recipeoutputtmp_file-pf070" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>recipe.output.tmp_file</code> property.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#recipes-to-export-compiled-binary"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF071"></a></p>
+<h2 id="recipeoutputtmp_file-min-length-pf071">recipe.output.tmp_file &lt; min length (<code>PF071</code>)<a class="headerlink" href="#recipeoutputtmp_file-min-length-pf071" title="Permanent link">&para;</a></h2>
+<p>The <code>recipe.output.tmp_file</code> property in the platform's <code>platform.txt</code> configuration file is shorter than the minimum
+length.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#recipes-to-export-compiled-binary"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF072"></a></p>
+<h2 id="missing-recipeoutputsave_file-pf072">missing recipe.output.save_file (<code>PF072</code>)<a class="headerlink" href="#missing-recipeoutputsave_file-pf072" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>recipe.output.save_file</code> property.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#recipes-to-export-compiled-binary"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF073"></a></p>
+<h2 id="recipeoutputsave_file-min-length-pf073">recipe.output.save_file &lt; min length (<code>PF073</code>)<a class="headerlink" href="#recipeoutputsave_file-min-length-pf073" title="Permanent link">&para;</a></h2>
+<p>The <code>recipe.output.save_file</code> property in the platform's <code>platform.txt</code> configuration file is shorter than the minimum
+length.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#recipes-to-export-compiled-binary"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF074"></a></p>
+<h2 id="missing-recipesizepattern-pf074">missing recipe.size.pattern (<code>PF074</code>)<a class="headerlink" href="#missing-recipesizepattern-pf074" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>recipe.size.pattern</code> property.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#recipes-to-compute-binary-sketch-size"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF075"></a></p>
+<h2 id="recipesizepattern-min-length-pf075">recipe.size.pattern &lt; min length (<code>PF075</code>)<a class="headerlink" href="#recipesizepattern-min-length-pf075" title="Permanent link">&para;</a></h2>
+<p>The <code>recipe.size.pattern</code> property in the platform's <code>platform.txt</code> configuration file is shorter than the minimum
+length.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#recipes-to-compute-binary-sketch-size"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF076"></a></p>
+<h2 id="missing-recipesizeregex-pf076">missing recipe.size.regex (<code>PF076</code>)<a class="headerlink" href="#missing-recipesizeregex-pf076" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>recipe.size.regex</code> property.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#recipes-to-compute-binary-sketch-size"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF077"></a></p>
+<h2 id="missing-recipesizeregexdata-pf077">missing recipe.size.regex.data (<code>PF077</code>)<a class="headerlink" href="#missing-recipesizeregexdata-pf077" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>recipe.size.regex.data</code> property.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#recipes-to-compute-binary-sketch-size"><strong>here</strong></a><br />
+Enabled for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF090"></a></p>
+<h2 id="invalid-pluggable_discoveryrequired-format-pf090">invalid pluggable_discovery.required format (<code>PF090</code>)<a class="headerlink" href="#invalid-pluggable_discoveryrequired-format-pf090" title="Permanent link">&para;</a></h2>
+<p>The tool dependency reference for a pluggable discovery in the platform's <code>platform.txt</code> configuration file has an
+invalid format.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#pluggable-discovery"><strong>here</strong></a><br /> Enabled for
+superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF091"></a></p>
+<h2 id="missing-pluggable_discoverydiscovery_idpattern-pf091">missing pluggable_discovery.DISCOVERY_ID.pattern (<code>PF091</code>)<a class="headerlink" href="#missing-pluggable_discoverydiscovery_idpattern-pf091" title="Permanent link">&para;</a></h2>
+<p>A manual installation pluggable discovery in the platform's <code>platform.txt</code> configuration file is missing the <code>pattern</code>
+property.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#pluggable-discovery"><strong>here</strong></a><br /> Enabled for
+superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF094"></a></p>
+<h2 id="pluggable_monitorpatternprotocol_id-min-length-pf094">pluggable_monitor.pattern.PROTOCOL_ID &lt; min length (<code>PF094</code>)<a class="headerlink" href="#pluggable_monitorpatternprotocol_id-min-length-pf094" title="Permanent link">&para;</a></h2>
+<p>The <code>pluggable_monitor.pattern.PROTOCOL_ID</code> property in the platform's <code>platform.txt</code> configuration file is shorter than
+the minimum length.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#pluggable-monitor"><strong>here</strong></a><br /> Enabled for
+superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF095"></a></p>
+<h2 id="invalid-pluggable_monitorrequiredprotocol_id-format-pf095">invalid pluggable_monitor.required.PROTOCOL_ID format (<code>PF095</code>)<a class="headerlink" href="#invalid-pluggable_monitorrequiredprotocol_id-format-pf095" title="Permanent link">&para;</a></h2>
+<p>The tool dependency reference for a pluggable monitor in the platform's <code>platform.txt</code> configuration file has an invalid
+format.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#pluggable-monitor"><strong>here</strong></a><br /> Enabled for
+superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF092"></a></p>
+<h2 id="uploadfieldfield_name-max-length-pf092">upload.field.FIELD_NAME &gt; max length (<code>PF092</code>)<a class="headerlink" href="#uploadfieldfield_name-max-length-pf092" title="Permanent link">&para;</a></h2>
+<p>The <code>tools.UPLOAD_RECIPE_ID.upload.field.FIELD_NAME</code> property in the platform's <code>platform.txt</code> configuration file is
+longer than the maximum length.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#user-provided-fields"><strong>here</strong></a><br /> Enabled for
+superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF093"></a></p>
+<h2 id="uploadfieldfield_namesecret-invalid-pf093">upload.field.FIELD_NAME.secret invalid (<code>PF093</code>)<a class="headerlink" href="#uploadfieldfield_namesecret-invalid-pf093" title="Permanent link">&para;</a></h2>
+<p>The <code>tools.UPLOAD_RECIPE_ID.upload.field.FIELD_NAME.secret</code> property in the platform's <code>platform.txt</code> configuration file
+has an invalid value.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#user-provided-fields"><strong>here</strong></a><br /> Enabled for
+superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF080"></a></p>
+<h2 id="missing-uploadpattern-pf080">missing upload.pattern (<code>PF080</code>)<a class="headerlink" href="#missing-uploadpattern-pf080" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>upload.pattern</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#tools"><strong>here</strong></a><br /> Enabled
+for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF081"></a></p>
+<h2 id="missing-programparamsverbose-pf081">missing program.params.verbose (<code>PF081</code>)<a class="headerlink" href="#missing-programparamsverbose-pf081" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>program.params.verbose</code> property.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#verbose-parameter"><strong>here</strong></a><br /> Enabled for
+superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF082"></a></p>
+<h2 id="missing-programparamsquiet-pf082">missing program.params.quiet (<code>PF082</code>)<a class="headerlink" href="#missing-programparamsquiet-pf082" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>program.params.quiet</code> property.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#verbose-parameter"><strong>here</strong></a><br /> Enabled for
+superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF083"></a></p>
+<h2 id="missing-programpattern-pf083">missing program.pattern (<code>PF083</code>)<a class="headerlink" href="#missing-programpattern-pf083" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>program.pattern</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#tools"><strong>here</strong></a><br /> Enabled
+for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF084"></a></p>
+<h2 id="missing-eraseparamsverbose-pf084">missing erase.params.verbose (<code>PF084</code>)<a class="headerlink" href="#missing-eraseparamsverbose-pf084" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>erase.params.verbose</code> property.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#verbose-parameter"><strong>here</strong></a><br /> Enabled for
+superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF085"></a></p>
+<h2 id="missing-eraseparamsquiet-pf085">missing erase.params.quiet (<code>PF085</code>)<a class="headerlink" href="#missing-eraseparamsquiet-pf085" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>erase.params.quiet</code> property.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#verbose-parameter"><strong>here</strong></a><br /> Enabled for
+superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF086"></a></p>
+<h2 id="missing-erasepattern-pf086">missing erase.pattern (<code>PF086</code>)<a class="headerlink" href="#missing-erasepattern-pf086" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>erase.pattern</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#tools"><strong>here</strong></a><br /> Enabled
+for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF087"></a></p>
+<h2 id="missing-bootloaderparamsverbose-pf087">missing bootloader.params.verbose (<code>PF087</code>)<a class="headerlink" href="#missing-bootloaderparamsverbose-pf087" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>bootloader.params.verbose</code> property.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#verbose-parameter"><strong>here</strong></a><br /> Enabled for
+superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF088"></a></p>
+<h2 id="missing-bootloaderparamsquiet-pf088">missing bootloader.params.quiet (<code>PF088</code>)<a class="headerlink" href="#missing-bootloaderparamsquiet-pf088" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>bootloader.params.quiet</code> property.</p>
+<p>More information:
+<a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#verbose-parameter"><strong>here</strong></a><br /> Enabled for
+superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PF089"></a></p>
+<h2 id="missing-bootloaderpattern-pf089">missing bootloader.pattern (<code>PF089</code>)<a class="headerlink" href="#missing-bootloaderpattern-pf089" title="Permanent link">&para;</a></h2>
+<p>The platform's <code>platform.txt</code> configuration file is missing the <code>bootloader.pattern</code> property.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/platform-specification/#tools"><strong>here</strong></a><br /> Enabled
+for superproject type: all<br /> Category: configuration files<br /> Subcategory: platform.txt</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="PC001"></a></p>
+<h2 id="arduinoh-case-pc001">Arduino.h case (<code>PC001</code>)<a class="headerlink" href="#arduinoh-case-pc001" title="Permanent link">&para;</a></h2>
+<p>An <code>#include</code> directive for a file matching the standardized Arduino core library's <code>Arduino.h</code> header in all except
+case (e.g., <code>#include &lt;arduino.h&gt;</code>) was found in the platform's code. This causes compilation failure on case-sensitive
+file systems.</p>
+<p>Enabled for superproject type: all<br /> Category: code<br /> Subcategory: miscellaneous</p>
+<h5>Rule levels</h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+
+              
+            </article>
+            
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="../library/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Library" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Library
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../package-index/" class="md-footer__link md-footer__link--next" aria-label="Next: Package index" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Package index
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright 2020 ARDUINO SA (http://www.arduino.cc/)
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.b97dbffb.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.0238f547.min.js"></script>
+      
+    
+  </body>
+</html>
