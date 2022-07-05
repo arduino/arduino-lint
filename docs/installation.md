@@ -82,7 +82,7 @@ get the latest nightly build available for the supported platform, use the follo
 [windows64-nightly]: https://downloads.arduino.cc/arduino-lint/nightly/arduino-lint_nightly-latest_Windows_64bit.zip
 [windows32-nightly]: https://downloads.arduino.cc/arduino-lint/nightly/arduino-lint_nightly-latest_Windows_32bit.zip
 [macos64-nightly]: https://downloads.arduino.cc/arduino-lint/nightly/arduino-lint_nightly-latest_macOS_64bit.tar.gz
-[macosarm64-nightly]: https://downloads.arduino.cc/arduino-lint/arduino-lint_nightly-latest_macOS_ARM64.tar.gz
+[macosarm64-nightly]: https://downloads.arduino.cc/arduino-lint/nightly/arduino-lint_nightly-latest_macOS_ARM64.tar.gz
 
 > These links return a `302: Found` response, redirecting to latest generated builds by replacing `latest` with the
 > latest available build date, using the format YYYYMMDD (i.e for 2019-08-06 `latest` is replaced with `20190806` )
