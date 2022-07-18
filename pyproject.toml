@@ -24,7 +24,7 @@ mkdocs-material = "^8.3.9"
 black = "^22.6"
 codespell = "^2.1.0"
 flake8 = "^4.0.1"
-pep8-naming = "^0.13.0"
+pep8-naming = "^0.13.1"
 
 [tool.black]
 line-length = 120
