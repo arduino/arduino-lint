@@ -15,10 +15,10 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [package.extras]
-tests_no_zope = ["six", "pytest (>=4.3.0)", "pympler", "hypothesis", "coverage[toml] (>=5.0.2)"]
-tests = ["zope.interface", "six", "pytest (>=4.3.0)", "pympler", "hypothesis", "coverage[toml] (>=5.0.2)"]
-docs = ["zope.interface", "sphinx", "furo"]
-dev = ["pre-commit", "sphinx", "furo", "zope.interface", "six", "pytest (>=4.3.0)", "pympler", "hypothesis", "coverage[toml] (>=5.0.2)"]
+dev = ["coverage[toml] (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "zope.interface", "furo", "sphinx", "pre-commit"]
+docs = ["furo", "sphinx", "zope.interface"]
+tests = ["coverage[toml] (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "zope.interface"]
+tests_no_zope = ["coverage[toml] (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)", "six"]
 
 [[package]]
 name = "black"
@@ -37,10 +37,10 @@ tomli = {version = ">=1.1.0", markers = "python_full_version < \"3.11.0a7\""}
 typing-extensions = {version = ">=3.10.0.0", markers = "python_version < \"3.10\""}
 
 [package.extras]
-uvloop = ["uvloop (>=0.15.2)"]
-jupyter = ["tokenize-rt (>=3.2.0)", "ipython (>=7.8.0)"]
-d = ["aiohttp (>=3.7.4)"]
 colorama = ["colorama (>=0.4.3)"]
+d = ["aiohttp (>=3.7.4)"]
+jupyter = ["ipython (>=7.8.0)", "tokenize-rt (>=3.2.0)"]
+uvloop = ["uvloop (>=0.15.2)"]
 
 [[package]]
 name = "click"
@@ -55,15 +55,15 @@ colorama = {version = "*", markers = "platform_system == \"Windows\""}
 
 [[package]]
 name = "codespell"
-version = "2.1.0"
+version = "2.2.1"
 description = "Codespell"
 category = "dev"
 optional = false
-python-versions = ">=3.5"
+python-versions = ">=3.6"
 
 [package.extras]
+dev = ["check-manifest", "flake8", "pytest", "pytest-cov", "pytest-dependency"]
 hard-encoding-detection = ["chardet"]
-dev = ["pytest-dependency", "pytest-cov", "pytest", "flake8", "check-manifest"]
 
 [[package]]
 name = "colorama"
@@ -134,9 +134,9 @@ python-versions = ">=3.6"
 zipp = ">=0.5"
 
 [package.extras]
-testing = ["importlib-resources (>=1.3)", "pytest-mypy", "pytest-black (>=0.3.7)", "pytest-perf (>=0.9.2)", "flufl.flake8", "pyfakefs", "pep517", "packaging", "pytest-enabler (>=1.0.1)", "pytest-cov", "pytest-flake8", "pytest-checkdocs (>=2.4)", "pytest (>=4.6)"]
+docs = ["sphinx", "jaraco.packaging (>=8.2)", "rst.linker (>=1.9)"]
 perf = ["ipython"]
-docs = ["rst.linker (>=1.9)", "jaraco.packaging (>=8.2)", "sphinx"]
+testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-cov", "pytest-enabler (>=1.0.1)", "packaging", "pep517", "pyfakefs", "flufl.flake8", "pytest-perf (>=0.9.2)", "pytest-black (>=0.3.7)", "pytest-mypy", "importlib-resources (>=1.3)"]
 
 [[package]]
 name = "iniconfig"
@@ -177,7 +177,7 @@ optional = false
 python-versions = ">=3.6"
 
 [package.extras]
-testing = ["pyyaml", "coverage"]
+testing = ["coverage", "pyyaml"]
 
 [[package]]
 name = "markupsafe"
@@ -338,7 +338,7 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [package.extras]
-dev = ["tox", "pre-commit"]
+dev = ["pre-commit", "tox"]
 
 [[package]]
 name = "py"
@@ -410,7 +410,7 @@ py = ">=1.8.2"
 tomli = ">=1.0.0"
 
 [package.extras]
-testing = ["xmlschema", "requests", "pygments (>=2.7.2)", "nose", "mock", "hypothesis (>=3.56)", "argcomplete"]
+testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "pygments (>=2.7.2)", "requests", "xmlschema"]
 
 [[package]]
 name = "python-dateutil"
@@ -502,7 +502,7 @@ optional = false
 python-versions = ">=3.6"
 
 [package.extras]
-watchmedo = ["argh (>=0.24.1)", "PyYAML (>=3.10)"]
+watchmedo = ["PyYAML (>=3.10)", "argh (>=0.24.1)"]
 
 [[package]]
 name = "zipp"
@@ -513,13 +513,13 @@ optional = false
 python-versions = ">=3.6"
 
 [package.extras]
-testing = ["pytest-mypy", "pytest-black (>=0.3.7)", "func-timeout", "jaraco.itertools", "pytest-enabler (>=1.0.1)", "pytest-cov", "pytest-flake8", "pytest-checkdocs (>=2.4)", "pytest (>=4.6)"]
-docs = ["rst.linker (>=1.9)", "jaraco.packaging (>=8.2)", "sphinx"]
+docs = ["sphinx", "jaraco.packaging (>=8.2)", "rst.linker (>=1.9)"]
+testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-cov", "pytest-enabler (>=1.0.1)", "jaraco.itertools", "func-timeout", "pytest-black (>=0.3.7)", "pytest-mypy"]
 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "fd34ef209029a3e8641354778c42f4f12a4007674f143ee0e325edb73fb24a41"
+content-hash = "bbb1ce1b447d20e1c20ffcee2242628b7884ad004d34d3d7a7030f05675cf704"
 
 [metadata.files]
 atomicwrites = [
@@ -560,8 +560,8 @@ click = [
     {file = "click-8.0.1.tar.gz", hash = "sha256:8c04c11192119b1ef78ea049e0a6f0463e4c48ef00a30160c704337586f3ad7a"},
 ]
 codespell = [
-    {file = "codespell-2.1.0-py3-none-any.whl", hash = "sha256:b864c7d917316316ac24272ee992d7937c3519be4569209c5b60035ac5d569b5"},
-    {file = "codespell-2.1.0.tar.gz", hash = "sha256:19d3fe5644fef3425777e66f225a8c82d39059dcfe9edb3349a8a2cf48383ee5"},
+    {file = "codespell-2.2.1-py3-none-any.whl", hash = "sha256:0c53a70f466952706407383d87142a78f319a0e18602802c4aadd3d93158bfc6"},
+    {file = "codespell-2.2.1.tar.gz", hash = "sha256:569b67e5e5c3ade02a1e23f6bbc56c64b608a3ab48ddd943ece0a03e6c346ed1"},
 ]
 colorama = [
     {file = "colorama-0.4.4-py2.py3-none-any.whl", hash = "sha256:9f47eda37229f68eee03b24b9748937c7dc3868f906e8ba69fbcbdd3bc5dc3e2"},
