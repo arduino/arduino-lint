@@ -276,7 +276,7 @@ i18n = ["babel (>=2.9.0)"]
 
 [[package]]
 name = "mkdocs-material"
-version = "8.5.3"
+version = "8.5.6"
 description = "Documentation that simply works"
 category = "main"
 optional = false
@@ -285,7 +285,7 @@ python-versions = ">=3.7"
 [package.dependencies]
 jinja2 = ">=3.0.2"
 markdown = ">=3.2"
-mkdocs = ">=1.3.0"
+mkdocs = ">=1.4.0"
 mkdocs-material-extensions = ">=1.0.3"
 pygments = ">=2.12"
 pymdown-extensions = ">=9.4"
@@ -569,7 +569,7 @@ testing = ["func-timeout", "jaraco.itertools", "pytest (>=4.6)", "pytest-black (
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "6e9a97f466c6c7da1766b49ba951eeb57f4a58f72d2cf44ea4f476c1bb6053e0"
+content-hash = "e294b7f8fe032ddd93a0ff3742e3668cb594f1fcc2fc8d5bb007bde661a08821"
 
 [metadata.files]
 attrs = [
@@ -724,8 +724,8 @@ mkdocs = [
     {file = "mkdocs-1.4.0.tar.gz", hash = "sha256:e5549a22d59e7cb230d6a791edd2c3d06690908454c0af82edc31b35d57e3069"},
 ]
 mkdocs-material = [
-    {file = "mkdocs_material-8.5.3-py3-none-any.whl", hash = "sha256:d194c38041d1e83560221022b3f85eec4604b35e44f5c3a488c24b88542074ed"},
-    {file = "mkdocs_material-8.5.3.tar.gz", hash = "sha256:43b0aa707d6f9acd836024cab2dce9330957c94a4e1e41c23ee6c8ce67b4d8c5"},
+    {file = "mkdocs_material-8.5.6-py3-none-any.whl", hash = "sha256:b473162c800321b9760453f301a91f7cb40a120a85a9d0464e1e484e74b76bb2"},
+    {file = "mkdocs_material-8.5.6.tar.gz", hash = "sha256:38a21d817265d0c203ab3dad64996e45859c983f72180f6937bd5540a4eb84e4"},
 ]
 mkdocs-material-extensions = [
     {file = "mkdocs-material-extensions-1.0.3.tar.gz", hash = "sha256:bfd24dfdef7b41c312ede42648f9eb83476ea168ec163b613f9abd12bbfddba2"},
