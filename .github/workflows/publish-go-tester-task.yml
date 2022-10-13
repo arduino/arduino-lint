@@ -132,6 +132,6 @@ jobs:
 
     steps:
       - name: Remove unneeded combined builds artifact
-        uses: geekyeggo/delete-artifact@v1
+        uses: geekyeggo/delete-artifact@v2
         with:
           name: ${{ env.BUILDS_ARTIFACT }}
