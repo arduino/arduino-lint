@@ -24,9 +24,10 @@ on:
   repository_dispatch:
 
 env:
+  # As defined by the Taskfile's PROJECT_NAME variable
+  PROJECT_NAME: arduino-lint
   # As defined by the Taskfile's DIST_DIR variable
   DIST_DIR: dist
-  BUILDS_ARTIFACT: build-artifacts
 
 jobs:
   run-determination:
@@ -52,10 +53,59 @@ jobs:
 
           echo "::set-output name=result::$RESULT"
 
-  build:
+  package-name-prefix:
     needs: run-determination
     if: needs.run-determination.outputs.result == 'true'
     runs-on: ubuntu-latest
+    outputs:
+      prefix: ${{ steps.calculation.outputs.prefix }}
+    steps:
+      - name: package name prefix calculation
+        id: calculation
+        run: |
+          PACKAGE_NAME_PREFIX="test"
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            PACKAGE_NAME_PREFIX="$PACKAGE_NAME_PREFIX-${{ github.event.number }}"
+          fi
+          PACKAGE_NAME_PREFIX="$PACKAGE_NAME_PREFIX-${{ github.sha }}-"
+
+          echo "::set-output name=prefix::$PACKAGE_NAME_PREFIX"
+
+  build:
+    needs: package-name-prefix
+    name: Build ${{ matrix.os.name }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        os:
+          - task: Windows_32bit
+            path: "*Windows_32bit.zip"
+            name: Windows_X86-32
+          - task: Windows_64bit
+            path: "*Windows_64bit.zip"
+            name: Windows_X86-64
+          - task: Linux_32bit
+            path: "*Linux_32bit.tar.gz"
+            name: Linux_X86-32
+          - task: Linux_64bit
+            path: "*Linux_64bit.tar.gz"
+            name: Linux_X86-64
+          - task: Linux_ARMv6
+            path: "*Linux_ARMv6.tar.gz"
+            name: Linux_ARMv6
+          - task: Linux_ARMv7
+            path: "*Linux_ARMv7.tar.gz"
+            name: Linux_ARMv7
+          - task: Linux_ARM64
+            path: "*Linux_ARM64.tar.gz"
+            name: Linux_ARM64
+          - task: macOS_64bit
+            path: "*macOS_64bit.tar.gz"
+            name: macOS_64
+          - task: macOS_ARM64
+            path: "*macOS_ARM64.tar.gz"
+            name: macOS_ARM64
 
     steps:
       - name: Checkout repository
@@ -69,69 +119,41 @@ jobs:
 
       - name: Build
         run: |
-          PACKAGE_NAME_PREFIX="test"
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            PACKAGE_NAME_PREFIX="$PACKAGE_NAME_PREFIX-${{ github.event.number }}"
-          fi
-          PACKAGE_NAME_PREFIX="$PACKAGE_NAME_PREFIX-${{ github.sha }}-"
+          PACKAGE_NAME_PREFIX=${{ needs.package-name-prefix.outputs.prefix }}
           export PACKAGE_NAME_PREFIX
-          task dist:all
+          task dist:${{ matrix.os.task }}
 
       # Transfer builds to artifacts job
-      - name: Upload combined builds artifact
+      - name: Upload build artifact
         uses: actions/upload-artifact@v3
         with:
-          path: ${{ env.DIST_DIR }}
-          name: ${{ env.BUILDS_ARTIFACT }}
+          path: ${{ env.DIST_DIR }}/${{ matrix.os.path }}
+          name: ${{ matrix.os.name }}
 
-  artifacts:
-    name: ${{ matrix.artifact.name }} artifact
-    needs: build
+  checksums:
+    needs:
+      - build
+      - package-name-prefix
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        artifact:
-          - path: "*checksums.txt"
-            name: checksums
-          - path: "*Linux_32bit.tar.gz"
-            name: Linux_X86-32
-          - path: "*Linux_64bit.tar.gz"
-            name: Linux_X86-64
-          - path: "*Linux_ARM64.tar.gz"
-            name: Linux_ARM64
-          - path: "*Linux_ARMv6.tar.gz"
-            name: Linux_ARMv6
-          - path: "*Linux_ARMv7.tar.gz"
-            name: Linux_ARMv7
-          - path: "*macOS_64bit.tar.gz"
-            name: macOS_64
-          - path: "*macOS_ARM64.tar.gz"
-            name: macOS_ARM64
-          - path: "*Windows_32bit.zip"
-            name: Windows_X86-32
-          - path: "*Windows_64bit.zip"
-            name: Windows_X86-64
-
     steps:
-      - name: Download combined builds artifact
+      - name: Download build artifacts
         uses: actions/download-artifact@v3
-        with:
-          name: ${{ env.BUILDS_ARTIFACT }}
-          path: ${{ env.BUILDS_ARTIFACT }}
 
-      - name: Upload individual build artifact
+      - name: Create checksum file
+        run: |
+          TAG="${{ needs.package-name-prefix.outputs.prefix }}git-snapshot"
+          declare -a artifacts=($(ls -d */))
+          for artifact in ${artifacts[@]}
+          do
+            cd $artifact
+            checksum=$(sha256sum ${{ env.PROJECT_NAME }}_${TAG}*)
+            cd ..
+            echo $checksum >> ${TAG}-checksums.txt
+          done
+
+      - name: Upload checksum artifact
         uses: actions/upload-artifact@v3
         with:
-          path: ${{ env.BUILDS_ARTIFACT }}/${{ matrix.artifact.path }}
-          name: ${{ matrix.artifact.name }}
-
-  clean:
-    needs: artifacts
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Remove unneeded combined builds artifact
-        uses: geekyeggo/delete-artifact@v2
-        with:
-          name: ${{ env.BUILDS_ARTIFACT }}
+          path: ./*checksums.txt
+          name: checksums
