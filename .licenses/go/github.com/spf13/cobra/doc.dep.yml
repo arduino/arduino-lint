@@ -1,12 +1,12 @@
 ---
 name: github.com/spf13/cobra/doc
-version: v1.4.0
+version: v1.6.1
 type: go
-summary:
+summary: 
 homepage: https://pkg.go.dev/github.com/spf13/cobra/doc
 license: apache-2.0
 licenses:
-- sources: cobra@v1.4.0/LICENSE.txt
+- sources: cobra@v1.6.1/LICENSE.txt
   text: |2
                                     Apache License
                                Version 2.0, January 2004
