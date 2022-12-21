@@ -2,9 +2,6 @@
 sources:
   go: true
 
-shared_cache: true
-cache_path: .licenses/
-
 apps:
   - source_path: ./
   - source_path: docsgen/

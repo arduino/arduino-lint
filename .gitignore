@@ -1,5 +1,5 @@
 # Build artifacts
-arduino-lint
+/arduino-lint
 arduino-lint.exe
 __pycache__/
 
