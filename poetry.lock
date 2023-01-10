@@ -290,7 +290,7 @@ min-versions = ["babel (==2.9.0)", "click (==7.0)", "colorama (==0.4)", "ghp-imp
 
 [[package]]
 name = "mkdocs-material"
-version = "9.0.2"
+version = "9.0.3"
 description = "Documentation that simply works"
 category = "main"
 optional = false
@@ -588,7 +588,7 @@ testing = ["func-timeout", "jaraco.itertools", "pytest (>=4.6)", "pytest-black (
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "ff87cd5d8b5ebf993114cefa1d2360e73ba097147c84967390d0873688294970"
+content-hash = "0c16f13e16e5a80e0baed3bf21532161a62fc0ed2724381f075d226a7696449f"
 
 [metadata.files]
 attrs = [
@@ -736,8 +736,8 @@ mkdocs = [
     {file = "mkdocs-1.4.2.tar.gz", hash = "sha256:8947af423a6d0facf41ea1195b8e1e8c85ad94ac95ae307fe11232e0424b11c5"},
 ]
 mkdocs-material = [
-    {file = "mkdocs_material-9.0.2-py3-none-any.whl", hash = "sha256:e2f0af24be09c2aaea88a70bac9fcca976276074931c06fd0631b1981f5c74ad"},
-    {file = "mkdocs_material-9.0.2.tar.gz", hash = "sha256:c24e2127ada1d4d3deff09fa4bbe0a22f6e6bb7eaf7616e193138bf2a40d6580"},
+    {file = "mkdocs_material-9.0.3-py3-none-any.whl", hash = "sha256:cedbbf84e156370489907d3c5b79999fcf6563f61a96965ec4c2513d303fa706"},
+    {file = "mkdocs_material-9.0.3.tar.gz", hash = "sha256:918fe38f504ca397b388b6c45445c22cb9acab61f00ade78d5f3edf299b6c9df"},
 ]
 mkdocs-material-extensions = [
     {file = "mkdocs_material_extensions-1.1-py3-none-any.whl", hash = "sha256:bcc2e5fc70c0ec50e59703ee6e639d87c7e664c0c441c014ea84461a90f1e902"},
