@@ -1,10 +1,10 @@
 ---
-name: golang.org/x/crypto/ssh/agent
+name: golang.org/x/crypto/internal/poly1305
 version: v0.0.0-20210921155107-089bfa567519
 type: go
-summary: Package agent implements the ssh-agent protocol, and provides both a client
-  and a server.
-homepage: https://pkg.go.dev/golang.org/x/crypto/ssh/agent
+summary: Package poly1305 implements Poly1305 one-time message authentication code
+  as specified in https://cr.yp.to/mac/poly1305-20050329.pdf.
+homepage: https://pkg.go.dev/golang.org/x/crypto/internal/poly1305
 license: bsd-3-clause
 licenses:
 - sources: crypto@v0.0.0-20210921155107-089bfa567519/LICENSE
