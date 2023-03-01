@@ -1,0 +1,9 @@
+---
+name: github.com/pjbgf/sha1cd/cgo
+version: v0.2.3
+type: go
+summary: 
+homepage: https://pkg.go.dev/github.com/pjbgf/sha1cd/cgo
+license: none
+licenses: []
+notices: []
