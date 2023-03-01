@@ -4,7 +4,7 @@ version: v0.3.0
 type: go
 summary: Package alias implements memory aliasing tests.
 homepage: https://pkg.go.dev/golang.org/x/crypto/internal/alias
-license: other
+license: bsd-3-clause
 licenses:
 - sources: crypto@v0.3.0/LICENSE
   text: |

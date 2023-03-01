@@ -2,9 +2,9 @@
 name: github.com/cloudflare/circl/internal/conv
 version: v1.1.0
 type: go
-summary: 
+summary:
 homepage: https://pkg.go.dev/github.com/cloudflare/circl/internal/conv
-license: other
+license: bsd-3-clause
 licenses:
 - sources: circl@v1.1.0/LICENSE
   text: |
