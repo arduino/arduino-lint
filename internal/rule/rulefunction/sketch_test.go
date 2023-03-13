@@ -75,7 +75,7 @@ func TestSketchNameMismatch(t *testing.T) {
 func TestProhibitedCharactersInSketchFileName(t *testing.T) {
 	testTables := []sketchRuleFunctionTestTable{
 		{"Has prohibited characters", "ProhibitedCharactersInFileName", ruleresult.Fail, "^Prohibited CharactersInFileName.h$"},
-		{"No prohibited characters", "Valid", ruleresult.Pass, ""},
+		{"No prohibited characters", "AllowedCharactersInFilenames", ruleresult.Pass, ""},
 	}
 
 	checkSketchRuleFunction(ProhibitedCharactersInSketchFileName, testTables, t)
