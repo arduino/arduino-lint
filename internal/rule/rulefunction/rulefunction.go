@@ -105,7 +105,7 @@ func brokenOutputList(list []string) string {
 
 // validProjectPathBaseName checks whether the provided library folder or sketch filename contains prohibited characters.
 func validProjectPathBaseName(name string) bool {
-	baseNameRegexp := regexp.MustCompile("^[a-zA-Z0-9][a-zA-Z0-9_.-]*$")
+	baseNameRegexp := regexp.MustCompile("^[a-zA-Z0-9_][a-zA-Z0-9_.-]*$")
 	return baseNameRegexp.MatchString(name)
 }
 
