@@ -1,13 +1,13 @@
 ---
 name: github.com/JohannesKaufmann/html-to-markdown/escape
-version: v1.3.6
+version: v1.3.7
 type: go
 summary: Package escape escapes characters that are commonly used in markdown like
   the * for strong/italic.
 homepage: https://pkg.go.dev/github.com/JohannesKaufmann/html-to-markdown/escape
 license: mit
 licenses:
-- sources: html-to-markdown@v1.3.6/LICENSE
+- sources: html-to-markdown@v1.3.7/LICENSE
   text: |
     MIT License
 
@@ -30,6 +30,6 @@ licenses:
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
-- sources: html-to-markdown@v1.3.6/README.md
+- sources: html-to-markdown@v1.3.7/README.md
   text: This project is licensed under the terms of the MIT license.
 notices: []
