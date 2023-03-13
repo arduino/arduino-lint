@@ -274,11 +274,11 @@ func (results Type) JSONReport() string {
 	return string(results.jsonReportRaw())
 }
 
-// jsonReportRaw returns the report marshalled into JSON format in byte encoding.
+// jsonReportRaw returns the report marshaled into JSON format in byte encoding.
 func (results Type) jsonReportRaw() []byte {
-	var marshalledReportBuffer bytes.Buffer
-	jsonEncoder := json.NewEncoder(io.Writer(&marshalledReportBuffer))
-	// By default, the json package HTML-sanitizes strings during marshalling (https://golang.org/pkg/encoding/json/#Marshal)
+	var marshaledReportBuffer bytes.Buffer
+	jsonEncoder := json.NewEncoder(io.Writer(&marshaledReportBuffer))
+	// By default, the json package HTML-sanitizes strings during marshaling (https://golang.org/pkg/encoding/json/#Marshal)
 	// This means that the simple json.MarshalIndent() approach would result in the report containing gibberish.
 	jsonEncoder.SetEscapeHTML(false)
 	jsonEncoder.SetIndent("", "  ")
@@ -287,7 +287,7 @@ func (results Type) jsonReportRaw() []byte {
 		panic(fmt.Sprintf("Error while formatting rules report: %v", err))
 	}
 
-	return marshalledReportBuffer.Bytes()
+	return marshaledReportBuffer.Bytes()
 }
 
 // WriteReport writes a report for all projects to the specified file.

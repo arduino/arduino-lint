@@ -200,19 +200,19 @@ func validationErrorSchemaSubPointerMatch(schemaPointerRegexp *regexp.Regexp, pa
 	return ""
 }
 
-// validationErrorSchemaPointerValueMatch marshalls the data in the schema at the given JSON pointer and returns whether
+// validationErrorSchemaPointerValueMatch marshals the data in the schema at the given JSON pointer and returns whether
 // it matches against the given regular expression.
 func validationErrorSchemaPointerValueMatch(
 	schemaPointerValueRegexp *regexp.Regexp,
 	validationError ValidationResult,
 	schemaPointer string,
 ) bool {
-	marshalledSchemaPointerValue, err := json.Marshal(schemaPointerValue(validationError.Result.SchemaURL, schemaPointer, validationError.dataLoader))
+	marshaledSchemaPointerValue, err := json.Marshal(schemaPointerValue(validationError.Result.SchemaURL, schemaPointer, validationError.dataLoader))
 	if err != nil {
 		panic(err)
 	}
-	logrus.Tracef("Checking schema pointer value: %s match with regexp: %s", marshalledSchemaPointerValue, schemaPointerValueRegexp)
-	return schemaPointerValueRegexp.Match(marshalledSchemaPointerValue)
+	logrus.Tracef("Checking schema pointer value: %s match with regexp: %s", marshaledSchemaPointerValue, schemaPointerValueRegexp)
+	return schemaPointerValueRegexp.Match(marshaledSchemaPointerValue)
 }
 
 // validationErrorContextMatch parses the validation error context data and returns whether it matches against the given
