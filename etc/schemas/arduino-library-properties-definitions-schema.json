@@ -91,7 +91,7 @@
                 "$ref": "#/definitions/propertiesObjects/name/specification/object"
               },
               {
-                "maxLength": 64
+                "maxLength": 32
               },
               {
                 "$ref": "#/definitions/propertiesObjects/name/strict/definitions/patternObjects/notContainsSpaces"

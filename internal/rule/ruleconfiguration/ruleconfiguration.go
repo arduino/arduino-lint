@@ -424,7 +424,7 @@ var configurations = []Type{
 		ID:               "LP010",
 		Brief:            "name > recommended length",
 		Description:      "The `name` field in the library's `library.properties` metadata file is longer than the recommended length. As the unique identifier for the library, the name will be typed by the users of command line tools (e.g., `arduino-cli lib install Servo`). For this reason, it is best practices to avoid unnecessary name length.",
-		MessageTemplate:  "library.properties name value {{.}} is longer than the recommended length of 64 characters.",
+		MessageTemplate:  "library.properties name value {{.}} is longer than the recommended length of 32 characters.",
 		Reference:        "https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format",
 		DisableModes:     nil,
 		EnableModes:      []rulemode.Type{rulemode.Default},
