@@ -297,7 +297,7 @@ func TestLibraryPropertiesNameFieldGTRecommendedLength(t *testing.T) {
 	testTables := []libraryRuleFunctionTestTable{
 		{"Invalid", "InvalidLibraryProperties", ruleresult.NotRun, ""},
 		{"Legacy", "Legacy", ruleresult.NotRun, ""},
-		{"Name field longer than recommended", "NameGTRecommendedLength", ruleresult.Fail, ""},
+		{"Name field longer than recommended", "NameIsBiggerThanRecommendedLength", ruleresult.Fail, ""},
 		{"Valid", "Recursive", ruleresult.Pass, ""},
 	}
 
