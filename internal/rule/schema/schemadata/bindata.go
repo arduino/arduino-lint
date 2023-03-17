@@ -1509,7 +1509,7 @@ var _arduinoLibraryPropertiesDefinitionsSchemaJson = []byte(`{
                 "$ref": "#/definitions/propertiesObjects/name/specification/object"
               },
               {
-                "maxLength": 16
+                "maxLength": 32
               },
               {
                 "$ref": "#/definitions/propertiesObjects/name/strict/definitions/patternObjects/notContainsSpaces"
