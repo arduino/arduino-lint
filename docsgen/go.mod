@@ -11,7 +11,7 @@ replace github.com/oleiade/reflections => github.com/oleiade/reflections v1.0.1 
 
 require (
 	github.com/arduino/arduino-lint v0.0.0
-	github.com/spf13/cobra v1.6.1
+	github.com/spf13/cobra v1.7.0
 )
 
 require (
@@ -41,7 +41,7 @@ require (
 	github.com/h2non/filetype v1.1.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/imdario/mergo v0.3.13 // indirect
-	github.com/inconshreveable/mousetrap v1.0.1 // indirect
+	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jandelgado/gcov2lcov v1.0.4 // indirect
 	github.com/jbenet/go-context v0.0.0-20150711004518-d14ea06fba99 // indirect
 	github.com/juju/errors v0.0.0-20200330140219-3fe23663418f // indirect
