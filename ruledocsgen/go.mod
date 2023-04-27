@@ -7,7 +7,7 @@ replace github.com/arduino/arduino-lint => ../
 replace github.com/jandelgado/gcov2lcov => github.com/jandelgado/gcov2lcov v1.0.5 // v1.0.4 causes Dependabot updates to fail due to checksum mismatch (likely a moved tag). This is an unused transitive dependency, so version is irrelevant.
 
 require (
-	github.com/JohannesKaufmann/html-to-markdown v1.3.7
+	github.com/JohannesKaufmann/html-to-markdown v1.4.0
 	github.com/arduino/arduino-lint v0.0.0
 	github.com/arduino/go-paths-helper v1.8.0
 	github.com/olekukonko/tablewriter v0.0.5
@@ -83,10 +83,10 @@ require (
 	go.opentelemetry.io/otel/trace v0.20.0 // indirect
 	golang.org/x/crypto v0.6.0 // indirect
 	golang.org/x/mod v0.8.0 // indirect
-	golang.org/x/net v0.8.0 // indirect
+	golang.org/x/net v0.9.0 // indirect
 	golang.org/x/sync v0.1.0 // indirect
-	golang.org/x/sys v0.6.0 // indirect
-	golang.org/x/text v0.8.0 // indirect
+	golang.org/x/sys v0.7.0 // indirect
+	golang.org/x/text v0.9.0 // indirect
 	golang.org/x/tools v0.6.0 // indirect
 	google.golang.org/genproto v0.0.0-20211208223120-3a66f561d7aa // indirect
 	google.golang.org/grpc v1.42.0 // indirect
