@@ -22,7 +22,7 @@ require (
 	github.com/arduino/go-properties-orderedmap v1.7.2 // indirect
 	github.com/cespare/xxhash v1.1.0 // indirect
 	github.com/client9/misspell v0.3.4 // indirect
-	github.com/cloudflare/circl v1.1.0 // indirect
+	github.com/cloudflare/circl v1.3.3 // indirect
 	github.com/cmaglie/go.rice v1.0.3 // indirect
 	github.com/codeclysm/extract/v3 v3.0.2 // indirect
 	github.com/daaku/go.zipexe v1.0.1 // indirect
