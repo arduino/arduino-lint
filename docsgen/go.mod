@@ -19,7 +19,7 @@ require (
 	github.com/ProtonMail/go-crypto v0.0.0-20230217124315-7d5c6f04bbb8 // indirect
 	github.com/acomagu/bufpipe v1.0.4 // indirect
 	github.com/arduino/arduino-cli v0.0.0-20201210103408-bf7a3194bb63 // indirect
-	github.com/arduino/go-paths-helper v1.9.0 // indirect
+	github.com/arduino/go-paths-helper v1.9.1 // indirect
 	github.com/arduino/go-properties-orderedmap v1.7.2 // indirect
 	github.com/cespare/xxhash v1.1.0 // indirect
 	github.com/client9/misspell v0.3.4 // indirect
