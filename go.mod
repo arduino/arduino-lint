@@ -29,7 +29,7 @@ require (
 	github.com/ProtonMail/go-crypto v0.0.0-20230217124315-7d5c6f04bbb8 // indirect
 	github.com/acomagu/bufpipe v1.0.4 // indirect
 	github.com/cespare/xxhash v1.1.0 // indirect
-	github.com/cloudflare/circl v1.1.0 // indirect
+	github.com/cloudflare/circl v1.3.3 // indirect
 	github.com/cmaglie/go.rice v1.0.3 // indirect
 	github.com/codeclysm/extract/v3 v3.0.2 // indirect
 	github.com/daaku/go.zipexe v1.0.1 // indirect
