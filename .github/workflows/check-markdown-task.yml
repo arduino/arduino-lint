@@ -1,6 +1,10 @@
 # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/check-markdown-task.md
 name: Check Markdown
 
+env:
+  # See: https://github.com/actions/setup-go/tree/main#supported-version-syntax
+  GO_VERSION: "1.17"
+
 # See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows
 on:
   push:
@@ -55,6 +59,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Install Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: ${{ env.GO_VERSION }}
 
       - name: Install Task
         uses: arduino/setup-task@v1

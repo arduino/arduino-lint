@@ -2,6 +2,8 @@
 name: Deploy Website
 
 env:
+  # See: https://github.com/actions/setup-go/tree/main#supported-version-syntax
+  GO_VERSION: "1.17"
   # See: https://github.com/actions/setup-python/tree/main#available-versions-of-python
   PYTHON_VERSION: "3.9"
 
@@ -53,6 +55,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Install Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: ${{ env.GO_VERSION }}
 
       - name: Install Python
         uses: actions/setup-python@v4
