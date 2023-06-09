@@ -5,7 +5,7 @@ type: go
 summary: Package blake2b implements the BLAKE2b hash algorithm defined by RFC 7693
   and the extendable output function (XOF) BLAKE2Xb.
 homepage: https://pkg.go.dev/golang.org/x/crypto/blake2b
-license: other
+license: bsd-3-clause
 licenses:
 - sources: crypto@v0.9.0/LICENSE
   text: |

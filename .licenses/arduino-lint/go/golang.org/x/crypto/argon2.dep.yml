@@ -4,7 +4,7 @@ version: v0.9.0
 type: go
 summary: Package argon2 implements the key derivation function Argon2.
 homepage: https://pkg.go.dev/golang.org/x/crypto/argon2
-license: other
+license: bsd-3-clause
 licenses:
 - sources: crypto@v0.9.0/LICENSE
   text: |
