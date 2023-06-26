@@ -38,6 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       result: ${{ steps.determination.outputs.result }}
+    permissions: {}
     steps:
       - name: Determine if the rest of the workflow should run
         id: determination
@@ -60,6 +61,8 @@ jobs:
   test:
     needs: run-determination
     if: needs.run-determination.outputs.result == 'true'
+    permissions:
+      contents: read
 
     strategy:
       matrix:

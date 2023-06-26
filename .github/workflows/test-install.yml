@@ -21,6 +21,7 @@ env:
 
 jobs:
   default:
+    permissions: {}
     strategy:
       fail-fast: false
 
@@ -47,6 +48,7 @@ jobs:
           "${PWD}/bin/${{ env.TOOL_NAME }}" --version
 
   bindir:
+    permissions: {}
     strategy:
       fail-fast: false
 
@@ -80,6 +82,7 @@ jobs:
           "${{ env.BINDIR }}/${{ env.TOOL_NAME }}" --version
 
   version:
+    permissions: {}
     strategy:
       fail-fast: false
 
@@ -109,6 +112,7 @@ jobs:
           "${PWD}/bin/${{ env.TOOL_NAME }}" --version | grep --fixed-strings "${{ env.VERSION }}"
 
   nightly:
+    permissions: {}
     strategy:
       fail-fast: false
 
