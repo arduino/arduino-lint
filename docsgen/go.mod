@@ -80,7 +80,7 @@ require (
 	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
 	go.bug.st/cleanup v1.0.0 // indirect
 	go.bug.st/downloader/v2 v2.1.0 // indirect
-	go.bug.st/relaxed-semver v0.10.2 // indirect
+	go.bug.st/relaxed-semver v0.11.0 // indirect
 	go.opentelemetry.io/contrib v0.20.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/net/http/httptrace/otelhttptrace v0.20.0 // indirect
 	go.opentelemetry.io/otel v0.20.0 // indirect
