@@ -593,16 +593,15 @@
 
   <h1>Sketch</h1>
 
-<p>Arduino Lint provides 10 rules for the <a href="https://arduino.github.io/arduino-cli/latest/sketch-specification/"><code>sketch</code></a>
-project type:</p>
+<p>Arduino Lint provides 10 rules for the <a href="https://arduino.github.io/arduino-cli/latest/sketch-specification/"><code>sketch</code></a> project type:</p>
 <hr />
 <p><a id="SS001"></a></p>
 <h2 id="name-mismatch-ss001">name mismatch (<code>SS001</code>)<a class="headerlink" href="#name-mismatch-ss001" title="Permanent link">&para;</a></h2>
-<p>There is no <code>.ino</code> sketch file with name matching the sketch folder. The primary sketch file name must match the folder
-for the sketch to be valid.</p>
-<p>More information:
-<a href="https://arduino.github.io/arduino-cli/latest/sketch-specification/#primary-sketch-file"><strong>here</strong></a><br /> Enabled for
-superproject type: all<br /> Category: structure<br /> Subcategory: root folder</p>
+<p>There is no <code>.ino</code> sketch file with name matching the sketch folder. The primary sketch file name must match the folder for the sketch to be valid.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/sketch-specification/#primary-sketch-file"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: structure<br />
+Subcategory: root folder</p>
 <h5>Rule levels</h5>
 <table>
 <thead>
@@ -630,9 +629,10 @@ superproject type: all<br /> Category: structure<br /> Subcategory: root folder<
 <p><a id="SS002"></a></p>
 <h2 id="prohibited-character-in-filename-ss002">prohibited character in filename (<code>SS002</code>)<a class="headerlink" href="#prohibited-character-in-filename-ss002" title="Permanent link">&para;</a></h2>
 <p>A sketch file's name contains a prohibited character.</p>
-<p>More information:
-<a href="https://arduino.github.io/arduino-cli/latest/sketch-specification/#sketch-folders-and-files"><strong>here</strong></a><br /> Enabled
-for superproject type: all<br /> Category: structure<br /> Subcategory: file name</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/sketch-specification/#sketch-folders-and-files"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: structure<br />
+Subcategory: file name</p>
 <h5>Rule levels</h5>
 <table>
 <thead>
@@ -660,9 +660,10 @@ for superproject type: all<br /> Category: structure<br /> Subcategory: file nam
 <p><a id="SS003"></a></p>
 <h2 id="file-name-too-long-ss003">file name too long (<code>SS003</code>)<a class="headerlink" href="#file-name-too-long-ss003" title="Permanent link">&para;</a></h2>
 <p>The sketch file's name exceeds the maximum length.</p>
-<p>More information:
-<a href="https://arduino.github.io/arduino-cli/latest/sketch-specification/#sketch-folders-and-files"><strong>here</strong></a><br /> Enabled
-for superproject type: all<br /> Category: structure<br /> Subcategory: file name</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/sketch-specification/#sketch-folders-and-files"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: structure<br />
+Subcategory: file name</p>
 <h5>Rule levels</h5>
 <table>
 <thead>
@@ -689,16 +690,11 @@ for superproject type: all<br /> Category: structure<br /> Subcategory: file nam
 <hr />
 <p><a id="SS004"></a></p>
 <h2 id="pde-extension-ss004">.pde extension (<code>SS004</code>)<a class="headerlink" href="#pde-extension-ss004" title="Permanent link">&para;</a></h2>
-<p>A sketch file uses the deprecated <code>.pde</code> file extension. The .pde extension is used by both
-<a href="https://processing.org/">Processing</a> sketches and Arduino sketches. If the project has supplemental Processing
-sketches, they should either be in the
-<a href="https://arduino.github.io/arduino-cli/latest/sketch-specification/#data-subfolder"><code>data</code> subfolder of the sketch</a> or
-in the
-<a href="https://arduino.github.io/arduino-cli/latest/library-specification/#extra-documentation"><code>extras</code> folder of the library</a>.
-Arduino sketches should use the modern <code>.ino</code> extension.</p>
-<p>More information:
-<a href="https://arduino.github.io/arduino-cli/latest/sketch-specification/#additional-code-files"><strong>here</strong></a><br /> Enabled for
-superproject type: all<br /> Category: structure<br /> Subcategory: file name</p>
+<p>A sketch file uses the deprecated <code>.pde</code> file extension. The .pde extension is used by both <a href="https://processing.org/">Processing</a> sketches and Arduino sketches. If the project has supplemental Processing sketches, they should either be in the <a href="https://arduino.github.io/arduino-cli/latest/sketch-specification/#data-subfolder"><code>data</code> subfolder of the sketch</a> or in the <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#extra-documentation"><code>extras</code> folder of the library</a>. Arduino sketches should use the modern <code>.ino</code> extension.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/sketch-specification/#additional-code-files"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: structure<br />
+Subcategory: file name</p>
 <h5>Rule levels</h5>
 <table>
 <thead>
@@ -725,10 +721,11 @@ superproject type: all<br /> Category: structure<br /> Subcategory: file name</p
 <hr />
 <p><a id="SS005"></a></p>
 <h2 id="src-folder-case-ss005">src folder case (<code>SS005</code>)<a class="headerlink" href="#src-folder-case-ss005" title="Permanent link">&para;</a></h2>
-<p>The sketch's source subfolder name has incorrect case. This folder must be named exactly <code>src</code> in order for the contents
-to be compiled on case sensitive file systems (e.g., Linux).</p>
+<p>The sketch's source subfolder name has incorrect case. This folder must be named exactly <code>src</code> in order for the contents to be compiled on case sensitive file systems (e.g., Linux).</p>
 <p>More information: <a href="https://arduino.github.io/arduino-cli/latest/sketch-specification/#src-subfolder"><strong>here</strong></a><br />
-Enabled for superproject type: all<br /> Category: structure<br /> Subcategory: miscellaneous</p>
+Enabled for superproject type: all<br />
+Category: structure<br />
+Subcategory: miscellaneous</p>
 <h5>Rule levels</h5>
 <table>
 <thead>
@@ -755,10 +752,10 @@ Enabled for superproject type: all<br /> Category: structure<br /> Subcategory: 
 <hr />
 <p><a id="SC001"></a></p>
 <h2 id="arduinoh-case-sc001">Arduino.h case (<code>SC001</code>)<a class="headerlink" href="#arduinoh-case-sc001" title="Permanent link">&para;</a></h2>
-<p>An <code>#include</code> directive for a file matching the standardized Arduino core library's <code>Arduino.h</code> header in all except
-case (e.g., <code>#include &lt;arduino.h&gt;</code>) was found in the sketch's code. This causes compilation failure on case-sensitive
-file systems.</p>
-<p>Enabled for superproject type: all<br /> Category: code<br /> Subcategory: miscellaneous</p>
+<p>An <code>#include</code> directive for a file matching the standardized Arduino core library's <code>Arduino.h</code> header in all except case (e.g., <code>#include &lt;arduino.h&gt;</code>) was found in the sketch's code. This causes compilation failure on case-sensitive file systems.</p>
+<p>Enabled for superproject type: all<br />
+Category: code<br />
+Subcategory: miscellaneous</p>
 <h5>Rule levels</h5>
 <table>
 <thead>
@@ -785,11 +782,11 @@ file systems.</p>
 <hr />
 <p><a id="SD001"></a></p>
 <h2 id="no-readme-sd001">no readme (<code>SD001</code>)<a class="headerlink" href="#no-readme-sd001" title="Permanent link">&para;</a></h2>
-<p>None of the standard README file names (e.g., <code>README.md</code>) were found in the sketch folder. This file provides
-interested parties with a convenient and standardized location to get information about the project.</p>
-<p>More information:
-<a href="https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes"><strong>here</strong></a><br />
-Enabled for superproject type: sketch<br /> Category: documentation<br /> Subcategory: miscellaneous</p>
+<p>None of the standard README file names (e.g., <code>README.md</code>) were found in the sketch folder. This file provides interested parties with a convenient and standardized location to get information about the project.</p>
+<p>More information: <a href="https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes"><strong>here</strong></a><br />
+Enabled for superproject type: sketch<br />
+Category: documentation<br />
+Subcategory: miscellaneous</p>
 <h5>Rule levels</h5>
 <table>
 <thead>
@@ -816,12 +813,11 @@ Enabled for superproject type: sketch<br /> Category: documentation<br /> Subcat
 <hr />
 <p><a id="SD002"></a></p>
 <h2 id="no-license-file-sd002">no license file (<code>SD002</code>)<a class="headerlink" href="#no-license-file-sd002" title="Permanent link">&para;</a></h2>
-<p>None of the standard license file names (e.g., <code>LICENSE.txt</code>) were found in the sketch's root folder. This file provides
-interested parties with a convenient and standardized location to get information about the project's licensing and is
-also used by GitHub for automatic license type classification.</p>
-<p>More information:
-<a href="https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository"><strong>here</strong></a><br />
-Enabled for superproject type: sketch<br /> Category: documentation<br /> Subcategory: miscellaneous</p>
+<p>None of the standard license file names (e.g., <code>LICENSE.txt</code>) were found in the sketch's root folder. This file provides interested parties with a convenient and standardized location to get information about the project's licensing and is also used by GitHub for automatic license type classification.</p>
+<p>More information: <a href="https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository"><strong>here</strong></a><br />
+Enabled for superproject type: sketch<br />
+Category: documentation<br />
+Subcategory: miscellaneous</p>
 <h5>Rule levels</h5>
 <table>
 <thead>
@@ -849,7 +845,9 @@ Enabled for superproject type: sketch<br /> Category: documentation<br /> Subcat
 <p><a id="SM001"></a></p>
 <h2 id="sketchjson-json-format-sm001">sketch.json JSON format (<code>SM001</code>)<a class="headerlink" href="#sketchjson-json-format-sm001" title="Permanent link">&para;</a></h2>
 <p>The sketch's <code>sketch.json</code> metadata file is not a valid JSON document.</p>
-<p>Enabled for superproject type: all<br /> Category: sketch.json<br /> Subcategory: general</p>
+<p>Enabled for superproject type: all<br />
+Category: sketch.json<br />
+Subcategory: general</p>
 <h5>Rule levels</h5>
 <table>
 <thead>
@@ -877,8 +875,10 @@ Enabled for superproject type: sketch<br /> Category: documentation<br /> Subcat
 <p><a id="SM002"></a></p>
 <h2 id="sketchjson-data-format-sm002">sketch.json data format (<code>SM002</code>)<a class="headerlink" href="#sketchjson-data-format-sm002" title="Permanent link">&para;</a></h2>
 <p>The sketch's <code>sketch.json</code> metadata file does not have a valid data format.</p>
-<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/sketch-specification/#metadata"><strong>here</strong></a><br /> Enabled
-for superproject type: all<br /> Category: sketch.json<br /> Subcategory: general</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/sketch-specification/#metadata"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: sketch.json<br />
+Subcategory: general</p>
 <h5>Rule levels</h5>
 <table>
 <thead>
