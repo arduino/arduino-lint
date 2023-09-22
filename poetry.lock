@@ -428,13 +428,13 @@ min-versions = ["babel (==2.9.0)", "click (==7.0)", "colorama (==0.4)", "ghp-imp
 
 [[package]]
 name = "mkdocs-material"
-version = "9.3.2"
+version = "9.4.0"
 description = "Documentation that simply works"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "mkdocs_material-9.3.2-py3-none-any.whl", hash = "sha256:f2fd5cef6f0266b4caad6414f31c6a51e3183dbdd341995ad8fa7f33bc998c3d"},
-    {file = "mkdocs_material-9.3.2.tar.gz", hash = "sha256:7b3a35a7731af02d70d120224fcec053ce09bebbf83dff3366ab72abc4d5fc89"},
+    {file = "mkdocs_material-9.4.0-py3-none-any.whl", hash = "sha256:b9f1bb8bf3377fa1b7edd34276b1923928c39b2d4a56543af0e811f0cfe59085"},
+    {file = "mkdocs_material-9.4.0.tar.gz", hash = "sha256:492108aae369c12af21af2b14160f9bd5c0d6d7da28055877a74a554a704a671"},
 ]
 
 [package.dependencies]
@@ -442,8 +442,8 @@ babel = ">=2.10,<3.0"
 colorama = ">=0.4,<1.0"
 jinja2 = ">=3.0,<4.0"
 markdown = ">=3.2,<4.0"
-mkdocs = ">=1.5,<2.0"
-mkdocs-material-extensions = ">=1.1,<2.0"
+mkdocs = ">=1.5.3,<2.0"
+mkdocs-material-extensions = ">=1.2,<2.0"
 paginate = ">=0.5,<1.0"
 pygments = ">=2.16,<3.0"
 pymdown-extensions = ">=10.2,<11.0"
@@ -457,13 +457,13 @@ recommended = ["mkdocs-minify-plugin (>=0.7,<1.0)", "mkdocs-redirects (>=1.2,<2.
 
 [[package]]
 name = "mkdocs-material-extensions"
-version = "1.1"
+version = "1.2"
 description = "Extension pack for Python Markdown and MkDocs Material."
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "mkdocs_material_extensions-1.1-py3-none-any.whl", hash = "sha256:bcc2e5fc70c0ec50e59703ee6e639d87c7e664c0c441c014ea84461a90f1e902"},
-    {file = "mkdocs_material_extensions-1.1.tar.gz", hash = "sha256:96ca979dae66d65c2099eefe189b49d5ac62f76afb59c38e069ffc7cf3c131ec"},
+    {file = "mkdocs_material_extensions-1.2-py3-none-any.whl", hash = "sha256:c767bd6d6305f6420a50f0b541b0c9966d52068839af97029be14443849fb8a1"},
+    {file = "mkdocs_material_extensions-1.2.tar.gz", hash = "sha256:27e2d1ed2d031426a6e10d5ea06989d67e90bb02acd588bc5673106b5ee5eedf"},
 ]
 
 [[package]]
@@ -969,4 +969,4 @@ testing = ["func-timeout", "jaraco.itertools", "pytest (>=4.6)", "pytest-black (
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "7c8db0a52f142fb4b75d640774bae5e23b4c42363d72a54575bc7031711c5a24"
+content-hash = "a112da67a0108d30692081ad0cefee627071ba403d9cc4eb7de0c700f65a5673"
