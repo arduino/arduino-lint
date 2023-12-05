@@ -83,7 +83,7 @@ jobs:
           echo "${{ env.INSTALL_PATH }}/$EXTRACTION_FOLDER" >> "$GITHUB_PATH"
 
       - name: Run ShellCheck
-        uses: liskin/gh-problem-matcher-wrap@v2
+        uses: liskin/gh-problem-matcher-wrap@v3
         continue-on-error: ${{ matrix.configuration.continue-on-error }}
         with:
           linters: gcc
