@@ -9,7 +9,7 @@ replace github.com/jandelgado/gcov2lcov => github.com/jandelgado/gcov2lcov v1.0.
 require (
 	github.com/JohannesKaufmann/html-to-markdown v1.4.0
 	github.com/arduino/arduino-lint v0.0.0
-	github.com/arduino/go-paths-helper v1.10.0
+	github.com/arduino/go-paths-helper v1.10.1
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/stretchr/testify v1.8.4
 )
