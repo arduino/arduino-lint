@@ -23,7 +23,7 @@ mkdocs-material = "^9.5.3"
 [tool.poetry.dev-dependencies]
 black = "^23.12"
 codespell = "^2.2.6"
-flake8 = "^6.1.0"
+flake8 = "^7.0.0"
 pep8-naming = "^0.13.3"
 
 [tool.black]
