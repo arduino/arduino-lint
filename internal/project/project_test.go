@@ -63,6 +63,57 @@ func TestSymlinkLoop(t *testing.T) {
 	assert.Panics(t, func() { FindProjects() }, "Infinite symlink loop encountered during project discovery")
 }
 
+func TestBrokenSymlink(t *testing.T) {
+	projectsPath := testDataPath.Join("Projects")
+	symlinkPath := projectsPath.Join("test-symlink")
+	symlinkTargetPath := projectsPath.Join("nonexistent")
+	// The broken symlink must have the attributes of a folder in order to be effective in this test, so the target must
+	// exist at the time the symlink is created.
+	err := symlinkTargetPath.Mkdir()
+	require.Nil(t, err)
+	// Create a folder symlink in the projects folder.
+	// It's probably most friendly to developers using Windows to create the symlink needed for the test on demand.
+	err = os.Symlink(projectsPath.Join("nonexistent").String(), symlinkPath.String())
+	require.Nil(t, err, "This test must be run as administrator on Windows to have symlink creation privilege.")
+	defer symlinkPath.RemoveAll() // Clean up.
+
+	// Break the symlink.
+	err = symlinkTargetPath.Remove()
+	require.Nil(t, err)
+
+	flags := test.ConfigurationFlags()
+	flags.Set("project-type", "all")
+	flags.Set("recursive", "true")
+	configuration.Initialize(flags, []string{projectsPath.String()})
+
+	foundProjects, err := FindProjects()
+	require.Nil(t, err)
+	assert.True(
+		t,
+		reflect.DeepEqual(
+			foundProjects,
+			[]Type{
+				{
+					Path:             testDataPath.Join("Projects", "Library"),
+					ProjectType:      projecttype.Library,
+					SuperprojectType: projecttype.Library,
+				},
+				{
+					Path:             testDataPath.Join("Projects", "Library", "examples", "Example"),
+					ProjectType:      projecttype.Sketch,
+					SuperprojectType: projecttype.Library,
+				},
+				{
+					Path:             testDataPath.Join("Projects", "Sketch"),
+					ProjectType:      projecttype.Sketch,
+					SuperprojectType: projecttype.Sketch,
+				},
+			},
+		),
+		"Broken symlink encountered during project discovery",
+	)
+}
+
 func TestFindProjects(t *testing.T) {
 	sketchPath := testDataPath.Join("Sketch")
 	libraryPath := testDataPath.Join("Library")

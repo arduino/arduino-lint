@@ -135,6 +135,19 @@ func TestLibraryContainsSymlinks(t *testing.T) {
 	err = symlinkPath.RemoveAll()
 	require.Nil(t, err)
 
+	// Set up a library with a broken symlink.
+	err = os.Symlink(librariesTestDataPath.Join(testLibrary, "nonexistent").String(), symlinkPath.String())
+	require.Nil(t, err)
+
+	testTables = []libraryRuleFunctionTestTable{
+		{"Has broken symlink", testLibrary, ruleresult.Fail, ""},
+	}
+
+	checkLibraryRuleFunction(LibraryContainsSymlinks, testTables, t)
+
+	err = symlinkPath.RemoveAll()
+	require.Nil(t, err)
+
 	testTables = []libraryRuleFunctionTestTable{
 		{"No symlink", testLibrary, ruleresult.Pass, ""},
 	}
