@@ -146,7 +146,7 @@ func findProjectsUnderPath(targetPath *paths.Path, projectTypeFilter projecttype
 			// It is possible for a combination of symlinks to parent paths to cause project discovery to get stuck in
 			// an endless loop of recursion. This is avoided by keeping count of the depth of symlinks and discontinuing
 			// recursion when it exceeds reason.
-			pathStat, err := os.Lstat(potentialProjectDirectory.String())
+			pathStat, err := potentialProjectDirectory.Lstat()
 			if err != nil {
 				panic(err)
 			}

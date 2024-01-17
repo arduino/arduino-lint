@@ -92,7 +92,7 @@ func LibraryContainsSymlinks() (result ruleresult.Type, output string) {
 
 	symlinkPaths := []string{}
 	for _, projectPathItem := range projectPathListing {
-		projectPathItemStat, err := os.Lstat(projectPathItem.String())
+		projectPathItemStat, err := projectPathItem.Lstat()
 		if err != nil {
 			panic(err)
 		}
