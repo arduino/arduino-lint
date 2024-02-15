@@ -66,7 +66,7 @@ jobs:
 
       - name: Download latest ShellCheck release binary package
         id: download
-        uses: MrOctopus/download-asset-action@1.0
+        uses: MrOctopus/download-asset-action@1.1
         with:
           repository: koalaman/shellcheck
           excludes: prerelease, draft
@@ -111,7 +111,7 @@ jobs:
 
       - name: Download shfmt
         id: download
-        uses: MrOctopus/download-asset-action@1.0
+        uses: MrOctopus/download-asset-action@1.1
         with:
           repository: mvdan/sh
           excludes: prerelease, draft
