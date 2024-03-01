@@ -10,7 +10,7 @@ python = "^3.9"
 # Integration tests dependencies.
 invoke = "^2.2.0"
 pytest = "^8.0.2"
-python-dateutil = "^2.8.2"
+python-dateutil = "^2.9.0"
 semver = "^3.0.2"
 
 # Documentation generation dependencies.
