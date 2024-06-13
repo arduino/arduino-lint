@@ -9,6 +9,7 @@ updates:
     directory: / # Check the repository's workflows under /.github/workflows/
     assignees:
       - per1234
+    open-pull-requests-limit: 100
     schedule:
       interval: daily
     labels:
@@ -18,6 +19,7 @@ updates:
     directory: /
     assignees:
       - per1234
+    open-pull-requests-limit: 100
     schedule:
       interval: daily
     labels:
@@ -26,6 +28,7 @@ updates:
     directory: /docsgen/
     assignees:
       - per1234
+    open-pull-requests-limit: 100
     schedule:
       interval: daily
     labels:
@@ -34,6 +37,7 @@ updates:
     directory: /ruledocsgen/
     assignees:
       - per1234
+    open-pull-requests-limit: 100
     schedule:
       interval: daily
     labels:
@@ -43,6 +47,7 @@ updates:
     directory: /
     assignees:
       - per1234
+    open-pull-requests-limit: 100
     schedule:
       interval: daily
     labels:
