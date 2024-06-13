@@ -7,6 +7,9 @@ updates:
   # See: https://docs.github.com/en/code-security/supply-chain-security/keeping-your-actions-up-to-date-with-dependabot
   - package-ecosystem: github-actions
     directory: / # Check the repository's workflows under /.github/workflows/
+    assignees:
+      - per1234
+    open-pull-requests-limit: 100
     schedule:
       interval: daily
     labels:
@@ -14,18 +17,27 @@ updates:
 
   - package-ecosystem: gomod
     directory: /
+    assignees:
+      - per1234
+    open-pull-requests-limit: 100
     schedule:
       interval: daily
     labels:
       - "topic: infrastructure"
   - package-ecosystem: gomod
     directory: /docsgen/
+    assignees:
+      - per1234
+    open-pull-requests-limit: 100
     schedule:
       interval: daily
     labels:
       - "topic: infrastructure"
   - package-ecosystem: gomod
     directory: /ruledocsgen/
+    assignees:
+      - per1234
+    open-pull-requests-limit: 100
     schedule:
       interval: daily
     labels:
@@ -33,6 +45,9 @@ updates:
 
   - package-ecosystem: pip
     directory: /
+    assignees:
+      - per1234
+    open-pull-requests-limit: 100
     schedule:
       interval: daily
     labels:
