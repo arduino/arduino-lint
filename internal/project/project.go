@@ -193,7 +193,7 @@ func findSubprojects(superproject Type, apexSuperprojectType projecttype.Type) [
 	var immediateSubprojects []Type
 	for _, subprojectsFolderName := range subprojectsFolderNames {
 		subprojectsPath := superproject.Path.Join(subprojectsFolderName)
-		if subprojectsPath.Exist() && subprojectsPath.IsDir() {
+		if subprojectsPath.IsDir() {
 			directoryListing, err := subprojectsPath.ReadDir()
 			if err != nil {
 				panic(err)
