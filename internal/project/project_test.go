@@ -429,3 +429,19 @@ func TestFindProjects(t *testing.T) {
 		}
 	}
 }
+
+func TestExamplefile(t *testing.T) {
+	// Set up directory structure of test library.
+	libraryPath, err := paths.TempDir().MkTempDir("TestExampleFile")
+	defer libraryPath.RemoveAll() // Clean up after the test.
+	require.Nil(t, err)
+	err = libraryPath.Join("TestExample.h").WriteFile([]byte{})
+	require.Nil(t, err)
+	// Create an example file in the library folder. This should not cause a panic and should be ignored since it's not a folder containing the examples
+	err = libraryPath.Join("example").WriteFile([]byte{})
+	require.Nil(t, err)
+
+	configuration.Initialize(test.ConfigurationFlags(), []string{libraryPath.String()})
+
+	assert.NotPanics(t, func() { FindProjects() }, "Example file should not cause panic")
+}
