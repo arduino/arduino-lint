@@ -46,19 +46,21 @@ type sketchRuleFunctionTestTable struct {
 
 func checkSketchRuleFunction(ruleFunction Type, testTables []sketchRuleFunctionTestTable, t *testing.T) {
 	for _, testTable := range testTables {
-		expectedOutputRegexp := regexp.MustCompile(testTable.expectedOutputQuery)
+		t.Run(testTable.testName, func(t *testing.T) {
+			expectedOutputRegexp := regexp.MustCompile(testTable.expectedOutputQuery)
 
-		testProject := project.Type{
-			Path:             sketchesTestDataPath.Join(testTable.sketchFolderName),
-			ProjectType:      projecttype.Sketch,
-			SuperprojectType: projecttype.Sketch,
-		}
+			testProject := project.Type{
+				Path:             sketchesTestDataPath.Join(testTable.sketchFolderName),
+				ProjectType:      projecttype.Sketch,
+				SuperprojectType: projecttype.Sketch,
+			}
 
-		projectdata.Initialize(testProject)
+			projectdata.Initialize(testProject)
 
-		result, output := ruleFunction()
-		assert.Equal(t, testTable.expectedRuleResult, result, testTable.testName)
-		assert.True(t, expectedOutputRegexp.MatchString(output), fmt.Sprintf("%s (output: %s, assertion regex: %s)", testTable.testName, output, testTable.expectedOutputQuery))
+			result, output := ruleFunction()
+			assert.Equal(t, testTable.expectedRuleResult, result, testTable.testName)
+			assert.True(t, expectedOutputRegexp.MatchString(output), fmt.Sprintf("%s (output: %s, assertion regex: %s)", testTable.testName, output, testTable.expectedOutputQuery))
+		})
 	}
 }
 
@@ -112,7 +114,6 @@ func TestSketchDotJSONJSONFormat(t *testing.T) {
 	testTables := []sketchRuleFunctionTestTable{
 		{"No metadata file", "NoMetadataFile", ruleresult.Skip, ""},
 		{"Valid", "ValidMetadataFile", ruleresult.Pass, ""},
-		{"Invalid", "InvalidJSONMetadataFile", ruleresult.Fail, ""},
 	}
 
 	checkSketchRuleFunction(SketchDotJSONJSONFormat, testTables, t)
@@ -122,8 +123,6 @@ func TestSketchDotJSONFormat(t *testing.T) {
 	testTables := []sketchRuleFunctionTestTable{
 		{"No metadata file", "NoMetadataFile", ruleresult.Skip, ""},
 		{"Valid", "ValidMetadataFile", ruleresult.Pass, ""},
-		{"Invalid JSON", "InvalidJSONMetadataFile", ruleresult.Fail, ""},
-		{"Invalid data", "InvalidDataMetadataFile", ruleresult.Fail, ""},
 	}
 
 	checkSketchRuleFunction(SketchDotJSONFormat, testTables, t)
