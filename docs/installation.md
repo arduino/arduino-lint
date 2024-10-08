@@ -33,34 +33,11 @@ curl -fsSL https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/insta
 
 ## Download
 
-Pre-built binaries for all the supported platforms are available for download from the links below.
-
-If you would like to use the `arduino-lint` command from any location, extract the downloaded file to a directory
-already in your [`PATH`](https://wikipedia.org/wiki/PATH%5F%28variable%29) or add the Arduino Lint installation path to
-your `PATH` environment variable.
-
-### Latest release
-
-| Platform  |                      |                      |
-| --------- | -------------------- | -------------------- |
-| Linux     | [32 bit][linux32]    | [64 bit][linux64]    |
-| Linux ARM | [32 bit][linuxarm32] | [64 bit][linuxarm64] |
-| Windows   | [32 bit][windows32]  | [64 bit][windows64]  |
-| macOS     |                      | [64 bit][macos64]    |
-| macOS ARM |                      | [64 bit][macosarm64] |
-
-[linux64]: https://downloads.arduino.cc/arduino-lint/arduino-lint_latest_Linux_64bit.tar.gz
-[linux32]: https://downloads.arduino.cc/arduino-lint/arduino-lint_latest_Linux_32bit.tar.gz
-[linuxarm64]: https://downloads.arduino.cc/arduino-lint/arduino-lint_latest_Linux_ARM64.tar.gz
-[linuxarm32]: https://downloads.arduino.cc/arduino-lint/arduino-lint_latest_Linux_ARMv7.tar.gz
-[windows64]: https://downloads.arduino.cc/arduino-lint/arduino-lint_latest_Windows_64bit.zip
-[windows32]: https://downloads.arduino.cc/arduino-lint/arduino-lint_latest_Windows_32bit.zip
-[macos64]: https://downloads.arduino.cc/arduino-lint/arduino-lint_latest_macOS_64bit.tar.gz
-[macosarm64]: https://downloads.arduino.cc/arduino-lint/arduino-lint_latest_macOS_ARM64.tar.gz
-
-### Previous versions
-
-These are available from the "Assets" sections on the [releases page](https://github.com/arduino/arduino-lint/releases).
+Pre-built binaries for all the supported platforms are available for download from the "Assets" sections on the
+[releases page](https://github.com/arduino/arduino-lint/releases). If you would like to use the `arduino-lint` command
+from any location, extract the downloaded file to a directory already in your
+[`PATH`](https://wikipedia.org/wiki/PATH%5F%28variable%29) or add the Arduino Lint installation path to your `PATH`
+environment variable.
 
 ### Nightly builds
 
