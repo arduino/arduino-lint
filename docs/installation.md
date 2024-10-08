@@ -47,7 +47,7 @@ your `PATH` environment variable.
 | Linux ARM | [32 bit][linuxarm32] | [64 bit][linuxarm64] |
 | Windows   | [32 bit][windows32]  | [64 bit][windows64]  |
 | macOS     |                      | [64 bit][macos64]    |
-| macOS ARM |                      | [64 bit][macosarm64] |
+| macOS ARM |                      |                      |
 
 [linux64]: https://downloads.arduino.cc/arduino-lint/arduino-lint_latest_Linux_64bit.tar.gz
 [linux32]: https://downloads.arduino.cc/arduino-lint/arduino-lint_latest_Linux_32bit.tar.gz
@@ -56,7 +56,6 @@ your `PATH` environment variable.
 [windows64]: https://downloads.arduino.cc/arduino-lint/arduino-lint_latest_Windows_64bit.zip
 [windows32]: https://downloads.arduino.cc/arduino-lint/arduino-lint_latest_Windows_32bit.zip
 [macos64]: https://downloads.arduino.cc/arduino-lint/arduino-lint_latest_macOS_64bit.tar.gz
-[macosarm64]: https://downloads.arduino.cc/arduino-lint/arduino-lint_latest_macOS_ARM64.tar.gz
 
 ### Previous versions
 
