@@ -28,6 +28,7 @@ import (
 )
 
 // Type is the type for the rule levels.
+//
 //go:generate stringer -type=Type -linecomment
 type Type int
 
