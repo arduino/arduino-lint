@@ -396,73 +396,61 @@ tasks:
     cmds:
       - poetry run flake8 --show-source
 
+  # Parameter variables:
+  # - SCRIPT_PATH: path of the script to be checked.
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-shell-task/Taskfile.yml
   shell:check:
     desc: Check for problems with shell scripts
     cmds:
+      - |
+        if [[ "{{.SCRIPT_PATH}}" == "" ]]; then
+          echo "Path to script file must be passed to this task via the SCRIPT_PATH taskfile variable."
+          echo "See: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/check-shell-task.md#usage"
+          exit 1
+        fi
       - |
         if ! which shellcheck &>/dev/null; then
           echo "shellcheck not installed or not in PATH. Please install: https://github.com/koalaman/shellcheck#installing"
           exit 1
         fi
       - |
-        # There is something odd about shellcheck that causes the task to always exit on the first fail, despite any
-        # measures that would prevent this with any other command. So it's necessary to call shellcheck only once with
-        # the list of script paths as an argument. This could lead to exceeding the maximum command length on Windows if
-        # the repository contained a large number of scripts, but it's unlikely to happen in reality.
         shellcheck \
           --format={{default "tty" .SHELLCHECK_FORMAT}} \
-          $(
-            # The odd method for escaping . in the regex is required for windows compatibility because mvdan.cc/sh gives
-            # \ characters special treatment on Windows in an attempt to support them as path separators.
-            find . \
-              -path ".git" -prune -or \
-              \( \
-                -regextype posix-extended \
-                -regex '.*[.](bash|sh)' -and \
-                -type f \
-              \)
-          )
+          "{{.SCRIPT_PATH}}"
 
+  # Parameter variables:
+  # - SCRIPT_PATH: path of the script to be checked.
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-shell-task/Taskfile.yml
   shell:check-mode:
     desc: Check for non-executable shell scripts
     cmds:
       - |
-        EXIT_STATUS=0
-        while read -r nonExecutableScriptPath; do
-          # The while loop always runs once, even if no file was found
-          if [[ "$nonExecutableScriptPath" == "" ]]; then
-            continue
-          fi
+        if [[ "{{.SCRIPT_PATH}}" == "" ]]; then
+          echo "Path to script file must be passed to this task via the SCRIPT_PATH taskfile variable."
+          echo "See: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/check-shell-task.md#usage"
+          exit 1
+        fi
+      - |
+        test -x "{{.SCRIPT_PATH}}"
 
-          echo "::error file=${nonExecutableScriptPath}::non-executable script file: $nonExecutableScriptPath";
-          EXIT_STATUS=1
-        done <<<"$(
-          # The odd approach to escaping `.` in the regex is required for windows compatibility because mvdan.cc/sh
-          # gives `\` characters special treatment on Windows in an attempt to support them as path separators.
-          find . \
-            -path ".git" -prune -or \
-            \( \
-              -regextype posix-extended \
-              -regex '.*[.](bash|sh)' -and \
-              -type f -and \
-              -not -executable \
-              -print \
-            \)
-        )"
-        exit $EXIT_STATUS
-
+  # Parameter variables:
+  # - SCRIPT_PATH: path of the script to be formatted.
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-shell-task/Taskfile.yml
   shell:format:
     desc: Format shell script files
     cmds:
       - |
+        if [[ "{{.SCRIPT_PATH}}" == "" ]]; then
+          echo "Path to script file must be passed to this task via the SCRIPT_PATH taskfile variable."
+          echo "See: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/check-shell-task.md#usage"
+          exit 1
+        fi
+      - |
         if ! which shfmt &>/dev/null; then
           echo "shfmt not installed or not in PATH. Please install: https://github.com/mvdan/sh#shfmt"
           exit 1
         fi
-      - shfmt -w .
+      - shfmt -w "{{.SCRIPT_PATH}}"
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-mkdocs-task/Taskfile.yml
   website:check:
