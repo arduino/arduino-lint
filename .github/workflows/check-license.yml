@@ -6,7 +6,7 @@ env:
   # SPDX identifier: https://spdx.org/licenses/
   EXPECTED_LICENSE_TYPE: GPL-3.0
 
-# See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows
+# See: https://docs.github.com/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows
 on:
   push:
     paths:

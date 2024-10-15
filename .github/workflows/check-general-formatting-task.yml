@@ -1,7 +1,7 @@
 # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/check-general-formatting-task.md
 name: Check General Formatting
 
-# See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows
+# See: https://docs.github.com/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows
 on:
   push:
   pull_request:
@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Set environment variables
         run: |
-          # See: https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
+          # See: https://docs.github.com/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#setting-an-environment-variable
           echo "EC_INSTALL_PATH=${{ runner.temp }}/editorconfig-checker" >> "$GITHUB_ENV"
 
       - name: Checkout repository
@@ -48,7 +48,7 @@ jobs:
           # Give the binary a standard name
           mv "${{ env.EC_INSTALL_PATH }}/bin/ec-linux-amd64" "${{ env.EC_INSTALL_PATH }}/bin/ec"
           # Add installation to PATH:
-          # See: https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#adding-a-system-path
+          # See: https://docs.github.com/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#adding-a-system-path
           echo "${{ env.EC_INSTALL_PATH }}/bin" >> "$GITHUB_PATH"
 
       - name: Check formatting

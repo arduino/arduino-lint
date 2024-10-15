@@ -1,4 +1,4 @@
-# See: https://github.com/github/licensed/blob/master/docs/configuration.md
+# See: https://github.com/github/licensed/blob/main/docs/configuration.md
 sources:
   go: true
 

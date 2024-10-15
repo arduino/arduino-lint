@@ -13,7 +13,7 @@ on:
     # Run every day at 03:00 UTC to catch breakage caused by external events
     - cron: "0 3 * * *"
   # workflow_dispatch event allows the workflow to be triggered manually.
-  # See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows#workflow_dispatch
+  # See: https://docs.github.com/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#workflow_dispatch
   workflow_dispatch:
 
 env:
@@ -64,7 +64,7 @@ jobs:
       - name: Set install path environment variable
         shell: bash
         run: |
-          # See: https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
+          # See: https://docs.github.com/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#setting-an-environment-variable
           echo "BINDIR=${{ runner.temp }}/custom-installation-folder" >> "$GITHUB_ENV"
 
       - name: Checkout repository

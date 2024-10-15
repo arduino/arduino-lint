@@ -1,7 +1,7 @@
 # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/check-shell-task.md
 name: Check Shell Scripts
 
-# See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows
+# See: https://docs.github.com/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows
 on:
   push:
     paths:
@@ -52,7 +52,7 @@ jobs:
     steps:
       - name: Set environment variables
         run: |
-          # See: https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
+          # See: https://docs.github.com/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#setting-an-environment-variable
           echo "INSTALL_PATH=${{ runner.temp }}/shellcheck" >> "$GITHUB_ENV"
 
       - name: Checkout repository
@@ -79,7 +79,7 @@ jobs:
           tar --extract --file="${{ steps.download.outputs.name }}"
           EXTRACTION_FOLDER="$(basename "${{ steps.download.outputs.name }}" "${{ env.SHELLCHECK_RELEASE_ASSET_SUFFIX }}")"
           # Add installation to PATH:
-          # See: https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#adding-a-system-path
+          # See: https://docs.github.com/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#adding-a-system-path
           echo "${{ env.INSTALL_PATH }}/$EXTRACTION_FOLDER" >> "$GITHUB_PATH"
 
       - name: Run ShellCheck
@@ -97,7 +97,7 @@ jobs:
     steps:
       - name: Set environment variables
         run: |
-          # See: https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
+          # See: https://docs.github.com/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#setting-an-environment-variable
           echo "SHFMT_INSTALL_PATH=${{ runner.temp }}/shfmt" >> "$GITHUB_ENV"
 
       - name: Checkout repository
@@ -125,7 +125,7 @@ jobs:
           # Standardize binary name
           mv "${{ env.SHFMT_INSTALL_PATH }}/${{ steps.download.outputs.name }}" "${{ env.SHFMT_INSTALL_PATH }}/shfmt"
           # Add installation to PATH:
-          # See: https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#adding-a-system-path
+          # See: https://docs.github.com/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#adding-a-system-path
           echo "${{ env.SHFMT_INSTALL_PATH }}" >> "$GITHUB_PATH"
 
       - name: Format shell scripts
