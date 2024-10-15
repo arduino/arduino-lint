@@ -1,7 +1,7 @@
 # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/check-certificates.md
 name: Check Certificates
 
-# See: https://docs.github.com/en/actions/reference/events-that-trigger-workflows
+# See: https://docs.github.com/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows
 on:
   push:
     paths:
@@ -41,7 +41,7 @@ jobs:
     steps:
       - name: Set certificate path environment variable
         run: |
-          # See: https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
+          # See: https://docs.github.com/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#setting-an-environment-variable
           echo "CERTIFICATE_PATH=${{ runner.temp }}/certificate.p12" >> "$GITHUB_ENV"
 
       - name: Decode certificate
