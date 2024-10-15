@@ -196,6 +196,9 @@ on:
       - "**.rviz"
       - "**.sublime-syntax"
       - "**.syntax"
+  schedule:
+    # Run periodically to catch breakage caused by external changes.
+    - cron: "0 4 * * WED"
   workflow_dispatch:
   repository_dispatch:
 
