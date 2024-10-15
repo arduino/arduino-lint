@@ -106,7 +106,8 @@ jobs:
         env:
           KEYCHAIN: "sign.keychain"
           INSTALLER_CERT_MAC_PATH: "/tmp/ArduinoCerts2020.p12"
-          KEYCHAIN_PASSWORD: keychainpassword # Arbitrary password for a keychain that exists only for the duration of the job, so not secret
+          # Arbitrary password for a keychain that exists only for the duration of the job, so not secret
+          KEYCHAIN_PASSWORD: keychainpassword
         run: |
           echo "${{ secrets.INSTALLER_CERT_MAC_P12 }}" | base64 --decode > "${{ env.INSTALLER_CERT_MAC_PATH }}"
           security create-keychain -p "${{ env.KEYCHAIN_PASSWORD }}" "${{ env.KEYCHAIN }}"

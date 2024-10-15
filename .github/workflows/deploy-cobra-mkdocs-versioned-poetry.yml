@@ -40,7 +40,13 @@ jobs:
         id: determination
         run: |
           RELEASE_BRANCH_REGEX="refs/heads/[0-9]+.[0-9]+.x"
-          if [[ "${{ github.event_name }}" == "push" || ( "${{ github.event_name }}" == "create" && "${{ github.ref }}" =~ $RELEASE_BRANCH_REGEX ) ]]; then
+          if [[
+            "${{ github.event_name }}" == "push" ||
+            (
+              "${{ github.event_name }}" == "create" &&
+              "${{ github.ref }}" =~ $RELEASE_BRANCH_REGEX
+            )
+          ]]; then
             RESULT="true"
           else
             RESULT="false"
@@ -96,7 +102,12 @@ jobs:
           # Publishing implies creating a git commit on the gh-pages branch, we let @ArduinoBot own these commits.
           git config --global user.email "bot@arduino.cc"
           git config --global user.name "ArduinoBot"
-          git fetch --no-tags --prune --depth=1 origin +refs/heads/gh-pages:refs/remotes/origin/gh-pages
+          git fetch \
+            --no-tags \
+            --prune \
+            --depth=1 \
+            origin \
+            +refs/heads/gh-pages:refs/remotes/origin/gh-pages
           poetry run mike deploy \
             --update-aliases \
             --push \
