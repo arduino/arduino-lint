@@ -154,7 +154,8 @@ tasks:
             echo "Licensed does not have Windows support."
             echo "Please use Linux/macOS or download the dependencies cache from the GitHub Actions workflow artifact."
           else
-            echo "licensed not found or not in PATH. Please install: https://github.com/github/licensed#as-an-executable"
+            echo "licensed not found or not in PATH."
+            echo "Please install: https://github.com/github/licensed#as-an-executable"
           fi
           exit 1
         fi
@@ -174,7 +175,8 @@ tasks:
     cmds:
       - |
         if ! which ec &>/dev/null; then
-          echo "ec not found or not in PATH. Please install: https://github.com/editorconfig-checker/editorconfig-checker#installation"
+          echo "ec not found or not in PATH."
+          echo "Please install: https://github.com/editorconfig-checker/editorconfig-checker#installation"
           exit 1
         fi
       - ec
@@ -410,7 +412,8 @@ tasks:
         fi
       - |
         if ! which shellcheck &>/dev/null; then
-          echo "shellcheck not installed or not in PATH. Please install: https://github.com/koalaman/shellcheck#installing"
+          echo "shellcheck not installed or not in PATH."
+          echo "Please install: https://github.com/koalaman/shellcheck#installing"
           exit 1
         fi
       - |
