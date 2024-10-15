@@ -26,6 +26,9 @@ on:
       - "Taskfile.ya?ml"
       - "**.go"
       - "**/testdata/**"
+  schedule:
+    # Run periodically to catch breakage caused by external changes.
+    - cron: "0 11 * * WED"
   workflow_dispatch:
   repository_dispatch:
 

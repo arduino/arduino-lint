@@ -30,6 +30,9 @@ on:
       - "poetry.lock"
       - "pyproject.toml"
       - "tests/**"
+  schedule:
+    # Run periodically to catch breakage caused by external changes.
+    - cron: "0 10 * * WED"
   workflow_dispatch:
   repository_dispatch:
 

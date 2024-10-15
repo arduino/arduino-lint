@@ -26,6 +26,9 @@ on:
       - "[lL][iI][cC][eE][nN][cCsS][eE]*"
       - "[oO][fF][lL]*"
       - "[pP][aA][tT][eE][nN][tT][sS]*"
+  schedule:
+    # Run periodically to catch breakage caused by external changes.
+    - cron: "0 6 * * WED"
   workflow_dispatch:
   repository_dispatch:
 
