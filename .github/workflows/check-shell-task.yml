@@ -50,7 +50,7 @@ jobs:
           echo "result=$RESULT" >> $GITHUB_OUTPUT
 
   lint:
-    name: ${{ matrix.configuration.name }}
+    name: ${{ matrix.configuration.name }} (${{ matrix.script }})
     needs: run-determination
     if: needs.run-determination.outputs.result == 'true'
     runs-on: ubuntu-latest
@@ -75,6 +75,8 @@ jobs:
             # ShellCheck's "tty" output format is most suitable for humans reading the log.
             format: tty
             continue-on-error: false
+        script:
+          - etc/install.sh
 
     steps:
       - name: Set environment variables
@@ -114,14 +116,25 @@ jobs:
         continue-on-error: ${{ matrix.configuration.continue-on-error }}
         with:
           linters: gcc
-          run: task --silent shell:check SHELLCHECK_FORMAT=${{ matrix.configuration.format }}
+          # Due to a quirk of the "liskin/gh-problem-matcher-wrap" action, the entire command must be on a single line
+          # (instead of being broken into multiple lines for readability).
+          run: |
+            task --silent shell:check SCRIPT_PATH="${{ matrix.script }}" SHELLCHECK_FORMAT=${{ matrix.configuration.format }}
 
   formatting:
+    name: formatting (${{ matrix.script }})
     needs: run-determination
     if: needs.run-determination.outputs.result == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        script:
+          - etc/install.sh
 
     steps:
       - name: Set environment variables
@@ -158,17 +171,29 @@ jobs:
           echo "${{ env.SHFMT_INSTALL_PATH }}" >> "$GITHUB_PATH"
 
       - name: Format shell scripts
-        run: task --silent shell:format
+        run: |
+          task \
+            --silent \
+            shell:format \
+            SCRIPT_PATH="${{ matrix.script }}"
 
       - name: Check formatting
         run: git diff --color --exit-code
 
   executable:
+    name: executable (${{ matrix.script }})
     needs: run-determination
     if: needs.run-determination.outputs.result == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        script:
+          - etc/install.sh
 
     steps:
       - name: Checkout repository
@@ -181,4 +206,8 @@ jobs:
           version: 3.x
 
       - name: Check for non-executable scripts
-        run: task --silent shell:check-mode
+        run: |
+          task \
+            --silent \
+            shell:check-mode \
+            SCRIPT_PATH="${{ matrix.script }}"
