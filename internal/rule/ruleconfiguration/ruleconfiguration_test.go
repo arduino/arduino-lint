@@ -33,7 +33,7 @@ func TestConfigurationResolution(t *testing.T) {
 	for _, ruleConfiguration := range ruleconfiguration.Configurations() {
 		for ruleMode := range rulemode.Types {
 			enabled, err := rule.IsEnabled(ruleConfiguration, map[rulemode.Type]bool{ruleMode: true})
-			assert.Nil(t, err, fmt.Sprintf("Enable configuration of rule %s doesn't resolve for rule mode %s", ruleConfiguration.ID, ruleMode))
+			assert.NoError(t, err, fmt.Sprintf("Enable configuration of rule %s doesn't resolve for rule mode %s", ruleConfiguration.ID, ruleMode))
 			if err == nil && enabled {
 				_, err := rulelevel.FailRuleLevel(ruleConfiguration, map[rulemode.Type]bool{ruleMode: true})
 				assert.Nil(t, err, fmt.Sprintf("Level configuration of rule %s doesn't resolve for rule mode %s", ruleConfiguration.ID, ruleMode))

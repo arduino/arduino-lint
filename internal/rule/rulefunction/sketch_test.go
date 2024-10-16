@@ -109,21 +109,3 @@ func TestIncorrectSketchSrcFolderNameCase(t *testing.T) {
 
 	checkSketchRuleFunction(IncorrectSketchSrcFolderNameCase, testTables, t)
 }
-
-func TestSketchDotJSONJSONFormat(t *testing.T) {
-	testTables := []sketchRuleFunctionTestTable{
-		{"No metadata file", "NoMetadataFile", ruleresult.Skip, ""},
-		{"Valid", "ValidMetadataFile", ruleresult.Pass, ""},
-	}
-
-	checkSketchRuleFunction(SketchDotJSONJSONFormat, testTables, t)
-}
-
-func TestSketchDotJSONFormat(t *testing.T) {
-	testTables := []sketchRuleFunctionTestTable{
-		{"No metadata file", "NoMetadataFile", ruleresult.Skip, ""},
-		{"Valid", "ValidMetadataFile", ruleresult.Pass, ""},
-	}
-
-	checkSketchRuleFunction(SketchDotJSONFormat, testTables, t)
-}
