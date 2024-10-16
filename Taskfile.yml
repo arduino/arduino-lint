@@ -123,7 +123,7 @@ tasks:
       # Source: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/github-workflow.json
       WORKFLOW_SCHEMA_URL: https://json.schemastore.org/github-workflow
       WORKFLOW_SCHEMA_PATH:
-        sh: mktemp -t workflow-schema-XXXXXXXXXX.json
+        sh: task utility:mktemp-file TEMPLATE="workflow-schema-XXXXXXXXXX.json"
       WORKFLOWS_DATA_PATH: "./.github/workflows/*.{yml,yaml}"
     deps:
       - task: npm:install-deps
