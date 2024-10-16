@@ -6,6 +6,7 @@
 
 # Generated files
 /.licenses/
+__pycache__/
 
 # Test files
 /internal/rule/schema/testdata/input/invalid-schema.json

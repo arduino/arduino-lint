@@ -1,5 +1,7 @@
 {
   "Exclude": [
+    "^\\.git[/\\\\]",
+    "__pycache__[/\\\\]",
     "^LICENSE\\.txt$",
     "^poetry\\.lock$",
     "^\\.licenses/",
