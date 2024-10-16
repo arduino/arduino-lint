@@ -4,6 +4,8 @@ name: Check Markdown
 env:
   # See: https://github.com/actions/setup-go/tree/main#supported-version-syntax
   GO_VERSION: "1.17"
+  # See: https://github.com/actions/setup-node/#readme
+  NODE_VERSION: 20.x
 
 # See: https://docs.github.com/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows
 on:
@@ -12,6 +14,8 @@ on:
     paths:
       - ".github/workflows/check-markdown-task.ya?ml"
       - ".markdown-link-check.json"
+      - "package.json"
+      - "package-lock.json"
       - "Taskfile.ya?ml"
       - "**/.markdownlint*"
       - "**.mdx?"
@@ -22,6 +26,8 @@ on:
     paths:
       - ".github/workflows/check-markdown-task.ya?ml"
       - ".markdown-link-check.json"
+      - "package.json"
+      - "package-lock.json"
       - "Taskfile.ya?ml"
       - "**/.markdownlint*"
       - "**.mdx?"
@@ -70,6 +76,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
       - name: Initialize markdownlint-cli problem matcher
         uses: xt0rted/markdownlint-problem-matcher@v3
 
@@ -97,6 +108,11 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: ${{ env.GO_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Install Task
         uses: arduino/setup-task@v2

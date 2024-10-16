@@ -3,6 +3,9 @@
 arduino-lint.exe
 __pycache__/
 
+# Generated files
+node_modules/
+
 # Test artifacts
 coverage_unit.txt
 

@@ -3,6 +3,7 @@
     "^\\.git[/\\\\]",
     "__pycache__[/\\\\]",
     "^LICENSE\\.txt$",
+    "node_modules[/\\\\]",
     "^poetry\\.lock$",
     "^\\.licenses[/\\\\]",
     "^internal/rule/schema/schemadata/bindata.go$",
