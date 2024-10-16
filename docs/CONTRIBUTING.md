@@ -91,7 +91,7 @@ If you want to run integration tests or work on documentation, you will also nee
 
 ### Building the source code
 
-From the project folder root, just run: F
+From the project folder root, just run:
 
 ```shell
 task build
@@ -220,8 +220,8 @@ command:
 task website:serve
 ```
 
-The documentation will build. If you don't see any error, open `http://127.0.0.1:8000` in your browser to local the
-local copy of the documentation.
+The documentation will build. If you don't see any error, open `http://127.0.0.1:8000` in your browser to view the local
+copy of the documentation.
 
 #### Documentation publishing
 
