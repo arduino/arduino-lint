@@ -80,10 +80,10 @@ func InitializeForLibrary(project project.Type) {
 
 		// Write the index data to file
 		libraryIndexFile, err := libraryIndexPath.Create()
-		defer libraryIndexFile.Close()
 		if err != nil {
 			panic(err)
 		}
+		defer libraryIndexFile.Close()
 		if _, err := io.Copy(libraryIndexFile, httpResponse.Body); err != nil {
 			panic(err)
 		}
