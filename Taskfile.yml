@@ -76,7 +76,11 @@ tasks:
       - task: markdown:check-links
       - task: python:lint
       - task: shell:check
+        vars:
+          SCRIPT_PATH: etc/install.sh
       - task: shell:check-mode
+        vars:
+          SCRIPT_PATH: etc/install.sh
       - task: website:check
 
   fix:
@@ -109,6 +113,8 @@ tasks:
       - task: markdown:fix
       - task: python:format
       - task: shell:format
+        vars:
+          SCRIPT_PATH: etc/install.sh
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-workflows-task/Taskfile.yml
   ci:validate:
