@@ -17,6 +17,7 @@ on:
     paths:
       - "docs/**"
       - ".github/workflows/deploy-cobra-mkdocs-versioned-poetry.ya?ml"
+      - "**/.npmrc"
       - "go.mod"
       - "go.sum"
       - "Taskfile.ya?ml"
@@ -24,6 +25,8 @@ on:
       - "docsgen/**"
       - "ruledocsgen/**"
       - "mkdocs.ya?ml"
+      - "package.json"
+      - "package-lock.json"
       - "poetry.lock"
       - "pyproject.toml"
   # Run on branch or tag creation (will be filtered by the publish-determination job).
@@ -79,6 +82,11 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install poetry
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
 
       - name: Install Task
         uses: arduino/setup-task@v2
