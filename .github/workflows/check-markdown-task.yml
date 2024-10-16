@@ -12,6 +12,7 @@ on:
     paths:
       - ".github/workflows/check-markdown-task.ya?ml"
       - ".markdown-link-check.json"
+      - "**/.npmrc"
       - "package.json"
       - "package-lock.json"
       - "Taskfile.ya?ml"
@@ -24,6 +25,7 @@ on:
     paths:
       - ".github/workflows/check-markdown-task.ya?ml"
       - ".markdown-link-check.json"
+      - "**/.npmrc"
       - "package.json"
       - "package-lock.json"
       - "Taskfile.ya?ml"

@@ -13,8 +13,11 @@ on:
   push:
     paths:
       - ".github/workflows/check-mkdocs-task.ya?ml"
+      - "**/.npmrc"
       - "Taskfile.ya?ml"
       - "mkdocs.ya?ml"
+      - "package.json"
+      - "package-lock.json"
       - "poetry.lock"
       - "pyproject.toml"
       - "docs/**"
@@ -24,8 +27,11 @@ on:
   pull_request:
     paths:
       - ".github/workflows/check-mkdocs-task.ya?ml"
+      - "**/.npmrc"
       - "Taskfile.ya?ml"
       - "mkdocs.ya?ml"
+      - "package.json"
+      - "package-lock.json"
       - "poetry.lock"
       - "pyproject.toml"
       - "docs/**"
@@ -86,6 +92,11 @@ jobs:
 
       - name: Install Poetry
         run: pip install poetry
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
 
       - name: Install Task
         uses: arduino/setup-task@v2
