@@ -320,6 +320,7 @@ tasks:
     desc: Check for broken links
     deps:
       - task: docs:generate
+      - task: npm:install-deps
     cmds:
       - |
         if [[ "{{.OS}}" == "Windows_NT" ]]; then
@@ -361,14 +362,28 @@ tasks:
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-markdown-task/Taskfile.yml
   markdown:fix:
     desc: Automatically correct linting violations in Markdown files where possible
+    deps:
+      - task: npm:install-deps
     cmds:
       - npx markdownlint-cli --fix "**/*.md"
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-markdown-task/Taskfile.yml
   markdown:lint:
     desc: Check for problems in Markdown files
+    deps:
+      - task: npm:install-deps
     cmds:
       - npx markdownlint-cli "**/*.md"
+
+  # Parameter variables:
+  # - PROJECT_PATH: path of the npm-managed project. Default value: "./"
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/npm-task/Taskfile.yml
+  npm:install-deps:
+    desc: Install dependencies managed by npm
+    dir: |
+      "{{default "./" .PROJECT_PATH}}"
+    cmds:
+      - npm install
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/poetry-task/Taskfile.yml
   poetry:install-deps:

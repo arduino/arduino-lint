@@ -83,6 +83,9 @@ If you want to run integration tests or work on documentation, you will also nee
 
 - A working [Python](https://www.python.org/downloads/) environment, version 3.9 or later.
 - [Poetry](https://python-poetry.org/docs/).
+- [**Node.js** / **npm**](https://nodejs.org/en/download/) - Node.js dependencies management tool.
+  - **ⓘ** [**nvm**](https://github.com/nvm-sh/nvm#installing-and-updating) is recommended if you want to manage multiple
+    installations of **Node.js** on your system.
 
 ### Building the source code
 
