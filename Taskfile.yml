@@ -157,6 +157,8 @@ tasks:
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-dependencies-task/Taskfile.yml
   general:cache-dep-licenses:
     desc: Cache dependency license metadata
+    deps:
+      - task: general:prepare-deps
     cmds:
       - |
         if ! which licensed &>/dev/null; then
@@ -214,6 +216,11 @@ tasks:
       - task: npm:install-deps
     cmds:
       - npx prettier --write .
+
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-go-dependencies-task/Taskfile.yml
+  general:prepare-deps:
+    desc: Prepare project dependencies for license check
+    # No preparation is needed for Go module-based projects.
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/go-task/Taskfile.yml
   go:build:
