@@ -119,6 +119,8 @@ tasks:
       WORKFLOW_SCHEMA_PATH:
         sh: mktemp -t workflow-schema-XXXXXXXXXX.json
       WORKFLOWS_DATA_PATH: "./.github/workflows/*.{yml,yaml}"
+    deps:
+      - task: npm:install-deps
     cmds:
       - |
         wget \

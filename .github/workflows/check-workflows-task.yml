@@ -6,10 +6,16 @@ on:
   push:
     paths:
       - ".github/workflows/*.ya?ml"
+      - "**/.npmrc"
+      - "package.json"
+      - "package-lock.json"
       - "Taskfile.ya?ml"
   pull_request:
     paths:
       - ".github/workflows/*.ya?ml"
+      - "**/.npmrc"
+      - "package.json"
+      - "package-lock.json"
       - "Taskfile.ya?ml"
   schedule:
     # Run every Tuesday at 8 AM UTC to catch breakage resulting from changes to the JSON schema.
@@ -26,6 +32,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
 
       - name: Install Task
         uses: arduino/setup-task@v2
