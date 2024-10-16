@@ -1,16 +1,22 @@
-# Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/sync-labels.md
+# Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/sync-labels-npm.md
 name: Sync Labels
 
 # See: https://docs.github.com/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows
 on:
   push:
     paths:
-      - ".github/workflows/sync-labels.ya?ml"
+      - ".github/workflows/sync-labels-npm.ya?ml"
       - ".github/label-configuration-files/*.ya?ml"
+      - ".npmrc"
+      - "package.json"
+      - "package-lock.json"
   pull_request:
     paths:
-      - ".github/workflows/sync-labels.ya?ml"
+      - ".github/workflows/sync-labels-npm.ya?ml"
       - ".github/label-configuration-files/*.ya?ml"
+      - ".npmrc"
+      - "package.json"
+      - "package-lock.json"
   schedule:
     # Run daily at 8 AM UTC to sync with changes to shared label configurations.
     - cron: "0 8 * * *"
@@ -31,6 +37,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+
       - name: Download JSON schema for labels configuration file
         id: download-schema
         uses: carlosperate/download-file-action@v2
@@ -39,20 +50,19 @@ jobs:
           location: ${{ runner.temp }}/label-configuration-schema
 
       - name: Install JSON schema validator
-        run: |
-          sudo npm install \
-            --global \
-            ajv-cli \
-            ajv-formats
+        run: npm install
 
       - name: Validate local labels configuration
         run: |
           # See: https://github.com/ajv-validator/ajv-cli#readme
-          ajv validate \
-            --all-errors \
-            -c ajv-formats \
-            -s "${{ steps.download-schema.outputs.file-path }}" \
-            -d "${{ env.CONFIGURATIONS_FOLDER }}/*.{yml,yaml}"
+          npx \
+            --package=ajv-cli \
+            --package=ajv-formats \
+            ajv validate \
+              --all-errors \
+              -c ajv-formats \
+              -s "${{ steps.download-schema.outputs.file-path }}" \
+              -d "${{ env.CONFIGURATIONS_FOLDER }}/*.{yml,yaml}"
 
   download:
     needs: check
@@ -126,6 +136,11 @@ jobs:
         with:
           name: ${{ env.CONFIGURATIONS_ARTIFACT_PREFIX }}*
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+
       - name: Merge label configuration files
         run: |
           # Merge all configuration files
@@ -133,14 +148,15 @@ jobs:
           cat "${{ env.CONFIGURATIONS_FOLDER }}"/*.@(yml|yaml) > "${{ env.MERGED_CONFIGURATION_PATH }}"
 
       - name: Install github-label-sync
-        run: sudo npm install --global github-label-sync
+        run: npm install
 
       - name: Sync labels
         env:
           GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # See: https://github.com/Financial-Times/github-label-sync
-          github-label-sync \
-            --labels "${{ env.MERGED_CONFIGURATION_PATH }}" \
-            ${{ steps.dry-run.outputs.flag }} \
-            ${{ github.repository }}
+          npx \
+            github-label-sync \
+              --labels "${{ env.MERGED_CONFIGURATION_PATH }}" \
+              ${{ steps.dry-run.outputs.flag }} \
+              ${{ github.repository }}
