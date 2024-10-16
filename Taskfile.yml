@@ -200,6 +200,8 @@ tasks:
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-prettier-formatting-task/Taskfile.yml
   general:format-prettier:
     desc: Format all supported files with Prettier
+    deps:
+      - task: npm:install-deps
     cmds:
       - npx prettier --write .
 

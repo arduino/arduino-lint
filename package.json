@@ -1,7 +1,8 @@
 {
   "devDependencies": {
     "markdown-link-check": "3.11.2",
-    "markdownlint-cli": "0.37.0"
+    "markdownlint-cli": "0.37.0",
+    "prettier": "3.3.3"
   },
   "type": "module"
 }
