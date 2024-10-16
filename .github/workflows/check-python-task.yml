@@ -1,10 +1,6 @@
 # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/check-python-task.md
 name: Check Python
 
-env:
-  # See: https://github.com/actions/setup-python/tree/main#available-versions-of-python
-  PYTHON_VERSION: "3.9"
-
 # See: https://docs.github.com/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows
 on:
   create:
@@ -73,7 +69,7 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
+          python-version-file: pyproject.toml
 
       - name: Install Poetry
         run: pip install poetry
@@ -104,7 +100,7 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
+          python-version-file: pyproject.toml
 
       - name: Install Poetry
         run: pip install poetry

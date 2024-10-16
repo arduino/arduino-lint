@@ -4,8 +4,6 @@ name: Deploy Website
 env:
   # See: https://github.com/actions/setup-go/tree/main#supported-version-syntax
   GO_VERSION: "1.17"
-  # See: https://github.com/actions/setup-python/tree/main#available-versions-of-python
-  PYTHON_VERSION: "3.9"
 
 on:
   push:
@@ -76,7 +74,7 @@ jobs:
       - name: Install Python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ env.PYTHON_VERSION }}
+          python-version-file: pyproject.toml
 
       - name: Install Poetry
         run: |
