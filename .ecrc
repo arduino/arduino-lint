@@ -4,7 +4,7 @@
     "__pycache__[/\\\\]",
     "^LICENSE\\.txt$",
     "^poetry\\.lock$",
-    "^\\.licenses/",
+    "^\\.licenses[/\\\\]",
     "^internal/rule/schema/schemadata/bindata.go$",
     "^internal/rule/schema/testdata/bindata.go$"
   ]
