@@ -937,7 +937,11 @@ submitting a PR:</p>
 </ul>
 <p>If you want to run integration tests or work on documentation, you will also need:</p>
 <ul>
-<li>A working <a href="https://www.python.org/downloads/">Python</a> environment, version 3.9 or later.</li>
+<li>A working <a href="https://www.python.org/downloads/">Python</a> environment.<ul>
+<li>The <strong>Python</strong> version in use is defined in the <code>tool.poetry.dependencies</code> field of
+  <a href="https://github.com/arduino/arduino-lint/blob/main/pyproject.toml"><code>pyproject.toml</code></a>.</li>
+</ul>
+</li>
 <li><a href="https://python-poetry.org/docs/">Poetry</a>.</li>
 <li><a href="https://nodejs.org/en/download/"><strong>Node.js</strong> / <strong>npm</strong></a> - Node.js dependencies management tool.<ul>
 <li>The <strong>Node.js</strong> version in use is defined in the <code>engines.node</code> field of
