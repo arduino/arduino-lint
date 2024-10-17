@@ -23,6 +23,7 @@ import (
 )
 
 // Type is the type for output formats
+//
 //go:generate stringer -type=Type -linecomment
 type Type int
 

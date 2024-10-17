@@ -312,7 +312,7 @@ func LibraryPropertiesNameFieldMissing() (result ruleresult.Type, output string)
 		return ruleresult.NotRun, "Couldn't load library.properties"
 	}
 
-	if projectdata.LoadedLibrary().IsLegacy {
+	if projectdata.LoadedLibrary() != nil && projectdata.LoadedLibrary().IsLegacy {
 		return ruleresult.Skip, "Library has legacy format"
 	}
 
@@ -524,7 +524,7 @@ func LibraryPropertiesVersionFieldMissing() (result ruleresult.Type, output stri
 		return ruleresult.NotRun, "Couldn't load library.properties"
 	}
 
-	if projectdata.LoadedLibrary().IsLegacy {
+	if projectdata.LoadedLibrary() != nil && projectdata.LoadedLibrary().IsLegacy {
 		return ruleresult.Skip, "Library has legacy format"
 	}
 
@@ -665,7 +665,7 @@ func LibraryPropertiesAuthorFieldMissing() (result ruleresult.Type, output strin
 		return ruleresult.NotRun, "Couldn't load library.properties"
 	}
 
-	if projectdata.LoadedLibrary().IsLegacy {
+	if projectdata.LoadedLibrary() != nil && projectdata.LoadedLibrary().IsLegacy {
 		return ruleresult.Skip, "Library has legacy format"
 	}
 
@@ -698,7 +698,7 @@ func LibraryPropertiesMaintainerFieldMissing() (result ruleresult.Type, output s
 		return ruleresult.NotRun, "Couldn't load library.properties"
 	}
 
-	if projectdata.LoadedLibrary().IsLegacy {
+	if projectdata.LoadedLibrary() != nil && projectdata.LoadedLibrary().IsLegacy {
 		return ruleresult.Skip, "Library has legacy format"
 	}
 
@@ -823,7 +823,7 @@ func LibraryPropertiesSentenceFieldMissing() (result ruleresult.Type, output str
 		return ruleresult.NotRun, "Couldn't load library.properties"
 	}
 
-	if projectdata.LoadedLibrary().IsLegacy {
+	if projectdata.LoadedLibrary() != nil && projectdata.LoadedLibrary().IsLegacy {
 		return ruleresult.Skip, "Library has legacy format"
 	}
 
@@ -861,7 +861,7 @@ func LibraryPropertiesParagraphFieldMissing() (result ruleresult.Type, output st
 		return ruleresult.NotRun, "Couldn't load library.properties"
 	}
 
-	if projectdata.LoadedLibrary().IsLegacy {
+	if projectdata.LoadedLibrary() != nil && projectdata.LoadedLibrary().IsLegacy {
 		return ruleresult.Skip, "Library has legacy format"
 	}
 
@@ -901,7 +901,7 @@ func LibraryPropertiesCategoryFieldMissing() (result ruleresult.Type, output str
 		return ruleresult.NotRun, "Couldn't load library.properties"
 	}
 
-	if projectdata.LoadedLibrary().IsLegacy {
+	if projectdata.LoadedLibrary() != nil && projectdata.LoadedLibrary().IsLegacy {
 		return ruleresult.Skip, "Library has legacy format"
 	}
 
@@ -953,7 +953,7 @@ func LibraryPropertiesURLFieldMissing() (result ruleresult.Type, output string) 
 		return ruleresult.NotRun, "Couldn't load library.properties"
 	}
 
-	if projectdata.LoadedLibrary().IsLegacy {
+	if projectdata.LoadedLibrary() != nil && projectdata.LoadedLibrary().IsLegacy {
 		return ruleresult.Skip, "Library has legacy format"
 	}
 
@@ -1023,7 +1023,7 @@ func LibraryPropertiesArchitecturesFieldMissing() (result ruleresult.Type, outpu
 		return ruleresult.NotRun, "Couldn't load library.properties"
 	}
 
-	if projectdata.LoadedLibrary().IsLegacy {
+	if projectdata.LoadedLibrary() != nil && projectdata.LoadedLibrary().IsLegacy {
 		return ruleresult.Skip, "Library has legacy format"
 	}
 
