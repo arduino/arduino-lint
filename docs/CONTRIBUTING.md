@@ -81,7 +81,9 @@ To build Arduino Lint from sources you need the following tools to be available 
 
 If you want to run integration tests or work on documentation, you will also need:
 
-- A working [Python](https://www.python.org/downloads/) environment, version 3.9 or later.
+- A working [Python](https://www.python.org/downloads/) environment.
+  - The **Python** version in use is defined in the `tool.poetry.dependencies` field of
+    [`pyproject.toml`](https://github.com/arduino/arduino-lint/blob/main/pyproject.toml).
 - [Poetry](https://python-poetry.org/docs/).
 - [**Node.js** / **npm**](https://nodejs.org/en/download/) - Node.js dependencies management tool.
   - The **Node.js** version in use is defined in the `engines.node` field of
