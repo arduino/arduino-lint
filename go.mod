@@ -1,8 +1,6 @@
 module github.com/arduino/arduino-lint
 
-go 1.22.0
-
-toolchain go1.22.3
+go 1.22.3
 
 replace github.com/jandelgado/gcov2lcov => github.com/jandelgado/gcov2lcov v1.0.5 // v1.0.4 causes Dependabot updates to fail due to checksum mismatch (likely a moved tag). This is an unused transitive dependency, so version is irrelevant.
 
