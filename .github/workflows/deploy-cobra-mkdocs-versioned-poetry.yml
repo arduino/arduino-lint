@@ -3,7 +3,7 @@ name: Deploy Website
 
 env:
   # See: https://github.com/actions/setup-go/tree/main#supported-version-syntax
-  GO_VERSION: "1.17"
+  GO_VERSION: "1.22"
 
 on:
   push:

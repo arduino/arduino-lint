@@ -259,7 +259,7 @@ tasks:
       - go install "github.com/go-bindata/go-bindata/...@v3.1.1"
       - go-bindata -nocompress -nometadata -o "./internal/rule/schema/schemadata/bindata.go" --pkg schemadata --prefix "./etc/schemas/" "./etc/schemas/"
       - go-bindata -nocompress -nometadata -o "./internal/rule/schema/testdata/bindata.go" --pkg testdata --prefix "./internal/rule/schema/testdata/input/" "./internal/rule/schema/testdata/input/"
-      - go install golang.org/x/tools/cmd/stringer@v0.0.0-20201211192254-72fbef54948b
+      - go install golang.org/x/tools/cmd/stringer@v0.25.0
       - go generate ./...
       - task: go:format
 
