@@ -18,6 +18,7 @@
 package compliancelevel
 
 // Type is the type for the compliance levels.
+//
 //go:generate stringer -type=Type -linecomment
 type Type int
 

@@ -124,31 +124,3 @@ func IncorrectSketchSrcFolderNameCase() (result ruleresult.Type, output string) 
 
 	return ruleresult.Pass, ""
 }
-
-// SketchDotJSONJSONFormat checks whether the sketch.json metadata file is a valid JSON document.
-func SketchDotJSONJSONFormat() (result ruleresult.Type, output string) {
-	metadataPath := sketch.MetadataPath(projectdata.ProjectPath())
-	if metadataPath == nil {
-		return ruleresult.Skip, "No metadata file"
-	}
-
-	if isValidJSON(metadataPath) {
-		return ruleresult.Pass, ""
-	}
-
-	return ruleresult.Fail, ""
-}
-
-// SketchDotJSONFormat checks whether the sketch.json metadata file has the required data format.
-func SketchDotJSONFormat() (result ruleresult.Type, output string) {
-	metadataPath := sketch.MetadataPath(projectdata.ProjectPath())
-	if metadataPath == nil {
-		return ruleresult.Skip, "No metadata file"
-	}
-
-	if projectdata.MetadataLoadError() == nil {
-		return ruleresult.Pass, ""
-	}
-
-	return ruleresult.Fail, projectdata.MetadataLoadError().Error()
-}
