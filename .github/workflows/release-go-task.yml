@@ -200,7 +200,7 @@ jobs:
           path: ${{ env.DIST_DIR }}
 
       - name: Create checksum file
-        working-directory: ${{ env.DIST_DIR}}
+        working-directory: ${{ env.DIST_DIR }}
         run: |
           TAG="${GITHUB_REF/refs\/tags\//}"
           sha256sum ${{ env.PROJECT_NAME }}_${TAG}* > ${TAG}-checksums.txt
