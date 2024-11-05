@@ -100,8 +100,7 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          pattern: ${{ env.ARTIFACT_PREFIX }}*
-          merge-multiple: true
+          name: ${{ env.ARTIFACT_PREFIX }}${{ matrix.build.artifact-suffix }}
           path: ${{ env.DIST_DIR }}
 
       - name: Import Code-Signing Certificates
