@@ -88,9 +88,11 @@ jobs:
     strategy:
       matrix:
         build:
-          - folder-suffix: darwin_amd64
+          - artifact-suffix: macOS_64bit
+            folder-suffix: darwin_amd64
             package-suffix: "macOS_64bit.tar.gz"
-          - folder-suffix: darwin_arm64
+          - artifact-suffix: macOS_ARM64
+            folder-suffix: darwin_arm64
             package-suffix: "macOS_ARM64.tar.gz"
 
     steps:
@@ -178,11 +180,12 @@ jobs:
           -C "${{ env.BUILD_FOLDER }}/" "${{ env.PROJECT_NAME }}" \
           -C ../../ LICENSE.txt
 
-      - name: Upload artifact
+      - name: Replace artifact with notarized build
         uses: actions/upload-artifact@v4
         with:
           if-no-files-found: error
-          name: ${{ env.ARTIFACT_PREFIX }}notarized-${{ matrix.build.folder-suffix }}
+          name: ${{ env.ARTIFACT_PREFIX }}${{ matrix.build.artifact-suffix }}
+          overwrite: true
           path: ${{ env.DIST_DIR }}/${{ env.PACKAGE_FILENAME }}
 
   create-release:
@@ -200,7 +203,7 @@ jobs:
           path: ${{ env.DIST_DIR }}
 
       - name: Create checksum file
-        working-directory: ${{ env.DIST_DIR}}
+        working-directory: ${{ env.DIST_DIR }}
         run: |
           TAG="${GITHUB_REF/refs\/tags\//}"
           sha256sum ${{ env.PROJECT_NAME }}_${TAG}* > ${TAG}-checksums.txt
