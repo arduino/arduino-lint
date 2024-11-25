@@ -11,7 +11,7 @@ require (
 	github.com/arduino/arduino-lint v0.0.0
 	github.com/arduino/go-paths-helper v1.12.1
 	github.com/olekukonko/tablewriter v0.0.5
-	github.com/stretchr/testify v1.9.0
+	github.com/stretchr/testify v1.10.0
 )
 
 require (
