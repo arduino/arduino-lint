@@ -7,7 +7,7 @@ env:
   # As defined by the Taskfile's DIST_DIR variable
   DIST_DIR: dist
   # The project's folder on Arduino's download server for uploading builds
-  AWS_PLUGIN_TARGET: /arduino-lint/nightly/
+  AWS_PLUGIN_TARGET: /arduino-lint/
   AWS_REGION: "us-east-1"
   ARTIFACT_PREFIX: dist-
 
