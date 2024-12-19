@@ -1,0 +1,1095 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Tool to check for problems with Arduino projects">
+      
+      
+      
+        <link rel="canonical" href="https://arduino.github.io/arduino-lint/1.3/CONTRIBUTING/">
+      
+      
+        <link rel="prev" href="../rules/package-index/">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.18">
+    
+    
+      
+        <title>How to contribute - Arduino Lint</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.66ac8b77.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#how-to-contribute" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Arduino Lint" class="md-header__button md-logo" aria-label="Arduino Lint" data-md-component="logo">
+      
+  <img src="../img/icon_mac_light.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Arduino Lint
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              How to contribute
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/arduino/arduino-lint" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    arduino/arduino-lint
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Arduino Lint" class="md-nav__button md-logo" aria-label="Arduino Lint" data-md-component="logo">
+      
+  <img src="../img/icon_mac_light.png" alt="logo">
+
+    </a>
+    Arduino Lint
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/arduino/arduino-lint" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    arduino/arduino-lint
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../commands/arduino-lint/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Command reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Rules
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Rules
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rules/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rules/sketch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sketch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rules/library/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Library
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rules/platform/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Platform
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rules/package-index/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Package index
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    How to contribute
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    How to contribute
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#issue-reports" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issue Reports
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Issue Reports">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#before-reporting-an-issue" class="md-nav__link">
+    <span class="md-ellipsis">
+      Before reporting an issue
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#qualities-of-an-excellent-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      Qualities of an excellent report
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pull-requests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pull Requests
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pull Requests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pull-request-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pull request checklist
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#development-prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Development prerequisites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-the-source-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Building the source code
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-the-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running the checks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Running the checks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#go-unit-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Go unit tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integration-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integration tests
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependency-license-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dependency license metadata
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#automated-corrections" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automated corrections
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#working-on-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Working on documentation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Working on documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#local-development" class="md-nav__link">
+    <span class="md-ellipsis">
+      Local development
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentation-publishing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Documentation publishing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#issue-reports" class="md-nav__link">
+    <span class="md-ellipsis">
+      Issue Reports
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Issue Reports">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#before-reporting-an-issue" class="md-nav__link">
+    <span class="md-ellipsis">
+      Before reporting an issue
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#qualities-of-an-excellent-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      Qualities of an excellent report
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pull-requests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pull Requests
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pull Requests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pull-request-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pull request checklist
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#development-prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Development prerequisites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#building-the-source-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      Building the source code
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#running-the-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running the checks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Running the checks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#go-unit-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Go unit tests
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integration-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integration tests
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependency-license-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      Dependency license metadata
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#automated-corrections" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automated corrections
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#working-on-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Working on documentation
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Working on documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#local-development" class="md-nav__link">
+    <span class="md-ellipsis">
+      Local development
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#documentation-publishing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Documentation publishing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="how-to-contribute">How to contribute<a class="headerlink" href="#how-to-contribute" title="Permanent link">&para;</a></h1>
+<p>First of all, thanks for contributing! This document provides some basic guidelines for contributing to this repository.</p>
+<p>There are several ways you can get involved:</p>
+<table>
+<thead>
+<tr>
+<th>Type of contribution</th>
+<th>Contribution method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>- Support request<br/>- Question<br/>- Discussion</td>
+<td>Post on the <a href="https://forum.arduino.cc/c/using-arduino/project-guidance/19">Arduino Forum</a></td>
+</tr>
+<tr>
+<td>- Bug report<br/>- Feature request</td>
+<td>Issue report (read the <a href="#issue-reports">issue guidelines</a>)</td>
+</tr>
+<tr>
+<td>Beta testing</td>
+<td>Try out the <a href="../installation/#nightly-builds">nightly build</a></td>
+</tr>
+<tr>
+<td>- Bug fix<br/>- Enhancement</td>
+<td>Pull Request (read the <a href="#pull-requests">pull request guidelines</a>)</td>
+</tr>
+<tr>
+<td>Monetary</td>
+<td>- <a href="https://www.arduino.cc/en/donate/">Donate</a><br/>- <a href="https://store.arduino.cc">Buy official products</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="issue-reports">Issue Reports<a class="headerlink" href="#issue-reports" title="Permanent link">&para;</a></h2>
+<p>Do you need help or have a question about using Arduino Lint? Support requests should be made to the
+<a href="https://forum.arduino.cc/c/using-arduino/project-guidance/19">Arduino forum</a>.</p>
+<p>High quality bug reports and feature requests are valuable contributions to the Arduino Lint project.</p>
+<h3 id="before-reporting-an-issue">Before reporting an issue<a class="headerlink" href="#before-reporting-an-issue" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Give the <a href="../installation/#nightly-builds">nightly build</a> a test drive to see if your issue was already resolved.</li>
+<li>Search <a href="https://github.com/arduino/arduino-lint/issues?q=">existing pull requests and issues</a> to see if it was already
+  reported. If you have additional information to provide about an existing issue, please comment there. You can use
+  <a href="https://github.blog/2016-03-10-add-reactions-to-pull-requests-issues-and-comments/">GitHub's "Reactions" feature</a> if
+  you only want to express support.</li>
+</ul>
+<h3 id="qualities-of-an-excellent-report">Qualities of an excellent report<a class="headerlink" href="#qualities-of-an-excellent-report" title="Permanent link">&para;</a></h3>
+<ul>
+<li>The issue title should be descriptive. Vague titles make it difficult to understand the purpose of the issue, which
+  might cause your issue to be overlooked.</li>
+<li>Provide a full set of steps necessary to reproduce the issue. Demonstration code or commands should be complete and
+  simplified to the minimum necessary to reproduce the issue.</li>
+<li>Be responsive. We may need you to provide additional information in order to investigate and resolve the issue.</li>
+<li>If you find a solution to your problem, please comment on your issue report with an explanation of how you were able
+  to fix it and close the issue.</li>
+</ul>
+<h2 id="pull-requests">Pull Requests<a class="headerlink" href="#pull-requests" title="Permanent link">&para;</a></h2>
+<p>To propose improvements or fix a bug, feel free to submit a PR.</p>
+<h3 id="pull-request-checklist">Pull request checklist<a class="headerlink" href="#pull-request-checklist" title="Permanent link">&para;</a></h3>
+<p>In order to ease code reviews and have your contributions merged faster, here is a list of items you can check before
+submitting a PR:</p>
+<ul>
+<li>Create small PRs that are narrowly focused on addressing a single concern.</li>
+<li>Write tests for the code you wrote.</li>
+<li>Maintain <a href="https://www.freshconsulting.com/insights/blog/atomic-commits/"><strong>clean commit history</strong></a> and use
+  <a href="https://cbea.ms/git-commit/"><strong>meaningful commit messages</strong></a>. PRs with messy commit history are difficult to review
+  and require a lot of work to be merged.</li>
+<li><a id="breaking"></a> If the PR contains a breaking change, please start the commit message and PR title with the
+  string <strong>[breaking]</strong>. Don't forget to describe in the PR description what changes users might need to make in their
+  workflow or application due to this PR. A breaking change is a change that forces users to change their command-line
+  invocations or parsing of the JSON formatted output when upgrading from an older version of Arduino Lint.</li>
+<li>PR titles indirectly become part of the CHANGELOG so it's crucial to provide a good record of <strong>what</strong> change is being
+  made in the title; <strong>why</strong> it was made will go in the PR description, along with
+  <a href="https://docs.github.com/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue">a link to a GitHub issue</a>
+  if one exists.</li>
+<li>Open your PR against the <code>main</code> branch.</li>
+<li>Your PR must pass all <a href="https://wikipedia.org/wiki/Continuous_integration">CI</a> tests before we will merge it. You can
+  run the CI in your fork by clicking the "Actions" tab and then the "I understand my workflows..." button. If you're
+  seeing an error and don't think it's your fault, it may not be! The reviewer will help you if there are test failures
+  that seem not related to the change you are making.</li>
+</ul>
+<h3 id="development-prerequisites">Development prerequisites<a class="headerlink" href="#development-prerequisites" title="Permanent link">&para;</a></h3>
+<p>To build Arduino Lint from sources you need the following tools to be available in your local environment:</p>
+<ul>
+<li><a href="https://golang.org/doc/install">Go</a></li>
+<li><a href="https://taskfile.dev/#/installation">Taskfile</a> to help you run the most common tasks from the command line</li>
+</ul>
+<p>If you want to run integration tests or work on documentation, you will also need:</p>
+<ul>
+<li>A working <a href="https://www.python.org/downloads/">Python</a> environment.<ul>
+<li>The <strong>Python</strong> version in use is defined in the <code>tool.poetry.dependencies</code> field of
+  <a href="https://github.com/arduino/arduino-lint/blob/main/pyproject.toml"><code>pyproject.toml</code></a>.</li>
+</ul>
+</li>
+<li><a href="https://python-poetry.org/docs/">Poetry</a>.</li>
+<li><a href="https://nodejs.org/en/download/"><strong>Node.js</strong> / <strong>npm</strong></a> - Node.js dependencies management tool.<ul>
+<li>The <strong>Node.js</strong> version in use is defined in the <code>engines.node</code> field of
+  <a href="https://github.com/arduino/arduino-lint/blob/main/package.json"><code>package.json</code></a>.</li>
+<li><strong>ⓘ</strong> <a href="https://github.com/nvm-sh/nvm#installing-and-updating"><strong>nvm</strong></a> is recommended if you want to manage multiple
+  installations of <strong>Node.js</strong> on your system.</li>
+</ul>
+</li>
+</ul>
+<h3 id="building-the-source-code">Building the source code<a class="headerlink" href="#building-the-source-code" title="Permanent link">&para;</a></h3>
+<p>From the project folder root, just run:</p>
+<div class="highlight"><pre><span></span><code>task<span class="w"> </span>build
+</code></pre></div>
+<p>The project uses Go modules, so dependencies will be downloaded automatically. At the end of the build, you should find
+the <code>arduino-lint</code> executable in the same folder.</p>
+<p><a id="running-the-tests"></a></p>
+<h3 id="running-the-checks">Running the checks<a class="headerlink" href="#running-the-checks" title="Permanent link">&para;</a></h3>
+<p>There are several checks and test suites in place to ensure the code works as expected and is written in a way that's
+consistent across the whole codebase. To avoid pushing changes that will cause the CI system to fail, you can run the
+checks locally by running this command:</p>
+<div class="highlight"><pre><span></span><code>task check
+</code></pre></div>
+<h4 id="go-unit-tests">Go unit tests<a class="headerlink" href="#go-unit-tests" title="Permanent link">&para;</a></h4>
+<p>To run only the Go unit tests, run:</p>
+<div class="highlight"><pre><span></span><code>task go:test
+</code></pre></div>
+<p>By default, all tests for all Arduino Lint's Go packages are run. To run unit tests for only one or more specific
+packages, you can set the <code>TARGETS</code> environment variable, e.g.:</p>
+<div class="highlight"><pre><span></span><code>TARGETS=./internal/rule task go:test
+</code></pre></div>
+<p>Alternatively, to run only some specific test(s), you can specify a regex to match against the test function name, e.g.:</p>
+<div class="highlight"><pre><span></span><code>TEST_REGEX=&#39;^TestLibraryProperties.*&#39; task go:test
+</code></pre></div>
+<p>Both can be combined as well, typically to run only a specific test:</p>
+<div class="highlight"><pre><span></span><code>TEST_REGEX=&#39;^TestFindProjects$&#39; TARGETS=./internal/project task go:test
+</code></pre></div>
+<h4 id="integration-tests">Integration tests<a class="headerlink" href="#integration-tests" title="Permanent link">&para;</a></h4>
+<p>Being a command line interface, Arduino Lint is heavily interactive and it has to stay consistent in accepting the user
+input and providing the expected output and proper exit codes.</p>
+<p>For these reasons, in addition to regular unit tests the project has a suite of integration tests that actually run
+<code>arduino-lint</code> in a different process and assess the options are correctly understood and the output is what we expect.</p>
+<h5 id="running-tests">Running tests<a class="headerlink" href="#running-tests" title="Permanent link">&para;</a></h5>
+<p>After the software requirements have been installed, you should be able to run the tests with:</p>
+<div class="highlight"><pre><span></span><code>task go:test-integration
+</code></pre></div>
+<p>This will automatically install the necessary dependencies, if not already installed, and run the integration tests
+automatically.</p>
+<p>To run specific tests, you must run <code>pytest</code> from the virtual environment created by Poetry.</p>
+<div class="highlight"><pre><span></span><code>poetry run pytest tests/test_all.py::test_report_file
+</code></pre></div>
+<p>You can avoid writing the <code>poetry run</code> prefix each time by creating a new shell inside the virtual environment:</p>
+<div class="highlight"><pre><span></span><code>poetry shell
+pytest test_lib.py
+pytest test_lib.py::test_list
+</code></pre></div>
+<h3 id="dependency-license-metadata">Dependency license metadata<a class="headerlink" href="#dependency-license-metadata" title="Permanent link">&para;</a></h3>
+<p>Metadata about the license types of all dependencies is cached in the repository. To update this cache, run the
+following command from the repository root folder:</p>
+<div class="highlight"><pre><span></span><code>task general:cache-dep-licenses
+</code></pre></div>
+<p>The necessary <strong>Licensed</strong> tool can be installed by following
+<a href="https://github.com/github/licensed#as-an-executable">these instructions</a>.</p>
+<p>Unfortunately, <strong>Licensed</strong> does not have Windows support.</p>
+<p>An updated cache is also generated whenever the cache is found to be outdated by the by the "Check Go Dependencies" CI
+workflow and made available for download via the <code>dep-licenses-cache</code>
+<a href="https://docs.github.com/actions/managing-workflow-runs/downloading-workflow-artifacts">workflow artifact</a>.</p>
+<p><a id="linting-and-formatting"></a> <a id="configuration-files-formatting"></a> <a id="documentation-formatting"></a></p>
+<h3 id="automated-corrections">Automated corrections<a class="headerlink" href="#automated-corrections" title="Permanent link">&para;</a></h3>
+<p>Tools are provided to automatically bring the project into compliance with some required checks. Run them all with this
+command:</p>
+<div class="highlight"><pre><span></span><code>task fix
+</code></pre></div>
+<h3 id="working-on-documentation">Working on documentation<a class="headerlink" href="#working-on-documentation" title="Permanent link">&para;</a></h3>
+<p>Documentation is provided to final users in form of static HTML content generated from a tool called
+<a href="https://www.mkdocs.org/">MkDocs</a> and hosted on <a href="https://pages.github.com/">GitHub Pages</a>:
+<a href="https://arduino.github.io/arduino-lint/dev/">https://arduino.github.io/arduino-lint/dev/</a></p>
+<h4 id="local-development">Local development<a class="headerlink" href="#local-development" title="Permanent link">&para;</a></h4>
+<p>The documentation consists of static content written over several Markdown files under the <code>docs</code> subfolder of the
+Arduino Lint repository, as well as the dynamically generated <a href="../commands/arduino-lint/">command line reference</a>.</p>
+<p>When working on the documentation, it is useful to be able to see the effect the changes will have on the generated
+documentation website. You can build the documentation website and serve it from your personal computer by running the
+command:</p>
+<div class="highlight"><pre><span></span><code>task website:serve
+</code></pre></div>
+<p>The documentation will build. If you don't see any error, open <code>http://127.0.0.1:8000</code> in your browser to view the local
+copy of the documentation.</p>
+<h4 id="documentation-publishing">Documentation publishing<a class="headerlink" href="#documentation-publishing" title="Permanent link">&para;</a></h4>
+<p>The Arduino Lint git repository has a special branch called <code>gh-pages</code> that contains the generated HTML code for the
+documentation website. Every time a change is pushed to this special branch, GitHub automatically triggers a deployment
+to pull the change and publish a new version of the website. Do not open Pull Requests to push changes to the <code>gh-pages</code>
+branch; that will be done exclusively from the CI.</p>
+<p>For details on the documentation publishing system, see:
+<a href="https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/deploy-cobra-mkdocs-versioned-poetry.md">https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/deploy-cobra-mkdocs-versioned-poetry.md</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright 2020 ARDUINO SA (http://www.arduino.cc/)
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.3220b9d7.min.js"></script>
+      
+    
+  </body>
+</html>

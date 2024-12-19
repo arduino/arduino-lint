@@ -1,0 +1,4645 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Tool to check for problems with Arduino projects">
+      
+      
+      
+        <link rel="canonical" href="https://arduino.github.io/arduino-lint/1.3/rules/library/">
+      
+      
+        <link rel="prev" href="../sketch/">
+      
+      
+        <link rel="next" href="../platform/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.18">
+    
+    
+      
+        <title>Library - Arduino Lint</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.66ac8b77.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#invalid-library-ls001" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Arduino Lint" class="md-header__button md-logo" aria-label="Arduino Lint" data-md-component="logo">
+      
+  <img src="../../img/icon_mac_light.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Arduino Lint
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Library
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/arduino/arduino-lint" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    arduino/arduino-lint
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Arduino Lint" class="md-nav__button md-logo" aria-label="Arduino Lint" data-md-component="logo">
+      
+  <img src="../../img/icon_mac_light.png" alt="logo">
+
+    </a>
+    Arduino Lint
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/arduino/arduino-lint" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    arduino/arduino-lint
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../commands/arduino-lint/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Command reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Rules
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Rules
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sketch/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Sketch
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Library
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Library
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-library-ls001" class="md-nav__link">
+    <span class="md-ellipsis">
+      invalid library (LS001)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#folder-name-too-long-ls002" class="md-nav__link">
+    <span class="md-ellipsis">
+      folder name too long (LS002)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prohibited-character-in-folder-name-ls003" class="md-nav__link">
+    <span class="md-ellipsis">
+      prohibited character in folder name (LS003)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#submodule-ls004" class="md-nav__link">
+    <span class="md-ellipsis">
+      submodule (LS004)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#symlink-ls005" class="md-nav__link">
+    <span class="md-ellipsis">
+      symlink (LS005)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#development-file-ls006" class="md-nav__link">
+    <span class="md-ellipsis">
+      .development file (LS006)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exe-file-ls007" class="md-nav__link">
+    <span class="md-ellipsis">
+      .exe file (LS007)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-header-mismatch-ls008" class="md-nav__link">
+    <span class="md-ellipsis">
+      name-header mismatch (LS008)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src-folder-case-ls009" class="md-nav__link">
+    <span class="md-ellipsis">
+      src folder case (LS009)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recursive-with-utility-folder-ls010" class="md-nav__link">
+    <span class="md-ellipsis">
+      recursive with utility folder (LS010)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-extras-folder-name-ls011" class="md-nav__link">
+    <span class="md-ellipsis">
+      incorrect extras folder name (LS011)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extras-folder-name-case-ls012" class="md-nav__link">
+    <span class="md-ellipsis">
+      extras folder name case (LS012)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-libraryproperties-lp001" class="md-nav__link">
+    <span class="md-ellipsis">
+      missing library.properties (LP001)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-libraryproperties-file-name-lp002" class="md-nav__link">
+    <span class="md-ellipsis">
+      incorrect library.properties file name (LP002)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#libraryproperties-file-name-case-lp003" class="md-nav__link">
+    <span class="md-ellipsis">
+      library.properties file name case (LP003)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#redundant-libraryproperties-lp004" class="md-nav__link">
+    <span class="md-ellipsis">
+      redundant library.properties (LP004)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#libraryproperties-format-lp005" class="md-nav__link">
+    <span class="md-ellipsis">
+      library.properties format (LP005)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#misspelled-libraryproperties-field-lp006" class="md-nav__link">
+    <span class="md-ellipsis">
+      misspelled library.properties field (LP006)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-name-lp007" class="md-nav__link">
+    <span class="md-ellipsis">
+      missing name (LP007)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-min-length-lp008" class="md-nav__link">
+    <span class="md-ellipsis">
+      name &lt; min length (LP008)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-max-length-lp009" class="md-nav__link">
+    <span class="md-ellipsis">
+      name &gt; max length (LP009)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-recommended-length-lp010" class="md-nav__link">
+    <span class="md-ellipsis">
+      name &gt; recommended length (LP010)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prohibited-character-in-name-lp011" class="md-nav__link">
+    <span class="md-ellipsis">
+      prohibited character in name (LP011)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-starts-with-arduino-lp012" class="md-nav__link">
+    <span class="md-ellipsis">
+      name starts with &#34;Arduino&#34; (LP012)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-missing-official-prefix-lp013" class="md-nav__link">
+    <span class="md-ellipsis">
+      name missing official prefix (LP013)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-contains-arduino-lp014" class="md-nav__link">
+    <span class="md-ellipsis">
+      name contains &#34;Arduino&#34; (LP014)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-contains-spaces-lp015" class="md-nav__link">
+    <span class="md-ellipsis">
+      name contains spaces (LP015)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-contains-library-lp016" class="md-nav__link">
+    <span class="md-ellipsis">
+      name contains &#34;library&#34; (LP016)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#duplicate-name-lp017" class="md-nav__link">
+    <span class="md-ellipsis">
+      duplicate name (LP017)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#not-in-lm-index-lp018" class="md-nav__link">
+    <span class="md-ellipsis">
+      not in LM index (LP018)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-version-field-lp019" class="md-nav__link">
+    <span class="md-ellipsis">
+      missing version field (LP019)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-version-lp020" class="md-nav__link">
+    <span class="md-ellipsis">
+      invalid version (LP020)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-semver-version-lp021" class="md-nav__link">
+    <span class="md-ellipsis">
+      non-semver version (LP021)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tag-mismatch-lp022" class="md-nav__link">
+    <span class="md-ellipsis">
+      tag mismatch (LP022)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-author-field-lp023" class="md-nav__link">
+    <span class="md-ellipsis">
+      missing author field (LP023)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#author-min-length-lp024" class="md-nav__link">
+    <span class="md-ellipsis">
+      author &lt; min length (LP024)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-maintainer-field-lp025" class="md-nav__link">
+    <span class="md-ellipsis">
+      missing maintainer field (LP025)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maintainer-min-length-lp026" class="md-nav__link">
+    <span class="md-ellipsis">
+      maintainer &lt; min length (LP026)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maintainer-starts-with-arduino-lp027" class="md-nav__link">
+    <span class="md-ellipsis">
+      maintainer starts with &#34;Arduino&#34; (LP027)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maintainer-contains-arduino-lp057" class="md-nav__link">
+    <span class="md-ellipsis">
+      maintainer contains &#34;Arduino&#34; (LP057)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#email-used-as-alias-for-maintainer-lp028" class="md-nav__link">
+    <span class="md-ellipsis">
+      &#34;email&#34; used as alias for &#34;maintainer&#34; (LP028)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#email-min-length-lp029" class="md-nav__link">
+    <span class="md-ellipsis">
+      email &lt; min length (LP029)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#email-starts-with-arduino-lp030" class="md-nav__link">
+    <span class="md-ellipsis">
+      email starts with &#34;Arduino&#34; (LP030)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-sentence-field-lp031" class="md-nav__link">
+    <span class="md-ellipsis">
+      missing sentence field (LP031)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sentence-min-length-lp032" class="md-nav__link">
+    <span class="md-ellipsis">
+      sentence &lt; min length (LP032)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sentence-spell-check-lp033" class="md-nav__link">
+    <span class="md-ellipsis">
+      sentence spell check (LP033)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-paragraph-field-lp034" class="md-nav__link">
+    <span class="md-ellipsis">
+      missing paragraph field (LP034)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#paragraph-spell-check-lp035" class="md-nav__link">
+    <span class="md-ellipsis">
+      paragraph spell check (LP035)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#paragraph-repeats-sentence-lp036" class="md-nav__link">
+    <span class="md-ellipsis">
+      paragraph repeats sentence (LP036)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-category-field-lp037" class="md-nav__link">
+    <span class="md-ellipsis">
+      missing category field (LP037)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-category-value-lp038" class="md-nav__link">
+    <span class="md-ellipsis">
+      invalid category value (LP038)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uncategorized-category-value-lp039" class="md-nav__link">
+    <span class="md-ellipsis">
+      &#34;Uncategorized&#34; category value (LP039)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-url-field-lp040" class="md-nav__link">
+    <span class="md-ellipsis">
+      missing url field (LP040)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#url-min-length-lp056" class="md-nav__link">
+    <span class="md-ellipsis">
+      url &lt; min length (LP056)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-url-format-lp041" class="md-nav__link">
+    <span class="md-ellipsis">
+      invalid url format (LP041)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dead-url-lp042" class="md-nav__link">
+    <span class="md-ellipsis">
+      dead URL (LP042)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-architectures-field-lp043" class="md-nav__link">
+    <span class="md-ellipsis">
+      missing architectures field (LP043)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architectures-blank-lp044" class="md-nav__link">
+    <span class="md-ellipsis">
+      architectures blank (LP044)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-alias-lp045" class="md-nav__link">
+    <span class="md-ellipsis">
+      architecture alias (LP045)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-case-lp046" class="md-nav__link">
+    <span class="md-ellipsis">
+      architecture case (LP046)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-depends-format-lp047" class="md-nav__link">
+    <span class="md-ellipsis">
+      invalid depends format (LP047)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#depends-not-in-index-lp048" class="md-nav__link">
+    <span class="md-ellipsis">
+      depends not in index (LP048)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-depends-constraint-syntax-lp058" class="md-nav__link">
+    <span class="md-ellipsis">
+      invalid depends constraint syntax (LP058)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-dot_a_linkage-value-lp049" class="md-nav__link">
+    <span class="md-ellipsis">
+      invalid dot_a_linkage value (LP049)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dot_a_linkagetrue-with-10-library-format-lp050" class="md-nav__link">
+    <span class="md-ellipsis">
+      dot_a_linkage=true with &#34;1.0&#34; library format (LP050)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#includes-blank-lp051" class="md-nav__link">
+    <span class="md-ellipsis">
+      includes blank (LP051)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#includes-not-in-library-lp052" class="md-nav__link">
+    <span class="md-ellipsis">
+      includes not in library (LP052)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-precompiled-value-lp053" class="md-nav__link">
+    <span class="md-ellipsis">
+      invalid precompiled value (LP053)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#precompiled-with-10-format-lp054" class="md-nav__link">
+    <span class="md-ellipsis">
+      precompiled with &#34;1.0&#34; format (LP054)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ldflags-min-length-lp055" class="md-nav__link">
+    <span class="md-ellipsis">
+      ldflags &lt; min length (LP055)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arduinoh-case-lc001" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arduino.h case (LC001)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#no-readme-ld001" class="md-nav__link">
+    <span class="md-ellipsis">
+      no readme (LD001)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#no-license-file-ld002" class="md-nav__link">
+    <span class="md-ellipsis">
+      no license file (LD002)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stray-sketch-ld003" class="md-nav__link">
+    <span class="md-ellipsis">
+      stray sketch (LD003)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#no-examples-ld004" class="md-nav__link">
+    <span class="md-ellipsis">
+      no examples (LD004)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-examples-folder-name-ld005" class="md-nav__link">
+    <span class="md-ellipsis">
+      incorrect examples folder name (LD005)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples-folder-name-case-ld006" class="md-nav__link">
+    <span class="md-ellipsis">
+      examples folder name case (LD006)
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../platform/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Platform
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../package-index/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Package index
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CONTRIBUTING/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    How to contribute
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-library-ls001" class="md-nav__link">
+    <span class="md-ellipsis">
+      invalid library (LS001)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#folder-name-too-long-ls002" class="md-nav__link">
+    <span class="md-ellipsis">
+      folder name too long (LS002)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prohibited-character-in-folder-name-ls003" class="md-nav__link">
+    <span class="md-ellipsis">
+      prohibited character in folder name (LS003)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#submodule-ls004" class="md-nav__link">
+    <span class="md-ellipsis">
+      submodule (LS004)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#symlink-ls005" class="md-nav__link">
+    <span class="md-ellipsis">
+      symlink (LS005)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#development-file-ls006" class="md-nav__link">
+    <span class="md-ellipsis">
+      .development file (LS006)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exe-file-ls007" class="md-nav__link">
+    <span class="md-ellipsis">
+      .exe file (LS007)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-header-mismatch-ls008" class="md-nav__link">
+    <span class="md-ellipsis">
+      name-header mismatch (LS008)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#src-folder-case-ls009" class="md-nav__link">
+    <span class="md-ellipsis">
+      src folder case (LS009)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recursive-with-utility-folder-ls010" class="md-nav__link">
+    <span class="md-ellipsis">
+      recursive with utility folder (LS010)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-extras-folder-name-ls011" class="md-nav__link">
+    <span class="md-ellipsis">
+      incorrect extras folder name (LS011)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extras-folder-name-case-ls012" class="md-nav__link">
+    <span class="md-ellipsis">
+      extras folder name case (LS012)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-libraryproperties-lp001" class="md-nav__link">
+    <span class="md-ellipsis">
+      missing library.properties (LP001)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-libraryproperties-file-name-lp002" class="md-nav__link">
+    <span class="md-ellipsis">
+      incorrect library.properties file name (LP002)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#libraryproperties-file-name-case-lp003" class="md-nav__link">
+    <span class="md-ellipsis">
+      library.properties file name case (LP003)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#redundant-libraryproperties-lp004" class="md-nav__link">
+    <span class="md-ellipsis">
+      redundant library.properties (LP004)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#libraryproperties-format-lp005" class="md-nav__link">
+    <span class="md-ellipsis">
+      library.properties format (LP005)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#misspelled-libraryproperties-field-lp006" class="md-nav__link">
+    <span class="md-ellipsis">
+      misspelled library.properties field (LP006)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-name-lp007" class="md-nav__link">
+    <span class="md-ellipsis">
+      missing name (LP007)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-min-length-lp008" class="md-nav__link">
+    <span class="md-ellipsis">
+      name &lt; min length (LP008)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-max-length-lp009" class="md-nav__link">
+    <span class="md-ellipsis">
+      name &gt; max length (LP009)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-recommended-length-lp010" class="md-nav__link">
+    <span class="md-ellipsis">
+      name &gt; recommended length (LP010)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prohibited-character-in-name-lp011" class="md-nav__link">
+    <span class="md-ellipsis">
+      prohibited character in name (LP011)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-starts-with-arduino-lp012" class="md-nav__link">
+    <span class="md-ellipsis">
+      name starts with &#34;Arduino&#34; (LP012)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-missing-official-prefix-lp013" class="md-nav__link">
+    <span class="md-ellipsis">
+      name missing official prefix (LP013)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-contains-arduino-lp014" class="md-nav__link">
+    <span class="md-ellipsis">
+      name contains &#34;Arduino&#34; (LP014)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-contains-spaces-lp015" class="md-nav__link">
+    <span class="md-ellipsis">
+      name contains spaces (LP015)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-contains-library-lp016" class="md-nav__link">
+    <span class="md-ellipsis">
+      name contains &#34;library&#34; (LP016)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#duplicate-name-lp017" class="md-nav__link">
+    <span class="md-ellipsis">
+      duplicate name (LP017)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#not-in-lm-index-lp018" class="md-nav__link">
+    <span class="md-ellipsis">
+      not in LM index (LP018)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-version-field-lp019" class="md-nav__link">
+    <span class="md-ellipsis">
+      missing version field (LP019)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-version-lp020" class="md-nav__link">
+    <span class="md-ellipsis">
+      invalid version (LP020)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#non-semver-version-lp021" class="md-nav__link">
+    <span class="md-ellipsis">
+      non-semver version (LP021)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tag-mismatch-lp022" class="md-nav__link">
+    <span class="md-ellipsis">
+      tag mismatch (LP022)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-author-field-lp023" class="md-nav__link">
+    <span class="md-ellipsis">
+      missing author field (LP023)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#author-min-length-lp024" class="md-nav__link">
+    <span class="md-ellipsis">
+      author &lt; min length (LP024)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-maintainer-field-lp025" class="md-nav__link">
+    <span class="md-ellipsis">
+      missing maintainer field (LP025)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maintainer-min-length-lp026" class="md-nav__link">
+    <span class="md-ellipsis">
+      maintainer &lt; min length (LP026)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maintainer-starts-with-arduino-lp027" class="md-nav__link">
+    <span class="md-ellipsis">
+      maintainer starts with &#34;Arduino&#34; (LP027)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#maintainer-contains-arduino-lp057" class="md-nav__link">
+    <span class="md-ellipsis">
+      maintainer contains &#34;Arduino&#34; (LP057)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#email-used-as-alias-for-maintainer-lp028" class="md-nav__link">
+    <span class="md-ellipsis">
+      &#34;email&#34; used as alias for &#34;maintainer&#34; (LP028)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#email-min-length-lp029" class="md-nav__link">
+    <span class="md-ellipsis">
+      email &lt; min length (LP029)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#email-starts-with-arduino-lp030" class="md-nav__link">
+    <span class="md-ellipsis">
+      email starts with &#34;Arduino&#34; (LP030)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-sentence-field-lp031" class="md-nav__link">
+    <span class="md-ellipsis">
+      missing sentence field (LP031)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sentence-min-length-lp032" class="md-nav__link">
+    <span class="md-ellipsis">
+      sentence &lt; min length (LP032)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sentence-spell-check-lp033" class="md-nav__link">
+    <span class="md-ellipsis">
+      sentence spell check (LP033)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-paragraph-field-lp034" class="md-nav__link">
+    <span class="md-ellipsis">
+      missing paragraph field (LP034)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#paragraph-spell-check-lp035" class="md-nav__link">
+    <span class="md-ellipsis">
+      paragraph spell check (LP035)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#paragraph-repeats-sentence-lp036" class="md-nav__link">
+    <span class="md-ellipsis">
+      paragraph repeats sentence (LP036)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-category-field-lp037" class="md-nav__link">
+    <span class="md-ellipsis">
+      missing category field (LP037)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-category-value-lp038" class="md-nav__link">
+    <span class="md-ellipsis">
+      invalid category value (LP038)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#uncategorized-category-value-lp039" class="md-nav__link">
+    <span class="md-ellipsis">
+      &#34;Uncategorized&#34; category value (LP039)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-url-field-lp040" class="md-nav__link">
+    <span class="md-ellipsis">
+      missing url field (LP040)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#url-min-length-lp056" class="md-nav__link">
+    <span class="md-ellipsis">
+      url &lt; min length (LP056)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-url-format-lp041" class="md-nav__link">
+    <span class="md-ellipsis">
+      invalid url format (LP041)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dead-url-lp042" class="md-nav__link">
+    <span class="md-ellipsis">
+      dead URL (LP042)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#missing-architectures-field-lp043" class="md-nav__link">
+    <span class="md-ellipsis">
+      missing architectures field (LP043)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architectures-blank-lp044" class="md-nav__link">
+    <span class="md-ellipsis">
+      architectures blank (LP044)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-alias-lp045" class="md-nav__link">
+    <span class="md-ellipsis">
+      architecture alias (LP045)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-case-lp046" class="md-nav__link">
+    <span class="md-ellipsis">
+      architecture case (LP046)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-depends-format-lp047" class="md-nav__link">
+    <span class="md-ellipsis">
+      invalid depends format (LP047)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#depends-not-in-index-lp048" class="md-nav__link">
+    <span class="md-ellipsis">
+      depends not in index (LP048)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-depends-constraint-syntax-lp058" class="md-nav__link">
+    <span class="md-ellipsis">
+      invalid depends constraint syntax (LP058)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-dot_a_linkage-value-lp049" class="md-nav__link">
+    <span class="md-ellipsis">
+      invalid dot_a_linkage value (LP049)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dot_a_linkagetrue-with-10-library-format-lp050" class="md-nav__link">
+    <span class="md-ellipsis">
+      dot_a_linkage=true with &#34;1.0&#34; library format (LP050)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#includes-blank-lp051" class="md-nav__link">
+    <span class="md-ellipsis">
+      includes blank (LP051)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#includes-not-in-library-lp052" class="md-nav__link">
+    <span class="md-ellipsis">
+      includes not in library (LP052)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#invalid-precompiled-value-lp053" class="md-nav__link">
+    <span class="md-ellipsis">
+      invalid precompiled value (LP053)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#precompiled-with-10-format-lp054" class="md-nav__link">
+    <span class="md-ellipsis">
+      precompiled with &#34;1.0&#34; format (LP054)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ldflags-min-length-lp055" class="md-nav__link">
+    <span class="md-ellipsis">
+      ldflags &lt; min length (LP055)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arduinoh-case-lc001" class="md-nav__link">
+    <span class="md-ellipsis">
+      Arduino.h case (LC001)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#no-readme-ld001" class="md-nav__link">
+    <span class="md-ellipsis">
+      no readme (LD001)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#no-license-file-ld002" class="md-nav__link">
+    <span class="md-ellipsis">
+      no license file (LD002)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stray-sketch-ld003" class="md-nav__link">
+    <span class="md-ellipsis">
+      stray sketch (LD003)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#no-examples-ld004" class="md-nav__link">
+    <span class="md-ellipsis">
+      no examples (LD004)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#incorrect-examples-folder-name-ld005" class="md-nav__link">
+    <span class="md-ellipsis">
+      incorrect examples folder name (LD005)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples-folder-name-case-ld006" class="md-nav__link">
+    <span class="md-ellipsis">
+      examples folder name case (LD006)
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+  <h1>Library</h1>
+
+<p>Arduino Lint provides 77 rules for the <a href="https://arduino.github.io/arduino-cli/latest/library-specification/"><code>library</code></a> project type:</p>
+<hr />
+<p><a id="LS001"></a></p>
+<h2 id="invalid-library-ls001">invalid library (<code>LS001</code>)<a class="headerlink" href="#invalid-library-ls001" title="Permanent link">&para;</a></h2>
+<p>The path does not contain a valid Arduino library.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: structure<br />
+Subcategory: general</p>
+<h5 id="rule-levels">Rule levels<a class="headerlink" href="#rule-levels" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LS002"></a></p>
+<h2 id="folder-name-too-long-ls002">folder name too long (<code>LS002</code>)<a class="headerlink" href="#folder-name-too-long-ls002" title="Permanent link">&para;</a></h2>
+<p>The library root folder name exceeds the maximum length supported by the Arduino development tools. This will be problematic for people doing manual installation of the library.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#library-root-folder"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: structure<br />
+Subcategory: root folder</p>
+<h5 id="rule-levels_1">Rule levels<a class="headerlink" href="#rule-levels_1" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LS003"></a></p>
+<h2 id="prohibited-character-in-folder-name-ls003">prohibited character in folder name (<code>LS003</code>)<a class="headerlink" href="#prohibited-character-in-folder-name-ls003" title="Permanent link">&para;</a></h2>
+<p>The library root folder name contains prohibited characters. This will be problematic for people doing manual installation of the library.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#library-root-folder"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: structure<br />
+Subcategory: root folder</p>
+<h5 id="rule-levels_2">Rule levels<a class="headerlink" href="#rule-levels_2" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LS004"></a></p>
+<h2 id="submodule-ls004">submodule (<code>LS004</code>)<a class="headerlink" href="#submodule-ls004" title="Permanent link">&para;</a></h2>
+<p>A <a href="https://git-scm.com/book/en/v2/Git-Tools-Submodules">Git submodule</a> was found under the library folder. Library Manager installations and installations of libraries downloaded via GitHub's "Download ZIP" feature will only contain an empty folder in place of the submodule.</p>
+<p>Enabled for superproject type: library<br />
+Category: structure<br />
+Subcategory: miscellaneous</p>
+<h5 id="rule-levels_3">Rule levels<a class="headerlink" href="#rule-levels_3" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>WARNING</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LS005"></a></p>
+<h2 id="symlink-ls005">symlink (<code>LS005</code>)<a class="headerlink" href="#symlink-ls005" title="Permanent link">&para;</a></h2>
+<p>A symlink was found under the library folder. Symlinks cause difficulties for Windows users due to restrictions on their use. The presence of a symlink blocks addition to the Arduino Library Manager index.</p>
+<p>Enabled for superproject type: all<br />
+Category: structure<br />
+Subcategory: miscellaneous</p>
+<h5 id="rule-levels_4">Rule levels<a class="headerlink" href="#rule-levels_4" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th><code>library-manager</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>submit</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>permissive</td>
+<td>update</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>permissive</td>
+<td>false</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>submit</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>update</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>false</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>submit</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>update</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>false</td>
+<td>WARNING</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LS006"></a></p>
+<h2 id="development-file-ls006">.development file (<code>LS006</code>)<a class="headerlink" href="#development-file-ls006" title="Permanent link">&para;</a></h2>
+<p>A <code>.development</code> file was found in the library root folder. Presence of this file blocks addition to the Library Manager index.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#development-flag-file"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: structure<br />
+Subcategory: miscellaneous</p>
+<h5 id="rule-levels_5">Rule levels<a class="headerlink" href="#rule-levels_5" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th><code>library-manager</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>submit</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>permissive</td>
+<td>update</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>permissive</td>
+<td>false</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>submit</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>update</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>false</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>submit</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>update</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>false</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LS007"></a></p>
+<h2 id="exe-file-ls007">.exe file (<code>LS007</code>)<a class="headerlink" href="#exe-file-ls007" title="Permanent link">&para;</a></h2>
+<p>A file with <code>.exe</code> file extension was found under the library folder. Presence of this file blocks addition to the Library Manager index.</p>
+<p>Enabled for superproject type: library<br />
+Category: structure<br />
+Subcategory: miscellaneous</p>
+<h5 id="rule-levels_6">Rule levels<a class="headerlink" href="#rule-levels_6" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th><code>library-manager</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>submit</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>permissive</td>
+<td>update</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>permissive</td>
+<td>false</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>submit</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>update</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>false</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>submit</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>update</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>false</td>
+<td>disabled</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LS008"></a></p>
+<h2 id="name-header-mismatch-ls008">name-header mismatch (<code>LS008</code>)<a class="headerlink" href="#name-header-mismatch-ls008" title="Permanent link">&para;</a></h2>
+<p>The match between the <code>library.properties</code> <code>name</code> field and the filename in an <code>#include</code> directive is a factor in the library's <a href="https://arduino.github.io/arduino-cli/latest/sketch-build-process/#dependency-resolution">dependency resolution priority</a>. It's recommended for the primary header filename to match the library name.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: structure<br />
+Subcategory: source code</p>
+<h5 id="rule-levels_7">Rule levels<a class="headerlink" href="#rule-levels_7" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>INFO</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>WARNING</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LS009"></a></p>
+<h2 id="src-folder-case-ls009">src folder case (<code>LS009</code>)<a class="headerlink" href="#src-folder-case-ls009" title="Permanent link">&para;</a></h2>
+<p>The library's source subfolder name has incorrect case. This folder must be named exactly <code>src</code> in order for the library to work on case sensitive file systems (e.g., Linux).</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#library-root-folder"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: structure<br />
+Subcategory: source code</p>
+<h5 id="rule-levels_8">Rule levels<a class="headerlink" href="#rule-levels_8" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LS010"></a></p>
+<h2 id="recursive-with-utility-folder-ls010">recursive with utility folder (<code>LS010</code>)<a class="headerlink" href="#recursive-with-utility-folder-ls010" title="Permanent link">&para;</a></h2>
+<p>A library with "1.5 format" (recursive layout) contains a subfolder named <code>utility</code>. Although the <code>utility</code> folder has special treatment in libraries with the old "1.5 format" (flat layout), it is not supported in libraries of the new layout.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#source-code"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: structure<br />
+Subcategory: source code</p>
+<h5 id="rule-levels_9">Rule levels<a class="headerlink" href="#rule-levels_9" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LS011"></a></p>
+<h2 id="incorrect-extras-folder-name-ls011">incorrect extras folder name (<code>LS011</code>)<a class="headerlink" href="#incorrect-extras-folder-name-ls011" title="Permanent link">&para;</a></h2>
+<p>A subfolder was found under the library root with a name similar to <code>extras</code>. The <code>extras</code> subfolder has been designated as the location for any supplemental files for the library. The name must be spelled exactly <code>extras</code>.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#extra-documentation"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: structure<br />
+Subcategory: extras folder</p>
+<h5 id="rule-levels_10">Rule levels<a class="headerlink" href="#rule-levels_10" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LS012"></a></p>
+<h2 id="extras-folder-name-case-ls012">extras folder name case (<code>LS012</code>)<a class="headerlink" href="#extras-folder-name-case-ls012" title="Permanent link">&para;</a></h2>
+<p>The library's extras subfolder name has incorrect case. The <code>extras</code> subfolder has been designated as the location for any supplemental files for the library. The folder name must be spelled exactly <code>extras</code></p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#extra-documentation"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: structure<br />
+Subcategory: extras folder</p>
+<h5 id="rule-levels_11">Rule levels<a class="headerlink" href="#rule-levels_11" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP001"></a></p>
+<h2 id="missing-libraryproperties-lp001">missing library.properties (<code>LP001</code>)<a class="headerlink" href="#missing-libraryproperties-lp001" title="Permanent link">&para;</a></h2>
+<p>The <code>library.properties</code> file provides metadata for Arduino libraries. Although not required for 1.0 format libraries (AKA "legacy") which are not in the Library Manager index, this metadata is useful, hence recommended.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#library-metadata"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: general</p>
+<h5 id="rule-levels_12">Rule levels<a class="headerlink" href="#rule-levels_12" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th><code>library-manager</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>submit</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>permissive</td>
+<td>update</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>permissive</td>
+<td>false</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>submit</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>update</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>false</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>submit</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>update</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>false</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP002"></a></p>
+<h2 id="incorrect-libraryproperties-file-name-lp002">incorrect library.properties file name (<code>LP002</code>)<a class="headerlink" href="#incorrect-libraryproperties-file-name-lp002" title="Permanent link">&para;</a></h2>
+<p>A file was found under the library root with a name similar to <code>library.properties</code>. The <code>library.properties</code> file provides metadata for Arduino libraries. The file name must be spelled exactly <code>library.properties</code></p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#library-metadata"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: general</p>
+<h5 id="rule-levels_13">Rule levels<a class="headerlink" href="#rule-levels_13" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP003"></a></p>
+<h2 id="libraryproperties-file-name-case-lp003">library.properties file name case (<code>LP003</code>)<a class="headerlink" href="#libraryproperties-file-name-case-lp003" title="Permanent link">&para;</a></h2>
+<p>The library's metadata file has incorrect case. This causes "1.5" format (AKA "recursive layout") libraries to not be recognized on case-sensitive file systems. The file name must be spelled exactly <code>library.properties</code></p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#library-metadata"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: general</p>
+<h5 id="rule-levels_14">Rule levels<a class="headerlink" href="#rule-levels_14" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP004"></a></p>
+<h2 id="redundant-libraryproperties-lp004">redundant library.properties (<code>LP004</code>)<a class="headerlink" href="#redundant-libraryproperties-lp004" title="Permanent link">&para;</a></h2>
+<p>The library contains a <code>library.properties</code> file in a subfolder. Only the file in the root of the library is used by the Arduino development tools for library metadata. Superfluous <code>library.properties</code> files can result in confusion or unnecessary maintenance effort.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#library-metadata"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: general</p>
+<h5 id="rule-levels_15">Rule levels<a class="headerlink" href="#rule-levels_15" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP005"></a></p>
+<h2 id="libraryproperties-format-lp005">library.properties format (<code>LP005</code>)<a class="headerlink" href="#libraryproperties-format-lp005" title="Permanent link">&para;</a></h2>
+<p>The <code>library.properties</code> file provides metadata for Arduino libraries. This file has a specific format that must be followed in order for the library to be valid.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: general</p>
+<h5 id="rule-levels_16">Rule levels<a class="headerlink" href="#rule-levels_16" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP006"></a></p>
+<h2 id="misspelled-libraryproperties-field-lp006">misspelled library.properties field (<code>LP006</code>)<a class="headerlink" href="#misspelled-libraryproperties-field-lp006" title="Permanent link">&para;</a></h2>
+<p>A field was found in the <code>library.properties</code> metadata file with a name similar, but not matching, one of the standard fields.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: general</p>
+<h5 id="rule-levels_17">Rule levels<a class="headerlink" href="#rule-levels_17" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP007"></a></p>
+<h2 id="missing-name-lp007">missing name (<code>LP007</code>)<a class="headerlink" href="#missing-name-lp007" title="Permanent link">&para;</a></h2>
+<p>The <code>name</code> field is missing from the library's <code>library.properties</code> metadata file.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: name field</p>
+<h5 id="rule-levels_18">Rule levels<a class="headerlink" href="#rule-levels_18" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP008"></a></p>
+<h2 id="name-min-length-lp008">name &lt; min length (<code>LP008</code>)<a class="headerlink" href="#name-min-length-lp008" title="Permanent link">&para;</a></h2>
+<p>The <code>name</code> field in the library's <code>library.properties</code> metadata file is shorter than the minimum length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: name field</p>
+<h5 id="rule-levels_19">Rule levels<a class="headerlink" href="#rule-levels_19" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP009"></a></p>
+<h2 id="name-max-length-lp009">name &gt; max length (<code>LP009</code>)<a class="headerlink" href="#name-max-length-lp009" title="Permanent link">&para;</a></h2>
+<p>The <code>name</code> field in the library's <code>library.properties</code> metadata file is greater than the maximum length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: name field</p>
+<h5 id="rule-levels_20">Rule levels<a class="headerlink" href="#rule-levels_20" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP010"></a></p>
+<h2 id="name-recommended-length-lp010">name &gt; recommended length (<code>LP010</code>)<a class="headerlink" href="#name-recommended-length-lp010" title="Permanent link">&para;</a></h2>
+<p>The <code>name</code> field in the library's <code>library.properties</code> metadata file is longer than the recommended length. As the unique identifier for the library, the name will be typed by the users of command line tools (e.g., <code>arduino-cli lib install Servo</code>). For this reason, it is best practices to avoid unnecessary name length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: name field</p>
+<h5 id="rule-levels_21">Rule levels<a class="headerlink" href="#rule-levels_21" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP011"></a></p>
+<h2 id="prohibited-character-in-name-lp011">prohibited character in name (<code>LP011</code>)<a class="headerlink" href="#prohibited-character-in-name-lp011" title="Permanent link">&para;</a></h2>
+<p>The <code>name</code> field in the library's <code>library.properties</code> metadata file contains a prohibited character.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: name field</p>
+<h5 id="rule-levels_22">Rule levels<a class="headerlink" href="#rule-levels_22" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP012"></a></p>
+<h2 id="name-starts-with-arduino-lp012">name starts with &#34;Arduino&#34; (<code>LP012</code>)<a class="headerlink" href="#name-starts-with-arduino-lp012" title="Permanent link">&para;</a></h2>
+<p>The <code>name</code> field in the library's <code>library.properties</code> metadata file starts with "Arduino" (case insensitive). Libraries with this name prefix are only allowed in Library Manager under one of the following conditions:</p>
+<ul>
+<li>official libraries</li>
+<li>3rd party libraries added to the Library Manager index prior to the enactment of this rule</li>
+</ul>
+<p>If the former, configure Arduino Lint in <a href="https://arduino.github.io/arduino-lint/latest/#environment-variables">"official" mode</a>.
+If the latter, use <a href="https://arduino.github.io/arduino-lint/latest/commands/arduino-lint/#options">the <code>--library-manager=update</code> flag</a></p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: library<br />
+Category: library.properties<br />
+Subcategory: name field</p>
+<h5 id="rule-levels_23">Rule levels<a class="headerlink" href="#rule-levels_23" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th><code>library-manager</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>submit</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>permissive</td>
+<td>update</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>permissive</td>
+<td>false</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>submit</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>update</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>false</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>submit</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>update</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>false</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP013"></a></p>
+<h2 id="name-missing-official-prefix-lp013">name missing official prefix (<code>LP013</code>)<a class="headerlink" href="#name-missing-official-prefix-lp013" title="Permanent link">&para;</a></h2>
+<p>The <code>name</code> field in the library's <code>library.properties</code> metadata file is missing the "Arduino_" prefix. The names of all new official libraries must have this prefix.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: library<br />
+Category: library.properties<br />
+Subcategory: name field</p>
+<h5 id="rule-levels_24">Rule levels<a class="headerlink" href="#rule-levels_24" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>disabled</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP014"></a></p>
+<h2 id="name-contains-arduino-lp014">name contains &#34;Arduino&#34; (<code>LP014</code>)<a class="headerlink" href="#name-contains-arduino-lp014" title="Permanent link">&para;</a></h2>
+<p>The <code>name</code> field in the library's <code>library.properties</code> metadata file contains "Arduino" (case insensitive). This is usually implicit, only adding unnecessary length to the name.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: name field</p>
+<h5 id="rule-levels_25">Rule levels<a class="headerlink" href="#rule-levels_25" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP015"></a></p>
+<h2 id="name-contains-spaces-lp015">name contains spaces (<code>LP015</code>)<a class="headerlink" href="#name-contains-spaces-lp015" title="Permanent link">&para;</a></h2>
+<p>The <code>name</code> field in the library's <code>library.properties</code> metadata file contains spaces. It's recommended that the name value, installation folder, and primary header filename all match. Since spaces are not allowed in library folder or file names, this is not possible when the name contains spaces.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: name field</p>
+<h5 id="rule-levels_26">Rule levels<a class="headerlink" href="#rule-levels_26" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP016"></a></p>
+<h2 id="name-contains-library-lp016">name contains &#34;library&#34; (<code>LP016</code>)<a class="headerlink" href="#name-contains-library-lp016" title="Permanent link">&para;</a></h2>
+<p>The <code>name</code> field in the library's <code>library.properties</code> metadata file contains "library" (case insensitive). This is implicit, only adding unnecessary length to the name.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: name field</p>
+<h5 id="rule-levels_27">Rule levels<a class="headerlink" href="#rule-levels_27" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP017"></a></p>
+<h2 id="duplicate-name-lp017">duplicate name (<code>LP017</code>)<a class="headerlink" href="#duplicate-name-lp017" title="Permanent link">&para;</a></h2>
+<p>The <code>name</code> field in the library's <code>library.properties</code> metadata file is in use by a library in the Library Manager index. A library must have a unique name value in order to be accepted into the Library Manager index.</p>
+<p>This requirement only applies to the library.properties name value. There is no requirement to change the repository or header file names.</p>
+<p>If your library is already in the index, use <a href="https://arduino.github.io/arduino-lint/latest/commands/arduino-lint/#options">the <code>--library-manager update</code> flag</a>.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: library<br />
+Category: library.properties<br />
+Subcategory: name field</p>
+<h5 id="rule-levels_28">Rule levels<a class="headerlink" href="#rule-levels_28" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th><code>library-manager</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>submit</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>permissive</td>
+<td>update</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>permissive</td>
+<td>false</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>submit</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>update</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>false</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>submit</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>update</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>false</td>
+<td>disabled</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP018"></a></p>
+<h2 id="not-in-lm-index-lp018">not in LM index (<code>LP018</code>)<a class="headerlink" href="#not-in-lm-index-lp018" title="Permanent link">&para;</a></h2>
+<p>The library name (as defined by <code>name</code> field in <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#library-metadata">the <code>library.properties</code> metadata file</a>) was not found in the Library Manager index, but Arduino Lint was run in the <a href="https://arduino.github.io/arduino-lint/latest/commands/arduino-lint/#options"><code>--library-manager update</code> mode</a>, indicating that it was expected there.</p>
+<p>Because the <code>name</code> value is the identifier used to install the library and define dependencies, it is not allowed to change after the library has been added to the index.</p>
+<p>More information: <a href="https://github.com/arduino/library-registry/blob/main/FAQ.md#how-can-i-change-a-librarys-name"><strong>here</strong></a><br />
+Enabled for superproject type: library<br />
+Category: library.properties<br />
+Subcategory: name field</p>
+<h5 id="rule-levels_29">Rule levels<a class="headerlink" href="#rule-levels_29" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th><code>library-manager</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>submit</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>permissive</td>
+<td>update</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>permissive</td>
+<td>false</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>submit</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>update</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>false</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>submit</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>update</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>false</td>
+<td>disabled</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP019"></a></p>
+<h2 id="missing-version-field-lp019">missing version field (<code>LP019</code>)<a class="headerlink" href="#missing-version-field-lp019" title="Permanent link">&para;</a></h2>
+<p>The <code>version</code> field is missing from the library's <code>library.properties</code> metadata file.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: version field</p>
+<h5 id="rule-levels_30">Rule levels<a class="headerlink" href="#rule-levels_30" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP020"></a></p>
+<h2 id="invalid-version-lp020">invalid version (<code>LP020</code>)<a class="headerlink" href="#invalid-version-lp020" title="Permanent link">&para;</a></h2>
+<p>The <code>version</code> field in the library's <code>library.properties</code> metadata file is invalid. It must be compliant with "relaxed semver".</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: version field</p>
+<h5 id="rule-levels_31">Rule levels<a class="headerlink" href="#rule-levels_31" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP021"></a></p>
+<h2 id="non-semver-version-lp021">non-semver version (<code>LP021</code>)<a class="headerlink" href="#non-semver-version-lp021" title="Permanent link">&para;</a></h2>
+<p>The <code>version</code> field in the library's <code>library.properties</code> metadata file is not compliant with the "semver" specification. Although not required, use of the standard semver version format is recommended.</p>
+<p>More information: <a href="https://semver.org/"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: version field</p>
+<h5 id="rule-levels_32">Rule levels<a class="headerlink" href="#rule-levels_32" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP022"></a></p>
+<h2 id="tag-mismatch-lp022">tag mismatch (<code>LP022</code>)<a class="headerlink" href="#tag-mismatch-lp022" title="Permanent link">&para;</a></h2>
+<p>The latest <a href="https://git-scm.com/book/en/v2/Git-Basics-Tagging">Git tag</a> appears to be greater than the <code>version</code> field in the library's <code>library.properties</code> metadata file. The Library Manager indexer will reject any tag that has a <code>library.properties</code> <code>version</code> value equal to a previous tag in the index.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: library<br />
+Category: library.properties<br />
+Subcategory: version field</p>
+<h5 id="rule-levels_33">Rule levels<a class="headerlink" href="#rule-levels_33" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th><code>library-manager</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>submit</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>permissive</td>
+<td>update</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>permissive</td>
+<td>false</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>submit</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>update</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>false</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>submit</td>
+<td>disabled</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>update</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>false</td>
+<td>disabled</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP023"></a></p>
+<h2 id="missing-author-field-lp023">missing author field (<code>LP023</code>)<a class="headerlink" href="#missing-author-field-lp023" title="Permanent link">&para;</a></h2>
+<p>The <code>author</code> field is missing from the library's <code>library.properties</code> metadata file.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: author field</p>
+<h5 id="rule-levels_34">Rule levels<a class="headerlink" href="#rule-levels_34" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP024"></a></p>
+<h2 id="author-min-length-lp024">author &lt; min length (<code>LP024</code>)<a class="headerlink" href="#author-min-length-lp024" title="Permanent link">&para;</a></h2>
+<p>The <code>author</code> field in the library's <code>library.properties</code> metadata file is shorter than the minimum length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: author field</p>
+<h5 id="rule-levels_35">Rule levels<a class="headerlink" href="#rule-levels_35" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP025"></a></p>
+<h2 id="missing-maintainer-field-lp025">missing maintainer field (<code>LP025</code>)<a class="headerlink" href="#missing-maintainer-field-lp025" title="Permanent link">&para;</a></h2>
+<p>The <code>maintainer</code> field is missing from the library's <code>library.properties</code> metadata file.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: maintainer field</p>
+<h5 id="rule-levels_36">Rule levels<a class="headerlink" href="#rule-levels_36" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP026"></a></p>
+<h2 id="maintainer-min-length-lp026">maintainer &lt; min length (<code>LP026</code>)<a class="headerlink" href="#maintainer-min-length-lp026" title="Permanent link">&para;</a></h2>
+<p>The <code>maintainer</code> field in the library's <code>library.properties</code> metadata file is shorter than the minimum length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: maintainer field</p>
+<h5 id="rule-levels_37">Rule levels<a class="headerlink" href="#rule-levels_37" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP027"></a></p>
+<h2 id="maintainer-starts-with-arduino-lp027">maintainer starts with &#34;Arduino&#34; (<code>LP027</code>)<a class="headerlink" href="#maintainer-starts-with-arduino-lp027" title="Permanent link">&para;</a></h2>
+<p>The <code>maintainer</code> field in the library's <code>library.properties</code> metadata file starts with "Arduino" (case insensitive). 3rd party libraries are not maintained by Arduino.</p>
+<p>If the library is maintained by Arduino, configure Arduino Lint in <a href="https://arduino.github.io/arduino-lint/latest/#environment-variables">"official" mode</a>.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: maintainer field</p>
+<h5 id="rule-levels_38">Rule levels<a class="headerlink" href="#rule-levels_38" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP057"></a></p>
+<h2 id="maintainer-contains-arduino-lp057">maintainer contains &#34;Arduino&#34; (<code>LP057</code>)<a class="headerlink" href="#maintainer-contains-arduino-lp057" title="Permanent link">&para;</a></h2>
+<p>The <code>maintainer</code> field in the library's <code>library.properties</code> metadata file contains "Arduino" (case insensitive). 3rd party libraries are not maintained by Arduino.</p>
+<p>If the library is maintained by Arduino, configure Arduino Lint in <a href="https://arduino.github.io/arduino-lint/latest/#environment-variables">"official" mode</a>.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: maintainer field</p>
+<h5 id="rule-levels_39">Rule levels<a class="headerlink" href="#rule-levels_39" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP028"></a></p>
+<h2 id="email-used-as-alias-for-maintainer-lp028">&#34;email&#34; used as alias for &#34;maintainer&#34; (<code>LP028</code>)<a class="headerlink" href="#email-used-as-alias-for-maintainer-lp028" title="Permanent link">&para;</a></h2>
+<p>The library's <code>library.properties</code> metadata file uses the deprecated <code>email</code> field instead of the standard <code>maintainer</code>.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: email field</p>
+<h5 id="rule-levels_40">Rule levels<a class="headerlink" href="#rule-levels_40" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP029"></a></p>
+<h2 id="email-min-length-lp029">email &lt; min length (<code>LP029</code>)<a class="headerlink" href="#email-min-length-lp029" title="Permanent link">&para;</a></h2>
+<p>The <code>email</code> field in the library's <code>library.properties</code> metadata file is shorter than the minimum length.</p>
+<p>Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: email field</p>
+<h5 id="rule-levels_41">Rule levels<a class="headerlink" href="#rule-levels_41" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP030"></a></p>
+<h2 id="email-starts-with-arduino-lp030">email starts with &#34;Arduino&#34; (<code>LP030</code>)<a class="headerlink" href="#email-starts-with-arduino-lp030" title="Permanent link">&para;</a></h2>
+<p>The <code>maintainer</code> field in the library's <code>library.properties</code> metadata file starts with "Arduino" (case insensitive). 3rd party libraries are not maintained by Arduino.</p>
+<p>Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: email field</p>
+<h5 id="rule-levels_42">Rule levels<a class="headerlink" href="#rule-levels_42" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP031"></a></p>
+<h2 id="missing-sentence-field-lp031">missing sentence field (<code>LP031</code>)<a class="headerlink" href="#missing-sentence-field-lp031" title="Permanent link">&para;</a></h2>
+<p>The <code>sentence</code> field is missing from the library's <code>library.properties</code> metadata file.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: sentence field</p>
+<h5 id="rule-levels_43">Rule levels<a class="headerlink" href="#rule-levels_43" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP032"></a></p>
+<h2 id="sentence-min-length-lp032">sentence &lt; min length (<code>LP032</code>)<a class="headerlink" href="#sentence-min-length-lp032" title="Permanent link">&para;</a></h2>
+<p>The <code>sentence</code> field in the library's <code>library.properties</code> metadata file is shorter than the minimum length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: sentence field</p>
+<h5 id="rule-levels_44">Rule levels<a class="headerlink" href="#rule-levels_44" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP033"></a></p>
+<h2 id="sentence-spell-check-lp033">sentence spell check (<code>LP033</code>)<a class="headerlink" href="#sentence-spell-check-lp033" title="Permanent link">&para;</a></h2>
+<p>The <code>sentence</code> field in the library's <code>library.properties</code> metadata file contains a commonly misspelled word.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: sentence field</p>
+<h5 id="rule-levels_45">Rule levels<a class="headerlink" href="#rule-levels_45" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>WARNING</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP034"></a></p>
+<h2 id="missing-paragraph-field-lp034">missing paragraph field (<code>LP034</code>)<a class="headerlink" href="#missing-paragraph-field-lp034" title="Permanent link">&para;</a></h2>
+<p>The <code>paragraph</code> field is missing from the library's <code>library.properties</code> metadata file.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: paragraph field</p>
+<h5 id="rule-levels_46">Rule levels<a class="headerlink" href="#rule-levels_46" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP035"></a></p>
+<h2 id="paragraph-spell-check-lp035">paragraph spell check (<code>LP035</code>)<a class="headerlink" href="#paragraph-spell-check-lp035" title="Permanent link">&para;</a></h2>
+<p>The <code>paragraph</code> field in the library's <code>library.properties</code> metadata file contains a commonly misspelled word.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: paragraph field</p>
+<h5 id="rule-levels_47">Rule levels<a class="headerlink" href="#rule-levels_47" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>WARNING</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP036"></a></p>
+<h2 id="paragraph-repeats-sentence-lp036">paragraph repeats sentence (<code>LP036</code>)<a class="headerlink" href="#paragraph-repeats-sentence-lp036" title="Permanent link">&para;</a></h2>
+<p>The <code>paragraph</code> field in the library's <code>library.properties</code> metadata file repeats the <code>sentence</code> field. These are displayed together so redundancy is not needed.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: paragraph field</p>
+<h5 id="rule-levels_48">Rule levels<a class="headerlink" href="#rule-levels_48" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP037"></a></p>
+<h2 id="missing-category-field-lp037">missing category field (<code>LP037</code>)<a class="headerlink" href="#missing-category-field-lp037" title="Permanent link">&para;</a></h2>
+<p>The <code>category</code> field is missing from the library's <code>library.properties</code> metadata file.This can cause a warning and results in the default "Uncategorized" category being used.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: category field</p>
+<h5 id="rule-levels_49">Rule levels<a class="headerlink" href="#rule-levels_49" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP038"></a></p>
+<h2 id="invalid-category-value-lp038">invalid category value (<code>LP038</code>)<a class="headerlink" href="#invalid-category-value-lp038" title="Permanent link">&para;</a></h2>
+<p>The <code>category</code> field in the library's <code>library.properties</code> metadata file has an invalid value. This can cause a warning and results in the default "Uncategorized" category being used.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: category field</p>
+<h5 id="rule-levels_50">Rule levels<a class="headerlink" href="#rule-levels_50" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP039"></a></p>
+<h2 id="uncategorized-category-value-lp039">&#34;Uncategorized&#34; category value (<code>LP039</code>)<a class="headerlink" href="#uncategorized-category-value-lp039" title="Permanent link">&para;</a></h2>
+<p>The <code>category</code> field in the library's <code>library.properties</code> metadata file is set to "Uncategorized". There is no good reason for using this non-specification compliant category value.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: category field</p>
+<h5 id="rule-levels_51">Rule levels<a class="headerlink" href="#rule-levels_51" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP040"></a></p>
+<h2 id="missing-url-field-lp040">missing url field (<code>LP040</code>)<a class="headerlink" href="#missing-url-field-lp040" title="Permanent link">&para;</a></h2>
+<p>The <code>url</code> field is missing from the library's <code>library.properties</code> metadata file.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: url field</p>
+<h5 id="rule-levels_52">Rule levels<a class="headerlink" href="#rule-levels_52" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP056"></a></p>
+<h2 id="url-min-length-lp056">url &lt; min length (<code>LP056</code>)<a class="headerlink" href="#url-min-length-lp056" title="Permanent link">&para;</a></h2>
+<p>The <code>url</code> field in the library's <code>library.properties</code> metadata file is shorter than the minimum length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: url field</p>
+<h5 id="rule-levels_53">Rule levels<a class="headerlink" href="#rule-levels_53" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP041"></a></p>
+<h2 id="invalid-url-format-lp041">invalid url format (<code>LP041</code>)<a class="headerlink" href="#invalid-url-format-lp041" title="Permanent link">&para;</a></h2>
+<p>The <code>url</code> field in the library's <code>library.properties</code> metadata file has an invalid URL format.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: url field</p>
+<h5 id="rule-levels_54">Rule levels<a class="headerlink" href="#rule-levels_54" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP042"></a></p>
+<h2 id="dead-url-lp042">dead URL (<code>LP042</code>)<a class="headerlink" href="#dead-url-lp042" title="Permanent link">&para;</a></h2>
+<p>The <code>url</code> field in the library's <code>library.properties</code> metadata file can not be loaded.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: url field</p>
+<h5 id="rule-levels_55">Rule levels<a class="headerlink" href="#rule-levels_55" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP043"></a></p>
+<h2 id="missing-architectures-field-lp043">missing architectures field (<code>LP043</code>)<a class="headerlink" href="#missing-architectures-field-lp043" title="Permanent link">&para;</a></h2>
+<p>The <code>architectures</code> field is missing from the library's <code>library.properties</code> metadata file. The architecture defaults to <code>*</code>, but it's better to explicitly define architectures.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: architectures field</p>
+<h5 id="rule-levels_56">Rule levels<a class="headerlink" href="#rule-levels_56" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP044"></a></p>
+<h2 id="architectures-blank-lp044">architectures blank (<code>LP044</code>)<a class="headerlink" href="#architectures-blank-lp044" title="Permanent link">&para;</a></h2>
+<p>The <code>architectures</code> field in the library's <code>library.properties</code> metadata file is blank. This causes the library to be considered incompatible with all architectures.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: architectures field</p>
+<h5 id="rule-levels_57">Rule levels<a class="headerlink" href="#rule-levels_57" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP045"></a></p>
+<h2 id="architecture-alias-lp045">architecture alias (<code>LP045</code>)<a class="headerlink" href="#architecture-alias-lp045" title="Permanent link">&para;</a></h2>
+<p>The <code>architectures</code> field in the library's <code>library.properties</code> metadata file contains architecture aliases.</p>
+<p>Alternative development frameworks diverged on architecture naming. It is fine to specify those, but compatibilities with the true Arduino architectures should also be defined.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: architectures field</p>
+<h5 id="rule-levels_58">Rule levels<a class="headerlink" href="#rule-levels_58" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP046"></a></p>
+<h2 id="architecture-case-lp046">architecture case (<code>LP046</code>)<a class="headerlink" href="#architecture-case-lp046" title="Permanent link">&para;</a></h2>
+<p>The <code>architecture</code> field in the library's <code>library.properties</code> metadata file contains architecture names with incorrect case. These are case sensitive (e.g., <code>AVR</code> != <code>avr</code>).</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: architectures field</p>
+<h5 id="rule-levels_59">Rule levels<a class="headerlink" href="#rule-levels_59" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP047"></a></p>
+<h2 id="invalid-depends-format-lp047">invalid depends format (<code>LP047</code>)<a class="headerlink" href="#invalid-depends-format-lp047" title="Permanent link">&para;</a></h2>
+<p>The <code>depends</code> field in the library's <code>library.properties</code> metadata file has an invalid format. This is a comma-separated list of library references.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: depends field</p>
+<h5 id="rule-levels_60">Rule levels<a class="headerlink" href="#rule-levels_60" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP048"></a></p>
+<h2 id="depends-not-in-index-lp048">depends not in index (<code>LP048</code>)<a class="headerlink" href="#depends-not-in-index-lp048" title="Permanent link">&para;</a></h2>
+<p>The <code>depends</code> field in the library's <code>library.properties</code> metadata file contains library names not found in the Library Manager index. This field should be used to define only the dependencies available from Library Manager. Library names are case-sensitive.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: depends field</p>
+<h5 id="rule-levels_61">Rule levels<a class="headerlink" href="#rule-levels_61" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>WARNING</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP058"></a></p>
+<h2 id="invalid-depends-constraint-syntax-lp058">invalid depends constraint syntax (<code>LP058</code>)<a class="headerlink" href="#invalid-depends-constraint-syntax-lp058" title="Permanent link">&para;</a></h2>
+<p>The <code>depends</code> field in the library's <code>library.properties</code> metadata file uses invalid version constraint syntax.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: depends field</p>
+<h5 id="rule-levels_62">Rule levels<a class="headerlink" href="#rule-levels_62" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP049"></a></p>
+<h2 id="invalid-dot_a_linkage-value-lp049">invalid dot_a_linkage value (<code>LP049</code>)<a class="headerlink" href="#invalid-dot_a_linkage-value-lp049" title="Permanent link">&para;</a></h2>
+<p>The <code>dot_a_linkage</code> field in the library's <code>library.properties</code> metadata file has an invalid value.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: dot_a_linkage field</p>
+<h5 id="rule-levels_63">Rule levels<a class="headerlink" href="#rule-levels_63" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP050"></a></p>
+<h2 id="dot_a_linkagetrue-with-10-library-format-lp050">dot_a_linkage=true with &#34;1.0&#34; library format (<code>LP050</code>)<a class="headerlink" href="#dot_a_linkagetrue-with-10-library-format-lp050" title="Permanent link">&para;</a></h2>
+<p>The <code>dot_a_linkage</code> field in the library's <code>library.properties</code> metadata file has a setting incompatible with the library format in use. The <code>dot_a_linkage</code> feature is only supported for "1.5 format" (recursive layout) libraries.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#source-code"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: dot_a_linkage field</p>
+<h5 id="rule-levels_64">Rule levels<a class="headerlink" href="#rule-levels_64" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP051"></a></p>
+<h2 id="includes-blank-lp051">includes blank (<code>LP051</code>)<a class="headerlink" href="#includes-blank-lp051" title="Permanent link">&para;</a></h2>
+<p>The <code>includes</code> field in the library's <code>library.properties</code> metadata file is blank.</p>
+<p>This caused the "<strong>Sketch &gt; Include library</strong>" feature of previous Arduino IDE versions to add an invalid empty <code>#include</code> directive to the sketch.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: includes field</p>
+<h5 id="rule-levels_65">Rule levels<a class="headerlink" href="#rule-levels_65" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP052"></a></p>
+<h2 id="includes-not-in-library-lp052">includes not in library (<code>LP052</code>)<a class="headerlink" href="#includes-not-in-library-lp052" title="Permanent link">&para;</a></h2>
+<p>The <code>includes</code> field in the library's <code>library.properties</code> metadata file contains file names not found in the library. This should be a list of header file names that must be added to <code>#include</code> directives in the sketch in order to use the library.</p>
+<p>Library authors sometimes think this is the way to define their library's dependencies, which breaks the Arduino IDE's "<strong>Sketch &gt; Include Library</strong>" feature for that library.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: includes field</p>
+<h5 id="rule-levels_66">Rule levels<a class="headerlink" href="#rule-levels_66" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP053"></a></p>
+<h2 id="invalid-precompiled-value-lp053">invalid precompiled value (<code>LP053</code>)<a class="headerlink" href="#invalid-precompiled-value-lp053" title="Permanent link">&para;</a></h2>
+<p>The <code>precompiled</code> field in the library's <code>library.properties</code> metadata file has an invalid value.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: precompiled field</p>
+<h5 id="rule-levels_67">Rule levels<a class="headerlink" href="#rule-levels_67" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP054"></a></p>
+<h2 id="precompiled-with-10-format-lp054">precompiled with &#34;1.0&#34; format (<code>LP054</code>)<a class="headerlink" href="#precompiled-with-10-format-lp054" title="Permanent link">&para;</a></h2>
+<p>The <code>precompiled</code> field in the library's <code>library.properties</code> metadata file has a setting incompatible with the library format in use. The <code>precompiled</code> feature is only supported for the "1.5 format" (recursive layout) library format.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: precompiled field</p>
+<h5 id="rule-levels_68">Rule levels<a class="headerlink" href="#rule-levels_68" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LP055"></a></p>
+<h2 id="ldflags-min-length-lp055">ldflags &lt; min length (<code>LP055</code>)<a class="headerlink" href="#ldflags-min-length-lp055" title="Permanent link">&para;</a></h2>
+<p>The <code>ldflags</code> field in the library's <code>library.properties</code> metadata file is shorter than the minimum length.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#libraryproperties-file-format"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: library.properties<br />
+Subcategory: ldflags field</p>
+<h5 id="rule-levels_69">Rule levels<a class="headerlink" href="#rule-levels_69" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LC001"></a></p>
+<h2 id="arduinoh-case-lc001">Arduino.h case (<code>LC001</code>)<a class="headerlink" href="#arduinoh-case-lc001" title="Permanent link">&para;</a></h2>
+<p>An <code>#include</code> directive for a file matching the standardized Arduino core library's <code>Arduino.h</code> header in all except case (e.g., <code>#include &lt;arduino.h&gt;</code>) was found in the library's code. This causes compilation failure on case-sensitive file systems.</p>
+<p>Enabled for superproject type: all<br />
+Category: code<br />
+Subcategory: miscellaneous</p>
+<h5 id="rule-levels_70">Rule levels<a class="headerlink" href="#rule-levels_70" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LD001"></a></p>
+<h2 id="no-readme-ld001">no readme (<code>LD001</code>)<a class="headerlink" href="#no-readme-ld001" title="Permanent link">&para;</a></h2>
+<p>None of the standard README file names (e.g., <code>README.md</code>) were found in the library's root folder. This file provides interested parties with a convenient and standardized location to get information about the project.</p>
+<p>More information: <a href="https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes"><strong>here</strong></a><br />
+Enabled for superproject type: library<br />
+Category: documentation<br />
+Subcategory: miscellaneous</p>
+<h5 id="rule-levels_71">Rule levels<a class="headerlink" href="#rule-levels_71" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LD002"></a></p>
+<h2 id="no-license-file-ld002">no license file (<code>LD002</code>)<a class="headerlink" href="#no-license-file-ld002" title="Permanent link">&para;</a></h2>
+<p>None of the standard license file names (e.g., <code>LICENSE.txt</code>) were found in the library's root folder. This file provides interested parties with a convenient and standardized location to get information about the project's licensing and is also used by GitHub for automatic license type classification.</p>
+<p>More information: <a href="https://docs.github.com/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository"><strong>here</strong></a><br />
+Enabled for superproject type: library<br />
+Category: documentation<br />
+Subcategory: miscellaneous</p>
+<h5 id="rule-levels_72">Rule levels<a class="headerlink" href="#rule-levels_72" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LD003"></a></p>
+<h2 id="stray-sketch-ld003">stray sketch (<code>LD003</code>)<a class="headerlink" href="#stray-sketch-ld003" title="Permanent link">&para;</a></h2>
+<p>A sketch was found outside the library's <code>examples</code> and/or <code>extras</code> subfolders. Example sketches must be placed in the standardized location.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#library-examples"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: documentation<br />
+Subcategory: examples</p>
+<h5 id="rule-levels_73">Rule levels<a class="headerlink" href="#rule-levels_73" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LD004"></a></p>
+<h2 id="no-examples-ld004">no examples (<code>LD004</code>)<a class="headerlink" href="#no-examples-ld004" title="Permanent link">&para;</a></h2>
+<p>No example sketches were found in the library. Examples demonstrating usage of the library serve as an important form of documentation for Arduino users. If the library does contain example sketches, make sure they are valid sketches and in the appropriate location.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#library-examples"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: documentation<br />
+Subcategory: examples</p>
+<h5 id="rule-levels_74">Rule levels<a class="headerlink" href="#rule-levels_74" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>WARNING</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LD005"></a></p>
+<h2 id="incorrect-examples-folder-name-ld005">incorrect examples folder name (<code>LD005</code>)<a class="headerlink" href="#incorrect-examples-folder-name-ld005" title="Permanent link">&para;</a></h2>
+<p>A subfolder was found in the library with name similar to the standard <code>examples</code> folder used for example sketches.</p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#library-examples"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: documentation<br />
+Subcategory: examples</p>
+<h5 id="rule-levels_75">Rule levels<a class="headerlink" href="#rule-levels_75" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><a id="LD006"></a></p>
+<h2 id="examples-folder-name-case-ld006">examples folder name case (<code>LD006</code>)<a class="headerlink" href="#examples-folder-name-case-ld006" title="Permanent link">&para;</a></h2>
+<p>The library's examples subfolder name has incorrect case. The folder name must be spelled exactly <code>examples</code></p>
+<p>More information: <a href="https://arduino.github.io/arduino-cli/latest/library-specification/#library-examples"><strong>here</strong></a><br />
+Enabled for superproject type: all<br />
+Category: documentation<br />
+Subcategory: examples</p>
+<h5 id="rule-levels_76">Rule levels<a class="headerlink" href="#rule-levels_76" title="Permanent link">&para;</a></h5>
+<table>
+<thead>
+<tr>
+<th><code>compliance</code></th>
+<th>Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>permissive</td>
+<td>WARNING</td>
+</tr>
+<tr>
+<td>specification</td>
+<td>ERROR</td>
+</tr>
+<tr>
+<td>strict</td>
+<td>ERROR</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright 2020 ARDUINO SA (http://www.arduino.cc/)
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.3220b9d7.min.js"></script>
+      
+    
+  </body>
+</html>
