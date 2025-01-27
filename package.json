@@ -4,7 +4,7 @@
     "ajv-formats": "3.0.1",
     "github-label-sync": "2.3.1",
     "markdown-link-check": "3.12.2",
-    "markdownlint-cli": "0.43.0",
+    "markdownlint-cli": "0.44.0",
     "prettier": "3.4.2"
   },
   "engines": {
