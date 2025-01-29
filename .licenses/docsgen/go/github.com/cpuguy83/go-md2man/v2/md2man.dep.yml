@@ -2,7 +2,7 @@
 name: github.com/cpuguy83/go-md2man/v2/md2man
 version: v2.0.4
 type: go
-summary: 
+summary:
 homepage: https://pkg.go.dev/github.com/cpuguy83/go-md2man/v2/md2man
 license: mit
 licenses:

@@ -2,7 +2,7 @@
 name: github.com/hashicorp/hcl/json/token
 version: v1.0.0
 type: go
-summary: 
+summary:
 homepage: https://pkg.go.dev/github.com/hashicorp/hcl/json/token
 license: mpl-2.0
 licenses:
@@ -363,3 +363,4 @@ licenses:
           the Mozilla Public License, v. 2.0.
 
 notices: []
+...

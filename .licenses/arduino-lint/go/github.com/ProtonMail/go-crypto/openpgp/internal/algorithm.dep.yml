@@ -2,7 +2,7 @@
 name: github.com/ProtonMail/go-crypto/openpgp/internal/algorithm
 version: v1.0.0
 type: go
-summary: 
+summary:
 homepage: https://pkg.go.dev/github.com/ProtonMail/go-crypto/openpgp/internal/algorithm
 license: bsd-3-clause
 licenses:

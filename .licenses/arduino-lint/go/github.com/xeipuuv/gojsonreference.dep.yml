@@ -2,7 +2,7 @@
 name: github.com/xeipuuv/gojsonreference
 version: v0.0.0-20180127040603-bd5ef7bd5415
 type: go
-summary: 
+summary:
 homepage: https://pkg.go.dev/github.com/xeipuuv/gojsonreference
 license: apache-2.0
 licenses:

@@ -2,7 +2,7 @@
 name: go.bug.st/cleanup
 version: v1.0.0
 type: go
-summary: 
+summary:
 homepage: https://pkg.go.dev/go.bug.st/cleanup
 license: bsd-3-clause
 licenses:
@@ -42,3 +42,4 @@ licenses:
     POSSIBILITY OF SUCH DAMAGE.
 
 notices: []
+...
