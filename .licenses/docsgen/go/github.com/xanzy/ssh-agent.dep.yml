@@ -2,7 +2,7 @@
 name: github.com/xanzy/ssh-agent
 version: v0.3.3
 type: go
-summary: 
+summary:
 homepage: https://pkg.go.dev/github.com/xanzy/ssh-agent
 license: apache-2.0
 licenses:

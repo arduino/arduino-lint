@@ -2,7 +2,7 @@
 name: github.com/klauspost/compress/zstd/internal/xxhash
 version: v1.17.0
 type: go
-summary: 
+summary:
 homepage: https://pkg.go.dev/github.com/klauspost/compress/zstd/internal/xxhash
 license: other
 licenses:

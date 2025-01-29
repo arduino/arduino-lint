@@ -2,7 +2,7 @@
 name: github.com/xeipuuv/gojsonpointer
 version: v0.0.0-20190905194746-02993c407bfb
 type: go
-summary: 
+summary:
 homepage: https://pkg.go.dev/github.com/xeipuuv/gojsonpointer
 license: apache-2.0
 licenses:

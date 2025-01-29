@@ -2,7 +2,7 @@
 name: github.com/arduino/arduino-cli/version
 version: v0.35.4-0.20241001142927-1f8d0f6c0dd3
 type: go
-summary: 
+summary:
 homepage: https://pkg.go.dev/github.com/arduino/arduino-cli/version
 license: other
 licenses:
