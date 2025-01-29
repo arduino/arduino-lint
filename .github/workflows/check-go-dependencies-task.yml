@@ -78,7 +78,7 @@ jobs:
         uses: github/setup-licensed@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
+          version: 5.x
 
       - name: Install Go
         uses: actions/setup-go@v5
