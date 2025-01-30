@@ -4,7 +4,7 @@ version: v1.17.0
 type: go
 summary: Package fse provides Finite State Entropy encoding and decoding.
 homepage: https://pkg.go.dev/github.com/klauspost/compress/fse
-license: other
+license: bsd-3-clause
 licenses:
 - sources: compress@v1.17.0/LICENSE
   text: |
