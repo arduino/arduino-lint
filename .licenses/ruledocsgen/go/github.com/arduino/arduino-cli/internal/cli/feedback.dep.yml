@@ -5,7 +5,7 @@ type: go
 summary: Package feedback provides an uniform API that can be used to print feedback
   to the users in different formats.
 homepage: https://pkg.go.dev/github.com/arduino/arduino-cli/internal/cli/feedback
-license: other
+license: gpl-3.0-only
 licenses:
 - sources: arduino-cli@v0.35.4-0.20241001142927-1f8d0f6c0dd3/LICENSE.txt
   text: |2

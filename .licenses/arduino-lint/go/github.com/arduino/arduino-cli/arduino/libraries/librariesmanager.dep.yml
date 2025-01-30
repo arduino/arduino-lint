@@ -4,7 +4,7 @@ version: v0.35.4-0.20241001142927-1f8d0f6c0dd3
 type: go
 summary:
 homepage: https://pkg.go.dev/github.com/arduino/arduino-cli/arduino/libraries/librariesmanager
-license: other
+license: gpl-3.0-only
 licenses:
 - sources: arduino-cli@v0.35.4-0.20241001142927-1f8d0f6c0dd3/LICENSE.txt
   text: |2
