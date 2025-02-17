@@ -11,7 +11,7 @@ replace github.com/oleiade/reflections => github.com/oleiade/reflections v1.0.1 
 
 require (
 	github.com/arduino/arduino-lint v0.0.0
-	github.com/spf13/cobra v1.8.1
+	github.com/spf13/cobra v1.9.1
 )
 
 require (
@@ -27,7 +27,7 @@ require (
 	github.com/cloudflare/circl v1.3.7 // indirect
 	github.com/cmaglie/pb v1.0.27 // indirect
 	github.com/codeclysm/extract/v4 v4.0.0 // indirect
-	github.com/cpuguy83/go-md2man/v2 v2.0.4 // indirect
+	github.com/cpuguy83/go-md2man/v2 v2.0.6 // indirect
 	github.com/cyphar/filepath-securejoin v0.3.6 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/dgraph-io/ristretto v0.0.3 // indirect
