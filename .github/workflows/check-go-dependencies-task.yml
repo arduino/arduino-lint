@@ -75,7 +75,7 @@ jobs:
           ruby-version: ruby # Install latest version
 
       - name: Install licensed
-        uses: github/setup-licensed@v1
+        uses: github/setup-licensed@v1.3.1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           version: 5.x
