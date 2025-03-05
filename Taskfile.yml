@@ -323,7 +323,7 @@ tasks:
     desc: Refresh dependency metadata
     dir: "{{default .DEFAULT_GO_MODULE_PATH .GO_MODULE_PATH}}"
     vars:
-      GO_VERSION: 1.17
+      GO_VERSION: 1.24.0
     cmds:
       - go mod tidy -compat={{.GO_VERSION}}
 
