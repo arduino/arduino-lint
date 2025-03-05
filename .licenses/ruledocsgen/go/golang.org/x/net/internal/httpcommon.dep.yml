@@ -1,12 +1,12 @@
 ---
-name: golang.org/x/text/encoding/unicode
-version: v0.22.0
+name: golang.org/x/net/internal/httpcommon
+version: v0.35.0
 type: go
-summary: Package unicode provides Unicode encodings such as UTF-16.
-homepage: https://pkg.go.dev/golang.org/x/text/encoding/unicode
-license: bsd-3-clause
+summary:
+homepage: https://pkg.go.dev/golang.org/x/net/internal/httpcommon
+license: other
 licenses:
-- sources: text@v0.22.0/LICENSE
+- sources: net@v0.35.0/LICENSE
   text: |
     Copyright 2009 The Go Authors.
 
@@ -35,7 +35,7 @@ licenses:
     THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
     (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-- sources: text@v0.22.0/PATENTS
+- sources: net@v0.35.0/PATENTS
   text: |
     Additional IP Rights Grant (Patents)
 
