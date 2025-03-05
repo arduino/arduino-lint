@@ -5,7 +5,7 @@ type: go
 summary: Package hkdf implements the HMAC-based Extract-and-Expand Key Derivation
   Function (HKDF) as defined in RFC 5869.
 homepage: https://pkg.go.dev/golang.org/x/crypto/hkdf
-license: other
+license: bsd-3-clause
 licenses:
 - sources: crypto@v0.32.0/LICENSE
   text: |
