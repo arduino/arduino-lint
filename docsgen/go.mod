@@ -19,7 +19,7 @@ require (
 	github.com/Microsoft/go-winio v0.6.2 // indirect
 	github.com/ProtonMail/go-crypto v1.1.6 // indirect
 	github.com/arduino/arduino-cli v0.35.4-0.20241001142927-1f8d0f6c0dd3 // indirect
-	github.com/arduino/go-paths-helper v1.13.0 // indirect
+	github.com/arduino/go-paths-helper v1.13.1 // indirect
 	github.com/arduino/go-properties-orderedmap v1.8.1 // indirect
 	github.com/arduino/go-win32-utils v1.0.0 // indirect
 	github.com/cespare/xxhash v1.1.0 // indirect
