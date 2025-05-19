@@ -1,13 +1,12 @@
 ---
-name: github.com/olekukonko/tablewriter
+name: github.com/olekukonko/tablewriter/renderer
 version: v1.0.6
 type: go
-summary: Package tablewriter provides functionality for creating and formatting tables
-  with customizable configurations.
-homepage: https://pkg.go.dev/github.com/olekukonko/tablewriter
+summary:
+homepage: https://pkg.go.dev/github.com/olekukonko/tablewriter/renderer
 license: mit
 licenses:
-- sources: LICENSE.md
+- sources: tablewriter@v1.0.6/LICENSE.md
   text: |
     Copyright (C) 2014 by Oleku Konko
 
@@ -28,6 +27,6 @@ licenses:
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
-- sources: README.md
+- sources: tablewriter@v1.0.6/README.md
   text: MIT License. See the [LICENSE](LICENSE) file for details.
 notices: []
