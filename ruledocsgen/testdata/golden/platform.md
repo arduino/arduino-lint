@@ -16,7 +16,7 @@ Subcategory: boards.txt
 ##### Rule levels
 
 | `compliance`  | Level |
-|---------------|-------|
+|:--------------|:------|
 | permissive    | ERROR |
 | specification | ERROR |
 | strict        | ERROR |
@@ -36,8 +36,8 @@ Subcategory: boards.txt
 
 ##### Rule levels
 
-| `compliance`  |  Level  |
-|---------------|---------|
+| `compliance`  | Level   |
+|:--------------|:--------|
 | permissive    | WARNING |
 | specification | WARNING |
 | strict        | ERROR   |

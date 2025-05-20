@@ -15,8 +15,8 @@ Subcategory: root folder
 
 ##### Rule levels
 
-| `compliance`  |  Level  |
-|---------------|---------|
+| `compliance`  | Level   |
+|:--------------|:--------|
 | permissive    | WARNING |
 | specification | ERROR   |
 | strict        | ERROR   |

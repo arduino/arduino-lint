@@ -16,7 +16,7 @@ Subcategory: package
 ##### Rule levels
 
 | `compliance`  | Level |
-|---------------|-------|
+|:--------------|:------|
 | permissive    | ERROR |
 | specification | ERROR |
 | strict        | ERROR |

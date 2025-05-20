@@ -32,6 +32,8 @@ import (
 	"github.com/arduino/arduino-lint/internal/rule/rulelevel"
 	"github.com/arduino/go-paths-helper"
 	"github.com/olekukonko/tablewriter"
+	"github.com/olekukonko/tablewriter/renderer"
+	"github.com/olekukonko/tablewriter/tw"
 )
 
 func main() {
@@ -102,13 +104,36 @@ Subcategory: {{.Subcategory}}
 		// This is too complex to handle via the template so it is appended to the templated text.
 		levelsData := ruleLevels(ruleConfiguration)
 		var table bytes.Buffer
-		tableWriter := tablewriter.NewWriter(&table)
-		tableWriter.SetAutoFormatHeaders(false)
-		tableWriter.SetHeader(levelsData[0])
-		tableWriter.SetBorders(tablewriter.Border{Left: true, Top: false, Right: true, Bottom: false})
-		tableWriter.SetCenterSeparator("|")
-		tableWriter.AppendBulk(levelsData[1:])
-		tableWriter.Render()
+
+		tableConfig := tablewriter.NewConfigBuilder().
+			/*
+				By default, the tablewriter package makes arbitrary changes to header content. The content is already exactly as
+				intended.
+			*/
+			WithHeaderAutoFormat(tw.Off).
+			WithHeaderAlignment(tw.AlignLeft).
+			WithRowAlignment(tw.AlignLeft).
+			Build()
+
+		tableWriter := tablewriter.NewTable(
+			&table,
+			tablewriter.WithConfig(tableConfig),
+			// Render the table as Markdown markup.
+			tablewriter.WithRenderer(renderer.NewMarkdown()),
+			tablewriter.WithAlignment(tw.Alignment{tw.AlignLeft}),
+		)
+
+		// Populate table data.
+		tableWriter.Header(levelsData[0])
+		if err := tableWriter.Bulk(levelsData[1:]); err != nil {
+			panic(err)
+		}
+
+		// Populate the buffer with the table markup.
+		if err := tableWriter.Render(); err != nil {
+			panic(err)
+		}
+
 		if _, err := table.WriteTo(&projectRulesData.content); err != nil {
 			panic(err)
 		}

@@ -16,7 +16,7 @@ Subcategory: general
 ##### Rule levels
 
 | `compliance`  | Level |
-|---------------|-------|
+|:--------------|:------|
 | permissive    | ERROR |
 | specification | ERROR |
 | strict        | ERROR |
@@ -36,8 +36,8 @@ Subcategory: miscellaneous
 
 ##### Rule levels
 
-| `compliance`  | `library-manager` |  Level   |
-|---------------|-------------------|----------|
+| `compliance`  | `library-manager` | Level    |
+|:--------------|:------------------|:---------|
 | permissive    | submit            | ERROR    |
 | permissive    | update            | ERROR    |
 | permissive    | false             | disabled |
