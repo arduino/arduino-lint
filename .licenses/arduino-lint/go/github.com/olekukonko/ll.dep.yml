@@ -1,15 +1,16 @@
 ---
-name: github.com/olekukonko/tablewriter
-version: v1.0.6
+name: github.com/olekukonko/ll
+version: v0.0.8-0.20250516010636-22ea57d81985
 type: go
-summary: Package tablewriter provides functionality for creating and formatting tables
-  with customizable configurations.
-homepage: https://pkg.go.dev/github.com/olekukonko/tablewriter
+summary:
+homepage: https://pkg.go.dev/github.com/olekukonko/ll
 license: mit
 licenses:
-- sources: LICENSE.md
+- sources: LICENSE
   text: |
-    Copyright (C) 2014 by Oleku Konko
+    MIT License
+
+    Copyright (c) 2025 Oleku Konko
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
@@ -18,16 +19,16 @@ licenses:
     copies of the Software, and to permit persons to whom the Software is
     furnished to do so, subject to the following conditions:
 
-    The above copyright notice and this permission notice shall be included in
-    all copies or substantial portions of the Software.
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
 
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
     AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-    THE SOFTWARE.
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
 - sources: README.md
-  text: MIT License. See the [LICENSE](LICENSE) file for details.
+  text: "`ll` is licensed under the MIT License. See [LICENSE](LICENSE) for details."
 notices: []

@@ -34,6 +34,8 @@ import (
 	"github.com/arduino/arduino-lint/internal/rule/ruleresult"
 	"github.com/arduino/go-paths-helper"
 	"github.com/olekukonko/tablewriter"
+	"github.com/olekukonko/tablewriter/renderer"
+	"github.com/olekukonko/tablewriter/tw"
 )
 
 // Results is the global instance of the rule results result.Type struct
@@ -126,18 +128,46 @@ func (results *Type) Record(lintedProject project.Type, ruleConfiguration ruleco
 		prefix := fmt.Sprintf("%s: ", level)
 
 		formattedOutput := &strings.Builder{}
-		table := tablewriter.NewWriter(formattedOutput)
-		table.SetBorder(false)
-		table.SetColumnSeparator("")
-		table.SetNoWhiteSpace(true)
-		table.SetColWidth(width - len(prefix))
-		table.SetReflowDuringAutoWrap(false) // Reflow removes explicit line breaks.
-		table.Append([]string{prefix, message})
-		table.Render()
-		// Remove blank lines on explicit line breaks caused by tablewriter bug.
-		cleanedOutput := blankLineRegexp.ReplaceAllLiteralString(formattedOutput.String(), "\n")
 
-		return cleanedOutput
+		tableConfigBuilder := tablewriter.NewConfigBuilder()
+		// Configure column widths so that the text will be wrapped to the appropriate width.
+		tableConfigBuilder.ForColumn(0).WithMaxWidth(len(prefix))
+		tableConfigBuilder.ForColumn(1).WithMaxWidth(width - len(prefix))
+		// A trailing space is intentionally added to the "prefix" string. Trimming must be disabled to preserve that space.
+		tableConfigBuilder.WithTrimSpace(tw.Off)
+		tableConfig := tableConfigBuilder.Build()
+
+		tableRendition := tw.Rendition{
+			// Do not add border characters to the table.
+			Borders: tw.BorderNone,
+			Settings: tw.Settings{
+				/*
+					Do not add a separator character between columns. The trailing space on the "prefix" string serves as the
+					separator.
+				*/
+				Separators: tw.SeparatorsNone,
+			},
+		}
+
+		tableRenderer := renderer.NewBlueprint(tableRendition)
+
+		table := tablewriter.NewTable(
+			formattedOutput,
+			tablewriter.WithConfig(tableConfig),
+			tablewriter.WithRenderer(tableRenderer),
+			// Do not add margins to the cell content.
+			tablewriter.WithPadding(tw.PaddingNone),
+		)
+
+		if err := table.Append([]string{prefix, message}); err != nil {
+			panic(err)
+		}
+
+		if err := table.Render(); err != nil {
+			panic(err)
+		}
+
+		return formattedOutput.String()
 	}
 
 	if configuration.Verbose() {
