@@ -1,12 +1,12 @@
 ---
 name: github.com/olekukonko/ll/lx
-version: v0.0.8-0.20250516010636-22ea57d81985
+version: v0.0.8
 type: go
 summary:
 homepage: https://pkg.go.dev/github.com/olekukonko/ll/lx
 license: mit
 licenses:
-- sources: ll@v0.0.8-0.20250516010636-22ea57d81985/LICENSE
+- sources: ll@v0.0.8/LICENSE
   text: |
     MIT License
 
@@ -29,6 +29,6 @@ licenses:
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
-- sources: ll@v0.0.8-0.20250516010636-22ea57d81985/README.md
+- sources: ll@v0.0.8/README.md
   text: "`ll` is licensed under the MIT License. See [LICENSE](LICENSE) for details."
 notices: []
