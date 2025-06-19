@@ -9,7 +9,7 @@ python = "~3.9"
 
 # Integration tests dependencies.
 invoke = "^2.2.0"
-pytest = "^8.4.0"
+pytest = "^8.4.1"
 python-dateutil = "^2.9.0"
 semver = "^3.0.4"
 
