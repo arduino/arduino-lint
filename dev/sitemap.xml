@@ -2,47 +2,47 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://arduino.github.io/arduino-lint/dev/</loc>
-         <lastmod>2025-06-19</lastmod>
+         <lastmod>2025-06-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://arduino.github.io/arduino-lint/dev/CONTRIBUTING/</loc>
-         <lastmod>2025-06-19</lastmod>
+         <lastmod>2025-06-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://arduino.github.io/arduino-lint/dev/installation/</loc>
-         <lastmod>2025-06-19</lastmod>
+         <lastmod>2025-06-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://arduino.github.io/arduino-lint/dev/rules/</loc>
-         <lastmod>2025-06-19</lastmod>
+         <lastmod>2025-06-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://arduino.github.io/arduino-lint/dev/commands/arduino-lint/</loc>
-         <lastmod>2025-06-19</lastmod>
+         <lastmod>2025-06-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://arduino.github.io/arduino-lint/dev/rules/library/</loc>
-         <lastmod>2025-06-19</lastmod>
+         <lastmod>2025-06-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://arduino.github.io/arduino-lint/dev/rules/package-index/</loc>
-         <lastmod>2025-06-19</lastmod>
+         <lastmod>2025-06-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://arduino.github.io/arduino-lint/dev/rules/platform/</loc>
-         <lastmod>2025-06-19</lastmod>
+         <lastmod>2025-06-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>https://arduino.github.io/arduino-lint/dev/rules/sketch/</loc>
-         <lastmod>2025-06-19</lastmod>
+         <lastmod>2025-06-23</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
