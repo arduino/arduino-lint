@@ -1,11 +1,9 @@
 ---
-name: github.com/olekukonko/tablewriter/tw
+name: github.com/olekukonko/tablewriter/pkg/twwidth
 version: v1.0.8
 type: go
-summary: Package tw provides utility functions for text formatting, width calculation,
-  and string manipulation specifically tailored for table rendering, including handling
-  ANSI escape codes and Unicode text.
-homepage: https://pkg.go.dev/github.com/olekukonko/tablewriter/tw
+summary:
+homepage: https://pkg.go.dev/github.com/olekukonko/tablewriter/pkg/twwidth
 license: mit
 licenses:
 - sources: tablewriter@v1.0.8/LICENSE.md
