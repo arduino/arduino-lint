@@ -1,6 +1,6 @@
 ---
 name: github.com/olekukonko/tablewriter/tw
-version: v1.0.7
+version: v1.0.8
 type: go
 summary: Package tw provides utility functions for text formatting, width calculation,
   and string manipulation specifically tailored for table rendering, including handling
@@ -8,7 +8,7 @@ summary: Package tw provides utility functions for text formatting, width calcul
 homepage: https://pkg.go.dev/github.com/olekukonko/tablewriter/tw
 license: mit
 licenses:
-- sources: tablewriter@v1.0.7/LICENSE.md
+- sources: tablewriter@v1.0.8/LICENSE.md
   text: |
     Copyright (C) 2014 by Oleku Konko
 
@@ -29,6 +29,6 @@ licenses:
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
     THE SOFTWARE.
-- sources: tablewriter@v1.0.7/README.md
+- sources: tablewriter@v1.0.8/README.md
   text: MIT License. See the [LICENSE](LICENSE) file for details.
 notices: []
