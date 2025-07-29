@@ -12,7 +12,7 @@ require (
 	github.com/arduino/go-properties-orderedmap v1.8.1
 	github.com/client9/misspell v0.3.4
 	github.com/go-git/go-git/v5 v5.16.2
-	github.com/olekukonko/tablewriter v1.0.8
+	github.com/olekukonko/tablewriter v1.0.9
 	github.com/ory/jsonschema/v3 v3.0.4
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/cobra v1.9.1
@@ -64,8 +64,8 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.16 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
-	github.com/olekukonko/errors v0.0.0-20250405072817-4e6d85265da6 // indirect
-	github.com/olekukonko/ll v0.0.8 // indirect
+	github.com/olekukonko/errors v1.1.0 // indirect
+	github.com/olekukonko/ll v0.0.9 // indirect
 	github.com/ory/go-acc v0.2.6 // indirect
 	github.com/ory/viper v1.7.5 // indirect
 	github.com/ory/x v0.0.272 // indirect
