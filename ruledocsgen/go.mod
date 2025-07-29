@@ -10,7 +10,7 @@ require (
 	github.com/JohannesKaufmann/html-to-markdown v1.6.0
 	github.com/arduino/arduino-lint v0.0.0
 	github.com/arduino/go-paths-helper v1.13.1
-	github.com/olekukonko/tablewriter v1.0.8
+	github.com/olekukonko/tablewriter v1.0.9
 	github.com/stretchr/testify v1.10.0
 )
 
@@ -57,8 +57,8 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-runewidth v0.0.16 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
-	github.com/olekukonko/errors v0.0.0-20250405072817-4e6d85265da6 // indirect
-	github.com/olekukonko/ll v0.0.8 // indirect
+	github.com/olekukonko/errors v1.1.0 // indirect
+	github.com/olekukonko/ll v0.0.9 // indirect
 	github.com/ory/go-acc v0.2.6 // indirect
 	github.com/ory/jsonschema/v3 v3.0.4 // indirect
 	github.com/ory/viper v1.7.5 // indirect
