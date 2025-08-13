@@ -85,7 +85,7 @@ jobs:
           echo "INSTALL_PATH=${{ runner.temp }}/shellcheck" >> "$GITHUB_ENV"
 
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install Task
         uses: arduino/setup-task@v2
@@ -147,7 +147,7 @@ jobs:
           echo "SHFMT_INSTALL_PATH=${{ runner.temp }}/shfmt" >> "$GITHUB_ENV"
 
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install Task
         uses: arduino/setup-task@v2
@@ -201,7 +201,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install Task
         uses: arduino/setup-task@v2
