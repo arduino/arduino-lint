@@ -81,8 +81,8 @@ github.com/apache/thrift v0.13.0/go.mod h1:cp2SuWMxlEZw2r+iP2GNCdIi4C1qmUzdZFSVb
 github.com/arduino/arduino-cli v0.35.4-0.20241001142927-1f8d0f6c0dd3 h1:Re75ucXjLzAUrNLcjG8bTIDa9oGV5+tSid2F+DAiBhI=
 github.com/arduino/arduino-cli v0.35.4-0.20241001142927-1f8d0f6c0dd3/go.mod h1:5xXurWYnyVD1iR+vuKJDQ6akkw7roFjRowoZWCSsgGA=
 github.com/arduino/go-paths-helper v1.0.1/go.mod h1:HpxtKph+g238EJHq4geEPv9p+gl3v5YYu35Yb+w31Ck=
-github.com/arduino/go-paths-helper v1.13.1 h1:M7SCdLB2VldxOdChnjZkxAZwWZdDtNY4IlHL9nxGQFo=
-github.com/arduino/go-paths-helper v1.13.1/go.mod h1:dDodKn2ZX4iwuoBMapdDO+5d0oDLBeM4BS0xS4i40Ak=
+github.com/arduino/go-paths-helper v1.14.0 h1:b4C8KJa7CNz2XnzTWg97M3LAmzWSWrj+m/o5/skzv3Y=
+github.com/arduino/go-paths-helper v1.14.0/go.mod h1:dDodKn2ZX4iwuoBMapdDO+5d0oDLBeM4BS0xS4i40Ak=
 github.com/arduino/go-properties-orderedmap v1.8.1 h1:nU5S6cXPwMoxZs4ORw61wPTALNfriIduvNB4cxTmNYM=
 github.com/arduino/go-properties-orderedmap v1.8.1/go.mod h1:DKjD2VXY/NZmlingh4lSFMEYCVubfeArCsGPGDwb2yk=
 github.com/arduino/go-win32-utils v1.0.0 h1:/cXB86sOJxOsCHP7sQmXGLkdValwJt56mIwOHYxgQjQ=
