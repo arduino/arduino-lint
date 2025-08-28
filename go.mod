@@ -89,7 +89,7 @@ require (
 	github.com/spf13/viper v1.17.0 // indirect
 	github.com/sqs/goreturns v0.0.0-20181028201513-538ac6014518 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
-	github.com/ulikunitz/xz v0.5.12 // indirect
+	github.com/ulikunitz/xz v0.5.14 // indirect
 	github.com/xanzy/ssh-agent v0.3.3 // indirect
 	go.bug.st/cleanup v1.0.0 // indirect
 	go.bug.st/downloader/v2 v2.1.1 // indirect
