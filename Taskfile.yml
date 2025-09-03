@@ -86,23 +86,23 @@ tasks:
   fix:
     desc: Make automated corrections to the project's files
     deps:
-      - task: general:format-prettier
-      - task: general:correct-spelling
-      - task: go:generate
-      - task: go:fix
-      - task: go:fix
-        vars:
-          GO_MODULE_PATH: ./docsgen
-      - task: go:fix
-        vars:
-          GO_MODULE_PATH: ./ruledocsgen
-      - task: go:format
-      - task: go:format
-        vars:
-          GO_MODULE_PATH: ./docsgen
-      - task: go:format
-        vars:
-          GO_MODULE_PATH: ./ruledocsgen
+      # - task: general:format-prettier
+      # - task: general:correct-spelling
+      # - task: go:generate
+      # - task: go:fix
+      # - task: go:fix
+      #   vars:
+      #     GO_MODULE_PATH: ./docsgen
+      # - task: go:fix
+      #   vars:
+      #     GO_MODULE_PATH: ./ruledocsgen
+      # - task: go:format
+      # - task: go:format
+      #   vars:
+      #     GO_MODULE_PATH: ./docsgen
+      # - task: go:format
+      #   vars:
+      #     GO_MODULE_PATH: ./ruledocsgen
       - task: go:tidy
       - task: go:tidy
         vars:
@@ -110,11 +110,11 @@ tasks:
       - task: go:tidy
         vars:
           GO_MODULE_PATH: ./ruledocsgen
-      - task: markdown:fix
-      - task: python:format
-      - task: shell:format
-        vars:
-          SCRIPT_PATH: etc/install.sh
+      # - task: markdown:fix
+      # - task: python:format
+      # - task: shell:format
+      #   vars:
+      #     SCRIPT_PATH: etc/install.sh
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-workflows-task/Taskfile.yml
   ci:validate:
