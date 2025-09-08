@@ -8,6 +8,7 @@
 [![Publish Tester Build status](https://github.com/arduino/arduino-lint/actions/workflows/publish-go-tester-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/publish-go-tester-task.yml)
 [![Publish Nightly Build status](https://github.com/arduino/arduino-lint/actions/workflows/publish-go-nightly-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/publish-go-nightly-task.yml)
 [![Check npm status](https://github.com/arduino/arduino-lint/actions/workflows/check-npm-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/check-npm-task.yml)
+[![Check Poetry status](https://github.com/arduino/arduino-lint/actions/workflows/check-poetry-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/check-poetry-task.yml)
 [![Check Python status](https://github.com/arduino/arduino-lint/actions/workflows/check-python-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/check-python-task.yml)
 [![Check Markdown status](https://github.com/arduino/arduino-lint/actions/workflows/check-markdown-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/check-markdown-task.yml)
 [![Spell Check status](https://github.com/arduino/arduino-lint/actions/workflows/spell-check-task.yml/badge.svg)](https://github.com/arduino/arduino-lint/actions/workflows/spell-check-task.yml)
