@@ -8,6 +8,7 @@
 /.licenses/
 __pycache__/
 node_modules/
+poetry.lock
 
 # Test files
 /internal/rule/schema/testdata/input/invalid-schema.json

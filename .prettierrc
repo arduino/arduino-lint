@@ -1,4 +1,5 @@
 {
+  "plugins": ["prettier-plugin-toml"],
   "semi": false,
   "printWidth": 120,
   "overrides": [
