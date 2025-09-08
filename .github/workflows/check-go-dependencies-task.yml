@@ -68,7 +68,7 @@ jobs:
         with:
           submodules: recursive
 
-      # This is required to allow licensee/setup-licensed to install licensed via Ruby gem.
+      # This is required to allow licensee/setup-licensed to install Licensed via Ruby gem.
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -135,7 +135,7 @@ jobs:
         with:
           submodules: recursive
 
-      # This is required to allow licensee/setup-licensed to install licensed via Ruby gem.
+      # This is required to allow licensee/setup-licensed to install Licensed via Ruby gem.
       - name: Install Ruby
         uses: ruby/setup-ruby@v1
         with:
