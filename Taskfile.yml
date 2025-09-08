@@ -289,14 +289,22 @@ tasks:
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-go-task/Taskfile.yml
   go:fix:
-    desc: Modernize usages of outdated APIs
+    desc: |
+      Modernize usages of outdated APIs.
+      Environment variable parameters:
+      - GO_MODULE_PATH: Path of the Go module root (default: {{.DEFAULT_GO_MODULE_PATH}}).
+      - GO_PACKAGES: List of Go packages to modernize (default: all packages of the module).
     dir: "{{default .DEFAULT_GO_MODULE_PATH .GO_MODULE_PATH}}"
     cmds:
       - go fix {{default .DEFAULT_GO_PACKAGES .GO_PACKAGES}}
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-go-task/Taskfile.yml
   go:format:
-    desc: Format Go code
+    desc: |
+      Format Go code.
+      Environment variable parameters:
+      - GO_MODULE_PATH: Path of the Go module root (default: {{.DEFAULT_GO_MODULE_PATH}}).
+      - GO_PACKAGES: List of Go packages to modernize (default: all packages of the module).
     dir: "{{default .DEFAULT_GO_MODULE_PATH .GO_MODULE_PATH}}"
     cmds:
       - go fmt {{default .DEFAULT_GO_PACKAGES .GO_PACKAGES}}
@@ -313,7 +321,11 @@ tasks:
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-go-task/Taskfile.yml
   go:lint:
-    desc: Lint Go code
+    desc: |
+      Lint Go code
+      Environment variable parameters:
+      - GO_MODULE_PATH: Path of the Go module root (default: {{.DEFAULT_GO_MODULE_PATH}}).
+      - GO_PACKAGES: List of Go packages to modernize (default: all packages of the module).
     dir: "{{default .DEFAULT_GO_MODULE_PATH .GO_MODULE_PATH}}"
     cmds:
       - |
@@ -378,7 +390,10 @@ tasks:
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-go-task/Taskfile.yml
   go:tidy:
-    desc: Refresh dependency metadata
+    desc: |
+      Refresh dependency metadata.
+      Environment variable parameters:
+      - GO_MODULE_PATH: Path of the Go module root (default: {{.DEFAULT_GO_MODULE_PATH}}).
     dir: "{{default .DEFAULT_GO_MODULE_PATH .GO_MODULE_PATH}}"
     vars:
       GO_VERSION: 1.24.0
@@ -387,7 +402,11 @@ tasks:
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-go-task/Taskfile.yml
   go:vet:
-    desc: Check for errors in Go code
+    desc: |
+      Check for errors in Go code.
+      Environment variable parameters:
+      - GO_MODULE_PATH: Path of the Go module root (default: {{.DEFAULT_GO_MODULE_PATH}}).
+      - GO_PACKAGES: List of Go packages to test (default: all packages of the module).
     dir: "{{default .DEFAULT_GO_MODULE_PATH .GO_MODULE_PATH}}"
     cmds:
       - go vet {{default .DEFAULT_GO_PACKAGES .GO_PACKAGES}}
@@ -458,21 +477,23 @@ tasks:
           markdownlint-cli \
             "**/*.md"
 
-  # Parameter variables:
-  # - PROJECT_PATH: path of the npm-managed project. Default value: "./"
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/npm-task/Taskfile.yml
   npm:install-deps:
-    desc: Install dependencies managed by npm
+    desc: |
+      Install dependencies managed by npm.
+      Environment variable parameters:
+      - PROJECT_PATH: Path of the npm-managed project (default: {{.DEFAULT_NPM_PROJECT_PATH}}).
     dir: |
       "{{default .DEFAULT_NPM_PROJECT_PATH .PROJECT_PATH}}"
     cmds:
       - npm install
 
-  # Parameter variables:
-  # - PROJECT_PATH: path of the npm-managed project. Default value: "./"
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-npm-task/Taskfile.yml
   npm:validate:
-    desc: Validate npm configuration files against their JSON schema
+    desc: |
+      Validate npm configuration files against their JSON schema.
+      Environment variable parameters:
+      - PROJECT_PATH: Path of the npm-managed project (default: {{.DEFAULT_NPM_PROJECT_PATH}}).
     vars:
       # Source: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/package.json
       SCHEMA_URL: https://json.schemastore.org/package.json
@@ -636,11 +657,12 @@ tasks:
           flake8 \
             --show-source
 
-  # Parameter variables:
-  # - SCRIPT_PATH: path of the script to be checked.
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-shell-task/Taskfile.yml
   shell:check:
-    desc: Check for problems with shell scripts
+    desc: |
+      Check for problems with shell scripts.
+      Environment variable parameters:
+      - SCRIPT_PATH: path of the script to be checked.
     cmds:
       - |
         if [[ "{{.SCRIPT_PATH}}" == "" ]]; then
@@ -659,11 +681,12 @@ tasks:
           --format={{default "tty" .SHELLCHECK_FORMAT}} \
           "{{.SCRIPT_PATH}}"
 
-  # Parameter variables:
-  # - SCRIPT_PATH: path of the script to be checked.
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-shell-task/Taskfile.yml
   shell:check-mode:
-    desc: Check for non-executable shell scripts
+    desc: |
+      Check for non-executable shell scripts.
+      Environment variable parameters:
+      - SCRIPT_PATH: path of the script to be checked.
     cmds:
       - |
         if [[ "{{.SCRIPT_PATH}}" == "" ]]; then
@@ -674,11 +697,12 @@ tasks:
       - |
         test -x "{{.SCRIPT_PATH}}"
 
-  # Parameter variables:
-  # - SCRIPT_PATH: path of the script to be formatted.
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-shell-task/Taskfile.yml
   shell:format:
-    desc: Format shell script files
+    desc: |
+      Format shell script files.
+      Environment variable parameters:
+      - SCRIPT_PATH: path of the script to be formatted.
     cmds:
       - |
         if [[ "{{.SCRIPT_PATH}}" == "" ]]; then
