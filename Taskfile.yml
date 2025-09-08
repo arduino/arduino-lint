@@ -28,8 +28,6 @@ vars:
       || \
       echo '"ERROR: Unable to discover Go packages"' \
     )
-  # Last version of ajv-cli with support for the JSON schema "Draft 4" specification
-  SCHEMA_DRAFT_4_AJV_CLI_VERSION: 3.3.0
   # build vars
   COMMIT:
     sh: |
@@ -508,6 +506,8 @@ tasks:
       Validate npm configuration files against their JSON schema.
       Environment variable parameters:
       - PROJECT_PATH: Path of the npm-managed project (default: {{.DEFAULT_NPM_PROJECT_PATH}}).
+    deps:
+      - task: npm:install-deps
     vars:
       # Source: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/package.json
       SCHEMA_URL: https://json.schemastore.org/package.json
@@ -551,10 +551,6 @@ tasks:
         sh: task utility:mktemp-file TEMPLATE="stylelintrc-schema-XXXXXXXXXX.json"
       INSTANCE_PATH: >-
         {{default .DEFAULT_NPM_PROJECT_PATH .PROJECT_PATH}}/package.json
-      PROJECT_FOLDER:
-        sh: pwd
-      WORKING_FOLDER:
-        sh: task utility:mktemp-folder TEMPLATE="dependabot-validate-XXXXXXXXXX"
     cmds:
       - wget --quiet --output-document="{{.SCHEMA_PATH}}" {{.SCHEMA_URL}}
       - wget --quiet --output-document="{{.AVA_SCHEMA_PATH}}" {{.AVA_SCHEMA_URL}}
@@ -567,20 +563,23 @@ tasks:
       - wget --quiet --output-document="{{.SEMANTIC_RELEASE_SCHEMA_PATH}}" {{.SEMANTIC_RELEASE_SCHEMA_URL}}
       - wget --quiet --output-document="{{.STYLELINTRC_SCHEMA_PATH}}" {{.STYLELINTRC_SCHEMA_URL}}
       - |
-        cd "{{.WORKING_FOLDER}}"  # Workaround for https://github.com/npm/cli/issues/3210
-        npx ajv-cli@{{.SCHEMA_DRAFT_4_AJV_CLI_VERSION}} validate \
-          --all-errors \
-          -s "{{.SCHEMA_PATH}}" \
-          -r "{{.AVA_SCHEMA_PATH}}" \
-          -r "{{.BASE_SCHEMA_PATH}}" \
-          -r "{{.ESLINTRC_SCHEMA_PATH}}" \
-          -r "{{.JSCPD_SCHEMA_PATH}}" \
-          -r "{{.NPM_BADGES_SCHEMA_PATH}}" \
-          -r "{{.PARTIAL_ESLINT_PLUGINS_PATH}}" \
-          -r "{{.PRETTIERRC_SCHEMA_PATH}}" \
-          -r "{{.SEMANTIC_RELEASE_SCHEMA_PATH}}" \
-          -r "{{.STYLELINTRC_SCHEMA_PATH}}" \
-          -d "{{.PROJECT_FOLDER}}/{{.INSTANCE_PATH}}"
+        npx \
+          --package=ajv-cli \
+          --package=ajv-formats \
+          ajv validate \
+            --all-errors \
+            --strict=false \
+            -s "{{.SCHEMA_PATH}}" \
+            -r "{{.AVA_SCHEMA_PATH}}" \
+            -r "{{.BASE_SCHEMA_PATH}}" \
+            -r "{{.ESLINTRC_SCHEMA_PATH}}" \
+            -r "{{.JSCPD_SCHEMA_PATH}}" \
+            -r "{{.NPM_BADGES_SCHEMA_PATH}}" \
+            -r "{{.PARTIAL_ESLINT_PLUGINS_PATH}}" \
+            -r "{{.PRETTIERRC_SCHEMA_PATH}}" \
+            -r "{{.SEMANTIC_RELEASE_SCHEMA_PATH}}" \
+            -r "{{.STYLELINTRC_SCHEMA_PATH}}" \
+            -d "{{.INSTANCE_PATH}}"
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/poetry-task/Taskfile.yml
   poetry:install:
@@ -739,17 +738,6 @@ tasks:
     vars:
       RAW_PATH:
         sh: mktemp --tmpdir "{{.TEMPLATE}}"
-    cmds:
-      - task: utility:normalize-path
-        vars:
-          RAW_PATH: "{{.RAW_PATH}}"
-
-  # Make a temporary folder named according to the passed TEMPLATE variable and print the path passed to stdout
-  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/windows-task/Taskfile.yml
-  utility:mktemp-folder:
-    vars:
-      RAW_PATH:
-        sh: mktemp --directory --tmpdir "{{.TEMPLATE}}"
     cmds:
       - task: utility:normalize-path
         vars:
