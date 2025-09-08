@@ -195,7 +195,7 @@ tasks:
             echo "Please use Linux/macOS or download the dependencies cache from the GitHub Actions workflow artifact."
           else
             echo "licensed not found or not in PATH."
-            echo "Please install: https://github.com/github/licensed#as-an-executable"
+            echo "Please install: https://github.com/licensee/licensed#installation"
           fi
           exit 1
         fi
