@@ -81,7 +81,7 @@ jobs:
       - name: Create all generated documentation content
         run: task docs:generate
 
-      - name: Install Python dependencies
+      - name: Install Dependencies
         run: task poetry:install-deps
 
       - name: Determine versioning parameters
