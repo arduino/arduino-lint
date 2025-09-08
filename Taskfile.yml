@@ -5,6 +5,9 @@ includes:
   dist: ./DistTasks.yml
 
 vars:
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/npm-task/Taskfile.yml
+  # Path of the project's primary npm-managed project:
+  DEFAULT_NPM_PROJECT_PATH: .
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/release-go-task/Taskfile.yml
   PROJECT_NAME: "arduino-lint"
   DIST_DIR: "dist"
@@ -155,6 +158,8 @@ tasks:
       WORKFLOWS_DATA_PATH: "./.github/workflows/*.{yml,yaml}"
     deps:
       - task: npm:install-deps
+        vars:
+          PROJECT_PATH: .
     cmds:
       - |
         wget \
@@ -248,6 +253,8 @@ tasks:
     desc: Format all supported files with Prettier
     deps:
       - task: npm:install-deps
+        vars:
+          PROJECT_PATH: .
     cmds:
       - |
         npx \
@@ -412,6 +419,8 @@ tasks:
     deps:
       - task: docs:generate
       - task: npm:install-deps
+        vars:
+          PROJECT_PATH: .
     cmds:
       - |
         npx \
@@ -423,6 +432,8 @@ tasks:
     desc: Automatically correct linting violations in Markdown files where possible
     deps:
       - task: npm:install-deps
+        vars:
+          PROJECT_PATH: .
     cmds:
       - |
         npx \
@@ -435,6 +446,8 @@ tasks:
     desc: Check for problems in Markdown files
     deps:
       - task: npm:install-deps
+        vars:
+          PROJECT_PATH: .
     cmds:
       - |
         npx \
@@ -447,7 +460,7 @@ tasks:
   npm:install-deps:
     desc: Install dependencies managed by npm
     dir: |
-      "{{default "./" .PROJECT_PATH}}"
+      "{{default .DEFAULT_NPM_PROJECT_PATH .PROJECT_PATH}}"
     cmds:
       - npm install
 
@@ -498,7 +511,7 @@ tasks:
       STYLELINTRC_SCHEMA_PATH:
         sh: task utility:mktemp-file TEMPLATE="stylelintrc-schema-XXXXXXXXXX.json"
       INSTANCE_PATH: >-
-        {{default "." .PROJECT_PATH}}/package.json
+        {{default .DEFAULT_NPM_PROJECT_PATH .PROJECT_PATH}}/package.json
       PROJECT_FOLDER:
         sh: pwd
       WORKING_FOLDER:
