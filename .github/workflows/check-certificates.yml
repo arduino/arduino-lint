@@ -59,7 +59,7 @@ jobs:
             RESULT="false"
           fi
 
-          echo "result=$RESULT" >> $GITHUB_OUTPUT
+          echo "result=$RESULT" >>$GITHUB_OUTPUT
 
   check-certificates:
     name: ${{ matrix.certificate.identifier }}
@@ -82,7 +82,7 @@ jobs:
       - name: Set certificate path environment variable
         run: |
           # See: https://docs.github.com/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#setting-an-environment-variable
-          echo "CERTIFICATE_PATH=${{ runner.temp }}/certificate.p12" >> "$GITHUB_ENV"
+          echo "CERTIFICATE_PATH=${{ runner.temp }}/certificate.p12" >>"$GITHUB_ENV"
 
       - name: Decode certificate
         env:
@@ -166,7 +166,7 @@ jobs:
           echo "Certificate expiration date: $EXPIRATION_DATE"
           echo "Days remaining before expiration: $DAYS_BEFORE_EXPIRATION"
 
-          echo "days=$DAYS_BEFORE_EXPIRATION" >> $GITHUB_OUTPUT
+          echo "days=$DAYS_BEFORE_EXPIRATION" >>$GITHUB_OUTPUT
 
       - name: Check if expiration notification period has been reached
         id: check-expiration

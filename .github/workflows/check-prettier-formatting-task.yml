@@ -227,7 +227,7 @@ jobs:
             RESULT="false"
           fi
 
-          echo "result=$RESULT" >> $GITHUB_OUTPUT
+          echo "result=$RESULT" >>$GITHUB_OUTPUT
 
   check:
     needs: run-determination

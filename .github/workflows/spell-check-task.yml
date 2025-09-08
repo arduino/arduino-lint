@@ -35,7 +35,7 @@ jobs:
             RESULT="false"
           fi
 
-          echo "result=$RESULT" >> $GITHUB_OUTPUT
+          echo "result=$RESULT" >>$GITHUB_OUTPUT
 
   spellcheck:
     needs: run-determination

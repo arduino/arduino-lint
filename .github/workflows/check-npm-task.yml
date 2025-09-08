@@ -47,7 +47,7 @@ jobs:
             RESULT="false"
           fi
 
-          echo "result=$RESULT" >> $GITHUB_OUTPUT
+          echo "result=$RESULT" >>$GITHUB_OUTPUT
 
   validate:
     name: validate (${{ matrix.project.path }})

@@ -55,7 +55,7 @@ jobs:
             RESULT="false"
           fi
 
-          echo "result=$RESULT" >> $GITHUB_OUTPUT
+          echo "result=$RESULT" >>$GITHUB_OUTPUT
 
   test:
     name: test (${{ matrix.module.path }} - ${{ matrix.operating-system }})
