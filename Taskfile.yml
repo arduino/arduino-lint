@@ -234,6 +234,8 @@ tasks:
     desc: Check for commonly misspelled words
     deps:
       - task: poetry:install-deps
+        vars:
+          POETRY_GROUPS: dev
     cmds:
       - poetry run codespell
 
@@ -242,6 +244,8 @@ tasks:
     desc: Correct commonly misspelled words where possible
     deps:
       - task: poetry:install-deps
+        vars:
+          POETRY_GROUPS: dev
     cmds:
       - |
         poetry run \
@@ -378,6 +382,8 @@ tasks:
       - task: go:build
       - task: go:rule-docs:build
       - task: poetry:install-deps
+        vars:
+          POETRY_GROUPS: dev
     cmds:
       - |
         poetry run \
@@ -636,11 +642,17 @@ tasks:
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/poetry-task/Taskfile.yml
   poetry:install-deps:
-    desc: Install dependencies managed by Poetry
+    desc: |
+      Install dependencies managed by Poetry.
+      Environment variable parameters:
+      - POETRY_GROUPS: Poetry dependency groups to install (default: install all dependencies).
+    run: when_changed
     deps:
       - task: poetry:install
     cmds:
-      - poetry install
+      - |
+        poetry install \
+          {{if .POETRY_GROUPS}} --only {{.POETRY_GROUPS}} {{end}}
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/poetry-task/Taskfile.yml
   poetry:update-deps:
@@ -655,6 +667,8 @@ tasks:
     desc: Format Python files
     deps:
       - task: poetry:install-deps
+        vars:
+          POETRY_GROUPS: dev
     cmds:
       - |
         poetry run \
@@ -666,6 +680,8 @@ tasks:
     desc: Lint Python code
     deps:
       - task: poetry:install-deps
+        vars:
+          POETRY_GROUPS: dev
     cmds:
       - |
         poetry run \
@@ -773,6 +789,8 @@ tasks:
     deps:
       - task: docs:generate
       - task: poetry:install-deps
+        vars:
+          POETRY_GROUPS: dev
     cmds:
       - |
         poetry run \
@@ -785,6 +803,8 @@ tasks:
     deps:
       - task: docs:generate
       - task: poetry:install-deps
+        vars:
+          POETRY_GROUPS: dev
     cmds:
       - |
         poetry run \
