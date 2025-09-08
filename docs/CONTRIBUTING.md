@@ -84,7 +84,6 @@ If you want to run integration tests or work on documentation, you will also nee
 - A working [Python](https://www.python.org/downloads/) environment.
   - The **Python** version in use is defined in the `tool.poetry.dependencies` field of
     [`pyproject.toml`](https://github.com/arduino/arduino-lint/blob/main/pyproject.toml).
-- [Poetry](https://python-poetry.org/docs/).
 - [**Node.js** / **npm**](https://nodejs.org/en/download/) - Node.js dependencies management tool.
   - The **Node.js** version in use is defined in the `engines.node` field of
     [`package.json`](https://github.com/arduino/arduino-lint/blob/main/package.json).
@@ -163,12 +162,13 @@ automatically.
 To run specific tests, you must run `pytest` from the virtual environment created by Poetry.
 
 ```
-poetry run pytest tests/test_all.py::test_report_file
+task poetry:install && poetry run pytest tests/test_all.py::test_report_file
 ```
 
 You can avoid writing the `poetry run` prefix each time by creating a new shell inside the virtual environment:
 
 ```
+task poetry:install
 poetry shell
 pytest test_lib.py
 pytest test_lib.py::test_list

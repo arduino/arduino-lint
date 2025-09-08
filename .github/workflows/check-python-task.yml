@@ -11,6 +11,8 @@ on:
       - "**/poetry.lock"
       - "**/pyproject.toml"
       - "**/setup.cfg"
+      - "go.mod"
+      - "go.sum"
       - "Taskfile.ya?ml"
       - "**/tox.ini"
       - "**.py"
@@ -21,6 +23,8 @@ on:
       - "**/poetry.lock"
       - "**/pyproject.toml"
       - "**/setup.cfg"
+      - "go.mod"
+      - "go.sum"
       - "Taskfile.ya?ml"
       - "**/tox.ini"
       - "**.py"
@@ -66,13 +70,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
+      - name: Install Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
       - name: Install Python
         uses: actions/setup-python@v6
         with:
           python-version-file: pyproject.toml
-
-      - name: Install Poetry
-        run: pip install poetry
 
       - name: Install Task
         uses: arduino/setup-task@v2
@@ -101,9 +107,6 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version-file: pyproject.toml
-
-      - name: Install Poetry
-        run: pip install poetry
 
       - name: Install Task
         uses: arduino/setup-task@v2

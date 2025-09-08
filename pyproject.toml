@@ -1,8 +1,18 @@
+# Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/poetry/pyproject.toml
+
 [tool.poetry]
 name = "arduino-lint"
 version = "0.0.0"
 description = "arduino-lint"
 authors = ["Arduino <info@arduino.cc>"]
+
+# The dependencies in this group are installed using pipx; NOT Poetry. The use of the `tool.poetry.group` super-table
+# is a hack required in order to be able to manage updates of these dependencies via Dependabot.
+[tool.poetry.group.pipx]
+optional = true
+
+[tool.poetry.group.pipx.dependencies]
+poetry = "2.1.3"
 
 [tool.poetry.dependencies]
 python = "~3.9"

@@ -84,9 +84,6 @@ jobs:
         with:
           python-version-file: pyproject.toml
 
-      - name: Install Poetry
-        run: pip install poetry
-
       - name: Install Task
         uses: arduino/setup-task@v2
         with:

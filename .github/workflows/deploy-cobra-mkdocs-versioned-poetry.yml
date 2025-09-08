@@ -72,16 +72,6 @@ jobs:
         with:
           python-version-file: pyproject.toml
 
-      - name: Install Poetry
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install poetry
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version-file: package.json
-
       - name: Install Task
         uses: arduino/setup-task@v2
         with:
@@ -92,7 +82,7 @@ jobs:
         run: task docs:generate
 
       - name: Install Python dependencies
-        run: poetry install --no-root
+        run: task poetry:install-deps
 
       - name: Determine versioning parameters
         id: determine-versioning
