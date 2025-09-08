@@ -14,7 +14,7 @@ poetry = "2.1.4"
 [tool.poetry.dependencies]
 python = "~3.9"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 black = "^25.1"
 codespell = "^2.4.1"
 flake8 = "^7.3.0"
