@@ -717,7 +717,9 @@ tasks:
         fi
       - shfmt -w "{{.SCRIPT_PATH}}"
 
-  # Make a temporary file named according to the passed TEMPLATE variable and print the path passed to stdout
+  # Make a temporary file and print the path passed to stdout.
+  # Environment variable parameters:
+  # - TEMPLATE: template for the format of the filename.
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/windows-task/Taskfile.yml
   utility:mktemp-file:
     vars:
@@ -739,7 +741,9 @@ tasks:
         vars:
           RAW_PATH: "{{.RAW_PATH}}"
 
-  # Print a normalized version of the path passed via the RAW_PATH variable to stdout
+  # Print a normalized version of the path to stdout.
+  # Environment variable parameters:
+  # - RAW_PATH: the path to be normalized.
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/windows-task/Taskfile.yml
   utility:normalize-path:
     cmds:
