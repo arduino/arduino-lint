@@ -65,7 +65,7 @@ jobs:
 
       matrix:
         check-license:
-          - path: ./
+          - path: .
             expected-filename: LICENSE.txt
             # SPDX identifier: https://spdx.org/licenses/
             expected-type: GPL-3.0

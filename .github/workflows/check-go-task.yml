@@ -62,7 +62,7 @@ jobs:
 
       matrix:
         module:
-          - path: ./
+          - path: .
           - path: docsgen
           - path: ruledocsgen
 
@@ -99,7 +99,7 @@ jobs:
 
       matrix:
         module:
-          - path: ./
+          - path: .
           - path: docsgen
           - path: ruledocsgen
 
@@ -142,7 +142,7 @@ jobs:
 
       matrix:
         module:
-          - path: ./
+          - path: .
           - path: docsgen
           - path: ruledocsgen
 
@@ -185,7 +185,7 @@ jobs:
 
       matrix:
         module:
-          - path: ./
+          - path: .
           - path: docsgen
           - path: ruledocsgen
 
@@ -228,7 +228,7 @@ jobs:
 
       matrix:
         module:
-          - path: ./
+          - path: .
           - path: docsgen
           - path: ruledocsgen
 
