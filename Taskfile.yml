@@ -237,7 +237,16 @@ tasks:
         vars:
           POETRY_GROUPS: dev
     cmds:
-      - poetry run codespell
+      - |
+        if
+          ! poetry run \
+            codespell
+        then
+          echo
+          echo "If this was a false positive, add the word to the ignore list:"
+          echo "https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/spell-check-task.md#false-positives"
+          exit 1
+        fi
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/spell-check-task/Taskfile.yml
   general:correct-spelling:
