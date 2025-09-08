@@ -105,15 +105,18 @@ jobs:
           git config \
             --global \
             user.email "bot@arduino.cc"
+
           git config \
             --global \
             user.name "ArduinoBot"
+
           git fetch \
             --no-tags \
             --prune \
             --depth=1 \
             origin \
             +refs/heads/gh-pages:refs/remotes/origin/gh-pages
+
           poetry run \
             mike deploy \
               --update-aliases \

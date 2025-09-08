@@ -151,9 +151,11 @@ jobs:
       - name: Create checksum file
         run: |
           TAG="${{ needs.package-name-prefix.outputs.prefix }}git-snapshot"
+
           declare \
             -a \
             artifacts=($(ls -d */))
+
           for artifact in ${artifacts[@]}; do
             cd $artifact
             checksum=$(sha256sum ${{ env.PROJECT_NAME }}_${TAG}*)
