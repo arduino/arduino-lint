@@ -124,7 +124,10 @@ jobs:
         run: task go:fix
 
       - name: Check if any fixes were needed
-        run: git diff --color --exit-code
+        run: |
+          git diff \
+            --color \
+            --exit-code
 
   check-style:
     name: check-style (${{ matrix.module.path }})
@@ -164,7 +167,10 @@ jobs:
       - name: Check style
         env:
           GO_MODULE_PATH: ${{ matrix.module.path }}
-        run: task --silent go:lint
+        run: |
+          task \
+            --silent \
+            go:lint
 
   check-formatting:
     name: check-formatting (${{ matrix.module.path }})
@@ -204,7 +210,10 @@ jobs:
         run: task go:format
 
       - name: Check formatting
-        run: git diff --color --exit-code
+        run: |
+          git diff \
+            --color \
+            --exit-code
 
   check-config:
     name: check-config (${{ matrix.module.path }})
@@ -244,4 +253,7 @@ jobs:
         run: task go:tidy
 
       - name: Check whether any tidying was needed
-        run: git diff --color --exit-code
+        run: |
+          git diff \
+            --color \
+            --exit-code

@@ -45,7 +45,8 @@ jobs:
       - name: Verify installation
         shell: bash
         run: |
-          "${PWD}/bin/${{ env.TOOL_NAME }}" --version
+          "${PWD}/bin/${{ env.TOOL_NAME }}" \
+            --version
 
   bindir:
     permissions: {}
@@ -73,13 +74,16 @@ jobs:
       - name: Run script with custom install location
         shell: sh
         run: |
-          mkdir -p "${{ env.BINDIR }}"
+          mkdir \
+            -p \
+            "${{ env.BINDIR }}"
           "${{ github.workspace }}/etc/install.sh"
 
       - name: Verify installation
         shell: bash
         run: |
-          "${{ env.BINDIR }}/${{ env.TOOL_NAME }}" --version
+          "${{ env.BINDIR }}/${{ env.TOOL_NAME }}" \
+            --version
 
   version:
     permissions: {}
@@ -109,7 +113,12 @@ jobs:
       - name: Verify installation
         shell: bash
         run: |
-          "${PWD}/bin/${{ env.TOOL_NAME }}" --version | grep --fixed-strings "${{ env.VERSION }}"
+          "${PWD}/bin/${{ env.TOOL_NAME }}" \
+            --version \
+          | \
+          grep \
+            --fixed-strings \
+            "${{ env.VERSION }}"
 
   nightly:
     permissions: {}
@@ -131,9 +140,14 @@ jobs:
       - name: Run script with nightly build version argument
         shell: sh
         run: |
-          "${{ github.workspace }}/etc/install.sh" "nightly-latest"
+          "${{ github.workspace }}/etc/install.sh" \
+            "nightly-latest"
 
       - name: Verify installation
         shell: bash
         run: |
-          "${PWD}/bin/${{ env.TOOL_NAME }}" --version | grep "^nightly-"
+          "${PWD}/bin/${{ env.TOOL_NAME }}" \
+            --version \
+          | \
+          grep \
+            "^nightly-"

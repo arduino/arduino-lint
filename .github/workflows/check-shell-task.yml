@@ -105,7 +105,9 @@ jobs:
       - name: Install ShellCheck
         run: |
           cd "${{ env.INSTALL_PATH }}"
-          tar --extract --file="${{ steps.download.outputs.name }}"
+          tar \
+            --extract \
+            --file="${{ steps.download.outputs.name }}"
           EXTRACTION_FOLDER="$(
             basename \
               "${{ steps.download.outputs.name }}" \
@@ -167,9 +169,13 @@ jobs:
       - name: Install shfmt
         run: |
           # Executable permissions of release assets are lost
-          chmod +x "${{ env.SHFMT_INSTALL_PATH }}/${{ steps.download.outputs.name }}"
+          chmod \
+            +x \
+            "${{ env.SHFMT_INSTALL_PATH }}/${{ steps.download.outputs.name }}"
           # Standardize binary name
-          mv "${{ env.SHFMT_INSTALL_PATH }}/${{ steps.download.outputs.name }}" "${{ env.SHFMT_INSTALL_PATH }}/shfmt"
+          mv \
+            "${{ env.SHFMT_INSTALL_PATH }}/${{ steps.download.outputs.name }}" \
+            "${{ env.SHFMT_INSTALL_PATH }}/shfmt"
           # Add installation to PATH:
           # See: https://docs.github.com/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#adding-a-system-path
           echo "${{ env.SHFMT_INSTALL_PATH }}" >>"$GITHUB_PATH"
@@ -182,7 +188,10 @@ jobs:
             SCRIPT_PATH="${{ matrix.script }}"
 
       - name: Check formatting
-        run: git diff --color --exit-code
+        run: |
+          git diff \
+            --color \
+            --exit-code
 
   executable:
     name: executable (${{ matrix.script }})

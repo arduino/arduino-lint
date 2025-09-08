@@ -115,4 +115,7 @@ jobs:
         run: task python:format
 
       - name: Check formatting
-        run: git diff --color --exit-code
+        run: |
+          git diff \
+            --color \
+            --exit-code

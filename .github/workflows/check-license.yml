@@ -80,7 +80,9 @@ jobs:
           ruby-version: ruby # Install latest version
 
       - name: Install licensee
-        run: gem install licensee
+        run: |
+          gem install \
+            licensee
 
       - name: Check license file for ${{ matrix.check-license.path }}
         run: |
@@ -92,14 +94,26 @@ jobs:
           # See: https://github.com/licensee/licensee
           LICENSEE_OUTPUT="$(licensee detect --json --confidence=100)"
 
-          DETECTED_LICENSE_FILE="$(echo "$LICENSEE_OUTPUT" | jq .matched_files[0].filename | tr --delete '\r')"
+          DETECTED_LICENSE_FILE="$(
+            echo "$LICENSEE_OUTPUT" \
+            | \
+            jq .matched_files[0].filename \
+            | \
+            tr --delete '\r'
+          )"
           echo "Detected license file: $DETECTED_LICENSE_FILE"
           if [ "$DETECTED_LICENSE_FILE" != "\"${{ matrix.check-license.expected-filename }}\"" ]; then
             echo "::error file=${DETECTED_LICENSE_FILE}::detected license file $DETECTED_LICENSE_FILE doesn't match expected: ${{ matrix.check-license.expected-filename }}"
             EXIT_STATUS=1
           fi
 
-          DETECTED_LICENSE_TYPE="$(echo "$LICENSEE_OUTPUT" | jq .matched_files[0].matched_license | tr --delete '\r')"
+          DETECTED_LICENSE_TYPE="$(
+            echo "$LICENSEE_OUTPUT" \
+            | \
+            jq .matched_files[0].matched_license \
+            | \
+            tr --delete '\r'
+          )"
           echo "Detected license type: $DETECTED_LICENSE_TYPE"
           if [ "$DETECTED_LICENSE_TYPE" != "\"${{ matrix.check-license.expected-type }}\"" ]; then
             echo "::error file=${DETECTED_LICENSE_FILE}::detected license type $DETECTED_LICENSE_TYPE doesn't match expected \"${{ matrix.check-license.expected-type }}\""

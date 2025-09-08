@@ -45,4 +45,7 @@ jobs:
           version: 3.x
 
       - name: Validate workflows
-        run: task --silent ci:validate
+        run: |
+          task \
+            --silent \
+            ci:validate

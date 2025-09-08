@@ -12,11 +12,16 @@ vars:
   DEFAULT_GO_MODULE_PATH: ./
   DEFAULT_GO_PACKAGES: |
     $( \
-      go list ./... \
+      go list \
+        ./... \
       | \
-      grep --invert-match 'github.com/arduino/arduino-lint/internal/rule/schema/schemadata' \
+      grep \
+        --invert-match \
+        'github.com/arduino/arduino-lint/internal/rule/schema/schemadata' \
       | \
-      tr '\n' ' ' \
+      tr \
+        '\n' \
+        ' ' \
       || \
       echo '"ERROR: Unable to discover Go packages"' \
     )
@@ -24,13 +29,34 @@ vars:
   SCHEMA_DRAFT_4_AJV_CLI_VERSION: 3.3.0
   # build vars
   COMMIT:
-    sh: echo "$(git log --no-show-signature -n 1 --format=%h)"
+    sh: |
+      echo \
+        "$(
+          git log \
+            --no-show-signature \
+            -n 1 \
+            --format=%h
+        )"
   TIMESTAMP:
-    sh: echo "$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+    sh: |
+      echo \
+        "$(
+          date \
+            -u \
+            +"%Y-%m-%dT%H:%M:%SZ"
+        )"
   TIMESTAMP_SHORT:
     sh: echo "{{now | date "20060102"}}"
   TAG:
-    sh: echo "$(git tag --points-at=HEAD 2> /dev/null | head -n1)"
+    sh: |
+      echo \
+        "$(
+          git tag \
+            --points-at=HEAD \
+          2>/dev/null \
+          | \
+          head -n1
+        )"
   VERSION: "{{if .NIGHTLY}}nightly-{{.TIMESTAMP_SHORT}}{{else if .TAG}}{{.TAG}}{{else}}{{.PACKAGE_NAME_PREFIX}}git-snapshot{{end}}"
   CONFIGURATION_PACKAGE: "github.com/arduino/{{.PROJECT_NAME}}/internal/configuration"
   LDFLAGS: >-
@@ -188,7 +214,10 @@ tasks:
     desc: Check basic formatting style of all files
     cmds:
       - |
-        if ! which ec &>/dev/null; then
+        if
+          ! which ec \
+          &>/dev/null
+        then
           echo "ec not found or not in PATH."
           echo "Please install: https://github.com/editorconfig-checker/editorconfig-checker#installation"
           exit 1
@@ -209,7 +238,10 @@ tasks:
     deps:
       - task: poetry:install-deps
     cmds:
-      - poetry run codespell --write-changes
+      - |
+        poetry run \
+          codespell \
+            --write-changes
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-prettier-formatting-task/Taskfile.yml
   general:format-prettier:
@@ -217,7 +249,11 @@ tasks:
     deps:
       - task: npm:install-deps
     cmds:
-      - npx prettier --write .
+      - |
+        npx \
+          prettier \
+            --write \
+            .
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-go-dependencies-task/Taskfile.yml
   general:prepare-deps:
@@ -229,7 +265,10 @@ tasks:
     desc: Build the Go code
     dir: "{{.DEFAULT_GO_MODULE_PATH}}"
     cmds:
-      - go build -v {{.LDFLAGS}}
+      - |
+        go build \
+          -v \
+          {{.LDFLAGS}}
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/deploy-cobra-mkdocs-versioned-poetry/Taskfile.yml
   go:cli-docs:
@@ -317,8 +356,14 @@ tasks:
       - task: go:rule-docs:build
       - task: poetry:install-deps
     cmds:
-      - poetry run pytest tests
-      - poetry run pytest ruledocsgen/tests
+      - |
+        poetry run \
+          pytest \
+            tests
+      - |
+        poetry run \
+          pytest \
+            ruledocsgen/tests
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-go-task/Taskfile.yml
   go:tidy:
@@ -379,7 +424,11 @@ tasks:
     deps:
       - task: npm:install-deps
     cmds:
-      - npx markdownlint-cli --fix "**/*.md"
+      - |
+        npx \
+          markdownlint-cli \
+            --fix \
+            "**/*.md"
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-markdown-task/Taskfile.yml
   markdown:lint:
@@ -387,7 +436,10 @@ tasks:
     deps:
       - task: npm:install-deps
     cmds:
-      - npx markdownlint-cli "**/*.md"
+      - |
+        npx \
+          markdownlint-cli \
+            "**/*.md"
 
   # Parameter variables:
   # - PROJECT_PATH: path of the npm-managed project. Default value: "./"
@@ -496,7 +548,10 @@ tasks:
     deps:
       - task: poetry:install-deps
     cmds:
-      - poetry run black .
+      - |
+        poetry run \
+          black \
+            .
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-python-task/Taskfile.yml
   python:lint:
@@ -504,7 +559,10 @@ tasks:
     deps:
       - task: poetry:install-deps
     cmds:
-      - poetry run flake8 --show-source
+      - |
+        poetry run \
+          flake8 \
+            --show-source
 
   # Parameter variables:
   # - SCRIPT_PATH: path of the script to be checked.
@@ -590,10 +648,17 @@ tasks:
   utility:normalize-path:
     cmds:
       - |
-        if [[ "{{.OS}}" == "Windows_NT" ]] && which cygpath &>/dev/null; then
+        if
+          [[ "{{.OS}}" == "Windows_NT" ]] \
+          && \
+          which cygpath \
+          &>/dev/null
+        then
           # Even though the shell handles POSIX format absolute paths as expected, external applications do not.
           # So paths passed to such applications must first be converted to Windows format.
-          cygpath -w "{{.RAW_PATH}}"
+          cygpath \
+            -w \
+            "{{.RAW_PATH}}"
         else
           echo "{{.RAW_PATH}}"
         fi
@@ -605,7 +670,10 @@ tasks:
       - task: docs:generate
       - task: poetry:install-deps
     cmds:
-      - poetry run mkdocs build --strict
+      - |
+        poetry run \
+          mkdocs build \
+            --strict
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-mkdocs-task/Taskfile.yml
   website:serve:
@@ -614,4 +682,6 @@ tasks:
       - task: docs:generate
       - task: poetry:install-deps
     cmds:
-      - poetry run mkdocs serve
+      - |
+        poetry run \
+          mkdocs serve

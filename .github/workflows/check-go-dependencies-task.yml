@@ -92,13 +92,21 @@ jobs:
           version: 3.x
 
       - name: Update dependencies license metadata cache
-        run: task --silent general:cache-dep-licenses
+        run: |
+          task \
+            --silent \
+            general:cache-dep-licenses
 
       - name: Check for outdated cache
         id: diff
         run: |
           git add .
-          if ! git diff --cached --color --exit-code; then
+          if
+            ! git diff \
+              --cached \
+              --color \
+              --exit-code
+          then
             echo
             echo "::error::Dependency license metadata out of sync. See: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/check-go-dependencies-task.md#metadata-cache"
             exit 1
@@ -151,4 +159,7 @@ jobs:
           version: 3.x
 
       - name: Check for dependencies with unapproved licenses
-        run: task --silent general:check-dep-licenses
+        run: |
+          task \
+            --silent \
+            general:check-dep-licenses

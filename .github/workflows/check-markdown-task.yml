@@ -121,4 +121,7 @@ jobs:
           version: 3.x
 
       - name: Check links
-        run: task --silent markdown:check-links
+        run: |
+          task \
+            --silent \
+            markdown:check-links

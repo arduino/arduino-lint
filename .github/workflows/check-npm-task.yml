@@ -79,7 +79,11 @@ jobs:
           version: 3.x
 
       - name: Validate package.json
-        run: task --silent npm:validate PROJECT_PATH="${{ matrix.project.path }}"
+        run: |
+          task \
+            --silent \
+            npm:validate \
+            PROJECT_PATH="${{ matrix.project.path }}"
 
   check-sync:
     name: check-sync (${{ matrix.project.path }})
@@ -112,7 +116,13 @@ jobs:
           version: 3.x
 
       - name: Install npm dependencies
-        run: task npm:install-deps PROJECT_PATH="${{ matrix.project.path }}"
+        run: |
+          task npm:install-deps \
+            PROJECT_PATH="${{ matrix.project.path }}"
 
       - name: Check package-lock.json
-        run: git diff --color --exit-code "${{ matrix.project.path }}/package-lock.json"
+        run: |
+          git diff \
+            --color \
+            --exit-code \
+            "${{ matrix.project.path }}/package-lock.json"
