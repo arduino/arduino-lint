@@ -78,7 +78,7 @@ jobs:
   build:
     needs: package-name-prefix
     name: Build ${{ matrix.os.artifact-name }}
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os.runner }}
     permissions:
       contents: read
 
@@ -87,30 +87,39 @@ jobs:
         os:
           - task: Windows_32bit
             path: "*Windows_32bit.zip"
+            runner: ubuntu-latest
             artifact-name: Windows_X86-32
           - task: Windows_64bit
             path: "*Windows_64bit.zip"
+            runner: ubuntu-latest
             artifact-name: Windows_X86-64
           - task: Linux_32bit
             path: "*Linux_32bit.tar.gz"
+            runner: ubuntu-latest
             artifact-name: Linux_X86-32
           - task: Linux_64bit
             path: "*Linux_64bit.tar.gz"
+            runner: ubuntu-latest
             artifact-name: Linux_X86-64
           - task: Linux_ARMv6
             path: "*Linux_ARMv6.tar.gz"
+            runner: ubuntu-latest
             artifact-name: Linux_ARMv6
           - task: Linux_ARMv7
             path: "*Linux_ARMv7.tar.gz"
+            runner: ubuntu-latest
             artifact-name: Linux_ARMv7
           - task: Linux_ARM64
             path: "*Linux_ARM64.tar.gz"
+            runner: ubuntu-latest
             artifact-name: Linux_ARM64
           - task: macOS_64bit
             path: "*macOS_64bit.tar.gz"
+            runner: ubuntu-latest
             artifact-name: macOS_64
           - task: macOS_ARM64
             path: "*macOS_ARM64.tar.gz"
+            runner: ubuntu-24.04-arm
             artifact-name: macOS_ARM64
 
     steps:
