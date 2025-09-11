@@ -71,13 +71,16 @@ jobs:
       - name: Install editorconfig-checker
         run: |
           cd "${{ env.EC_INSTALL_PATH }}"
+
           tar \
             --extract \
             --file="${{ steps.download.outputs.name }}"
+
           # Give the binary a standard name
           mv \
             "${{ env.EC_INSTALL_PATH }}/bin/ec-linux-amd64" \
             "${{ env.EC_INSTALL_PATH }}/bin/ec"
+
           # Add installation to PATH:
           # See: https://docs.github.com/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#adding-a-system-path
           echo "${{ env.EC_INSTALL_PATH }}/bin" >>"$GITHUB_PATH"

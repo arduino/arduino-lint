@@ -115,11 +115,14 @@ jobs:
           security create-keychain \
             -p "${{ env.KEYCHAIN_PASSWORD }}" \
             "${{ env.KEYCHAIN }}"
+
           security default-keychain \
             -s "${{ env.KEYCHAIN }}"
+
           security unlock-keychain \
             -p "${{ env.KEYCHAIN_PASSWORD }}" \
             "${{ env.KEYCHAIN }}"
+
           security import \
             "${{ env.INSTALLER_CERT_MAC_PATH }}" \
             -k "${{ env.KEYCHAIN }}" \
@@ -127,6 +130,7 @@ jobs:
             -A \
             -T /usr/bin/codesign \
             -P "${{ secrets.INSTALLER_CERT_MAC_PASSWORD }}"
+
           security set-key-partition-list \
             -S apple-tool:,apple: \
             -s \
@@ -142,6 +146,7 @@ jobs:
           unzip \
             gon_macos.zip \
             -d /usr/local/bin
+
       - name: Write gon config to file
         # gon does not allow env variables in config file (https://github.com/mitchellh/gon/issues/20)
         run: |
@@ -179,14 +184,17 @@ jobs:
           chmod \
             +x \
             "${{ env.BUILD_FOLDER }}/${{ env.PROJECT_NAME }}"
+
           # Use of an array here is required for globbing
           PACKAGE_FILENAME=(${{ env.PROJECT_NAME }}_nightly-*${{ matrix.build.package-suffix }})
+
           tar \
             -czvf "$PACKAGE_FILENAME" \
             -C "${{ env.BUILD_FOLDER }}/" \
             "${{ env.PROJECT_NAME }}" \
             -C ../../ \
             LICENSE.txt
+
           echo "PACKAGE_FILENAME=$PACKAGE_FILENAME" >> $GITHUB_ENV
 
       - name: Replace artifact with notarized build
