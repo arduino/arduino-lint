@@ -88,9 +88,6 @@ jobs:
         with:
           python-version-file: pyproject.toml
 
-      - name: Install Poetry
-        run: pip install poetry
-
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
