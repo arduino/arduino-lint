@@ -12,9 +12,11 @@ vars:
   DEFAULT_GO_MODULE_PATH: ./
   DEFAULT_GO_PACKAGES: |
     $( \
-      go list ./... | \
-        grep --invert-match 'github.com/arduino/arduino-lint/internal/rule/schema/schemadata' | \
-          tr '\n' ' ' \
+      go list ./... \
+      | \
+      grep --invert-match 'github.com/arduino/arduino-lint/internal/rule/schema/schemadata' \
+      | \
+      tr '\n' ' ' \
       || \
       echo '"ERROR: Unable to discover Go packages"' \
     )
@@ -589,9 +591,9 @@ tasks:
     cmds:
       - |
         if [[ "{{.OS}}" == "Windows_NT" ]] && which cygpath &>/dev/null; then
-            # Even though the shell handles POSIX format absolute paths as expected, external applications do not.
-            # So paths passed to such applications must first be converted to Windows format.
-            cygpath -w "{{.RAW_PATH}}"
+          # Even though the shell handles POSIX format absolute paths as expected, external applications do not.
+          # So paths passed to such applications must first be converted to Windows format.
+          cygpath -w "{{.RAW_PATH}}"
         else
           echo "{{.RAW_PATH}}"
         fi

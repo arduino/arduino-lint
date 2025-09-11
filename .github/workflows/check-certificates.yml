@@ -100,7 +100,9 @@ jobs:
               -legacy \
               -noout \
               -passin env:CERTIFICATE_PASSWORD
-          ) || (
+          ) \
+          || \
+          (
             echo "::error::Verification of ${{ matrix.certificate.identifier }} failed!!!"
             exit 1
           )
@@ -124,39 +126,45 @@ jobs:
         run: |
           if [[ ${{ matrix.certificate.type }} == "pkcs12" ]]; then
             EXPIRATION_DATE="$(
-                (
+              (
                 openssl pkcs12 \
-                    -in ${{ env.CERTIFICATE_PATH }} \
-                    -clcerts \
-                    -legacy \
-                    -nodes \
-                    -passin env:CERTIFICATE_PASSWORD
-                ) | (
+                  -in ${{ env.CERTIFICATE_PATH }} \
+                  -clcerts \
+                  -legacy \
+                  -nodes \
+                  -passin env:CERTIFICATE_PASSWORD
+              ) \
+              | \
+              (
                 openssl x509 \
-                    -noout \
-                    -enddate
-                ) | (
+                  -noout \
+                  -enddate
+              ) \
+              | \
+              (
                 grep \
-                    --max-count=1 \
-                    --only-matching \
-                    --perl-regexp \
-                    'notAfter=(\K.*)'
-                )
+                  --max-count=1 \
+                  --only-matching \
+                  --perl-regexp \
+                  'notAfter=(\K.*)'
+              )
             )"
           elif [[ ${{ matrix.certificate.type }} == "x509" ]]; then
             EXPIRATION_DATE="$(
-                (
+              (
                 openssl x509 \
-                    -in ${{ env.CERTIFICATE_PATH }} \
-                    -noout \
-                    -enddate
-                ) | (
+                  -in ${{ env.CERTIFICATE_PATH }} \
+                  -noout \
+                  -enddate
+              ) \
+              | \
+              (
                 grep \
-                    --max-count=1 \
-                    --only-matching \
-                    --perl-regexp \
-                    'notAfter=(\K.*)'
-                )
+                  --max-count=1 \
+                  --only-matching \
+                  --perl-regexp \
+                  'notAfter=(\K.*)'
+              )
             )"
           fi
 
