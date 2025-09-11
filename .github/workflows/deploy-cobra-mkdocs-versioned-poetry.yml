@@ -102,17 +102,22 @@ jobs:
         if: fromJson(steps.determine-versioning.outputs.data).version != null
         run: |
           # Publishing implies creating a git commit on the gh-pages branch, we let @ArduinoBot own these commits.
-          git config --global user.email "bot@arduino.cc"
-          git config --global user.name "ArduinoBot"
+          git config \
+            --global \
+            user.email "bot@arduino.cc"
+          git config \
+            --global \
+            user.name "ArduinoBot"
           git fetch \
             --no-tags \
             --prune \
             --depth=1 \
             origin \
             +refs/heads/gh-pages:refs/remotes/origin/gh-pages
-          poetry run mike deploy \
-            --update-aliases \
-            --push \
-            --remote origin \
-            ${{ fromJson(steps.determine-versioning.outputs.data).version }} \
-            ${{ fromJson(steps.determine-versioning.outputs.data).alias }}
+          poetry run \
+            mike deploy \
+              --update-aliases \
+              --push \
+              --remote origin \
+              ${{ fromJson(steps.determine-versioning.outputs.data).version }} \
+              ${{ fromJson(steps.determine-versioning.outputs.data).alias }}

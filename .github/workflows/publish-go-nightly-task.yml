@@ -112,9 +112,14 @@ jobs:
           KEYCHAIN_PASSWORD: keychainpassword
         run: |
           echo "${{ secrets.INSTALLER_CERT_MAC_P12 }}" | base64 --decode >"${{ env.INSTALLER_CERT_MAC_PATH }}"
-          security create-keychain -p "${{ env.KEYCHAIN_PASSWORD }}" "${{ env.KEYCHAIN }}"
-          security default-keychain -s "${{ env.KEYCHAIN }}"
-          security unlock-keychain -p "${{ env.KEYCHAIN_PASSWORD }}" "${{ env.KEYCHAIN }}"
+          security create-keychain \
+            -p "${{ env.KEYCHAIN_PASSWORD }}" \
+            "${{ env.KEYCHAIN }}"
+          security default-keychain \
+            -s "${{ env.KEYCHAIN }}"
+          security unlock-keychain \
+            -p "${{ env.KEYCHAIN_PASSWORD }}" \
+            "${{ env.KEYCHAIN }}"
           security import \
             "${{ env.INSTALLER_CERT_MAC_PATH }}" \
             -k "${{ env.KEYCHAIN }}" \
@@ -130,13 +135,18 @@ jobs:
 
       - name: Install gon for code signing and app notarization
         run: |
-          wget -q https://github.com/Bearer/gon/releases/download/v0.0.27/gon_macos.zip
-          unzip gon_macos.zip -d /usr/local/bin
+          wget \
+            -q \
+            https://github.com/Bearer/gon/releases/download/v0.0.27/gon_macos.zip
 
+          unzip \
+            gon_macos.zip \
+            -d /usr/local/bin
       - name: Write gon config to file
         # gon does not allow env variables in config file (https://github.com/mitchellh/gon/issues/20)
         run: |
-          cat >"${{ env.GON_CONFIG_PATH }}" <<EOF
+          cat >"${{ env.GON_CONFIG_PATH }}" \
+          <<EOF
           # See: https://github.com/Bearer/gon#configuration-file
           source = ["${{ env.DIST_DIR }}/${{ env.BUILD_FOLDER }}/${{ env.PROJECT_NAME }}"]
           bundle_id = "cc.arduino.${{ env.PROJECT_NAME }}"
@@ -166,12 +176,17 @@ jobs:
         run: |
           # GitHub's upload/download-artifact actions don't preserve file permissions,
           # so we need to add execution permission back until the action is made to do this.
-          chmod +x "${{ env.BUILD_FOLDER }}/${{ env.PROJECT_NAME }}"
+          chmod \
+            +x \
+            "${{ env.BUILD_FOLDER }}/${{ env.PROJECT_NAME }}"
           # Use of an array here is required for globbing
           PACKAGE_FILENAME=(${{ env.PROJECT_NAME }}_nightly-*${{ matrix.build.package-suffix }})
-          tar -czvf "$PACKAGE_FILENAME" \
-            -C "${{ env.BUILD_FOLDER }}/" "${{ env.PROJECT_NAME }}" \
-            -C ../../ LICENSE.txt
+          tar \
+            -czvf "$PACKAGE_FILENAME" \
+            -C "${{ env.BUILD_FOLDER }}/" \
+            "${{ env.PROJECT_NAME }}" \
+            -C ../../ \
+            LICENSE.txt
           echo "PACKAGE_FILENAME=$PACKAGE_FILENAME" >> $GITHUB_ENV
 
       - name: Replace artifact with notarized build
@@ -212,7 +227,10 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Upload release files on Arduino downloads servers
-        run: aws s3 sync ${{ env.DIST_DIR }} s3://${{ secrets.DOWNLOADS_BUCKET }}${{ env.AWS_PLUGIN_TARGET }}nightly
+        run: |
+          aws s3 sync \
+            ${{ env.DIST_DIR }} \
+            s3://${{ secrets.DOWNLOADS_BUCKET }}${{ env.AWS_PLUGIN_TARGET }}nightly
 
   report:
     runs-on: ubuntu-latest
