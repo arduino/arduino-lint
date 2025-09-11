@@ -100,9 +100,9 @@ jobs:
       - name: Set environment variables
         run: |
           # See: https://docs.github.com/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#setting-an-environment-variable
-          echo "BUILD_FOLDER=${{ env.PROJECT_NAME }}_osx_${{ matrix.build.folder-suffix }}" >> "$GITHUB_ENV"
+          echo "BUILD_FOLDER=${{ env.PROJECT_NAME }}_osx_${{ matrix.build.folder-suffix }}" >>"$GITHUB_ENV"
           TAG="${GITHUB_REF/refs\/tags\//}"
-          echo "PACKAGE_FILENAME=${{ env.PROJECT_NAME }}_${TAG}_${{ matrix.build.package-suffix }}" >> $GITHUB_ENV
+          echo "PACKAGE_FILENAME=${{ env.PROJECT_NAME }}_${TAG}_${{ matrix.build.package-suffix }}" >>$GITHUB_ENV
 
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -120,7 +120,7 @@ jobs:
           # Arbitrary password for a keychain that exists only for the duration of the job, so not secret
           KEYCHAIN_PASSWORD: keychainpassword
         run: |
-          echo "${{ secrets.INSTALLER_CERT_MAC_P12 }}" | base64 --decode > "${{ env.INSTALLER_CERT_MAC_PATH }}"
+          echo "${{ secrets.INSTALLER_CERT_MAC_P12 }}" | base64 --decode >"${{ env.INSTALLER_CERT_MAC_PATH }}"
           security create-keychain -p "${{ env.KEYCHAIN_PASSWORD }}" "${{ env.KEYCHAIN }}"
           security default-keychain -s "${{ env.KEYCHAIN }}"
           security unlock-keychain -p "${{ env.KEYCHAIN_PASSWORD }}" "${{ env.KEYCHAIN }}"
@@ -145,7 +145,7 @@ jobs:
       - name: Write gon config to file
         # gon does not allow env variables in config file (https://github.com/mitchellh/gon/issues/20)
         run: |
-          cat > "${{ env.GON_CONFIG_PATH }}" <<EOF
+          cat >"${{ env.GON_CONFIG_PATH }}" <<EOF
           # See: https://github.com/Bearer/gon#configuration-file
           source = ["${{ env.DIST_DIR }}/${{ env.BUILD_FOLDER }}/${{ env.PROJECT_NAME }}"]
           bundle_id = "cc.arduino.${{ env.PROJECT_NAME }}"
@@ -208,7 +208,7 @@ jobs:
         working-directory: ${{ env.DIST_DIR }}
         run: |
           TAG="${GITHUB_REF/refs\/tags\//}"
-          sha256sum ${{ env.PROJECT_NAME }}_${TAG}* > ${TAG}-checksums.txt
+          sha256sum ${{ env.PROJECT_NAME }}_${TAG}* >${TAG}-checksums.txt
 
       - name: Identify Prerelease
         # This is a workaround while waiting for create-release action
@@ -224,7 +224,7 @@ jobs:
             )" != \
             "" \
           ]]; then
-            echo "IS_PRE=true" >> $GITHUB_OUTPUT
+            echo "IS_PRE=true" >>$GITHUB_OUTPUT
           fi
 
       - name: Create Github Release and upload artifacts

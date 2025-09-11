@@ -35,7 +35,7 @@ jobs:
             RESULT="false"
           fi
 
-          echo "result=$RESULT" >> $GITHUB_OUTPUT
+          echo "result=$RESULT" >>$GITHUB_OUTPUT
 
   check:
     needs: run-determination
@@ -48,7 +48,7 @@ jobs:
       - name: Set environment variables
         run: |
           # See: https://docs.github.com/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#setting-an-environment-variable
-          echo "EC_INSTALL_PATH=${{ runner.temp }}/editorconfig-checker" >> "$GITHUB_ENV"
+          echo "EC_INSTALL_PATH=${{ runner.temp }}/editorconfig-checker" >>"$GITHUB_ENV"
 
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -76,7 +76,7 @@ jobs:
           mv "${{ env.EC_INSTALL_PATH }}/bin/ec-linux-amd64" "${{ env.EC_INSTALL_PATH }}/bin/ec"
           # Add installation to PATH:
           # See: https://docs.github.com/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#adding-a-system-path
-          echo "${{ env.EC_INSTALL_PATH }}/bin" >> "$GITHUB_PATH"
+          echo "${{ env.EC_INSTALL_PATH }}/bin" >>"$GITHUB_PATH"
 
       - name: Check formatting
         run: task --silent general:check-formatting

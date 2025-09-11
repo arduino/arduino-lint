@@ -47,7 +47,7 @@ jobs:
             RESULT="false"
           fi
 
-          echo "result=$RESULT" >> $GITHUB_OUTPUT
+          echo "result=$RESULT" >>$GITHUB_OUTPUT
 
   lint:
     name: ${{ matrix.configuration.name }} (${{ matrix.script }})
@@ -82,7 +82,7 @@ jobs:
       - name: Set environment variables
         run: |
           # See: https://docs.github.com/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#setting-an-environment-variable
-          echo "INSTALL_PATH=${{ runner.temp }}/shellcheck" >> "$GITHUB_ENV"
+          echo "INSTALL_PATH=${{ runner.temp }}/shellcheck" >>"$GITHUB_ENV"
 
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -113,7 +113,7 @@ jobs:
           )"
           # Add installation to PATH:
           # See: https://docs.github.com/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#adding-a-system-path
-          echo "${{ env.INSTALL_PATH }}/$EXTRACTION_FOLDER" >> "$GITHUB_PATH"
+          echo "${{ env.INSTALL_PATH }}/$EXTRACTION_FOLDER" >>"$GITHUB_PATH"
 
       - name: Run ShellCheck
         uses: liskin/gh-problem-matcher-wrap@v3
@@ -144,7 +144,7 @@ jobs:
       - name: Set environment variables
         run: |
           # See: https://docs.github.com/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#setting-an-environment-variable
-          echo "SHFMT_INSTALL_PATH=${{ runner.temp }}/shfmt" >> "$GITHUB_ENV"
+          echo "SHFMT_INSTALL_PATH=${{ runner.temp }}/shfmt" >>"$GITHUB_ENV"
 
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -172,7 +172,7 @@ jobs:
           mv "${{ env.SHFMT_INSTALL_PATH }}/${{ steps.download.outputs.name }}" "${{ env.SHFMT_INSTALL_PATH }}/shfmt"
           # Add installation to PATH:
           # See: https://docs.github.com/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#adding-a-system-path
-          echo "${{ env.SHFMT_INSTALL_PATH }}" >> "$GITHUB_PATH"
+          echo "${{ env.SHFMT_INSTALL_PATH }}" >>"$GITHUB_PATH"
 
       - name: Format shell scripts
         run: |

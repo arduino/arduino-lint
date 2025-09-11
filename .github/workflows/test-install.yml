@@ -65,7 +65,7 @@ jobs:
         shell: bash
         run: |
           # See: https://docs.github.com/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#setting-an-environment-variable
-          echo "BINDIR=${{ runner.temp }}/custom-installation-folder" >> "$GITHUB_ENV"
+          echo "BINDIR=${{ runner.temp }}/custom-installation-folder" >>"$GITHUB_ENV"
 
       - name: Checkout repository
         uses: actions/checkout@v5

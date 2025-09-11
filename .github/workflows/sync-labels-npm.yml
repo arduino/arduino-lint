@@ -103,7 +103,7 @@ jobs:
       - name: Set environment variables
         run: |
           # See: https://docs.github.com/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions#setting-an-environment-variable
-          echo "MERGED_CONFIGURATION_PATH=${{ runner.temp }}/labels.yml" >> "$GITHUB_ENV"
+          echo "MERGED_CONFIGURATION_PATH=${{ runner.temp }}/labels.yml" >>"$GITHUB_ENV"
 
       - name: Determine whether to dry run
         id: dry-run
@@ -119,7 +119,7 @@ jobs:
         run: |
           # Use of this flag in the github-label-sync command will cause it to only check the validity of the
           # configuration.
-          echo "flag=--dry-run" >> $GITHUB_OUTPUT
+          echo "flag=--dry-run" >>$GITHUB_OUTPUT
 
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -145,7 +145,7 @@ jobs:
         run: |
           # Merge all configuration files
           shopt -s extglob
-          cat "${{ env.CONFIGURATIONS_FOLDER }}"/*.@(yml|yaml) > "${{ env.MERGED_CONFIGURATION_PATH }}"
+          cat "${{ env.CONFIGURATIONS_FOLDER }}"/*.@(yml|yaml) >"${{ env.MERGED_CONFIGURATION_PATH }}"
 
       - name: Install github-label-sync
         run: npm install
