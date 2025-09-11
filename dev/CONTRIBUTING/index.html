@@ -942,7 +942,6 @@ submitting a PR:</p>
   <a href="https://github.com/arduino/arduino-lint/blob/main/pyproject.toml"><code>pyproject.toml</code></a>.</li>
 </ul>
 </li>
-<li><a href="https://python-poetry.org/docs/">Poetry</a>.</li>
 <li><a href="https://nodejs.org/en/download/"><strong>Node.js</strong> / <strong>npm</strong></a> - Node.js dependencies management tool.<ul>
 <li>The <strong>Node.js</strong> version in use is defined in the <code>engines.node</code> field of
   <a href="https://github.com/arduino/arduino-lint/blob/main/package.json"><code>package.json</code></a>.</li>
@@ -990,10 +989,11 @@ input and providing the expected output and proper exit codes.</p>
 <p>This will automatically install the necessary dependencies, if not already installed, and run the integration tests
 automatically.</p>
 <p>To run specific tests, you must run <code>pytest</code> from the virtual environment created by Poetry.</p>
-<div class="highlight"><pre><span></span><code>poetry run pytest tests/test_all.py::test_report_file
+<div class="highlight"><pre><span></span><code>task poetry:install &amp;&amp; poetry run pytest tests/test_all.py::test_report_file
 </code></pre></div>
 <p>You can avoid writing the <code>poetry run</code> prefix each time by creating a new shell inside the virtual environment:</p>
-<div class="highlight"><pre><span></span><code>poetry shell
+<div class="highlight"><pre><span></span><code>task poetry:install
+poetry shell
 pytest test_lib.py
 pytest test_lib.py::test_list
 </code></pre></div>
