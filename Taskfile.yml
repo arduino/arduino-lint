@@ -9,7 +9,7 @@ vars:
   PROJECT_NAME: "arduino-lint"
   DIST_DIR: "dist"
   # Path of the project's primary Go module:
-  DEFAULT_GO_MODULE_PATH: ./
+  DEFAULT_GO_MODULE_PATH: .
   DEFAULT_GO_PACKAGES: |
     $( \
       go list \

@@ -73,7 +73,7 @@ jobs:
           - windows-latest
           - macos-latest
         module:
-          - path: ./
+          - path: .
             codecov-flags: unit
           - path: ruledocsgen/
             codecov-flags: unit

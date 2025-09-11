@@ -62,7 +62,7 @@ jobs:
 
       matrix:
         module:
-          - path: ./
+          - path: .
           - path: docsgen
           - path: ruledocsgen
 
@@ -99,7 +99,7 @@ jobs:
 
       matrix:
         module:
-          - path: ./
+          - path: .
           - path: docsgen
           - path: ruledocsgen
 
@@ -110,7 +110,7 @@ jobs:
       - name: Install Go
         uses: actions/setup-go@v6
         with:
-          go-version-file: go.mod
+          go-version-file: ${{ matrix.module.path }}/go.mod
 
       - name: Install Task
         uses: arduino/setup-task@v2
@@ -142,7 +142,7 @@ jobs:
 
       matrix:
         module:
-          - path: ./
+          - path: .
           - path: docsgen
           - path: ruledocsgen
 
@@ -153,7 +153,7 @@ jobs:
       - name: Install Go
         uses: actions/setup-go@v6
         with:
-          go-version-file: go.mod
+          go-version-file: ${{ matrix.module.path }}/go.mod
 
       - name: Install Task
         uses: arduino/setup-task@v2
@@ -185,7 +185,7 @@ jobs:
 
       matrix:
         module:
-          - path: ./
+          - path: .
           - path: docsgen
           - path: ruledocsgen
 
@@ -196,7 +196,7 @@ jobs:
       - name: Install Go
         uses: actions/setup-go@v6
         with:
-          go-version-file: go.mod
+          go-version-file: ${{ matrix.module.path }}/go.mod
 
       - name: Install Task
         uses: arduino/setup-task@v2
@@ -228,7 +228,7 @@ jobs:
 
       matrix:
         module:
-          - path: ./
+          - path: .
           - path: docsgen
           - path: ruledocsgen
 
@@ -239,7 +239,7 @@ jobs:
       - name: Install Go
         uses: actions/setup-go@v6
         with:
-          go-version-file: go.mod
+          go-version-file: ${{ matrix.module.path }}/go.mod
 
       - name: Install Task
         uses: arduino/setup-task@v2

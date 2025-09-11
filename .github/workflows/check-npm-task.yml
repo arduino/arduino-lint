@@ -107,7 +107,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
-          node-version-file: package.json
+          node-version-file: "${{ matrix.project.path }}/package.json"
 
       - name: Install Task
         uses: arduino/setup-task@v2
