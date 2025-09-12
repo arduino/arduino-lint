@@ -179,6 +179,7 @@ tasks:
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/deploy-cobra-mkdocs-versioned-poetry/Taskfile.yml
   docs:generate:
     desc: Create all generated documentation content
+    run: when_changed
     deps:
       - task: go:cli-docs
       - task: go:rule-docs
@@ -495,6 +496,7 @@ tasks:
       Install dependencies managed by npm.
       Environment variable parameters:
       - PROJECT_PATH: Path of the npm-managed project (default: {{.DEFAULT_NPM_PROJECT_PATH}}).
+    run: when_changed
     dir: |
       "{{default .DEFAULT_NPM_PROJECT_PATH .PROJECT_PATH}}"
     cmds:
