@@ -82,7 +82,9 @@ jobs:
         run: task docs:generate
 
       - name: Install Dependencies
-        run: task poetry:install-deps
+        run: |
+          task poetry:install-deps \
+            POETRY_GROUPS=dev
 
       - name: Determine versioning parameters
         id: determine-versioning
