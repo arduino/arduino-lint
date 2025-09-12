@@ -172,9 +172,9 @@ jobs:
             )"
           fi
 
-          DAYS_BEFORE_EXPIRATION="$(
-            (($(date --utc --date="$EXPIRATION_DATE" +%s) - $(date --utc +%s)) / 60 / 60 / 24)
-          )"
+          DAYS_BEFORE_EXPIRATION="$((
+            ($(date --utc --date="$EXPIRATION_DATE" +%s) - $(date --utc +%s)) / 60 / 60 / 24
+          ))"
 
           # Display the expiration information in the log.
           echo "Certificate expiration date: $EXPIRATION_DATE"
