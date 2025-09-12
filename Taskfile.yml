@@ -142,6 +142,7 @@ tasks:
         vars:
           GO_MODULE_PATH: ./ruledocsgen
       - task: markdown:fix
+      - task: npm:fix-config
       - task: python:format
       - task: shell:format
         vars:
@@ -476,6 +477,19 @@ tasks:
         npx \
           markdownlint-cli \
             "**/*.md"
+
+  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-npm-task/Taskfile.yml
+  npm:fix-config:
+    desc: |
+      Fix problems with the npm configuration file.
+      Environment variable parameters:
+      - PROJECT_PATH: Path of the npm-managed project (default: {{.DEFAULT_NPM_PROJECT_PATH}}).
+    dir: "{{default .DEFAULT_NPM_PROJECT_PATH .PROJECT_PATH}}"
+    cmds:
+      - |
+        npm config \
+          --location project \
+          fix
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/npm-task/Taskfile.yml
   npm:install-deps:

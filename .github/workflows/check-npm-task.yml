@@ -126,3 +126,44 @@ jobs:
             --color \
             --exit-code \
             "${{ matrix.project.path }}/package-lock.json"
+
+  check-config:
+    name: check-config (${{ matrix.project.path }})
+    needs: run-determination
+    if: needs.run-determination.outputs.result == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        project:
+          - path: .
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: "${{ matrix.project.path }}/package.json"
+
+      - name: Install Task
+        uses: arduino/setup-task@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          version: 3.x
+
+      - name: Fix problems in npm configuration file
+        run: |
+          task npm:fix-config \
+            PROJECT_PATH="${{ matrix.project.path }}"
+
+      - name: Check if fixes are needed in npm configuration file
+        run: |
+          git diff \
+            --color \
+            --exit-code \
+            "${{ matrix.project.path }}/.npmrc"
