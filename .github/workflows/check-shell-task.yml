@@ -127,8 +127,7 @@ jobs:
           linters: gcc
           # Due to a quirk of the "liskin/gh-problem-matcher-wrap" action, the entire command must be on a single line
           # (instead of being broken into multiple lines for readability).
-          run: |
-            task --silent shell:check SCRIPT_PATH="${{ matrix.script }}" SHELLCHECK_FORMAT=${{ matrix.configuration.format }}
+          run: task --silent shell:check SCRIPT_PATH="${{ matrix.script }}" SHELLCHECK_FORMAT=${{ matrix.configuration.format }}
 
   formatting:
     name: formatting (${{ matrix.script }})
