@@ -639,7 +639,7 @@ tasks:
     deps:
       - task: poetry:install
     cmds:
-      - poetry install --no-root
+      - poetry install
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/poetry-task/Taskfile.yml
   poetry:update-deps:
