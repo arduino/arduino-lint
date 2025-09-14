@@ -169,7 +169,8 @@ jobs:
       - name: Write gon config to file
         # gon does not allow env variables in config file (https://github.com/mitchellh/gon/issues/20)
         run: |
-          cat >"${{ env.GON_CONFIG_PATH }}" <<EOF
+          cat >"${{ env.GON_CONFIG_PATH }}" \
+          <<EOF
           # See: https://github.com/Bearer/gon#configuration-file
           source = ["${{ env.DIST_DIR }}/${{ env.BUILD_FOLDER }}/${{ env.PROJECT_NAME }}"]
           bundle_id = "cc.arduino.${{ env.PROJECT_NAME }}"

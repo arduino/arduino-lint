@@ -121,6 +121,7 @@ jobs:
           KEYCHAIN_PASSWORD: keychainpassword
         run: |
           echo "${{ secrets.INSTALLER_CERT_MAC_P12 }}" | base64 --decode >"${{ env.INSTALLER_CERT_MAC_PATH }}"
+
           security create-keychain \
             -p "${{ env.KEYCHAIN_PASSWORD }}" \
             "${{ env.KEYCHAIN }}"
@@ -204,7 +205,7 @@ jobs:
             -C ../../ \
             LICENSE.txt
 
-          echo "PACKAGE_FILENAME=$PACKAGE_FILENAME" >> $GITHUB_ENV
+          echo "PACKAGE_FILENAME=$PACKAGE_FILENAME" >>$GITHUB_ENV
 
       - name: Replace artifact with notarized build
         uses: actions/upload-artifact@v4
