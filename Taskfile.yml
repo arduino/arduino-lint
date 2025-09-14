@@ -197,7 +197,10 @@ tasks:
       - task: general:prepare-deps
     cmds:
       - |
-        if ! which licensed &>/dev/null; then
+        if
+          ! which licensed \
+          &>/dev/null
+        then
           if [[ {{OS}} == "windows" ]]; then
             echo "Licensed does not have Windows support."
             echo "Please use Linux/macOS or download the dependencies cache from the GitHub Actions workflow artifact."
@@ -606,13 +609,19 @@ tasks:
     run: when_changed
     cmds:
       - |
-        if ! which go &>/dev/null; then
+        if
+          ! which go \
+          &>/dev/null
+        then
           echo "Go not found or not in PATH."
           echo "Please install: https://go.dev/doc/install"
           exit 1
         fi
       - |
-        if ! which python &>/dev/null; then
+        if
+          ! which python \
+          &>/dev/null
+        then
           python_constraint="$( \
             yq \
               --input-format toml \
@@ -627,7 +636,10 @@ tasks:
           exit 1
         fi
       - |
-        if ! which pipx &>/dev/null; then
+        if
+          ! which pipx \
+          &>/dev/null
+        then
           echo "pipx not found or not in PATH."
           echo "Please install: https://pipx.pypa.io/stable/installation/#installing-pipx"
           exit 1
@@ -734,7 +746,10 @@ tasks:
           exit 1
         fi
       - |
-        if ! which shellcheck &>/dev/null; then
+        if
+          ! which shellcheck \
+          &>/dev/null
+        then
           echo "shellcheck not installed or not in PATH."
           echo "Please install: https://github.com/koalaman/shellcheck#installing"
           exit 1
@@ -774,7 +789,10 @@ tasks:
           exit 1
         fi
       - |
-        if ! which shfmt &>/dev/null; then
+        if
+          ! which shfmt \
+          &>/dev/null
+        then
           echo "shfmt not installed or not in PATH. Please install: https://github.com/mvdan/sh#shfmt"
           exit 1
         fi
