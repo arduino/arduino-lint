@@ -205,7 +205,7 @@ jobs:
             -C ../../ \
             LICENSE.txt
 
-          echo "PACKAGE_FILENAME=$PACKAGE_FILENAME" >> $GITHUB_ENV
+          echo "PACKAGE_FILENAME=$PACKAGE_FILENAME" >>$GITHUB_ENV
 
       - name: Replace artifact with notarized build
         uses: actions/upload-artifact@v4
