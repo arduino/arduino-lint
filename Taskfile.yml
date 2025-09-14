@@ -687,14 +687,6 @@ tasks:
         poetry lock \
           --no-cache
 
-  # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/poetry-task/Taskfile.yml
-  poetry:update-deps:
-    desc: Update all dependencies managed by Poetry to their newest versions
-    deps:
-      - task: poetry:install
-    cmds:
-      - poetry update
-
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/check-poetry-task/Taskfile.yml
   poetry:validate:
     desc: Validate Poetry configuration
