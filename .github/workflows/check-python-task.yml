@@ -80,17 +80,13 @@ jobs:
         with:
           python-version-file: pyproject.toml
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
-
       - name: Run flake8
         uses: liskin/gh-problem-matcher-wrap@v3
         with:
           linters: flake8
-          run: task python:lint
+          # Due to a quirk of the "liskin/gh-problem-matcher-wrap" action, the entire command must be on a single line
+          # (instead of being broken into multiple lines for readability).
+          run: go tool github.com/go-task/task/v3/cmd/task python:lint
 
   formatting:
     needs: run-determination
@@ -103,19 +99,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
+      - name: Install Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+
       - name: Install Python
         uses: actions/setup-python@v6
         with:
           python-version-file: pyproject.toml
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
-
       - name: Format Python code
-        run: task python:format
+        run: |
+          go tool \
+            github.com/go-task/task/v3/cmd/task python:format
 
       - name: Check formatting
         run: |

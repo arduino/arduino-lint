@@ -156,7 +156,10 @@ tasks:
       # Source: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/github-workflow.json
       WORKFLOW_SCHEMA_URL: https://json.schemastore.org/github-workflow
       WORKFLOW_SCHEMA_PATH:
-        sh: task utility:mktemp-file TEMPLATE="workflow-schema-XXXXXXXXXX.json"
+        sh: |
+          go tool \
+            github.com/go-task/task/v3/cmd/task utility:mktemp-file \
+              TEMPLATE="workflow-schema-XXXXXXXXXX.json"
       WORKFLOWS_DATA_PATH: "./.github/workflows/*.{yml,yaml}"
     deps:
       - task: npm:install-deps
@@ -534,43 +537,73 @@ tasks:
       # Source: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/package.json
       SCHEMA_URL: https://json.schemastore.org/package.json
       SCHEMA_PATH:
-        sh: task utility:mktemp-file TEMPLATE="package-json-schema-XXXXXXXXXX.json"
+        sh: |
+          go tool \
+            github.com/go-task/task/v3/cmd/task utility:mktemp-file \
+              TEMPLATE="package-json-schema-XXXXXXXXXX.json"
       # Source: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/ava.json
       AVA_SCHEMA_URL: https://json.schemastore.org/ava.json
       AVA_SCHEMA_PATH:
-        sh: task utility:mktemp-file TEMPLATE="ava-schema-XXXXXXXXXX.json"
+        sh: |
+          go tool \
+            github.com/go-task/task/v3/cmd/task utility:mktemp-file \
+              TEMPLATE="ava-schema-XXXXXXXXXX.json"
       # Source: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/base.json
       BASE_SCHEMA_URL: https://json.schemastore.org/base.json
       BASE_SCHEMA_PATH:
-        sh: task utility:mktemp-file TEMPLATE="base-schema-XXXXXXXXXX.json"
+        sh: |
+          go tool \
+            github.com/go-task/task/v3/cmd/task utility:mktemp-file \
+              TEMPLATE="base-schema-XXXXXXXXXX.json"
       # Source: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/eslintrc.json
       ESLINTRC_SCHEMA_URL: https://json.schemastore.org/eslintrc.json
       ESLINTRC_SCHEMA_PATH:
-        sh: task utility:mktemp-file TEMPLATE="eslintrc-schema-XXXXXXXXXX.json"
+        sh: |
+          go tool \
+            github.com/go-task/task/v3/cmd/task utility:mktemp-file \
+              TEMPLATE="eslintrc-schema-XXXXXXXXXX.json"
       # Source: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/jscpd.json
       JSCPD_SCHEMA_URL: https://json.schemastore.org/jscpd.json
       JSCPD_SCHEMA_PATH:
-        sh: task utility:mktemp-file TEMPLATE="jscpd-schema-XXXXXXXXXX.json"
+        sh: |
+          go tool \
+            github.com/go-task/task/v3/cmd/task utility:mktemp-file \
+              TEMPLATE="jscpd-schema-XXXXXXXXXX.json"
       # Source: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/npm-badges.json
       NPM_BADGES_SCHEMA_URL: https://json.schemastore.org/npm-badges.json
       NPM_BADGES_SCHEMA_PATH:
-        sh: task utility:mktemp-file TEMPLATE="npm-badges-schema-XXXXXXXXXX.json"
+        sh: |
+          go tool \
+            github.com/go-task/task/v3/cmd/task utility:mktemp-file \
+              TEMPLATE="npm-badges-schema-XXXXXXXXXX.json"
       # Source: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/partial-eslint-plugins.json
       PARTIAL_ESLINT_PLUGINS_SCHEMA_URL: https://json.schemastore.org/partial-eslint-plugins.json
       PARTIAL_ESLINT_PLUGINS_PATH:
-        sh: task utility:mktemp-file TEMPLATE="partial-eslint-plugins-schema-XXXXXXXXXX.json"
+        sh: |
+          go tool \
+            github.com/go-task/task/v3/cmd/task utility:mktemp-file \
+              TEMPLATE="partial-eslint-plugins-schema-XXXXXXXXXX.json"
       # Source: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/prettierrc.json
       PRETTIERRC_SCHEMA_URL: https://json.schemastore.org/prettierrc.json
       PRETTIERRC_SCHEMA_PATH:
-        sh: task utility:mktemp-file TEMPLATE="prettierrc-schema-XXXXXXXXXX.json"
+        sh: |
+          go tool \
+            github.com/go-task/task/v3/cmd/task utility:mktemp-file \
+              TEMPLATE="prettierrc-schema-XXXXXXXXXX.json"
       # Source: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/semantic-release.json
       SEMANTIC_RELEASE_SCHEMA_URL: https://json.schemastore.org/semantic-release.json
       SEMANTIC_RELEASE_SCHEMA_PATH:
-        sh: task utility:mktemp-file TEMPLATE="semantic-release-schema-XXXXXXXXXX.json"
+        sh: |
+          go tool \
+            github.com/go-task/task/v3/cmd/task utility:mktemp-file \
+              TEMPLATE="semantic-release-schema-XXXXXXXXXX.json"
       # Source: https://github.com/SchemaStore/schemastore/blob/master/src/schemas/json/stylelintrc.json
       STYLELINTRC_SCHEMA_URL: https://json.schemastore.org/stylelintrc.json
       STYLELINTRC_SCHEMA_PATH:
-        sh: task utility:mktemp-file TEMPLATE="stylelintrc-schema-XXXXXXXXXX.json"
+        sh: |
+          go tool \
+            github.com/go-task/task/v3/cmd/task utility:mktemp-file \
+              TEMPLATE="stylelintrc-schema-XXXXXXXXXX.json"
       INSTANCE_PATH: >-
         {{default .DEFAULT_NPM_PROJECT_PATH .PROJECT_PATH}}/package.json
     cmds:
@@ -647,8 +680,9 @@ tasks:
         fi
       - |
         export PIPX_DEFAULT_PYTHON="$( \
-          task utility:normalize-path \
-            RAW_PATH="$(which python)" \
+          go tool \
+            github.com/go-task/task/v3/cmd/task utility:normalize-path \
+              RAW_PATH="$(which python)" \
         )"
 
         poetry_constraint="$( \

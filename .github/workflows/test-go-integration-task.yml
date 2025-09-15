@@ -84,11 +84,5 @@ jobs:
         with:
           python-version-file: pyproject.toml
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
-
       - name: Run integration tests
-        run: task go:test-integration
+        run: go tool github.com/go-task/task/v3/cmd/task go:test-integration

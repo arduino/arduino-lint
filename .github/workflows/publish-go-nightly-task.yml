@@ -60,16 +60,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
+      - name: Install Go
+        uses: actions/setup-go@v6
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
+          go-version-file: go.mod
 
       - name: Build
         env:
           NIGHTLY: true
-        run: task dist:${{ matrix.os.task }}
+        run: |
+          go tool \
+            github.com/go-task/task/v3/cmd/task dist:${{ matrix.os.task }}
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4

@@ -7,6 +7,8 @@ on:
     paths:
       - ".github/workflows/*.ya?ml"
       - ".npmrc"
+      - "go.mod"
+      - "go.sum"
       - "package.json"
       - "package-lock.json"
       - "Taskfile.ya?ml"
@@ -14,6 +16,8 @@ on:
     paths:
       - ".github/workflows/*.ya?ml"
       - ".npmrc"
+      - "go.mod"
+      - "go.sum"
       - "package.json"
       - "package-lock.json"
       - "Taskfile.ya?ml"
@@ -33,19 +37,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
+      - name: Install Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
           node-version-file: package.json
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
-
       - name: Validate workflows
         run: |
-          task \
-            --silent \
-            ci:validate
+          go tool \
+            github.com/go-task/task/v3/cmd/task \
+              --silent \
+              ci:validate

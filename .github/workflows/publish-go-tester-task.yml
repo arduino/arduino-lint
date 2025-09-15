@@ -126,17 +126,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
+      - name: Install Go
+        uses: actions/setup-go@v6
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
+          go-version-file: go.mod
 
       - name: Build
         run: |
           PACKAGE_NAME_PREFIX=${{ needs.package-name-prefix.outputs.prefix }}
           export PACKAGE_NAME_PREFIX
-          task dist:${{ matrix.os.task }}
+          go tool \
+            github.com/go-task/task/v3/cmd/task dist:${{ matrix.os.task }}
 
       # Transfer builds to artifacts job
       - name: Upload build artifact

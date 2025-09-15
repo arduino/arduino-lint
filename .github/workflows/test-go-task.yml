@@ -89,16 +89,13 @@ jobs:
         with:
           go-version-file: go.mod
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
-
       - name: Run tests
         env:
           GO_MODULE_PATH: ${{ matrix.module.path }}
-        run: task go:test
+        shell: bash
+        run: |
+          go tool \
+            github.com/go-task/task/v3/cmd/task go:test
 
       # A token is used to avoid intermittent spurious job failures caused by rate limiting.
       - name: Set up Codecov upload token

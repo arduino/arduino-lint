@@ -71,17 +71,12 @@ jobs:
         with:
           python-version-file: pyproject.toml
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
-
       - name: Validate configuration
         run: |
-          task \
-            --silent \
-            poetry:validate
+          go tool \
+            github.com/go-task/task/v3/cmd/task \
+              --silent \
+              poetry:validate
 
   check-sync:
     needs: run-determination
@@ -94,22 +89,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
+      - name: Install Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+
       - name: Install Python
         uses: actions/setup-python@v6
         with:
           python-version-file: pyproject.toml
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
-
       - name: Sync lockfile
         run: |
-          task \
-            --silent \
-            poetry:sync
+          go tool \
+            github.com/go-task/task/v3/cmd/task \
+              --silent \
+              poetry:sync
 
       - name: Check if lockfile was out of sync
         run: |

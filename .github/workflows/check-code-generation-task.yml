@@ -59,14 +59,10 @@ jobs:
         with:
           go-version-file: go.mod
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
-
       - name: Generate code
-        run: task go:generate
+        run: |
+          go tool \
+            github.com/go-task/task/v3/cmd/task go:generate
 
       - name: Check for forgotten code generation
         run: git diff --color --exit-code
