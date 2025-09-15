@@ -18,8 +18,10 @@ package rulefunction
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 	"regexp"
+	"strings"
 	"testing"
 	"time"
 
@@ -27,7 +29,9 @@ import (
 	"github.com/arduino/arduino-lint/internal/project/projectdata"
 	"github.com/arduino/arduino-lint/internal/project/projecttype"
 	"github.com/arduino/arduino-lint/internal/rule/ruleresult"
+	"github.com/arduino/arduino-lint/internal/util/test"
 	"github.com/arduino/go-paths-helper"
+	"github.com/arduino/go-properties-orderedmap"
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing/object"
 	"github.com/stretchr/testify/assert"
@@ -780,11 +784,75 @@ func TestLibraryPropertiesUrlFieldDeadLink(t *testing.T) {
 		{"Unable to load", "InvalidLibraryProperties", ruleresult.NotRun, ""},
 		{"Not defined", "MissingFields", ruleresult.NotRun, ""},
 		{"Bad URL", "BadURL", ruleresult.Fail, "^Head \"http://invalid/\": dial tcp: lookup invalid"},
-		{"HTTP error 404", "URL404", ruleresult.Fail, "^404 Not Found$"},
-		{"Good URL", "Recursive", ruleresult.Pass, ""},
 	}
 
 	checkLibraryRuleFunction(LibraryPropertiesURLFieldDeadLink, testTables, t)
+
+	/*
+		In order to avoid a dependency on an external site, a test HTTP server is used for the tests covering handling of
+		various HTTP response status codes. For this reason, the following tests can't be performed via the
+		checkLibraryRuleFunction function.
+	*/
+	statusTestTables := []struct {
+		testName            string
+		serverStatus        int
+		expectedRuleResult  ruleresult.Type
+		expectedOutputQuery string
+	}{
+		{"HTTP error 404", http.StatusNotFound, ruleresult.Fail, "^404 Not Found$"},
+		{"Good URL", http.StatusOK, ruleresult.Pass, ""},
+	}
+
+	var propertiesMap = map[string]string{
+		"name":          "WebServer",
+		"version":       "1.0.0",
+		"author":        "Cristian Maglie <c.maglie@example.com>, Pippo Pluto <pippo@example.com>",
+		"maintainer":    "Cristian Maglie <c.maglie@example.com>",
+		"sentence":      "A library that makes coding a Webserver a breeze.",
+		"paragraph":     "Supports HTTP1.1 and you can do GET and POST.",
+		"category":      "Communication",
+		"architectures": "avr",
+	}
+
+	libraryProperties := properties.NewFromHashmap(propertiesMap)
+
+	for _, testTable := range statusTestTables {
+		// Create an HTTP server that will return the desired status.
+		server := test.StatusServer(testTable.serverStatus)
+		defer server.Close()
+
+		libraryProperties.Set("url", server.URL)
+		// AsSlice is the closest thing to a []byte output function provided by
+		// `github.com/arduino/go-properties-orderedmap`.
+		propertiesBytes := []byte(strings.Join(libraryProperties.AsSlice(), "\n"))
+
+		// Generate the test data library.
+		sourcePath := librariesTestDataPath.Join("TestLibraryPropertiesUrlFieldDeadLink")
+		tempPath, err := paths.MkTempDir("", "TestLibraryPropertiesUrlFieldDeadLink")
+		defer tempPath.RemoveAll() // Clean up after the test.
+		require.NoError(t, err)
+		libraryPath := tempPath.Join("TestLibraryPropertiesUrlFieldDeadLink")
+		err = sourcePath.CopyDirTo(libraryPath)
+		require.NoError(t, err)
+		err = libraryPath.Join("library.properties").WriteFile(propertiesBytes)
+		require.NoError(t, err)
+
+		testProject := project.Type{
+			Path:             libraryPath,
+			ProjectType:      projecttype.Library,
+			SuperprojectType: projecttype.Library,
+		}
+		projectdata.Initialize(testProject)
+
+		result, output := LibraryPropertiesURLFieldDeadLink()
+		assert.Equal(t, testTable.expectedRuleResult, result, testTable.testName)
+		expectedOutputRegexp := regexp.MustCompile(testTable.expectedOutputQuery)
+		assert.True(
+			t,
+			expectedOutputRegexp.MatchString(output),
+			fmt.Sprintf("%s (output: %s, assertion regex: %s)", testTable.testName, output, testTable.expectedOutputQuery),
+		)
+	}
 }
 
 func TestLibraryPropertiesArchitecturesFieldMissing(t *testing.T) {

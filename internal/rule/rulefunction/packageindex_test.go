@@ -17,7 +17,9 @@
 package rulefunction
 
 import (
+	"encoding/json"
 	"fmt"
+	"net/http"
 	"regexp"
 	"testing"
 
@@ -25,11 +27,68 @@ import (
 	"github.com/arduino/arduino-lint/internal/project/projectdata"
 	"github.com/arduino/arduino-lint/internal/project/projecttype"
 	"github.com/arduino/arduino-lint/internal/rule/ruleresult"
+	"github.com/arduino/arduino-lint/internal/util/test"
 	"github.com/arduino/go-paths-helper"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 var packageIndexesTestDataPath *paths.Path
+
+// Help is the type of the `packages[*].help` and `packages[*].platforms[*].help` package index keys.
+type Help struct {
+	Online string `json:"online"`
+}
+
+// Help is the type of the elements of the `packages[*].platforms[*].toolsDependencies` package index key.
+type ToolDependency struct{}
+
+// Platform is the type of the elements of the `packages[*].platforms` package index key.
+type Platform struct {
+	Architecture      string           `json:"architecture"`
+	ArchiveFileName   string           `json:"archiveFileName"`
+	Boards            []string         `json:"boards"`
+	Category          string           `json:"category"`
+	Checksum          string           `json:"checksum"`
+	Help              Help             `json:"help"`
+	Name              string           `json:"name"`
+	Size              string           `json:"size"`
+	ToolsDependencies []ToolDependency `json:"toolsDependencies"`
+	URL               string           `json:"url"`
+	Version           string           `json:"version"`
+}
+
+// System is the type of the elements of the `packages[*].tools[*].systems` package index key.
+type System struct {
+	ArchiveFileName string `json:"archiveFileName"`
+	Checksum        string `json:"checksum"`
+	Host            string `json:"host"`
+	Size            string `json:"size"`
+	URL             string `json:"url"`
+}
+
+// Tool is the type of the elements of the `packages[*].tools` package index key.
+type Tool struct {
+	Name    string   `json:"name"`
+	Systems []System `json:"systems"`
+	Version string   `json:"version"`
+}
+
+// Package is the type of the elements of the `packages` package index key.
+type Package struct {
+	Email      string     `json:"email"`
+	Help       Help       `json:"help"`
+	Maintainer string     `json:"maintainer"`
+	Name       string     `json:"name"`
+	Platforms  []Platform `json:"platforms"`
+	Tools      []Tool     `json:"tools"`
+	WebsiteURL string     `json:"websiteURL"`
+}
+
+// Package is the type of the package index data.
+type Index struct {
+	Packages []Package `json:"packages"`
+}
 
 func init() {
 	workingDirectory, _ := paths.Getwd()
@@ -43,22 +102,54 @@ type packageIndexRuleFunctionTestTable struct {
 	expectedOutputQuery    string
 }
 
+// checkPackageIndexRuleFunction tests the given rule function according to the given test tables.
 func checkPackageIndexRuleFunction(ruleFunction Type, testTables []packageIndexRuleFunctionTestTable, t *testing.T) {
 	for _, testTable := range testTables {
-		expectedOutputRegexp := regexp.MustCompile(testTable.expectedOutputQuery)
-
-		testProject := project.Type{
-			Path:             packageIndexesTestDataPath.Join(testTable.packageIndexFolderName),
-			ProjectType:      projecttype.PackageIndex,
-			SuperprojectType: projecttype.PackageIndex,
-		}
-
-		projectdata.Initialize(testProject)
-
-		result, output := ruleFunction()
-		assert.Equal(t, testTable.expectedRuleResult, result, testTable.testName)
-		assert.True(t, expectedOutputRegexp.MatchString(output), fmt.Sprintf("%s (output: %s, assertion regex: %s)", testTable.testName, output, testTable.expectedOutputQuery))
+		indexFolder := packageIndexesTestDataPath.Join(testTable.packageIndexFolderName)
+		checkPackageIndexRuleFunctionForPath(indexFolder, ruleFunction, testTable, t)
 	}
+}
+
+// checkPackageIndexRuleFunctionForPath tests the given rule function on the given path against the given assertions.
+// This may be called directly from the test in cases where the test data is generated and thus not in the static test
+// data folder.
+func checkPackageIndexRuleFunctionForPath(
+	indexFolder *paths.Path,
+	ruleFunction Type,
+	testTable packageIndexRuleFunctionTestTable,
+	t *testing.T,
+) {
+	expectedOutputRegexp := regexp.MustCompile(testTable.expectedOutputQuery)
+
+	testProject := project.Type{
+		Path:             indexFolder,
+		ProjectType:      projecttype.PackageIndex,
+		SuperprojectType: projecttype.PackageIndex,
+	}
+
+	projectdata.Initialize(testProject)
+
+	result, output := ruleFunction()
+	assert.Equal(t, testTable.expectedRuleResult, result, testTable.testName)
+	assert.True(
+		t,
+		expectedOutputRegexp.MatchString(output),
+		fmt.Sprintf("%s (output: %s, assertion regex: %s)", testTable.testName, output, testTable.expectedOutputQuery),
+	)
+}
+
+// makeIndex generates a package index file from the given data.
+func makeIndex(folder *paths.Path, data Index) error {
+	indexData, err := json.Marshal(data)
+	if err != nil {
+		return err
+	}
+
+	if err := folder.Join("package_foo_index.json").WriteFile(indexData); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func TestPackageIndexMissing(t *testing.T) {
@@ -265,12 +356,82 @@ func TestPackageIndexPackagesWebsiteURLInvalidFormat(t *testing.T) {
 func TestPackageIndexPackagesWebsiteURLDeadLink(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"Dead URLs", "packages-websiteurl-dead", ruleresult.Fail, "^foopackager1, foopackager2$"},
 		{"Invalid URL", "packages-websiteurl-invalid", ruleresult.Fail, "^foopackager$"},
-		{"Valid URL", "valid-package-index", ruleresult.Pass, ""},
 	}
 
 	checkPackageIndexRuleFunction(PackageIndexPackagesWebsiteURLDeadLink, testTables, t)
+
+	/*
+		In order to avoid a dependency on an external site, a test HTTP server is used for the tests covering handling of
+		various HTTP response status codes. For this reason, the following tests can't be performed via the
+		checkPackageIndexRuleFunction function.
+	*/
+	statusTestTables := []struct {
+		serverStatuses []int
+		testTable      packageIndexRuleFunctionTestTable
+	}{
+		{
+			[]int{http.StatusNotFound, http.StatusForbidden},
+			packageIndexRuleFunctionTestTable{
+				"Dead URLs",
+				"",
+				ruleresult.Fail,
+				"^foopackager1, foopackager2$",
+			},
+		},
+		{
+			[]int{http.StatusOK, http.StatusOK},
+			packageIndexRuleFunctionTestTable{
+				"Valid URL",
+				"",
+				ruleresult.Pass,
+				"",
+			},
+		},
+	}
+
+	index := Index{
+		Packages: []Package{
+			{
+				Email: "jane@example.com",
+				Help: Help{
+					Online: "http://example.com",
+				},
+				Maintainer: "Jane Developer",
+				Name:       "foopackager1",
+			},
+			{
+				Email: "jane@example.com",
+				Help: Help{
+					Online: "http://example.com",
+				},
+				Maintainer: "Jane Developer",
+				Name:       "foopackager2",
+			},
+		},
+	}
+
+	for _, statusTestTable := range statusTestTables {
+		// Create HTTP servers that will return the desired statuses.
+		for packageIndex, status := range statusTestTable.serverStatuses {
+			server := test.StatusServer(status)
+			defer server.Close()
+			index.Packages[packageIndex].WebsiteURL = server.URL
+		}
+
+		// Generate the test package index file.
+		indexFolder, err := paths.MkTempDir("", "TestPackageIndexPackagesWebsiteURLDeadLink")
+		defer indexFolder.RemoveAll() // Clean up after the test.
+		err = makeIndex(indexFolder, index)
+		require.NoError(t, err)
+
+		checkPackageIndexRuleFunctionForPath(
+			indexFolder,
+			PackageIndexPackagesWebsiteURLDeadLink,
+			statusTestTable.testTable,
+			t,
+		)
+	}
 }
 
 func TestPackageIndexPackagesEmailMissing(t *testing.T) {
@@ -346,11 +507,77 @@ func TestPackageIndexPackagesHelpOnlineInvalidFormat(t *testing.T) {
 func TestPackageIndexPackagesHelpOnlineDeadLink(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"Dead URLs", "packages-help-online-dead", ruleresult.Fail, "^foopackager1, foopackager2$"},
-		{"Valid URL", "valid-package-index", ruleresult.Pass, ""},
 	}
 
 	checkPackageIndexRuleFunction(PackageIndexPackagesHelpOnlineDeadLink, testTables, t)
+
+	/*
+		In order to avoid a dependency on an external site, a test HTTP server is used for the tests covering handling of
+		various HTTP response status codes. For this reason, the following tests can't be performed via the
+		checkPackageIndexRuleFunction function.
+	*/
+	statusTestTables := []struct {
+		serverStatuses []int
+		testTable      packageIndexRuleFunctionTestTable
+	}{
+		{
+			[]int{http.StatusNotFound, http.StatusForbidden},
+			packageIndexRuleFunctionTestTable{
+				"Dead URLs",
+				"",
+				ruleresult.Fail,
+				"^foopackager1, foopackager2$",
+			},
+		},
+		{
+			[]int{http.StatusOK, http.StatusOK},
+			packageIndexRuleFunctionTestTable{
+				"Valid URL",
+				"",
+				ruleresult.Pass,
+				"",
+			},
+		},
+	}
+
+	index := Index{
+		Packages: []Package{
+			{
+				Email:      "jane@example.com",
+				Maintainer: "Jane Developer",
+				Name:       "foopackager1",
+				WebsiteURL: "http://example.com",
+			},
+			{
+				Email:      "jane@example.com",
+				Maintainer: "Jane Developer",
+				Name:       "foopackager2",
+				WebsiteURL: "http://example.com",
+			},
+		},
+	}
+
+	for _, statusTestTable := range statusTestTables {
+		// Create HTTP servers that will return the desired statuses.
+		for packageIndex, status := range statusTestTable.serverStatuses {
+			server := test.StatusServer(status)
+			defer server.Close()
+			index.Packages[packageIndex].Help.Online = server.URL
+		}
+
+		// Generate the test package index file.
+		indexFolder, err := paths.MkTempDir("", "TestPackageIndexPackagesHelpOnlineDeadLink")
+		defer indexFolder.RemoveAll() // Clean up after the test.
+		err = makeIndex(indexFolder, index)
+		require.NoError(t, err)
+
+		checkPackageIndexRuleFunctionForPath(
+			indexFolder,
+			PackageIndexPackagesHelpOnlineDeadLink,
+			statusTestTable.testTable,
+			t,
+		)
+	}
 }
 
 func TestPackageIndexPackagesPlatformsMissing(t *testing.T) {
@@ -586,11 +813,96 @@ func TestPackageIndexPackagesPlatformsHelpOnlineInvalidFormat(t *testing.T) {
 func TestPackageIndexPackagesPlatformsHelpOnlineDeadLink(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"Dead URLs", "packages-platforms-help-online-dead", ruleresult.Fail, "^" + brokenOutputListIndent + "foopackager:avr@1\\.0\\.0\n" + brokenOutputListIndent + "foopackager:samd@1\\.0\\.0$"},
-		{"Valid URL", "valid-package-index", ruleresult.Pass, ""},
 	}
 
 	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsHelpOnlineDeadLink, testTables, t)
+
+	/*
+		In order to avoid a dependency on an external site, a test HTTP server is used for the tests covering handling of
+		various HTTP response status codes. For this reason, the following tests can't be performed via the
+		checkPackageIndexRuleFunction function.
+	*/
+	statusTestTables := []struct {
+		serverStatuses []int
+		testTable      packageIndexRuleFunctionTestTable
+	}{
+		{
+			[]int{http.StatusNotFound, http.StatusForbidden},
+			packageIndexRuleFunctionTestTable{
+				"Dead URLs",
+				"",
+				ruleresult.Fail,
+				"^" + brokenOutputListIndent + "foopackager:avr@1\\.0\\.0\n" + brokenOutputListIndent + "foopackager:samd@1\\.0\\.0$",
+			},
+		},
+		{
+			[]int{http.StatusOK, http.StatusOK},
+			packageIndexRuleFunctionTestTable{
+				"Valid URL",
+				"",
+				ruleresult.Pass,
+				"",
+			},
+		},
+	}
+
+	index := Index{
+		Packages: []Package{
+			{
+				Email: "jane@example.com",
+				Help: Help{
+					Online: "http://example.com",
+				},
+				Maintainer: "Jane Developer",
+				Name:       "foopackager",
+				Platforms: []Platform{
+					{
+						Architecture:    "avr",
+						ArchiveFileName: "myboard-1.0.0.zip",
+						Category:        "Contributed",
+						Checksum:        "SHA-256:ec3ff8a1dc96d3ba6f432b9b837a35fd4174a34b3d2927de1d51010e8b94f9f1",
+						Name:            "My AVR Board",
+						Size:            "15005",
+						URL:             "https://janedeveloper.github.io/myboard/myboard-1.0.0.zip",
+						Version:         "1.0.0",
+					},
+					{
+						Architecture:    "samd",
+						ArchiveFileName: "myboard-1.0.0.zip",
+						Category:        "Contributed",
+						Checksum:        "SHA-256:ec3ff8a1dc96d3ba6f432b9b837a35fd4174a34b3d2927de1d51010e8b94f9f1",
+						Name:            "My AVR Board",
+						Size:            "15005",
+						URL:             "https://janedeveloper.github.io/myboard/myboard-1.0.0.zip",
+						Version:         "1.0.0",
+					},
+				},
+				WebsiteURL: "http://example.com",
+			},
+		},
+	}
+
+	for _, statusTestTable := range statusTestTables {
+		// Create HTTP servers that will return the desired statuses.
+		for platformIndex, status := range statusTestTable.serverStatuses {
+			server := test.StatusServer(status)
+			defer server.Close()
+			index.Packages[0].Platforms[platformIndex].Help.Online = server.URL
+		}
+
+		// Generate the test package index file.
+		indexFolder, err := paths.MkTempDir("", "TestPackageIndexPackagesPlatformsHelpOnlineDeadLink")
+		defer indexFolder.RemoveAll() // Clean up after the test.
+		err = makeIndex(indexFolder, index)
+		require.NoError(t, err)
+
+		checkPackageIndexRuleFunctionForPath(
+			indexFolder,
+			PackageIndexPackagesPlatformsHelpOnlineDeadLink,
+			statusTestTable.testTable,
+			t,
+		)
+	}
 }
 
 func TestPackageIndexPackagesPlatformsUrlMissing(t *testing.T) {
@@ -626,11 +938,100 @@ func TestPackageIndexPackagesPlatformsUrlInvalidFormat(t *testing.T) {
 func TestPackageIndexPackagesPlatformsURLDeadLink(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"Dead URLs", "packages-platforms-url-dead", ruleresult.Fail, "^" + brokenOutputListIndent + "foopackager:avr@1\\.0\\.0\n" + brokenOutputListIndent + "foopackager:samd@1\\.0\\.0$"},
-		{"Valid URL", "valid-package-index", ruleresult.Pass, ""},
 	}
 
 	checkPackageIndexRuleFunction(PackageIndexPackagesPlatformsURLDeadLink, testTables, t)
+
+	/*
+		In order to avoid a dependency on an external site, a test HTTP server is used for the tests covering handling of
+		various HTTP response status codes. For this reason, the following tests can't be performed via the
+		checkPackageIndexRuleFunction function.
+	*/
+	statusTestTables := []struct {
+		serverStatuses []int
+		testTable      packageIndexRuleFunctionTestTable
+	}{
+		{
+			[]int{http.StatusNotFound, http.StatusForbidden},
+			packageIndexRuleFunctionTestTable{
+				"Dead URLs",
+				"",
+				ruleresult.Fail,
+				"^" + brokenOutputListIndent + "foopackager:avr@1\\.0\\.0\n" + brokenOutputListIndent + "foopackager:samd@1\\.0\\.0$",
+			},
+		},
+		{
+			[]int{http.StatusOK, http.StatusOK},
+			packageIndexRuleFunctionTestTable{
+				"Valid URL",
+				"",
+				ruleresult.Pass,
+				"",
+			},
+		},
+	}
+
+	index := Index{
+		Packages: []Package{
+			{
+				Email: "jane@example.com",
+				Help: Help{
+					Online: "http://example.com",
+				},
+				Maintainer: "Jane Developer",
+				Name:       "foopackager",
+				Platforms: []Platform{
+					{
+						Architecture:    "avr",
+						ArchiveFileName: "myboard-1.0.0.zip",
+						Category:        "Contributed",
+						Checksum:        "SHA-256:ec3ff8a1dc96d3ba6f432b9b837a35fd4174a34b3d2927de1d51010e8b94f9f1",
+						Help: Help{
+							Online: "http://example.com",
+						},
+						Name:    "My AVR Board",
+						Size:    "15005",
+						Version: "1.0.0",
+					},
+					{
+						Architecture:    "samd",
+						ArchiveFileName: "myboard-1.0.0.zip",
+						Category:        "Contributed",
+						Checksum:        "SHA-256:ec3ff8a1dc96d3ba6f432b9b837a35fd4174a34b3d2927de1d51010e8b94f9f1",
+						Help: Help{
+							Online: "http://example.com",
+						},
+						Name:    "My AVR Board",
+						Size:    "15005",
+						Version: "1.0.0",
+					},
+				},
+				WebsiteURL: "http://example.com",
+			},
+		},
+	}
+
+	for _, statusTestTable := range statusTestTables {
+		// Create HTTP servers that will return the desired statuses.
+		for platformIndex, status := range statusTestTable.serverStatuses {
+			server := test.StatusServer(status)
+			defer server.Close()
+			index.Packages[0].Platforms[platformIndex].URL = server.URL
+		}
+
+		// Generate the test package index file.
+		indexFolder, err := paths.MkTempDir("", "TestPackageIndexPackagesPlatformsURLDeadLink")
+		defer indexFolder.RemoveAll() // Clean up after the test.
+		err = makeIndex(indexFolder, index)
+		require.NoError(t, err)
+
+		checkPackageIndexRuleFunctionForPath(
+			indexFolder,
+			PackageIndexPackagesPlatformsURLDeadLink,
+			statusTestTable.testTable,
+			t,
+		)
+	}
 }
 
 func TestPackageIndexPackagesPlatformsArchiveFileNameMissing(t *testing.T) {
@@ -1286,11 +1687,94 @@ func TestPackageIndexPackagesToolsSystemsUrlInvalidFormat(t *testing.T) {
 func TestPackageIndexPackagesToolsSystemsURLDeadLink(t *testing.T) {
 	testTables := []packageIndexRuleFunctionTestTable{
 		{"Invalid JSON", "invalid-JSON", ruleresult.NotRun, ""},
-		{"Dead URLs", "packages-tools-systems-url-dead", ruleresult.Fail, "^" + brokenOutputListIndent + "foopackager:CMSIS@4\\.0\\.0-atmel >> arm-linux-gnueabihf\n" + brokenOutputListIndent + "foopackager:CMSIS@4\\.0\\.0-atmel >> i686-mingw32$"},
-		{"Valid URL", "valid-package-index", ruleresult.Pass, ""},
 	}
 
 	checkPackageIndexRuleFunction(PackageIndexPackagesToolsSystemsURLDeadLink, testTables, t)
+
+	/*
+		In order to avoid a dependency on an external site, a test HTTP server is used for the tests covering handling of
+		various HTTP response status codes. For this reason, the following tests can't be performed via the
+		checkPackageIndexRuleFunction function.
+	*/
+	statusTestTables := []struct {
+		serverStatuses []int
+		testTable      packageIndexRuleFunctionTestTable
+	}{
+		{
+			[]int{http.StatusNotFound, http.StatusForbidden},
+			packageIndexRuleFunctionTestTable{
+				"Dead URLs",
+				"",
+				ruleresult.Fail,
+				"^" + brokenOutputListIndent + "foopackager:CMSIS@4\\.0\\.0-atmel >> arm-linux-gnueabihf\n" + brokenOutputListIndent + "foopackager:CMSIS@4\\.0\\.0-atmel >> i686-mingw32$",
+			},
+		},
+		{
+			[]int{http.StatusOK, http.StatusOK},
+			packageIndexRuleFunctionTestTable{
+				"Valid URL",
+				"",
+				ruleresult.Pass,
+				"",
+			},
+		},
+	}
+
+	index := Index{
+		Packages: []Package{
+			{
+				Email: "jane@example.com",
+				Help: Help{
+					Online: "http://example.com",
+				},
+				Maintainer: "Jane Developer",
+				Name:       "foopackager",
+				WebsiteURL: "http://example.com",
+				Tools: []Tool{
+					{
+						Name: "CMSIS",
+						Systems: []System{
+							{
+								ArchiveFileName: "CMSIS-4.0.0.tar.bz2",
+								Checksum:        "SHA-256:7d637d2d7a0c6bacc22065848a201db2fff124268e4a56868260d0f472b4bbb7",
+								Host:            "arm-linux-gnueabihf",
+								Size:            "17642623",
+							},
+							{
+								ArchiveFileName: "CMSIS-4.0.0.tar.bz2",
+								Checksum:        "SHA-256:7d637d2d7a0c6bacc22065848a201db2fff124268e4a56868260d0f472b4bbb7",
+								Host:            "i686-mingw32",
+								Size:            "17642623",
+							},
+						},
+						Version: "4.0.0-atmel",
+					},
+				},
+			},
+		},
+	}
+
+	for _, statusTestTable := range statusTestTables {
+		// Create HTTP servers that will return the desired statuses.
+		for systemIndex, status := range statusTestTable.serverStatuses {
+			server := test.StatusServer(status)
+			defer server.Close()
+			index.Packages[0].Tools[0].Systems[systemIndex].URL = server.URL
+		}
+
+		// Generate the test package index file.
+		indexFolder, err := paths.MkTempDir("", "TestPackageIndexPackagesToolsSystemsURLDeadLink")
+		defer indexFolder.RemoveAll() // Clean up after the test.
+		err = makeIndex(indexFolder, index)
+		require.NoError(t, err)
+
+		checkPackageIndexRuleFunctionForPath(
+			indexFolder,
+			PackageIndexPackagesToolsSystemsURLDeadLink,
+			statusTestTable.testTable,
+			t,
+		)
+	}
 }
 
 func TestPackageIndexPackagesToolsSystemsArchiveFileNameMissing(t *testing.T) {
