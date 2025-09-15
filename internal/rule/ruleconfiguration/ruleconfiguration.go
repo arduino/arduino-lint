@@ -5266,7 +5266,7 @@ var configurations = []Type{
 		SuperprojectType: projecttype.All,
 		Category:         "data",
 		Subcategory:      "tool",
-		ID:               "IT025 ",
+		ID:               "IT025",
 		Brief:            "packages[*].tools[*].systems[*].checksum missing",
 		Description:      "A `systems` object for one of the package index's tools is missing a `checksum` property.",
 		MessageTemplate:  "Missing packages[*].tools[*].systems[*].checksum property in tool(s):\n{{.}}",
