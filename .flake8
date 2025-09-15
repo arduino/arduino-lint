@@ -5,6 +5,14 @@
 
 [flake8]
 doctests = True
+exclude =
+  __pycache__/
+  .git/
+  /.licenses/
+  /docs/commands/
+  /docs/rules/
+  /site/
+  node_modules/
 # W503 and W504 are mutually exclusive. PEP 8 recommends line break before.
 ignore = W503
 max-complexity = 10
