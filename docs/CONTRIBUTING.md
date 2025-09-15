@@ -77,7 +77,6 @@ submitting a PR:
 To build Arduino Lint from sources you need the following tools to be available in your local environment:
 
 - [Go](https://golang.org/doc/install)
-- [Taskfile](https://taskfile.dev/#/installation) to help you run the most common tasks from the command line
 
 If you want to run integration tests or work on documentation, you will also need:
 
@@ -95,7 +94,7 @@ If you want to run integration tests or work on documentation, you will also nee
 From the project folder root, just run:
 
 ```shell
-task build
+go tool github.com/go-task/task/v3/cmd/task build
 ```
 
 The project uses Go modules, so dependencies will be downloaded automatically. At the end of the build, you should find
@@ -110,7 +109,7 @@ consistent across the whole codebase. To avoid pushing changes that will cause t
 checks locally by running this command:
 
 ```
-task check
+go tool github.com/go-task/task/v3/cmd/task check
 ```
 
 #### Go unit tests
@@ -118,7 +117,7 @@ task check
 To run only the Go unit tests, run:
 
 ```
-task go:test
+go tool github.com/go-task/task/v3/cmd/task go:test
 ```
 
 By default, all tests for all Arduino Lint's Go packages are run. To run unit tests for only one or more specific
@@ -153,7 +152,7 @@ For these reasons, in addition to regular unit tests the project has a suite of 
 After the software requirements have been installed, you should be able to run the tests with:
 
 ```
-task go:test-integration
+go tool github.com/go-task/task/v3/cmd/task go:test-integration
 ```
 
 This will automatically install the necessary dependencies, if not already installed, and run the integration tests
@@ -162,13 +161,13 @@ automatically.
 To run specific tests, you must run `pytest` from the virtual environment created by Poetry.
 
 ```
-task poetry:install && poetry run pytest tests/test_all.py::test_report_file
+go tool github.com/go-task/task/v3/cmd/task poetry:install && poetry run pytest tests/test_all.py::test_report_file
 ```
 
 You can avoid writing the `poetry run` prefix each time by creating a new shell inside the virtual environment:
 
 ```
-task poetry:install
+go tool github.com/go-task/task/v3/cmd/task poetry:install
 poetry shell
 pytest test_lib.py
 pytest test_lib.py::test_list
@@ -180,7 +179,7 @@ Metadata about the license types of all dependencies is cached in the repository
 following command from the repository root folder:
 
 ```
-task general:cache-dep-licenses
+go tool github.com/go-task/task/v3/cmd/task general:cache-dep-licenses
 ```
 
 The necessary **Licensed** tool can be installed by following
@@ -200,7 +199,7 @@ Tools are provided to automatically bring the project into compliance with some 
 command:
 
 ```
-task fix
+go tool github.com/go-task/task/v3/cmd/task fix
 ```
 
 ### Working on documentation
@@ -219,7 +218,7 @@ documentation website. You can build the documentation website and serve it from
 command:
 
 ```
-task website:serve
+go tool github.com/go-task/task/v3/cmd/task website:serve
 ```
 
 The documentation will build. If you don't see any error, open `http://127.0.0.1:8000` in your browser to view the local

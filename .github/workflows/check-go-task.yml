@@ -75,16 +75,12 @@ jobs:
         with:
           go-version-file: go.mod
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
-
       - name: Check for errors
         env:
           GO_MODULE_PATH: ${{ matrix.module.path }}
-        run: task go:vet
+        run: |
+          go tool \
+            github.com/go-task/task/v3/cmd/task go:vet
 
   check-outdated:
     name: check-outdated (${{ matrix.module.path }})
@@ -112,16 +108,12 @@ jobs:
         with:
           go-version-file: ${{ matrix.module.path }}/go.mod
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
-
       - name: Modernize usages of outdated APIs
         env:
           GO_MODULE_PATH: ${{ matrix.module.path }}
-        run: task go:fix
+        run: |
+          go tool \
+            github.com/go-task/task/v3/cmd/task go:fix
 
       - name: Check if any fixes were needed
         run: |
@@ -155,12 +147,6 @@ jobs:
         with:
           go-version-file: ${{ matrix.module.path }}/go.mod
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
-
       - name: Install golint
         run: go install golang.org/x/lint/golint@latest
 
@@ -168,9 +154,10 @@ jobs:
         env:
           GO_MODULE_PATH: ${{ matrix.module.path }}
         run: |
-          task \
-            --silent \
-            go:lint
+          go tool \
+            github.com/go-task/task/v3/cmd/task  \
+              --silent \
+              go:lint
 
   check-formatting:
     name: check-formatting (${{ matrix.module.path }})
@@ -198,16 +185,12 @@ jobs:
         with:
           go-version-file: ${{ matrix.module.path }}/go.mod
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
-
       - name: Format code
         env:
           GO_MODULE_PATH: ${{ matrix.module.path }}
-        run: task go:format
+        run: |
+          go tool \
+            github.com/go-task/task/v3/cmd/task go:format
 
       - name: Check formatting
         run: |
@@ -241,16 +224,12 @@ jobs:
         with:
           go-version-file: ${{ matrix.module.path }}/go.mod
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
-
       - name: Run go mod tidy
         env:
           GO_MODULE_PATH: ${{ matrix.module.path }}
-        run: task go:tidy
+        run: |
+          go tool \
+            github.com/go-task/task/v3/cmd/task go:tidy
 
       - name: Check whether any tidying was needed
         run: |

@@ -53,11 +53,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
+      - name: Install Go
+        uses: actions/setup-go@v6
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
+          go-version-file: go.mod
 
       - name: Download latest editorconfig-checker release binary package
         id: download
@@ -87,6 +86,7 @@ jobs:
 
       - name: Check formatting
         run: |
-          task \
-            --silent \
-            general:check-formatting
+          go tool \
+            github.com/go-task/task/v3/cmd/task \
+              --silent \
+              general:check-formatting

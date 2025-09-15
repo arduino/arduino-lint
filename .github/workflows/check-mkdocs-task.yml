@@ -93,11 +93,7 @@ jobs:
         with:
           node-version-file: package.json
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
-
       - name: Build website
-        run: task website:check
+        run: |
+          go tool \
+            github.com/go-task/task/v3/cmd/task website:check

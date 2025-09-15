@@ -7,6 +7,8 @@ on:
   push:
     paths:
       - ".github/workflows/check-shell-task.ya?ml"
+      - "go.mod"
+      - "go.sum"
       - "Taskfile.ya?ml"
       - "**/.editorconfig"
       - "**.bash"
@@ -14,6 +16,8 @@ on:
   pull_request:
     paths:
       - ".github/workflows/check-shell-task.ya?ml"
+      - "go.mod"
+      - "go.sum"
       - "Taskfile.ya?ml"
       - "**/.editorconfig"
       - "**.bash"
@@ -87,11 +91,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
+      - name: Install Go
+        uses: actions/setup-go@v6
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
+          go-version-file: go.mod
 
       - name: Download latest ShellCheck release binary package
         id: download
@@ -127,7 +130,7 @@ jobs:
           linters: gcc
           # Due to a quirk of the "liskin/gh-problem-matcher-wrap" action, the entire command must be on a single line
           # (instead of being broken into multiple lines for readability).
-          run: task --silent shell:check SCRIPT_PATH="${{ matrix.script }}" SHELLCHECK_FORMAT=${{ matrix.configuration.format }}
+          run: go tool github.com/go-task/task/v3/cmd/task --silent shell:check SCRIPT_PATH="${{ matrix.script }}" SHELLCHECK_FORMAT=${{ matrix.configuration.format }}
 
   formatting:
     name: formatting (${{ matrix.script }})
@@ -153,11 +156,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
+      - name: Install Go
+        uses: actions/setup-go@v6
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
+          go-version-file: go.mod
 
       - name: Download shfmt
         id: download
@@ -186,10 +188,11 @@ jobs:
 
       - name: Format shell scripts
         run: |
-          task \
-            --silent \
-            shell:format \
-            SCRIPT_PATH="${{ matrix.script }}"
+          go tool \
+            github.com/go-task/task/v3/cmd/task \
+              --silent \
+              shell:format \
+              SCRIPT_PATH="${{ matrix.script }}"
 
       - name: Check formatting
         run: |
@@ -216,15 +219,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
+      - name: Install Go
+        uses: actions/setup-go@v6
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
+          go-version-file: go.mod
 
       - name: Check for non-executable scripts
         run: |
-          task \
-            --silent \
-            shell:check-mode \
-            SCRIPT_PATH="${{ matrix.script }}"
+          go tool \
+            github.com/go-task/task/v3/cmd/task \
+              --silent \
+              shell:check-mode \
+              SCRIPT_PATH="${{ matrix.script }}"

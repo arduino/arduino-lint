@@ -72,19 +72,16 @@ jobs:
         with:
           python-version-file: pyproject.toml
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
-
       - name: Create all generated documentation content
-        run: task docs:generate
+        run: |
+          go tool \
+            github.com/go-task/task/v3/cmd/task docs:generate
 
       - name: Install Dependencies
         run: |
-          task poetry:install-deps \
-            POETRY_GROUPS=dev
+          go tool \
+            github.com/go-task/task/v3/cmd/task poetry:install-deps \
+              POETRY_GROUPS=dev
 
       - name: Determine versioning parameters
         id: determine-versioning

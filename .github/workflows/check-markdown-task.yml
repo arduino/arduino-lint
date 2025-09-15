@@ -76,6 +76,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
+      - name: Install Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
@@ -84,14 +89,10 @@ jobs:
       - name: Initialize markdownlint-cli problem matcher
         uses: xt0rted/markdownlint-problem-matcher@v3
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
-
       - name: Lint
-        run: task markdown:lint
+        run: |
+          go tool \
+            github.com/go-task/task/v3/cmd/task markdown:lint
 
   links:
     needs: run-determination
@@ -114,14 +115,9 @@ jobs:
         with:
           node-version-file: package.json
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
-
       - name: Check links
         run: |
-          task \
-            --silent \
-            markdown:check-links
+          go tool \
+            github.com/go-task/task/v3/cmd/task \
+              --silent \
+              markdown:check-links

@@ -53,11 +53,12 @@ jobs:
         with:
           python-version-file: pyproject.toml
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
+      - name: Install Go
+        uses: actions/setup-go@v6
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
+          go-version-file: go.mod
 
       - name: Spell check
-        run: task general:check-spelling
+        run: |
+          go tool \
+            github.com/go-task/task/v3/cmd/task general:check-spelling

@@ -10,6 +10,8 @@ on:
       - "**/.npmrc"
       - "**/package.json"
       - "**/package-lock.json"
+      - "go.mod"
+      - "go.sum"
       - "Taskfile.ya?ml"
   pull_request:
     paths:
@@ -17,6 +19,8 @@ on:
       - "**/.npmrc"
       - "**/package.json"
       - "**/package-lock.json"
+      - "go.mod"
+      - "go.sum"
       - "Taskfile.ya?ml"
   schedule:
     # Run every Tuesday at 8 AM UTC to catch breakage resulting from changes to the JSON schema.
@@ -67,23 +71,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
+      - name: Install Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
           node-version-file: package.json
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
-
       - name: Validate package.json
         run: |
-          task \
-            --silent \
-            npm:validate \
-            PROJECT_PATH="${{ matrix.project.path }}"
+          go tool \
+            github.com/go-task/task/v3/cmd/task \
+              --silent \
+              npm:validate \
+              PROJECT_PATH="${{ matrix.project.path }}"
 
   check-sync:
     name: check-sync (${{ matrix.project.path }})
@@ -103,21 +107,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
+      - name: Install Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
           node-version-file: "${{ matrix.project.path }}/package.json"
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
-
       - name: Install npm dependencies
         run: |
-          task npm:install-deps \
-            PROJECT_PATH="${{ matrix.project.path }}"
+          go tool \
+            github.com/go-task/task/v3/cmd/task npm:install-deps \
+              PROJECT_PATH="${{ matrix.project.path }}"
 
       - name: Check package-lock.json
         run: |
@@ -144,21 +148,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v5
 
+      - name: Install Go
+        uses: actions/setup-go@v6
+        with:
+          go-version-file: go.mod
+
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
           node-version-file: "${{ matrix.project.path }}/package.json"
 
-      - name: Install Task
-        uses: arduino/setup-task@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          version: 3.x
-
       - name: Fix problems in npm configuration file
         run: |
-          task npm:fix-config \
-            PROJECT_PATH="${{ matrix.project.path }}"
+          go tool \
+            github.com/go-task/task/v3/cmd/task npm:fix-config \
+              PROJECT_PATH="${{ matrix.project.path }}"
 
       - name: Check if fixes are needed in npm configuration file
         run: |
