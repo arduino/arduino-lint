@@ -17,7 +17,12 @@
 // Package test provides resources for testing arduino-lint.
 package test
 
-import "github.com/spf13/pflag"
+import (
+	"net/http"
+	"net/http/httptest"
+
+	"github.com/spf13/pflag"
+)
 
 // ConfigurationFlags returns a set of the flags used for command line configuration of arduino-lint.
 func ConfigurationFlags() *pflag.FlagSet {
@@ -34,4 +39,14 @@ func ConfigurationFlags() *pflag.FlagSet {
 	flags.Bool("version", false, "")
 
 	return flags
+}
+
+// StatusServer returns an HTTP test server that will respond with the given status code.
+func StatusServer(status int) *httptest.Server {
+	handler := func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(status)
+	}
+	server := httptest.NewServer(http.HandlerFunc(handler))
+
+	return server
 }
