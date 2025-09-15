@@ -623,7 +623,8 @@ tasks:
           &>/dev/null
         then
           python_constraint="$( \
-            yq \
+          go tool \
+            github.com/mikefarah/yq/v4 \
               --input-format toml \
               --output-format yaml \
               '.tool.poetry.dependencies.python' \
