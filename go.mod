@@ -12,7 +12,7 @@ require (
 	github.com/arduino/go-properties-orderedmap v1.8.1
 	github.com/client9/misspell v0.3.4
 	github.com/go-git/go-git/v5 v5.16.2
-	github.com/olekukonko/tablewriter v1.0.9
+	github.com/olekukonko/tablewriter v1.1.0
 	github.com/ory/jsonschema/v3 v3.0.4
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/cobra v1.10.1

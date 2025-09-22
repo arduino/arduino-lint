@@ -10,7 +10,7 @@ require (
 	github.com/JohannesKaufmann/html-to-markdown v1.6.0
 	github.com/arduino/arduino-lint v0.0.0
 	github.com/arduino/go-paths-helper v1.14.0
-	github.com/olekukonko/tablewriter v1.0.9
+	github.com/olekukonko/tablewriter v1.1.0
 	github.com/stretchr/testify v1.11.1
 )
 
