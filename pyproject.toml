@@ -9,7 +9,7 @@ package-mode = false
 optional = true
 
 [tool.poetry.group.pipx.dependencies]
-poetry = "2.2.0"
+poetry = "2.2.1"
 
 [tool.poetry.dependencies]
 python = "~3.9"
