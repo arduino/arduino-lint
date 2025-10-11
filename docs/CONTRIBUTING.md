@@ -4,19 +4,18 @@ First of all, thanks for contributing! This document provides some basic guideli
 
 There are several ways you can get involved:
 
-| Type of contribution                              | Contribution method                                     |
-| ------------------------------------------------- | ------------------------------------------------------- |
-| - Support request<br/>- Question<br/>- Discussion | Post on the [Arduino Forum][forum]                      |
-| - Bug report<br/>- Feature request                | Issue report (read the [issue guidelines][issues])      |
-| Beta testing                                      | Try out the [nightly build][nightly]                    |
-| - Bug fix<br/>- Enhancement                       | Pull Request (read the [pull request guidelines][prs])  |
-| Monetary                                          | - [Donate][donate]<br/>- [Buy official products][store] |
+| Type of contribution                              | Contribution method                                    |
+| ------------------------------------------------- | ------------------------------------------------------ |
+| - Support request<br/>- Question<br/>- Discussion | Post on the [Arduino Forum][forum]                     |
+| - Bug report<br/>- Feature request                | Issue report (read the [issue guidelines][issues])     |
+| Beta testing                                      | Try out the [nightly build][nightly]                   |
+| - Bug fix<br/>- Enhancement                       | Pull Request (read the [pull request guidelines][prs]) |
+| Monetary                                          | [Buy official products][store]                         |
 
 [forum]: https://forum.arduino.cc/c/using-arduino/project-guidance/19
 [issues]: #issue-reports
 [nightly]: installation.md#nightly-builds
 [prs]: #pull-requests
-[donate]: https://www.arduino.cc/en/donate/
 [store]: https://store.arduino.cc
 
 ## Issue Reports
