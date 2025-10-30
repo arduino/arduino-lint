@@ -28,7 +28,7 @@ import (
 // Type is the type for rule modes.
 type Type int
 
-//go:generate stringer -type=Type -linecomment
+//go:generate go tool golang.org/x/tools/cmd/stringer -type=Type -linecomment
 const (
 	Strict                   Type = iota // strict
 	Specification                        // specification

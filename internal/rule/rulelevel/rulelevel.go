@@ -29,7 +29,7 @@ import (
 
 // Type is the type for the rule levels.
 //
-//go:generate stringer -type=Type -linecomment
+//go:generate go tool golang.org/x/tools/cmd/stringer -type=Type -linecomment
 type Type int
 
 // The line comments set the string for each level.
