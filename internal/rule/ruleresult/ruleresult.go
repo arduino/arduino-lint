@@ -19,7 +19,7 @@ package ruleresult
 
 // Type is the type for rule results.
 //
-//go:generate stringer -type=Type -linecomment
+//go:generate go tool golang.org/x/tools/cmd/stringer -type=Type -linecomment
 type Type int
 
 const (
