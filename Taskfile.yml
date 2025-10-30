@@ -352,7 +352,6 @@ tasks:
             --pkg testdata \
             --prefix "./internal/rule/schema/testdata/input/" \
             "./internal/rule/schema/testdata/input/"
-      - go install golang.org/x/tools/cmd/stringer@v0.25.0
       - go generate ./...
       - task: go:format
 
