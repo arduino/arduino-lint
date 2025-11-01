@@ -111,7 +111,7 @@ jobs:
             artifact-name: Linux_ARMv7
           - task: Linux_ARM64
             path: "*Linux_ARM64.tar.gz"
-            runner: ubuntu-latest
+            runner: ubuntu-24.04-arm
             artifact-name: Linux_ARM64
           - task: macOS_64bit
             path: "*macOS_64bit.tar.gz"

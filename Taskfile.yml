@@ -434,7 +434,7 @@ tasks:
       - GO_MODULE_PATH: Path of the Go module root (default: {{.DEFAULT_GO_MODULE_PATH}}).
     dir: "{{default .DEFAULT_GO_MODULE_PATH .GO_MODULE_PATH}}"
     vars:
-      GO_VERSION: 1.24.0
+      GO_VERSION: 1.24.8
     cmds:
       - go mod tidy -compat={{.GO_VERSION}}
 
