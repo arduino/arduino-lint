@@ -140,7 +140,7 @@ jobs:
             -f pkcs12 \
             -A \
             -T /usr/bin/codesign \
-            -P "${{ secrets.INSTALLER_CERT_MAC_PASSWORD }}"
+            -P '${{ secrets.INSTALLER_CERT_MAC_PASSWORD }}'
 
           security set-key-partition-list \
             -S apple-tool:,apple: \
