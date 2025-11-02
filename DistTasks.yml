@@ -74,6 +74,33 @@ tasks:
       PACKAGE_PLATFORM: "Windows_64bit"
       PACKAGE_NAME: "{{.PROJECT_NAME}}_{{.VERSION}}_{{.PACKAGE_PLATFORM}}.zip"
 
+  Windows_ARM64:
+    desc: Builds Windows ARM64 binaries
+    dir: "{{.DIST_DIR}}"
+    cmds:
+      # "git config safe.directory" is required until this is fixed https://github.com/elastic/golang-crossbuild/issues/232
+      - |
+        docker run \
+          -v `pwd`/..:/home/build \
+          -w /home/build \
+          -e CGO_ENABLED=1 \
+          {{.CONTAINER}}:{{.CONTAINER_TAG}} \
+          --build-cmd "git config --global --add safe.directory /home/build && {{.BUILD_COMMAND}}" \
+          -p "{{.BUILD_PLATFORM}}"
+
+        zip \
+          {{.PACKAGE_NAME}} \
+          {{.PLATFORM_DIR}}/{{.PROJECT_NAME}}.exe ../LICENSE.txt \
+          -j
+
+    vars:
+      PLATFORM_DIR: "{{.PROJECT_NAME}}_windows_arm64"
+      BUILD_COMMAND: "go build -o {{.DIST_DIR}}/{{.PLATFORM_DIR}}/{{.PROJECT_NAME}}.exe {{.LDFLAGS}}"
+      BUILD_PLATFORM: "windows/arm64"
+      CONTAINER_TAG: "{{.GO_VERSION}}-windows-arm64-debian12"
+      PACKAGE_PLATFORM: "Windows_ARM64"
+      PACKAGE_NAME: "{{.PROJECT_NAME}}_{{.VERSION}}_{{.PACKAGE_PLATFORM}}.zip"
+
   Linux_32bit:
     desc: Builds Linux 32 bit binaries
     dir: "{{.DIST_DIR}}"
