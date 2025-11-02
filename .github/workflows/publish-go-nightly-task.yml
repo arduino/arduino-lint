@@ -219,29 +219,63 @@ jobs:
           overwrite: true
           path: ${{ env.DIST_DIR }}/${{ env.PACKAGE_FILENAME }}
 
+  checksums:
+    needs: notarize-macos
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Set environment variables
+        run: |
+          # See: https://docs.github.com/actions/reference/workflows-and-actions/workflow-commands#setting-an-environment-variable
+          TAG="nightly-$(date -u +"%Y%m%d")"
+          echo "CHECKSUM_FILE_PATH=${{ runner.temp }}/${TAG}-checksums.txt" >>"$GITHUB_ENV"
+          echo "TAG=$TAG" >>"$GITHUB_ENV"
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v6
+        with:
+          merge-multiple: true
+          path: ${{ env.DIST_DIR }}
+          pattern: ${{ env.ARTIFACT_PREFIX }}*
+
+      - name: Create checksum file
+        working-directory: ${{ env.DIST_DIR }}
+        run: |
+          sha256sum ${{ env.PROJECT_NAME }}_${{ env.TAG }}* >"${{ env.CHECKSUM_FILE_PATH }}"
+
+      - name: Upload checksum artifact
+        uses: actions/upload-artifact@v5
+        with:
+          if-no-files-found: error
+          name: ${{ env.ARTIFACT_PREFIX }}checksums
+          path: ${{ env.CHECKSUM_FILE_PATH }}
+
   publish-nightly:
     runs-on: ubuntu-latest
     environment: production
-    needs: notarize-macos
+    needs: checksums
     permissions:
       contents: write
       id-token: write # This is required for requesting the JWT
 
     steps:
+      - name: Determine whether publishing to AWS is possible
+        id: aws-determination
+        run: |
+          echo "publish=${{ secrets.AWS_ROLE_TO_ASSUME != '' }}" >>$GITHUB_OUTPUT
+
       - name: Download artifact
+        if: steps.aws-determination.outputs.publish == 'true'
         uses: actions/download-artifact@v6
         with:
           pattern: ${{ env.ARTIFACT_PREFIX }}*
           merge-multiple: true
           path: ${{ env.DIST_DIR }}
 
-      - name: Create checksum file
-        working-directory: ${{ env.DIST_DIR }}
-        run: |
-          TAG="nightly-$(date -u +"%Y%m%d")"
-          sha256sum ${{ env.PROJECT_NAME }}_${TAG}* >${TAG}-checksums.txt
-
       - name: configure aws credentials
+        if: steps.aws-determination.outputs.publish == 'true'
         uses: aws-actions/configure-aws-credentials@v5
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
@@ -249,6 +283,7 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Upload release files on Arduino downloads servers
+        if: steps.aws-determination.outputs.publish == 'true'
         run: |
           aws s3 sync \
             ${{ env.DIST_DIR }} \
