@@ -87,9 +87,9 @@ checkLatestVersion() {
   CHECKLATESTVERSION_REGEX="[0-9][A-Za-z0-9\.-]*"
   CHECKLATESTVERSION_LATEST_URL="https://github.com/${PROJECT_OWNER}/${PROJECT_NAME}/releases/latest"
   if [ "$DOWNLOAD_TOOL" = "curl" ]; then
-    CHECKLATESTVERSION_TAG=$(curl -SsL $CHECKLATESTVERSION_LATEST_URL | grep -o "<title>Release $CHECKLATESTVERSION_REGEX · ${PROJECT_OWNER}/${PROJECT_NAME}" | grep -o "$CHECKLATESTVERSION_REGEX")
+    CHECKLATESTVERSION_TAG=$(curl -SsL $CHECKLATESTVERSION_LATEST_URL | grep --extended-regexp -o "<title>Release $CHECKLATESTVERSION_REGEX · ${PROJECT_OWNER}/${PROJECT_NAME}" | grep --extended-regexp -o "$CHECKLATESTVERSION_REGEX")
   elif [ "$DOWNLOAD_TOOL" = "wget" ]; then
-    CHECKLATESTVERSION_TAG=$(wget -q -O - $CHECKLATESTVERSION_LATEST_URL | grep -o "<title>Release $CHECKLATESTVERSION_REGEX · ${PROJECT_OWNER}/${PROJECT_NAME}" | grep -o "$CHECKLATESTVERSION_REGEX")
+    CHECKLATESTVERSION_TAG=$(wget -q -O - $CHECKLATESTVERSION_LATEST_URL | grep --extended-regexp -o "<title>Release $CHECKLATESTVERSION_REGEX · ${PROJECT_OWNER}/${PROJECT_NAME}" | grep --extended-regexp -o "$CHECKLATESTVERSION_REGEX")
   fi
   if [ "$CHECKLATESTVERSION_TAG" = "" ]; then
     echo "Cannot determine latest tag."
@@ -168,9 +168,9 @@ downloadFile() {
       fi
 
       # || true forces this command to not catch error if grep does not find anything
-      DOWNLOAD_URL=$(echo "$BODY" | grep 'browser_' | cut -d\" -f4 | grep "$APPLICATION_DIST") || true
+      DOWNLOAD_URL=$(echo "$BODY" | grep --extended-regexp 'browser_' | cut -d\" -f4 | grep --extended-regexp "$APPLICATION_DIST") || true
       if [ -z "$DOWNLOAD_URL" ]; then
-        DOWNLOAD_URL=$(echo "$BODY" | grep 'browser_' | cut -d\" -f4 | grep "$FALLBACK_APPLICATION_DIST") || true
+        DOWNLOAD_URL=$(echo "$BODY" | grep --extended-regexp 'browser_' | cut -d\" -f4 | grep --extended-regexp "$FALLBACK_APPLICATION_DIST") || true
       fi
 
       if [ -z "$DOWNLOAD_URL" ]; then
