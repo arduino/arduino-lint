@@ -19,7 +19,7 @@ version: "3"
 
 vars:
   CONTAINER: "docker.elastic.co/beats-dev/golang-crossbuild"
-  GO_VERSION: "1.24.8"
+  GO_VERSION: "1.25.2"
 
 tasks:
   Windows_32bit:
@@ -307,9 +307,9 @@ tasks:
       # The reason seems that go 1.16.x use a macos API which is available since 10.12
       #    https://github.com/techknowlogick/xgo/issues/100#issuecomment-780894190
       #
-      # To compile it we need an SDK >=10.12 so we use the debian10 based container that
+      # To compile it we need an SDK >=10.12 so we use the debian12 based container that
       # has the SDK 10.14 installed.
-      CONTAINER_TAG: "{{.GO_VERSION}}-darwin-debian10"
+      CONTAINER_TAG: "{{.GO_VERSION}}-darwin-debian12"
       PACKAGE_PLATFORM: "macOS_64bit"
       PACKAGE_NAME: "{{.PROJECT_NAME}}_{{.VERSION}}_{{.PACKAGE_PLATFORM}}.tar.gz"
 
