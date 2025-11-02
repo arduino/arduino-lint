@@ -221,6 +221,11 @@ jobs:
       id-token: write # This is required for requesting the JWT
 
     steps:
+      - name: Determine whether publishing to AWS is possible
+        id: aws-determination
+        run: |
+          echo "publish=${{ secrets.AWS_ROLE_TO_ASSUME != '' }}" >>$GITHUB_OUTPUT
+
       - name: Download artifact
         uses: actions/download-artifact@v6
         with:
@@ -275,6 +280,7 @@ jobs:
           artifacts: ${{ env.DIST_DIR }}/*
 
       - name: configure aws credentials
+        if: steps.aws-determination.outputs.publish == 'true'
         uses: aws-actions/configure-aws-credentials@v5
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
@@ -282,6 +288,7 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Upload release files on Arduino downloads servers
+        if: steps.aws-determination.outputs.publish == 'true'
         run: |
           aws s3 sync \
             ${{ env.DIST_DIR }} \
