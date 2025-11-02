@@ -59,16 +59,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Create changelog
-        # Avoid creating the same changelog for each os
-        if: matrix.os.task == 'Windows_32bit'
-        uses: arduino/create-changelog@v1
-        with:
-          tag-regex: '^[0-9]+\.[0-9]+\.[0-9]+.*$'
-          filter-regex: '^\[(skip|changelog)[ ,-](skip|changelog)\].*'
-          case-insensitive-regex: true
-          changelog-file-path: "${{ env.DIST_DIR }}/CHANGELOG.md"
-
       - name: Install Go
         uses: actions/setup-go@v6
         with:
@@ -275,7 +265,6 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          bodyFile: ${{ env.DIST_DIR }}/CHANGELOG.md
           draft: false
           prerelease: ${{ steps.prerelease.outputs.IS_PRE }}
           # NOTE: "Artifact is a directory" warnings are expected and don't indicate a problem
