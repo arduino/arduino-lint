@@ -93,6 +93,10 @@ jobs:
             path: "*Windows_64bit.zip"
             runner: ubuntu-latest
             artifact-name: Windows_X86-64
+          - task: Windows_ARM64
+            path: "*Windows_ARM64.zip"
+            runner: ubuntu-24.04-arm
+            artifact-name: Windows_ARM64
           - task: Linux_32bit
             path: "*Linux_32bit.tar.gz"
             runner: ubuntu-latest
