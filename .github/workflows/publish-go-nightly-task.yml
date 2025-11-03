@@ -180,7 +180,7 @@ jobs:
         env:
           AC_USERNAME: ${{ secrets.AC_USERNAME }}
           AC_PASSWORD: ${{ secrets.AC_PASSWORD }}
-          AC_PROVIDER: ${{ secrets.AC_PROVIDER }}
+          AC_PROVIDER: ${{ vars.AC_PROVIDER }}
         run: |
           go tool \
             github.com/bearer/gon/cmd/gon "${{ env.GON_CONFIG_PATH }}"
