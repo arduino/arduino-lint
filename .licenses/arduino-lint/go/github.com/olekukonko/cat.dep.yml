@@ -1,9 +1,9 @@
 ---
-name: github.com/olekukonko/ll
-version: v0.1.2
+name: github.com/olekukonko/cat
+version: v0.0.0-20250911104152-50322a0618f6
 type: go
-summary:
-homepage: https://pkg.go.dev/github.com/olekukonko/ll
+summary: Package cat provides efficient and flexible string concatenation utilities.
+homepage: https://pkg.go.dev/github.com/olekukonko/cat
 license: mit
 licenses:
 - sources: LICENSE
@@ -29,6 +29,4 @@ licenses:
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
-- sources: README.md
-  text: "`ll` is licensed under the MIT License. See [LICENSE](LICENSE) for details."
 notices: []
