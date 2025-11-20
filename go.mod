@@ -12,7 +12,7 @@ require (
 	github.com/arduino/go-properties-orderedmap v1.8.1
 	github.com/client9/misspell v0.3.4
 	github.com/go-git/go-git/v5 v5.16.3
-	github.com/olekukonko/tablewriter v1.1.0
+	github.com/olekukonko/tablewriter v1.1.1
 	github.com/ory/jsonschema/v3 v3.0.4
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/cobra v1.10.1
@@ -39,6 +39,9 @@ require (
 	github.com/bearer/gon v0.0.37 // indirect
 	github.com/cespare/xxhash v1.1.0 // indirect
 	github.com/chainguard-dev/git-urls v1.0.2 // indirect
+	github.com/clipperhouse/displaywidth v0.3.1 // indirect
+	github.com/clipperhouse/stringish v0.1.1 // indirect
+	github.com/clipperhouse/uax29/v2 v2.2.0 // indirect
 	github.com/cloudflare/circl v1.6.1 // indirect
 	github.com/cmaglie/pb v1.0.27 // indirect
 	github.com/codeclysm/extract/v4 v4.0.0 // indirect
@@ -91,15 +94,16 @@ require (
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
-	github.com/mattn/go-runewidth v0.0.16 // indirect
+	github.com/mattn/go-runewidth v0.0.19 // indirect
 	github.com/mattn/go-zglob v0.0.6 // indirect
 	github.com/mikefarah/yq/v4 v4.48.1 // indirect
 	github.com/mitchellh/go-wordwrap v1.0.0 // indirect
 	github.com/mitchellh/hashstructure/v2 v2.0.2 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/muesli/cancelreader v0.2.2 // indirect
+	github.com/olekukonko/cat v0.0.0-20250911104152-50322a0618f6 // indirect
 	github.com/olekukonko/errors v1.1.0 // indirect
-	github.com/olekukonko/ll v0.0.9 // indirect
+	github.com/olekukonko/ll v0.1.2 // indirect
 	github.com/ory/go-acc v0.2.6 // indirect
 	github.com/ory/viper v1.7.5 // indirect
 	github.com/ory/x v0.0.272 // indirect
@@ -110,7 +114,6 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/radovskyb/watcher v1.0.7 // indirect
-	github.com/rivo/uniseg v0.4.4 // indirect
 	github.com/sagikazarmark/locafero v0.3.0 // indirect
 	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
 	github.com/sajari/fuzzy v1.0.0 // indirect
