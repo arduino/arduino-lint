@@ -35,7 +35,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
         uses: actions/setup-node@v6
@@ -120,7 +120,7 @@ jobs:
           echo "flag=--dry-run" >>$GITHUB_OUTPUT
 
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Download configuration file artifacts
         uses: actions/download-artifact@v6
