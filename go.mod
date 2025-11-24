@@ -11,7 +11,7 @@ require (
 	github.com/arduino/go-paths-helper v1.14.0
 	github.com/arduino/go-properties-orderedmap v1.8.1
 	github.com/client9/misspell v0.3.4
-	github.com/go-git/go-git/v5 v5.16.3
+	github.com/go-git/go-git/v5 v5.16.4
 	github.com/olekukonko/tablewriter v1.1.1
 	github.com/ory/jsonschema/v3 v3.0.4
 	github.com/sirupsen/logrus v1.9.3
