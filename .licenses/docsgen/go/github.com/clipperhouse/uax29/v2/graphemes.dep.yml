@@ -1,12 +1,12 @@
 ---
 name: github.com/clipperhouse/uax29/v2/graphemes
-version: v2.2.0
+version: v2.3.0
 type: go
 summary: 'Package graphemes implements Unicode grapheme cluster boundaries: https://unicode.org/reports/tr29/#Grapheme_Cluster_Boundaries'
 homepage: https://pkg.go.dev/github.com/clipperhouse/uax29/v2/graphemes
 license: mit
 licenses:
-- sources: v2@v2.2.0/LICENSE
+- sources: v2@v2.3.0/LICENSE
   text: |
     MIT License
 

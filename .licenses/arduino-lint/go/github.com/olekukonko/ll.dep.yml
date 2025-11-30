@@ -1,6 +1,6 @@
 ---
 name: github.com/olekukonko/ll
-version: v0.1.2
+version: v0.1.3
 type: go
 summary:
 homepage: https://pkg.go.dev/github.com/olekukonko/ll
