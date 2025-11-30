@@ -1,12 +1,12 @@
 ---
 name: github.com/olekukonko/ll/lh
-version: v0.1.2
+version: v0.1.3
 type: go
 summary:
 homepage: https://pkg.go.dev/github.com/olekukonko/ll/lh
 license: mit
 licenses:
-- sources: ll@v0.1.2/LICENSE
+- sources: ll@v0.1.3/LICENSE
   text: |
     MIT License
 
@@ -29,6 +29,6 @@ licenses:
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
-- sources: ll@v0.1.2/README.md
+- sources: ll@v0.1.3/README.md
   text: "`ll` is licensed under the MIT License. See [LICENSE](LICENSE) for details."
 notices: []
