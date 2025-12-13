@@ -117,7 +117,7 @@ jobs:
           go-version-file: go.mod
 
       - name: Download artifacts
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: ${{ env.ARTIFACT_PREFIX }}${{ matrix.build.artifact-suffix }}
           path: ${{ env.DIST_DIR }}
@@ -223,7 +223,7 @@ jobs:
           echo "publish=${{ secrets.AWS_ROLE_TO_ASSUME != '' }}" >>$GITHUB_OUTPUT
 
       - name: Download artifact
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           pattern: ${{ env.ARTIFACT_PREFIX }}*
           merge-multiple: true
