@@ -76,7 +76,7 @@ jobs:
             github.com/go-task/task/v3/cmd/task dist:${{ matrix.os.task }}
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           if-no-files-found: error
           name: ${{ env.ARTIFACT_PREFIX }}${{ matrix.os.artifact-suffix }}
@@ -207,7 +207,7 @@ jobs:
           echo "PACKAGE_FILENAME=$PACKAGE_FILENAME" >>$GITHUB_ENV
 
       - name: Replace artifact with notarized build
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           if-no-files-found: error
           name: ${{ env.ARTIFACT_PREFIX }}${{ matrix.build.artifact-suffix }}
@@ -241,7 +241,7 @@ jobs:
           sha256sum ${{ env.PROJECT_NAME }}_${{ env.TAG }}* >"${{ env.CHECKSUM_FILE_PATH }}"
 
       - name: Upload checksum artifact
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           if-no-files-found: error
           name: ${{ env.ARTIFACT_PREFIX }}checksums
