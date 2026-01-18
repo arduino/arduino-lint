@@ -14,7 +14,7 @@ require (
 	github.com/go-git/go-git/v5 v5.16.4
 	github.com/olekukonko/tablewriter v1.1.3
 	github.com/ory/jsonschema/v3 v3.0.4
-	github.com/sirupsen/logrus v1.9.3
+	github.com/sirupsen/logrus v1.9.4
 	github.com/spf13/cobra v1.10.2
 	github.com/spf13/pflag v1.0.10
 	github.com/stretchr/testify v1.11.1
