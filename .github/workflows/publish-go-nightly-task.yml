@@ -117,7 +117,7 @@ jobs:
           go-version-file: go.mod
 
       - name: Download artifacts
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: ${{ env.ARTIFACT_PREFIX }}${{ matrix.build.artifact-suffix }}
           path: ${{ env.DIST_DIR }}
@@ -229,7 +229,7 @@ jobs:
           echo "TAG=$TAG" >>"$GITHUB_ENV"
 
       - name: Download artifacts
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           merge-multiple: true
           path: ${{ env.DIST_DIR }}
@@ -263,7 +263,7 @@ jobs:
 
       - name: Download artifact
         if: steps.aws-determination.outputs.publish == 'true'
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           pattern: ${{ env.ARTIFACT_PREFIX }}*
           merge-multiple: true
