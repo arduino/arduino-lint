@@ -1,6 +1,6 @@
 ---
 name: github.com/olekukonko/errors
-version: v1.1.0
+version: v1.2.0
 type: go
 summary: Package errors provides a robust error handling library with support for
   error wrapping, stack traces, context storage, and retry mechanisms.
