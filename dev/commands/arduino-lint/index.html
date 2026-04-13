@@ -700,24 +700,23 @@
 <p>Linter for Arduino projects.</p>
 <h3 id="synopsis">Synopsis<a class="headerlink" href="#synopsis" title="Permanent link">&para;</a></h3>
 <p>Arduino Lint checks for specification compliance and other common problems with Arduino projects</p>
-<div class="highlight"><pre><span></span><code>arduino-lint [FLAG]... [PROJECT_PATH]...
-
-Lint project in PROJECT_PATH or current path if no PROJECT_PATH argument provided.
-</code></pre></div>
+<p>```
+arduino-lint [FLAG]... [PROJECT_PATH]...</p>
+<p>Lint project in PROJECT_PATH or current path if no PROJECT_PATH argument provided.
+```</p>
 <h3 id="options">Options<a class="headerlink" href="#options" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>      --compliance string        Configure how strict the tool is. Can be {strict|specification|permissive} (default &quot;specification&quot;)
-      --format string            The output format can be {text|json}. (default &quot;text&quot;)
+<p><code>--compliance string        Configure how strict the tool is. Can be {strict|specification|permissive} (default "specification")
+      --format string            The output format can be {text|json}. (default "text")
   -h, --help                     help for arduino-lint
       --library-manager string   Configure the rules for libraries in the Arduino Library Manager index. Can be {submit|update|false}.
                                  submit: Also run additional rules required to pass before a library is accepted for inclusion in the index.
                                  update: Also run additional rules required to pass before new releases of a library already in the index are accepted.
-                                 false: Don&#39;t run any Library Manager-specific rules.
-      --project-type string      Only lint projects of the specified type and their subprojects. Can be {sketch|library|platform|all}. (default &quot;all&quot;)
+                                 false: Don't run any Library Manager-specific rules.
+      --project-type string      Only lint projects of the specified type and their subprojects. Can be {sketch|library|platform|all}. (default "all")
       --recursive                Search path recursively for Arduino projects to lint. Can be {true|false}.
       --report-file string       Save a report on the rules to this file.
   -v, --verbose                  Show more information while running rules.
-      --version                  Print version and timestamp of the build.
-</code></pre></div>
+      --version                  Print version and timestamp of the build.</code></p>
 
 
 

@@ -770,18 +770,15 @@
 though it is available as part of <a href="https://gitforwindows.org/">Git for Windows</a> (Git Bash). If you don't have <code>sh</code>
 available, use the <a href="#download">"Download" installation option</a>.</p>
 <p>This script will install the latest version of Arduino Lint to <code>$PWD/bin</code>:</p>
-<div class="highlight"><pre><span></span><code>curl -fsSL https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/install.sh | sh
-</code></pre></div>
+<p><code>curl -fsSL https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/install.sh | sh</code></p>
 <p>If you want to target a different directory, for example <code>~/local/bin</code>, set the <code>BINDIR</code> environment variable like this:</p>
-<div class="highlight"><pre><span></span><code>curl -fsSL https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/install.sh | BINDIR=~/local/bin sh
-</code></pre></div>
+<p><code>curl -fsSL https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/install.sh | BINDIR=~/local/bin sh</code></p>
 <p>If you would like to use the <code>arduino-lint</code> command from any location, install Arduino Lint to a directory already in
 your <a href="https://wikipedia.org/wiki/PATH%5F%28variable%29"><code>PATH</code></a> or add the Arduino Lint installation path to your <code>PATH</code>
 environment variable.</p>
 <p>If you want to download a specific Arduino Lint version, for example <code>0.9.0</code> or <code>nightly-latest</code>, pass the version
 number as a parameter like this:</p>
-<div class="highlight"><pre><span></span><code>curl -fsSL https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/install.sh | sh -s 0.9.0
-</code></pre></div>
+<p><code>curl -fsSL https://raw.githubusercontent.com/arduino/arduino-lint/main/etc/install.sh | sh -s 0.9.0</code></p>
 <h2 id="download">Download<a class="headerlink" href="#download" title="Permanent link">&para;</a></h2>
 <p>Pre-built binaries for all the supported platforms are available for download from the links below.</p>
 <p>If you would like to use the <code>arduino-lint</code> command from any location, extract the downloaded file to a directory

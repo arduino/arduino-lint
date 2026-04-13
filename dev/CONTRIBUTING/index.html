@@ -1100,8 +1100,8 @@ submitting a PR:</p>
 </ul>
 <h3 id="building-the-source-code">Building the source code<a class="headerlink" href="#building-the-source-code" title="Permanent link">&para;</a></h3>
 <p>From the project folder root, just run:</p>
-<div class="highlight"><pre><span></span><code>go<span class="w"> </span>tool<span class="w"> </span>github.com/go-task/task/v3/cmd/task<span class="w"> </span>build
-</code></pre></div>
+<p><code>shell
+go tool github.com/go-task/task/v3/cmd/task build</code></p>
 <p>The project uses Go modules, so dependencies will be downloaded automatically. At the end of the build, you should find
 the <code>arduino-lint</code> executable in the same folder.</p>
 <p><a id="running-the-tests"></a></p>
@@ -1109,22 +1109,17 @@ the <code>arduino-lint</code> executable in the same folder.</p>
 <p>There are several checks and test suites in place to ensure the code works as expected and is written in a way that's
 consistent across the whole codebase. To avoid pushing changes that will cause the CI system to fail, you can run the
 checks locally by running this command:</p>
-<div class="highlight"><pre><span></span><code>go tool github.com/go-task/task/v3/cmd/task check
-</code></pre></div>
+<p><code>go tool github.com/go-task/task/v3/cmd/task check</code></p>
 <h4 id="go-unit-tests">Go unit tests<a class="headerlink" href="#go-unit-tests" title="Permanent link">&para;</a></h4>
 <p>To run only the Go unit tests, run:</p>
-<div class="highlight"><pre><span></span><code>go tool github.com/go-task/task/v3/cmd/task go:test
-</code></pre></div>
+<p><code>go tool github.com/go-task/task/v3/cmd/task go:test</code></p>
 <p>By default, all tests for all Arduino Lint's Go packages are run. To run unit tests for only one or more specific
 packages, you can set the <code>TARGETS</code> environment variable, e.g.:</p>
-<div class="highlight"><pre><span></span><code>TARGETS=./internal/rule task go:test
-</code></pre></div>
+<p><code>TARGETS=./internal/rule task go:test</code></p>
 <p>Alternatively, to run only some specific test(s), you can specify a regex to match against the test function name, e.g.:</p>
-<div class="highlight"><pre><span></span><code>TEST_REGEX=&#39;^TestLibraryProperties.*&#39; task go:test
-</code></pre></div>
+<p><code>TEST_REGEX='^TestLibraryProperties.*' task go:test</code></p>
 <p>Both can be combined as well, typically to run only a specific test:</p>
-<div class="highlight"><pre><span></span><code>TEST_REGEX=&#39;^TestFindProjects$&#39; TARGETS=./internal/project task go:test
-</code></pre></div>
+<p><code>TEST_REGEX='^TestFindProjects$' TARGETS=./internal/project task go:test</code></p>
 <h4 id="integration-tests">Integration tests<a class="headerlink" href="#integration-tests" title="Permanent link">&para;</a></h4>
 <p>Being a command line interface, Arduino Lint is heavily interactive and it has to stay consistent in accepting the user
 input and providing the expected output and proper exit codes.</p>
@@ -1132,24 +1127,20 @@ input and providing the expected output and proper exit codes.</p>
 <code>arduino-lint</code> in a different process and assess the options are correctly understood and the output is what we expect.</p>
 <h5 id="running-tests">Running tests<a class="headerlink" href="#running-tests" title="Permanent link">&para;</a></h5>
 <p>After the software requirements have been installed, you should be able to run the tests with:</p>
-<div class="highlight"><pre><span></span><code>go tool github.com/go-task/task/v3/cmd/task go:test-integration
-</code></pre></div>
+<p><code>go tool github.com/go-task/task/v3/cmd/task go:test-integration</code></p>
 <p>This will automatically install the necessary dependencies, if not already installed, and run the integration tests
 automatically.</p>
 <p>To run specific tests, you must run <code>pytest</code> from the virtual environment created by Poetry.</p>
-<div class="highlight"><pre><span></span><code>go tool github.com/go-task/task/v3/cmd/task poetry:install &amp;&amp; poetry run pytest tests/test_all.py::test_report_file
-</code></pre></div>
+<p><code>go tool github.com/go-task/task/v3/cmd/task poetry:install &amp;&amp; poetry run pytest tests/test_all.py::test_report_file</code></p>
 <p>You can avoid writing the <code>poetry run</code> prefix each time by creating a new shell inside the virtual environment:</p>
-<div class="highlight"><pre><span></span><code>go tool github.com/go-task/task/v3/cmd/task poetry:install
+<p><code>go tool github.com/go-task/task/v3/cmd/task poetry:install
 poetry shell
 pytest test_lib.py
-pytest test_lib.py::test_list
-</code></pre></div>
+pytest test_lib.py::test_list</code></p>
 <h3 id="dependency-license-metadata">Dependency license metadata<a class="headerlink" href="#dependency-license-metadata" title="Permanent link">&para;</a></h3>
 <p>Metadata about the license types of all dependencies is cached in the repository. To update this cache, run the
 following command from the repository root folder:</p>
-<div class="highlight"><pre><span></span><code>go tool github.com/go-task/task/v3/cmd/task general:cache-dep-licenses
-</code></pre></div>
+<p><code>go tool github.com/go-task/task/v3/cmd/task general:cache-dep-licenses</code></p>
 <p>The necessary <strong>Licensed</strong> tool can be installed by following
 <a href="https://github.com/github/licensed#as-an-executable">these instructions</a>.</p>
 <p>Unfortunately, <strong>Licensed</strong> does not have Windows support.</p>
@@ -1160,8 +1151,7 @@ workflow and made available for download via the <code>dep-licenses-cache</code>
 <h3 id="automated-corrections">Automated corrections<a class="headerlink" href="#automated-corrections" title="Permanent link">&para;</a></h3>
 <p>Tools are provided to automatically bring the project into compliance with some required checks. Run them all with this
 command:</p>
-<div class="highlight"><pre><span></span><code>go tool github.com/go-task/task/v3/cmd/task fix
-</code></pre></div>
+<p><code>go tool github.com/go-task/task/v3/cmd/task fix</code></p>
 <h3 id="working-on-documentation">Working on documentation<a class="headerlink" href="#working-on-documentation" title="Permanent link">&para;</a></h3>
 <p>Documentation is provided to final users in form of static HTML content generated from a tool called
 <a href="https://www.mkdocs.org/">MkDocs</a> and hosted on <a href="https://pages.github.com/">GitHub Pages</a>:
@@ -1172,8 +1162,7 @@ Arduino Lint repository, as well as the dynamically generated <a href="../comman
 <p>When working on the documentation, it is useful to be able to see the effect the changes will have on the generated
 documentation website. You can build the documentation website and serve it from your personal computer by running the
 command:</p>
-<div class="highlight"><pre><span></span><code>go tool github.com/go-task/task/v3/cmd/task website:serve
-</code></pre></div>
+<p><code>go tool github.com/go-task/task/v3/cmd/task website:serve</code></p>
 <p>The documentation will build. If you don't see any error, open <code>http://127.0.0.1:8000</code> in your browser to view the local
 copy of the documentation.</p>
 <h4 id="documentation-publishing">Documentation publishing<a class="headerlink" href="#documentation-publishing" title="Permanent link">&para;</a></h4>
