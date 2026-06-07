@@ -5,7 +5,7 @@ type: go
 summary: Package consts contains the definitions of internal constants used throughout
   filepath-securejoin.
 homepage: https://pkg.go.dev/github.com/cyphar/filepath-securejoin/internal/consts
-license: other
+license: bsd-3-clause
 licenses:
 - sources: filepath-securejoin@v0.6.1/COPYING.md
   text: |

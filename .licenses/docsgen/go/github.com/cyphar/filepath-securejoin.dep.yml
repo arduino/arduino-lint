@@ -5,7 +5,8 @@ type: go
 summary: Package securejoin implements a set of helpers to make it easier to write
   Go code that is safe against symlink-related escape attacks.
 homepage: https://pkg.go.dev/github.com/cyphar/filepath-securejoin
-license: other
+# MPL-2.0 subsumes BSD-3-Clause.
+license: mpl-2.0
 licenses:
 - sources: COPYING.md
   text: |

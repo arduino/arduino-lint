@@ -5,7 +5,7 @@ type: go
 summary: Package httpsfv provides functionality for dealing with HTTP Structured Field
   Values.
 homepage: https://pkg.go.dev/golang.org/x/net/internal/httpsfv
-license: other
+license: bsd-3-clause
 licenses:
 - sources: net@v0.53.0/LICENSE
   text: |
