@@ -141,7 +141,7 @@ func Initialize(flags *pflag.FlagSet, projectPaths []string) error {
 		"log level":                       logrus.GetLevel().String(),
 		"superproject type filter":        SuperprojectTypeFilter(),
 		"recursive":                       Recursive(),
-		"report file":                     ReportFilePath(),
+		"report file":                     reportFilePathString,
 		"verbose":                         Verbose(),
 		"projects path":                   TargetPaths(),
 	}).Debug("Configuration initialized")
