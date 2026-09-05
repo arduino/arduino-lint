@@ -1,6 +1,6 @@
 ---
 name: github.com/klauspost/cpuid/v2
-version: v2.3.0
+version: v2.4.0
 type: go
 summary: Package cpuid provides information about the CPU running the current program.
 homepage: https://pkg.go.dev/github.com/klauspost/cpuid/v2
