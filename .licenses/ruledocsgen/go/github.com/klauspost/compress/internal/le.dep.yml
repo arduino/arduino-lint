@@ -4,7 +4,7 @@ version: v1.19.2
 type: go
 summary:
 homepage: https://pkg.go.dev/github.com/klauspost/compress/internal/le
-license: other
+license: bsd-3-clause
 licenses:
 - sources: compress@v1.19.2/LICENSE
   text: |

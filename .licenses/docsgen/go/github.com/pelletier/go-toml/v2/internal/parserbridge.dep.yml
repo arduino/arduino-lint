@@ -5,7 +5,7 @@ type: go
 summary: Package parserbridge exposes the unstable parser's non-AST scanners to the
   root toml package without making them part of the unstable public API.
 homepage: https://pkg.go.dev/github.com/pelletier/go-toml/v2/internal/parserbridge
-license: other
+license: mit
 licenses:
 - sources: v2@v2.4.3/LICENSE
   text: |
