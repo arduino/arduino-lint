@@ -20,6 +20,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"regexp"
+	"slices"
 
 	"github.com/ory/jsonschema/v3"
 	"github.com/sirupsen/logrus"
@@ -170,10 +171,10 @@ func validationErrorSchemaPointerMatch(
 
 // validationErrorSchemaSubPointerMatch recursively checks JSON pointers of all keywords under the parent pointer for match against a regular expression.
 // The matching JSON pointer is returned.
-func validationErrorSchemaSubPointerMatch(schemaPointerRegexp *regexp.Regexp, parentPointer string, pointerValueObject interface{}) string {
+func validationErrorSchemaSubPointerMatch(schemaPointerRegexp *regexp.Regexp, parentPointer string, pointerValueObject any) string {
 	// Recurse through iterable objects.
 	switch assertedObject := pointerValueObject.(type) {
-	case []interface{}:
+	case []any:
 		for index, element := range assertedObject {
 			// Append index to JSON pointer and check for match.
 			matchingPointer := validationErrorSchemaSubPointerMatch(schemaPointerRegexp, fmt.Sprintf("%s/%d", parentPointer, index), element)
@@ -181,7 +182,7 @@ func validationErrorSchemaSubPointerMatch(schemaPointerRegexp *regexp.Regexp, pa
 				return matchingPointer
 			}
 		}
-	case map[string]interface{}:
+	case map[string]any:
 		for key := range assertedObject {
 			// Append key to JSON pointer and check for match.
 			matchingPointer := validationErrorSchemaSubPointerMatch(schemaPointerRegexp, parentPointer+"/"+key, assertedObject[key])
@@ -238,10 +239,5 @@ func validationErrorContextRequiredMatch(
 	contextObject *jsonschema.ValidationErrorContextRequired,
 ) bool {
 	// See: https://godoc.org/github.com/ory/jsonschema#ValidationErrorContextRequired
-	for _, requiredPropertyPointer := range contextObject.Missing {
-		if failureContextRegexp.MatchString(requiredPropertyPointer) {
-			return true
-		}
-	}
-	return false
+	return slices.ContainsFunc(contextObject.Missing, failureContextRegexp.MatchString)
 }

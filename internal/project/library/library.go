@@ -19,6 +19,7 @@ package library
 
 import (
 	"fmt"
+	"slices"
 
 	"github.com/arduino/go-paths-helper"
 )
@@ -53,13 +54,7 @@ func ContainsHeaderFile(searchPath *paths.Path) bool {
 	}
 
 	directoryListing.FilterOutDirs()
-	for _, potentialHeaderFile := range directoryListing {
-		if HasHeaderFileValidExtension(potentialHeaderFile) {
-			return true
-		}
-	}
-
-	return false
+	return slices.ContainsFunc(directoryListing, HasHeaderFileValidExtension)
 }
 
 // See: https://arduino.github.io/arduino-cli/latest/library-specification/#library-metadata
@@ -91,13 +86,7 @@ func ContainsMetadataFile(searchPath *paths.Path) bool {
 	}
 
 	directoryListing.FilterOutDirs()
-	for _, potentialMetadataFile := range directoryListing {
-		if IsMetadataFile(potentialMetadataFile) {
-			return true
-		}
-	}
-
-	return false
+	return slices.ContainsFunc(directoryListing, IsMetadataFile)
 }
 
 // See: https://arduino.github.io/arduino-cli/latest/library-specification/#library-examples

@@ -18,7 +18,7 @@ package result
 
 import (
 	"fmt"
-	"io/ioutil"
+
 	"os"
 	"testing"
 
@@ -320,7 +320,7 @@ func TestAddSummary(t *testing.T) {
 func TestWriteReport(t *testing.T) {
 	flags := test.ConfigurationFlags()
 
-	reportFolderPathString, err := ioutil.TempDir("", "arduino-lint-result-TestWriteReport")
+	reportFolderPathString, err := os.MkdirTemp("", "arduino-lint-result-TestWriteReport")
 	require.Nil(t, err)
 	defer os.RemoveAll(reportFolderPathString) // clean up
 	reportFolderPath := paths.New(reportFolderPathString)

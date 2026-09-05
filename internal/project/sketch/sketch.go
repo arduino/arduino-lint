@@ -22,6 +22,7 @@ package sketch
 
 import (
 	"fmt"
+	"slices"
 
 	"github.com/arduino/arduino-cli/arduino/globals"
 	"github.com/arduino/go-paths-helper"
@@ -49,13 +50,7 @@ func ContainsMainSketchFile(searchPath *paths.Path) bool {
 	}
 
 	directoryListing.FilterOutDirs()
-	for _, potentialHeaderFile := range directoryListing {
-		if HasMainFileValidExtension(potentialHeaderFile) {
-			return true
-		}
-	}
-
-	return false
+	return slices.ContainsFunc(directoryListing, HasMainFileValidExtension)
 }
 
 // HasSupportedExtension returns whether the file at the given path has any of the file extensions supported for source/header files of a sketch.

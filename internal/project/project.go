@@ -20,6 +20,7 @@ package project
 import (
 	"fmt"
 	"os"
+	"slices"
 
 	"github.com/arduino/arduino-lint/internal/configuration"
 	"github.com/arduino/arduino-lint/internal/project/library"
@@ -269,14 +270,7 @@ func isProjectIndicatorFile(potentialProjectFilePath *paths.Path, projectTypeFil
 func isSketch(potentialProjectPath *paths.Path) bool {
 	directoryListing, _ := potentialProjectPath.ReadDir()
 	directoryListing.FilterOutDirs()
-	for _, potentialSketchFile := range directoryListing {
-		if isSketchIndicatorFile(potentialSketchFile) {
-			return true
-		}
-	}
-
-	// No file was found with a valid main sketch file extension.
-	return false
+	return slices.ContainsFunc(directoryListing, isSketchIndicatorFile)
 }
 
 func isSketchIndicatorFile(filePath *paths.Path) bool {
@@ -291,14 +285,7 @@ func isLibrary(potentialProjectPath *paths.Path) bool {
 	// - a header file
 	directoryListing, _ := potentialProjectPath.ReadDir()
 	directoryListing.FilterOutDirs()
-	for _, potentialLibraryFile := range directoryListing {
-		if isLibraryIndicatorFile(potentialLibraryFile) {
-			return true
-		}
-	}
-
-	// None of the files required for a valid Arduino library were found.
-	return false
+	return slices.ContainsFunc(directoryListing, isLibraryIndicatorFile)
 }
 
 func isLibraryIndicatorFile(filePath *paths.Path) bool {
@@ -318,13 +305,7 @@ func isLibraryIndicatorFile(filePath *paths.Path) bool {
 func isPlatform(potentialProjectPath *paths.Path) bool {
 	directoryListing, _ := potentialProjectPath.ReadDir()
 	directoryListing.FilterOutDirs()
-	for _, potentialPlatformFile := range directoryListing {
-		if isStrictPlatformIndicatorFile(potentialPlatformFile) {
-			return true
-		}
-	}
-
-	return false
+	return slices.ContainsFunc(directoryListing, isStrictPlatformIndicatorFile)
 }
 
 func isPlatformIndicatorFile(filePath *paths.Path) bool {
@@ -340,13 +321,7 @@ func isStrictPlatformIndicatorFile(filePath *paths.Path) bool {
 func isPackageIndex(potentialProjectPath *paths.Path) bool {
 	directoryListing, _ := potentialProjectPath.ReadDir()
 	directoryListing.FilterOutDirs()
-	for _, potentialPackageIndexFile := range directoryListing {
-		if isStrictPackageIndexIndicatorFile(potentialPackageIndexFile) {
-			return true
-		}
-	}
-
-	return false
+	return slices.ContainsFunc(directoryListing, isStrictPackageIndexIndicatorFile)
 }
 
 func isPackageIndexIndicatorFile(filePath *paths.Path) bool {

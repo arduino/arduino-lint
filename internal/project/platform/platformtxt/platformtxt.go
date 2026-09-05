@@ -62,7 +62,7 @@ func Validate(platformTxt *properties.Map) map[compliancelevel.Type]schema.Valid
 		data structure used is a selective map, using a flat map except for the tools, pluggable_discovery, and
 		pluggable_monitor keys, which can contain any number of arbitrary subproperties which must be linted.
 	*/
-	platformTxtInterface := make(map[string]interface{})
+	platformTxtInterface := make(map[string]any)
 	keys := platformTxt.Keys()
 	for _, key := range keys {
 		if strings.HasPrefix(key, "pluggable_discovery.") {

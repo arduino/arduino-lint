@@ -19,6 +19,7 @@ package rule
 
 import (
 	"fmt"
+	"slices"
 
 	"github.com/arduino/arduino-lint/internal/configuration"
 	"github.com/arduino/arduino-lint/internal/configuration/rulemode"
@@ -82,16 +83,12 @@ func IsEnabled(ruleConfiguration ruleconfiguration.Type, configurationRuleModes 
 	}
 
 	// Use default
-	for _, disableMode := range ruleConfiguration.DisableModes {
-		if disableMode == rulemode.Default {
-			return false, nil
-		}
+	if slices.Contains(ruleConfiguration.DisableModes, rulemode.Default) {
+		return false, nil
 	}
 
-	for _, enableMode := range ruleConfiguration.EnableModes {
-		if enableMode == rulemode.Default {
-			return true, nil
-		}
+	if slices.Contains(ruleConfiguration.EnableModes, rulemode.Default) {
+		return true, nil
 	}
 
 	return false, fmt.Errorf("Rule %s is incorrectly configured", ruleConfiguration.ID)

@@ -54,14 +54,14 @@ func Validate(boardsTxt *properties.Map) map[compliancelevel.Type]schema.Validat
 	}
 
 	//Convert the boards.txt data from the native properties.Map type to the interface type required by the schema validation package.
-	boardsTxtInterface := make(map[string]interface{})
+	boardsTxtInterface := make(map[string]any)
 	keys := boardsTxt.FirstLevelKeys()
 	for _, key := range keys {
 		if key == "menu" {
 			// Menu title subproperties are flat.
 			boardsTxtInterface[key] = general.PropertiesToMap(boardsTxt.SubTree(key), 1)
 		} else {
-			boardIDInterface := make(map[string]interface{})
+			boardIDInterface := make(map[string]any)
 			boardIDProperties := boardsTxt.SubTree(key)
 			boardIDKeys := boardIDProperties.Keys()
 

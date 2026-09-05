@@ -1,6 +1,6 @@
 module github.com/arduino/arduino-lint/ruledocsgen
 
-go 1.25.2
+go 1.26.8
 
 replace github.com/arduino/arduino-lint => ../
 

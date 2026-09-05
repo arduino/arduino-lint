@@ -22,7 +22,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
+
 	"path"
 
 	"github.com/ory/jsonschema/v3"
@@ -56,7 +56,7 @@ func Compile(schemaFilename string, referencedSchemaFilenames []string, dataLoad
 			return nil, err
 		}
 
-		return ioutil.NopCloser(bytes.NewReader(schemaData)), nil
+		return io.NopCloser(bytes.NewReader(schemaData)), nil
 	}
 
 	// Load the referenced schemas.
@@ -80,7 +80,7 @@ func Compile(schemaFilename string, referencedSchemaFilenames []string, dataLoad
 
 // Validate validates an instance against a JSON schema and returns nil if it was success, or the
 // jsonschema.ValidationError object otherwise.
-func Validate(instanceInterface map[string]interface{}, schemaObject Schema) ValidationResult {
+func Validate(instanceInterface map[string]any, schemaObject Schema) ValidationResult {
 	validationError := schemaObject.Compiled.ValidateInterface(instanceInterface)
 	validationResult := ValidationResult{
 		Result:     nil,
@@ -125,7 +125,7 @@ func loadReferencedSchema(compiler *jsonschema.Compiler, schemaFilename string, 
 func schemaID(schemaFilename string, dataLoader dataLoaderType) (string, error) {
 	schemaInterface := unmarshalJSONFile(schemaFilename, dataLoader)
 
-	id, ok := schemaInterface.(map[string]interface{})["$id"].(string)
+	id, ok := schemaInterface.(map[string]any)["$id"].(string)
 	if !ok {
 		return "", fmt.Errorf("Schema %s is missing an $id keyword", schemaFilename)
 	}
@@ -134,13 +134,13 @@ func schemaID(schemaFilename string, dataLoader dataLoaderType) (string, error) 
 }
 
 // unmarshalJSONFile returns the data from a JSON file.
-func unmarshalJSONFile(filename string, dataLoader dataLoaderType) interface{} {
+func unmarshalJSONFile(filename string, dataLoader dataLoaderType) any {
 	data, err := dataLoader(filename)
 	if err != nil {
 		panic(err)
 	}
 
-	var dataInterface interface{}
+	var dataInterface any
 	if err := json.Unmarshal(data, &dataInterface); err != nil {
 		panic(err)
 	}
@@ -171,17 +171,17 @@ func logValidationError(validationError ValidationResult) {
 }
 
 // validationErrorSchemaPointerValue returns the object identified by the validation error's schema JSON pointer.
-func validationErrorSchemaPointerValue(validationError ValidationResult) interface{} {
+func validationErrorSchemaPointerValue(validationError ValidationResult) any {
 	return schemaPointerValue(validationError.Result.SchemaURL, validationError.Result.SchemaPtr, validationError.dataLoader)
 }
 
 // schemaPointerValue returns the object identified by the given JSON pointer from the schema file.
-func schemaPointerValue(schemaURL, schemaPointer string, dataLoader dataLoaderType) interface{} {
+func schemaPointerValue(schemaURL, schemaPointer string, dataLoader dataLoaderType) any {
 	return jsonPointerValue(schemaPointer, path.Base(schemaURL), dataLoader)
 }
 
 // jsonPointerValue returns the object identified by the given JSON pointer from the JSON file.
-func jsonPointerValue(jsonPointer string, fileName string, dataLoader dataLoaderType) interface{} {
+func jsonPointerValue(jsonPointer string, fileName string, dataLoader dataLoaderType) any {
 	jsonReference, err := gojsonreference.NewJsonReference(jsonPointer)
 	if err != nil {
 		panic(err)

@@ -162,7 +162,7 @@ func TestPropertyTypeMismatch(t *testing.T) {
 }
 `
 	rawInstance := fmt.Sprintf(instanceTemplate, propertyName)
-	var instance map[string]interface{}
+	var instance map[string]any
 	json.Unmarshal([]byte(rawInstance), &instance)
 
 	assert.False(t, PropertyTypeMismatch(propertyName, Validate(instance, validSchemaWithReferences)), "Property type is correct")
@@ -185,7 +185,7 @@ func TestPropertyFormatMismatch(t *testing.T) {
 }
 `
 	rawInstance := fmt.Sprintf(instanceTemplate, propertyName)
-	var instance map[string]interface{}
+	var instance map[string]any
 	json.Unmarshal([]byte(rawInstance), &instance)
 
 	assert.False(t, PropertyFormatMismatch(propertyName, Validate(instance, validSchemaWithReferences)), "Property format is correct")
@@ -225,7 +225,7 @@ func TestProhibitedAdditionalProperties(t *testing.T) {
 
 	for _, testTable := range testTables {
 		rawInstance := fmt.Sprintf(instanceTemplate, propertyName)
-		var instance map[string]interface{}
+		var instance map[string]any
 		json.Unmarshal([]byte(rawInstance), &instance)
 
 		assert.False(t, ProhibitedAdditionalProperties(testTable.objectPointerString, Validate(instance, validSchemaWithReferences)), fmt.Sprintf("No additional properties in %s", testTable.objectPointerString))

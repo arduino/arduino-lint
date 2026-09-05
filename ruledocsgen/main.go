@@ -20,6 +20,7 @@ package main
 import (
 	"bytes"
 	"os"
+	"slices"
 	"text/template"
 
 	"github.com/JohannesKaufmann/html-to-markdown/escape"
@@ -195,10 +196,8 @@ func ruleLevels(ruleConfiguration ruleconfiguration.Type) [][]string {
 		// Determine whether the `--library-manager` flag setting affects this rule's level
 		for _, ruleConfigurationModeField := range ruleConfigurationModeFields {
 			for _, modeConfiguration := range ruleConfigurationModeField {
-				for _, libraryManagerMode := range libraryManagerModes {
-					if modeConfiguration == libraryManagerMode {
-						return true
-					}
+				if slices.Contains(libraryManagerModes, modeConfiguration) {
+					return true
 				}
 			}
 		}

@@ -27,48 +27,48 @@ import (
 )
 
 // VerbosePrintln behaves like Println but only prints when verbosity is enabled.
-func VerbosePrintln(v ...interface{}) {
+func VerbosePrintln(v ...any) {
 	VerbosePrint(v...)
 	VerbosePrint("\n")
 }
 
 // VerbosePrintf behaves like Printf but only prints when verbosity is enabled.
-func VerbosePrintf(format string, v ...interface{}) {
+func VerbosePrintf(format string, v ...any) {
 	VerbosePrint(fmt.Sprintf(format, v...))
 }
 
 // VerbosePrint behaves like Print but only prints when verbosity is enabled.
-func VerbosePrint(v ...interface{}) {
+func VerbosePrint(v ...any) {
 	if configuration.Verbose() && (configuration.OutputFormat() == outputformat.Text) {
 		Print(v...)
 	}
 }
 
 // Println behaves like fmt.Println but only prints when output format is set to `text`.
-func Println(v ...interface{}) {
+func Println(v ...any) {
 	Print(v...)
 	Print("\n")
 }
 
 // Printf behaves like fmt.Printf but only prints when output format is set to `text`.
-func Printf(format string, v ...interface{}) {
+func Printf(format string, v ...any) {
 	Print(fmt.Sprintf(format, v...))
 }
 
 // Print behaves like fmt.Print but only prints when output format is set to `text`.
-func Print(v ...interface{}) {
+func Print(v ...any) {
 	if configuration.OutputFormat() == outputformat.Text {
 		fmt.Print(v...)
 	}
 }
 
 // Errorf behaves like fmt.Printf but adds a newline and also logs the error.
-func Errorf(format string, v ...interface{}) {
+func Errorf(format string, v ...any) {
 	Error(fmt.Sprintf(format, v...))
 }
 
 // Error behaves like fmt.Print but adds a prefix, newline and also logs the error.
-func Error(v ...interface{}) {
+func Error(v ...any) {
 	fmt.Fprint(os.Stderr, "error: ")
 	fmt.Fprintln(os.Stderr, v...)
 	logrus.Error(fmt.Sprint(v...))

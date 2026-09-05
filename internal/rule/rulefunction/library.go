@@ -23,6 +23,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"slices"
 	"strings"
 
 	"github.com/arduino/arduino-cli/arduino/libraries"
@@ -1077,10 +1078,8 @@ func LibraryPropertiesArchitecturesFieldSoloAlias() (result ruleresult.Type, out
 
 	trueArchitecturePresent := func(trueArchitecturesQuery []string) bool {
 		for _, trueArchitectureQuery := range trueArchitecturesQuery {
-			for _, architecture := range architecturesList {
-				if architecture == trueArchitectureQuery {
-					return true
-				}
+			if slices.Contains(architecturesList, trueArchitectureQuery) {
+				return true
 			}
 		}
 
@@ -1141,13 +1140,7 @@ func LibraryPropertiesArchitecturesFieldValueCase() (result ruleresult.Type, out
 	}
 
 	correctArchitecturePresent := func(correctArchitectureQuery string) bool {
-		for _, architecture := range architecturesList {
-			if architecture == correctArchitectureQuery {
-				return true
-			}
-		}
-
-		return false
+		return slices.Contains(architecturesList, correctArchitectureQuery)
 	}
 
 	miscasedArchitectures := []string{}
@@ -1488,10 +1481,8 @@ func MissingExamples() (result ruleresult.Type, output string) {
 
 		directoryListing, _ := examplesPath.ReadDirRecursive()
 		directoryListing.FilterDirs()
-		for _, potentialExamplePath := range directoryListing {
-			if sketch.ContainsMainSketchFile(potentialExamplePath) {
-				return ruleresult.Pass, ""
-			}
+		if slices.ContainsFunc(directoryListing, sketch.ContainsMainSketchFile) {
+			return ruleresult.Pass, ""
 		}
 	}
 
@@ -1558,7 +1549,7 @@ func spellCheckLibraryPropertiesFieldValue(fieldName string) (result ruleresult.
 // commaSeparatedToList returns the list equivalent of a comma-separated string.
 func commaSeparatedToList(commaSeparated string) []string {
 	list := []string{}
-	for _, item := range strings.Split(commaSeparated, ",") {
+	for item := range strings.SplitSeq(commaSeparated, ",") {
 		list = append(list, strings.TrimSpace(item))
 	}
 

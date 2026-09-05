@@ -30,8 +30,8 @@ having both a string and a map type, which is not supported. For this reason, it
 recursion of key levels on a case-by-case basis.
 In the event a full recursion of key levels is desired, set the levels argument to a value <1.
 */
-func PropertiesToMap(flatProperties *properties.Map, levels int) map[string]interface{} {
-	propertiesInterface := make(map[string]interface{})
+func PropertiesToMap(flatProperties *properties.Map, levels int) map[string]any {
+	propertiesInterface := make(map[string]any)
 
 	if levels != 1 {
 		for _, key := range flatProperties.FirstLevelKeys() {
@@ -55,14 +55,14 @@ func PropertiesToMap(flatProperties *properties.Map, levels int) map[string]inte
 
 // PropertiesToList parses a property that has a list data type and returns it in the map[string]interface{} type
 // consumed by the JSON schema parser.
-func PropertiesToList(flatProperties *properties.Map, key string) map[string]interface{} {
+func PropertiesToList(flatProperties *properties.Map, key string) map[string]any {
 	list := flatProperties.ExtractSubIndexLists(key)
 	// Convert the slice to the required interface type
-	listInterface := make([]interface{}, len(list))
+	listInterface := make([]any, len(list))
 	for i, v := range list {
 		listInterface[i] = v
 	}
-	mapInterface := make(map[string]interface{})
+	mapInterface := make(map[string]any)
 	mapInterface[key] = listInterface
 	return mapInterface
 }

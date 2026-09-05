@@ -40,7 +40,7 @@ func TestPropertiesToMap(t *testing.T) {
 	propertiesInput, err := properties.LoadFromBytes(rawProperties)
 	require.Nil(t, err)
 
-	expectedMapOutput := map[string]interface{}{
+	expectedMapOutput := map[string]any{
 		"hello":       "world",
 		"goodbye":     "",
 		"foo.bar":     "asdf",
@@ -54,21 +54,21 @@ func TestPropertiesToMap(t *testing.T) {
 
 	assert.True(t, reflect.DeepEqual(expectedMapOutput, PropertiesToMap(propertiesInput, 1)))
 
-	expectedMapOutput = map[string]interface{}{
+	expectedMapOutput = map[string]any{
 		"hello":   "world",
 		"goodbye": "",
-		"foo": map[string]interface{}{
+		"foo": map[string]any{
 			"bar": "asdf",
 			"baz": "zxcv",
 		},
-		"bar": map[string]interface{}{
+		"bar": map[string]any{
 			"bat.bam": "123",
 		},
-		"qux": map[string]interface{}{
+		"qux": map[string]any{
 			"a":   "x",
 			"a.b": "y",
 		},
-		"fuz": map[string]interface{}{
+		"fuz": map[string]any{
 			"a.b": "y",
 			"a":   "x",
 		},
@@ -76,25 +76,25 @@ func TestPropertiesToMap(t *testing.T) {
 
 	assert.True(t, reflect.DeepEqual(expectedMapOutput, PropertiesToMap(propertiesInput, 2)))
 
-	expectedMapOutput = map[string]interface{}{
+	expectedMapOutput = map[string]any{
 		"hello":   "world",
 		"goodbye": "",
-		"foo": map[string]interface{}{
+		"foo": map[string]any{
 			"bar": "asdf",
 			"baz": "zxcv",
 		},
-		"bar": map[string]interface{}{
-			"bat": map[string]interface{}{
+		"bar": map[string]any{
+			"bat": map[string]any{
 				"bam": "123",
 			},
 		},
-		"qux": map[string]interface{}{
-			"a": map[string]interface{}{
+		"qux": map[string]any{
+			"a": map[string]any{
 				"b": "y", // It is impossible to represent the complete "properties" data structure recursed to this depth.
 			},
 		},
-		"fuz": map[string]interface{}{
-			"a": map[string]interface{}{
+		"fuz": map[string]any{
+			"a": map[string]any{
 				"b": "y",
 			},
 		},
@@ -113,13 +113,13 @@ func TestPropertiesToList(t *testing.T) {
 	propertiesInput, err := properties.LoadFromBytes(rawProperties)
 	require.Nil(t, err)
 
-	expectedMapOutput := map[string]interface{}{
-		"hello": []interface{}{"world"},
+	expectedMapOutput := map[string]any{
+		"hello": []any{"world"},
 	}
 	assert.True(t, reflect.DeepEqual(expectedMapOutput, PropertiesToList(propertiesInput, "hello")))
 
-	expectedMapOutput = map[string]interface{}{
-		"foo": []interface{}{"asdf", "zxcv"},
+	expectedMapOutput = map[string]any{
+		"foo": []any{"asdf", "zxcv"},
 	}
 	assert.True(t, reflect.DeepEqual(expectedMapOutput, PropertiesToList(propertiesInput, "foo")))
 }

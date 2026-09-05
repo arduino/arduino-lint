@@ -32,7 +32,7 @@ import (
 )
 
 // Properties parses the package index from the given path and returns the data.
-func Properties(packageIndexPath *paths.Path) (map[string]interface{}, error) {
+func Properties(packageIndexPath *paths.Path) (map[string]any, error) {
 	if packageIndexPath == nil {
 		return nil, fmt.Errorf("Package index path is nil")
 	}
@@ -40,7 +40,7 @@ func Properties(packageIndexPath *paths.Path) (map[string]interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-	var indexData map[string]interface{}
+	var indexData map[string]any
 	err = json.Unmarshal(rawIndex, &indexData)
 	if err != nil {
 		return nil, err
@@ -52,7 +52,7 @@ func Properties(packageIndexPath *paths.Path) (map[string]interface{}, error) {
 var schemaObject = make(map[compliancelevel.Type]schema.Schema)
 
 // Validate validates boards.txt data against the JSON schema and returns a map of the result for each compliance level.
-func Validate(packageIndex map[string]interface{}) map[compliancelevel.Type]schema.ValidationResult {
+func Validate(packageIndex map[string]any) map[compliancelevel.Type]schema.ValidationResult {
 	referencedSchemaFilenames := []string{
 		"general-definitions-schema.json",
 		"arduino-package-index-definitions-schema.json",

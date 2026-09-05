@@ -19,6 +19,7 @@ package rulelevel
 
 import (
 	"fmt"
+	"slices"
 
 	"github.com/arduino/arduino-lint/internal/configuration"
 	"github.com/arduino/arduino-lint/internal/configuration/rulemode"
@@ -70,22 +71,16 @@ func FailRuleLevel(ruleConfiguration ruleconfiguration.Type, configurationRuleMo
 	}
 
 	// Use default level
-	for _, errorMode := range ruleConfiguration.ErrorModes {
-		if errorMode == rulemode.Default {
-			return Error, nil
-		}
+	if slices.Contains(ruleConfiguration.ErrorModes, rulemode.Default) {
+		return Error, nil
 	}
 
-	for _, warningMode := range ruleConfiguration.WarningModes {
-		if warningMode == rulemode.Default {
-			return Warning, nil
-		}
+	if slices.Contains(ruleConfiguration.WarningModes, rulemode.Default) {
+		return Warning, nil
 	}
 
-	for _, infoMode := range ruleConfiguration.InfoModes {
-		if infoMode == rulemode.Default {
-			return Info, nil
-		}
+	if slices.Contains(ruleConfiguration.InfoModes, rulemode.Default) {
+		return Info, nil
 	}
 
 	return Notice, fmt.Errorf("Rule %s is incorrectly configured", ruleConfiguration.ID)

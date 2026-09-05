@@ -101,7 +101,7 @@ var validIndexRaw = []byte(`
 `)
 
 func TestSchemaValid(t *testing.T) {
-	var validIndex map[string]interface{}
+	var validIndex map[string]any
 	err := json.Unmarshal(validIndexRaw, &validIndex)
 	require.NoError(t, err)
 
@@ -177,7 +177,7 @@ func TestMinLength(t *testing.T) {
 
 	// Test schema validation results with value length < minimum.
 	for _, testTable := range testTables {
-		var packageIndex map[string]interface{}
+		var packageIndex map[string]any
 		err := json.Unmarshal(validIndexRaw, &packageIndex)
 		require.NoError(t, err)
 
@@ -363,7 +363,7 @@ func TestRequired(t *testing.T) {
 	}
 
 	for _, testTable := range testTables {
-		var packageIndex map[string]interface{}
+		var packageIndex map[string]any
 		err := json.Unmarshal(validIndexRaw, &packageIndex)
 		require.NoError(t, err)
 
@@ -396,7 +396,7 @@ func TestEnum(t *testing.T) {
 	}
 
 	for _, testTable := range testTables {
-		var packageIndex map[string]interface{}
+		var packageIndex map[string]any
 		err := json.Unmarshal(validIndexRaw, &packageIndex)
 		require.NoError(t, err)
 
@@ -564,7 +564,7 @@ func TestPattern(t *testing.T) {
 	}
 
 	for _, testTable := range testTables {
-		var packageIndex map[string]interface{}
+		var packageIndex map[string]any
 		err := json.Unmarshal(validIndexRaw, &packageIndex)
 		require.NoError(t, err)
 
@@ -582,7 +582,7 @@ func TestPattern(t *testing.T) {
 func TestType(t *testing.T) {
 	testTables := []struct {
 		propertyPointerString string
-		propertyValue         interface{}
+		propertyValue         any
 		assertion             assert.BoolAssertionFunc
 	}{
 		{"/packages", 42, assert.True},
@@ -628,7 +628,7 @@ func TestType(t *testing.T) {
 
 	for _, testTable := range testTables {
 		for _, complianceLevel := range []compliancelevel.Type{compliancelevel.Permissive, compliancelevel.Specification, compliancelevel.Strict} {
-			var packageIndex map[string]interface{}
+			var packageIndex map[string]any
 			err := json.Unmarshal(validIndexRaw, &packageIndex)
 			require.NoError(t, err)
 
@@ -692,7 +692,7 @@ func TestFormat(t *testing.T) {
 	}
 
 	for _, testTable := range testTables {
-		var packageIndex map[string]interface{}
+		var packageIndex map[string]any
 		err := json.Unmarshal(validIndexRaw, &packageIndex)
 		require.NoError(t, err)
 
@@ -760,7 +760,7 @@ func TestAdditionalProperties(t *testing.T) {
 	}
 
 	for _, testTable := range testTables {
-		var packageIndex map[string]interface{}
+		var packageIndex map[string]any
 		err := json.Unmarshal(validIndexRaw, &packageIndex)
 		require.NoError(t, err)
 

@@ -29,9 +29,9 @@ import (
 
 // PackageIndexData is the type for package index data.
 type PackageIndexData struct {
-	ID          string                 // Identifier for display to humans
-	JSONPointer string                 // Path to the data in the JSON document
-	Object      map[string]interface{} // The data of the object
+	ID          string         // Identifier for display to humans
+	JSONPointer string         // Path to the data in the JSON document
+	Object      map[string]any // The data of the object
 }
 
 // InitializeForPackageIndex gathers the package index rule data for the specified project.
@@ -73,10 +73,10 @@ func InitializeForPackageIndex() {
 	}
 }
 
-var packageIndex map[string]interface{}
+var packageIndex map[string]any
 
 // PackageIndex returns the package index data.
-func PackageIndex() map[string]interface{} {
+func PackageIndex() map[string]any {
 	return packageIndex
 }
 
@@ -157,10 +157,10 @@ func PackageIndexSchemaValidationResult() map[compliancelevel.Type]schema.Valida
 	return packageIndexSchemaValidationResult
 }
 
-func getPackageIndexData(interfaceObject map[string]interface{}, pointerPrefix string, dataKey string, iDPrefix string, iDSuffixTemplateString string, iDSuffixKeys []string) []PackageIndexData {
+func getPackageIndexData(interfaceObject map[string]any, pointerPrefix string, dataKey string, iDPrefix string, iDSuffixTemplateString string, iDSuffixKeys []string) []PackageIndexData {
 	var data []PackageIndexData
 
-	interfaceSlice, ok := interfaceObject[dataKey].([]interface{})
+	interfaceSlice, ok := interfaceObject[dataKey].([]any)
 	if !ok {
 		return data
 	}
@@ -171,7 +171,7 @@ func getPackageIndexData(interfaceObject map[string]interface{}, pointerPrefix s
 			Object:      nil,
 		}
 
-		object, ok := interfaceElement.(map[string]interface{})
+		object, ok := interfaceElement.(map[string]any)
 		if ok {
 			interfaceElementData.Object = object
 		}

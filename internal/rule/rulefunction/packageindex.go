@@ -561,7 +561,7 @@ func PackageIndexPackagesHelpOnlineDeadLink() (result ruleresult.Type, output st
 
 	nonCompliantIDs := []string{}
 	for _, data := range projectdata.PackageIndexPackages() {
-		help, ok := data.Object["help"].(map[string]interface{})
+		help, ok := data.Object["help"].(map[string]any)
 		if !ok {
 			continue
 		}
@@ -1057,7 +1057,7 @@ func PackageIndexPackagesPlatformsHelpOnlineDeadLink() (result ruleresult.Type, 
 
 	nonCompliantIDs := []string{}
 	for _, data := range projectdata.PackageIndexPlatforms() {
-		help, ok := data.Object["help"].(map[string]interface{})
+		help, ok := data.Object["help"].(map[string]any)
 		if !ok {
 			continue
 		}
