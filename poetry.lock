@@ -579,14 +579,14 @@ smmap = ">=3.0.1,<4"
 
 [[package]]
 name = "gitpython"
-version = "3.1.61"
+version = "3.1.62"
 description = "GitPython is a Python library used to interact with Git repositories"
 optional = false
 python-versions = ">=3.7"
 groups = ["dev"]
 files = [
-    {file = "gitpython-3.1.61-py3-none-any.whl", hash = "sha256:8ab28c9da863cdd9e7d7694ec46cf3e6c9a12d8a30a1acd3447aec11975d530c"},
-    {file = "gitpython-3.1.61.tar.gz", hash = "sha256:f51c24d8c0f733a195447385f5774a5dfe8767f5acfd7994a33755644c6ecc95"},
+    {file = "gitpython-3.1.62-py3-none-any.whl", hash = "sha256:7002251225e10e29d2e1f49e6532613fe5d5d9f0b6f1f02997a52b38fe56899e"},
+    {file = "gitpython-3.1.62.tar.gz", hash = "sha256:1791de66309bc0c7cfca40bf8d2e3de7ca091cbf94e6051be1ad0722c61062af"},
 ]
 
 [package.dependencies]
@@ -2133,4 +2133,4 @@ cffi = ["cffi (>=1.17) ; python_version >= \"3.13\" and platform_python_implemen
 [metadata]
 lock-version = "2.1"
 python-versions = "~3.14"
-content-hash = "bbd324a954dd0ef7f421c5505c856a48e0680715ce081a696f0be4d27315e007"
+content-hash = "699925f72e3242bc4c7069e6e6954ad02b2d169ffcd0ae4e6fb8f8840b8b8bfb"
