@@ -9,7 +9,7 @@ replace github.com/oleiade/reflections => github.com/oleiade/reflections v1.0.1 
 require (
 	github.com/arduino/arduino-cli v0.35.4-0.20241001142927-1f8d0f6c0dd3
 	github.com/arduino/go-paths-helper v1.14.0
-	github.com/arduino/go-properties-orderedmap v1.9.0
+	github.com/arduino/go-properties-orderedmap v1.9.1
 	github.com/client9/misspell v0.3.4
 	github.com/go-git/go-git/v5 v5.19.2
 	github.com/olekukonko/tablewriter v1.1.4

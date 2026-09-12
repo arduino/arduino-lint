@@ -114,8 +114,8 @@ github.com/arduino/arduino-cli v0.35.4-0.20241001142927-1f8d0f6c0dd3 h1:Re75ucXj
 github.com/arduino/arduino-cli v0.35.4-0.20241001142927-1f8d0f6c0dd3/go.mod h1:5xXurWYnyVD1iR+vuKJDQ6akkw7roFjRowoZWCSsgGA=
 github.com/arduino/go-paths-helper v1.14.0 h1:b4C8KJa7CNz2XnzTWg97M3LAmzWSWrj+m/o5/skzv3Y=
 github.com/arduino/go-paths-helper v1.14.0/go.mod h1:dDodKn2ZX4iwuoBMapdDO+5d0oDLBeM4BS0xS4i40Ak=
-github.com/arduino/go-properties-orderedmap v1.9.0 h1:tAPwd8RMMi5dhsIsve5VYe9DHEw0IJP6hZ8e2F9NFcQ=
-github.com/arduino/go-properties-orderedmap v1.9.0/go.mod h1:6JXfyKBfcDEduXqCXDVuopJZWJhkjEGp67YdAWYixdo=
+github.com/arduino/go-properties-orderedmap v1.9.1 h1:c+qfKz1ceE2nEgbXNAJL3kAI8JxvNqWZoVSOL0zWhCc=
+github.com/arduino/go-properties-orderedmap v1.9.1/go.mod h1:6JXfyKBfcDEduXqCXDVuopJZWJhkjEGp67YdAWYixdo=
 github.com/arduino/go-win32-utils v1.0.0 h1:/cXB86sOJxOsCHP7sQmXGLkdValwJt56mIwOHYxgQjQ=
 github.com/arduino/go-win32-utils v1.0.0/go.mod h1:0jqM7doGEAs6DaJCxxhLBUDS5OawrqF48HqXkcEie/Q=
 github.com/armon/circbuf v0.0.0-20150827004946-bbbad097214e/go.mod h1:3U/XgcO3hCbHZ8TKRvWD2dDTCfh9M9ya+I9JpbB7O8o=
