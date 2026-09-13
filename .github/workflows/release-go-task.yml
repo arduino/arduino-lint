@@ -18,6 +18,7 @@ on:
 
 jobs:
   create-release-artifacts:
+    name: Build ${{ matrix.os.artifact-suffix }}
     runs-on: ${{ matrix.os.runner }}
     permissions:
       contents: read

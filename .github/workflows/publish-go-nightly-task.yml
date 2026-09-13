@@ -21,6 +21,7 @@ on:
 
 jobs:
   create-nightly-artifacts:
+    name: Build ${{ matrix.os.artifact-suffix }}
     runs-on: ${{ matrix.os.runner }}
     permissions:
       contents: read
