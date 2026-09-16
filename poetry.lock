@@ -1761,15 +1761,18 @@ jeepney = ">=0.6"
 
 [[package]]
 name = "semver"
-version = "3.0.4"
+version = "3.1.0"
 description = "Python helper for Semantic Versioning (https://semver.org)"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "semver-3.0.4-py3-none-any.whl", hash = "sha256:9c824d87ba7f7ab4a1890799cec8596f15c1241cb473404ea1cb0c55e4b04746"},
-    {file = "semver-3.0.4.tar.gz", hash = "sha256:afc7d8c584a5ed0a11033af086e8af226a9c0b206f313e0301f8dd7b6b589602"},
+    {file = "semver-3.1.0-py3-none-any.whl", hash = "sha256:6e4998f8b4762acdfea85f9bfd5b4032e0bb50038dc04bf82011b42d5d1145c5"},
+    {file = "semver-3.1.0.tar.gz", hash = "sha256:14bc073439513d7773662a338f4db9829cf16c12b74b9568e2d2689975fbd7fc"},
 ]
+
+[package.extras]
+native = ["fast-semver-rs-backend (>=0.1.1) ; platform_python_implementation == \"CPython\""]
 
 [[package]]
 name = "shellingham"
@@ -2133,4 +2136,4 @@ cffi = ["cffi (>=1.17) ; python_version >= \"3.13\" and platform_python_implemen
 [metadata]
 lock-version = "2.1"
 python-versions = "~3.14"
-content-hash = "699925f72e3242bc4c7069e6e6954ad02b2d169ffcd0ae4e6fb8f8840b8b8bfb"
+content-hash = "dc2bf77944b8f1bde5365176c9035d7e7ea1b6dd06fb3a45bbbd728e8005bef4"
