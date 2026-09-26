@@ -24,6 +24,8 @@ vars:
       go list \
         -f {{"{{.GoVersion}}"}} \
         -m
+  # See: https://pkg.go.dev/cmd/cgo#:~:text=by%20setting%20the-,CGO_ENABLED,-environment%20variable%20when
+  CGO_ENABLED: "0"
 
 tasks:
   Windows_32bit:
@@ -34,7 +36,7 @@ tasks:
         docker run \
           -v `pwd`/..:/home/build \
           -w /home/build \
-          -e CGO_ENABLED=0 \
+          -e CGO_ENABLED={{.CGO_ENABLED}} \
           {{.CONTAINER}}:{{.CONTAINER_TAG}} \
           --build-cmd "{{.BUILD_COMMAND}}" \
           -p "{{.BUILD_PLATFORM}}"
@@ -60,7 +62,7 @@ tasks:
         docker run \
           -v `pwd`/..:/home/build \
           -w /home/build \
-          -e CGO_ENABLED=0 \
+          -e CGO_ENABLED={{.CGO_ENABLED}} \
           {{.CONTAINER}}:{{.CONTAINER_TAG}} \
           --build-cmd "{{.BUILD_COMMAND}}" \
           -p "{{.BUILD_PLATFORM}}"
@@ -87,7 +89,7 @@ tasks:
         docker run \
           -v `pwd`/..:/home/build \
           -w /home/build \
-          -e CGO_ENABLED=1 \
+          -e CGO_ENABLED={{.CGO_ENABLED}} \
           {{.CONTAINER}}:{{.CONTAINER_TAG}} \
           --build-cmd "git config --global --add safe.directory /home/build && {{.BUILD_COMMAND}}" \
           -p "{{.BUILD_PLATFORM}}"
@@ -113,7 +115,7 @@ tasks:
         docker run \
           -v `pwd`/..:/home/build \
           -w /home/build \
-          -e CGO_ENABLED=0 \
+          -e CGO_ENABLED={{.CGO_ENABLED}} \
           {{.CONTAINER}}:{{.CONTAINER_TAG}} \
           --build-cmd "{{.BUILD_COMMAND}}" \
           -p "{{.BUILD_PLATFORM}}"
@@ -141,7 +143,7 @@ tasks:
         docker run \
           -v `pwd`/..:/home/build \
           -w /home/build \
-          -e CGO_ENABLED=0 \
+          -e CGO_ENABLED={{.CGO_ENABLED}} \
           {{.CONTAINER}}:{{.CONTAINER_TAG}} \
           --build-cmd "{{.BUILD_COMMAND}}" \
           -p "{{.BUILD_PLATFORM}}"
@@ -169,7 +171,7 @@ tasks:
         docker run \
           -v `pwd`/..:/home/build \
           -w /home/build \
-          -e CGO_ENABLED=0 \
+          -e CGO_ENABLED={{.CGO_ENABLED}} \
           {{.CONTAINER}}:{{.CONTAINER_TAG}} \
           --build-cmd "{{.BUILD_COMMAND}}" \
           -p "{{.BUILD_PLATFORM}}"
@@ -198,7 +200,7 @@ tasks:
         docker run \
           -v `pwd`/..:/home/build \
           -w /home/build \
-          -e CGO_ENABLED=0 \
+          -e CGO_ENABLED={{.CGO_ENABLED}} \
           {{.CONTAINER}}:{{.CONTAINER_TAG}} \
           --build-cmd "git config --global --add safe.directory /home/build && {{.BUILD_COMMAND}}" \
           -p "{{.BUILD_PLATFORM}}"
@@ -255,7 +257,7 @@ tasks:
         docker run \
           -v `pwd`/..:/home/build \
           -w /home/build \
-          -e CGO_ENABLED=0 \
+          -e CGO_ENABLED={{.CGO_ENABLED}} \
           {{.CONTAINER}}:{{.CONTAINER_TAG}} \
           --build-cmd "git config --global --add safe.directory /home/build && {{.BUILD_COMMAND}}" \
           -p "{{.BUILD_PLATFORM}}"
@@ -284,7 +286,7 @@ tasks:
         docker run \
           -v `pwd`/..:/home/build \
           -w /home/build \
-          -e CGO_ENABLED=1 \
+          -e CGO_ENABLED={{.CGO_ENABLED}} \
           {{.CONTAINER}}:{{.CONTAINER_TAG}} \
           --build-cmd "git config --global --add safe.directory /home/build && {{.BUILD_COMMAND}}" \
           -p "{{.BUILD_PLATFORM}}"
@@ -326,7 +328,7 @@ tasks:
         docker run \
           -v `pwd`/..:/home/build \
           -w /home/build \
-          -e CGO_ENABLED=1 \
+          -e CGO_ENABLED={{.CGO_ENABLED}} \
           {{.CONTAINER}}:{{.CONTAINER_TAG}} \
           --build-cmd "git config --global --add safe.directory /home/build && {{.BUILD_COMMAND}}" \
           -p "{{.BUILD_PLATFORM}}"
