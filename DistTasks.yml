@@ -115,7 +115,13 @@ tasks:
           -w /home/build \
           -e CGO_ENABLED={{.CGO_ENABLED}} \
           {{.CONTAINER}}:{{.CONTAINER_TAG}} \
-          --build-cmd "git config --global --add safe.directory /home/build && {{.BUILD_COMMAND}}" \
+          --build-cmd " \
+            git config \
+              --global \
+              --add safe.directory /home/build \
+            && \
+            {{.BUILD_COMMAND}} \
+          " \
           -p "{{.BUILD_PLATFORM}}"
       - |
         zip \
@@ -255,7 +261,13 @@ tasks:
           -w /home/build \
           -e CGO_ENABLED={{.CGO_ENABLED}} \
           {{.CONTAINER}}:{{.CONTAINER_TAG}} \
-          --build-cmd "git config --global --add safe.directory /home/build && {{.BUILD_COMMAND}}" \
+          --build-cmd " \
+            git config \
+              --global \
+              --add safe.directory /home/build \
+            && \
+            {{.BUILD_COMMAND}} \
+          " \
           -p "{{.BUILD_PLATFORM}}"
       - |
         tar \
@@ -319,7 +331,13 @@ tasks:
           -w /home/build \
           -e CGO_ENABLED={{.CGO_ENABLED}} \
           {{.CONTAINER}}:{{.CONTAINER_TAG}} \
-          --build-cmd "git config --global --add safe.directory /home/build && {{.BUILD_COMMAND}}" \
+          --build-cmd " \
+            git config \
+              --global \
+              --add safe.directory /home/build \
+            && \
+            {{.BUILD_COMMAND}} \
+          " \
           -p "{{.BUILD_PLATFORM}}"
       - |
         tar \
@@ -355,7 +373,13 @@ tasks:
           -w /home/build \
           -e CGO_ENABLED={{.CGO_ENABLED}} \
           {{.CONTAINER}}:{{.CONTAINER_TAG}} \
-          --build-cmd "git config --global --add safe.directory /home/build && {{.BUILD_COMMAND}}" \
+          --build-cmd " \
+            git config \
+              --global \
+              --add safe.directory /home/build \
+            && \
+            {{.BUILD_COMMAND}} \
+          " \
           -p "{{.BUILD_PLATFORM}}"
       - |
         tar \
@@ -404,7 +428,13 @@ tasks:
           -w /home/build \
           -e CGO_ENABLED={{.CGO_ENABLED}} \
           {{.CONTAINER}}:{{.CONTAINER_TAG}} \
-          --build-cmd "git config --global --add safe.directory /home/build && {{.BUILD_COMMAND}}" \
+          --build-cmd " \
+            git config \
+              --global \
+              --add safe.directory /home/build \
+            && \
+            {{.BUILD_COMMAND}} \
+          " \
           -p "{{.BUILD_PLATFORM}}"
       - |
         tar \
