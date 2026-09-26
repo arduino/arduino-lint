@@ -5,7 +5,7 @@
     "github-label-sync": "3.0.0",
     "markdown-link-check": "3.15.0",
     "markdownlint-cli": "0.49.1",
-    "prettier": "3.9.8",
+    "prettier": "3.9.9",
     "prettier-plugin-toml": "2.0.6"
   },
   "engines": {
