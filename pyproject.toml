@@ -3,6 +3,9 @@
 [tool.poetry]
 package-mode = false
 
+[tool.poetry.dependencies]
+python = "~3.14"
+
 # The dependencies in this group are installed using pipx; NOT Poetry. The use of the `tool.poetry.group` super-table
 # is a hack required in order to be able to manage updates of these dependencies via Dependabot.
 [tool.poetry.group.pipx]
@@ -10,9 +13,6 @@ optional = true
 
 [tool.poetry.group.pipx.dependencies]
 poetry = "2.5.1"
-
-[tool.poetry.dependencies]
-python = "~3.14"
 
 [tool.poetry.group.dev.dependencies]
 black = "^26.5"
