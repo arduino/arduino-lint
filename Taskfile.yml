@@ -229,14 +229,16 @@ tasks:
     cmds:
       - |
         if
-          ! which ec \
+          ! which go \
           &>/dev/null
         then
-          echo "ec not found or not in PATH."
-          echo "Please install: https://github.com/editorconfig-checker/editorconfig-checker#installation"
+          echo "Go not found or not in PATH."
+          echo "Please install: https://go.dev/doc/install"
           exit 1
         fi
-      - ec
+      - |
+        go tool \
+          github.com/editorconfig-checker/editorconfig-checker/v3/cmd/editorconfig-checker
 
   # Source: https://github.com/arduino/tooling-project-assets/blob/main/workflow-templates/assets/spell-check-task/Taskfile.yml
   general:check-spelling:
