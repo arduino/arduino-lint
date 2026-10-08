@@ -15,7 +15,7 @@ optional = true
 poetry = "2.5.1"
 
 [tool.poetry.group.dev.dependencies]
-black = "^26.5"
+black = "^26.10"
 codespell = "^2.4.3"
 flake8 = "^7.4.1"
 gitpython = "^3.2.0"
