@@ -14,6 +14,7 @@ updates:
       cronjob: 0 12 * * *
       interval: cron
     labels:
+      - "topic: dependencies"
       - "topic: infrastructure"
 
   - package-ecosystem: gomod
@@ -25,7 +26,7 @@ updates:
       cronjob: 0 12 * * *
       interval: cron
     labels:
-      - "topic: infrastructure"
+      - "topic: dependencies"
   - package-ecosystem: gomod
     directory: /docsgen/
     assignees:
@@ -35,7 +36,7 @@ updates:
       cronjob: 0 12 * * *
       interval: cron
     labels:
-      - "topic: infrastructure"
+      - "topic: dependencies"
   - package-ecosystem: gomod
     directory: /ruledocsgen/
     assignees:
@@ -45,7 +46,7 @@ updates:
       cronjob: 0 12 * * *
       interval: cron
     labels:
-      - "topic: infrastructure"
+      - "topic: dependencies"
 
   - package-ecosystem: npm
     directory: /
@@ -56,6 +57,7 @@ updates:
       cronjob: 0 12 * * *
       interval: cron
     labels:
+      - "topic: dependencies"
       - "topic: infrastructure"
 
   - package-ecosystem: pip
@@ -67,4 +69,5 @@ updates:
       cronjob: 0 12 * * *
       interval: cron
     labels:
+      - "topic: dependencies"
       - "topic: infrastructure"
