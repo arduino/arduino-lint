@@ -17,7 +17,7 @@ poetry = "2.5.1"
 [tool.poetry.group.dev.dependencies]
 black = "^26.10"
 codespell = "^2.4.3"
-flake8 = "^7.4.1"
+flake8 = "^7.5.0"
 gitpython = "^3.2.1"
 invoke = "^3.0.3"
 mdx_truly_sane_lists = "^1.3"
