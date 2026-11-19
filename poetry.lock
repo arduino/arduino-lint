@@ -1796,14 +1796,14 @@ jeepney = ">=0.6"
 
 [[package]]
 name = "semver"
-version = "3.1.1"
+version = "3.1.2"
 description = "Python helper for Semantic Versioning (https://semver.org)"
 optional = false
 python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "semver-3.1.1-py3-none-any.whl", hash = "sha256:c00cf7dac88a352bc6a4a997d6ac0bf95ba835c589bc0c54f7b76f9e2a45123a"},
-    {file = "semver-3.1.1.tar.gz", hash = "sha256:149b26cabada6f63212f97e94505d21578cb1d280cf714827f328d5e70765fea"},
+    {file = "semver-3.1.2-py3-none-any.whl", hash = "sha256:45d107c3fa880910441dfab9d555046cba2829a25feeadfe4a1566439635c510"},
+    {file = "semver-3.1.2.tar.gz", hash = "sha256:bea193552413194252d33ff26ce0962b76669bd1c6fb17e8e203ac37f072feaf"},
 ]
 
 [package.extras]
@@ -2157,4 +2157,4 @@ cffi = ["cffi (>=1.17) ; python_version >= \"3.13\" and platform_python_implemen
 [metadata]
 lock-version = "2.1"
 python-versions = "~3.14"
-content-hash = "e1cd42b4b826be789888d26533f7d28630b2ac1ff0a80542757f8dbacd9f3050"
+content-hash = "94fbf2ffb69042e36488ed9339d7a65bb1e1424fdb0c0b7880ae8a52ca7e1a9b"
